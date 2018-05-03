@@ -1,0 +1,15 @@
+{"navLinks": [
+    {
+     "label": "Yesterday",
+     "path": "starting-goalies/yesterday"
+    },
+    {
+     "label": "Today",
+     "path": "starting-goalies"
+    },
+    {
+     "label": "Tomorrow",
+     "path": "starting-goalies/tomorrow"
+    }
+  ]
+}

@@ -1,0 +1,388 @@
+<h1 class="center date-header"> MLB Today's Starting Pitchers</h1>
+<h1 class="center date-header"> {{ gameDate | date:'fullDate' }}</h1>
+<div class="spinner-msg" *ngIf="loading">
+  Retrieving pitching data...
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="showData != null">
+  <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showData | orderBy: 'gameId'" [class.hide]="data.playerNotPlayingYet === false">
+    <mat-card class="tp-box mat-card-sp" [@flipState]="data.flip">
+      <div *ngIf="data.flip === 'inactive'" class="ribbon"><span>{{data.team.Name}}</span></div>
+      <div class="tp-box__side tp-box__front">
+        <div class="content-wrapper">
+          <div class="left-content">
+            <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+          </div>
+          <div class="right-content">
+            <p>
+              <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie  <br></span>
+             
+              <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.Height}} Weight: {{data.player.Weight}}  <br> </span>
+             <span *ngIf="data.player.city != null">Born: {{data.player.BirthDate | date: 'shortDate'}} <span *ngIf="data.player.country === 'USA'">{{data.player.city}}</span><span *ngIf="data.player.country != 'USA'">{{data.player.country}}</span>  <br> </span>
+             Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
+              <ng-template #content>{{data.team.opponent}}</ng-template>
+              <ng-template #other_content>No game today.</ng-template>
+              <br>SP Opponent: {{data.player.pitchingOpponent}}
+              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime}} EST, {{data.team.gameField}} </span>
+              <br> in progress: {{data.playingRightNow}}
+              <br> game over: {{data.playingOver}}
+              <br> game id: {{data.gameId}}
+            </p>
+          </div>
+        </div>
+        <div class="bottom-content">
+          <!-- <img src="../assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"> -->
+          <p class="name-number">{{ data.player.FirstName + ' ' + data.player.LastName}} - {{data.player.Throws}} - SP | #{{data.player.JerseyNumber}}</p>
+          <p class="name-number">
+            <b>W-L:</b> {{ data.stats.Wins['#text'] +'-'+ data.stats.Losses['#text'] }} / <b>ERA:</b> {{ data.stats.EarnedRunAvg['#text'] }} /
+            <b>K's:</b> {{ data.stats.PitcherStrikeouts['#text'] }}
+          </p>
+          <div *ngIf="data.player.favPitchPercent != null" class="fav-pitch">
+            <p *ngIf="data.player.favPitch == data.stats.Pitcher2SeamFastballs['#text']">Throws 2-Seam Fastball {{data.player.favPitchPercent}}%.</p>
+            <p *ngIf="data.player.favPitch == data.stats.Pitcher4SeamFastballs['#text']">Throws 4-Seam Fastball {{data.player.favPitchPercent}}%.</p>
+            <p *ngIf="data.player.favPitch == data.stats.PitcherChangeups['#text']">Throws Changeup {{data.player.favPitchPercent}}%.</p>
+            <p *ngIf="data.player.favPitch == data.stats.PitcherCurveballs['#text']">Throws Curveball {{data.player.favPitchPercent}}%.</p>
+            <p *ngIf="data.player.favPitch == data.stats.PitcherCutters['#text']">Throws Cutter {{data.player.favPitchPercent}}%.</p>
+            <p *ngIf="data.player.favPitch == data.stats.PitcherSliders['#text']">Throws Slider {{data.player.favPitchPercent}}%.</p>
+            <p *ngIf="data.player.favPitch == data.stats.PitcherSinkers['#text']">Throws Sinker {{data.player.favPitchPercent}}%.</p>
+            <p *ngIf="data.player.favPitch == data.stats.PitcherSplitters['#text']">Throws Splitter {{data.player.favPitchPercent}}%.</p>
+            <br>
+            <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+          </div>
+          <div *ngIf="data.firstStart != null" class="fav-pitch">
+          <p>{{data.firstStart}}</p>
+            <br>
+            <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+          </div>
+          <div *ngIf="data.player.pitchSpeedAvg != null" class="fav-pitch">
+            <p>Avg pitch speed is {{data.player.pitchSpeedAvg}}mph</p>
+          </div>
+          <div *ngIf="data.player.fastestPitch != null" class="fav-pitch">
+            <p>Top pitch speed {{data.player.fastestPitch}}mph</p>
+          </div>
+        </div>
+      </div>  <!-- FRONT OF CARD -->
+     
+      <!-- SCORE BACK OF CARD -->
+      <div class="tp-box__side tp-box__back">
+          <div class="content-wrapper">
+          <div class="left-content">
+            <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+          </div>
+          <div class="right-content">
+            <p>
+              <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.ContractStartYear === '2018' && data.player.ContractTotalYears === '1'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
+              <span *ngIf="data.player.ContractBaseSalary != ''">Contract Salary: ${{data.player.ContractBaseSalary | number:'.2'}} <br></span>
+              <span *ngIf="data.player.ContractTotalYears != ''">Contract Years:  {{data.player.ContractTotalYears}}<br></span> 
+              <span *ngIf="data.player.DraftYear != ''">Drafted: Round {{data.player.DraftRound}}, {{data.player.DraftYear}}<br></span>
+              <span *ngIf="data.player.College != ''">College: {{data.player.College}}<br></span> 
+              <span *ngIf="data.player.Highschool != ''">Highschool: {{data.player.Highschool}} <br></span>
+              Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
+              <ng-template #content>{{data.team.opponent}}</ng-template>
+              <ng-template #other_content>No game today.</ng-template>
+              <br>SP Opponent: {{data.player.pitchingOpponent}}
+              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime}} EST, {{data.team.gameField}} </span>
+              <!-- <br> in progress: {{data.playingRightNow}} -->
+              <!-- <br> game over: {{data.playingOver}} -->
+              <!-- <br> game id: {{data.gameId}} -->
+            </p>
+          </div>
+        </div>
+        <div class="bottom-content">
+          <!-- <img src="../assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"> -->
+          <p class="name-number">{{ data.player.FirstName + ' ' + data.player.LastName}} - {{data.player.Throws}} - SP | #{{data.player.JerseyNumber}}</p>
+          <p class="name-number">
+            <b>W-L:</b> {{ data.stats.Wins['#text'] +'-'+ data.stats.Losses['#text'] }} / <b>ERA:</b> {{ data.stats.EarnedRunAvg['#text'] }} /
+            <b>K's:</b> {{ data.stats.PitcherStrikeouts['#text'] }}
+            <br>  <a class="more-stats-btn" (click)="flipBack(data)">GO BACK</a>
+          </p>
+         
+          <div class="fav-pitch">
+            <p>Last week info...</p>
+          </div>
+         
+        </div>
+        <div *ngIf="data.player.gameLocation === 'home'" class="content-wrapper-teams">
+         <div class="left-content-teams"><img src="../assets/mlb-logos/{{data.team.opponentId}}.png" alt="mlb team logo"></div>
+         <div class="middle-content-teams">@</div>
+          <div class="right-content-teams"><img src="../assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"></div>
+        </div>
+        <div *ngIf="data.player.gameLocation === 'away'" class="content-wrapper-teams">
+         <div class="left-content-teams"><img src="../assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"></div>
+         <div class="middle-content-teams">@</div>
+          <div class="right-content-teams"><img src="../assets/mlb-logos/{{data.team.opponentId}}.png" alt="mlb team logo"></div>
+        </div>
+         
+      </div> <!-- SCORE BACK OF CARD  -->
+    </mat-card>
+  </div>
+  <div *ngIf="liveGames === true">
+    <hr>
+    <h3 class="center">Live Games</h3>
+    <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showData" [class.hide]="data.playingRightNow === false">
+      <mat-card class="tp-box mat-card-sp" [@flipState]="data.flip">
+        <div *ngIf="data.flip === 'inactive'" class="ribbon"><span>{{data.team.Name}}</span></div>
+        <div class="tp-box__side tp-box__front">
+          <div class="content-wrapper">
+            <div class="left-content">
+              <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+            </div>
+            <div class="right-content">
+              <p>
+                <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                <br>
+                <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.Height}} Weight: {{data.player.Weight}}</span>
+                <br> <span *ngIf="data.player.city != null">Born: {{data.player.BirthDate | date: 'shortDate'}} <span *ngIf="data.player.country === 'USA'">{{data.player.city}}</span><span *ngIf="data.player.country != 'USA'">{{data.player.country}}</span></span>
+                <br> Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
+                <ng-template #content>{{data.team.opponent}}</ng-template>
+                <ng-template #other_content>No game today.</ng-template>
+                <br>SP Opponent: {{data.player.pitchingOpponent}}
+                <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime}} EST, {{data.team.gameField}} </span>
+                <br> in progress: {{data.playingRightNow}}
+                <br> game over: {{data.playingOver}}
+               <!--  <br> game id: {{data.gameId}} -->           </p>
+            </div>
+          </div>
+          <div class="bottom-content">
+            <!-- <img src="../assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"> -->
+            <p class="name-number">{{ data.player.FirstName + ' ' + data.player.LastName}} - {{data.player.Throws}} - SP | #{{data.player.JerseyNumber}}</p>
+            <p class="name-number">
+              <b>W-L:</b> {{ data.stats.Wins['#text'] +'-'+ data.stats.Losses['#text'] }} / <b>ERA:</b> {{ data.stats.EarnedRunAvg['#text'] }} /
+              <b>K's:</b> {{ data.stats.PitcherStrikeouts['#text'] }}
+            </p>
+            <div class="fav-pitch live-pitch" *ngIf="data.player.winToday == '0' && data.player.saveToday == '0' && data.player.loseToday == '0'">
+              (live stats) Game Time: {{data.player.gameTime}} EST <span *ngIf="data.player.gameLocation === 'away'">@{{data.team.opponentCity}}</span>
+              <br>
+              <br> {{ data.player.FirstName + ' ' + data.player.LastName}} pitched
+              <div *ngIf="data.player.inningsToday === '1.0';then pt else other_pt"></div>
+              <ng-template #pt>1 inning</ng-template>
+              <ng-template #other_pt>{{data.player.inningsToday}} innings</ng-template>, {{data.player.strikeoutsToday}}
+              <div *ngIf="data.player.strikeoutsToday === '1';then k else other_k"></div>
+              <ng-template #k>strikeout</ng-template>
+              <ng-template #other_k>strikeouts</ng-template> and gave up {{data.player.earnedrunsToday}}
+              <div *ngIf="data.player.earnedrunsToday === '1';then r else other_r"></div>
+              <ng-template #r>run</ng-template>
+              <ng-template #other_r>runs</ng-template> today!
+              <br>
+              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+            </div>
+            <div *ngIf="data.player.favPitchPercent != null" class="fav-pitch">
+              <p *ngIf="data.player.favPitch == data.stats.Pitcher2SeamFastballs['#text']">Throws 2-Seam Fastball {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.Pitcher4SeamFastballs['#text']">Throws 4-Seam Fastball {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherChangeups['#text']">Throws Changeup {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherCurveballs['#text']">Throws Curveball {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherCutters['#text']">Throws Cutter {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherSliders['#text']">Throws Slider {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherSinkers['#text']">Throws Sinker {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherSplitters['#text']">Throws Splitter {{data.player.favPitchPercent}}%</p>
+            </div>
+            <div *ngIf="data.player.pitchSpeedAvg != null" class="fav-pitch">
+              <p>Avg pitch speed is {{data.player.pitchSpeedAvg}}mph</p>
+            </div>
+            <div *ngIf="data.player.fastestPitch != null" class="fav-pitch">
+              <p>Top pitch speed {{data.player.fastestPitch}}mph</p>
+            </div>
+          </div>
+        </div>
+        <!-- FRONT OF CARD -->
+     <!-- SCORE BACK OF CARD -->
+      <div class="tp-box__side tp-box__back">
+          <div class="content-wrapper">
+          <div class="left-content">
+            <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+          </div>
+          <div class="right-content">
+            <p>
+              <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.ContractStartYear === '2018' && data.player.ContractTotalYears === '1'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
+              <span *ngIf="data.player.ContractBaseSalary != ''">Contract Salary: ${{data.player.ContractBaseSalary | number:'.2'}} <br></span>
+              <span *ngIf="data.player.ContractTotalYears != ''">Contract Years:  {{data.player.ContractTotalYears}}<br></span> 
+              <span *ngIf="data.player.DraftYear != ''">Drafted: Round {{data.player.DraftRound}}, {{data.player.DraftYear}}<br></span>
+              <span *ngIf="data.player.College != ''">College: {{data.player.College}}<br></span> 
+              <span *ngIf="data.player.Highschool != ''">Highschool: {{data.player.Highschool}} <br></span>
+              Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
+              <ng-template #content>{{data.team.opponent}}</ng-template>
+              <ng-template #other_content>No game today.</ng-template>
+              <br>SP Opponent: {{data.player.pitchingOpponent}}
+              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime}} EST, {{data.team.gameField}} </span>
+              <!-- <br> in progress: {{data.playingRightNow}} -->
+              <!-- <br> game over: {{data.playingOver}} -->
+              <!-- <br> game id: {{data.gameId}} -->
+            </p>
+          </div>
+        </div>
+        <div class="bottom-content">
+          <!-- <img src="../assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"> -->
+          <p class="name-number">{{ data.player.FirstName + ' ' + data.player.LastName}} - {{data.player.Throws}} - SP | #{{data.player.JerseyNumber}}</p>
+          <p class="name-number">
+            <span  *ngIf="data.player.winToday === '1'"><b>W</b></span>
+            <span  *ngIf="data.player.loseToday === '1'"><b>L</b></span>
+            
+            <b>ERA:</b> {{ data.player.eraToday }} /
+            <b>K's:</b> {{ data.player.strikeoutsToday }} <br>
+            <a class="more-stats-btn" (click)="flipBack(data)">GO BACK</a>
+          </p>
+         <!--  <div class="fav-pitch live-stats-block">
+            <p>score, inning top bottom, whos on base, no decision stuff...</p>
+          </div> -->
+          <div *ngIf="data.player.favPitchPercentToday != null" class="fav-pitch">
+            <p *ngIf="data.player.favPitchToday == data.stats.Pitcher2SeamFastballsToday">Throwing 2-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.Pitcher4SeamFastballsToday">Throwing 4-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherChangeupsToday">Throwing Changeup {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherCurveballsToday">Throwing Curveball {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherCuttersToday">Throwing Cutter {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherSlidersToday">Throwing Slider {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherSinkersToday">Throwing Sinker {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherSplittersToday">Throwing Splitter {{data.player.favPitchPercentToday}}%.</p>
+          
+          </div>
+          <div *ngIf="data.player.pitchSpeedAvgToday != null" class="fav-pitch">
+            <p>Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
+          </div>
+          <div *ngIf="data.player.fastestPitchToday != null" class="fav-pitch">
+            <p>Top pitch today {{data.player.fastestPitchToday}}mph</p>
+          </div>
+        </div>
+         
+      </div> <!-- SCORE BACK OF CARD  -->
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="gameover === true">
+    <hr>
+    <h3 class="center">Completed Games</h3>
+    <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showData" [class.hide]="data.playingOver === false">
+      <mat-card class="tp-box mat-card-sp" [@flipState]="data.flip">
+        <div class="ribbon" *ngIf="data.flip === 'inactive'"><span>{{data.team.Name}}</span></div>
+        <div class="tp-box__side tp-box__front">
+          <div class="content-wrapper">
+            <div class="left-content">
+              <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+            </div>
+            <div class="right-content">
+              <p>
+                <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                <br>
+                <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.Height}} Weight: {{data.player.Weight}}</span>
+                <br> <span *ngIf="data.player.city != null">Born: {{data.player.BirthDate | date: 'shortDate'}} <span *ngIf="data.player.country === 'USA'">{{data.player.city}}</span><span *ngIf="data.player.country != 'USA'">{{data.player.country}}</span></span>
+                <br> Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
+                <ng-template #content>{{data.team.opponent}}</ng-template>
+                <ng-template #other_content>No game today.</ng-template>
+                <br>SP Opponent: {{data.player.pitchingOpponent}}
+                <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime}} EST, {{data.team.gameField}} </span>
+                <br> in progress: {{data.playingRightNow}}
+                <br> game over: {{data.playingOver}}
+                <!-- <br> game id: {{data.gameId}}           </p> -->
+            </div>
+          </div>
+          <div class="bottom-content">
+            <!-- <img src="../assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"> -->
+            <p class="name-number">{{ data.player.FirstName + ' ' + data.player.LastName}} - {{data.player.Throws}} - SP | #{{data.player.JerseyNumber}}</p>
+            <p class="name-number">
+              <b>W-L:</b> {{ data.stats.Wins['#text'] +'-'+ data.stats.Losses['#text'] }} / <b>ERA:</b> {{ data.stats.EarnedRunAvg['#text'] }} /
+              <b>K's:</b> {{ data.stats.PitcherStrikeouts['#text'] }}
+            </p>
+            <div class="fav-pitch" *ngIf="data.player.winToday == '0' && data.player.loseToday == '0'">
+              <p>{{ data.player.FirstName + ' ' + data.player.LastName}} got a no-decision today!</p>
+              <br>
+              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+            </div>
+            <div class="fav-pitch" *ngIf="data.player.winToday == '1'">
+              <p>{{ data.player.FirstName + ' ' + data.player.LastName}} got a Win today!</p>
+              <br>
+              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+            </div>
+            <div class="fav-pitch" *ngIf="data.player.loseToday == '1'">
+              <p>{{ data.player.FirstName + ' ' + data.player.LastName}} Lost today!</p>
+              <br>
+              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+            </div>
+            <div class="fav-pitch" *ngIf="data.player.saveToday == '1'">
+              <p>{{ data.player.FirstName + ' ' + data.player.LastName}} got a Save today!</p>
+              <br>
+              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+            </div>
+            <div *ngIf="data.player.favPitchPercent != null" class="fav-pitch">
+              <p *ngIf="data.player.favPitch == data.stats.Pitcher2SeamFastballs['#text']">Throws 2-Seam Fastball {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.Pitcher4SeamFastballs['#text']">Throws 4-Seam Fastball {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherChangeups['#text']">Throws Changeup {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherCurveballs['#text']">Throws Curveball {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherCutters['#text']">Throws Cutter {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherSliders['#text']">Throws Slider {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherSinkers['#text']">Throws Sinker {{data.player.favPitchPercent}}%</p>
+              <p *ngIf="data.player.favPitch == data.stats.PitcherSplitters['#text']">Throws Splitter {{data.player.favPitchPercent}}%</p>
+            </div>
+            <div *ngIf="data.player.pitchSpeedAvg != null" class="fav-pitch">
+              <p>Avg pitch speed is {{data.player.pitchSpeedAvg}}mph</p>
+            </div>
+            <div *ngIf="data.player.fastestPitch != null" class="fav-pitch">
+              <p>Top pitch speed {{data.player.fastestPitch}}mph</p>
+            </div>
+          </div>
+        </div>
+        <!-- FRONT OF CARD -->
+       <!-- SCORE BACK OF CARD -->
+      <div class="tp-box__side tp-box__back">
+          <div class="content-wrapper">
+          <div class="left-content">
+            <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+          </div>
+          <div class="right-content">
+            <p>
+              <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.ContractStartYear === '2018' && data.player.ContractTotalYears === '1'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
+              <span *ngIf="data.player.ContractBaseSalary != ''">Contract Salary: ${{data.player.ContractBaseSalary | number:'.2'}} <br></span>
+              <span *ngIf="data.player.ContractTotalYears != ''">Contract Years:  {{data.player.ContractTotalYears}}<br></span> 
+              <span *ngIf="data.player.DraftYear != ''">Drafted: Round {{data.player.DraftRound}}, {{data.player.DraftYear}}<br></span>
+              <span *ngIf="data.player.College != ''">College: {{data.player.College}}<br></span> 
+              <span *ngIf="data.player.Highschool != ''">Highschool: {{data.player.Highschool}} <br></span>
+              Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
+              <ng-template #content>{{data.team.opponent}}</ng-template>
+              <ng-template #other_content>No game today.</ng-template>
+              <br>SP Opponent: {{data.player.pitchingOpponent}}
+              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime}} EST, {{data.team.gameField}} </span>
+              <!-- <br> in progress: {{data.playingRightNow}} -->
+              <!-- <br> game over: {{data.playingOver}} -->
+              <!-- <br> game id: {{data.gameId}} -->
+            </p>
+          </div>
+        </div>
+        <div class="bottom-content">
+          <!-- <img src="../assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"> -->
+          <p class="name-number">{{ data.player.FirstName + ' ' + data.player.LastName}} - {{data.player.Throws}} - SP | #{{data.player.JerseyNumber}}</p>
+          <p class="name-number">
+            <span  *ngIf="data.player.winToday === '1'"><b>W</b></span>
+            <span  *ngIf="data.player.loseToday === '1'"><b>L</b></span>
+            
+            / <b>ERA:</b> {{ data.player.eraToday }} /
+            <b>K's:</b> {{ data.player.strikeoutsToday }}
+            <br>
+            <a class="more-stats-btn" (click)="flipBack(data)">GO BACK</a>
+          </p>
+         <!--  <div class="fav-pitch live-stats-block">
+            <p>score, inning top bottom, whos on base, no decision stuff...</p>
+          </div> -->
+          <div *ngIf="data.player.favPitchPercentToday != null" class="fav-pitch">
+            <p *ngIf="data.player.favPitchToday == data.stats.Pitcher2SeamFastballsToday">Throwing 2-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.Pitcher4SeamFastballsToday">Throwing 4-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherChangeupsToday">Throwing Changeup {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherCurveballsToday">Throwing Curveball {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherCuttersToday">Throwing Cutter {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherSlidersToday">Throwing Slider {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherSinkersToday">Throwing Sinker {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.PitcherSplittersToday">Throwing Splitter {{data.player.favPitchPercentToday}}%.</p>
+          </div>
+          <div *ngIf="data.player.pitchSpeedAvgToday != null" class="fav-pitch">
+            <p>Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
+          </div>
+          <div *ngIf="data.player.fastestPitchToday != null" class="fav-pitch">
+            <p>Top pitch today {{data.player.fastestPitchToday}}mph</p>
+          </div>
+        </div>
+         
+      </div> <!-- SCORE BACK OF CARD  -->
+      </mat-card>
+    </div>
+  </div>
+</div>

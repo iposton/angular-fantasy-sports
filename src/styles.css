@@ -1,1 +1,203 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body { 
+  font-family: Roboto, Arial, sans-serif; 
+  margin: 0;
+  background-color: #303030;
+}
+
+.mat-toolbar.mat-primary {
+  background:  #d35400;
+}
+
+.mat-drawer-container {
+  background-color: #303030;
+}
+
+.center {
+  text-align: center;
+}
+
+h1.date-header {
+  color: #fff;
+}
+
+my-dialog img {
+  width: 50%;
+  display: inline-block;
+  /*border-radius: 10%;*/
+  /*border: #3F51B5 solid 2px;*/
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  margin: 5px 5px 0 5px;
+}
+
+my-dialog .fav-pitch {
+  background: #d35400;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-bottom: 15px;
+}
+
+my-dialog .live-pitch {
+  background: #2ecc71;
+}
+
+.mat-dialog-container {
+  width: 600px;
+}
+
+my-dialog p {
+  font-family: Monospace;
+  line-height: 1.4em
+}
+
+my-dialog h1 {
+  color: #222
+}
+
+my-dialog .more-stats-btn {
+  margin-bottom: 8px;
+}
+
+.matchup-layout {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 20px;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.card-wrap {
+  display: inline-block;
+  margin: 20px;
+  vertical-align: top;
+  width: 570px;
+}
+
+.vs {
+  font-size: 20px;
+}
+
+.goalies-inline {
+  display: inline-block;
+  width: 45%;
+  font-size: 12px;
+}
+
+.login-container {
+  margin: 15px;
+}
+
+.nhl-playoff img {
+  width: 7%;
+}
+
+.goalies-inline {
+  display: inline-block;
+  width: 45%;
+  font-size: 12px;
+}
+
+.game-info img {
+  width: 10%; 
+  margin: 0 5px 0 5px;
+}
+
+.player-img {
+  cursor: pointer;
+}
+
+.last-week img {
+  width: 3%;
+  margin: 0;
+}
+
+.player img {
+  width: 3.5%;
+  margin: 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
+  border-radius: 50%;
+}
+
+img {
+  width: 45%;
+  margin: 0 15px 0 15px;
+}
+
+.faded {
+  opacity: 0.5;
+}
+
+.faded2 img {
+  width: 22%;
+}
+
+.faded2 {
+  font-size: 11px;
+}
+
+.spinner-msg {
+  text-align: center; 
+  background: #303030;
+  height:250px; 
+  padding-top: 80px;
+  color: #fff;
+}
+
+mat-spinner {
+  margin: 0 auto;
+}
+
+ul {
+    padding: 0 0 0 15px;
+    list-style: none;
+    font-size: 13px;
+}
+
+@media only screen and (max-width: 700px) {
+
+    my-dialog p {
+      line-height: 1.4em;
+      font-size: 8.5px;
+    }
+
+    my-dialog h1, my-dialog h2 {
+      font-size: 15px;
+    }
+
+    my-dialog h1 {
+      margin-top: 0;
+    }
+
+    .mat-dialog-container {
+      width: auto;
+      padding-top: 0;
+      margin: 0 auto;
+    }
+
+    mat-dialog-container {
+      padding-top: 4px;
+    }
+
+    #cdk-overlay-2 {
+      width: auto!important;
+    }
+
+    .mat-grid-tile .mat-figure { 
+      height: 65%;
+    }
+
+   .dialog-head {
+      height: 175px!important;
+    }
+}
+

@@ -1,20 +1,56 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <span class="toolbar-header">Fantasy Sports Resource</span>
+  <span style="flex: 1 1 auto;"></span>
+ 
+  <i matTooltip="Menu" [matTooltipPosition]="position" (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
 
+</mat-toolbar>
+<div class="full-container">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" #sidenav position="end">
+      
+      <ul class="category-list">
+        <li [routerLink]="['/all-sports']">
+         MLB Starting Pitchers
+        </li>
+         <li [routerLink]="['/pitching-stats']">
+         MLB Pitching Stats
+        </li>
+        <li [routerLink]="['/starting-goalies']">
+         NHL Starting Goalies
+        </li>
+         <li [routerLink]="['/starting-goalies-tomorrow']">
+         NHL Goalies Tomorrow
+        </li>
+         <li [routerLink]="['/starting-goalies-yesterday']">
+         NHL Goalies Yesterday
+        </li>
+      </ul>
+    </mat-sidenav>
+
+    <router-outlet></router-outlet>
+
+    <footer class="docs-footer">
+      <div class="docs-footer-list">
+        <div class="footer-logo">
+          <div class="logo-container">
+            <a href="#">Fantasy Sports Resource</a>
+          </div>
+          <div style="max-width: 100px;">
+            <span style="font-family: Roboto; font-size: 10px; font-weight: 500;">I &hearts; Angular</span>
+          </div>
+        </div>
+        <div class="docs-footer-links">
+          <ul>
+            <li matTooltip="Ian Poston, a web developer from Los Angeles." [matTooltipPosition]="position"><a href="https://twitter.com/intent/follow?screen_name=ianposton&commit=Log%20in%20and%20follow%20%40ianposton&session%5Busername_or_email%5D=ianposton&tw_p=followbutton&region=follow_link">Who Built This?</a></li>
+          </ul>
+        </div>
+        <div class="docs-footer-links">
+          <ul>
+            <li matTooltip="This is a fantasy sports resource. In this app I am using angular5. Find todays starting pitchers and choose a future date from the date picker for future starter info! Enjoy! ☺" [matTooltipPosition]="position">About</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </mat-sidenav-container>
+</div>

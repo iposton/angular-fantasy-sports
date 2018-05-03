@@ -1,0 +1,96 @@
+<!--  <div class="example-header">
+    
+      <input matInput #filter placeholder="Filter users">
+   
+  </div> -->
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="spinner-msg" *ngIf="loading">
+  Retrieving pitching data...
+  <mat-spinner></mat-spinner>
+</div>
+<!-- <mat-toolbar color="primary" *ngIf="!loading">
+  <span>MLB Pitching Stats</span>
+  <span class="example-spacer"></span>
+  <span *ngIf="gameToday === true">There is a game today but the starters have not been updated by the API...</span>
+</mat-toolbar> -->
+<div id="exampleContainer" class="example-container example-container-fixed mat-elevation-z8">
+  <div class="example-container mat-elevation-z8">
+ 
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+    <!-- Rank Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Rank <span *ngIf="gamesToday || live" class="live-case">( </span><span class="live-case" *ngIf="dailyStats != undefined || live">live stats </span>
+        <div class="live-dot" *ngIf="dailyStats != undefined || live"></div>
+        <span *ngIf="gamesToday || live" class="live-case">starting </span>
+        <div class="live-dot-orange" *ngIf="gamesToday || live"></div> <span *ngIf="gamesToday || live" class="live-case">)</span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let i=index; let data;">
+        <div fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
+          <b>{{i+1}}. </b>{{ data.player.FirstName + ' ' + data.player.LastName}} <span class="table-img"><img src="../assets/mlb-logos/{{data.team.ID}}.png" alt=""></span>
+          <div *ngIf="data.player.playingToday" class="live-dot"></div>&nbsp;
+          <div *ngIf="data.player.startingToday" class="live-dot-orange"></div>
+        </div>
+        <div fxHide [fxHide.xs]="isVisibleOnMobile()">
+          <b>{{i+1}}. </b>{{ data.player.FirstName | slice:0:1 }}. {{ data.player.LastName }}
+          <div *ngIf="data.player.playingToday" class="live-dot"></div>&nbsp;
+          <div *ngIf="data.player.startingToday" class="live-dot-orange"></div>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <!-- Pitches Column -->
+    <ng-container matColumnDef="pitches">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Pitch Count </mat-header-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.PitchesThrown['#text']}} </mat-cell>
+    </ng-container>
+    <!-- StrikeOuts Column -->
+    <ng-container matColumnDef="strikeouts">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Strike Outs </mat-header-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.PitcherStrikeouts['#text']}} </mat-cell>
+    </ng-container>
+    <!-- PitcherWalks Column -->
+    <ng-container matColumnDef="pitcherWalks">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Pitcher Walks </mat-header-cell>
+      <mat-cell *matCellDef="let data">
+        {{data.stats.PitcherWalks['#text']}}
+      </mat-cell>
+    </ng-container>
+    <!-- InningsPitched Column -->
+    <ng-container matColumnDef="inningsPitched">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Innings Pitched </mat-header-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.InningsPitched['#text']}}</mat-cell>
+    </ng-container>
+    <!-- pitchesPerInning Column -->
+    <ng-container matColumnDef="pitchesPerInning">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Pitches Per Inning </mat-header-cell>
+      <mat-cell *matCellDef="let data">
+        {{data.stats.PitchesPerInning['#text']}}
+      </mat-cell>
+    </ng-container>
+    <!-- BattersHit Column -->
+    <!-- <ng-container matColumnDef="battersHit">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Batters Hit </mat-header-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.BattersHit['#text']}}</mat-cell>
+    </ng-container> -->
+    <!-- PitcherWildPitches Column -->
+    <ng-container matColumnDef="pitcherWildPitches">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Wild Pitches </mat-header-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.PitcherWildPitches['#text']}}</mat-cell>
+    </ng-container>
+    <!-- PickoffAttempts Column -->
+    <ng-container matColumnDef="pickoffAttempts">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Pickoff Attempts </mat-header-cell>
+      <mat-cell *matCellDef="let data">
+        {{data.stats.PickoffAttempts['#text']}}
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns" [ngClass]="loading ? 'loading' : 'notLoading'" class="mat-header-row-res"></mat-header-row>
+    <mat-row [ngClass]="{'active': isActive(data), 'margin': i === 0}" (click)="open($event, data)" *matRowDef="let data; columns: displayedColumns; let i=index;"></mat-row>
+  </mat-table>
+</div>
+
+
+
+
