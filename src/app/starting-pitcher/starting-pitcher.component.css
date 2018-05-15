@@ -6,20 +6,12 @@
   border-radius: 4px;
 }
 
+
 .right-content img {
   width: 3%;
   margin: 0;
 }
 
-.left-content-teams img {
-  width: 80%;
-  margin: 0;
-}
-
-.right-content-teams img {
-  width: 80%;
-  margin: 0;
-}
 
 .content-wrapper {
   display: flex;
@@ -33,6 +25,11 @@
 
 .content-wrapper-teams div {
   flex: 1;
+}
+
+.content-wrapper-teams img {
+  width: 80%;
+  margin: 0;
 }
 
 .middle-content-teams {
@@ -205,4 +202,13 @@ h3 {
   -webkit-transform: rotateY(-180deg);
   -ms-transform: rotateY(-180deg);
   transform: rotateY(-180deg);
+}
+
+.err {
+  color: #fff;
+}
+
+.go-back-btn {
+  float: right;
+  font-size: 11px;
 }

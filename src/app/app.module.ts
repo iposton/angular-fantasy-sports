@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout'
+
 import { MatCardModule, 
         MatGridListModule, 
         MatToolbarModule, 
@@ -22,33 +25,21 @@ import { MatCardModule,
         MatSortModule,
         MatTableModule, 
         MatSidenavModule } from '@angular/material';
- import { DataService } from './data.service';
- import { YesterdayService } from './yesterday.service';
- import { TomorrowService } from './tomorrow.service';
- import { NhlDataService } from './nhl-data.service';
 
-
-import { AppComponent } from './app.component';
-import { StartingPitcherComponent } from './starting-pitcher/starting-pitcher.component';
-
-import { masterFirebaseConfig } from './api-keys';
-
-import { FirebaseService } from './firebase.service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+
+
 import { OrderBy } from './orderby.pipe';
+import { StartingPitcherComponent } from './starting-pitcher/starting-pitcher.component';
 import { PitchingStatsComponent, MyDialog } from './pitching-stats/pitching-stats.component';
 import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from './starting-goalies/starting-goalies.component';
 import { YesterdayResultsComponent, InfoYesterday } from './yesterday-results/yesterday-results.component';
 import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './tomorrow-results/tomorrow-results.component';
-import { ShareModule } from 'ng2share/share.module';
+// import { ShareModule } from 'ng2share/share.module';
 
-export const firebaseConfig = {
-  apiKey: masterFirebaseConfig.apiKey,
-  authDomain: masterFirebaseConfig.authDomain,
-  databaseURL: masterFirebaseConfig.databaseURL
-};
 
 const routes: Routes = [
  {
@@ -80,7 +71,6 @@ const routes: Routes = [
  
 ];
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,39 +88,37 @@ const routes: Routes = [
     LastweekDialog,
     TomorrowDialog,
     LoginDialog
-    
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatGridListModule,
-    MatToolbarModule,
-    MatSnackBarModule,
+    FlexLayoutModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    MatCardModule, 
+    MatGridListModule, 
+    MatToolbarModule, 
+    MatSnackBarModule, 
     MatButtonModule, 
-    MatTabsModule,
+    MatTabsModule, 
     MatMenuModule,
-    MatSelectModule,
-    MatDialogModule,
     MatListModule,
+    MatInputModule,
     MatChipsModule,
     MatTooltipModule,
-    MatInputModule,
+    MatDialogModule,
+    MatSelectModule,
     MatProgressSpinnerModule,
-    MatSidenavModule,
-    MatTableModule,
     MatSortModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    ShareModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    MatTableModule, 
+    MatSidenavModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [DataService, FirebaseService, TomorrowService, YesterdayService, NhlDataService],
+  providers: [],
   entryComponents: [
    MyDialog, Info, InfoYesterday, InfoTomorrow, TodayDialog, LastweekDialog, TomorrowDialog, LoginDialog
   ],

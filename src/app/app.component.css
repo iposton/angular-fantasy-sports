@@ -1,6 +1,6 @@
 footer {
   position: fixed; bottom: 0px; width: 100%; 
-  z-index: 2;
+  z-index: 333;
 }
 
 .docs-footer {
@@ -90,6 +90,11 @@ i {
   color: #777;
 }
 
+.sidenav-container[_ngcontent-c0] {
+    position: relative;
+    height: 100vh;
+    /* margin-bottom: 100px; */
+}
 
 .category-list {
   width: 195px;

@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -15,9 +16,5 @@
       "es2017",
       "dom"
     ]
-  },
-  "include": [
-    "src/**/*",
-    "node_modules/ng2share/share.module.ts"
-  ]
+  }
 }

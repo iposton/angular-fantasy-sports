@@ -45,7 +45,9 @@ let sentAll;
 
 //console.log(dailyDate, 'today\'s date');
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NhlDataService {
 
   info: Observable < any > = null;

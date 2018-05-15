@@ -340,7 +340,7 @@
           <ng-template #home>{{data.team.Name}}</ng-template>
           <ng-template #away>{{data.team.opponentName}}</ng-template> Win!
         </p> <br> <br>
-             <span *ngIf="data.team.matchup[0].player.Shutouts == '1'">
+             <!-- <span *ngIf="data.team.matchup[0].player.Shutouts == '1'">
            <share-container direction="horizontal" addedText="" [properties]="{title: data.team.matchup[0].team.City +' '+ data.team.matchup[0].team.Name +' '+ data.team.matchup[0].player.atHandle + data.team.matchup[0].player.FirstName +' '+ data.team.matchup[0].player.LastName + ' had a '+ data.team.matchup[0].player.saves +' save SHUTOUT ' +data.team.day+' night against the '+ data.team.matchup[1].team.City + ' ' + data.team.matchup[1].team.Name +' @ '+  data.team.matchup[1].team.City + data.team.matchup[0].team.firstBacktoBack + data.team.matchup[0].team.secondBacktoBack, description:'starting goalies', img:'img', via:'GoaliesStarting', hashtags:'startingGoalies #SHUTOUT #Stats #NHL #FantasyHockey '+data.team.matchup[0].player.twitterHandle +' '+data.team.matchup[1].player.twitterHandle}" [expandable]="false" [textEnabled]="true" [platforms]="['twitter']">
           </share-container>
          </span>
@@ -387,7 +387,7 @@
           <span *ngIf="data.team.matchup[2] != null &&  data.team.matchup[2].player.Shutouts == '1'">
             <share-container direction="horizontal" addedText="" [properties]="{title: data.team.matchup[2].team.City +' '+ data.team.matchup[2].team.Name +' '+ data.team.matchup[2].player.atHandle + data.team.matchup[2].player.FirstName +' '+ data.team.matchup[2].player.LastName + ' had a '+ data.team.matchup[2].player.saves +' save SHUTOUT ' +data.team.day+' night against the '+ data.team.matchup[2].team.opponentCity + ' ' + data.team.matchup[2].team.opponentName +' @ '+  data.team.matchup[2].team.City + data.team.matchup[2].team.firstBacktoBack + data.team.matchup[2].team.secondBacktoBack, description:'starting goalies', img:'img', via:'GoaliesStarting', hashtags:'startingGoalies #SHUTOUT #Stats #NHL #FantasyHockey '+data.team.matchup[0].player.twitterHandle +' '+data.team.matchup[2].player.twitterHandle}" [expandable]="false" [textEnabled]="true" [platforms]="['twitter']">
           </share-container>
-         </span>
+         </span> -->
 
       </mat-card>
     </div>

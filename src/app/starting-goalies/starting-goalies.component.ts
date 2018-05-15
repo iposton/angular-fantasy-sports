@@ -70,6 +70,8 @@ export class StartingGoaliesComponent implements OnInit {
   allGoaliesTomorrow: Array < any > ;
   selected: any;
   startingGoaliesToday: Array < any > = [];
+  gameStarter: {gameID: string, playerID: string};
+  gameStarters: Array < any > = [];
   tweetDay: any;
   noGamesMsg: any;
   noScoresMsg: any;
@@ -237,9 +239,11 @@ export class StartingGoaliesComponent implements OnInit {
                   let i;
                   let i2;
                   let res2;
+                  let game2;
                   res.forEach((item, index) => {
                     i = index;
                     //console.log(res[i]['gamestartinglineup'].teamLineup, 'got starting lineups data!');
+                    game2 = res[i]['gamestartinglineup'].game;
                     res2 = res[i]['gamestartinglineup'].teamLineup;
                     
                     res2.forEach((item, index) => {
@@ -249,9 +253,21 @@ export class StartingGoaliesComponent implements OnInit {
                         //console.log(res2[i2].actual.starter[0].player, 'got player ID for goalie actualy starting!');
                         this.starterIdData.push(res2[i2].actual.starter[0].player.ID);
 
+                        this.gameStarter = {
+                      playerID: res2[i2].expected.starter[0].player.ID,
+                      gameID: game2.id
+                    }
+                    this.gameStarters.push(this.gameStarter);
+
                       } else if (res2[i2].actual == null && res2[i2].expected != null) {
                         //console.log(res2[i2].expected.starter[0].player.ID, 'got player ID for goalie expected to start!');
                         this.starterIdData.push(res2[i2].expected.starter[0].player.ID);
+
+                        this.gameStarter = {
+                      playerID: res2[i2].expected.starter[0].player.ID,
+                      gameID: game2.id
+                    }
+                    this.gameStarters.push(this.gameStarter);
                       } else {
                         //console.log(res2[i2].team.City + " " + res2[i2].team.Name, 'no starters yet!');
                         this.starterIdData.push(res2[i2].team.ID);
@@ -289,9 +305,9 @@ export class StartingGoaliesComponent implements OnInit {
             // }
 
             this.fullSchedule = res['fullgameschedule'].gameentry;
-          })
+          });
 
-      })
+      });
 
   }
 
@@ -316,6 +332,18 @@ export class StartingGoaliesComponent implements OnInit {
 
     
         this.myData = res['cumulativeplayerstats'].playerstatsentry;
+
+         for (let gs of this.gameStarters) {
+
+                for (let data of this.myData) {
+
+                  if (gs.playerID === data.player.ID ) {
+                    data.gameId = gs.gameID;
+                  }
+
+                }
+
+              }
 
       
 

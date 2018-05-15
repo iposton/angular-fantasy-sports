@@ -37,7 +37,9 @@ let headers = null;
 let sendingTomorrow;
 let sentTomorrow;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TomorrowService {
 
   info: Observable < any > = null;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 let headers = null;
 
@@ -13,7 +13,10 @@ utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
 let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
+
 export class DataService {
 
   schedule: Observable <any> = null;
@@ -134,5 +137,4 @@ export class DataService {
     }
     return this.score;
   }
-
 }

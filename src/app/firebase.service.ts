@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class FirebaseService {
 
   items: any;
@@ -79,9 +83,15 @@ export class FirebaseService {
    
   }
 
-  //  addData(fastBallData) {
-  //    this.af.list('/pitchspeeds').push(fastBallData).then(_ => console.log('new pitchspeeds added!')); 
-  // }
+   addData2(fastBallData) {
+     this.af.list('/pitchspeeds').push(fastBallData).then(_ => console.log('new pitchspeeds added!')); 
+     // this.af.list('/pitchspeeds').remove().then(_ => {
+     //    console.log('deleted!');
+     //    //this.af.list('/pitchspeeds').push(fastBallData).then(_ => console.log('new pitchspeeds added!')); 
+       
+     //  });
+     
+  }
 
   getData() {
     console.log('getting starter data from firebase...');
@@ -89,4 +99,3 @@ export class FirebaseService {
   }
 
 }
- 

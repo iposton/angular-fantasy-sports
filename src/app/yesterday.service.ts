@@ -39,7 +39,9 @@ let sentYesterday;
 
 //console.log(dailyDate, 'today\'s date');
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class YesterdayService {
 
   info: Observable < any > = null;
