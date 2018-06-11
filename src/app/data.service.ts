@@ -97,7 +97,7 @@ export class DataService {
     if (!this.allstats) {
 
       console.log('getting cumulative_player_stats by player ID from API...');
-
+      //cumulative_player_stats.json?position=P&sort=STATS.Miscellaneous-GS.D&limit=180
       let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&sort=STATS.Pitching-NP.D&limit=180`;
       this.allstats = this.http.get(url, {headers})
       

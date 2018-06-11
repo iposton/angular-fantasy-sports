@@ -83,11 +83,11 @@
             <p>
               <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
               <span *ngIf="data.player.ContractStartYear === '2018' && data.player.ContractTotalYears === '1'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
-              <span *ngIf="data.player.ContractBaseSalary != ''">Contract Salary: ${{data.player.ContractBaseSalary | number:'.2'}} <br></span>
-              <span *ngIf="data.player.ContractTotalYears != ''">Contract Years:  {{data.player.ContractTotalYears}}<br></span> 
-              <span *ngIf="data.player.DraftYear != ''">Drafted: Round {{data.player.DraftRound}}, {{data.player.DraftYear}}<br></span>
-              <span *ngIf="data.player.College != ''">College: {{data.player.College}}<br></span> 
-              <span *ngIf="data.player.Highschool != ''">Highschool: {{data.player.Highschool}} <br></span>
+              <span *ngIf="data.player.ContractBaseSalary !== undefined && data.player.ContractBaseSalary != ''">Contract Salary: ${{data.player.ContractBaseSalary | number:'.2'}} <br></span>
+              <span *ngIf="data.player.ContractTotalYears !== undefined && data.player.ContractTotalYears != ''">Contract Years:  {{data.player.ContractTotalYears}}<br></span> 
+              <span *ngIf="data.player.DraftYear !== undefined && data.player.DraftYear != ''">Drafted: Round {{data.player.DraftRound}}, {{data.player.DraftYear}}<br></span>
+              <span *ngIf="data.player.College !== undefined && data.player.College != ''">College: {{data.player.College}}<br></span> 
+              <span *ngIf="data.player.Highschool !== undefined && data.player.Highschool != ''">Highschool: {{data.player.Highschool}} <br></span>
               Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
@@ -103,14 +103,15 @@
           <!-- <img src="./assets/mlb-logos/{{data.team.ID}}.png" alt="mlb team logo"> -->
           <p class="name-number">{{ data.player.FirstName + ' ' + data.player.LastName}} - {{data.player.Throws}} - SP | #{{data.player.JerseyNumber}}</p>
           <p class="name-number">
-           <span *ngIf="data.previousWin1 != null && data.previousWin2 === undefined"><strong>W-L:</strong> {{data.previousWin1}}</span> - <span *ngIf="data.previousL1 != null && data.previousL2 === undefined">{{data.previousL1}}</span><span *ngIf="data.previousWin1 != null && data.previousWin2 != null"><strong>W-L:</strong> {{data.previousWin1 + data.previousWin2}}</span> - <span *ngIf="data.previousL1 != null && data.previousL2 != null">{{data.previousL1 + data.previousL2}}</span><span *ngIf="data.previousEra1 != null && data.previousEra2 === undefined">/ <strong>ERA:</strong> {{ data.previousEra1 }} /</span><span *ngIf="data.previousEra1 != null && data.previousEra2 != null">/ <strong>ERA:</strong> {{ (data.previousEra1 + data.previousEra2) / 2 }} /</span> 
+           <span *ngIf="data.previousWin1 != null && data.previousWin2 === undefined"><strong>W-L:</strong> {{data.previousWin1}} - </span><span *ngIf="data.previousL1 != null && data.previousL2 === undefined">{{data.previousL1}}</span><span *ngIf="data.previousWin1 != null && data.previousWin2 != null"><strong>W-L:</strong> {{data.previousWin1 + data.previousWin2}} - </span><span *ngIf="data.previousL1 != null && data.previousL2 != null">{{data.previousL1 + data.previousL2}}</span><span *ngIf="data.previousEra1 != null && data.previousEra2 === undefined"> / <strong>ERA:</strong> {{ data.previousEra1 }} / </span><span *ngIf="data.previousEra1 != null && data.previousEra2 != null"> / <strong>ERA:</strong> {{ (data.previousEra1 + data.previousEra2) / 2 | number }} / </span> 
            <span *ngIf="data.previousSO1 != null && data.previousSO2 === undefined"><strong>K's:</strong> {{ data.previousSO1 }}</span><span *ngIf="data.previousSO1 != null && data.previousSO2 != null"><strong>K's:</strong> {{ data.previousSO1 + data.previousSO2 }}</span>
           
           </p>
          
           <div class="fav-pitch"> 
             <p>
-            <span>Previous game stats</span> <br> 
+            <span *ngIf="data.pgBlurb1 == null && loadingPrevious === false">Previous game stats are unavailable :( </span> 
+            <span *ngIf="data.pgBlurb1 != null">Previous game stats</span> <br> 
             <span *ngIf="data.pgBlurb1 != null">{{data.pgBlurb1}} <br> </span>
             <span *ngIf="data.pgBlurb2 != null">{{data.pgBlurb2}} <br> </span> 
             <span *ngIf="data.homeruns1 != null && data.homeruns2 === undefined">Homeruns given up: {{data.homeruns1}}</span>
