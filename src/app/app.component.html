@@ -37,9 +37,9 @@
           <div class="logo-container">
             <a href="#">Fantasy Sports Resource</a>
           </div>
-          <div style="max-width: 100px;">
+          <!-- <div style="max-width: 100px;">
             <span style="font-family: Roboto; font-size: 10px; font-weight: 500;">I &hearts; Angular</span>
-          </div>
+          </div> -->
         </div>
         <div class="docs-footer-links">
           <ul>
@@ -47,9 +47,10 @@
           </ul>
         </div>
         <div class="docs-footer-links">
-          <ul>
-            <li matTooltip="This is a fantasy sports resource. In this app I am using angular5. Find todays starting pitchers and choose a future date from the date picker for future starter info! Enjoy! ☺" [matTooltipPosition]="position">About</li>
+          <ul fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
+            <li matTooltip="This is a fantasy sports resource. In this app I am using angular6 and sourcing sports data from mysportsfeeds.com. Find todays starting MLB Pitchers and starting NHL Goalies! Enjoy! ☺" [matTooltipPosition]="position">About</li>
           </ul>
+          <ul fxHide [fxHide.xs]="isVisibleOnMobile()" style="font-size: 9px; max-width: 80px; text-align: justify;"><li>About: I love to code and work with sports API's. In this app I am using angular6 with the MySportsFeeds API.</li></ul>
         </div>
       </div>
     </footer>

@@ -8,4 +8,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   //position for tooltip
   position = 'above';
+
+  public isVisibleOnMobile() {
+    // console.log('width under 600px');
+  }
+
+  public isVisibleOnDesktop() {
+    // console.log('width over 600px');
+  }
 }

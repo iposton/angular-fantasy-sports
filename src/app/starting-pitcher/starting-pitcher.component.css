@@ -234,3 +234,18 @@ h3 {
   margin-top: 0;
   margin-bottom: 6px;
 }
+
+@media only screen and (max-width: 600px) {
+
+  .card-wrap-sp {
+    display: inline-block;
+    margin: 0 0 20px 0;
+    vertical-align: top;
+    width: 100%;
+  }
+
+   .baseball-header {
+    font-size: 20px;
+  }
+
+}
