@@ -439,6 +439,7 @@ export class StartingPitcherComponent implements OnInit {
   getPreviousGameStats(data) {
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
     this.loadingPrevious = true;
+    console.log(data, 'this player has been flipped data...');
     if (data.player.previousGame1 != null) {
 
       this.http.get(`${this.apiRoot}/game_boxscore.json?gameid=` + data.player.previousGame1, { headers })
@@ -451,14 +452,15 @@ export class StartingPitcherComponent implements OnInit {
 
             res['gameboxscore'].homeTeam.homePlayers['playerEntry'].forEach((item, index) => {
               if (item.player.ID === data.player.ID) {
-                console.log(item, 'this is the pitcher and stats...');
+               // console.log(item, 'this is the pitcher and stats...');
 
-                data.pgBlurb1 = item.stats.PitchesThrown['#text'] + ' pitches thrown, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'] + ' batters VS ' + res['gameboxscore'].game.awayTeam.Name;
+                data.pgBlurb1 = ' vs ' + res['gameboxscore'].game.awayTeam.Name + ': ' + item.stats.PitchesThrown['#text'] + ' pitches, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'];
                 data.homeruns1 = parseInt(item.stats.HomerunsAllowed['#text']);
-                data.previousEra1 = parseInt(item.stats.EarnedRunAvg['#text']);
+                data.previousEra1 = parseFloat(item.stats.EarnedRunAvg['#text']);
                 data.previousWin1 = parseInt(item.stats.Wins['#text']);
                 data.previousL1 = parseInt(item.stats.Losses['#text']);
                 data.previousSO1 = parseInt(item.stats.PitcherStrikeouts['#text']);
+                data.walks1 = parseInt(item.stats.PitcherWalks['#text']);
               }
 
             });
@@ -467,12 +469,13 @@ export class StartingPitcherComponent implements OnInit {
             res['gameboxscore'].awayTeam.awayPlayers['playerEntry'].forEach((item, index) => {
               if (item.player.ID === data.player.ID) {
                 console.log(item, 'this is the pitcher and stats...')
-                data.pgBlurb1 = item.stats.PitchesThrown['#text'] + ' pitches thrown, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'] + ' batters @ ' + res['gameboxscore'].game.homeTeam.Name;
+                data.pgBlurb1 = ' @ ' + res['gameboxscore'].game.homeTeam.Name + ': ' + item.stats.PitchesThrown['#text'] + ' pitches, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'];
                 data.homeruns1 = parseInt(item.stats.HomerunsAllowed['#text']);
-                data.previousEra1 = parseInt(item.stats.EarnedRunAvg['#text']);
+                data.previousEra1 = parseFloat(item.stats.EarnedRunAvg['#text']);
                 data.previousWin1 = parseInt(item.stats.Wins['#text']);
                 data.previousL1 = parseInt(item.stats.Losses['#text']);
                 data.previousSO1 = parseInt(item.stats.PitcherStrikeouts['#text']);
+                data.walks1 = parseInt(item.stats.PitcherWalks['#text']);
               }
 
             });
@@ -493,12 +496,13 @@ export class StartingPitcherComponent implements OnInit {
             res['gameboxscore'].homeTeam.homePlayers['playerEntry'].forEach((item, index) => {
               if (item.player.ID === data.player.ID) {
                 console.log(item, 'this is the pitcher and stats...')
-                data.pgBlurb2 = item.stats.PitchesThrown['#text'] + ' pitches thrown, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'] + ' batters VS ' + res['gameboxscore'].game.awayTeam.Name;
+                data.pgBlurb2 = ' vs ' + res['gameboxscore'].game.awayTeam.Name + ': ' + item.stats.PitchesThrown['#text'] + ' pitches, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'];
                 data.homeruns2  = parseInt(item.stats.HomerunsAllowed['#text']);
-                data.previousEra2 = parseInt(item.stats.EarnedRunAvg['#text']);
+                data.previousEra2 = parseFloat(item.stats.EarnedRunAvg['#text']);
                 data.previousWin2 = parseInt(item.stats.Wins['#text']);
                 data.previousL2 = parseInt(item.stats.Losses['#text']);
                 data.previousSO2 = parseInt(item.stats.PitcherStrikeouts['#text']);
+                data.walks2 = parseInt(item.stats.PitcherWalks['#text']);
               }
 
             });
@@ -507,12 +511,13 @@ export class StartingPitcherComponent implements OnInit {
             res['gameboxscore'].awayTeam.awayPlayers['playerEntry'].forEach((item, index) => {
               if (item.player.ID === data.player.ID) {
                 console.log(item, 'this is the pitcher and stats...');
-                data.pgBlurb2 = item.stats.PitchesThrown['#text'] + ' pitches thrown, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'] + ' batters @ ' + res['gameboxscore'].game.homeTeam.Name;
+                data.pgBlurb2 = ' @ ' + res['gameboxscore'].game.homeTeam.Name + ': ' + item.stats.PitchesThrown['#text'] + ' pitches, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'];
                 data.homeruns2 = parseInt(item.stats.HomerunsAllowed['#text']);
-                data.previousEra2 = parseInt(item.stats.EarnedRunAvg['#text']);
+                data.previousEra2 = parseFloat(item.stats.EarnedRunAvg['#text']);
                 data.previousWin2 = parseInt(item.stats.Wins['#text']);
                 data.previousL2 = parseInt(item.stats.Losses['#text']);
                 data.previousSO2 = parseInt(item.stats.PitcherStrikeouts['#text']);
+                data.walks2 = parseInt(item.stats.PitcherWalks['#text']);
               }
 
             });
