@@ -1,0 +1,43 @@
+<button mat-button class="more-stats-btn go-back-btn" (click)="goBack()">GO BACK</button> <br>
+<div class="spinner-msg" *ngIf="loading">
+  Retrieving pitching data...
+  <mat-spinner></mat-spinner>
+</div>
+<mat-card *ngIf="!loading" [ngClass]="loading ? 'loading' : 'notLoading'">
+  <mat-card-title><span class="player-img"><img src="{{ selectedPlayer.player.image }}"></span> 
+  {{ selectedPlayer.player.FirstName + ' ' + selectedPlayer.player.LastName + ' (' + selectedPlayer.team.Name + ' - ' + selectedPlayer.player.Position + ')'}}</mat-card-title>
+
+  <mat-card-subtitle *ngIf="selectedPlayer.team.isGameInProgress === 'true'"> <span class="score-img"><img src="../assets/mlb-logos/{{selectedPlayer.team.ID}}.png" alt=""></span> {{ selectedPlayer.team.teamScore }} <span class="score-img"><img src="../assets/mlb-logos/{{selectedPlayer.team.opponentId}}.png" alt=""></span>{{ selectedPlayer.team.opponentScore }} | <span *ngIf="selectedPlayer.team.currentInningHalf === 'top';then up else down"></span><ng-template #up><i class="material-icons" style="color: red;">arrow_drop_up</i></ng-template><ng-template #down><i class="material-icons" style="color: red;">arrow_drop_down</i></ng-template> {{ selectedPlayer.team.currentInning }} inning - {{selectedPlayer.team.outs}} <span *ngIf="selectedPlayer.team.outs === '1';then out else outs"></span><ng-template #out>Out</ng-template> <ng-template #outs>Outs</ng-template> {{selectedPlayer.team.balls}} <span *ngIf="selectedPlayer.team.balls === '1';then ball else balls"></span><ng-template #ball>Ball</ng-template> <ng-template #balls>Balls</ng-template>  {{selectedPlayer.team.strikes}} <span *ngIf="selectedPlayer.team.strikes === '1';then strike else strikes"></span><ng-template #strike>Strike</ng-template> <ng-template #strikes>Strikes</ng-template></mat-card-subtitle>
+
+<mat-card-content>
+  <p *ngIf="selectedPlayer.team.isGameInProgress === 'true'">{{ selectedPlayer.player.FirstName + ' ' + selectedPlayer.player.LastName }} is facing The {{selectedPlayer.team.opponent}} today. He threw {{selectedPlayer.player.pitchesthrownToday}} pitches today and allowed {{selectedPlayer.player.hitsallowedToday}} <span *ngIf="selectedPlayer.player.hitsallowedToday === '1';then hit else hits"></span><ng-template #hit>hit</ng-template><ng-template #hits>hits</ng-template>!</p> 
+
+  
+  
+  <p *ngIf="selectedPlayer.team.isGameOver === 'true'">This game is over. Final score. {{ selectedPlayer.team.Abbreviation }} {{ selectedPlayer.team.teamScore }} {{ selectedPlayer.team.opponentAbbreviation }} {{ selectedPlayer.team.opponentScore }}. {{ selectedPlayer.player.FirstName + ' ' + selectedPlayer.player.LastName }} faced The {{selectedPlayer.team.opponent}} today. He lasted {{ selectedPlayer.player.inningsToday }} innings and threw {{selectedPlayer.player.pitchesthrownToday}} pitches today and allowed {{selectedPlayer.player.hitsallowedToday}} hits! <span *ngIf="selectedPlayer.team.teamScore < selectedPlayer.team.opponentScore && selectedPlayer.player.loseToday === '0'">{{ selectedPlayer.player.FirstName + ' ' + selectedPlayer.player.LastName }} recieved a no decision today.</span></p>
+
+  <p *ngIf="selectedPlayer.team.isGameInProgress === 'true'">The {{ selectedPlayer.team.Name }} are <span *ngIf="selectedPlayer.team.teamScore &gt; selectedPlayer.team.opponentScore">winning {{ selectedPlayer.team.teamScore }} to {{ selectedPlayer.team.opponentScore }} over the {{ selectedPlayer.team.opponent }}</span><span *ngIf="selectedPlayer.team.teamScore < selectedPlayer.team.opponentScore">trailing {{selectedPlayer.team.teamScore }} to {{ selectedPlayer.team.opponentScore }} to the {{ selectedPlayer.team.opponent }}</span> <span *ngIf="selectedPlayer.team.teamScore === selectedPlayer.team.opponentScore"> tied {{selectedPlayer.team.teamScore }} to {{ selectedPlayer.team.opponentScore }} with the {{ selectedPlayer.team.opponent }}</span>  in the {{ selectedPlayer.team.currentInningHalf }} of the {{ selectedPlayer.team.currentInning }}<span *ngIf="selectedPlayer.team.currentInning === '1'">st</span><span *ngIf="selectedPlayer.team.currentInning === '2'">nd</span><span *ngIf="selectedPlayer.team.currentInning === '3'">rd</span><span *ngIf="selectedPlayer.team.currentInning != '1' && selectedPlayer.team.currentInning !='2' && selectedPlayer.team.currentInning !='3'">th</span> inning. The {{ teamAtBat }} are at bat right now. And the {{ currentPitcherArm }}y <span *ngIf="selectedPlayer.player.ID === currentPitcherId">{{ currentPitcher }}</span> <span *ngIf="selectedPlayer.player.ID != currentPitcherId" (click)="goToThisPitcher(currentPitcherId)" class="current-pitcher-link">{{ currentPitcher }}</span> is on the mound for the <span *ngIf="selectedPlayer.team.City + ' ' + selectedPlayer.team.Name === teamAtBat;then opponent else team"></span><ng-template #opponent>{{ selectedPlayer.team.opponent }}</ng-template><ng-template #team>{{ selectedPlayer.team.Name }}</ng-template>. {{selectedPlayer.team.currentBatter}} is <span *ngIf="currentHitter === selectedPlayer.team.currentBatter">hitting {{ currentHitStance}}</span> at the plate with {{selectedPlayer.team.outs}} outs, {{ selectedPlayer.team.strikes }} strikes and {{selectedPlayer.team.balls}} balls. <span *ngIf="selectedPlayer.team.firstBaseRunner">{{selectedPlayer.team.firstBaseRunner}} is the runner on first.</span> <span *ngIf="selectedPlayer.team.secondBaseRunner">{{selectedPlayer.team.secondBaseRunner}} is the runner on second.</span><span *ngIf="selectedPlayer.team.thirdBaseRunner"> 
+  {{selectedPlayer.team.thirdBaseRunner}} is the runner on thirdbase.</span> The last pitch was a {{ currentPitchSpeed }}mph <span *ngIf="currentPitchResult === 'IN_PLAY_OUTS'">the ball is in play for an out</span> <span *ngIf="currentPitchResult === 'FOUL'">foul ball</span> <span *ngIf="currentPitchResult === 'CALLED_STRIKE'">strike</span> <span *ngIf="currentPitchResult === 'BALL'">ball</span> <span *ngIf="currentPitchResult === 'IN_PLAY_RUNS'">the ball is in play, runs score</span>. 
+
+ <!--  <span *ngIf="selectedPlayer.team.strikes == '2' && selectedPlayer.team.balls == '3'">and there's a full count</span><span *ngIf="selectedPlayer.team.strikes != '2' && selectedPlayer.team.balls != '3'">{{ selectedPlayer.team.strikes }} strikes and {{selectedPlayer.team.balls}} balls</span> -->
+
+  <!-- <span *ngIf="selectedPlayer.player.ID != currentPitcherId">{{ selectedPlayer.player.FirstName + ' ' + selectedPlayer.player.LastName }} is no longer in the game.</span></p>   -->
+
+  <!-- {{ currentPitchResult }} -->
+
+  <!-- Hitting {{ currentHitStance }} at the plate stands {{currentHitter}}, and the result is {{currentHitResult}}.  -->
+
+
+
+<!-- current inning plays
+  <div *ngFor="let plays of currentInningAtBatPlays">
+   <p>{{plays.batterUp.result}} {{plays.batterUp.battingPlayer.FirstName + ' ' + plays.batterUp.battingPlayer.LastName}}</p> 
+  </div> -->
+  <!-- MAKE A REFRESH FROM THIS LOCATION HOLD CURRENT DATA OF SELECTED PLAYER -->
+  <!-- CONNECT BY LINK OF CURRENT PITCHER BY ID TO SEE THEIR PAGE. ANNCHOR LINK SIMPLE http://localhost:3001/daily-stats/{{currentPitcherId}} -->
+   <!--  no longer in the game.  -->
+   <!-- if 1 strike "strike one" and 1 ball -->
+<!--  IS THE PITCHER STILL IN THE GAME?  WHAT'S HAPPENING IN THE GAME. IS IT A FULL-COUNT. LAST PLAY RESULT: NEED TO CALL PLAY BY PLAY BY GAME ID FOR MORE DETAILS. WHO SCORED WHICH PLAYER. OFF WHO?  -->
+</mat-card-content>
+</mat-card>
+

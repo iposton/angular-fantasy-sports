@@ -6,6 +6,8 @@ let headers = null;
 
 let sending;
 let sent;
+let sendingAll;
+let sentAll;
 
 let thisDate = new Date();
 let utcDate = new Date(thisDate.toUTCString());
@@ -27,9 +29,12 @@ export class DataService {
   gameid: Observable <any> = null;
   info: Observable <any> = null;
   env: Observable < any > = null;
-  apiRoot: string = "https://api.mysportsfeeds.com/v1.2/pull/mlb/2018-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
+  public dailyDate: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.dailyDate = dailyDate;
+  }
 
   sendHeaderOptions(h) {
     console.log('got headers & options in data service...');
@@ -45,6 +50,17 @@ export class DataService {
     console.log("stats sent to component...");
     sent = sending;
     return sent;
+  }
+
+  sendAllStats(allstatsArray) {
+    console.log("sending all stats to service...");
+    sendingAll = allstatsArray;
+  }
+
+  getAllSentStats() {
+    console.log("all stats sent to component...");
+    sentAll = sendingAll;
+    return sentAll;
   }
 
   getEnv() {
@@ -71,7 +87,8 @@ export class DataService {
     if (!this.schedule) {
       console.log('getting mlb schedule for today from api...');
 
-      let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
+      //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
+      let url = `${this.apiRoot}/date/${dailyDate}/games.json`;
       this.schedule = this.http.get(url, {headers})
        
     }
@@ -84,8 +101,8 @@ export class DataService {
     if (!this.stats) {
 
       console.log('getting cumulative_player_stats by player ID from API...');
-
-      let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&player=`+playerID;
+      //let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&player=`+playerID;
+      let url = `${this.apiRoot}/player_stats_totals.json?position=P&player=${playerID}`;
       this.stats = this.http.get(url, {headers})
       
     }
@@ -98,7 +115,7 @@ export class DataService {
 
       console.log('getting cumulative_player_stats by player ID from API...');
       //cumulative_player_stats.json?position=P&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&sort=STATS.Pitching-NP.D&limit=180`;
+      let url = `${this.apiRoot}/player_stats_totals.json?position=P`;
       this.allstats = this.http.get(url, {headers})
       
     }
@@ -108,7 +125,7 @@ export class DataService {
   getInfo() {
 
     if (!this.info) {
-      let url = `${this.apiRoot}/active_players.json?position=P`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P`;
       console.log('getting active player data from API...');
       this.info = this.http.get(url, {headers})
         
@@ -119,7 +136,9 @@ export class DataService {
    getDaily() {
 
     if (!this.daily) {
-      let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
+      //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
+      let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=P`;
+      console.log(url, 'url')
       console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})
         
@@ -127,12 +146,13 @@ export class DataService {
     return this.daily;
   }
 
-  getScore() {
+  getScore(data) {
 
     if (!this.score) {
-      let url5 = `${this.apiRoot}/scoreboard.json?fordate=`+dailyDate;
+      //let url = `${this.apiRoot}/scoreboard.json?fordate=`+dailyDate;
+      let url = `${this.apiRoot}/games/`+dailyDate+`-`+ data.team.opponent +`-`+ data.team.abbreviation+`/boxscore.json`
       console.log('getting daily scores of todays games from API...');
-      this.score = this.http.get(url5, {headers})
+      this.score = this.http.get(url, {headers})
         
     }
     return this.score;

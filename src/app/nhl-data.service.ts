@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http'
 
 let thisDate = new Date();
 let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
@@ -45,10 +45,8 @@ let sentAll;
 
 //console.log(dailyDate, 'today\'s date');
 
-@Injectable({
-  providedIn: 'root'
-})
-export class NhlDataService {
+@Injectable({ providedIn: 'root' }) 
+export class NHLDataService {
 
   info: Observable < any > = null;
   stats: Observable < any > = null;
@@ -60,10 +58,14 @@ export class NhlDataService {
   score: Observable < any > = null;
   play: Observable <any> = null;
   injured: Observable <any> = null;
-  apiRoot: string = "https://api.mysportsfeeds.com/v1.2/pull/nhl/2018-playoff";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.0/pull/nhl/2018-2019-regular";
   headers: any;
+  public dailyDate: string = '';
+
   
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+     this.dailyDate = dailyDate;
+  }
 
   sendHeaderOptions(h) {
     console.log('got headers & options in data service...');
@@ -75,8 +77,8 @@ export class NhlDataService {
     
     if (!this.schedule) {
       console.log('getting schedule data from API...');
-
-      let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
+      
+      let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
       this.schedule = this.http.get(url, {headers})
         
     }
@@ -144,7 +146,8 @@ export class NhlDataService {
 
     if (!this.info) {
 
-      let url = `${this.apiRoot}/active_players.json?position=G`;
+      //let url = `${this.apiRoot}/active_players.json?position=G`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
       console.log('getting active player data from API...');
       this.info = this.http.get(url, {headers})
         
@@ -154,9 +157,9 @@ export class NhlDataService {
 
   getStats(teams) {
     if (!this.stats) {
-      console.log(teams, 'getting cumulative player stats from API...');
-
-      let url = `${this.apiRoot}/cumulative_player_stats.json?position=G&team=`+teams;
+      console.log('getting cumulative player stats from API...');
+     
+      let url = `${this.apiRoot}/player_stats_totals.json?position=G&team=`+teams;
       this.stats = this.http.get(url, {headers})
         
     }
@@ -168,7 +171,7 @@ export class NhlDataService {
     if (!this.gameid) {
       console.log('getting yesterday, today, tomorrow from API...');
 
-      let url = `${this.apiRoot}/full_game_schedule.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
+      let url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
       this.gameid = this.http.get(url, {headers})
         
     }
@@ -181,7 +184,7 @@ export class NhlDataService {
     if (!this.lastweekgameid) {
       console.log('getting 1 week of games from API...');
 
-      let url = `${this.apiRoot}/full_game_schedule.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
+      let url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
       this.lastweekgameid = this.http.get(url, {headers})
         
     }
@@ -191,7 +194,8 @@ export class NhlDataService {
    getDaily() {
 
     if (!this.daily) {
-      let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=G`;
+      //date/20181103/player_gamelogs.json?team=det
+      let url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=G`;
       console.log('getting daily stats for goalies from API...');
       this.daily = this.http.get(url, {headers})
         
@@ -211,13 +215,13 @@ export class NhlDataService {
     return this.injured;
   }
 
-  getScore() {
+  getScore(a, h) {
 
     if (!this.score) {
-      let url = `${this.apiRoot}/scoreboard.json?fordate=`+dailyDate;
+      //games/20181211-CHI-WPJ/boxscore.json
+      let url = `${this.apiRoot}/games/`+dailyDate+`-`+a+`-`+h+`/boxscore.json`;
       console.log('getting daily scores of todays games from API...');
-      this.score = this.http.get(url, {headers})
-        
+      this.score = this.http.get(url, {headers})     
     }
     return this.score;
   }

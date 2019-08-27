@@ -29,12 +29,12 @@
       </mat-header-cell>
       <mat-cell *matCellDef="let i=index; let data;">
         <div fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
-          <b>{{i+1}}. </b>{{ data.player.FirstName + ' ' + data.player.LastName}} <span class="table-img"><img src="../assets/mlb-logos/{{data.team.ID}}.png" alt=""></span>
+          <b>{{i+1}}. </b>{{ data.player.firstName + ' ' + data.player.lastName}} <span class="table-img"><img src="../assets/mlb-logos/{{data.team.id}}.png" alt=""></span>
           <div *ngIf="data.player.playingToday" class="live-dot"></div>&nbsp;
           <div *ngIf="data.player.startingToday" class="live-dot-orange"></div>
         </div>
         <div fxHide [fxHide.xs]="isVisibleOnMobile()">
-          <b>{{i+1}}. </b>{{ data.player.FirstName | slice:0:1 }}. {{ data.player.LastName }}
+          <b>{{i+1}}. </b>{{ data.player.firstName | slice:0:1 }}. {{ data.player.lastName }}
           <div *ngIf="data.player.playingToday" class="live-dot"></div>&nbsp;
           <div *ngIf="data.player.startingToday" class="live-dot-orange"></div>
         </div>
@@ -43,47 +43,47 @@
     <!-- Pitches Column -->
     <ng-container matColumnDef="pitches">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Pitch Count </mat-header-cell>
-      <mat-cell *matCellDef="let data">{{data.stats.PitchesThrown['#text']}} </mat-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.pitching.pitchesThrown}} </mat-cell>
     </ng-container>
     <!-- StrikeOuts Column -->
     <ng-container matColumnDef="strikeouts">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Strike Outs </mat-header-cell>
-      <mat-cell *matCellDef="let data">{{data.stats.PitcherStrikeouts['#text']}} </mat-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.pitching.pitcherStrikeouts}} </mat-cell>
     </ng-container>
     <!-- PitcherWalks Column -->
     <ng-container matColumnDef="pitcherWalks">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Pitcher Walks </mat-header-cell>
       <mat-cell *matCellDef="let data">
-        {{data.stats.PitcherWalks['#text']}}
+        {{data.stats.pitching.pitcherWalks}}
       </mat-cell>
     </ng-container>
     <!-- InningsPitched Column -->
     <ng-container matColumnDef="inningsPitched">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Innings Pitched </mat-header-cell>
-      <mat-cell *matCellDef="let data">{{data.stats.InningsPitched['#text']}}</mat-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.pitching.inningsPitched}}</mat-cell>
     </ng-container>
     <!-- pitchesPerInning Column -->
     <ng-container matColumnDef="pitchesPerInning">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Pitches Per Inning </mat-header-cell>
       <mat-cell *matCellDef="let data">
-        {{data.stats.PitchesPerInning['#text']}}
+        {{data.stats.pitching.pitchesPerInning}}
       </mat-cell>
     </ng-container>
     <!-- BattersHit Column -->
     <!-- <ng-container matColumnDef="battersHit">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Batters Hit </mat-header-cell>
-      <mat-cell *matCellDef="let data">{{data.stats.BattersHit['#text']}}</mat-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.BattersHit}}</mat-cell>
     </ng-container> -->
     <!-- PitcherWildPitches Column -->
     <ng-container matColumnDef="pitcherWildPitches">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Wild Pitches </mat-header-cell>
-      <mat-cell *matCellDef="let data">{{data.stats.PitcherWildPitches['#text']}}</mat-cell>
+      <mat-cell *matCellDef="let data">{{data.stats.pitching.pitcherWildPitches}}</mat-cell>
     </ng-container>
     <!-- PickoffAttempts Column -->
     <ng-container matColumnDef="pickoffAttempts">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Pickoff Attempts </mat-header-cell>
       <mat-cell *matCellDef="let data">
-        {{data.stats.PickoffAttempts['#text']}}
+        {{data.stats.pitching.pickoffAttempts}}
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns" [ngClass]="loading ? 'loading' : 'notLoading'" class="mat-header-row-res"></mat-header-row>

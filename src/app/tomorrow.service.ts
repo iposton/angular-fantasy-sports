@@ -52,7 +52,7 @@ export class TomorrowService {
   play: Observable <any> = null;
   injured: Observable <any> = null;
 
-  apiRoot: string = "https://api.mysportsfeeds.com/v1.2/pull/nhl/2018-playoff";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
 
   constructor(private http: HttpClient) {}
 
@@ -67,7 +67,8 @@ export class TomorrowService {
     if (!this.schedule) {
       console.log('getting schedule data from API...');
 
-      let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
+      //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
+      let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
       this.schedule = this.http.get(url, {headers})
         
     }
@@ -113,7 +114,8 @@ export class TomorrowService {
 
     if (!this.info) {
 
-      let url = `${this.apiRoot}/active_players.json?position=G`;
+      //let url = `${this.apiRoot}/active_players.json?position=G`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
       console.log('getting active player data from API...');
       this.info = this.http.get(url, {headers})
         
@@ -125,7 +127,7 @@ export class TomorrowService {
     if (!this.stats) {
       console.log('getting cumulative player stats from API...');
 
-      let url = `${this.apiRoot}/cumulative_player_stats.json?position=G&team=`+teams;
+      let url = `${this.apiRoot}/player_stats_totals.json?position=G&team=`+teams;
       this.stats = this.http.get(url, {headers})
         
     }

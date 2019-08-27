@@ -5,7 +5,8 @@
   <i matTooltip="Menu" [matTooltipPosition]="position" (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
 
 </mat-toolbar>
-<div class="full-container">
+<div id="wrap">
+<div id="main" class="full-container">
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav mode="side" #sidenav position="end">
       
@@ -29,8 +30,9 @@
     </mat-sidenav>
 
     <router-outlet></router-outlet>
-   
-
+  </mat-sidenav-container>
+</div>
+</div>
     <footer class="docs-footer">
       <div class="docs-footer-list">
         <div class="footer-logo">
@@ -54,6 +56,4 @@
         </div>
       </div>
     </footer>
-  </mat-sidenav-container>
-</div>
 

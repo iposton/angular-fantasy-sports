@@ -8,7 +8,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout'
 
-import { MatCardModule, 
+import { MatCardModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         MatGridListModule, 
         MatToolbarModule, 
         MatSnackBarModule, 
@@ -38,6 +40,7 @@ import { PitchingStatsComponent, MyDialog } from './pitching-stats/pitching-stat
 import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from './starting-goalies/starting-goalies.component';
 import { YesterdayResultsComponent, InfoYesterday } from './yesterday-results/yesterday-results.component';
 import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './tomorrow-results/tomorrow-results.component';
+import { BaseballPlayerComponent } from './baseball-player/baseball-player.component';
 // import { ShareModule } from 'ng2share/share.module';
 
 
@@ -66,7 +69,12 @@ const routes: Routes = [
   {
         path: 'starting-goalies',
         component: StartingGoaliesComponent
-  }
+  },
+  {
+        path: 'daily-stats/:id',
+        component: BaseballPlayerComponent
+      
+   }
 
  
 ];
@@ -87,7 +95,8 @@ const routes: Routes = [
     TodayDialog,
     LastweekDialog,
     TomorrowDialog,
-    LoginDialog
+    LoginDialog,
+    BaseballPlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +109,8 @@ const routes: Routes = [
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     MatCardModule, 
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatGridListModule, 
     MatToolbarModule, 
     MatSnackBarModule, 

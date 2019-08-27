@@ -56,7 +56,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 heroku.request({
   method: 'GET',
-  path: 'https://api.heroku.com/apps/nhl-starting-goalies-angular/config-vars',
+  path: 'https://api.heroku.com/apps/fantasy-sports-resource/config-vars',
   headers: {
     "Accept": "application/vnd.heroku+json; version=3",
     "Authorization": "Bearer "+process.env.API_TOKEN

@@ -12,7 +12,6 @@
   margin: 0;
 }
 
-
 .content-wrapper {
   display: flex;
 }
@@ -234,6 +233,20 @@ h3 {
   margin-top: 0;
   margin-bottom: 6px;
 }
+
+.mat-form-field {
+  color: #efefef;
+}
+
+
+.mat-form-field .mat-datepicker-toggle-default-icon {
+  color: #efefef;
+}
+
+.mat-form-field-type-mat-input.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-hide-placeholder {
+  color: #efefef;
+}
+
 
 @media only screen and (max-width: 600px) {
 

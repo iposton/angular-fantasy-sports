@@ -7,7 +7,7 @@ import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DatePipe, PercentPipe } from '@angular/common';
-import { NhlDataService } from '../nhl-data.service';
+import { NHLDataService } from '../nhl-data.service';
 import { FirebaseService } from '../firebase.service';
 import { YesterdayService } from '../yesterday.service';
 import { TomorrowService } from '../tomorrow.service';
@@ -50,6 +50,7 @@ export class StartingGoaliesComponent implements OnInit {
   starterIdData: Array < any > = [];
   startersData: Array < any > = [];
   dailyStats: Array < any > = [];
+  teamRef: Array < any > = [];
   myData: Array < any > ;
   showData: Array < any > ;
   showTomorrow: Array <any> ;
@@ -70,8 +71,6 @@ export class StartingGoaliesComponent implements OnInit {
   allGoaliesTomorrow: Array < any > ;
   selected: any;
   startingGoaliesToday: Array < any > = [];
-  gameStarter: {gameID: string, playerID: string};
-  gameStarters: Array < any > = [];
   tweetDay: any;
   noGamesMsg: any;
   noScoresMsg: any;
@@ -80,7 +79,7 @@ export class StartingGoaliesComponent implements OnInit {
   tomorrowDate: any;
   fullFirebaseResponse: any;
   loading: boolean = true;
-  apiRoot: string = "https://api.mysportsfeeds.com/v1.2/pull/nhl/2018-playoff";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
 
   stats: boolean = false;
   hitCount: any;
@@ -103,11 +102,11 @@ export class StartingGoaliesComponent implements OnInit {
 
 
 
-  constructor(private http: HttpClient, private dataService: NhlDataService, private fbService: FirebaseService, private yesterdayService: YesterdayService, private tomorrowService: TomorrowService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
+  constructor(private http: HttpClient, private dataService: NHLDataService, private fbService: FirebaseService, private yesterdayService: YesterdayService, private tomorrowService: TomorrowService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
     this.fbService
       .getStarterData()
       .subscribe(res => {
-        this.sortData();
+
         if (res[0] != null) {
           console.log(res, 'got response from firebase...');
           this.fullFirebaseResponse = res[0];
@@ -122,25 +121,25 @@ export class StartingGoaliesComponent implements OnInit {
             for (let show of this.showData) {
               for (let rep of this.myData) {
                 //console.log(show, 'showData items...');
-                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[0].player.ID] != null && this.fullFirebaseResponse[1][rep.player.ID] != null && rep.team.ID === show.team.matchup[0].team.ID && this.fullFirebaseResponse[1][show.team.matchup[0].player.ID].probable === false && this.fullFirebaseResponse[1][rep.player.ID].confirmed === true) {
+                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team.ID === show.team.matchup[0].team.id && this.fullFirebaseResponse[1][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === true) {
                   // Find goalies with the same team ID
                   // if the view has a goalie that is probable false swap with goalie from firebase that is confirmed
                   console.log(rep, 'update me into the view right now! I am confirmed to start.');
                   console.log(show.team.matchup[0], 'I have been changed, replace me with confirmed goalie.');
                   show.team.matchup[0] = rep;
-                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[0].player.ID] != null && this.fullFirebaseResponse[1][rep.player.ID] != null && rep.team.ID === show.team.matchup[0].team.ID && this.fullFirebaseResponse[1][show.team.matchup[0].player.ID].probable === false && this.fullFirebaseResponse[1][rep.player.ID].confirmed === false && this.fullFirebaseResponse[1][rep.player.ID].probable === true && rep.player.probable === false) {
+                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[1][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === false && this.fullFirebaseResponse[1][rep.player.id].probable === true && rep.player.probable === false) {
                   rep.player.probable = true;
                   console.log(rep, 'update me into the view right now! I am probable to start.');
                   console.log(show.team.matchup[0], 'I have been changed, replace me with probable goalie.');
                   show.team.matchup[0] = rep;
                 }
-                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[1].player.ID] != null && this.fullFirebaseResponse[1][rep.player.ID] != null && rep.team.ID === show.team.matchup[1].team.ID && this.fullFirebaseResponse[1][show.team.matchup[1].player.ID].probable === false && this.fullFirebaseResponse[1][rep.player.ID].confirmed === true) {
+                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[1][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === true) {
                   // same thing
                   // now check against the 2nd item in the view matchup array
                   console.log(rep, 'update me into the view right now! I am confirmed to start.');
                   console.log(show.team.matchup[1], 'I have been changed, replace me with new goalie...');
                   show.team.matchup[1] = rep;
-                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[1].player.ID] != null && this.fullFirebaseResponse[1][rep.player.ID] != null && rep.team.ID === show.team.matchup[1].team.ID && this.fullFirebaseResponse[1][show.team.matchup[1].player.ID].probable === false && this.fullFirebaseResponse[1][rep.player.ID].confirmed === false && this.fullFirebaseResponse[1][rep.player.ID].probable === true && rep.player.probable === false) {
+                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[1][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === false && this.fullFirebaseResponse[1][rep.player.id].probable === true && rep.player.probable === false) {
                   rep.player.probable = true;
                   console.log(rep, 'update me into the view right now! I am probable to start.');
                   console.log(show.team.matchup[1], 'I have been changed, replace me with probable goalie.');
@@ -191,7 +190,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.dataService
       .getEnv().subscribe(res => {
         
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
        
         this.dataService
           .sendHeaderOptions(headers);
@@ -201,36 +200,36 @@ export class StartingGoaliesComponent implements OnInit {
 
             console.log(res, "schedule...");
 
-            if (res['dailygameschedule'].gameentry == null) {
+            if (res['games'].length === 0) {
               this.loading = false;
               this.noGamesToday = true;
-              this.noGamesMsg = "There Are No Games Scheduled Today :("
+              this.noGamesMsg = "There Are No Games Scheduled Today :(";
               console.log('There are no games being played today.');
             } else {
               let postponed;
-              res['dailygameschedule'].gameentry.forEach((item, index) => {
+              res['games'].forEach((item, index) => {
 
-                // if(this.fbService.userDetails === null) {
+                if(this.fbService.userDetails === null) {
                  
-                //   dailyTeams.push(item.homeTeam.Abbreviation, item.awayTeam.Abbreviation); 
-                //   teamString = dailyTeams.join();
-                // }
+                  dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
+                  teamString = dailyTeams.join();
+                }
                 
                 // postponed = index;
-                // if (res['dailygameschedule'].gameentry[postponed].id === '41392') {
-                //   console.log(res['dailygameschedule'].gameentry[postponed], "hi, iam postponed and causing trouble...");
-                //   res['dailygameschedule'].gameentry.splice(postponed, 1);
+                // if (res['games'][postponed].id === '41392') {
+                //   console.log(res['games'][postponed], "hi, iam postponed and causing trouble...");
+                //   res['games'].splice(postponed, 1);
                 // }
               });
-              this.dailySchedule = res['dailygameschedule'].gameentry;
-              this.gameDate = res['dailygameschedule'].gameentry[0].date;
+              this.dailySchedule = res['games'];
+              this.gameDate = res['lastUpdatedOn']; //res['games'][0].date;
               let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
               this.gamesToday = true;
 
               Observable.forkJoin(
-                  res['dailygameschedule'].gameentry.map(
-                    g =>  this.http.get(`${this.apiRoot}/game_startinglineup.json?gameid=` + g.id + `&position=Goalie-starter`, {headers})
+                  res['games'].map(
+                    g =>  this.http.get(`${this.apiRoot}/games/`+this.dataService.dailyDate+`-`+ g['schedule'].awayTeam.abbreviation +`-`+ g['schedule'].homeTeam.abbreviation +`/lineup.json?position=Goalie-starter`, {headers})
                   )
                 )
                 .subscribe(res => {
@@ -239,38 +238,25 @@ export class StartingGoaliesComponent implements OnInit {
                   let i;
                   let i2;
                   let res2;
-                  let game2;
                   res.forEach((item, index) => {
                     i = index;
-                    //console.log(res[i]['gamestartinglineup'].teamLineup, 'got starting lineups data!');
-                    game2 = res[i]['gamestartinglineup'].game;
-                    res2 = res[i]['gamestartinglineup'].teamLineup;
+                    //console.log(res[i]['teamLineups'], 'got starting lineups data!');
+                    res2 = res[i]['teamLineups'];
                     
                     res2.forEach((item, index) => {
 
                       i2 = index;
                       if (res2[i2].actual != null && res2[i2].expected != null) {
+                        
                         //console.log(res2[i2].actual.starter[0].player, 'got player ID for goalie actualy starting!');
-                        this.starterIdData.push(res2[i2].actual.starter[0].player.ID);
-
-                        this.gameStarter = {
-                      playerID: res2[i2].expected.starter[0].player.ID,
-                      gameID: game2.id
-                    }
-                    this.gameStarters.push(this.gameStarter);
+                        this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.id);
 
                       } else if (res2[i2].actual == null && res2[i2].expected != null) {
                         //console.log(res2[i2].expected.starter[0].player.ID, 'got player ID for goalie expected to start!');
-                        this.starterIdData.push(res2[i2].expected.starter[0].player.ID);
-
-                        this.gameStarter = {
-                      playerID: res2[i2].expected.starter[0].player.ID,
-                      gameID: game2.id
-                    }
-                    this.gameStarters.push(this.gameStarter);
+                        this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.id);
                       } else {
                         //console.log(res2[i2].team.City + " " + res2[i2].team.Name, 'no starters yet!');
-                        this.starterIdData.push(res2[i2].team.ID);
+                        this.starterIdData.push(res2[i2].team.id);
                       
                         //console.log(this.starterIdData, 'this array has ALL the team IDs of todays starters');
 
@@ -279,7 +265,7 @@ export class StartingGoaliesComponent implements OnInit {
                     });
                   });
 
-                  // this.sortData();
+                  this.sortData();
 
                 });
 
@@ -290,37 +276,36 @@ export class StartingGoaliesComponent implements OnInit {
 
         this.dataService
           .getGameId().subscribe(res => {
-            console.log(res['fullgameschedule'].gameentry, "scheduled games for yesterday today and tomorrow...");
+            console.log(res['games'], "scheduled games for yesterday today and tomorrow...");
 
             //this removed a postponed game from api to avoid errors
-            // if (res['fullgameschedule'].gameentry > 0) {
+            // if (res['games'] > 0) {
             //   let postponed;
-            //   res['fullgameschedule'].gameentry.forEach((item, index) => {
+            //   res['games'].forEach((item, index) => {
             //     postponed = index;
-            //     if (res['fullgameschedule'].gameentry[postponed].id === '41392') {
-            //       console.log(res['fullgameschedule'].gameentry[postponed], "hi, iam postponed and causing trouble...");
-            //       res['fullgameschedule'].gameentry.splice(postponed, 1);
+            //     if (res['games'][postponed].id === '41392') {
+            //       console.log(res['games'][postponed], "hi, iam postponed and causing trouble...");
+            //       res['games'].splice(postponed, 1);
             //     }
             //   });
             // }
 
-            this.fullSchedule = res['fullgameschedule'].gameentry;
-          });
+            this.fullSchedule = res['games'];
+          })
 
-      });
+      })
 
   }
 
 
   sortData() {
 
-
-
     if (this.gamesToday === true) {
       this.dataService
         .getDaily().subscribe(res => {
           console.log(res, "Daily stats...");
-          this.dailyStats = res['dailyplayerstats'].playerstatsentry;
+          this.dailyStats = res['gamelogs'];
+          this.teamRef = res['references'].teamReferences;
         })
     } else {
       console.log('No games then no daily stats either. :(');
@@ -328,24 +313,9 @@ export class StartingGoaliesComponent implements OnInit {
 
     this.dataService
       .getStats(teamString).subscribe(res => {
-        console.log(res['cumulativeplayerstats'].playerstatsentry, "cumulative stats...");
-
+        console.log(res['playerStatsTotals'], "cumulative stats...");
     
-        this.myData = res['cumulativeplayerstats'].playerstatsentry;
-
-         for (let gs of this.gameStarters) {
-
-                for (let data of this.myData) {
-
-                  if (gs.playerID === data.player.ID ) {
-                    data.gameId = gs.gameID;
-                  }
-
-                }
-
-              }
-
-      
+        this.myData = res['playerStatsTotals']; 
 
         if (this.myData && this.dailySchedule) {
           console.log('start sorting data for daily schedule...');
@@ -355,33 +325,33 @@ export class StartingGoaliesComponent implements OnInit {
 
             for (let sdata of this.myData) {
 
+              for (let team of this.teamRef) {
+                 
+              
               sdata.player.lastweekWins = 0;
               sdata.player.lastweekLosses = 0;
               sdata.player.lastweekOtl = 0;
 
-              if (schedule.awayTeam.Name === sdata.team.Name) {
-                sdata.player.gameTime = schedule.time;
+              if (schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
+                sdata.player.gameTime = schedule['schedule'].startTime;
 
-                if (schedule.location === 'Nassau Coliseum') {
+                 if (schedule['schedule'].venue.name === 'Nassau Coliseum') {
                   sdata.team.gameIce = 'Barclays Center';
-                } else if (schedule.location === 'Verizon Center') {
+                } else if (schedule['schedule'].venue.name === 'Verizon Center') {
                   sdata.team.gameIce = 'Capital One Arena';
-                } else if (schedule.location === 'Joe Louis Arena') {
+                } else if (schedule['schedule'].venue.name === 'Joe Louis Arena') {
                   sdata.team.gameIce = 'Little Caesars Arena';
-                } else if (schedule.location === 'Consol Energy Center') {
+                } else if (schedule['schedule'].venue.name === 'Consol Energy Center') {
                   sdata.team.gameIce = 'PPG Paints Arena';
                 } else {
-                  sdata.team.gameIce = schedule.location;
+                  sdata.team.gameIce = schedule['schedule'].venue.name;
                 }
 
-                sdata.team.gameId = schedule.id;
+                sdata.team.gameId = schedule['schedule'].id;
                 sdata.player.gameLocation = "away";
                 sdata.team.day = this.tweetDay;
-                sdata.team.opponent = schedule.homeTeam.City + ' ' + schedule.homeTeam.Name;
-                sdata.team.opponentId = schedule.homeTeam.ID;
-                sdata.team.opponentCity = schedule.homeTeam.City;
-                sdata.team.opponentName = schedule.homeTeam.Name;
-                sdata.team.opponentAbbreviation = schedule.homeTeam.Abbreviation;
+                sdata.team.opponentId = schedule['schedule'].homeTeam.id;
+                sdata.team.opponentAbbreviation = schedule['schedule'].homeTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
                 sdata.team.yesterday = yesterday;
@@ -390,30 +360,38 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.player.startstatus = '';
                 sdata.flip = 'inactive';
 
-              }
-              if (schedule.homeTeam.Name === sdata.team.Name) {
-                sdata.player.gameTime = schedule.time;
-
-                if (schedule.location === 'Nassau Coliseum') {
-                  sdata.team.gameIce = 'Barclays Center';
-                } else if (schedule.location === 'Verizon Center') {
-                  sdata.team.gameIce = 'Capital One Arena';
-                } else if (schedule.location === 'Joe Louis Arena') {
-                  sdata.team.gameIce = 'Little Caesars Arena';
-                } else if (schedule.location === 'Consol Energy Center') {
-                  sdata.team.gameIce = 'PPG Paints Arena';
-                } else {
-                  sdata.team.gameIce = schedule.location;
+                if(sdata.team.id === team.id) {
+                  sdata.team.teamFull = team.city +' '+ team.name;   
+                  sdata.team.teamCity = team.city;
+                  sdata.team.teamName = team.name;
+                } 
+                if (sdata.team.opponentId === team.id) {
+                  sdata.team.opponent = team.city +' '+ team.name;   
+                  sdata.team.opponentCity = team.city;
+                  sdata.team.opponentName = team.name;
                 }
 
-                sdata.team.gameId = schedule.id;
+              }
+              if (schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
+                sdata.player.gameTime = schedule['schedule'].startTime;
+
+                if (schedule['schedule'].venue.name === 'Nassau Coliseum') {
+                  sdata.team.gameIce = 'Barclays Center';
+                } else if (schedule['schedule'].venue.name === 'Verizon Center') {
+                  sdata.team.gameIce = 'Capital One Arena';
+                } else if (schedule['schedule'].venue.name === 'Joe Louis Arena') {
+                  sdata.team.gameIce = 'Little Caesars Arena';
+                } else if (schedule['schedule'].venue.name === 'Consol Energy Center') {
+                  sdata.team.gameIce = 'PPG Paints Arena';
+                } else {
+                  sdata.team.gameIce = schedule['schedule'].venue.name;
+                }
+
+                sdata.team.gameId = schedule['schedule'].id;
                 sdata.player.gameLocation = "home";
                 sdata.team.day = this.tweetDay;
-                sdata.team.opponent = schedule.awayTeam.City + ' ' + schedule.awayTeam.Name;
-                sdata.team.opponentId = schedule.awayTeam.ID;
-                sdata.team.opponentCity = schedule.awayTeam.City;
-                sdata.team.opponentName = schedule.awayTeam.Name;
-                sdata.team.opponentAbbreviation = schedule.awayTeam.Abbreviation;
+                sdata.team.opponentId = schedule['schedule'].awayTeam.id;
+                sdata.team.opponentAbbreviation = schedule['schedule'].awayTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
                 sdata.team.yesterday = yesterday;
@@ -421,10 +399,22 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.player.probable = false;
                 sdata.player.startstatus = '';
                 sdata.flip = 'inactive';
+
+                if(sdata.team.id === team.id) {
+                  sdata.team.teamFull = team.city +' '+ team.name;   
+                  sdata.team.teamCity = team.city;
+                  sdata.team.teamName = team.name;
+                }
+                if (sdata.team.opponentId === team.id) {
+                  sdata.team.opponent = team.city +' '+ team.name;   
+                  sdata.team.opponentCity = team.city;
+                  sdata.team.opponentName = team.name;
+                }
 
               }
 
             }
+           }
           }
         }
 
@@ -433,34 +423,34 @@ export class StartingGoaliesComponent implements OnInit {
           for (let daily of this.dailyStats) {
             for (let mdata of this.myData) {
 
-              if (daily.player.ID === mdata.player.ID) {
+              if (daily.player.id === mdata.player.id) {
+          
+                mdata.player.saves = daily.stats.goaltending.saves;
+                mdata.player.shotsFaced = daily.stats.goaltending.shotsAgainst;
+                mdata.player.wins = daily.stats.goaltending.wins;
+                mdata.player.losses = daily.stats.goaltending.losses;
+                mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses;
+                mdata.player.Shutouts = daily.stats.goaltending.shutouts;
+                mdata.player.ga = daily.stats.goaltending.goalsAgainst;
 
-                mdata.player.saves = daily.stats.Saves['#text'];
-                mdata.player.shotsFaced = daily.stats.ShotsAgainst['#text'];
-                mdata.player.wins = daily.stats.Wins['#text'];
-                mdata.player.losses = daily.stats.Losses['#text'];
-                mdata.player.OvertimeLosses = daily.stats.OvertimeLosses['#text'];
-                mdata.player.Shutouts = daily.stats.Shutouts['#text'];
-                mdata.player.ga = daily.stats.GoalsAgainst['#text'];
-
-                if (daily.stats.Saves['#text'] > 0 || daily.stats.Wins['#text'] == '1') {
+                if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins == '1') {
                   // this.starterIdData.push(daily.player.ID);
-                  this.startingGoaliesToday.push(daily.player.ID);
+                  this.startingGoaliesToday.push(daily.player.id);
                 }
 
-                if (daily.stats.GoalsAgainst['#text'] == '1') {
-                  mdata.player.GoalsAgainst = daily.stats.GoalsAgainst['#text'] + ' goal';
+                if (daily.stats.goaltending.goalsAgainst == '1') {
+                  mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goal';
                 } else {
-                  mdata.player.GoalsAgainst = daily.stats.GoalsAgainst['#text'] + ' goals';
+                  mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goals';
                 }
 
-                if (parseInt(daily.stats.Saves['#text']) > 20 && daily.stats.GoalsAgainst['#text'] == '0') {
+                if (parseInt(daily.stats.goaltending.saves) > 20 && daily.stats.goaltending.goalsAgainst == '0') {
                   mdata.player.twentySavesPlus = true;
-                  mdata.player.twentySavesPlusResult = mdata.player.FirstName + ' ' + mdata.player.LastName + ' has ' + daily.stats.Saves['#text'] + ' saves and has not given up a goal to the ' + mdata.team.opponentCity + ' ' + mdata.team.opponentName + '!';
-                } else if (parseInt(daily.stats.Saves['#text']) > 20 && daily.stats.GoalsAgainst['#text'] > '0') {
+                  mdata.player.twentySavesPlusResult = mdata.player.FirstName + ' ' + mdata.player.LastName + ' has ' + daily.stats.goaltending.saves + ' saves and has not given up a goal to the ' + mdata.team.opponentCity + ' ' + mdata.team.opponentName + '!';
+                } else if (parseInt(daily.stats.goaltending.saves) > 20 && daily.stats.goaltending.goalsAgainst > '0') {
                   mdata.player.twentySavesPlus = true;
                   mdata.player.twentySavesPlusShutout = false;
-                  mdata.player.twentySavesPlusResult = mdata.player.FirstName + ' ' + mdata.player.LastName + ' has ' + daily.stats.Saves['#text'] + ' saves against ' + daily.stats.ShotsAgainst['#text'] + ' shots fired by ' + mdata.team.opponentCity + ' ' + mdata.team.opponentName + ' offense and let ' + mdata.player.GoalsAgainst + ' light the lamp!';
+                  mdata.player.twentySavesPlusResult = mdata.player.FirstName + ' ' + mdata.player.LastName + ' has ' + daily.stats.goaltending.saves + ' saves against ' + daily.stats.goaltending.shotsAgainst + ' shots fired by ' + mdata.team.opponentCity + ' ' + mdata.team.opponentName + ' offense and let ' + mdata.player.GoalsAgainst + ' light the lamp!';
                 }
 
 
@@ -472,43 +462,45 @@ export class StartingGoaliesComponent implements OnInit {
 
         if (this.myData && this.fullSchedule) {
           console.log('start sorting data for full schedule...');
+          let dPipe = new DatePipe("en-US");
+              this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
           for (let full of this.fullSchedule) {
 
             for (let btb of this.myData) {
 
-              if (full.awayTeam.ID === btb.team.ID) {
-
-                if (btb.team.yesterday === full.date) {
+              if (full['schedule'].awayTeam.id === btb.team.id) {
+              
+                if (btb.team.yesterday === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
                   btb.team.hadGameYesterday = true;
 
                 }
-                if (btb.team.today === full.date) {
+                if (btb.team.today === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
                   btb.team.haveGameToday = true;
                 }
 
 
-                if (btb.team.tomorrow === full.date) {
+                if (btb.team.tomorrow === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
                   btb.team.haveGameTomorrow = true;
                 }
 
               }
-              if (full.homeTeam.ID === btb.team.ID) {
+              if (full['schedule'].homeTeam.id === btb.team.id) {
 
 
-                if (btb.team.yesterday === full.date) {
+                if (btb.team.yesterday === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
                   btb.team.hadGameYesterday = true;
 
 
                 }
-                if (btb.team.today === full.date) {
+                if (btb.team.today === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
                   btb.team.haveGameToday = true;
                 }
 
 
-                if (btb.team.tomorrow === full.date) {
+                if (btb.team.tomorrow === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
                   btb.team.haveGameTomorrow = true;
                 }
@@ -521,21 +513,21 @@ export class StartingGoaliesComponent implements OnInit {
 
 
         for (let data of this.myData) {
-          console.log('start sorting data for goalie images and back to back...');
-
-          data.player.savePercent = data.stats.stats.SavePercentage['#text'].slice(1);
+          //console.log(data, 'start sorting data for goalie images and back to back...');
+          //stats.goaltending.savePercentage
+          data.player.savePercent = data.stats.goaltending.savePercentage;
 
           if (this.todayStarters != null) {
 
-            if (this.todayStarters[data.player.ID] != null) {
-              data.player.image = this.todayStarters[data.player.ID].image;
-              data.player.atHandle = this.todayStarters[data.player.ID].atHandle;
-              data.player.twitterHandle = this.todayStarters[data.player.ID].twitterHandle;
+            if (this.todayStarters[data.player.id] != null) {
+              data.player.image = this.todayStarters[data.player.id].image;
+              data.player.atHandle = this.todayStarters[data.player.id].atHandle;
+              data.player.twitterHandle = this.todayStarters[data.player.id].twitterHandle;
             }
 
-            if (this.startersDate === data.team.today && this.todayStarters[data.player.ID] != null && data.player.saves == null && data.player.shotsFaced == null && this.todayStarters[data.player.ID].probable === true || this.startersDate === data.team.today && this.todayStarters[data.player.ID] != null && data.player.saves == '0' && data.player.shotsFaced == '0' && this.todayStarters[data.player.ID].probable === true) {
-              data.player.confirmed = this.todayStarters[data.player.ID].confirmed;
-              data.player.probable = this.todayStarters[data.player.ID].probable;
+            if (this.startersDate === data.team.today && this.todayStarters[data.player.id] != null && data.player.saves == null && data.player.shotsFaced == null && this.todayStarters[data.player.id].probable === true || this.startersDate === data.team.today && this.todayStarters[data.player.id] != null && data.player.saves == '0' && data.player.shotsFaced == '0' && this.todayStarters[data.player.id].probable === true) {
+              data.player.confirmed = this.todayStarters[data.player.id].confirmed;
+              data.player.probable = this.todayStarters[data.player.id].probable;
               data.player.startingToday = true;
               data.player.startingTodayNow = false;
 
@@ -614,7 +606,7 @@ export class StartingGoaliesComponent implements OnInit {
 
               for (let progressdata of this.myData) {
 
-                if (startinprogress === progressdata.player.ID) {
+                if (startinprogress === progressdata.player.id) {
                   console.log('starters of games that have started');
                   progressdata.player.startingToday = true;
                   progressdata.player.startingTodayNow = true;
@@ -635,7 +627,7 @@ export class StartingGoaliesComponent implements OnInit {
 
               for (let startdata of this.myData) {
 
-                if (startid === startdata.team.ID && startdata.stats.GamesPlayed['#text'] > 1) {
+                if (startid === startdata.team.id && startdata.stats.goaltending.gamesPlayed > 1) {
                   if (this.startersDate != startdata.team.today) {
 
                     startdata.player.startingToday = false;
@@ -645,7 +637,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
                   }
-                } else if (this.startersDate != startdata.team.today && startid === startdata.player.ID) {
+                } else if (this.startersDate != startdata.team.today && startid === startdata.player.id) {
                   if (startdata.player.saves == null || startdata.player.saves == '0') {
                     console.log(startdata.player, 'expected goalies from api');
                     startdata.player.startingToday = true;
@@ -700,7 +692,7 @@ return r
 
         if (this.statData[data.team.gameId].length > 2) {
           //console.log(this.statData[data.team.gameId][0].team.Name + ' ' + this.statData[data.team.gameId][1].team.Name + ' ' + this.statData[data.team.gameId][2].team.Name, 'possible starters...');
-          if (this.statData[data.team.gameId][0].team.ID === this.statData[data.team.gameId][1].team.ID) {
+          if (this.statData[data.team.gameId][0].team.id === this.statData[data.team.gameId][1].team.id) {
             this.statData[data.team.gameId][1].player.twoPossibleStarters = true;
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
             if (this.statData[data.team.gameId][0].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
@@ -713,7 +705,7 @@ return r
           } else {
             this.statData[data.team.gameId][1].twoPossibleStarters = false;
           }
-          if (this.statData[data.team.gameId][0].team.ID === this.statData[data.team.gameId][2].team.ID) {
+          if (this.statData[data.team.gameId][0].team.id === this.statData[data.team.gameId][2].team.id) {
             this.statData[data.team.gameId][0].player.twoPossibleStarters = true;
             this.statData[data.team.gameId][0].twoPossibleStarters = true;
             if (this.statData[data.team.gameId][2].player.saves == null && this.statData[data.team.gameId][0].player.saves > '0') {
@@ -726,7 +718,7 @@ return r
           } else {
             this.statData[data.team.gameId][0].twoPossibleStarters = false;
           }
-          if (this.statData[data.team.gameId][1].team.ID === this.statData[data.team.gameId][2].team.ID) {
+          if (this.statData[data.team.gameId][1].team.id === this.statData[data.team.gameId][2].team.id) {
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
             this.statData[data.team.gameId][2].player.twoPossibleStarters = true;
             if (this.statData[data.team.gameId][2].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
@@ -747,7 +739,7 @@ return r
             this.statData[data.team.gameId][2].player.twoPossibleStarters = false;
           }
           if (this.statData[data.team.gameId][3] != null) {
-            if (this.statData[data.team.gameId][2].team.ID === this.statData[data.team.gameId][3].team.ID) {
+            if (this.statData[data.team.gameId][2].team.id === this.statData[data.team.gameId][3].team.id) {
               this.statData[data.team.gameId][2].twoPossibleStarters = true;
               this.statData[data.team.gameId][3].twoPossibleStarters = true;
             } else {
@@ -793,41 +785,41 @@ return r
             this.dataService
               .getDaily().subscribe(res => {
                 console.log(res, "Daily stats updated!");
-                this.dailyStats = res['dailyplayerstats'].playerstatsentry;
+                this.dailyStats = res['gamelogs'];
 
                 if (this.myData && this.dailyStats) {
                   console.log('start sorting data for daily stats...');
                   for (let daily of this.dailyStats) {
                     for (let mdata of this.myData) {
 
-                      if (daily.player.ID === mdata.player.ID) {
+                      if (daily.player.id === mdata.player.id) {
 
-                        mdata.player.saves = daily.stats.Saves['#text'];
-                        mdata.player.shotsFaced = daily.stats.ShotsAgainst['#text'];
-                        mdata.player.wins = daily.stats.Wins['#text'];
-                        mdata.player.losses = daily.stats.Losses['#text'];
-                        mdata.player.OvertimeLosses = daily.stats.OvertimeLosses['#text'];
-                        mdata.player.Shutouts = daily.stats.Shutouts['#text'];
-                        mdata.player.ga = daily.stats.GoalsAgainst['#text'];
+                        mdata.player.saves = daily.stats.goaltending.saves;
+                        mdata.player.shotsFaced = daily.stats.goaltending.shotsAgainst;
+                        mdata.player.wins = daily.stats.goaltending.wins;
+                        mdata.player.losses = daily.stats.goaltending.losses;
+                        mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses;
+                        mdata.player.Shutouts = daily.stats.goaltending.shutouts;
+                        mdata.player.ga = daily.stats.goaltending.goalsAgainst;
 
-                        if (daily.stats.Saves['#text'] > 0 || daily.stats.Wins['#text'] == '1') {
+                        if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins == '1') {
                           // this.starterIdData.push(daily.player.ID);
-                          this.startingGoaliesToday.push(daily.player.ID);
+                          this.startingGoaliesToday.push(daily.player.id);
                         }
 
-                        if (daily.stats.GoalsAgainst['#text'] == '1') {
-                          mdata.player.GoalsAgainst = daily.stats.GoalsAgainst['#text'] + ' goal';
+                        if (daily.stats.goaltending.goalsAgainst == '1') {
+                          mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goal';
                         } else {
-                          mdata.player.GoalsAgainst = daily.stats.GoalsAgainst['#text'] + ' goals';
+                          mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goals';
                         }
 
-                        if (parseInt(daily.stats.Saves['#text']) > 20 && daily.stats.GoalsAgainst['#text'] == '0') {
+                        if (parseInt(daily.stats.goaltending.saves) > 20 && daily.stats.goaltending.goalsAgainst == '0') {
                           mdata.player.twentySavesPlus = true;
-                          mdata.player.twentySavesPlusResult = mdata.player.FirstName + ' ' + mdata.player.LastName + ' has ' + daily.stats.Saves['#text'] + ' saves and has not given up a goal to the ' + mdata.team.opponentCity + ' ' + mdata.team.opponentName + '!';
-                        } else if (parseInt(daily.stats.Saves['#text']) > 20 && daily.stats.GoalsAgainst['#text'] > '0') {
+                          mdata.player.twentySavesPlusResult = mdata.player.FirstName + ' ' + mdata.player.LastName + ' has ' + daily.stats.goaltending.saves + ' saves and has not given up a goal to the ' + mdata.team.opponentCity + ' ' + mdata.team.opponentName + '!';
+                        } else if (parseInt(daily.stats.goaltending.saves) > 20 && daily.stats.goaltending.goalsAgainst > '0') {
                           mdata.player.twentySavesPlus = true;
                           mdata.player.twentySavesPlusShutout = false;
-                          mdata.player.twentySavesPlusResult = mdata.player.FirstName + ' ' + mdata.player.LastName + ' has ' + daily.stats.Saves['#text'] + ' saves against ' + daily.stats.ShotsAgainst['#text'] + ' shots fired by ' + mdata.team.opponentCity + ' ' + mdata.team.opponentName + ' offense and let ' + mdata.player.GoalsAgainst + ' light the lamp!';
+                          mdata.player.twentySavesPlusResult = mdata.player.FirstName + ' ' + mdata.player.LastName + ' has ' + daily.stats.goaltending.saves + ' saves against ' + daily.stats.goaltending.shotsAgainst + ' shots fired by ' + mdata.team.opponentCity + ' ' + mdata.team.opponentName + ' offense and let ' + mdata.player.GoalsAgainst + ' light the lamp!';
                         }
 
 
@@ -901,18 +893,18 @@ return r
   public showTodayStarters() {
     this.stats = true;
     for (let info of this.myData) {
-      if (this.fullFirebaseResponse[1][info.player.ID] != null) {
-        if (this.fullFirebaseResponse[1][info.player.ID].confirmed === false && this.fullFirebaseResponse[1][info.player.ID].probable === false) {
+      if (this.fullFirebaseResponse[1][info.player.id] != null) {
+        if (this.fullFirebaseResponse[1][info.player.id].confirmed === false && this.fullFirebaseResponse[1][info.player.id].probable === false) {
 
-          this.fullFirebaseResponse[1][info.player.ID].filterOutStarters = true;
-          //console.log(this.fullFirebaseResponse[1][info.player.ID], "not starting today...");
+          this.fullFirebaseResponse[1][info.player.id].filterOutStarters = true;
+          //console.log(this.fullFirebaseResponse[1][info.player.id], "not starting today...");
         }
       }
 
-      if (this.fullFirebaseResponse[3][info.player.ID] != null) {
-        if (this.fullFirebaseResponse[3][info.player.ID].confirmed === false && this.fullFirebaseResponse[3][info.player.ID].probable === false) {
+      if (this.fullFirebaseResponse[3][info.player.id] != null) {
+        if (this.fullFirebaseResponse[3][info.player.id].confirmed === false && this.fullFirebaseResponse[3][info.player.id].probable === false) {
 
-          this.fullFirebaseResponse[3][info.player.ID].filterOutStarters = true;
+          this.fullFirebaseResponse[3][info.player.id].filterOutStarters = true;
           //console.log(this.fullFirebaseResponse[3][info.player.ID], "not starting tomorrow...");
         }
       }
@@ -921,25 +913,27 @@ return r
 
   public selectAll() {
     for (let info of this.myData) {
-      if (this.fullFirebaseResponse[3][info.player.ID] != null) {
-        this.fullFirebaseResponse[3][info.player.ID].confirmed = false;
-        this.fullFirebaseResponse[3][info.player.ID].probable = false;
+      if (this.fullFirebaseResponse[3][info.player.id] != null) {
+        this.fullFirebaseResponse[3][info.player.id].confirmed = false;
+        this.fullFirebaseResponse[3][info.player.id].probable = false;
         //console.log(this.fullFirebaseResponse, "make all starters false");
       }
     }
   }
 
 
-  public toggleFlip(data) {
+  public toggleFlip(data, a, h) {
     
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
 
     this.dataService
-          .getScore().subscribe(res => {
-            console.log(res['scoreboard'].gameScore, "Score...");
-            this.score = res['scoreboard'].gameScore;
+          .getScore(a, h).subscribe(res => {
+            console.log(res, "Score...");
+            this.score = res;
+            //this.awayScore = this.score.awayScoreTotal;
+            //this.homeScore = this.score.homeScoreTotal;
 
-            if (res['scoreboard'].gameScore == null) {
+            if (res == null) {
               
               this.noScores = true;
               this.noScoresMsg = "The game is not live yet."
@@ -950,13 +944,11 @@ return r
             for (let sc of this.score) {
               for (let pdata of this.showData) {
 
-                if (sc.game.homeTeam.ID === pdata.team.ID) {
-
-                  pdata.team.homeGoalie = pdata.player.FirstName + ' ' + pdata.player.LastName;
-                  pdata.team.opponentAbbreviation = sc.game.awayTeam.Abbreviation;
-                  pdata.team.opponentScore = sc.awayScore;
-                  pdata.team.teamScore = sc.homeScore;
-
+                if (sc.game.homeTeam.abbreviation === pdata.team.abbreviation) {
+                  pdata.team.homeGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
+                  pdata.team.opponentAbbreviation = sc.game.awayTeam.abbreviation;
+                  pdata.team.opponentScore = sc.scoring.awayScoreTotal;
+                  pdata.team.teamScore = sc.scoring.homeScoreTotal;
                 }
 
               }
@@ -1102,7 +1094,7 @@ export class LastweekDialog implements OnInit {
   sentLastweek: any;
   loading: boolean = true;
 
-  constructor(public dialogRef: MatDialogRef < LastweekDialog > , @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private dataService: NhlDataService) {
+  constructor(public dialogRef: MatDialogRef < LastweekDialog > , @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private dataService: NHLDataService) {
     this.sentHotData = this.dataService.getSentHotStats();
     this.sentAllData = this.dataService.getSentAllStats();
     this.sentYesterday = this.dataService.getYesterday();
@@ -1114,14 +1106,14 @@ export class LastweekDialog implements OnInit {
 
     this.dataService
       .getLastweekGameId().subscribe(res => {
-        console.log(res['fullgameschedule'].gameentry, "scheduled games for lastweek...");
-        //this.lastweekSchedule = res['fullgameschedule'].gameentry;
+        console.log(res['games'], "scheduled games for lastweek...");
+        //this.lastweekSchedule = res['games'];
 
 
         Observable.forkJoin(
-            res['fullgameschedule'].gameentry.map(
+            res['games'].map(
               g =>
-              this.http.get('https://api.mysportsfeeds.com/v1.2/pull/nhl/2017-2018-regular/game_boxscore.json?gameid=' + g.id + '&playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
+              this.http.get('https://api.mysportsfeeds.com/v1.2/pull/nhl/2017-2018-regular/game_boxscore.json?gameid=' + g.schedule.id + '&playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
               //.map(response => response.json())
             )
           )
@@ -1154,23 +1146,23 @@ export class LastweekDialog implements OnInit {
                 let dPipe = new DatePipe("en-US");
                 myDate = dPipe.transform(res[i]['gameboxscore'].game.date, 'MMM d');
 
-                if (res2[i2].stats != null && res2[i2].stats.Wins['#text'] == '1') {
+                if (res2[i2].stats != null && res2[i2].stats.goaltending.wins == '1') {
          
-                  res2[i2].player.opponent = {date: myDate, desc: '(W) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.GoalsAgainst['#text']}
+                  res2[i2].player.opponent = {date: myDate, desc: '(W) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.goaltending.goalsAgainst}
                   
                 }
-                if (res2[i2].stats != null && res2[i2].stats.Losses['#text'] == '1') {
+                if (res2[i2].stats != null && res2[i2].stats.goaltending.losses == '1') {
                   
-                  res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.GoalsAgainst['#text']}
+                  res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.goaltending.goalsAgainst}
                
                 }
-                if (res2[i2].stats != null && res2[i2].stats.OvertimeLosses['#text'] == '1') {
+                if (res2[i2].stats != null && res2[i2].stats.goaltending.overtimeLosses == '1') {
                   
-                  res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.GoalsAgainst['#text']}
+                  res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.goaltending.goalsAgainst}
                  
                 }
 
-                if (res2[i2].stats != null && res2[i2].stats.Wins['#text'] > '0' && res2[i2].player.ID != '9072' || res2[i2].stats != null && res2[i2].stats.Losses['#text'] > '0' && res2[i2].player.ID != '9072' || res2[i2].stats != null && res2[i2].stats.OvertimeLosses['#text'] > '0' && res2[i2].player.ID != '9072') {
+                if (res2[i2].stats != null && res2[i2].stats.goaltending.wins > '0' && res2[i2].player.id != '9072' || res2[i2].stats != null && res2[i2].stats.goaltending.losses > '0' && res2[i2].player.id != '9072' || res2[i2].stats != null && res2[i2].stats.goaltending.overtimeLosses > '0' && res2[i2].player.id != '9072') {
                   this.starterStatData.push(res2[i2]);
                   //console.log(res2[i2], 'got player stats for away goalie stats!'); 
 
@@ -1185,24 +1177,24 @@ export class LastweekDialog implements OnInit {
                 res3[i3].player.city = res[i]['gameboxscore'].game.homeTeam.City;
                 res3[i3].player.team = res[i]['gameboxscore'].game.homeTeam.Name;
                 res3[i3].player.teamId = res[i]['gameboxscore'].game.homeTeam.ID;
-                if (res3[i3].stats != null && res3[i3].stats.Wins['#text'] == '1') {
+                if (res3[i3].stats != null && res3[i3].stats.goaltending.wins == '1') {
                   
-                  res3[i3].player.opponent = {date: myDate, desc: '(W) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.GoalsAgainst['#text']}
+                  res3[i3].player.opponent = {date: myDate, desc: '(W) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.goaltending.goalsAgainst}
                   
                 }
-                if (res3[i3].stats != null && res3[i3].stats.Losses['#text'] == '1') {
+                if (res3[i3].stats != null && res3[i3].stats.goaltending.losses == '1') {
                   
-                  res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.GoalsAgainst['#text']}
+                  res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.goaltending.goalsAgainst}
                  
                 }
-                if (res3[i3].stats != null && res3[i3].stats.OvertimeLosses['#text'] == '1') {
+                if (res3[i3].stats != null && res3[i3].stats.goaltending.overtimeLosses == '1') {
                   
-                  res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.GoalsAgainst['#text']}
+                  res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.goaltending.goalsAgainst}
                   
                 }
 
                 //res3[i3].player.opponent = res[i]['gameboxscore'].game.awayTeam.Abbreviation;
-                if (res3[i3].stats != null && res3[i3].stats.Wins['#text'] > '0' && res3[i3].player.ID != '9072' || res3[i3].stats != null && res3[i3].stats.Losses['#text'] > '0' && res3[i3].player.ID != '9072' || res3[i3].stats != null && res3[i3].stats.OvertimeLosses['#text'] > '0' && res3[i3].player.ID != '9072') {
+                if (res3[i3].stats != null && res3[i3].stats.goaltending.wins > '0' && res3[i3].player.id != '9072' || res3[i3].stats != null && res3[i3].stats.goaltending.losses > '0' && res3[i3].player.id != '9072' || res3[i3].stats != null && res3[i3].stats.goaltending.overtimeLosses > '0' && res3[i3].player.id != '9072') {
                   this.starterStatData.push(res3[i3]);
                   //console.log(res3[i3], 'got player stats for home goalie!');
                 }
@@ -1224,11 +1216,9 @@ export class LastweekDialog implements OnInit {
       for (let data of this.starterStatData) {
         //console.log(info, 'looking for image');
 
-        if (info.player.ID === data.player.ID) {
+        if (info.player.id === data.player.id) {
           //console.log(info, 'looking for image IDS Match!!')
           data.player.image = info.player.image;
-
-
         }
 
       }
@@ -1238,17 +1228,17 @@ export class LastweekDialog implements OnInit {
       //console.log(hash, 'hash');
       return function(r, a) {
         //console.log(a, 'this is a');
-        let key = a.player.ID;
+        let key = a.player.id;
         if (!hash[key]) {
-          hash[key] = { wins: 0, losses: 0, otl: 0, name: a.player.FirstName + ' ' + a.player.LastName, id: a.player.ID, opponents: [], team: a.player.teamId, ga: 0, sa: 0, sv: 0, svpercent: 0, hot: false, image: a.player.image };
+          hash[key] = { wins: 0, losses: 0, otl: 0, name: a.player.firstName + ' ' + a.player.lastName, id: a.player.id, opponents: [], team: a.player.teamId, ga: 0, sa: 0, sv: 0, svpercent: 0, hot: false, image: a.player.image };
           r.push(hash[key]);
         }
-        hash[key].wins += parseInt(a.stats.Wins['#text']);
-        hash[key].losses += parseInt(a.stats.Losses['#text']);
-        hash[key].otl += parseInt(a.stats.OvertimeLosses['#text']);
-        hash[key].ga += parseInt(a.stats.GoalsAgainst['#text']);
-        hash[key].sa += parseInt(a.stats.ShotsAgainst['#text']);
-        hash[key].sv += parseInt(a.stats.Saves['#text']);
+        hash[key].wins += parseInt(a.stats.goaltending.wins);
+        hash[key].losses += parseInt(a.stats.goaltending.losses);
+        hash[key].otl += parseInt(a.stats.goaltending.overtimeLosses);
+        hash[key].ga += parseInt(a.stats.goaltending.goalsAgainst);
+        hash[key].sa += parseInt(a.stats.goaltending.shotsAgainst);
+        hash[key].sv += parseInt(a.stats.goaltending.saves);
         hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
 
         if (hash[key].svpercent < 95) {

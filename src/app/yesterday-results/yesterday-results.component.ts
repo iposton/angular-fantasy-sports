@@ -43,7 +43,7 @@ export class YesterdayResultsComponent implements OnInit {
   tweetDay: any;
   noGamesMsg: any;
   loading: boolean = true;
-  apiRoot: string = "https://api.mysportsfeeds.com/v1.2/pull/nhl/2018-playoff";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
 
   constructor(private http: HttpClient, private yesterdayService: YesterdayService, public snackBar: MatSnackBar, public router: Router) {
     this.getJSON();
@@ -69,8 +69,8 @@ export class YesterdayResultsComponent implements OnInit {
 
     this.yesterdayService
       .getEnv().subscribe(res => {
-        
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        //headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
         
         this.yesterdayService
           .sendHeaderOptions(headers);
@@ -82,21 +82,21 @@ export class YesterdayResultsComponent implements OnInit {
             console.log(res, "schedule...");
             //console.log(tomorrowDailyDate, "get tomorrows schedule to find back to back games");
            
-            if (res['dailygameschedule'].gameentry == null) {
+            if (res['games'].length === 0) {
               this.loading = false;
               this.noGamesToday = true;
               this.noGamesMsg = "No Games Scheduled Yesterday :("
               console.log('There are no games being played today.');
             } else {
               this.gamesToday = true;
-               this.dailySchedule = res['dailygameschedule'].gameentry;
-            this.gameDate = res['dailygameschedule'].gameentry[0].date;
+              this.dailySchedule = res['games'];
+              this.gameDate = res['lastUpdatedOn']; //res['dailygameschedule'].gameentry[0].date;
             
             let dPipe = new DatePipe("en-US");
             this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
 
               Observable.forkJoin(
-                  res['dailygameschedule'].gameentry.map(
+                  res['games'].map(
 
                     g => 
                           this.http.get(`${this.apiRoot}/game_boxscore.json?gameid=` + g.id + `&playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW`, {headers})

@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { TomorrowService } from '../tomorrow.service';
-import { NhlDataService } from '../nhl-data.service';
+import { NHLDataService } from '../nhl-data.service';
 import { FirebaseService } from '../firebase.service';
 import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/map';
@@ -52,9 +52,9 @@ export class TomorrowResultsComponent implements OnInit {
   startersDate: any;
   loading: boolean = true;
   fullFirebaseResponse: any;
-  apiRoot: string = "https://api.mysportsfeeds.com/v1.2/pull/nhl/2018-playoff";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
 
-  constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NhlDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
+  constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
 
       this.fbService
       .getStarterData()
@@ -140,8 +140,8 @@ export class TomorrowResultsComponent implements OnInit {
 
     this.tomorrowService
       .getEnv().subscribe(res => {
-        
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        //headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
    
         this.tomorrowService
           .sendHeaderOptions(headers);
@@ -151,7 +151,7 @@ export class TomorrowResultsComponent implements OnInit {
 
             console.log(res, "schedule...");
 
-            if (res['dailygameschedule'].gameentry == null) {
+            if (res['games'].length === 0) {
               this.loading = false;
               this.noGamesToday = true;
               this.noGamesMsg = "No Games Scheduled Tomorrow :("
@@ -160,7 +160,7 @@ export class TomorrowResultsComponent implements OnInit {
 
               let postponed;
 
-              res['dailygameschedule'].gameentry.forEach((item, index) => {
+              res['games'].gameentry.forEach((item, index) => {
 
                  
                 dailyTeams.push(item.homeTeam.Abbreviation, item.awayTeam.Abbreviation); 
@@ -175,7 +175,7 @@ export class TomorrowResultsComponent implements OnInit {
 
               this.gamesToday = true;
               this.dailySchedule = res['dailygameschedule'].gameentry;
-              this.gameDate = res['dailygameschedule'].gameentry[0].date;
+              this.gameDate = res['lastUpdatedOn']; //res['dailygameschedule'].gameentry[0].date;
 
               let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
