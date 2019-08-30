@@ -26,10 +26,11 @@
           </div>
           <div class="right-content">
             <p>
-              <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie  <br></span>
+
+              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie  <br></span>
              
               <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.height}} Weight: {{data.player.weight}}  <br> </span>
-             <span *ngIf="data.player.city != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.country === 'USA'">{{data.player.city}}</span><span *ngIf="data.player.country != 'USA'">{{data.player.country}}</span>  <br> </span>
+             <span *ngIf="data.player.birthCity != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.birthCountry === 'USA'">{{data.player.birthCity}}</span><span *ngIf="data.player.birthCountry != 'USA'">{{data.player.birthCountry}}</span>  <br> </span>
              Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
@@ -43,7 +44,7 @@
         </div>
         <div class="bottom-content">
           <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
-          <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data.player.throws != null"> - {{data.player.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
+          <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
           <p class="name-number">
             <b>W-L:</b> {{ data.stats.pitching.wins +'-'+ data.stats.pitching.losses }} / <b>ERA:</b> {{ data.stats.pitching.earnedRunAvg }} /
             <b>K's:</b> {{ data.stats.pitching.pitcherStrikeouts }}
@@ -89,13 +90,13 @@
           </div>
           <div class="right-content">
             <p>
-              <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
-              <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === '1'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
+              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary !== undefined && data.player.contractBaseSalary != ''">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
               <span *ngIf="data.player.contractTotalYears !== undefined && data.player.contractTotalYears != ''">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
-              <span *ngIf="data.player.DraftYear !== undefined && data.player.DraftYear != ''">Drafted: Round {{data.player.DraftRound}}, {{data.player.DraftYear}}<br></span>
+              <span *ngIf="data.player.draftYear !== undefined && data.player.draftYear != ''">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
               <span *ngIf="data.player.college !== undefined && data.player.college != ''">College: {{data.player.college}}<br></span> 
-              <span *ngIf="data.player.highschool !== undefined && data.player.highschool != ''">Highschool: {{data.player.highschool}} <br></span>
+              <span *ngIf="data.player.highSchool !== undefined && data.player.highSchool != ''">Highschool: {{data.player.highSchool}} <br></span>
               Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
@@ -109,7 +110,7 @@
         </div>
         <div class="bottom-content">
           <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
-          <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data.player.throws != null"> - {{data.player.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
+          <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
           <p class="name-number">
            <span *ngIf="data.previousWin1 != null && data.previousWin2 === undefined"><strong>W-L:</strong> {{data.previousWin1}}-</span><span *ngIf="data.previousL1 != null && data.previousL2 === undefined">{{data.previousL1}}</span><span *ngIf="data.previousWin1 != null && data.previousWin2 != null"><strong>W-L:</strong> {{data.previousWin1 + data.previousWin2}}-</span><span *ngIf="data.previousL1 != null && data.previousL2 != null">{{data.previousL1 + data.previousL2}}</span><span *ngIf="data.previousEra1 != null && data.previousEra2 === undefined"> / <strong>ERA:</strong> {{ data.previousEra1 }} / </span><span *ngIf="data.previousEra1 != null && data.previousEra2 != null"> / <strong>ERA:</strong> {{ (data.previousEra1 + data.previousEra2) / 2 | number:'1.2-2' }} / </span> 
            <span *ngIf="data.previousSO1 != null && data.previousSO2 === undefined"><strong>K's:</strong> {{ data.previousSO1 }}</span><span *ngIf="data.previousSO1 != null && data.previousSO2 != null"><strong>K's:</strong> {{ data.previousSO1 + data.previousSO2 }}</span>
@@ -160,10 +161,10 @@
             </div>
             <div class="right-content">
               <p>
-                <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
                 <br>
                 <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.height}} Weight: {{data.player.weight}}</span>
-                <br> <span *ngIf="data.player.city != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.country === 'USA'">{{data.player.city}}</span><span *ngIf="data.player.country != 'USA'">{{data.player.country}}</span></span>
+                <br> <span *ngIf="data.player.birthCity != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.birthCountry === 'USA'">{{data.player.birthCity}}</span><span *ngIf="data.player.birthCountry != 'USA'">{{data.player.birthCountry}}</span></span>
                 <br> Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
                 <ng-template #content>{{data.team.opponent}}</ng-template>
                 <ng-template #other_content>No game today.</ng-template>
@@ -176,22 +177,22 @@
           </div>
           <div class="bottom-content">
             <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
-            <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data.player.throws != null"> - {{data.player.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
+            <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
             <p class="name-number">
               <b>W-L:</b> {{ data.stats.pitching.wins +'-'+ data.stats.pitching.losses }} / <b>ERA:</b> {{ data.stats.pitching.earnedRunAvg }} /
               <b>K's:</b> {{ data.stats.pitching.pitcherStrikeouts }}
             </p>
-            <div class="fav-pitch live-pitch" *ngIf="data.player.winToday == '0' && data.player.saveToday == '0' && data.player.loseToday == '0'">
+            <div class="fav-pitch live-pitch" *ngIf="data.player.winToday === 0 && data.player.saveToday === 0 && data.player.loseToday === 0">
               (live stats) Game Time: {{data.player.gameTime | date: 'shortTime'}} EST <span *ngIf="data.player.gameLocation === 'away'">@{{data.team.opponentCity}}</span>
               <br>
               <br> {{ data.player.firstName + ' ' + data.player.lastName}} pitched
               <div *ngIf="data.player.inningsToday === '1.0';then pt else other_pt"></div>
               <ng-template #pt>1 inning</ng-template>
               <ng-template #other_pt>{{data.player.inningsToday}} innings</ng-template>, {{data.player.strikeoutsToday}}
-              <div *ngIf="data.player.strikeoutsToday === '1';then k else other_k"></div>
+              <div *ngIf="data.player.strikeoutsToday === 1;then k else other_k"></div>
               <ng-template #k>strikeout</ng-template>
               <ng-template #other_k>strikeouts</ng-template> and gave up {{data.player.earnedrunsToday}}
-              <div *ngIf="data.player.earnedrunsToday === '1';then r else other_r"></div>
+              <div *ngIf="data.player.earnedrunsToday === 1;then r else other_r"></div>
               <ng-template #r>run</ng-template>
               <ng-template #other_r>runs</ng-template> today!
               <br>
@@ -230,13 +231,13 @@
           </div>
           <div class="right-content">
             <p>
-              <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
-              <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === '1'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
+              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary != ''">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
               <span *ngIf="data.player.contractTotalYears != ''">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
-              <span *ngIf="data.player.DraftYear != ''">Drafted: Round {{data.player.DraftRound}}, {{data.player.DraftYear}}<br></span>
+              <span *ngIf="data.player.draftYear != ''">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
               <span *ngIf="data.player.college != ''">College: {{data.player.college}}<br></span> 
-              <span *ngIf="data.player.highschool != ''">Highschool: {{data.player.highschool}} <br></span>
+              <span *ngIf="data.player.highSchool != ''">Highschool: {{data.player.highSchool}} <br></span>
               Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
@@ -250,10 +251,10 @@
         </div>
         <div class="bottom-content">
           <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
-          <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data.player.throws != null"> - {{data.player.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
+          <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
           <p class="name-number">
-            <span  *ngIf="data.player.winToday === '1'"><b>W</b></span>
-            <span  *ngIf="data.player.loseToday === '1'"><b>L</b></span>
+            <span  *ngIf="data.player.winToday === 1"><b>W</b></span>
+            <span  *ngIf="data.player.loseToday === 1"><b>L</b></span>
             
             <b>ERA:</b> {{ data.player.eraToday }} /
             <b>K's:</b> {{ data.player.strikeoutsToday }} <br>
@@ -262,6 +263,137 @@
          <!--  <div class="fav-pitch live-stats-block">
             <p>score, inning top bottom, whos on base, no decision stuff...</p>
           </div> -->
+          <div class="fav-pitch live-pitch live-status">
+
+          <span *ngIf="data.team.isGameOver === true">
+            Final Score:
+          </span>
+
+          <span class="score-img">
+            <img src="../assets/mlb-logos/{{data?.team.id}}.png" alt="">
+          </span> 
+          {{ data?.team.teamScore }} 
+          <span class="score-img">
+            <img src="../assets/mlb-logos/{{data?.team.opponentId}}.png" alt="">
+          </span>
+          {{ data?.team.opponentScore }} | 
+
+          <span *ngIf="data.team.isGameOver === true">
+            <span *ngIf="data?.team.teamScore &gt;  data?.team.opponentScore"> {{data.team.abbreviation}} wins!</span>
+            <span *ngIf="data?.team.teamScore <  data?.team.opponentScore"> {{data.team.opponent}} wins!</span>
+          </span>
+
+          <span *ngIf="data.team.isGameInProgress === true">
+          <span *ngIf="data?.team.currentInningHalf === 'TOP';then up else down"></span>
+          <ng-template #up><i class="material-icons" style="color: red;">arrow_drop_up</i></ng-template>
+          <ng-template #down><i class="material-icons" style="color: red;">arrow_drop_down</i></ng-template> 
+          {{ data?.team.currentInning }}<span *ngIf="data.team.currentInning === 1">st</span>
+             <span *ngIf="data.team.currentInning === 2">nd</span>
+             <span *ngIf="data.team.currentInning === 3">rd</span>
+             <span *ngIf="data.team.currentInning != 1 && data.team.currentInning != 2 && data.team.currentInning != 3">th</span> inning - {{data?.team.outCount}} 
+          <span *ngIf="data?.team.outCount === 1;then out else outs"></span>
+          <ng-template #out>Out</ng-template> <ng-template #outs>Outs</ng-template> {{data?.team.ballCount}} 
+          <span *ngIf="data?.team.ballCount === 1;then ball else balls"></span><ng-template #ball>Ball</ng-template> 
+          <ng-template #balls>Balls</ng-template>  {{data?.team.strikeCount}} <span *ngIf="data.team.strikeCount === 1;then strike else strikes"></span>
+          <ng-template #strike>Strike</ng-template> <ng-template #strikes>Strikes</ng-template>
+          </span>
+
+          <p *ngIf="data.team.isGameInProgress === true && data.isPitchingRightNow === false">
+            {{ data.player.firstName + ' ' + data.player.lastName }} is no longer pitching in this game. 
+            He lasted {{ data.player.inningsToday }} innings and threw {{data.player.pitchesthrownToday}} pitches today and allowed {{data.player.hitsallowedToday}} <span *ngIf="data.player.hitsallowedToday === 1;then hit else hits"></span>
+            <ng-template #hit>hit</ng-template><ng-template #hits>hits</ng-template>! 
+          
+          </p> 
+
+          <p *ngIf="data.team.isGameInProgress === true  && data.isPitchingRightNow === true">
+            {{ data.player.firstName + ' ' + data.player.lastName }} is facing {{data.team.opponent}} today. 
+            He threw {{data.player.pitchesthrownToday}} pitches today and allowed {{data.player.hitsallowedToday}} 
+            <span *ngIf="data.player.hitsallowedToday === 1;then hit else hits"></span>
+            <ng-template #hit>hit</ng-template><ng-template #hits>hits</ng-template>!
+
+          </p> 
+
+
+             <p *ngIf="data.team.isGameInProgress === true  && data.isPitchingRightNow === true && data.pitcher === data.player.firstName + ' ' + data.player.lastName">
+               The 
+     <span *ngIf="data.throwHand === 'R'">Righty </span> 
+     <span *ngIf="data.throwHand === 'L'">Lefty </span> 
+     <span *ngIf="data.pitcher === data.player.firstName + ' ' + data.player.lastName"> {{data.pitcher}}</span> 
+     <span *ngIf="data.pitcher != data.player.firstName + ' ' + data.player.lastName"> {{ data.pitcher }}</span> is on the mound for 
+     <span *ngIf="data.team.abbreviation === data.battingTeam;then opponent else team"></span><ng-template #opponent>{{ data.team.opponent }}</ng-template>
+     <ng-template #team>{{ data.team.abbreviation }}</ng-template>. 
+              {{data.batter}} is <span>hitting  
+     <span *ngIf="data.battingFrom === 'R'">from the right</span> 
+     <span *ngIf="data.battingFrom === 'L'">from the left</span> </span> at the plate. 
+
+              The last pitch was a {{data.throwSpeed}} mph
+     <span *ngIf="data.throwType === 'FOUR_SEAM_FASTBALL'"> four seam fastball </span>
+     <span *ngIf="data.throwType === 'SLIDER'"> slider </span>
+     <span *ngIf="data.pitchResult === 'IN_PLAY_OUTS'"> the ball is in play for an out</span> 
+     <span *ngIf="data.pitchResult === 'FOUL'"> was hit foul </span> 
+     <span *ngIf="data.pitchResult === 'CALLED_STRIKE'"> thrown for a strike</span> 
+     <span *ngIf="data.pitchResult === 'BALL'"> thrown for a ball</span> 
+     <span *ngIf="data.pitchResult === 'IN_PLAY_RUNS'"> the ball is in play, runs score</span>.</p>
+         
+          
+
+
+          <p *ngIf="data.team.isGameOver === true">
+            This game is over. {{data.team.abbreviation}} <span *ngIf="data?.team.teamScore &gt; data?.team.opponentScore"> won </span> <span *ngIf="data?.team.teamScore < data?.team.opponentScore"> lost </span> 
+            <span *ngIf="data.player.gameLocation === 'home'"> at home </span> <span *ngIf="data.player.gameLocation === 'away'"> on the road </span> against   
+            {{ data.team.opponent }} {{data.team.teamScore}} to {{ data.team.opponentScore }}. 
+            {{ data.player.firstName + ' ' + data.player.lastName }} faced {{data.team.opponent}} today. 
+            He lasted {{ data.player.inningsToday }} innings and threw {{data.player.pitchesthrownToday}} pitches today and allowed {{data.player.hitsallowedToday}} hits! 
+            <span *ngIf="data.team.teamScore < data.team.opponentScore && data.player.loseToday === 0">
+            {{data.player.firstName + ' ' + data.player.lastName}} recieved a no decision today.</span>
+          </p>
+
+            <p *ngIf="data?.player?.pitchSpeedAvgToday">Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
+            <p *ngIf="data?.player?.fastestPitchToday">Top pitch today {{data.player.fastestPitchToday}}mph</p>
+
+         <!--   <p *ngIf="data.team.isGameInProgress === true">
+             {{ data.team.abbreviation }} is 
+             <span *ngIf="data.team.teamScore &gt; data.team.opponentScore">
+             winning {{ data.team.teamScore }} to {{ data.team.opponentScore }} over {{ data.team.opponent }}
+             </span>
+             <span *ngIf="data.team.teamScore < data.team.opponentScore">
+             trailing {{data.team.teamScore }} to {{ data.team.opponentScore }} 
+             to {{ data.team.opponent }}</span> 
+             <span *ngIf="data.team.teamScore === data.team.opponentScore"> tied {{data.team.teamScore }} to {{ data.team.opponentScore }} with {{ data.team.opponent }}</span>  
+             in the {{ data.team.currentInningHalf }} of the {{ data.team.currentInning }}     <span *ngIf="data.team.currentInning === 1">st</span>
+             <span *ngIf="data.team.currentInning === 2">nd</span>
+             <span *ngIf="data.team.currentInning === 3">rd</span>
+             <span *ngIf="data.team.currentInning != 1 && data.team.currentInning != 2 && data.team.currentInning != 3">th</span> inning. 
+             {{data.battingTeam}} is at bat right now. And the 
+             <span *ngIf="data.throwHand === 'R'">Righty </span> 
+             <span *ngIf="data.throwHand === 'L'">Lefty </span> 
+             <span *ngIf="data.pitcher === data.player.firstName + ' ' + data.player.lastName"> {{data.pitcher}}</span> 
+             <span *ngIf="data.pitcher != data.player.firstName + ' ' + data.player.lastName"> {{ data.pitcher }}</span> is on the mound for 
+             <span *ngIf="data.team.abbreviation === data.battingTeam;then opponent else team"></span><ng-template #opponent>{{ data.team.opponent }}</ng-template>
+             <ng-template #team>{{ data.team.abbreviation }}</ng-template>. {{data.batter}} is <span>hitting  
+             <span *ngIf="data.battingFrom === 'R'">from the right</span> 
+             <span *ngIf="data.battingFrom === 'L'">from the left</span> </span> at the plate with 
+             {{data?.team.outCount}} 
+            <span *ngIf="data?.team.outCount === 1;then out else outs"></span>
+            <ng-template #out>Out,</ng-template> <ng-template #outs>Outs,</ng-template> {{data?.team.ballCount}} 
+            <span *ngIf="data?.team.ballCount === 1;then ball else balls"></span><ng-template #ball>Ball</ng-template> 
+            <ng-template #balls>Balls</ng-template> and {{data?.team.strikeCount}} <span *ngIf="data.team.strikeCount === 1;then strike else strikes"></span>
+            <ng-template #strike>Strike</ng-template> <ng-template #strikes>Strikes</ng-template>.
+
+             <span *ngIf="data.team.firstBaseRunner">{{data.team.firstBaseRunner}} is the runner on first.</span> 
+             <span *ngIf="data.team.secondBaseRunner">{{data.team.secondBaseRunner}} is the runner on second.</span><span *ngIf="data.team.thirdBaseRunner"> 
+             {{data.team.thirdBaseRunner}} is the runner on thirdbase.</span> 
+             The last pitch was a {{data.throwSpeed}} mph
+             <span *ngIf="data.throwType === 'FOUR_SEAM_FASTBALL'"> four seam fastball </span>
+             <span *ngIf="data.throwType === 'SLIDER'"> slider </span>
+             <span *ngIf="data.pitchResult === 'IN_PLAY_OUTS'"> the ball is in play for an out</span> 
+             <span *ngIf="data.pitchResult === 'FOUL'"> was hit foul </span> 
+             <span *ngIf="data.pitchResult === 'CALLED_STRIKE'"> thrown for a strike</span> 
+             <span *ngIf="data.pitchResult === 'BALL'"> thrown for a ball</span> 
+             <span *ngIf="data.pitchResult === 'IN_PLAY_RUNS'"> the ball is in play, runs score</span>.
+            </p> -->
+            
+        </div>
           <div *ngIf="data.player.favPitchPercentToday != null" class="fav-pitch">
             <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher2SeamFastballsToday">Throwing 2-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
             <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher4SeamFastballsToday">Throwing 4-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
@@ -273,12 +405,12 @@
             <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSplittersToday">Throwing Splitter {{data.player.favPitchPercentToday}}%.</p>
           
           </div>
-          <div *ngIf="data.player.pitchSpeedAvgToday != null" class="fav-pitch">
+         <!--  <div *ngIf="data.player.pitchSpeedAvgToday != null" class="fav-pitch">
             <p>Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
           </div>
           <div *ngIf="data.player.fastestPitchToday != null" class="fav-pitch">
             <p>Top pitch today {{data.player.fastestPitchToday}}mph</p>
-          </div>
+          </div> -->
         </div>
          
       </div> <!-- SCORE BACK OF CARD  -->
@@ -298,10 +430,10 @@
             </div>
             <div class="right-content">
               <p>
-                <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
                 <br>
                 <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.height}} Weight: {{data.player.weight}}</span>
-                <br> <span *ngIf="data.player.city != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.country === 'USA'">{{data.player.city}}</span><span *ngIf="data.player.country != 'USA'">{{data.player.country}}</span></span>
+                <br> <span *ngIf="data.player.birthCity != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.birthCountry === 'USA'">{{data.player.birthCity}}</span><span *ngIf="data.player.birthCountry != 'USA'">{{data.player.birthCountry}}</span></span>
                 <br> Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
                 <ng-template #content>{{data.team.opponent}}</ng-template>
                 <ng-template #other_content>No game today.</ng-template>
@@ -314,27 +446,27 @@
           </div>
           <div class="bottom-content">
             <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
-            <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data.player.throws != null"> - {{data.player.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
+            <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
             <p class="name-number">
               <b>W-L:</b> {{ data.stats.pitching.wins +'-'+ data.stats.pitching.losses }} / <b>ERA:</b> {{ data.stats.pitching.earnedRunAvg }} /
               <b>K's:</b> {{ data.stats.pitching.pitcherStrikeouts }}
             </p>
-            <div class="fav-pitch" *ngIf="data.player.winToday == '0' && data.player.loseToday == '0'">
+            <div class="fav-pitch" *ngIf="data.player.winToday === 0 && data.player.loseToday === 0">
               <p>{{ data.player.firstName + ' ' + data.player.lastName}} got a no-decision today!</p>
               <br>
               <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
             </div>
-            <div class="fav-pitch" *ngIf="data.player.winToday == '1'">
+            <div class="fav-pitch" *ngIf="data.player.winToday == 1">
               <p>{{ data.player.firstName + ' ' + data.player.lastName}} got a Win today!</p>
               <br>
               <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
             </div>
-            <div class="fav-pitch" *ngIf="data.player.loseToday == '1'">
+            <div class="fav-pitch" *ngIf="data.player.loseToday == 1">
               <p>{{ data.player.firstName + ' ' + data.player.lastName}} Lost today!</p>
               <br>
               <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
             </div>
-            <div class="fav-pitch" *ngIf="data.player.saveToday == '1'">
+            <div class="fav-pitch" *ngIf="data.player.saveToday == 1">
               <p>{{ data.player.firstName + ' ' + data.player.lastName}} got a Save today!</p>
               <br>
               <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
@@ -372,13 +504,13 @@
           </div>
           <div class="right-content">
             <p>
-              <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
-              <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === '1'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
+              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary != ''">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
               <span *ngIf="data.player.contractTotalYears != ''">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
-              <span *ngIf="data.player.DraftYear != ''">Drafted: Round {{data.player.DraftRound}}, {{data.player.DraftYear}}<br></span>
+              <span *ngIf="data.player.draftYear != ''">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
               <span *ngIf="data.player.college != ''">College: {{data.player.college}}<br></span> 
-              <span *ngIf="data.player.highschool != ''">Highschool: {{data.player.highschool}} <br></span>
+              <span *ngIf="data.player.highSchool != ''">Highschool: {{data.player.highSchool}} <br></span>
               Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
@@ -392,10 +524,10 @@
         </div>
         <div class="bottom-content">
           <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
-          <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data.player.throws != null"> - {{data.player.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
+          <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
           <p class="name-number">
-            <span  *ngIf="data.player.winToday === '1'"><b>W</b></span>
-            <span  *ngIf="data.player.loseToday === '1'"><b>L</b></span>
+            <span  *ngIf="data.player.winToday === 1"><b>W</b></span>
+            <span  *ngIf="data.player.loseToday === 1"><b>L</b></span>
             
             / <b>ERA:</b> {{ data.player.eraToday }} /
             <b>K's:</b> {{ data.player.strikeoutsToday }}
@@ -405,6 +537,135 @@
          <!--  <div class="fav-pitch live-stats-block">
             <p>score, inning top bottom, whos on base, no decision stuff...</p>
           </div> -->
+          <div class="fav-pitch live-pitch live-status">
+
+  <span *ngIf="data.team.isGameOver === true">
+    Final Score:
+  </span>
+
+  <span class="score-img">
+    <img src="../assets/mlb-logos/{{data?.team.id}}.png" alt="">
+  </span> 
+  {{ data?.team.teamScore }} 
+  <span class="score-img">
+    <img src="../assets/mlb-logos/{{data?.team.opponentId}}.png" alt="">
+  </span>
+  {{ data?.team.opponentScore }} | 
+
+  <span *ngIf="data.team.isGameOver === true">
+    <span *ngIf="data?.team.teamScore &gt;  data?.team.opponentScore"> {{data.team.abbreviation}} wins!</span>
+    <span *ngIf="data?.team.teamScore <  data?.team.opponentScore"> {{data.team.opponent}} wins!</span>
+  </span>
+
+  <span *ngIf="data.team.isGameInProgress === true">
+  <span *ngIf="data?.team.currentInningHalf === 'TOP';then up else down"></span>
+  <ng-template #up><i class="material-icons" style="color: red;">arrow_drop_up</i></ng-template>
+  <ng-template #down><i class="material-icons" style="color: red;">arrow_drop_down</i></ng-template> 
+  {{ data?.team.currentInning }}<span *ngIf="data.team.currentInning === 1">st</span>
+     <span *ngIf="data.team.currentInning === 2">nd</span>
+     <span *ngIf="data.team.currentInning === 3">rd</span>
+     <span *ngIf="data.team.currentInning != 1 && data.team.currentInning != 2 && data.team.currentInning != 3">th</span> inning - {{data?.team.outCount}} 
+  <span *ngIf="data?.team.outCount === 1;then out else outs"></span>
+  <ng-template #out>Out</ng-template> <ng-template #outs>Outs</ng-template> {{data?.team.ballCount}} 
+  <span *ngIf="data?.team.ballCount === 1;then ball else balls"></span><ng-template #ball>Ball</ng-template> 
+  <ng-template #balls>Balls</ng-template>  {{data?.team.strikeCount}} <span *ngIf="data.team.strikeCount === 1;then strike else strikes"></span>
+  <ng-template #strike>Strike</ng-template> <ng-template #strikes>Strikes</ng-template>
+  </span>
+
+   <p *ngIf="data.team.isGameInProgress === true && data.isPitchingRightNow === false">
+            {{ data.player.firstName + ' ' + data.player.lastName }} is no longer pitching in this game. 
+            He lasted {{ data.player.inningsToday }} innings and threw {{data.player.pitchesthrownToday}} pitches today and allowed {{data.player.hitsallowedToday}} <span *ngIf="data.player.hitsallowedToday === 1;then hit else hits"></span>
+            <ng-template #hit>hit</ng-template><ng-template #hits>hits</ng-template>! 
+      
+          </p> 
+
+          <p *ngIf="data.team.isGameInProgress === true  && data.isPitchingRightNow === true">
+            {{ data.player.firstName + ' ' + data.player.lastName }} is facing {{data.team.opponent}} today. 
+            He threw {{data.player.pitchesthrownToday}} pitches today and allowed {{data.player.hitsallowedToday}} 
+            <span *ngIf="data.player.hitsallowedToday === 1;then hit else hits"></span>
+            <ng-template #hit>hit</ng-template><ng-template #hits>hits</ng-template>!
+            
+          </p>
+
+           <p *ngIf="data.team.isGameInProgress === true  && data.isPitchingRightNow === true && data.pitcher === data.player.firstName + ' ' + data.player.lastName">
+            The 
+     <span *ngIf="data.throwHand === 'R'">Righty </span> 
+     <span *ngIf="data.throwHand === 'L'">Lefty </span> 
+     <span *ngIf="data.pitcher === data.player.firstName + ' ' + data.player.lastName"> {{data.pitcher}}</span> 
+     <span *ngIf="data.pitcher != data.player.firstName + ' ' + data.player.lastName"> {{ data.pitcher }}</span> is on the mound for 
+     <span *ngIf="data.team.abbreviation === data.battingTeam;then opponent else team"></span><ng-template #opponent>{{ data.team.opponent }}</ng-template>
+     <ng-template #team>{{ data.team.abbreviation }}</ng-template>. 
+            {{data.batter}} is <span>hitting  
+     <span *ngIf="data.battingFrom === 'R'">from the right</span> 
+     <span *ngIf="data.battingFrom === 'L'">from the left</span> </span> at the plate. 
+
+              The last pitch was a {{data.throwSpeed}} mph
+     <span *ngIf="data.throwType === 'FOUR_SEAM_FASTBALL'"> four seam fastball </span>
+     <span *ngIf="data.throwType === 'SLIDER'"> slider </span>
+     <span *ngIf="data.pitchResult === 'IN_PLAY_OUTS'"> the ball is in play for an out</span> 
+     <span *ngIf="data.pitchResult === 'FOUL'"> was hit foul </span> 
+     <span *ngIf="data.pitchResult === 'CALLED_STRIKE'"> thrown for a strike</span> 
+     <span *ngIf="data.pitchResult === 'BALL'"> thrown for a ball</span> 
+     <span *ngIf="data.pitchResult === 'IN_PLAY_RUNS'"> the ball is in play, runs score</span>.</p>
+         
+          
+        
+  <p *ngIf="data.team.isGameOver === true">
+    This game is over. {{data.team.abbreviation}} <span *ngIf="data?.team.teamScore &gt; data?.team.opponentScore"> won </span> <span *ngIf="data?.team.teamScore < data?.team.opponentScore"> lost </span> 
+    <span *ngIf="data.player.gameLocation === 'home'"> at home </span> <span *ngIf="data.player.gameLocation === 'away'"> on the road </span> against   
+    {{ data.team.opponent }} {{data.team.teamScore}} to {{ data.team.opponentScore }}. 
+    {{ data.player.firstName + ' ' + data.player.lastName }} faced {{data.team.opponent}} today. 
+    He lasted {{ data.player.inningsToday }} innings and threw {{data.player.pitchesthrownToday}} pitches today and allowed {{data.player.hitsallowedToday}} hits! 
+    <span *ngIf="data.team.teamScore < data.team.opponentScore && data.player.loseToday === 0">
+    {{data.player.firstName + ' ' + data.player.lastName}} recieved a no decision today.</span>
+  </p>
+
+     <p *ngIf="data?.player?.pitchSpeedAvgToday">Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
+            <p *ngIf="data?.player?.fastestPitchToday">Top pitch today {{data.player.fastestPitchToday}}mph</p>
+
+  <!--  <p *ngIf="data.team.isGameInProgress === true">
+     {{ data.team.abbreviation }} is 
+     <span *ngIf="data.team.teamScore &gt; data.team.opponentScore">
+     winning {{ data.team.teamScore }} to {{ data.team.opponentScore }} over {{ data.team.opponent }}
+     </span>
+     <span *ngIf="data.team.teamScore < data.team.opponentScore">
+     trailing {{data.team.teamScore }} to {{ data.team.opponentScore }} 
+     to {{ data.team.opponent }}</span> 
+     <span *ngIf="data.team.teamScore === data.team.opponentScore"> tied {{data.team.teamScore }} to {{ data.team.opponentScore }} with {{ data.team.opponent }}</span>  
+     in the {{ data.team.currentInningHalf }} of the {{ data.team.currentInning }}     <span *ngIf="data.team.currentInning === 1">st</span>
+     <span *ngIf="data.team.currentInning === 2">nd</span>
+     <span *ngIf="data.team.currentInning === 3">rd</span>
+     <span *ngIf="data.team.currentInning != 1 && data.team.currentInning != 2 && data.team.currentInning != 3">th</span> inning. 
+     {{data.battingTeam}} is at bat right now. And the 
+     <span *ngIf="data.throwHand === 'R'">Righty </span> 
+     <span *ngIf="data.throwHand === 'L'">Lefty </span> 
+     <span *ngIf="data.pitcher === data.player.firstName + ' ' + data.player.lastName"> {{data.pitcher}}</span> 
+     <span *ngIf="data.pitcher != data.player.firstName + ' ' + data.player.lastName"> {{ data.pitcher }}</span> is on the mound for 
+     <span *ngIf="data.team.abbreviation === data.battingTeam;then opponent else team"></span><ng-template #opponent>{{ data.team.opponent }}</ng-template>
+     <ng-template #team>{{ data.team.abbreviation }}</ng-template>. {{data.batter}} is <span>hitting  
+     <span *ngIf="data.battingFrom === 'R'">from the right</span> 
+     <span *ngIf="data.battingFrom === 'L'">from the left</span> </span> at the plate with 
+     {{data?.team.outCount}} 
+    <span *ngIf="data?.team.outCount === 1;then out else outs"></span>
+    <ng-template #out>Out,</ng-template> <ng-template #outs>Outs,</ng-template> {{data?.team.ballCount}} 
+    <span *ngIf="data?.team.ballCount === 1;then ball else balls"></span><ng-template #ball>Ball</ng-template> 
+    <ng-template #balls>Balls</ng-template> and {{data?.team.strikeCount}} <span *ngIf="data.team.strikeCount === 1;then strike else strikes"></span>
+    <ng-template #strike>Strike</ng-template> <ng-template #strikes>Strikes</ng-template>.
+
+     <span *ngIf="data.team.firstBaseRunner">{{data.team.firstBaseRunner}} is the runner on first.</span> 
+     <span *ngIf="data.team.secondBaseRunner">{{data.team.secondBaseRunner}} is the runner on second.</span><span *ngIf="data.team.thirdBaseRunner"> 
+     {{data.team.thirdBaseRunner}} is the runner on thirdbase.</span> 
+     The last pitch was a {{data.throwSpeed}} mph
+     <span *ngIf="data.throwType === 'FOUR_SEAM_FASTBALL'"> four seam fastball </span>
+     <span *ngIf="data.throwType === 'SLIDER'"> slider </span>
+     <span *ngIf="data.pitchResult === 'IN_PLAY_OUTS'"> the ball is in play for an out</span> 
+     <span *ngIf="data.pitchResult === 'FOUL'"> was hit foul </span> 
+     <span *ngIf="data.pitchResult === 'CALLED_STRIKE'"> thrown for a strike</span> 
+     <span *ngIf="data.pitchResult === 'BALL'"> thrown for a ball</span> 
+     <span *ngIf="data.pitchResult === 'IN_PLAY_RUNS'"> the ball is in play, runs score</span>.
+    </p> -->
+    
+</div>
           <div *ngIf="data.player.favPitchPercentToday != null" class="fav-pitch">
             <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher2SeamFastballsToday">Throwing 2-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
             <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher4SeamFastballsToday">Throwing 4-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
@@ -415,12 +676,12 @@
             <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSinkersToday">Throwing Sinker {{data.player.favPitchPercentToday}}%.</p>
             <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSplittersToday">Throwing Splitter {{data.player.favPitchPercentToday}}%.</p>
           </div>
-          <div *ngIf="data.player.pitchSpeedAvgToday != null" class="fav-pitch">
+         <!--  <div *ngIf="data.player.pitchSpeedAvgToday != null" class="fav-pitch">
             <p>Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
           </div>
           <div *ngIf="data.player.fastestPitchToday != null" class="fav-pitch">
             <p>Top pitch today {{data.player.fastestPitchToday}}mph</p>
-          </div>
+          </div> -->
         </div>
          
       </div> <!-- SCORE BACK OF CARD  -->

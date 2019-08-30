@@ -40,7 +40,7 @@ import { PitchingStatsComponent, MyDialog } from './pitching-stats/pitching-stat
 import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from './starting-goalies/starting-goalies.component';
 import { YesterdayResultsComponent, InfoYesterday } from './yesterday-results/yesterday-results.component';
 import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './tomorrow-results/tomorrow-results.component';
-import { BaseballPlayerComponent } from './baseball-player/baseball-player.component';
+
 // import { ShareModule } from 'ng2share/share.module';
 
 
@@ -69,14 +69,8 @@ const routes: Routes = [
   {
         path: 'starting-goalies',
         component: StartingGoaliesComponent
-  },
-  {
-        path: 'daily-stats/:id',
-        component: BaseballPlayerComponent
-      
-   }
+  }
 
- 
 ];
 
 @NgModule({
@@ -95,8 +89,7 @@ const routes: Routes = [
     TodayDialog,
     LastweekDialog,
     TomorrowDialog,
-    LoginDialog,
-    BaseballPlayerComponent
+    LoginDialog
   ],
   imports: [
     BrowserModule,

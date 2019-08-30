@@ -96,13 +96,12 @@ export class DataService {
 
   }
 
-  getStats(playerID) {
+  getStats(players) {
 
     if (!this.stats) {
-
-      console.log('getting cumulative_player_stats by player ID from API...');
+      //console.log('getting cumulative_player_stats by player ID from API...', players);
       //let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&player=`+playerID;
-      let url = `${this.apiRoot}/player_stats_totals.json?position=P&player=${playerID}`;
+      let url = `${this.apiRoot}/player_stats_totals.json?position=P&player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     }
@@ -149,9 +148,8 @@ export class DataService {
   getScore(data) {
 
     if (!this.score) {
-      //let url = `${this.apiRoot}/scoreboard.json?fordate=`+dailyDate;
-      let url = `${this.apiRoot}/games/`+dailyDate+`-`+ data.team.opponent +`-`+ data.team.abbreviation+`/boxscore.json`
-      console.log('getting daily scores of todays games from API...');
+      console.log(`${this.apiRoot}/games/`+data+`/boxscore.json`, 'getting daily scores of todays games from API...');
+      let url = `${this.apiRoot}/games/`+data+`/boxscore.json`;
       this.score = this.http.get(url, {headers})
         
     }
