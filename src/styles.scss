@@ -33,7 +33,7 @@ h1.date-header {
   color: #fff;
 }
 
-my-dialog img {
+my-dialog .player-headshot {
   width: 50%;
   display: inline-block;
   /*border-radius: 10%;*/
@@ -55,6 +55,20 @@ my-dialog .fav-pitch {
 
 my-dialog .live-pitch {
   background: #2ecc71;
+}
+
+my-dialog .live-pitch.live-status {
+  background: #111;
+  p {
+    text-align: left;
+    padding: 10px;
+  }
+  p.center {
+    text-align: center;
+  }
+  p.center:hover {
+    cursor: pointer;
+  }
 }
 
 .mat-dialog-container {
@@ -183,6 +197,60 @@ footer {
   clear: both;
 }
 
+/* More stats */
+my-dialog {
+  .player-img img {
+    width: 10%;
+    display: inline-block;
+    box-shadow: 0 0 0 rgba(0,0,0,0.19), 0 0 0 rgba(0,0,0,0.23);
+    margin: 5px 5px 0 5px;
+  }
+
+  .no-player-selected {
+    display: none;
+  }
+
+  .player-selected {
+    display: normal;
+  }
+
+  mat-card p {
+    font-size: 20px;
+  }
+
+  .current-pitcher-link {
+    color: #0f83ba;
+    cursor: pointer;
+  }
+
+  .loading {
+    display: none;
+  }
+
+  .notLoading {
+    display: normal;
+  }
+
+  .spinner-msg {
+    text-align: center; 
+    background: #fff; 
+    height:250px; 
+    padding-top: 80px;
+  }
+
+  mat-spinner {
+    margin: 0 auto;
+  }
+
+  .score-img img {
+    width: 4%;
+    margin: 5px 0 0 0;
+  }
+
+  .go-back-btn {
+    color: #fff;
+  }
+}
 
 @media only screen and (max-width: 700px) {
 

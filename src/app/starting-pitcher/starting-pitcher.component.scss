@@ -85,9 +85,17 @@ ul {
   font-size: 16px;
 }
 
-.bottom-content img {
-  width: 10%; 
-}
+.bottom-content {
+  img {
+    width: 5%;
+    margin: 0;
+  }
+  .live-pitch.live-status p {
+    text-align: left;
+    padding: 3px;
+  }
+} 
+
 
 .fav-pitch {
   background: #d35400;
