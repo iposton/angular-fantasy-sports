@@ -4,7 +4,7 @@ import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs/Observable';
 import { DataService } from '../data.service';
 import { FirebaseService } from '../firebase.service';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
@@ -61,9 +61,11 @@ export class PitchingStatsComponent implements OnInit {
   public stat: string = '';
   public defineToken: string = '';
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
+  public gameStarter: { gameID: string, playerID: string, score: any, status: any };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
   public specificFastballData: Array <any> = [];
   public speedResults: Array < any > = [];
+  public gameStarters: Array < any > = [];
 
   //MAT-TABLE 
   public displayedColumns = [
@@ -80,7 +82,10 @@ export class PitchingStatsComponent implements OnInit {
   @ViewChild(MatSort,{static: false}) sort: MatSort;
   public dataSource: MyDataSource;
 
-  constructor(public dialog: MatDialog, private dataService: DataService, private firebaseService: FirebaseService, private http: HttpClient) {
+  constructor(public dialog: MatDialog, 
+    private dataService: DataService, 
+    private firebaseService: FirebaseService, 
+    private http: HttpClient) {
     this.players = this.dataService.getAllSentStats();
   }
 
@@ -110,24 +115,27 @@ export class PitchingStatsComponent implements OnInit {
                   res['games'].map(
                     g =>
 
-                    this.http.get(`${this.apiRoot}/games/`+this.dataService.dailyDate+`-`+ g['schedule'].awayTeam.abbreviation +`-`+ g['schedule'].homeTeam.abbreviation+`/lineup.json?position=P`, { headers })
+                    this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=P`, { headers })
                   
                   )
                 )
                 .subscribe(res => {
-                  console.log(res, 'making several calls by GAME ID for starting lineups...');
+                  //console.log(res, 'making several calls by GAME ID for starting lineups...');
 
                   let i;
                   let i2;
                   let res2;
+                  let game2;
+                  let score2;
                   res.forEach((item, index) => {
                     i = index;
                     //console.log(res[i]['gamestartinglineup'].teamLineup, 'got starting lineups data!');
                     //res2 = res[i]['gamestartinglineup'].teamLineup;
 
                     try {
-                      //game2 = res[i]['game'];
+                      game2 = res[i]['game'];
                       res2 = res[i]['teamLineups'];
+                      score2 = this.dailySchedule[i].score;
                     } catch {
                       console.log('bad endpoint');
                     }
@@ -139,6 +147,13 @@ export class PitchingStatsComponent implements OnInit {
                         this.starterIdData.push(res2[i2].team['id']);
                       } else {
                         //console.log(res2[i2].expected.starter[0].player.ID, 'got player ID!');
+                        this.gameStarter = {
+                          playerID: res2[i2].actual ? res2[i2].actual.lineupPositions[0].player.id : res2[i2].expected.lineupPositions[0].player.id,
+                          gameID: game2.id,
+                          score: score2,
+                          status: game2.playedStatus
+                        }
+                        this.gameStarters.push(this.gameStarter);
                         this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.id);
 
                         //console.log(this.starterIdData, 'this array has ALL the IDs of todays starters');
@@ -147,16 +162,24 @@ export class PitchingStatsComponent implements OnInit {
                     });
                   });
 
+                }, (err: HttpErrorResponse) => {
+
+                   console.log(err, 'error getting lineup');
+
                 });
             }
             this.loadData();
-          })
+          }, (err: HttpErrorResponse) => {
+
+            console.log(err, 'error getting schedule');
+
+          });
      });
 
     this.firebaseService
       .getData()
       .subscribe(x => {
-        console.log(x, 'got response from firebase...');
+        //console.log(x, 'got response from firebase...');
         //this.loadData();
         this.fastballData = x;
       });
@@ -250,7 +273,9 @@ export class PitchingStatsComponent implements OnInit {
                   sdata.player.gameTime = schedule.schedule.startTime;
                   sdata.team.gameField = schedule.schedule.venue.name;
 
-                  sdata.team.gameId = schedule.schedule.id;
+                  // if (schedule.schedule.playedStatus !== "UNPLAYED") 
+                  //   sdata.team.gameId = schedule.schedule.id;
+
                   sdata.player.gameLocation = "away";
                   sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
                   //sdata.team.opponentCity = schedule.schedule.homeTeam.City;
@@ -260,7 +285,10 @@ export class PitchingStatsComponent implements OnInit {
                 if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
                   sdata.player.gameTime = schedule.schedule.startTime;
                   sdata.team.gameField = schedule.schedule.venue.name;
-                  sdata.team.gameId = schedule.schedule.id;
+
+                  // if (schedule.schedule.playedStatus !== "UNPLAYED")
+                  //   sdata.team.gameId = schedule.schedule.id;
+
                   sdata.player.gameLocation = "home";
                   sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                   //sdata.team.opponentCity = schedule.schedule.awayTeam.City;
@@ -284,90 +312,50 @@ export class PitchingStatsComponent implements OnInit {
                   mdata.player.strikeoutsToday = daily.stats.pitching.pitcherStrikeouts;
                   mdata.player.hitsallowedToday = daily.stats.pitching.hitsAllowed;
                   mdata.player.pitchesthrownToday = daily.stats.pitching.pitchesThrown;
+
+                  //TODO Get pitch speeds for today here
+
                 } 
               }
             }
+
+            for (let gs of this.gameStarters) {
+
+                for (let data of this.myData) {
+
+                  if (gs.playerID === data.player.id) {
+                    data.gameId = gs.gameID;
+                    data.score = gs.score;
+                    data.gameStatus = gs.status;
+
+                    if (gs.status !== "UNPLAYED") {
+                      if (data.player.gameLocation === 'home') {
+                        data.team.teamScore = gs.score['homeScoreTotal'];
+                        data.team.opponentScore = gs.score['awayScoreTotal'];
+                      } else if (data.player.gameLocation === 'away') {
+                        data.team.teamScore = gs.score['awayScoreTotal'];
+                        data.team.opponentScore = gs.score['homeScoreTotal'];
+                      }
+                      data.team.currentInning = gs.score['currentInning'];
+                      data.team.currentInningHalf = gs.score['currentInningHalf'];
+                    }
+                    //console.log(game, 'is game over?');
+                    if (gs.status === "COMPLETED" 
+                      || gs.status === "COMPLETED_PENDING_REVIEW") {
+                      data.team.isGameOver = true;
+                      data.team.isGameInProgress = false;
+                      data.team.isGameUnplayed = false;
+                    } else {
+                      data.team.isGameInProgress = true;
+                      data.team.isGameUnplayed = true;
+                      data.team.isGameOver = false;
+                    }
+                  }
+
+                }
+
+              }
           }
-
-          // if (this.myData && this.score) {
-          //   console.log('start sorting data for scoreboard stats...');
-          //   for (let sc of this.score) {
-          //     for (let pdata of this.myData) {
-          //       if (pdata.player.startingToday === true) {
-          //         this.startersData.push(pdata);
-          //       }
-          //       // USE GAMEID TO CHECK FOR OPPOSING PITCHER 
-          //       if (sc.game.awayTeam.Abbreviation === pdata.team.Abbreviation) {
-
-          //         //console.log(sc, 'score items');
-          //         pdata.team.awayPitcher = pdata.player.FirstName + ' ' + pdata.player.LastName;
-          //         pdata.team.opponentAbbreviation = sc.game.homeTeam.Abbreviation;
-          //         pdata.team.teamScore = sc.awayScore;
-          //         pdata.team.opponentScore = sc.homeScore;
-          //         pdata.team.currentInning = sc.currentInning;
-          //         pdata.team.currentInningHalf = sc.currentInningHalf;
-          //         pdata.team.isGameOver = sc.isCompleted;
-          //         pdata.team.isGameInProgress = sc.isInProgress;
-          //         pdata.team.isGameUnplayed = sc.isUnplayed;
-          //         if (sc.playStatus != null) {
-          //           //console.log(sc.playStatus, 'play status');
-          //           pdata.team.balls = sc.playStatus.ballCount;
-          //           pdata.team.strikes = sc.playStatus.strikeCount;
-          //           pdata.team.outs = sc.playStatus.outCount;
-          //           if (sc.playStatus['batter'] != null) {
-          //             pdata.team.currentBatter = sc.playStatus['batter'].FirstName + ' ' + sc.playStatus['batter'].LastName;
-          //           }
-          //           if (sc.playStatus['firstBaseRunner'] != null) {
-          //             pdata.team.firstBaseRunner = sc.playStatus['firstBaseRunner'].FirstName + ' ' + sc.playStatus['firstBaseRunner'].LastName;
-
-          //           }
-          //           if (sc.playStatus['secondBaseRunner'] != null) {
-          //             pdata.team.secondBaseRunner = sc.playStatus['secondBaseRunner'].FirstName + ' ' + sc.playStatus['secondBaseRunner'].LastName;
-          //           }
-          //           if (sc.playStatus['thirdBaseRunner'] != null) {
-          //             pdata.team.thirdBaseRunner = sc.playStatus['thirdBaseRunner'].FirstName + ' ' + sc.playStatus['thirdBaseRunner'].LastName;
-          //           }
-          //           pdata.team.currentPitcher = sc.playStatus.pitcher['ID'];
-          //         }
-
-          //       }
-          //       if (sc.game.homeTeam.Abbreviation === pdata.team.Abbreviation) {
-
-          //         pdata.team.homePitcher = pdata.player.FirstName + ' ' + pdata.player.LastName;
-          //         pdata.team.opponentAbbreviation = sc.game.awayTeam.Abbreviation;
-          //         pdata.team.opponentScore = sc.awayScore;
-          //         pdata.team.teamScore = sc.homeScore;
-          //         pdata.team.currentInning = sc.currentInning;
-          //         pdata.team.currentInningHalf = sc.currentInningHalf;
-          //         pdata.team.isGameOver = sc.isCompleted;
-          //         pdata.team.isGameInProgress = sc.isInProgress;
-          //         pdata.team.isGameUnplayed = sc.isUnplayed;
-          //         if (sc.playStatus != null) {
-          //           console.log(sc.playStatus, 'play status');
-          //           pdata.team.balls = sc.playStatus.ballCount;
-          //           pdata.team.strikes = sc.playStatus.strikeCount;
-          //           pdata.team.outs = sc.playStatus.outCount;
-          //           if (sc.playStatus['batter'] != null) {
-          //             pdata.team.currentBatter = sc.playStatus['batter'].FirstName + ' ' + sc.playStatus['batter'].LastName;
-          //           }
-          //           if (sc.playStatus['firstBaseRunner'] != null) {
-          //             pdata.team.firstBaseRunner = sc.playStatus['firstBaseRunner'].FirstName + ' ' + sc.playStatus['firstBaseRunner'].LastName;
-          //           }
-          //           if (sc.playStatus['secondBaseRunner'] != null) {
-          //             pdata.team.secondBaseRunner = sc.playStatus['secondBaseRunner'].FirstName + ' ' + sc.playStatus['secondBaseRunner'].LastName;
-          //           }
-          //           if (sc.playStatus['thirdBaseRunner'] != null) {
-          //             pdata.team.thirdBaseRunner = sc.playStatus['thirdBaseRunner'].FirstName + ' ' + sc.playStatus['thirdBaseRunner'].LastName;
-          //           }
-
-          //           pdata.team.currentPitcher = sc.playStatus.pitcher['ID'];
-          //         }
-
-          //       }
-
-          //     }
-          //   }
-          // }
 
       
           if (this.myData && this.playerInfo) {
@@ -384,7 +372,7 @@ export class PitchingStatsComponent implements OnInit {
                 // }
 
                 if (info.player.id === data.player.id) {
-                
+                  //TODO Get pitch speeds for the year here
                   if (data.stats.pitching) {
                     data.player.favPitchToday = Math.max(parseInt(data.stats.pitching.pitcher2SeamFastballs, 10), parseInt(data.stats.pitching.pitcher4SeamFastballs, 10), parseInt(data.stats.pitching.pitcherChangeups, 10), parseInt(data.stats.pitching.pitcherCurveballs, 10), parseInt(data.stats.pitching.pitcherCutters, 10), parseInt(data.stats.pitching.pitcherSliders, 10), parseInt(data.stats.pitching.pitcherSinkers, 10), parseInt(data.stats.pitching.pitcherSplitters, 10));
                     data.player.favPitchPercentToday = Math.floor(data.player.favPitchToday / parseInt(data.stats.pitching.pitchesThrown, 10) * 100);
@@ -571,163 +559,10 @@ export class PitchingStatsComponent implements OnInit {
   }
 
   public open(event, data) {
-
-    let teams = null;
+    
     console.log(data, 'get game status for', data.team.abbreviation);
-
-    if (data.player.gameLocation === 'home')
-      teams = this.dataService.dailyDate+`-`+ data.team.opponent +`-`+ data.team.abbreviation;
-    else
-      teams = this.dataService.dailyDate+`-`+ data.team.abbreviation +`-`+ data.team.opponent;
-
-    this.dataService
-      .getScore(teams).subscribe(res => {
-          console.log(res, "Score, Game...");
-
-        if (res != null) {
-
-          this.score = res['scoring'];
-          let game = res['game'].playedStatus; //"COMPLETED" playedStatus: "COMPLETED_PENDING_REVIEW"
-
-            // "awayHitsTotal": 7,
-            // "awayErrorsTotal": 0,
-
-            // "homeHitsTotal": 10,
-            // "homeErrorsTotal": 1,
-
-            if (data.player.gameLocation === 'home') {
-              data.team.teamScore = this.score['homeScoreTotal'];
-              data.team.opponentScore = this.score['awayScoreTotal'];
-            } else if (data.player.gameLocation === 'away') {
-              data.team.teamScore = this.score['awayScoreTotal'];
-              data.team.opponentScore = this.score['homeScoreTotal'];
-            }
-
-            data.team.currentInning = this.score['currentInning'];
-            data.team.currentInningHalf = this.score['currentInningHalf'];
-            data.gameStatus = game;
-            //console.log(game, 'is game over?');
-            if (game === "COMPLETED" || game === "COMPLETED_PENDING_REVIEW") {
-              data.team.isGameOver = true;
-              data.team.isGameInProgress = false;
-              data.team.isGameUnplayed = false;
-            } else {
-              data.team.isGameInProgress = true;
-              data.team.isGameUnplayed = true;
-              data.team.isGameOver = false;
-            }
-
-        }
-      
-   });
-    console.log(`${this.apiRoot}/games/`+teams+`/playbyplay.json`)
-    this.http.get(`${this.apiRoot}/games/`+teams+`/playbyplay.json`, { headers })
-      .subscribe(res => {
-        console.log(res, 'got play by play game data for ' + data.player.lastName);
-
-        if (res != null) {
-
-        if (res['atBats'] != null) {
-
-        res['atBats'].forEach((item2, index) => {
-
-           //console.log(item2, 'atbatplay items...');
-           if (data.team.abbreviation === item2.battingTeam.abbreviation)
-            data.isTeamPitching = false;
-           else 
-             data.isTeamPitching = true;
-           data.battingTeam = item2.battingTeam.abbreviation;
-           if (item2 != null && item2.atBatPlay.length > 0)
-             item2.atBatPlay.forEach((item3, index) => {
-             let f = item3;
-
-             if (f.pitch != undefined && f.pitch.ballStartSpeed != undefined) {
-               //console.log(f.pitch);
-               this.pitcherspeed = {
-                 pitcher: f.pitch.pitchingPlayer.id,
-                 pitchspeedStart: f.pitch.ballStartSpeed,
-                 lastName: f.pitch.pitchingPlayer.lastName,
-               }
-               this.specificFastballData.push(this.pitcherspeed);
-
-               data.batter = f.pitch.battingPlayer.firstName +' '+ f.pitch.battingPlayer.lastName; //id: 16046, firstName: "Tommy", lastName: "Edman", position: "2B", jerseyNumber: 19}
-               data.pitcher = f.pitch.pitchingPlayer.firstName +' '+ f.pitch.pitchingPlayer.lastName; //id: 12389, firstName: "Josh", lastName: "Hader", position: "P", jerseyNumber: 71}
-               data.pitchResult = f.pitch.result; //"IN_PLAY_OUTS"
-               data.throwType = f.pitch.throwType; //"FOUR_SEAM_FASTBALL"
-               data.throwHand = f.pitch.throwingLeftOrRight; //"L"
-               data.throwSpeed = f.pitch.ballStartSpeed;
-
-               if (data.battingTeam !== data.team.abbreviation 
-                   && data.pitcher !== data.player.firstName + ' ' + data.player.lastName)
-                   data.isPitchingRightNow = false;
-                 else 
-                   data.isPitchingRightNow = true;
-   
-             }
-
-             if (f.playStatus  != undefined && f.playStatus != null) {
-                   //console.log(f.playStatus, 'play status');
-                   data.team.ballCount = f.playStatus.ballCount;
-                   data.team.strikeCount = f.playStatus.strikeCount;
-                   data.team.outCount = f.playStatus.outCount;
-
-                  if (f.playStatus['batter'] != null) {
-                     data.batter = f.playStatus['batter'].firstName + ' ' + f.playStatus['batter'].lastName;
-                  }
-                  if (f.playStatus['firstBaseRunner'] != null) {
-                    data.firstBaseRunner = f.playStatus['firstBaseRunner'].firstName + ' ' + f.playStatus['firstBaseRunner'].lastName;
-                  }
-                  if (f.playStatus['secondBaseRunner'] != null) {
-                    data.secondBaseRunner = f.playStatus['secondBaseRunner'].firstName + ' ' + f.playStatus['secondBaseRunner'].lastName;
-                  }
-                  if (f.playStatus['thirdBaseRunner'] != null) {
-                    data.thirdBaseRunner = f.playStatus['thirdBaseRunner'].firstName + ' ' + f.playStatus['thirdBaseRunner'].lastName;
-                  }
-                  data.pitcher = f.playStatus.pitcher['firstName'] + ' ' + f.playStatus.pitcher['lastName'];
-             }
-
-            if (f.batterUp  != undefined && f.batterUp != null) {
-             data.battingFrom = f.batterUp.standingLeftOrRight;
-             data.batResult = f.batterUp.result;  
-            }
-
-           })
-         })
-
-         this.speedResults = this.specificFastballData.reduce(function(r, a) {
-           r[a.pitcher] = r[a.pitcher] || [];
-           r[a.pitcher].push(a.pitchspeedStart);
-           return r
-         }, Object.create(null));
-         console.log('made groups of pichers pitch speeds by ID...');
-
-       }
-       this.myData.forEach((data, index) => {
-
-
-         if (this.speedResults[data.player.id]) {
-           let avg = this.speedResults[data.player.id].reduce((r, a) => {
-
-             return r + parseInt(a);
-
-           }, 0) / this.speedResults[data.player.id].length;
-
-           let max = this.speedResults[data.player.id].reduce(function(a, b) {
-             return Math.max(a, b);
-           });
-
-           data.player.pitchSpeedAvgToday = Math.floor(avg);
-           data.player.fastestPitchToday = max;
-
-           }
-
-        });
-        this.openModal(data); 
-
-      } else {
-        this.openModal(data);
-      }
-    });
+    this.openModal(data);
+    
   }
 
   public openModal(data) {
@@ -800,19 +635,19 @@ export class PitchingStatsComponent implements OnInit {
 <div class="fav-pitch live-pitch" *ngIf="data.player.winToday === 0 && data.player.saveToday === 0 && data.player.loseToday === 0 && moreStats === false">
  (live stats) Game Time: {{data.player.gameTime | date: 'short'}} EST <span *ngIf="data.player.gameLocation === 'away'">@{{data.team.opponentCity}}</span>
   <h2>{{ data.player.firstName + ' ' + data.player.lastName}} pitched  <div *ngIf="data.player.inningsToday === '1.0';then pt else other_pt"></div> <ng-template #pt>1 inning</ng-template> <ng-template #other_pt>{{data.player.inningsToday}} innings</ng-template>, {{data.player.strikeoutsToday}}  <div *ngIf="data.player.strikeoutsToday === '1';then k else other_k"></div> <ng-template #k>strikeout</ng-template> <ng-template #other_k>strikeouts</ng-template> and gave up {{data.player.earnedrunsToday}} <div *ngIf="data.player.earnedrunsToday === '1';then r else other_r"></div> <ng-template #r>run</ng-template> <ng-template #other_r>runs</ng-template> today!</h2>
-  <button mat-button class="more-stats-btn" (click)="toggle()">MORE STATS</button>
+  <button mat-button class="more-stats-btn" (click)="getGame(data, data.gameId)">MORE STATS</button>
 </div>
 <div class="fav-pitch" *ngIf="data.player.winToday === 1 && moreStats === false">
   <h2>{{ data.player.firstName + ' ' + data.player.lastName}} got a Win today!</h2>
-    <button mat-button class="more-stats-btn" (click)="toggle()">MORE STATS</button>
+    <button mat-button class="more-stats-btn" (click)="getGame(data, data.gameId)">MORE STATS</button>
 </div>
 <div class="fav-pitch" *ngIf="data.player.loseToday === 1 && moreStats === false">
   <h2>{{ data.player.firstName + ' ' + data.player.lastName}} Lost today!</h2>
-    <button mat-button class="more-stats-btn" (click)="toggle()">MORE STATS</button>
+    <button mat-button class="more-stats-btn" (click)="getGame(data, data.gameId)">MORE STATS</button>
 </div>
 <div class="fav-pitch" *ngIf="data.player.saveToday === 1 && moreStats === false">
   <h2>{{ data.player.firstName + ' ' + data.player.lastName}} got a Save today!</h2>
-    <button mat-button class="more-stats-btn" (click)="toggle()">MORE STATS</button>
+    <button mat-button class="more-stats-btn" (click)="getGame(data, data.gameId)">MORE STATS</button>
 </div>
 <div class="fav-pitch" *ngIf="moreStats === false">
   <h2 *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher2SeamFastballs">Uses the 2-Seam Fastball {{data.player.favPitchPercentToday}}% of pitches thrown.</h2>
@@ -931,17 +766,196 @@ export class PitchingStatsComponent implements OnInit {
      <span *ngIf="data.pitchResult === 'BALL'"> thrown for a ball</span> 
      <span *ngIf="data.pitchResult === 'IN_PLAY_RUNS'"> the ball is in play, runs score</span>.
     </p>
+
+     <p>
+    <span *ngIf="data?.player?.pitchSpeedAvgToday">
+    Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph <br>
+    </span>
+    <span *ngIf="data?.player?.fastestPitchToday">Top pitch today {{data.player.fastestPitchToday}}mph</span>
+  </p>
     <p (click)="toggle()" class="center">Go Back</p>
 </div>`,
 })
 
 export class MyDialog {
   public moreStats: boolean = false;
+  public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
+  public speedResults: Array <any> = [];
+  public specificFastballData: Array <any> = [];
+  public score: Array <any>;
+  public myData: Array <any>;
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
 
-  constructor(public dialogRef: MatDialogRef < MyDialog > , @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public dialogRef: MatDialogRef < MyDialog > , 
+    @Inject(MAT_DIALOG_DATA) 
+    public data: any,
+    private dataService: DataService, 
+    private http: HttpClient) {
+
+      
+      // this.dataService
+      //   .getAllStats().subscribe(res => {
+      //     console.log(res, 'modal my data');
+      //     this.myData = res['playerStatsTotals'];
+      // });
+  }
   
   public toggle() {
     this.moreStats = !this.moreStats;
+  }
+
+  public getGame(data, gid) {
+    this.moreStats = true;
+    this.dataService
+      .getScore(gid).subscribe(res => {
+          console.log(res, "Score, Game...");
+
+        if (res != null) {
+
+          this.score = res['scoring'];
+          let game = res['game'].playedStatus; //"COMPLETED" playedStatus: "COMPLETED_PENDING_REVIEW"
+
+            if (data.player.gameLocation === 'home') {
+              data.team.teamScore = this.score['homeScoreTotal'];
+              data.team.opponentScore = this.score['awayScoreTotal'];
+            } else if (data.player.gameLocation === 'away') {
+              data.team.teamScore = this.score['awayScoreTotal'];
+              data.team.opponentScore = this.score['homeScoreTotal'];
+            }
+
+            data.team.currentInning = this.score['currentInning'];
+            data.team.currentInningHalf = this.score['currentInningHalf'];
+            data.gameStatus = game;
+            //console.log(game, 'is game over?');
+            if (game === "COMPLETED" || game === "COMPLETED_PENDING_REVIEW") {
+              data.team.isGameOver = true;
+              data.team.isGameInProgress = false;
+              data.team.isGameUnplayed = false;
+            } else {
+              data.team.isGameInProgress = true;
+              data.team.isGameUnplayed = true;
+              data.team.isGameOver = false;
+            }
+
+        }
+      
+   }, (err: HttpErrorResponse) => {
+
+      console.log(err, 'error getting boxscore');
+
+   });
+
+    //console.log(`${this.apiRoot}/games/`+gid+`/playbyplay.json`)
+    this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
+      .subscribe(res => {
+        console.log(res, 'got play by play game data for ' + data.player.lastName);
+
+        if (res != null) {
+
+        if (res['atBats'] != null) {
+
+        res['atBats'].forEach((item2, index) => {
+
+           //console.log(item2, 'atbatplay items...');
+           if (data.team.abbreviation === item2.battingTeam.abbreviation)
+            data.isTeamPitching = false;
+           else 
+             data.isTeamPitching = true;
+           data.battingTeam = item2.battingTeam.abbreviation;
+           if (item2 != null && item2.atBatPlay.length > 0)
+             item2.atBatPlay.forEach((item3, index) => {
+             let f = item3;
+
+             if (f.pitch != undefined && f.pitch.ballStartSpeed != undefined) {
+               //console.log(f.pitch);
+               this.pitcherspeed = {
+                 pitcher: f.pitch.pitchingPlayer.id,
+                 pitchspeedStart: f.pitch.ballStartSpeed,
+                 lastName: f.pitch.pitchingPlayer.lastName,
+               }
+               this.specificFastballData.push(this.pitcherspeed);
+
+               data.batter = f.pitch.battingPlayer.firstName +' '+ f.pitch.battingPlayer.lastName; //id: 16046, firstName: "Tommy", lastName: "Edman", position: "2B", jerseyNumber: 19}
+               data.pitcher = f.pitch.pitchingPlayer.firstName +' '+ f.pitch.pitchingPlayer.lastName; //id: 12389, firstName: "Josh", lastName: "Hader", position: "P", jerseyNumber: 71}
+               data.pitchResult = f.pitch.result; //"IN_PLAY_OUTS"
+               data.throwType = f.pitch.throwType; //"FOUR_SEAM_FASTBALL"
+               data.throwHand = f.pitch.throwingLeftOrRight; //"L"
+               data.throwSpeed = f.pitch.ballStartSpeed;
+
+               if (data.battingTeam !== data.team.abbreviation 
+                   && data.pitcher !== data.player.firstName + ' ' + data.player.lastName)
+                   data.isPitchingRightNow = false;
+                 else 
+                   data.isPitchingRightNow = true;
+   
+             }
+
+             if (f.playStatus  != undefined && f.playStatus != null) {
+                   //console.log(f.playStatus, 'play status');
+                   data.team.ballCount = f.playStatus.ballCount;
+                   data.team.strikeCount = f.playStatus.strikeCount;
+                   data.team.outCount = f.playStatus.outCount;
+
+                  if (f.playStatus['batter'] != null) {
+                     data.batter = f.playStatus['batter'].firstName + ' ' + f.playStatus['batter'].lastName;
+                  }
+                  if (f.playStatus['firstBaseRunner'] != null) {
+                    data.firstBaseRunner = f.playStatus['firstBaseRunner'].firstName + ' ' + f.playStatus['firstBaseRunner'].lastName;
+                  }
+                  if (f.playStatus['secondBaseRunner'] != null) {
+                    data.secondBaseRunner = f.playStatus['secondBaseRunner'].firstName + ' ' + f.playStatus['secondBaseRunner'].lastName;
+                  }
+                  if (f.playStatus['thirdBaseRunner'] != null) {
+                    data.thirdBaseRunner = f.playStatus['thirdBaseRunner'].firstName + ' ' + f.playStatus['thirdBaseRunner'].lastName;
+                  }
+                  data.pitcher = f.playStatus.pitcher['firstName'] + ' ' + f.playStatus.pitcher['lastName'];
+             }
+
+            if (f.batterUp  != undefined && f.batterUp != null) {
+             data.battingFrom = f.batterUp.standingLeftOrRight;
+             data.batResult = f.batterUp.result;  
+            }
+
+           })
+         })
+
+         this.speedResults = this.specificFastballData.reduce(function(r, a) {
+           r[a.pitcher] = r[a.pitcher] || [];
+           r[a.pitcher].push(a.pitchspeedStart);
+           return r
+         }, Object.create(null));
+         console.log('made groups of pichers pitch speeds by ID...');
+
+       }
+     
+
+         console.log(this.speedResults[data.player.id], 'speed results by id?');
+         if (this.speedResults[data.player.id]) {
+           let avg = this.speedResults[data.player.id].reduce((r, a) => {
+
+             return r + parseInt(a);
+
+           }, 0) / this.speedResults[data.player.id].length;
+
+           let max = this.speedResults[data.player.id].reduce(function(a, b) {
+             return Math.max(a, b);
+           });
+
+           data.player.pitchSpeedAvgToday = Math.floor(avg);
+           data.player.fastestPitchToday = max;
+           console.log(data.player, 'speeds?');
+
+           }
+        
+
+      } else {
+       
+      }
+    }, (err: HttpErrorResponse) => {
+
+      console.log(err, 'error getting lineup');
+
+   });
   }
 }
 

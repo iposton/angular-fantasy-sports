@@ -64,7 +64,7 @@
           <div *ngIf="data.firstStart != null" class="fav-pitch">
           <p>{{data.firstStart}}</p>
             <br>
-            <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+            <a class="more-stats-btn" (click)="getGameStats(data, data.gameId)">MORE STATS</a>
           </div>
           <div *ngIf="data.player.pitchSpeedAvg != null" class="fav-pitch">
             <p>Avg pitch speed {{data.player.pitchSpeedAvg}}mph</p>
@@ -183,7 +183,7 @@
               <b>K's:</b> {{ data.stats.pitching.pitcherStrikeouts }}
             </p>
             <div class="fav-pitch live-pitch" *ngIf="data.player.winToday === 0 && data.player.saveToday === 0 && data.player.loseToday === 0">
-              (live stats) Game Time: {{data.player.gameTime | date: 'shortTime'}} EST <span *ngIf="data.player.gameLocation === 'away'">@{{data.team.opponentCity}}</span>
+              (live stats) Game Time: {{data.player.gameTime | date: 'shortTime'}} EST <span *ngIf="data.player.gameLocation === 'away'">@{{data.team.opponent}}</span>
               <br>
               <br> {{ data.player.firstName + ' ' + data.player.lastName}} pitched
               <div *ngIf="data.player.inningsToday === '1.0';then pt else other_pt"></div>
@@ -196,7 +196,7 @@
               <ng-template #r>run</ng-template>
               <ng-template #other_r>runs</ng-template> today!
               <br>
-              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+              <a class="more-stats-btn" (click)="getGameStats(data, data.gameId)">MORE STATS</a>
             </div>
             <div *ngIf="data.player.favPitchPercent != null" class="fav-pitch">
               <p *ngIf="data.player.favPitch == data.stats.pitching.pitcher2SeamFastballs">Throws 2-Seam Fastball {{data.player.favPitchPercent}}%</p>
@@ -233,11 +233,11 @@
             <p>
               <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
               <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
-              <span *ngIf="data.player.contractBaseSalary != ''">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
-              <span *ngIf="data.player.contractTotalYears != ''">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
-              <span *ngIf="data.player.draftYear != ''">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
-              <span *ngIf="data.player.college != ''">College: {{data.player.college}}<br></span> 
-              <span *ngIf="data.player.highSchool != ''">Highschool: {{data.player.highSchool}} <br></span>
+              <span *ngIf="data.player.contractBaseSalary != '' && data.player.contractBaseSalary != null">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
+              <span *ngIf="data.player.contractTotalYears != '' && data.player.contractTotalYears != null">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
+              <span *ngIf="data.player.draftYear != '' && data.player.draftYear != null">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
+              <span *ngIf="data.player.college != '' && data.player.college != null">College: {{data.player.college}}<br></span> 
+              <span *ngIf="data.player.highSchool != '' && data.player.highSchool != null">Highschool: {{data.player.highSchool}} <br></span>
               Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
@@ -347,9 +347,13 @@
             <span *ngIf="data.team.teamScore < data.team.opponentScore && data.player.loseToday === 0">
             {{data.player.firstName + ' ' + data.player.lastName}} recieved a no decision today.</span>
           </p>
-
-            <p *ngIf="data?.player?.pitchSpeedAvgToday">Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
-            <p *ngIf="data?.player?.fastestPitchToday">Top pitch today {{data.player.fastestPitchToday}}mph</p>
+          <p>
+             <span *ngIf="data?.player?.pitchSpeedAvgToday">
+            Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph <br>
+            </span>
+            <span *ngIf="data?.player?.fastestPitchToday">Top pitch today {{data.player.fastestPitchToday}}mph</span>
+          </p>
+            
 
          <!--   <p *ngIf="data.team.isGameInProgress === true">
              {{ data.team.abbreviation }} is 
@@ -454,22 +458,22 @@
             <div class="fav-pitch" *ngIf="data.player.winToday === 0 && data.player.loseToday === 0">
               <p>{{ data.player.firstName + ' ' + data.player.lastName}} got a no-decision today!</p>
               <br>
-              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+              <a class="more-stats-btn" (click)="getGameStats(data, data.gameId)">MORE STATS</a>
             </div>
             <div class="fav-pitch" *ngIf="data.player.winToday == 1">
               <p>{{ data.player.firstName + ' ' + data.player.lastName}} got a Win today!</p>
               <br>
-              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+              <a class="more-stats-btn" (click)="getGameStats(data, data.gameId)">MORE STATS</a>
             </div>
             <div class="fav-pitch" *ngIf="data.player.loseToday == 1">
               <p>{{ data.player.firstName + ' ' + data.player.lastName}} Lost today!</p>
               <br>
-              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+              <a class="more-stats-btn" (click)="getGameStats(data, data.gameId)">MORE STATS</a>
             </div>
             <div class="fav-pitch" *ngIf="data.player.saveToday == 1">
               <p>{{ data.player.firstName + ' ' + data.player.lastName}} got a Save today!</p>
               <br>
-              <a class="more-stats-btn" (click)="getGameStats(data)">MORE STATS</a>
+              <a class="more-stats-btn" (click)="getGameStats(data, data.gameId)">MORE STATS</a>
             </div>
             <div *ngIf="data.player.favPitchPercent != null" class="fav-pitch">
               <p *ngIf="data.player.favPitch == data.stats.pitching.pitcher2SeamFastballs">Throws 2-Seam Fastball {{data.player.favPitchPercent}}%</p>
@@ -506,11 +510,11 @@
             <p>
               <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
               <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
-              <span *ngIf="data.player.contractBaseSalary != ''">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
-              <span *ngIf="data.player.contractTotalYears != ''">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
-              <span *ngIf="data.player.draftYear != ''">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
-              <span *ngIf="data.player.college != ''">College: {{data.player.college}}<br></span> 
-              <span *ngIf="data.player.highSchool != ''">Highschool: {{data.player.highSchool}} <br></span>
+              <span *ngIf="data.player.contractBaseSalary != '' && data.player.contractBaseSalary != null">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
+              <span *ngIf="data.player.contractTotalYears != '' && data.player.contractTotalYears != null">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
+              <span *ngIf="data.player.draftYear != '' && data.player.draftYear != null">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
+              <span *ngIf="data.player.college != '' && data.player.college != null">College: {{data.player.college}}<br></span> 
+              <span *ngIf="data.player.highSchool != '' && data.player.highSchool != null">Highschool: {{data.player.highSchool}} <br></span>
               Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
@@ -619,9 +623,12 @@
     <span *ngIf="data.team.teamScore < data.team.opponentScore && data.player.loseToday === 0">
     {{data.player.firstName + ' ' + data.player.lastName}} recieved a no decision today.</span>
   </p>
-
-     <p *ngIf="data?.player?.pitchSpeedAvgToday">Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
-            <p *ngIf="data?.player?.fastestPitchToday">Top pitch today {{data.player.fastestPitchToday}}mph</p>
+  <p>
+    <span *ngIf="data?.player?.pitchSpeedAvgToday">
+    Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph <br>
+    </span>
+    <span *ngIf="data?.player?.fastestPitchToday">Top pitch today {{data.player.fastestPitchToday}}mph</span>
+  </p>
 
   <!--  <p *ngIf="data.team.isGameInProgress === true">
      {{ data.team.abbreviation }} is 

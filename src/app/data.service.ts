@@ -146,13 +146,14 @@ export class DataService {
   }
 
   getScore(data) {
-
-    if (!this.score) {
-      console.log(`${this.apiRoot}/games/`+data+`/boxscore.json`, 'getting daily scores of todays games from API...');
-      let url = `${this.apiRoot}/games/`+data+`/boxscore.json`;
+    let id = null;
+    id = data
+    //if (!this.score) {
+      console.log(`${this.apiRoot}/games/`+id+`/boxscore.json`, 'getting daily scores of todays games from API...');
+      let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
       this.score = this.http.get(url, {headers})
         
-    }
+    //}
     return this.score;
   }
 }

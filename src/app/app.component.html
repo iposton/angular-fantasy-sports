@@ -1,5 +1,6 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
   <span class="toolbar-header">Fantasy Sports Resource</span>
+  
   <span style="flex: 1 1 auto;"></span>
  
   <i matTooltip="Menu" [matTooltipPosition]="position" (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
@@ -50,9 +51,9 @@
         </div>
         <div class="docs-footer-links">
           <ul fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
-            <li matTooltip="This is a fantasy sports resource. In this app I am using angular6 and sourcing sports data from mysportsfeeds.com. Find todays starting MLB Pitchers and starting NHL Goalies! Enjoy! ☺" [matTooltipPosition]="position">About</li>
+            <li matTooltip="This is a fantasy sports resource. In this app I am using Angular 8 and sourcing pro sports data from mysportsfeeds.com. Find todays starting MLB Pitchers and starting NHL Goalies! Enjoy! ☺" [matTooltipPosition]="position">About</li>
           </ul>
-          <ul fxHide [fxHide.xs]="isVisibleOnMobile()" style="font-size: 9px; max-width: 80px; text-align: justify;"><li>About: I love to code and work with sports API's. In this app I am using angular6 with the MySportsFeeds API.</li></ul>
+          <ul fxHide [fxHide.xs]="isVisibleOnMobile()" style="font-size: 9px; max-width: 80px; text-align: justify;"><li>About: I love to code and work with sports API's. In this app I am using Angular 8 with the MySportsFeeds API.</li></ul>
         </div>
       </div>
     </footer>
