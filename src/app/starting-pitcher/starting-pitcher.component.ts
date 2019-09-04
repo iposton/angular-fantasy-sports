@@ -53,12 +53,14 @@ export class StartingPitcherComponent implements OnInit {
   public gameover: boolean = false;
   public noGamesMsg: string = '';
   public errMessage: string = '';
-  public gameStarter: { gameID: string, playerID: string };
+  public gameStarter: { gameID: string, playerID: string, score: any, status: any };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
   public gameStarters: Array < any > = [];
   public teamsCompletedPlayingToday: Array < any > = [];
 
-  constructor(private fbService: FirebaseService, private dataService: DataService, private http: HttpClient) {
+  constructor(private fbService: FirebaseService, 
+              private dataService: DataService, 
+              private http: HttpClient) {
     this.fbService
       .getData().subscribe(res => {
         //console.log(res, 'firebase data');
@@ -82,12 +84,12 @@ export class StartingPitcherComponent implements OnInit {
 
         this.dataService
           .getDailySchedule().subscribe(res => {
-            //console.log(res, "schedule...");
+            console.log(res, "schedule...");
 
             if (res['games'].length === 0) {
               this.loading = false;
               this.noGamesToday = true;
-              this.noGamesMsg = "There Are No Games Scheduled Today :("
+              this.noGamesMsg = "There Are No Games Scheduled Today :(";
               console.log('There are no games being played today.');
             } else {
 
@@ -112,12 +114,14 @@ export class StartingPitcherComponent implements OnInit {
               //   });
 
               this.gamesToday = true;
-              //console.log(this.dailySchedule, 'sched')
-
+              //console.log(this.dailySchedule, 'sched');
+            
               forkJoin(
                   res['games'].map(
-                    g =>
-                    this.http.get(`${this.apiRoot}/games/`+this.dataService.dailyDate+`-`+ g['schedule'].awayTeam.abbreviation +`-`+ g['schedule'].homeTeam.abbreviation+`/lineup.json?position=P`, { headers })
+                    g => 
+                    
+                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=P`, { headers })
+                    
                   )
                 )
                 .subscribe(res => {
@@ -125,12 +129,17 @@ export class StartingPitcherComponent implements OnInit {
                   let i2;
                   let res2;
                   let game2;
-                  res.forEach((item, index) => {
+                  let score2;
+                
+                  
+                res.forEach((item, index) => {
+                    //console.log(this.dailySchedule[i], 'score for games');
+                    //console.log(res, 'got starting lineups data!');
                     i = index;
-                   // console.log(res, 'got starting lineups data!');
                     try {
                       game2 = res[i]['game'];
                       res2 = res[i]['teamLineups'];
+                      score2 = this.dailySchedule[i].score;
                     } catch {
                       console.log('bad endpoint');
                     }
@@ -142,7 +151,9 @@ export class StartingPitcherComponent implements OnInit {
                         //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                         this.gameStarter = {
                           playerID: res2[i2].actual.lineupPositions[0].player.id,
-                          gameID: game2.id
+                          gameID: game2.id,
+                          score: score2,
+                          status: game2.playedStatus
                         }
                         this.gameStarters.push(this.gameStarter);
                         this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.firstName+'-'+res2[i2].actual.lineupPositions[0].player.lastName);
@@ -152,7 +163,9 @@ export class StartingPitcherComponent implements OnInit {
                         //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
                         this.gameStarter = {
                           playerID: res2[i2].expected.lineupPositions[0].player.id,
-                          gameID: game2.id
+                          gameID: game2.id,
+                          score: score2,
+                          status: game2.playedStatus
                         }
                         this.gameStarters.push(this.gameStarter);
                         this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.firstName+'-'+res2[i2].expected.lineupPositions[0].player.lastName);
@@ -167,12 +180,16 @@ export class StartingPitcherComponent implements OnInit {
 
                   this.sortData();
 
-                });
+                }, (err: HttpErrorResponse) => {
+                  
+                  console.log(err, 'error getting lineup');
+
+              });
 
             }
           }, (err: HttpErrorResponse) => {
 
-            console.log(err);
+            console.log(err, 'error getting schedule');
 
           });
 
@@ -260,17 +277,7 @@ export class StartingPitcherComponent implements OnInit {
 
                      if (this.myData && this.gameStarters) {
                        console.log('start sorting data for real gameID by PitcherID...');
-                      for (let gs of this.gameStarters) {
-
-                        for (let data of this.myData) {
-
-                          if (gs.playerID === data.player.id) {
-                            data.gameId = gs.gameID;
-                          }
-
-                        }
-
-                      }
+                    
 
 
                       if (this.myData && this.dailySchedule) {
@@ -315,6 +322,43 @@ export class StartingPitcherComponent implements OnInit {
                             sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
                           }
                         }
+                      }
+
+                        for (let gs of this.gameStarters) {
+
+                        for (let data of this.myData) {
+
+                          if (gs.playerID === data.player.id) {
+                            data.gameId = gs.gameID;
+                            data.score = gs.score;
+                            data.gameStatus = gs.status;
+
+                            if (gs.status !== "UNPLAYED") {
+                              if (data.player.gameLocation === 'home') {
+                                data.team.teamScore = gs.score['homeScoreTotal'];
+                                data.team.opponentScore = gs.score['awayScoreTotal'];
+                              } else if (data.player.gameLocation === 'away') {
+                                data.team.teamScore = gs.score['awayScoreTotal'];
+                                data.team.opponentScore = gs.score['homeScoreTotal'];
+                              }
+                              data.team.currentInning = gs.score['currentInning'];
+                              data.team.currentInningHalf = gs.score['currentInningHalf'];
+                            }
+                            //console.log(game, 'is game over?');
+                            if (gs.status === "COMPLETED" 
+                              || gs.status === "COMPLETED_PENDING_REVIEW") {
+                              data.team.isGameOver = true;
+                              data.team.isGameInProgress = false;
+                              data.team.isGameUnplayed = false;
+                            } else {
+                              data.team.isGameInProgress = true;
+                              data.team.isGameUnplayed = true;
+                              data.team.isGameOver = false;
+                            }
+                          }
+
+                        }
+
                       }
                     }
 
@@ -537,31 +581,19 @@ export class StartingPitcherComponent implements OnInit {
   }
 
 
-  getGameStats(data) {
-    let teams = null;
+  getGameStats(data, gid) {
     console.log(data, 'whats going on');
-    if (data.player.gameLocation === 'home')
-      teams = this.dataService.dailyDate+`-`+ data.team.opponent +`-`+ data.team.abbreviation;
-    else
-      teams = this.dataService.dailyDate+`-`+ data.team.abbreviation +`-`+ data.team.opponent;
 
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
-
+   
     this.dataService
-      .getScore(teams).subscribe(res => {
+      .getScore(gid).subscribe(res => {
        
           if (res != null) {
-
-          console.log(res, "Score, Game...");
-          this.score = res['scoring'];
-          let game = res['game'].playedStatus; //"COMPLETED" playedStatus: "COMPLETED_PENDING_REVIEW"
-
-   
-            // "awayHitsTotal": 7,
-            // "awayErrorsTotal": 0,
-
-            // "homeHitsTotal": 10,
-            // "homeErrorsTotal": 1,
+            console.log(res, "Score, Game...");
+            this.score = res['scoring'];
+            let game = null;
+            game = res['game'].playedStatus; //"COMPLETED" playedStatus: "COMPLETED_PENDING_REVIEW"
 
             if (data.player.gameLocation === 'home') {
               data.team.teamScore = this.score['homeScoreTotal'];
@@ -587,15 +619,17 @@ export class StartingPitcherComponent implements OnInit {
 
         }
 
-      
+   }, (err: HttpErrorResponse) => {
+
+     console.log(err, 'error getting boxscore');
+
    });
-
-    this.http.get(`${this.apiRoot}/games/`+teams+`/playbyplay.json`, { headers })
+    console.log(`${this.apiRoot}/games/`+gid+`/playbyplay.json`);
+    this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
       .subscribe(res => {
-
+            console.log(res, 'got play by play game data for ' + data.player.lastName);
 
           if (res != null) {
-            console.log(res, 'got play by play game data for ' + data.player.lastName);
 
           if (res['atBats'] != null) {
 
@@ -694,6 +728,10 @@ export class StartingPitcherComponent implements OnInit {
           });
 
         }
+       }, (err: HttpErrorResponse) => {
+
+            console.log(err, 'error getting playbyplay');
+
        });
 
   }
