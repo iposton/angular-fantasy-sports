@@ -1,8 +1,8 @@
-<h1 class="center date-header baseball-header"> MLB Today's Starting Pitchers</h1>
+<h1 class="center date-header baseball-header"> MLB Starting Pitchers</h1>
 <h1 class="center date-header baseball-header"> {{ gameDate | date:'fullDate' }}</h1>
 <div class="center">
   <mat-form-field color="accent">
-  <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+  <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="getByDate($event)" [max]="maxD">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>

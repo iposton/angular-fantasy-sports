@@ -36,6 +36,10 @@ export class DataService {
     this.dailyDate = dailyDate;
   }
 
+  public selectedDate(d) {
+    dailyDate = d;
+  }
+
   sendHeaderOptions(h) {
     console.log('got headers & options in data service...');
     headers = h;
@@ -72,76 +76,76 @@ export class DataService {
 
   getGameId() {
 
-    if (!this.gameid) {
+    //if (!this.gameid) {
       console.log('getting pitch speed data from API...');
 
       let url = `${this.apiRoot}/full_game_schedule.json?date=from-13-days-ago-to-2-days-ago`;
       this.gameid = this.http.get(url, {headers})
         
-    }
+    //}
     return this.gameid;
   }
 
     getDailySchedule() {
     //get all games for today get game ID and find a pitchers opponent
-    if (!this.schedule) {
+   // if (!this.schedule) {
       console.log('getting mlb schedule for today from api...');
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
       let url = `${this.apiRoot}/date/${dailyDate}/games.json`;
       this.schedule = this.http.get(url, {headers})
        
-    }
+   // }
     return this.schedule;
 
   }
 
   getStats(players) {
 
-    if (!this.stats) {
+    //if (!this.stats) {
       //console.log('getting cumulative_player_stats by player ID from API...', players);
       //let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&player=`+playerID;
       let url = `${this.apiRoot}/player_stats_totals.json?position=P&player=${players}`;
       this.stats = this.http.get(url, {headers})
       
-    }
+    //}
     return this.stats;
   }
 
    getAllStats() {
 
-    if (!this.allstats) {
+    //if (!this.allstats) {
 
       console.log('getting cumulative_player_stats by player ID from API...');
       //cumulative_player_stats.json?position=P&sort=STATS.Miscellaneous-GS.D&limit=180
       let url = `${this.apiRoot}/player_stats_totals.json?position=P`;
       this.allstats = this.http.get(url, {headers})
       
-    }
+    //}
     return this.allstats;
   }
 
   getInfo() {
 
-    if (!this.info) {
+   // if (!this.info) {
       let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P`;
       console.log('getting active player data from API...');
       this.info = this.http.get(url, {headers})
         
-    }
+   // }
     return this.info;
   }
 
    getDaily() {
 
-    if (!this.daily) {
+   // if (!this.daily) {
       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
       let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=P`;
       console.log(url, 'url')
       console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})
         
-    }
+  //  }
     return this.daily;
   }
 
