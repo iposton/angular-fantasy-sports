@@ -199,11 +199,7 @@ export class PitchingStatsComponent implements OnInit {
         })
       });
       
-      // this.dataService
-      //   .getScore('data').subscribe(res => {
-      //     console.log(res['scoreboard'].gameScore, "Score...");
-      //     this.score = res['scoreboard'].gameScore;
-      //   })
+     
     } else {
       console.log('No games then no daily stats either. :(');
     }
@@ -303,6 +299,7 @@ export class PitchingStatsComponent implements OnInit {
             for (let daily of this.dailyStats) {
               for (let mdata of this.myData) {
                 if (daily.player.id === mdata.player.id) {
+                  mdata.gameId = daily.game.id;
                   mdata.player.playingToday = true;
                   mdata.player.winToday = daily.stats.pitching.wins;
                   mdata.player.loseToday = daily.stats.pitching.losses;

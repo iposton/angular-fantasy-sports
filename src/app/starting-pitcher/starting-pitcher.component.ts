@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { FirebaseService } from '../firebase.service';
@@ -12,6 +12,7 @@ import { OrderBy } from '../orderby.pipe';
 
 let headers = null;
 let playerString = null;
+let today = new Date();
 
 @Component({
   selector: 'app-starting-pitcher',
@@ -32,19 +33,19 @@ let playerString = null;
 })
 export class StartingPitcherComponent implements OnInit {
 
-  public dailySchedule: Array < any > ;
-  public players: Array < any > ;
-  public pitcherSpeed: Array < any > ;
-  public starterIdData: Array < any > = [];
+  public dailySchedule: Array <any>;
+  public players: Array <any>;
+  public pitcherSpeed: Array <any>;
+  public starterIdData: Array <any> = [];
   public specificFastballData: Array <any> = [];
-  public specificFastballDataById: Array < any > = [];
-  public speedResults: Array < any > = [];
+  public specificFastballDataById: Array <any> = [];
+  public speedResults: Array <any> = [];
   public gameDate: any;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
-  public showData: Array < any > ;
-  public myData: Array < any > ;
-  public dailyStats: Array < any > ;
-  public score: Array < any > ;
+  public showData: Array <any>;
+  public myData: Array <any>;
+  public dailyStats: Array <any>;
+  public score: Array <any>;
   public gamesToday: boolean = false;
   public noGamesToday: boolean = false;
   public loading: boolean = true;
@@ -55,8 +56,9 @@ export class StartingPitcherComponent implements OnInit {
   public errMessage: string = '';
   public gameStarter: { gameID: string, playerID: string, score: any, status: any };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
-  public gameStarters: Array < any > = [];
-  public teamsCompletedPlayingToday: Array < any > = [];
+  public gameStarters: Array <any> = [];
+  public teamsCompletedPlayingToday: Array <any> = [];
+  public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
 
   constructor(private fbService: FirebaseService, 
               private dataService: DataService, 
@@ -68,6 +70,37 @@ export class StartingPitcherComponent implements OnInit {
       });
 
     this.players = this.dataService.getSentStats();
+  }
+
+  public getByDate(event) {
+    this.loading = true;
+
+    //empty old data on data change 
+    this.dailySchedule = [];
+    this.gameStarters = [];
+    this.starterIdData = [];
+    playerString = null;
+    this.dailyStats = [];
+    this.myData = [];
+    this.showData = [];
+    this.specificFastballData = [];
+    this.teamsCompletedPlayingToday = [];
+    this.score = [];
+    this.players = [];
+    this.speedResults = [];
+    this.liveGames = false;
+    this.gameover = false;
+    this.gamesToday = false;
+    this.noGamesMsg = '';
+ 
+    let thisDate = new Date(event.value);
+    let utcDate = new Date(thisDate.toUTCString());
+    utcDate.setHours(utcDate.getHours());
+    let myDate = new Date(utcDate);
+    let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+    console.log(dailyDate, 'get stats for this selected date');
+    this.dataService.selectedDate(dailyDate);
+    this.loadData();
   }
 
   loadData() {
@@ -94,7 +127,7 @@ export class StartingPitcherComponent implements OnInit {
             } else {
 
               this.dailySchedule = res['games'];
-              this.gameDate = res['lastUpdatedOn'];
+              this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
               let dPipe = new DatePipe("en-US");
 
               // let postponed;
@@ -125,11 +158,11 @@ export class StartingPitcherComponent implements OnInit {
                   )
                 )
                 .subscribe(res => {
-                  let i;
-                  let i2;
-                  let res2;
-                  let game2;
-                  let score2;
+                  let i = null;
+                  let i2 = null;
+                  let res2 = null;
+                  let game2 = null;
+                  let score2 = null;
                 
                   
                 res.forEach((item, index) => {
@@ -350,10 +383,15 @@ export class StartingPitcherComponent implements OnInit {
                               data.team.isGameOver = true;
                               data.team.isGameInProgress = false;
                               data.team.isGameUnplayed = false;
+                              this.liveGames = false;
                             } else {
                               data.team.isGameInProgress = true;
                               data.team.isGameUnplayed = true;
                               data.team.isGameOver = false;
+                            }
+
+                            if (gs.status === "LIVE") {
+                              this.liveGames = true;
                             }
                           }
 
@@ -383,7 +421,7 @@ export class StartingPitcherComponent implements OnInit {
                             //console.log(daily.game, 'get game info by player id')
                             mdata.gameId = daily.game.id;
                             mdata.playerNotPlayingYet = false;
-                            this.liveGames = true;
+                            //this.liveGames = true;
                             mdata.player.playingToday = true;
                             mdata.player.winToday = daily.stats.pitching.wins;
                             mdata.player.loseToday = daily.stats.pitching.losses;
@@ -750,6 +788,60 @@ export class StartingPitcherComponent implements OnInit {
                
                 this.dailyStats = res['gamelogs'];
 
+                  if (this.myData && this.dailySchedule) {
+                      console.log('start sorting data for pitching opponent...');
+                      for (let schedule of this.myData) {
+
+                        for (let sdata of this.myData) {
+                          if (sdata.team.opponentId === schedule.team.id) {
+                            sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
+                          }
+                        }
+                      }
+
+                        for (let gs of this.gameStarters) {
+
+                        for (let data of this.myData) {
+
+                          if (gs.playerID === data.player.id) {
+                            data.gameId = gs.gameID;
+                            data.score = gs.score;
+                            data.gameStatus = gs.status;
+
+                            if (gs.status !== "UNPLAYED") {
+                              if (data.player.gameLocation === 'home') {
+                                data.team.teamScore = gs.score['homeScoreTotal'];
+                                data.team.opponentScore = gs.score['awayScoreTotal'];
+                              } else if (data.player.gameLocation === 'away') {
+                                data.team.teamScore = gs.score['awayScoreTotal'];
+                                data.team.opponentScore = gs.score['homeScoreTotal'];
+                              }
+                              data.team.currentInning = gs.score['currentInning'];
+                              data.team.currentInningHalf = gs.score['currentInningHalf'];
+                            }
+                            //console.log(game, 'is game over?');
+                            if (gs.status === "COMPLETED" 
+                              || gs.status === "COMPLETED_PENDING_REVIEW") {
+                              data.team.isGameOver = true;
+                              data.team.isGameInProgress = false;
+                              data.team.isGameUnplayed = false;
+                              this.liveGames = false;
+                            } else {
+                              data.team.isGameInProgress = true;
+                              data.team.isGameUnplayed = true;
+                              data.team.isGameOver = false;
+                            }
+
+                            if (gs.status === "LIVE") {
+                              this.liveGames = true;
+                            }
+                          }
+
+                        }
+
+                      }
+                    }
+
                 if (this.myData && this.dailyStats) {
                   console.log('start sorting data for daily stats...');
                   for (let daily of this.dailyStats) {
@@ -769,7 +861,7 @@ export class StartingPitcherComponent implements OnInit {
                               mdata.player.favPitchPercentToday = Math.floor(mdata.player.favPitchToday / parseInt(daily.stats.pitching.pitchesThrown, 10) * 100);
                             }
                             mdata.playerNotPlayingYet = false;
-                            this.liveGames = true;
+                            //this.liveGames = true;
                             mdata.player.playingToday = true;
                             mdata.player.winToday = daily.stats.pitching.wins;
                             mdata.player.loseToday = daily.stats.pitching.losses;

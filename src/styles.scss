@@ -289,3 +289,28 @@ my-dialog {
       height: 175px!important;
     }
 }
+
+.mat-focused .mat-form-field-label {
+ /*change color of label*/
+ color: #fff !important;
+}
+
+.mat-form-field-underline {
+ /*change color of underline*/
+ background-color: #fff !important;
+} 
+
+.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: #fff !important;;
+}
+
+.mat-form-field-label {
+ /*change color of label*/
+ color: #fff !important;
+}
+
+
+mat-datepicker-toggle {
+ color: #fff !important;
+}
