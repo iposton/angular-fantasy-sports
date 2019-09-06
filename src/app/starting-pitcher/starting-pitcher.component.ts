@@ -43,6 +43,7 @@ export class StartingPitcherComponent implements OnInit {
   public gameDate: any;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
   public showData: Array <any>;
+  public playerInfo: Array <any>;
   public myData: Array <any>;
   public dailyStats: Array <any>;
   public score: Array <any>;
@@ -52,9 +53,10 @@ export class StartingPitcherComponent implements OnInit {
   public loadingPrevious: boolean = true;
   public liveGames: boolean = false;
   public gameover: boolean = false;
+  public postponed: boolean = false;
   public noGamesMsg: string = '';
   public errMessage: string = '';
-  public gameStarter: { gameID: string, playerID: string, score: any, status: any };
+  public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
   public gameStarters: Array <any> = [];
   public teamsCompletedPlayingToday: Array <any> = [];
@@ -90,6 +92,7 @@ export class StartingPitcherComponent implements OnInit {
     this.speedResults = [];
     this.liveGames = false;
     this.gameover = false;
+    this.postponed = false;
     this.gamesToday = false;
     this.noGamesMsg = '';
  
@@ -186,7 +189,8 @@ export class StartingPitcherComponent implements OnInit {
                           playerID: res2[i2].actual.lineupPositions[0].player.id,
                           gameID: game2.id,
                           score: score2,
-                          status: game2.playedStatus
+                          status: game2.playedStatus,
+                          scheduleStatus: game2.scheduleStatus
                         }
                         this.gameStarters.push(this.gameStarter);
                         this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.firstName+'-'+res2[i2].actual.lineupPositions[0].player.lastName);
@@ -198,7 +202,8 @@ export class StartingPitcherComponent implements OnInit {
                           playerID: res2[i2].expected.lineupPositions[0].player.id,
                           gameID: game2.id,
                           score: score2,
-                          status: game2.playedStatus
+                          status: game2.playedStatus,
+                          scheduleStatus: game2.scheduleStatus
                         }
                         this.gameStarters.push(this.gameStarter);
                         this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.firstName+'-'+res2[i2].expected.lineupPositions[0].player.lastName);
@@ -233,6 +238,14 @@ export class StartingPitcherComponent implements OnInit {
   sortData() {
 
     if (this.gamesToday === true) {
+
+      this.dataService
+        .getStarterInfo(playerString).subscribe(res => {
+          console.log(res, 'got activeplayers from api!');
+          this.playerInfo = res['players'];
+          
+      });
+
       this.dataService
         .getDaily().subscribe(res => {
             console.log(res, "Daily stats...");
@@ -262,7 +275,14 @@ export class StartingPitcherComponent implements OnInit {
                           speeddata.flip = 'inactive';
 
                           if (speeddata.stats.pitching.pitchesThrown > 0) {
-                            if (speeddata.stats.pitching.pitcher2SeamFastballs && speeddata.stats.pitching.pitcher4SeamFastballs && speeddata.stats.pitching.pitcherChangeups && speeddata.stats.pitching.pitcherCurveballs && speeddata.stats.pitching.pitcherCutters && speeddata.stats.pitching.pitcherSliders && speeddata.stats.pitching.pitcherSinkers && speeddata.stats.pitching.pitcherSplitters) {
+                            if (speeddata.stats.pitching.pitcher2SeamFastballs >= 0 && 
+                              speeddata.stats.pitching.pitcher4SeamFastballs >= 0 && 
+                              speeddata.stats.pitching.pitcherChangeups >= 0 && 
+                              speeddata.stats.pitching.pitcherCurveballs >= 0 && 
+                              speeddata.stats.pitching.pitcherCutters >= 0 && 
+                              speeddata.stats.pitching.pitcherSliders >= 0 && 
+                              speeddata.stats.pitching.pitcherSinkers >= 0 && 
+                              speeddata.stats.pitching.pitcherSplitters >= 0) {
                               speeddata.player.favPitch = Math.max(parseInt(speeddata.stats.pitching.pitcher2SeamFastballs, 10), parseInt(speeddata.stats.pitching.pitcher4SeamFastballs, 10), parseInt(speeddata.stats.pitching.pitcherChangeups, 10), parseInt(speeddata.stats.pitching.pitcherCurveballs, 10), parseInt(speeddata.stats.pitching.pitcherCutters, 10), parseInt(speeddata.stats.pitching.pitcherSliders, 10), parseInt(speeddata.stats.pitching.pitcherSinkers, 10), parseInt(speeddata.stats.pitching.pitcherSplitters, 10));
                               speeddata.player.favPitchPercent = Math.floor(speeddata.player.favPitch / parseInt(speeddata.stats.pitching.pitchesThrown, 10) * 100);
                             }
@@ -393,6 +413,10 @@ export class StartingPitcherComponent implements OnInit {
                             if (gs.status === "LIVE") {
                               this.liveGames = true;
                             }
+
+                            if (gs.scheduleStatus === "POSTPONED") {
+                              data.postponed = true;
+                            }
                           }
 
                         }
@@ -414,9 +438,16 @@ export class StartingPitcherComponent implements OnInit {
                           }
 
                           if (daily.player.id === mdata.player.id) {
-                            if (daily.stats.pitching.pitcher2SeamFastballs && daily.stats.pitching.pitcher4SeamFastballs && daily.stats.pitching.pitcherChangeups && daily.stats.pitching.pitcherCurveballs && daily.stats.pitching.pitcherCutters && daily.stats.pitching.pitcherSliders && daily.stats.pitching.pitcherSinkers && daily.stats.pitching.pitcherSplitters) {
-                              mdata.player.favPitchToday = Math.max(parseInt(daily.stats.pitching.pitcher2SeamFastballs, 10), parseInt(daily.stats.pitching.pitcher4SeamFastballs, 10), parseInt(daily.stats.pitching.pitcherChangeups, 10), parseInt(daily.stats.pitching.pitcherCurveballs, 10), parseInt(daily.stats.pitching.pitcherCutters, 10), parseInt(daily.stats.pitching.pitcherSliders, 10), parseInt(daily.stats.pitching.pitcherSinkers, 10), parseInt(daily.stats.pitching.pitcherSplitters, 10));
-                              mdata.player.favPitchPercentToday = Math.floor(mdata.player.favPitchToday / parseInt(daily.stats.pitching.pitchesThrown, 10) * 100);
+                            if (daily.stats.pitching.pitcher2SeamFastballs >= 0 && 
+                              daily.stats.pitching.pitcher4SeamFastballs >= 0 && 
+                              daily.stats.pitching.pitcherChangeups >= 0 && 
+                              daily.stats.pitching.pitcherCurveballs >= 0 && 
+                              daily.stats.pitching.pitcherCutters >= 0 && 
+                              daily.stats.pitching.pitcherSliders >= 0 && 
+                              daily.stats.pitching.pitcherSinkers >= 0 && 
+                              daily.stats.pitching.pitcherSplitters >= 0) {
+                              mdata.player.favPitchToday = Math.max(daily.stats.pitching.pitcher2SeamFastballs, daily.stats.pitching.pitcher4SeamFastballs, daily.stats.pitching.pitcherChangeups, daily.stats.pitching.pitcherCurveballs, daily.stats.pitching.pitcherCutters, daily.stats.pitching.pitcherSliders, daily.stats.pitching.pitcherSinkers, daily.stats.pitching.pitcherSplitters);
+                              mdata.player.favPitchPercentToday = Math.floor(mdata.player.favPitchToday / daily.stats.pitching.pitchesThrown * 100);
                             }
                             //console.log(daily.game, 'get game info by player id')
                             mdata.gameId = daily.game.id;
@@ -466,6 +497,28 @@ export class StartingPitcherComponent implements OnInit {
                           }
                         }
                       }
+
+           if (this.myData && this.playerInfo) {
+            console.log('start sorting data for pictures and other info about player...');
+            for (let info of this.playerInfo) {
+              for (let data of this.myData) {
+                
+                // if (data.team.Abbreviation === 'HOU' || data.team.Abbreviation === 'CLE' || data.team.Abbreviation === 'NYY' || data.team.Abbreviation === 'MIN' || data.team.Abbreviation === 'BOS') {
+                //   data.player.americanLeaguePlayoff = true;
+                // }
+
+                // if (data.team.Abbreviation === 'LAD' || data.team.Abbreviation === 'WAS' || data.team.Abbreviation === 'CHC' || data.team.Abbreviation === 'ARI' || data.team.Abbreviation === 'COL') {
+                //   data.player.nationalLeaguePlayoff = true;
+                // }
+
+                if (info.player.id === data.player.id) {
+                  data.player.image = info.player.officialImageSrc;
+                }
+              }
+
+
+              }
+            }
 
                       //THIS FOR LOOP GETS AVG PITCH SPEED FOR EVERY PITCHER IN THIS LIST
                       this.showData = this.myData;
@@ -856,9 +909,9 @@ export class StartingPitcherComponent implements OnInit {
                           }
 
                           if (daily.player.id === mdata.player.id) {
-                            if (daily.stats.pitching.pitcher2SeamFastballs && daily.stats.pitching.pitcher4SeamFastballs && daily.stats.pitching.pitcherChangeups && daily.stats.pitching.pitcherCurveballs && daily.stats.pitching.pitcherCutters && daily.stats.pitching.pitcherSliders && daily.stats.pitching.pitcherSinkers && daily.stats.pitching.pitcherSplitters) {
-                              mdata.player.favPitchToday = Math.max(parseInt(daily.stats.pitching.pitcher2SeamFastballs, 10), parseInt(daily.stats.pitching.pitcher4SeamFastballs, 10), parseInt(daily.stats.pitching.pitcherChangeups, 10), parseInt(daily.stats.pitching.pitcherCurveballs, 10), parseInt(daily.stats.pitching.pitcherCutters, 10), parseInt(daily.stats.pitching.pitcherSliders, 10), parseInt(daily.stats.pitching.pitcherSinkers, 10), parseInt(daily.stats.pitching.pitcherSplitters, 10));
-                              mdata.player.favPitchPercentToday = Math.floor(mdata.player.favPitchToday / parseInt(daily.stats.pitching.pitchesThrown, 10) * 100);
+                            if (daily.stats.pitching.pitcher2SeamFastballs >= 0 && daily.stats.pitching.pitcher4SeamFastballs >= 0 && daily.stats.pitching.pitcherChangeups >= 0 && daily.stats.pitching.pitcherCurveballs >= 0 && daily.stats.pitching.pitcherCutters >= 0 && daily.stats.pitching.pitcherSliders >= 0 && daily.stats.pitching.pitcherSinkers >= 0 && daily.stats.pitching.pitcherSplitters) {
+                              mdata.player.favPitchToday = Math.max(daily.stats.pitching.pitcher2SeamFastballs, daily.stats.pitching.pitcher4SeamFastballs, daily.stats.pitching.pitcherChangeups, daily.stats.pitching.pitcherCurveballs, daily.stats.pitching.pitcherCutters, daily.stats.pitching.pitcherSliders, daily.stats.pitching.pitcherSinkers, daily.stats.pitching.pitcherSplitters);
+                              mdata.player.favPitchPercentToday = Math.floor(mdata.player.favPitchToday / daily.stats.pitching.pitchesThrown * 100);
                             }
                             mdata.playerNotPlayingYet = false;
                             //this.liveGames = true;
