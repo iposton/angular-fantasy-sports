@@ -36,7 +36,7 @@
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
               <br>SP Opponent: {{data.player.pitchingOpponent}}
-              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} EST, {{data.team.gameField}} </span>
+              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} PST, {{data.team.gameField}} </span>
             <!--   <br> in progress: {{data.playingRightNow}}
               <br> game over: {{data.playingOver}}
               <br> game id: {{data.gameId}} -->
@@ -51,14 +51,14 @@
             <b>K's:</b> {{ data.stats.pitching.pitcherStrikeouts }}
           </p>
           <div *ngIf="data.player.favPitchPercent != null" class="fav-pitch">
-            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcher2SeamFastballs">Throws 2-Seam Fastball {{data.player.favPitchPercent}}%.</p>
-            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcher4SeamFastballs">Throws 4-Seam Fastball {{data.player.favPitchPercent}}%.</p>
-            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherChangeups">Throws Changeup {{data.player.favPitchPercent}}%.</p>
-            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherCurveballs">Throws Curveball {{data.player.favPitchPercent}}%.</p>
-            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherCutters">Throws Cutter {{data.player.favPitchPercent}}%.</p>
-            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherSliders">Throws Slider {{data.player.favPitchPercent}}%.</p>
-            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherSinkers">Throws Sinker {{data.player.favPitchPercent}}%.</p>
-            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherSplitters">Throws Splitter {{data.player.favPitchPercent}}%.</p>
+            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcher2SeamFastballs">Throws 2-Seam Fastball {{data.player.favPitchPercent}}%</p>
+            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcher4SeamFastballs">Throws 4-Seam Fastball {{data.player.favPitchPercent}}%</p>
+            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherChangeups">Throws Changeup {{data.player.favPitchPercent}}%</p>
+            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherCurveballs">Throws Curveball {{data.player.favPitchPercent}}%</p>
+            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherCutters">Throws Cutter {{data.player.favPitchPercent}}%</p>
+            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherSliders">Throws Slider {{data.player.favPitchPercent}}%</p>
+            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherSinkers">Throws Sinker {{data.player.favPitchPercent}}%</p>
+            <p *ngIf="data.player.favPitch == data.stats.pitching.pitcherSplitters">Throws Splitter {{data.player.favPitchPercent}}%</p>
             <br>
             <a class="more-stats-btn" (click)="getPreviousGameStats(data)">MORE STATS</a>
           </div>
@@ -103,7 +103,7 @@
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
               <br>SP Opponent: {{data.player.pitchingOpponent}}
-              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} EST, {{data.team.gameField}} </span>
+              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} PST, {{data.team.gameField}} </span>
               <!-- <br> in progress: {{data.playingRightNow}} -->
               <!-- <br> game over: {{data.playingOver}} -->
               <!-- <br> game id: {{data.gameId}} -->
@@ -172,7 +172,7 @@
                 <ng-template #content>{{data.team.opponent}}</ng-template>
                 <ng-template #other_content>No game today.</ng-template>
                 <br>SP Opponent: {{data.player.pitchingOpponent}}
-                <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} EST, {{data.team.gameField}} </span>
+                <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} PST, {{data.team.gameField}} </span>
                 <!-- <br> in progress: {{data.playingRightNow}}
                 <br> game over: {{data.playingOver}} -->
                <!--  <br> game id: {{data.gameId}} -->           </p>
@@ -246,7 +246,7 @@
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
               <br>SP Opponent: {{data.player.pitchingOpponent}}
-              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} EST, {{data.team.gameField}} </span>
+              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} PST, {{data.team.gameField}} </span>
               <!-- <br> in progress: {{data.playingRightNow}} -->
               <!-- <br> game over: {{data.playingOver}} -->
               <!-- <br> game id: {{data.gameId}} -->
@@ -447,7 +447,7 @@
                 <ng-template #content>{{data.team.opponent}}</ng-template>
                 <ng-template #other_content>No game today.</ng-template>
                 <br>SP Opponent: {{data.player.pitchingOpponent}}
-                <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} EST, {{data.team.gameField}} </span>
+                <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} PST, {{data.team.gameField}} </span>
                <!--  <br> in progress: {{data.playingRightNow}}
                 <br> game over: {{data.playingOver}} -->
                 <!-- <br> game id: {{data.gameId}}           </p> -->
@@ -525,7 +525,7 @@
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
               <br>SP Opponent: {{data.player.pitchingOpponent}}
-              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} EST, {{data.team.gameField}} </span>
+              <span *ngIf="data.team.opponent"><br>Game: {{data.player.gameTime | date: 'shortTime'}} PST, {{data.team.gameField}} </span>
               <!-- <br> in progress: {{data.playingRightNow}} -->
               <!-- <br> game over: {{data.playingOver}} -->
               <!-- <br> game id: {{data.gameId}} -->

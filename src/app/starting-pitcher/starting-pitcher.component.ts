@@ -235,16 +235,20 @@ export class StartingPitcherComponent implements OnInit {
 
   }
 
-  sortData() {
+  async sortData() {
 
     if (this.gamesToday === true) {
-
-      this.dataService
-        .getStarterInfo(playerString).subscribe(res => {
-          console.log(res, 'got activeplayers from api!');
-          this.playerInfo = res['players'];
-          
+      let promiseOne;
+      promiseOne = new Promise((resolve, reject) => {
+        this.dataService
+          .getInfo().subscribe(res => {
+            console.log(res, 'got activeplayers from api!');
+            this.playerInfo = res['players'];
+            resolve();
+        });
       });
+
+      let resultOne = await promiseOne;
 
       this.dataService
         .getDaily().subscribe(res => {
@@ -283,25 +287,17 @@ export class StartingPitcherComponent implements OnInit {
                               speeddata.stats.pitching.pitcherSliders >= 0 && 
                               speeddata.stats.pitching.pitcherSinkers >= 0 && 
                               speeddata.stats.pitching.pitcherSplitters >= 0) {
-                              speeddata.player.favPitch = Math.max(parseInt(speeddata.stats.pitching.pitcher2SeamFastballs, 10), parseInt(speeddata.stats.pitching.pitcher4SeamFastballs, 10), parseInt(speeddata.stats.pitching.pitcherChangeups, 10), parseInt(speeddata.stats.pitching.pitcherCurveballs, 10), parseInt(speeddata.stats.pitching.pitcherCutters, 10), parseInt(speeddata.stats.pitching.pitcherSliders, 10), parseInt(speeddata.stats.pitching.pitcherSinkers, 10), parseInt(speeddata.stats.pitching.pitcherSplitters, 10));
-                              speeddata.player.favPitchPercent = Math.floor(speeddata.player.favPitch / parseInt(speeddata.stats.pitching.pitchesThrown, 10) * 100);
+                              speeddata.player.favPitch = Math.max(speeddata.stats.pitching.pitcher2SeamFastballs, speeddata.stats.pitching.pitcher4SeamFastballs, speeddata.stats.pitching.pitcherChangeups, speeddata.stats.pitching.pitcherCurveballs, speeddata.stats.pitching.pitcherCutters, speeddata.stats.pitching.pitcherSliders, speeddata.stats.pitching.pitcherSinkers, speeddata.stats.pitching.pitcherSplitters);
+                              speeddata.player.favPitchPercent = Math.floor(speeddata.player.favPitch / speeddata.stats.pitching.pitchesThrown * 100);
                             }
+                            if (speeddata.stats.pitching.earnedRunAvg)
+                              speeddata.stats.pitching.earnedRunAvg = parseFloat(speeddata.stats.pitching.earnedRunAvg).toFixed(2);
                           } else {
                             speeddata.firstStart = "First start this season.";
                           }
 
                           if (parseInt(fastballspeed.ID) === speeddata.player.id) {
 
-                            //speeddata.player.Height = fastballspeed.Height;
-                            //speeddata.player.Weight = fastballspeed.Weight;
-                            //speeddata.player.age = fastballspeed.age;
-                            //speeddata.player.city = fastballspeed.city;
-                            //speeddata.player.country = fastballspeed.country;
-                            //speeddata.player.IsRookie = fastballspeed.IsRookie;
-                            //speeddata.player.Throws = fastballspeed.Throws;
-                            //speeddata.player.BirthDate = fastballspeed.BirthDate;
-                            //speeddata.player.College = fastballspeed.College;
-                           // speeddata.player.Highschool = fastballspeed.HighSchool;
                             speeddata.player.pitchSpeedAvg = fastballspeed.pitchSpeedAvg;
                             speeddata.player.fastestPitch = fastballspeed.fastestPitch;
                             speeddata.player.image = fastballspeed.image;
@@ -328,11 +324,9 @@ export class StartingPitcherComponent implements OnInit {
 
                     }
 
-                     if (this.myData && this.gameStarters) {
+                    if (this.myData && this.gameStarters) {
                        console.log('start sorting data for real gameID by PitcherID...');
                     
-
-
                       if (this.myData && this.dailySchedule) {
                         console.log('start sorting data for daily schedule...');
                         for (let schedule of this.dailySchedule) {
@@ -368,15 +362,7 @@ export class StartingPitcherComponent implements OnInit {
 
                     if (this.myData && this.dailySchedule) {
                       console.log('start sorting data for pitching opponent...');
-                      for (let schedule of this.myData) {
-
-                        for (let sdata of this.myData) {
-                          if (sdata.team.opponentId === schedule.team.id) {
-                            sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
-                          }
-                        }
-                      }
-
+                      
                         for (let gs of this.gameStarters) {
 
                         for (let data of this.myData) {
@@ -422,6 +408,16 @@ export class StartingPitcherComponent implements OnInit {
                         }
 
                       }
+
+                      for (let schedule of this.myData) {
+
+                        for (let sdata of this.myData) {
+                          if (sdata.team.opponentId === schedule.team.id && 
+                            sdata.gameId === schedule.gameId) {
+                            sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
+                          }
+                        }
+                      }
                     }
 
                     if (this.myData && this.dailyStats) {
@@ -432,7 +428,7 @@ export class StartingPitcherComponent implements OnInit {
                           if (daily.team.abbreviation === mdata.team.abbreviation) {
                             if (daily.stats.pitching.wins === 1 || daily.stats.pitching.losses === 1) {
                               this.gameover = true;
-                              console.log(daily.team.abbreviation, 'this team has completed their game today...');
+                             // console.log(daily.team.abbreviation, 'this team has completed their game today...');
                               this.teamsCompletedPlayingToday.push(daily.team.abbreviation);
                             }
                           }
@@ -462,7 +458,7 @@ export class StartingPitcherComponent implements OnInit {
                             mdata.player.strikeoutsToday = daily.stats.pitching.pitcherStrikeouts;
                             mdata.player.hitsallowedToday = daily.stats.pitching.hitsAllowed;
                             mdata.player.pitchesthrownToday = daily.stats.pitching.pitchesThrown;
-                            mdata.player.eraToday = daily.stats.pitching.earnedRunAvg;
+                            mdata.player.eraToday = parseFloat(daily.stats.pitching.earnedRunAvg).toFixed(2);
                             mdata.stats.pitching.pitcher2SeamFastballsToday = daily.stats.pitching.pitcher2SeamFastballs;
                             mdata.stats.pitching.pitcher4SeamFastballsToday = daily.stats.pitching.pitcher4SeamFastballs;
                             mdata.stats.pitching.pitcherChangeupsToday = daily.stats.pitching.pitcherChangeups;
@@ -843,18 +839,10 @@ export class StartingPitcherComponent implements OnInit {
 
                   if (this.myData && this.dailySchedule) {
                       console.log('start sorting data for pitching opponent...');
-                      for (let schedule of this.myData) {
-
-                        for (let sdata of this.myData) {
-                          if (sdata.team.opponentId === schedule.team.id) {
-                            sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
-                          }
-                        }
-                      }
-
+                      
                         for (let gs of this.gameStarters) {
 
-                        for (let data of this.myData) {
+                          for (let data of this.myData) {
 
                           if (gs.playerID === data.player.id) {
                             data.gameId = gs.gameID;
@@ -951,7 +939,7 @@ export class StartingPitcherComponent implements OnInit {
                   if (this.teamsCompletedPlayingToday != null) {
                     for (let complete of this.teamsCompletedPlayingToday) {
                       for (let comdata of this.myData) {
-                        if (comdata.team.Name === complete) {
+                        if (comdata.team.abbreviation === complete) {
                           comdata.playingRightNow = false;
                           comdata.playingOver = true;
                         }
@@ -970,7 +958,7 @@ export class StartingPitcherComponent implements OnInit {
     } else {
       this.loading = false;
       this.showData = this.players;
-      this.gameDate = this.showData["0"].gamedate;
+      this.gameDate = this.showData[0].gamedate;
 
       for (let p of this.players) {
 
