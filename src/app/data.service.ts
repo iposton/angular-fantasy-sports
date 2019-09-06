@@ -28,6 +28,7 @@ export class DataService {
   allstats: Observable <any> = null;
   gameid: Observable <any> = null;
   info: Observable <any> = null;
+  starterInfo: Observable <any> = null;
   env: Observable < any > = null;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
   public dailyDate: any;
@@ -134,6 +135,17 @@ export class DataService {
         
    // }
     return this.info;
+  }
+
+  getStarterInfo(players) {
+
+   // if (!this.info) {
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P&player=${players}`;
+      console.log('getting active player data from API...');
+      this.starterInfo = this.http.get(url, {headers})
+        
+   // }
+    return this.starterInfo;
   }
 
    getDaily() {

@@ -28,6 +28,7 @@
             <p>
 
               <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie  <br></span>
+              <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
              
               <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.height}} Weight: {{data.player.weight}}  <br> </span>
              <span *ngIf="data.player.birthCity != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.birthCountry === 'USA'">{{data.player.birthCity}}</span><span *ngIf="data.player.birthCountry != 'USA'">{{data.player.birthCountry}}</span>  <br> </span>
@@ -91,6 +92,7 @@
           <div class="right-content">
             <p>
               <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                  <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
               <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary !== undefined && data.player.contractBaseSalary != ''">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
               <span *ngIf="data.player.contractTotalYears !== undefined && data.player.contractTotalYears != ''">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
@@ -162,6 +164,7 @@
             <div class="right-content">
               <p>
                 <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                    <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
                 <br>
                 <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.height}} Weight: {{data.player.weight}}</span>
                 <br> <span *ngIf="data.player.birthCity != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.birthCountry === 'USA'">{{data.player.birthCity}}</span><span *ngIf="data.player.birthCountry != 'USA'">{{data.player.birthCountry}}</span></span>
@@ -232,6 +235,7 @@
           <div class="right-content">
             <p>
               <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                  <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
               <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary != '' && data.player.contractBaseSalary != null">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
               <span *ngIf="data.player.contractTotalYears != '' && data.player.contractTotalYears != null">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
@@ -399,14 +403,14 @@
             
         </div>
           <div *ngIf="data.player.favPitchPercentToday != null" class="fav-pitch">
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher2SeamFastballsToday">Throwing 2-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher4SeamFastballsToday">Throwing 4-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherChangeupsToday">Throwing Changeup {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherCurveballsToday">Throwing Curveball {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherCuttersToday">Throwing Cutter {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSlidersToday">Throwing Slider {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSinkersToday">Throwing Sinker {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSplittersToday">Throwing Splitter {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher2SeamFastballsToday">Throwing 2-Seam Fastball {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher4SeamFastballsToday">Throwing 4-Seam Fastball {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherChangeupsToday">Throwing Changeup {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherCurveballsToday">Throwing Curveball {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherCuttersToday">Throwing Cutter {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSlidersToday">Throwing Slider {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSinkersToday">Throwing Sinker {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSplittersToday">Throwing Splitter {{data.player.favPitchPercentToday}}%</p>
           
           </div>
          <!--  <div *ngIf="data.player.pitchSpeedAvgToday != null" class="fav-pitch">
@@ -435,6 +439,7 @@
             <div class="right-content">
               <p>
                 <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                    <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
                 <br>
                 <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.height}} Weight: {{data.player.weight}}</span>
                 <br> <span *ngIf="data.player.birthCity != null">Born: {{data.player.birthDate | date: 'shortDate'}} <span *ngIf="data.player.birthCountry === 'USA'">{{data.player.birthCity}}</span><span *ngIf="data.player.birthCountry != 'USA'">{{data.player.birthCountry}}</span></span>
@@ -509,6 +514,7 @@
           <div class="right-content">
             <p>
               <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                  <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
               <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary != '' && data.player.contractBaseSalary != null">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
               <span *ngIf="data.player.contractTotalYears != '' && data.player.contractTotalYears != null">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
@@ -674,14 +680,14 @@
     
 </div>
           <div *ngIf="data.player.favPitchPercentToday != null" class="fav-pitch">
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher2SeamFastballsToday">Throwing 2-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher4SeamFastballsToday">Throwing 4-Seam Fastball {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherChangeupsToday">Throwing Changeup {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherCurveballsToday">Throwing Curveball {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherCuttersToday">Throwing Cutter {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSlidersToday">Throwing Slider {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSinkersToday">Throwing Sinker {{data.player.favPitchPercentToday}}%.</p>
-            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSplittersToday">Throwing Splitter {{data.player.favPitchPercentToday}}%.</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher2SeamFastballsToday">Throwing 2-Seam Fastball {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcher4SeamFastballsToday">Throwing 4-Seam Fastball {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherChangeupsToday">Throwing Changeup {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherCurveballsToday">Throwing Curveball {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherCuttersToday">Throwing Cutter {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSlidersToday">Throwing Slider {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSinkersToday">Throwing Sinker {{data.player.favPitchPercentToday}}%</p>
+            <p *ngIf="data.player.favPitchToday == data.stats.pitching.pitcherSplittersToday">Throwing Splitter {{data.player.favPitchPercentToday}}%</p>
           </div>
          <!--  <div *ngIf="data.player.pitchSpeedAvgToday != null" class="fav-pitch">
             <p>Avg pitch speed today {{data.player.pitchSpeedAvgToday}}mph</p>
