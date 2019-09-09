@@ -34,6 +34,7 @@ let today = new Date();
 export class StartingPitcherComponent implements OnInit {
 
   public dailySchedule: Array <any>;
+  public previousGames: Array <any>;
   public players: Array <any>;
   public pitcherSpeed: Array <any>;
   public starterIdData: Array <any> = [];
@@ -236,7 +237,6 @@ export class StartingPitcherComponent implements OnInit {
   }
 
   async sortData() {
-
     if (this.gamesToday === true) {
       let promiseOne;
       promiseOne = new Promise((resolve, reject) => {
@@ -514,6 +514,12 @@ export class StartingPitcherComponent implements OnInit {
 
 
               }
+
+              this.dataService
+                .getPrevGameId().subscribe(res => {
+                  console.log(res, 'got previous games array!');
+                  this.previousGames = res['games'];
+              });
             }
 
                       //THIS FOR LOOP GETS AVG PITCH SPEED FOR EVERY PITCHER IN THIS LIST
@@ -576,95 +582,122 @@ export class StartingPitcherComponent implements OnInit {
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
     this.loadingPrevious = false;
     console.log(data, 'this player has been flipped data...');
+    console.log(this.previousGames, 'previous games find player id');
+    for (let game of this.previousGames) {
+      if (game['schedule'].awayTeam.abbreviation === data.team.abbreviation ||
+        game['schedule'].homeTeam.abbreviation === data.team.abbreviation) {
 
-    // if (data.player.previousGame1 != null) {
-    //   // /games/`+this.dataService.dailyDate+`-`+ g['schedule'].awayTeam.abbreviation +`-`+ g['schedule'].homeTeam.abbreviation+`/lineup.json?position=P`
+        let prevHome = game['schedule'].homeTeam.abbreviation === data.team.abbreviation ? true : false;
 
-    //   this.http.get(`${this.apiRoot}/game_boxscore.json?gameid=` + data.player.previousGame1, { headers })
-    //     .subscribe(res => {
-    //       this.loadingPrevious = false;
+        this.dataService
+         .getScore(game['schedule'].id).subscribe(res => {
 
-    //       if (data.team.abbreviation === res['gameboxscore'].game.homeTeam.abbreviation) {
-    //         console.log(res['gameboxscore'], "last home game data");
+           console.log(res, 'score of this previous game');
+
+           let players = null;
+
+           if (prevHome)
+             players = res.stats.home.players;
+           else
+             players = res.stats.away.players;
+
+           for (let item of players) {
+             if (item.player.id === data.player.id) {
+                this.getAverages(game['schedule'].id);
+                let stats = item.playerStats[0].pitching;
+                console.log(stats, 'stats for', data.player.lastName);
+                data.pgBlurb1 = (prevHome ? ' vs ' + game['schedule'].awayTeam.abbreviation : ' @ ' +  game['schedule'].homeTeam.abbreviation) + ': ' + stats.pitchesThrown + ' pitches, ' + stats.hitsAllowed + ' hits allowed, sat down ' + stats.pitcherStrikeouts;
+                data.homeruns1 = stats.homerunsAllowed;
+                data.previousEra1 = parseFloat(stats.earnedRunAvg).toFixed(2);
+                data.previousWin1 = stats.wins;
+                data.previousL1 = stats.losses;
+                data.previousSO1 = stats.pitcherStrikeouts;
+                data.walks1 = stats.pitcherWalks;
+             }
+           }
+
+        })
+
+      //  this.http.get(`${this.apiRoot}/games/`+game['schedule'].id+`/playbyplay.json`, { headers })
+      // .subscribe(res => {
+      //       console.log(res, 'got play by play game data for ' + data.player.lastName);
+
+      //     if (res != null) {}
+
+      //   })
+
+      }
+    }
+   
+  }
+
+  public getAverages(gid) {
+
+        this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
+      .subscribe(res => {
+          console.log(res, 'got play by play game data for ');
+
+          if (res != null) {
+
+          if (res['atBats'] != null) {
+
+          res['atBats'].forEach((item2, index) => {
+
+             if (item2 != null && item2.atBatPlay.length > 0)
+               item2.atBatPlay.forEach((item3, index) => {
+               let f = item3;
+
+               if (f.pitch != undefined && f.pitch.ballStartSpeed != undefined) {
+                 //console.log(f.pitch);
+                 this.pitcherspeed = {
+                   pitcher: f.pitch.pitchingPlayer.id,
+                   pitchspeedStart: f.pitch.ballStartSpeed,
+                   lastName: f.pitch.pitchingPlayer.lastName,
+                 }
+                 this.specificFastballData.push(this.pitcherspeed);
+
+     
+               }
+
+             })
+           })
+
+           this.speedResults = this.specificFastballData.reduce(function(r, a) {
+             r[a.pitcher] = r[a.pitcher] || [];
+             r[a.pitcher].push(a.pitchspeedStart);
+             return r
+           }, Object.create(null));
+           console.log('made groups of pichers pitch speeds by ID...');
+
+         }
+         this.myData.forEach((data, index) => {
 
 
-    //         res['gameboxscore'].homeTeam.homePlayers['playerEntry'].forEach((item, index) => {
-    //           if (item.player.ID === data.player.ID) {
-    //            // console.log(item, 'this is the pitcher and stats...');
+           if (this.speedResults[data.player.id]) {
+             let avg = this.speedResults[data.player.id].reduce((r, a) => {
 
-    //             data.pgBlurb1 = ' vs ' + res['gameboxscore'].game.awayTeam.abbreviation + ': ' + item.stats.PitchesThrown['#text'] + ' pitches, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'];
-    //             data.homeruns1 = parseInt(item.stats.HomerunsAllowed['#text']);
-    //             data.previousEra1 = parseFloat(item.stats.EarnedRunAvg['#text']);
-    //             data.previousWin1 = parseInt(item.stats.Wins['#text']);
-    //             data.previousL1 = parseInt(item.stats.Losses['#text']);
-    //             data.previousSO1 = parseInt(item.stats.PitcherStrikeouts['#text']);
-    //             data.walks1 = parseInt(item.stats.PitcherWalks['#text']);
-    //           }
+               return r + parseInt(a);
 
-    //         });
-    //       } else {
-    //         //console.log(res['gameboxscore'].awayTeam.awayPlayers['playerEntry'], "last away game data");
-    //         res['gameboxscore'].awayTeam.awayPlayers['playerEntry'].forEach((item, index) => {
-    //           if (item.player.ID === data.player.ID) {
-    //             console.log(item, 'this is the pitcher and stats...')
-    //             data.pgBlurb1 = ' @ ' + res['gameboxscore'].game.homeTeam.abbreviation + ': ' + item.stats.PitchesThrown['#text'] + ' pitches, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'];
-    //             data.homeruns1 = parseInt(item.stats.HomerunsAllowed['#text']);
-    //             data.previousEra1 = parseFloat(item.stats.EarnedRunAvg['#text']);
-    //             data.previousWin1 = parseInt(item.stats.Wins['#text']);
-    //             data.previousL1 = parseInt(item.stats.Losses['#text']);
-    //             data.previousSO1 = parseInt(item.stats.PitcherStrikeouts['#text']);
-    //             data.walks1 = parseInt(item.stats.PitcherWalks['#text']);
-    //           }
+             }, 0) / this.speedResults[data.player.id].length;
 
-    //         });
-    //       }
-    //     })
-    // } else {
-    //   this.loadingPrevious = false;
-    //   console.log(data, 'no previous game for data...');
-    // }
+             let max = this.speedResults[data.player.id].reduce(function(a, b) {
+               return Math.max(a, b);
+             });
 
-    // if (data.player.previousGame2 != null) {
-    //   this.http.get(`${this.apiRoot}/game_boxscore.json?gameid=` + data.player.previousGame2, { headers })
-    //     .subscribe(res => {
-    //       this.loadingPrevious = false;
-    //       if (data.team.abbreviation === res['gameboxscore'].game.homeTeam.abbreviation) {
+             data.player.pitchSpeedAvg = Math.floor(avg);
+             data.player.fastestPitch = max;
 
-    //         // console.log(res['gameboxscore'].homeTeam.homePlayers['playerEntry'], "the other previous home game data");
-    //         res['gameboxscore'].homeTeam.homePlayers['playerEntry'].forEach((item, index) => {
-    //           if (item.player.ID === data.player.ID) {
-    //             console.log(item, 'this is the pitcher and stats...')
-    //             data.pgBlurb2 = ' vs ' + res['gameboxscore'].game.awayTeam.abbreviation + ': ' + item.stats.PitchesThrown['#text'] + ' pitches, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'];
-    //             data.homeruns2  = parseInt(item.stats.HomerunsAllowed['#text']);
-    //             data.previousEra2 = parseFloat(item.stats.EarnedRunAvg['#text']);
-    //             data.previousWin2 = parseInt(item.stats.Wins['#text']);
-    //             data.previousL2 = parseInt(item.stats.Losses['#text']);
-    //             data.previousSO2 = parseInt(item.stats.PitcherStrikeouts['#text']);
-    //             data.walks2 = parseInt(item.stats.PitcherWalks['#text']);
-    //           }
+             }
 
-    //         });
-    //       } else {
-    //         // console.log(res['gameboxscore'].awayTeam.awayPlayers['playerEntry'], "the other previous away game data");
-    //         res['gameboxscore'].awayTeam.awayPlayers['playerEntry'].forEach((item, index) => {
-    //           if (item.player.ID === data.player.ID) {
-    //             console.log(item, 'this is the pitcher and stats...');
-    //             data.pgBlurb2 = ' @ ' + res['gameboxscore'].game.homeTeam.abbreviation + ': ' + item.stats.PitchesThrown['#text'] + ' pitches, ' + item.stats.HitsAllowed['#text'] + ' hits allowed, sat down ' + item.stats.PitcherStrikeouts['#text'];
-    //             data.homeruns2 = parseInt(item.stats.HomerunsAllowed['#text']);
-    //             data.previousEra2 = parseFloat(item.stats.EarnedRunAvg['#text']);
-    //             data.previousWin2 = parseInt(item.stats.Wins['#text']);
-    //             data.previousL2 = parseInt(item.stats.Losses['#text']);
-    //             data.previousSO2 = parseInt(item.stats.PitcherStrikeouts['#text']);
-    //             data.walks2 = parseInt(item.stats.PitcherWalks['#text']);
-    //           }
+          });
 
-    //         });
-    //       }
-    //     })
-    // } else {
-    //   this.loadingPrevious = false;
-    //   console.log(data, 'no previous game for data for 2 item in game id array...');
-    // }
+        }
+       }, (err: HttpErrorResponse) => {
+
+            console.log(err, 'error getting playbyplay');
+
+       });
+
   }
 
 
