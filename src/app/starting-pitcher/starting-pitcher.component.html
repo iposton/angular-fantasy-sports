@@ -91,7 +91,7 @@
           </div>
           <div class="right-content">
             <p>
-              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie <br></span>
                   <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
               <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary !== undefined && data.player.contractBaseSalary != ''">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
@@ -128,9 +128,17 @@
             <span *ngIf="data.homeruns1 != null && data.homeruns2 === undefined">Homeruns given up: {{data.homeruns1}}<br></span>
             <span *ngIf="data.homeruns2 != null && data.homeruns1 === undefined">Homeruns given up: {{data.homeruns2}}<br></span>
             <span *ngIf="data.homeruns1 != null && data.homeruns2 != null">Homeruns given up: {{data.homeruns1 + data.homeruns2}}<br></span>
-            <span *ngIf="data.walks1 != null && data.walks2 === undefined">Walks allowed: {{data.walks1}}</span>
-            <span *ngIf="data.walks2 != null && data.walks1 === undefined">Walks allowed: {{data.walks2}}</span>
-            <span *ngIf="data.walks1 != null && data.walks2 != null">Walks allowed: {{data.walks1 + data.walks2}}</span>
+            <span *ngIf="data.walks1 != null && data.walks2 === undefined">Walks allowed: {{data.walks1}}<br></span>
+            <span *ngIf="data.walks2 != null && data.walks1 === undefined">Walks allowed: {{data.walks2}}<br></span>
+            <span *ngIf="data.walks1 != null && data.walks2 != null">Walks allowed: {{data.walks1 + data.walks2}}<br></span>
+            <br>
+            <span *ngIf="data.player.pitchSpeedAvg != null">
+              Avg pitch speed {{data.player.pitchSpeedAvg}}mph
+            <br></span>
+          
+            <span *ngIf="data.player.fastestPitch != null">
+              Top pitch speed {{data.player.fastestPitch}}mph
+            </span>
 
            </p>
           </div>
@@ -163,7 +171,7 @@
             </div>
             <div class="right-content">
               <p>
-                <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie <br></span>
                     <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
                 <br>
                 <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.height}} Weight: {{data.player.weight}}</span>
@@ -234,14 +242,14 @@
           </div>
           <div class="right-content">
             <p>
-              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie <br></span>
                   <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
               <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary != '' && data.player.contractBaseSalary != null">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
               <span *ngIf="data.player.contractTotalYears != '' && data.player.contractTotalYears != null">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
               <span *ngIf="data.player.draftYear != '' && data.player.draftYear != null">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
-              <span *ngIf="data.player.college != '' && data.player.college != null">College: {{data.player.college}}<br></span> 
-              <span *ngIf="data.player.highSchool != '' && data.player.highSchool != null">Highschool: {{data.player.highSchool}} <br></span>
+              <span *ngIf="data.player.college != null">College: {{data.player.college}}<br></span> 
+              <span *ngIf="data.player.highSchool != null">Highschool: {{data.player.highSchool}} <br></span>
               Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>
@@ -438,7 +446,7 @@
             </div>
             <div class="right-content">
               <p>
-                <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+                <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie <br></span>
                     <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
                 <br>
                 <span *ngIf="data.player.age != null"> Age: {{data.player.age}} Height: {{data.player.height}} Weight: {{data.player.weight}}</span>
@@ -513,14 +521,14 @@
           </div>
           <div class="right-content">
             <p>
-              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+              <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie <br></span>
                   <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
               <span *ngIf="data.player.contractStartYear === '2018' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
               <span *ngIf="data.player.contractBaseSalary != '' && data.player.contractBaseSalary != null">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
               <span *ngIf="data.player.contractTotalYears != '' && data.player.contractTotalYears != null">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
               <span *ngIf="data.player.draftYear != '' && data.player.draftYear != null">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
-              <span *ngIf="data.player.college != '' && data.player.college != null">College: {{data.player.college}}<br></span> 
-              <span *ngIf="data.player.highSchool != '' && data.player.highSchool != null">Highschool: {{data.player.highSchool}} <br></span>
+              <span *ngIf="data.player.college != null">College: {{data.player.college}}<br></span> 
+              <span *ngIf="data.player.highSchool != null">Highschool: {{data.player.highSchool}} <br></span>
               Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span>
               <ng-template #content>{{data.team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template>

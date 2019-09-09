@@ -75,12 +75,12 @@ export class DataService {
   }
 
 
-  getGameId() {
+  getPrevGameId() {
 
     //if (!this.gameid) {
       console.log('getting pitch speed data from API...');
 
-      let url = `${this.apiRoot}/full_game_schedule.json?date=from-13-days-ago-to-2-days-ago`;
+      let url = `${this.apiRoot}/games.json?date=from-6-days-ago-to-5-days-ago`;
       this.gameid = this.http.get(url, {headers})
         
     //}
