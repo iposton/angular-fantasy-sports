@@ -34,6 +34,7 @@ let today = new Date();
 export class StartingPitcherComponent implements OnInit {
 
   public dailySchedule: Array <any>;
+  public teamRef: Array <any>;
   public previousGames: Array <any>;
   public players: Array <any>;
   public pitcherSpeed: Array <any>;
@@ -77,6 +78,13 @@ export class StartingPitcherComponent implements OnInit {
 
   public getByDate(event) {
     this.loading = true;
+    let thisDate = new Date(event.value);
+    let utcDate = new Date(thisDate.toUTCString());
+    utcDate.setHours(utcDate.getHours());
+    let myDate = new Date(utcDate);
+    let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+    console.log(dailyDate, 'get stats for this selected date');
+    this.dataService.selectedDate(dailyDate);
 
     //empty old data on data change 
     this.dailySchedule = [];
@@ -88,6 +96,7 @@ export class StartingPitcherComponent implements OnInit {
     this.showData = [];
     this.specificFastballData = [];
     this.teamsCompletedPlayingToday = [];
+    this.previousGames = [];
     this.score = [];
     this.players = [];
     this.speedResults = [];
@@ -96,14 +105,6 @@ export class StartingPitcherComponent implements OnInit {
     this.postponed = false;
     this.gamesToday = false;
     this.noGamesMsg = '';
- 
-    let thisDate = new Date(event.value);
-    let utcDate = new Date(thisDate.toUTCString());
-    utcDate.setHours(utcDate.getHours());
-    let myDate = new Date(utcDate);
-    let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-    console.log(dailyDate, 'get stats for this selected date');
-    this.dataService.selectedDate(dailyDate);
     this.loadData();
   }
 
@@ -131,6 +132,7 @@ export class StartingPitcherComponent implements OnInit {
             } else {
 
               this.dailySchedule = res['games'];
+              this.teamRef = res['references'].teamReferences;
               this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
               let dPipe = new DatePipe("en-US");
 
@@ -358,6 +360,18 @@ export class StartingPitcherComponent implements OnInit {
                         }
                       }
 
+                       for (let team of this.teamRef) {
+                         for (let data of this.myData) { 
+                            if (team.id === data.team.id) {
+                              data.team.color = team.teamColoursHex[0];
+                              data.team.accent = team.teamColoursHex[1];
+                              data.team.logo = team.officialLogoImageSrc;
+                              data.team.city = team.city;
+                              data.team.name = team.name;
+                            }
+                          }  
+                       }
+
                     }
 
                     if (this.myData && this.dailySchedule) {
@@ -409,12 +423,14 @@ export class StartingPitcherComponent implements OnInit {
 
                       }
 
+                   
                       for (let schedule of this.myData) {
 
                         for (let sdata of this.myData) {
                           if (sdata.team.opponentId === schedule.team.id && 
                             sdata.gameId === schedule.gameId) {
                             sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
+                            sdata.team.opponentLogo = schedule.team.logo;
                           }
                         }
                       }
@@ -514,6 +530,8 @@ export class StartingPitcherComponent implements OnInit {
 
 
               }
+
+             
 
               this.dataService
                 .getPrevGameId().subscribe(res => {
@@ -633,7 +651,7 @@ export class StartingPitcherComponent implements OnInit {
 
   public getAverages(gid) {
 
-        this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
+    this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
       .subscribe(res => {
           console.log(res, 'got play by play game data for ');
 

@@ -38,6 +38,7 @@ export class DataService {
   }
 
   public selectedDate(d) {
+    console.log(d, 'set new date');
     dailyDate = d;
   }
 
@@ -80,7 +81,7 @@ export class DataService {
     //if (!this.gameid) {
       console.log('getting pitch speed data from API...');
 
-      let url = `${this.apiRoot}/games.json?date=from-6-days-ago-to-5-days-ago`;
+      let url = `${this.apiRoot}/games.json?date=from-7-days-ago-to-5-days-ago`;
       this.gameid = this.http.get(url, {headers})
         
     //}
@@ -90,7 +91,7 @@ export class DataService {
     getDailySchedule() {
     //get all games for today get game ID and find a pitchers opponent
    // if (!this.schedule) {
-      console.log('getting mlb schedule for today from api...');
+      console.log('getting mlb schedule for today from api...', dailyDate);
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
       let url = `${this.apiRoot}/date/${dailyDate}/games.json`;
