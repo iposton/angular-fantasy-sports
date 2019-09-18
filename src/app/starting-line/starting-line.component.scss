@@ -1,0 +1,287 @@
+.left-content {
+  img {
+    width: 60%;
+    margin: 0;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    border: 2px solid #fff;
+    border-radius: 4px;
+  }
+
+}
+
+
+
+.right-content img {
+  width: 3%;
+  margin: 0;
+}
+
+.content-wrapper {
+  display: flex;
+}
+
+.content-wrapper-teams {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+.content-wrapper-teams div {
+  flex: 1;
+}
+
+.content-wrapper-teams {
+  img {
+    width: 68%;
+    margin: 0;
+  }
+  
+  .left-content-teams {
+    img {
+      float: right;
+    }
+  }
+}
+
+.middle-content-teams {
+  text-align: center;
+  font-size: 40px;
+}
+
+.left-content {
+  flex: 0 0 15%;
+  p {
+    font-size: 13px;
+  }
+}
+
+.right-content {
+  flex: 1;
+  font-size: 12px;
+}
+
+ul {
+  list-style: none;
+}
+
+.card-wrap-sp {
+    display: inline-block;
+    margin: 20px;
+    vertical-align: top;
+    width: 90%;
+}
+
+.mat-card-sp:not([class*=mat-elevation-z]) {
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.mat-card-sp {
+  padding: 8px;
+}
+
+
+.mat-card-sp {
+    transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+    display: block;
+    position: relative;
+    padding: 24px;
+    border-radius: 2px;
+}
+.mat-card-sp {
+    background: #424242;
+    color: white;
+}
+
+.bottom-content {
+  font-size: 14px;
+}
+
+.name-number {
+  font-size: 16px;
+}
+
+.bottom-content {
+  img {
+    width: 5%;
+    margin: 0;
+  }
+  .live-pitch.live-status p {
+    text-align: left;
+    padding: 3px;
+  }
+} 
+
+
+.fav-pitch {
+  background: #d35400;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-bottom: 15px;
+}
+
+.live-pitch {
+  background: #2ecc71;
+}
+
+h3 {
+  color: #2ecc71;
+}
+
+
+.ribbon {
+  position: absolute;
+  left: -5px; top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px; height: 75px;
+  text-align: right;
+}
+.ribbon span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  // background: #79A70A;
+  // background: linear-gradient(#D15419 0%, #AD4514 100%);
+  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 19px; left: -21px;
+}
+.ribbon span::before {
+  content: "";
+  position: absolute; left: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid #222;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #222;
+}
+.ribbon span::after {
+  content: "";
+  position: absolute; right: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #222;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #222;
+}
+
+.hide {
+  display: none;
+}
+
+.tp-box {
+  position: relative;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform: transform 1s;
+  -ms-transform: transform 1s;
+  transform: transform 1s;
+}
+
+.tp-box__side {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  font-weight: 700; 
+}
+
+.tp-box__front {
+  -webkit-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  transform: rotateY(0deg);
+}
+
+.tp-box__front a:hover,
+.tp-box__back a:hover { 
+    /*opacity: 0.7;*/
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tp-box__front a,
+.tp-box__back a { 
+   /* margin-top: 2px;
+    background: #FED64F;*/
+    color: #fff;
+   /* padding: 3px;
+    border-radius: 3px;*/
+}
+
+.tp-box__back {
+  position: absolute;
+  width: 87%;
+  top: 27px;
+  -webkit-transform: rotateY(-180deg);
+  -ms-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
+}
+
+.err {
+  color: #fff;
+}
+
+.go-back-btn {
+  position: absolute;
+  right: 0;
+  font-size: 11px;
+}
+
+.previous-game-stat-block {
+  background: #e2e2e2;
+  color: #555;
+  text-align: left;
+  padding: 0 0 1px 2px;
+  margin-bottom: 15px;
+  border: 1px solid #333;
+  font-size: 12px;
+}
+
+.previous-p {
+  margin-top: 0;
+}
+
+.previous-header {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.mat-form-field {
+  color: #efefef;
+}
+
+
+.mat-form-field .mat-datepicker-toggle-default-icon {
+  color: #efefef;
+}
+
+.mat-form-field-type-mat-input.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-hide-placeholder {
+  color: #efefef;
+}
+
+
+@media only screen and (max-width: 600px) {
+
+  .card-wrap-sp {
+    display: inline-block;
+    margin: 0 0 20px 0;
+    vertical-align: top;
+    width: 100%;
+  }
+
+   .baseball-header {
+    font-size: 20px;
+  }
+
+}

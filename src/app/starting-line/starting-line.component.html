@@ -1,0 +1,126 @@
+<h1 class="center date-header baseball-header"> NFL Offensive Line</h1>
+<h1 class="center date-header baseball-header"> Week {{selectedWeek}}</h1>
+<div class="center">
+  <select name="week" id="week">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+  </select>
+</div>
+
+<div class="spinner-msg" *ngIf="loading">
+  Retrieving pitching data...
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="errMessage" class="err center">
+     <h1><strong>Error: </strong> {{ errMessage }}</h1>
+</div>
+<div *ngIf="showData != null">
+  <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData" [class.hide]="data.playerNotPlayingYet === false">
+    <mat-card class="tp-box mat-card-sp" [@flipState]="data[0].flip">
+      <div *ngIf="data[0].flip === 'inactive'" class="ribbon"><span [ngStyle]="{'backgroundColor': data[0].team?.color ? data[0].team?.color : 'black' }">{{data[0].team.name}}</span></div>
+      <div class="tp-box__side tp-box__front">
+        <div class="content-wrapper">
+          <div class="left-content" *ngFor="let item of data">
+            
+            <img src="{{item?.player?.officialImageSrc}}" alt="football player" onError="this.src='http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/ARM455007.png'">
+            <p>
+              <span *ngIf="item.player?.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px; width: 50%;">Rookie <br> </span>
+              <span>{{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} <br></span>
+                 <span *ngIf="item?.player?.age != null"> Age: {{item?.player?.age}} <br> Height: {{item?.player?.height}} Weight: {{item?.player?.weight}}  <br> </span>
+            
+            </p>
+          </div>
+          <div class="right-content">
+            <p>
+
+              <span *ngIf="data[0].team?.opponent">Opponent:
+              {{data[0].team?.opponent}} <br>
+               Game: {{data[0].player.gameTime | date: 'shortTime'}} PST, {{data[0].team.gameField}} </span>
+            <!--   <br> in progress: {{item.playingRightNow}}
+              <br> game over: {{data.playingOver}}
+              <br> game id: {{data.gameId}} -->
+            </p>
+          </div>
+        </div>
+        <div class="bottom-content">
+          <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
+          <!-- <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness"> - {{data?.player?.handedness}}</span> - {{data?.player?.primaryPosition}} | #{{data.player.jerseyNumber}}</p> -->
+      <!--     <p class="name-number">
+            <b>W-L:</b> {{ data.stats.pitching.wins +'-'+ data.stats.pitching.losses }} / <b>ERA:</b> {{ data.stats.pitching.earnedRunAvg }} /
+            <b>K's:</b> {{ data.stats.pitching.pitcherStrikeouts }}
+          </p> -->
+       <!--    <div class="fav-pitch">
+            
+            <br>
+            <a class="more-stats-btn" (click)="getPreviousGameStats(data)">MORE STATS</a>
+          </div> -->
+         <!--  <div *ngIf="data.firstStart != null" class="fav-pitch">
+          <p>{{data.firstStart}}</p>
+            <br>
+            <a class="more-stats-btn" (click)="getGameStats(data, data.gameId)">MORE STATS</a>
+          </div> -->
+          
+        </div>
+      </div>  <!-- FRONT OF CARD -->
+     
+      <!-- SCORE BACK OF CARD -->
+      <div class="tp-box__side tp-box__back">
+        <a class="go-back-btn" (click)="flipBack(data)">GO BACK</a>
+          <div class="content-wrapper">
+          <div class="left-content">
+            <!-- <img src="{{data?.player?.officialImageSrc}}" alt="football player" onError="this.src='http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/ARM455007.png'"> -->
+          </div>
+          <div class="right-content">
+            <p>
+              <!-- <span *ngIf="data.player.rookie === true" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie <br></span>
+                  <span *ngIf="data.postponed === true" style="background:red; color:#fff; padding:1px; border-radius:2px;">Postponed  <br></span>
+              <span *ngIf="data.player.contractStartYear === '2019' && data.player.contractTotalYears === 1" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Contract Year<br></span>
+              <span *ngIf="data.player.contractBaseSalary !== undefined && data.player.contractBaseSalary != ''">Contract Salary: ${{data.player.contractBaseSalary | number:'.2'}} <br></span>
+              <span *ngIf="data.player.contractTotalYears !== undefined && data.player.contractTotalYears != ''">Contract Years:  {{data.player.contractTotalYears}}<br></span> 
+              <span *ngIf="data.player.draftYear !== undefined && data.player.draftYear != ''">Drafted: Round {{data.player.draftRound}}, {{data.player.draftYear}}<br></span>
+              <span *ngIf="data.player.college !== undefined && data.player.college != ''">College: {{data.player.college}}<br></span> 
+              <span *ngIf="data.player.highSchool !== undefined && data.player.highSchool != ''">Highschool: {{data.player.highSchool}} <br></span>
+              Opponent: <span *ngIf="data.team.opponent;then content else other_content"></span> -->
+              <ng-template #content>{{data[0].team.opponent}}</ng-template>
+              <ng-template #other_content>No game today.</ng-template>
+              <!-- <br>SP Opponent: {{data.player.pitchingOpponent}} -->
+              <span *ngIf="data[0].team.opponent"><br>Game: {{data[0].player.gameTime | date: 'shortTime'}} PST, {{data[0].team.gameField}} </span>
+              <!-- <br> in progress: {{data.playingRightNow}} -->
+              <!-- <br> game over: {{data.playingOver}} -->
+              <!-- <br> game id: {{data.gameId}} -->
+            </p>
+          </div>
+        </div>
+        <div class="bottom-content">
+          <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
+        <!--   <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness"> - {{data?.player?.handedness}}</span> - {{data?.player?.primaryPosition}} | #{{data.player.jerseyNumber}}</p> -->
+       
+         
+          <div class="fav-pitch previous-game-stat-block"> 
+          
+          </div>
+         
+        </div>
+        <div *ngIf="data[0].player.gameLocation === 'home'" class="content-wrapper-teams">
+         <div class="left-content-teams"><img src="{{data[0].team.opponentLogo}}" alt="mlb team logo"></div>
+         <div class="middle-content-teams">@</div>
+          <div class="right-content-teams"><img src="{{data[0].team.logo}}" alt="mlb team logo"></div>
+        </div>
+        <div *ngIf="data[0].player.gameLocation === 'away'" class="content-wrapper-teams">
+         <div class="left-content-teams"><img src="{{data[0].team.logo}}" alt="mlb team logo"></div>
+         <div class="middle-content-teams">@</div>
+          <div class="right-content-teams"><img src="{{data[0].team.opponentLogo}}" alt="mlb team logo"></div>
+        </div>
+         
+      </div> <!-- SCORE BACK OF CARD  -->
+    </mat-card>
+  </div>
+ 
+
+</div>

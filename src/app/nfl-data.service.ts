@@ -19,7 +19,7 @@ let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
   providedIn: 'root'
 })
 
-export class DataService {
+export class NFLDataService {
 
   public schedule: Observable <any> = null;
   public stats: Observable <any> = null;
@@ -30,10 +30,10 @@ export class DataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular";
   public dailyDate: any;
 
-  //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,T,C,TE
+  //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,T,C
 
   constructor(private http: HttpClient) {
     this.dailyDate = dailyDate;
@@ -90,13 +90,14 @@ export class DataService {
     return this.gameid;
   }
 
-    getDailySchedule() {
+    getSchedule(selected) {
+      // pass in week
     //get all games for today get game ID and find a pitchers opponent
    // if (!this.schedule) {
       console.log('getting mlb schedule for today from api...', dailyDate);
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
-      let url = `${this.apiRoot}/date/${dailyDate}/games.json`;
+      let url = `${this.apiRoot}/week/${selected}/games.json`;
       this.schedule = this.http.get(url, {headers})
        
    // }
@@ -108,8 +109,8 @@ export class DataService {
 
     //if (!this.stats) {
       //console.log('getting cumulative_player_stats by player ID from API...', players);
-      //let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&player=`+playerID;
-      let url = `${this.apiRoot}/player_stats_totals.json?position=P&player=${players}`;
+      //let url = `${this.apiRoot}/cumulative_player_stats.json?position=G,T,C&player=`+playerID;
+      let url = `${this.apiRoot}/player_stats_totals.json?position=G,T,C`; //&player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     //}
@@ -121,8 +122,8 @@ export class DataService {
     //if (!this.allstats) {
 
       console.log('getting cumulative_player_stats by player ID from API...');
-      //cumulative_player_stats.json?position=P&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `${this.apiRoot}/player_stats_totals.json?position=P`;
+      //cumulative_player_stats.json?position=G,T,C&sort=STATS.Miscellaneous-GS.D&limit=180
+      let url = `${this.apiRoot}/player_stats_totals.json?position=G,T,C`;
       this.allstats = this.http.get(url, {headers})
       
     //}
@@ -132,7 +133,7 @@ export class DataService {
   getInfo() {
 
    // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=G,T,C`;
       console.log('getting active player data from API...');
       this.info = this.http.get(url, {headers})
         
@@ -143,7 +144,7 @@ export class DataService {
   getStarterInfo(players) {
 
    // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P&player=${players}`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=G,T,C&player=${players}`;
       console.log('getting active player data from API...');
       this.starterInfo = this.http.get(url, {headers})
         
@@ -151,11 +152,11 @@ export class DataService {
     return this.starterInfo;
   }
 
-   getDaily() {
-
+   getDaily(selected) {
+   // pass in week
    // if (!this.daily) {
       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-      let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=P`;
+      let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=G,T,C`;
       console.log(url, 'url')
       console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})
