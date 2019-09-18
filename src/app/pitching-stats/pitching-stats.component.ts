@@ -413,7 +413,7 @@ export class PitchingStatsComponent implements OnInit {
                     data.player.ContractTotalSalary = '';
                   }
                   if (info.player.currentContractYear != null) {
-                    data.player.ContractTotalYears = info.player.currentContractYear.overallContract.totalYears;
+                    data.player.contractTotalYears = info.player.currentContractYear.overallContract.totalYears;
                   } else {
                     data.player.contractTotalYears = '';
                   }

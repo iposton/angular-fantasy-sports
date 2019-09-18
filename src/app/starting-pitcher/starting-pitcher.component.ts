@@ -525,6 +525,22 @@ export class StartingPitcherComponent implements OnInit {
 
                 if (info.player.id === data.player.id) {
                   data.player.image = info.player.officialImageSrc;
+                  if (info.player.drafted != null) {
+                    data.player.draftYear = info.player.drafted.year;
+                    data.player.draftRound = info.player.drafted.round;
+                  }
+                  if (info.player.highSchool != null) {
+                    data.player.highSchool = info.player.highSchool;
+                  }
+                  if (info.player.college != null) {
+                    data.player.college = info.player.college;
+                  }
+                  if (info.player.currentContractYear != null) {
+                    data.player.contractStartYear = info.player.currentContractYear.seasonStartYear;
+                    data.player.contractBaseSalary = info.player.currentContractYear.baseSalary;
+                    if (info.player.currentContractYear.overallContract != null)
+                      data.player.contractTotalYears = info.player.currentContractYear.overallContract.totalYears;
+                  }
                 }
               }
 

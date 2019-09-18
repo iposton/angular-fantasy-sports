@@ -32,9 +32,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-
-
 import { OrderBy } from './orderby.pipe';
+
+import { StartingLineComponent } from './starting-line/starting-line.component';
 import { StartingPitcherComponent } from './starting-pitcher/starting-pitcher.component';
 import { PitchingStatsComponent, MyDialog } from './pitching-stats/pitching-stats.component';
 import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from './starting-goalies/starting-goalies.component';
@@ -57,6 +57,10 @@ const routes: Routes = [
  { 
         path: 'pitching-stats', 
         component: PitchingStatsComponent 
+ },
+ { 
+        path: 'o-line', 
+        component: StartingLineComponent 
  },
  {
         path: 'starting-goalies-yesterday',
@@ -81,6 +85,7 @@ const routes: Routes = [
     MyDialog,
     PitchingStatsComponent,
     StartingGoaliesComponent,
+    StartingLineComponent,
     TomorrowResultsComponent,
     YesterdayResultsComponent,
     Info,
