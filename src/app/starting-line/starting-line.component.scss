@@ -34,11 +34,16 @@
       display: flex;
       // flex-direction: column;
       flex-basis: 100%;
-      flex: 1;
+      flex: 0 0 75%;
       .player-box-inline {
         display: inline-block;
         // width: 15%;
       }
+    }
+    .col-info {
+      display: flex;
+      flex-basis: 100%;
+      flex: 0 0 25%;
     }
   }
 }

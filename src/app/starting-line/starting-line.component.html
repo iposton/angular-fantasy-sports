@@ -29,7 +29,7 @@
   <h1><strong>Error: </strong> {{ errMessage }}</h1>[""0""].offensePlayers[""0""].playerObj.flip
 </div>
 <div *ngIf="showData != null">
-  <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'gameId'">
+  <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'nfl'">
     <mat-card class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
       <div *ngIf="data?.offensePlayers[0]?.playerObj.flip === 'inactive'" class="ribbon"><span
           [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">{{data?.offensePlayers[0]?.playerObj.team.name}}</span>
@@ -53,34 +53,36 @@
                         </p>
                     </span>
                   </div>
-                  <div class="right-content">
-                      <div *ngIf="data?.offensePlayers[0]?.playerObj['player'].gameLocation === 'home'" class="content-wrapper-teams">
-                        <div class="left-content-teams"><img src="{{data?.offensePlayers[0]?.playerObj.team.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo"></div>
-                        <div class="middle-content-teams">vs</div>
-                        <div class="right-content-teams"><img src="{{data?.offensePlayers[0]?.playerObj.team.opponentLogo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.opponentName}} logo"></div>
-                      </div>
-                      <div *ngIf="data?.offensePlayers[0]?.playerObj['player'].gameLocation === 'away'" class="content-wrapper-teams">
-                        <div class="left-content-teams"><img src="{{data?.offensePlayers[0]?.playerObj.team.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo"></div>
-                        <div class="middle-content-teams">@</div>
-                        <div class="right-content-teams"><img src="{{data?.offensePlayers[0]?.playerObj.team.opponentLogo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.opponentName}} logo"></div>
-                      </div>
-                      <div *ngIf="data?.offensePlayers[0]?.playerObj['gameId'] == null" class="content-wrapper-teams">
-                        <p style="font-size:22px;">Bye</p> 
-                      </div>
-                      <p>
-                        <span *ngIf="data?.offensePlayers[0]?.playerObj.team?.opponent">Opponent:
-                          {{data?.offensePlayers[0]?.playerObj.team?.opponentName}} <br>
-                          Game: {{data?.offensePlayers[0]?.playerObj.player.gameTime | date: 'shortTime'}} PST, {{data?.offensePlayers[0]?.playerObj.team.gameField}} <br></span>
-                          <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
-                              Defense Rank: {{data?.offensePlayers[0]?.playerObj['dRank']}} <br>
-                          </span>
-                          <span *ngIf="data?.offensePlayers[0]?.playerObj['oRank'] != null">
-                              Offense Rank: {{data?.offensePlayers[0]?.playerObj['oRank']}}
-                          </span>   
-                        </p>
+                  
+            </div>
+            <div class="col-info">
+                <div class="right-content">
+                    <div *ngIf="data?.offensePlayers[0]?.playerObj['player'].gameLocation === 'home'" class="content-wrapper-teams">
+                      <div class="left-content-teams"><img src="{{data?.offensePlayers[0]?.playerObj.team.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo"></div>
+                      <div class="middle-content-teams">vs</div>
+                      <div class="right-content-teams"><img src="{{data?.offensePlayers[0]?.playerObj.team.opponentLogo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.opponentName}} logo"></div>
                     </div>
+                    <div *ngIf="data?.offensePlayers[0]?.playerObj['player'].gameLocation === 'away'" class="content-wrapper-teams">
+                      <div class="left-content-teams"><img src="{{data?.offensePlayers[0]?.playerObj.team.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo"></div>
+                      <div class="middle-content-teams">@</div>
+                      <div class="right-content-teams"><img src="{{data?.offensePlayers[0]?.playerObj.team.opponentLogo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.opponentName}} logo"></div>
+                    </div>
+                    <div *ngIf="data?.offensePlayers[0]?.playerObj['gameId'] == null" class="content-wrapper-teams">
+                      <p style="font-size:22px;">Bye</p> 
+                    </div>
+                    <p>
+                      <span *ngIf="data?.offensePlayers[0]?.playerObj.team?.opponent">Opponent:
+                        {{data?.offensePlayers[0]?.playerObj.team?.opponentName}} <br>
+                        Game: {{data?.offensePlayers[0]?.playerObj.player.gameTime | date: 'shortTime'}} PST, {{data?.offensePlayers[0]?.playerObj.team.gameField}} </span>
+                      
+                      </p>
+                  </div>
+            </div>
+            <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
+              <p class="center">Total Yards: {{data?.teamStats?.rushing?.rushYards + data?.teamStats?.passing?.passNetYards}} / Sacks Given up: {{data?.teamStats?.passing?.passSacks}} -- <span *ngIf="data?.offensePlayers[0]?.playerObj['oRank'] != null">
+                  Offense Rank: {{data?.offensePlayers[0]?.playerObj['oRank']}}
+              </span></p>
             </div>  
-            <div class="row"><p class="center">Total Yards: {{data?.teamStats?.rushing?.rushYards + data?.teamStats?.passing?.passNetYards}} / Sacks Given up: {{data?.teamStats?.passing?.passSacks}}</p></div>  
           </div>
           <div class="row">
               <div class="row"><p class="center">D-Line <br></p></div>
@@ -101,7 +103,11 @@
                       </span>
                     </div>
             </div>   
-            <div class="row"><p class="center">Sacks: {{data?.teamStats?.tackles?.sacks}}</p></div> 
+            <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
+              <p class="center">Sacks: {{data?.teamStats?.tackles?.sacks}} --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
+                  Defense Rank: {{data?.offensePlayers[0]?.playerObj['dRank']}} <br>
+              </span></p>
+            </div> 
           </div>
          
        

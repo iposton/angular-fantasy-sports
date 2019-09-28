@@ -16,7 +16,7 @@
      <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>
 <div *ngIf="showData != null">
-  <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'gameId'" [class.hide]="data.playerNotPlayingYet === false">
+  <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'mlb'" [class.hide]="data.playerNotPlayingYet === false">
     <mat-card class="tp-box mat-card-sp" [@flipState]="data.flip">
       <div *ngIf="data.flip === 'inactive'" class="ribbon"><span [ngStyle]="{'backgroundColor': data.team.color}">{{data.team.name}}</span></div>
       <div class="tp-box__side tp-box__front">
