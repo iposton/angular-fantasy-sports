@@ -13,7 +13,7 @@ import { OrderBy } from '../orderby.pipe';
 let headers = null;
 let playerString = null;
 let today = new Date();
-
+let teamRef = [];
 @Component({
   selector: 'app-starting-line',
   templateUrl: './starting-line.component.html',
@@ -35,8 +35,10 @@ export class StartingLineComponent implements OnInit {
 
   public dailySchedule: Array <any>;
   public teamRef: Array <any>;
+  public dRank: Array <any>;
   public previousGames: Array <any>;
   public players: Array <any>;
+  public teamStats: Array <any>;
   public pitcherSpeed: Array <any>;
   public starterIdData: Array <any> = [];
   public specificFastballData: Array <any> = [];
@@ -47,6 +49,8 @@ export class StartingLineComponent implements OnInit {
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
   public groups: Array <any>;
+  public tsGroups: Array <any>;
+  public lineGroups: Array <any>;
   public myData: Array <any>;
   public dailyStats: Array <any>;
   public score: Array <any>;
@@ -63,52 +67,38 @@ export class StartingLineComponent implements OnInit {
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
   public gameStarters: Array <any> = [];
   public teamsCompletedPlayingToday: Array <any> = [];
-  // public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
   public selectedWeek: string;
 
   constructor(
               private dataService: NFLDataService, 
               private http: HttpClient) {
-    // this.fbService
-    //   .getData().subscribe(res => {
-    //     //console.log(res, 'firebase data');
-    //     this.pitcherSpeed = res;
-    //   });
     this.players = this.dataService.getSentStats();
-    this.selectedWeek = '3';
+    this.selectedWeek = '1';
   }
 
-  // public getByDate(event) {
-  //   this.loading = true;
-  //   let thisDate = new Date(event.value);
-  //   let utcDate = new Date(thisDate.toUTCString());
-  //   utcDate.setHours(utcDate.getHours());
-  //   let myDate = new Date(utcDate);
-  //   let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-  //   console.log(dailyDate, 'get stats for this selected date');
-  //   this.dataService.selectedDate(dailyDate);
-
-  //   //empty old data on data change 
-  //   this.dailySchedule = [];
-  //   this.gameStarters = [];
-  //   this.starterIdData = [];
-  //   playerString = null;
-  //   this.dailyStats = [];
-  //   this.myData = [];
-  //   this.showData = [];
-  //   this.specificFastballData = [];
-  //   this.teamsCompletedPlayingToday = [];
-  //   this.previousGames = [];
-  //   this.score = [];
-  //   this.players = [];
-  //   this.speedResults = [];
-  //   this.liveGames = false;
-  //   this.gameover = false;
-  //   this.postponed = false;
-  //   this.gamesToday = false;
-  //   this.noGamesMsg = '';
-  //   this.loadData();
-  // }
+  public onChange(week) {
+   this.loading = true;
+   this.selectedWeek = week;
+   this.dailySchedule = [];
+   this.gameStarters = [];
+   this.starterIdData = [];
+   playerString = null;
+   this.dailyStats = [];
+   this.myData = [];
+   this.showData = [];
+   this.specificFastballData = [];
+   this.teamsCompletedPlayingToday = [];
+   this.previousGames = [];
+   this.score = [];
+   this.players = [];
+   this.speedResults = [];
+   this.liveGames = false;
+   this.gameover = false;
+   this.postponed = false;
+   this.gamesToday = false;
+   this.noGamesMsg = '';
+   this.loadData();
+  }
 
   loadData() {
 
@@ -135,10 +125,10 @@ export class StartingLineComponent implements OnInit {
 
               this.dailySchedule = res['games'];
               this.teamRef = res['references'].teamReferences;
+              teamRef = res['references'].teamReferences;
+              console.log(this.teamRef, 'tream ref');
               this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
               let dPipe = new DatePipe("en-US");
-
-            
 
               this.gamesToday = true;
               //console.log(this.dailySchedule, 'sched');
@@ -151,7 +141,7 @@ export class StartingLineComponent implements OnInit {
                   res['games'].map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=G,T,C`, { headers })
+                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=G,C,OT,NT,DT,DE`, { headers })
                     
                   )
                 )
@@ -234,20 +224,63 @@ export class StartingLineComponent implements OnInit {
 
   }
 
-  public sortData() {
+  public async sortData() {
     if (this.gamesToday === true) {
 
-      // let promiseOne;
-      // promiseOne = new Promise((resolve, reject) => {
-      //   this.dataService
-      //     .getInfo().subscribe(res => {
-      //       console.log(res, 'got activeplayers from api!');
-      //       this.playerInfo = res['players'];
-      //       resolve();
-      //   });
-      // });
+      let promiseOne;
+      promiseOne = new Promise((resolve, reject) => {
+        this.dataService
+          .getTeamStats().subscribe(res => {
+            console.log(res, 'got team stats!');
+            this.teamStats = res['teamStatsTotals'];
+            let oSort = [];
+            let dSort = [];
+            let dRank = [];
+            let oRank = [];
+            oSort = res['teamStatsTotals'];
+            dSort = res['teamStatsTotals'];
 
-      // let resultOne = await promiseOne;
+            dRank = dSort.slice().sort((a: any, b: any) => {
+              if (a['stats'].standings.pointsAgainst <= b['stats'].standings.pointsAgainst) {
+                return -1;
+              } else if (a['stats'].standings.pointsAgainst >= b['stats'].standings.pointsAgainst) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+
+            dRank.forEach(function(item, index){
+              for (let team of teamRef) {
+               if (dRank[index].team.abbreviation === team.abbreviation) { 
+                 team.dRank = index + 1; 
+               }
+              }
+            });
+
+            oRank = oSort.slice().sort((a: any, b: any) => {
+              if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards)   >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards)) {
+                return -1;
+              } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards)) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+            
+           oRank.forEach(function(item, index){
+            for (let team of teamRef) {
+             if (oRank[index].team.abbreviation === team.abbreviation) { 
+               team.oRank = index + 1; 
+             }
+            }
+           });
+            console.log(oRank, 'first index should be least points against');
+            resolve();
+        });
+      });
+
+      let resultOne = await promiseOne;
 
       this.dataService
         .getDaily(this.selectedWeek).subscribe(res => {
@@ -259,7 +292,7 @@ export class StartingLineComponent implements OnInit {
 
                   //this.myData = res['playerStatsTotals'];
                   this.myData = res['playerStatsTotals'].filter(
-                  player => player.player.currentTeam.id === player.team.id && player.stats.gamesPlayed > 0);
+                  player => player.stats.miscellaneous && player.stats.miscellaneous['gamesStarted'] > 1);
 
                   if (this.myData) {
                     console.log(this.myData, "cumulative stats...");
@@ -276,13 +309,11 @@ export class StartingLineComponent implements OnInit {
 
                               sdata.player.gameTime = schedule.schedule.startTime;
                               sdata.team.gameField = schedule.schedule.venue.name;
-                              sdata.gameId = schedule.id;
+                              sdata.gameId = schedule.schedule.id;
                               sdata.player.gameLocation = "away";
                               sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
                               //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
                               sdata.team.opponentId = schedule.schedule.homeTeam.id;
-
-
                             }
                             if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
 
@@ -298,7 +329,7 @@ export class StartingLineComponent implements OnInit {
                         }
                       }
 
-                       for (let team of this.teamRef) {
+                       for (let team of teamRef) {
                          for (let data of this.myData) { 
                             if (team.id === data.team.id) {
                               data.team.color = team.teamColoursHex[0];
@@ -307,6 +338,8 @@ export class StartingLineComponent implements OnInit {
                               data.team.city = team.city;
                               data.team.name = team.name;
                               data.flip = 'inactive';
+                              data.dRank = team.dRank;
+                              data.oRank = team.oRank;
                             }
                           }  
                        }
@@ -317,15 +350,33 @@ export class StartingLineComponent implements OnInit {
                             sdata.team.opponentId === schedule.team.id && 
                             sdata.gameId === schedule.gameId) {
                             sdata.team.opponentLogo = schedule.team.logo;
+                            sdata.team.opponentName = schedule.team.name;
                           }
                         }
                       }
 
                      this.groups = this.myData.reduce(function (r, a) {
-                          r[a.team.abbreviation] = r[a.team.abbreviation] || [];
-                          r[a.team.abbreviation].push(a);
-                          return r;
+                      r[a.team.abbreviation] = r[a.team.abbreviation] || [];
+                       if (a.player.primaryPosition === 'NT' || a.player.primaryPosition === 'DT' || a.player.primaryPosition === 'DE') {
+                         r[a.team.abbreviation].push({'def': 'def', 'playerObj': a});
+                         return r;
+                       } else {
+                         r[a.team.abbreviation].push({'of': 'of', 'playerObj': a});
+                        return r;
+                       }
+                          
                       }, Object.create(null));
+
+                      this.tsGroups = this.teamStats.reduce(function (r, a) {
+                        r[a.team.abbreviation] = r[a.team.abbreviation] || [];
+                        r[a.team.abbreviation].push(a);
+                        return r;
+  
+                      }, Object.create(null));
+
+                      this.lineGroups = Object.keys(this.groups).map(key => {
+                        return {team: key, offensePlayers: this.groups[key].filter(item => item.of), defensePlayers: this.groups[key].filter(item => item.def), teamStats: this.tsGroups[key][0].stats};
+                      });
 
                      this.showTeams();
 
@@ -373,15 +424,11 @@ export class StartingLineComponent implements OnInit {
   }
 
   public showTeams() {
-
-    this.teamRef.forEach((data) => {    
-      this.showData.push(this.groups[data.abbreviation]); 
-    });
+    this.showData = this.lineGroups;
 
      console.log(this.showData, 'show data');
-                      this.dataService
-                        .sendStats(this.showData);
-
+     this.dataService
+       .sendStats(this.showData);
   }
 
   flipBack(data) {

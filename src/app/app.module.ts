@@ -59,7 +59,7 @@ const routes: Routes = [
         component: PitchingStatsComponent 
  },
  { 
-        path: 'o-line', 
+        path: 'nfl-line-rank', 
         component: StartingLineComponent 
  },
  {
