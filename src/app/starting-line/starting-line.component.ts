@@ -340,6 +340,7 @@ export class StartingLineComponent implements OnInit {
                               data.flip = 'inactive';
                               data.dRank = team.dRank;
                               data.oRank = team.oRank;
+                              data.teamRank = Math.floor(((team.dRank*1 + team.oRank*1) /2));
                             }
                           }  
                        }
@@ -351,6 +352,10 @@ export class StartingLineComponent implements OnInit {
                             sdata.gameId === schedule.gameId) {
                             sdata.team.opponentLogo = schedule.team.logo;
                             sdata.team.opponentName = schedule.team.name;
+                            sdata.opponentDR = schedule.dRank;
+                            sdata.opponentOR = schedule.oRank;
+                            sdata.opponentTR = schedule.teamRank;
+                            sdata.opponentColor = schedule.team.color;
                           }
                         }
                       }
