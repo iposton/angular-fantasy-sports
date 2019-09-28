@@ -26,6 +26,7 @@ export class NFLDataService {
   public daily: Observable <any> = null;
   public score: Observable <any> = null;
   public allstats: Observable <any> = null;
+  public teamstats: Observable <any> = null;
   public gameid: Observable <any> = null;
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
@@ -33,7 +34,7 @@ export class NFLDataService {
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular";
   public dailyDate: any;
 
-  //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,T,C
+  //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE
 
   constructor(private http: HttpClient) {
     this.dailyDate = dailyDate;
@@ -109,8 +110,8 @@ export class NFLDataService {
 
     //if (!this.stats) {
       //console.log('getting cumulative_player_stats by player ID from API...', players);
-      //let url = `${this.apiRoot}/cumulative_player_stats.json?position=G,T,C&player=`+playerID;
-      let url = `${this.apiRoot}/player_stats_totals.json?position=G,T,C`; //&player=${players}`;
+      //let url = `${this.apiRoot}/cumulative_player_stats.json?position=G,C,OT,NT,DT,DE&player=`+playerID;
+      let url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`; //&player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     //}
@@ -121,19 +122,27 @@ export class NFLDataService {
 
     //if (!this.allstats) {
 
-      console.log('getting cumulative_player_stats by player ID from API...');
-      //cumulative_player_stats.json?position=G,T,C&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `${this.apiRoot}/player_stats_totals.json?position=G,T,C`;
+      console.log('getting total player stats from API...');
+      //cumulative_player_stats.json?position=G,C,OT,NT,DT,DE&sort=STATS.Miscellaneous-GS.D&limit=180
+      let url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
       this.allstats = this.http.get(url, {headers})
       
     //}
     return this.allstats;
   }
 
+  getTeamStats() {
+      console.log('getting total team stats from API...');
+      let url = `${this.apiRoot}/team_stats_totals.json`;
+      this.teamstats = this.http.get(url, {headers})
+
+    return this.teamstats;
+  }
+
   getInfo() {
 
    // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=G,T,C`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=G,C,OT,NT,DT,DE`;
       console.log('getting active player data from API...');
       this.info = this.http.get(url, {headers})
         
@@ -144,7 +153,7 @@ export class NFLDataService {
   getStarterInfo(players) {
 
    // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=G,T,C&player=${players}`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=G,C,OT,NT,DT,DE&player=${players}`;
       console.log('getting active player data from API...');
       this.starterInfo = this.http.get(url, {headers})
         
@@ -156,7 +165,7 @@ export class NFLDataService {
    // pass in week
    // if (!this.daily) {
       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-      let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=G,T,C`;
+      let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
       console.log(url, 'url')
       console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})

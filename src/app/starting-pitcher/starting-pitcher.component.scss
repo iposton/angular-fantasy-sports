@@ -9,11 +9,28 @@
 
 }
 
-
-
 .right-content img {
   width: 3%;
   margin: 0;
+}
+
+.right-content {
+  .rookie {
+    background:#2ecc71; 
+    color:#fff; 
+    padding:1px; 
+    border-radius:2px;
+    display: block;
+    width: 30%;
+  }
+  .postponed {
+    background: red; 
+    color:#fff; 
+    padding:1px; 
+    border-radius:2px;
+    display: block;
+    width: 30%;
+  }
 }
 
 .content-wrapper {
