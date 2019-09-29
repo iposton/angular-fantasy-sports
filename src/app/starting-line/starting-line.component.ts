@@ -53,6 +53,7 @@ export class StartingLineComponent implements OnInit {
   public lineGroups: Array <any>;
   public myData: Array <any>;
   public dailyStats: Array <any>;
+  public weekStats: Array <any>;
   public score: Array <any>;
   public gamesToday: boolean = false;
   public noGamesToday: boolean = false;
@@ -240,6 +241,12 @@ export class StartingLineComponent implements OnInit {
             oSort = res['teamStatsTotals'];
             dSort = res['teamStatsTotals'];
 
+            this.dataService
+              .getWeek(this.selectedWeek).subscribe(res => {
+                console.log(res, "weekly games...");
+                this.weekStats = res['gamelogs'];
+            });
+            
             dRank = dSort.slice().sort((a: any, b: any) => {
               if (a['stats'].standings.pointsAgainst <= b['stats'].standings.pointsAgainst) {
                 return -1;
@@ -358,6 +365,23 @@ export class StartingLineComponent implements OnInit {
                             sdata.opponentColor = schedule.team.color;
                           }
                         }
+                      }
+
+                      if (this.weekStats.length > 0) {
+                        for (let week of this.weekStats) {
+                          for (let data of this.myData) {
+                            if (data.team.id != null && 
+                              data.team.id === week.team.id) {
+                              data.teamScore = week.stats.standings.pointsFor;
+                              data.opponentScore = week.stats.standings.pointsAgainst; 
+                              data.win = week.stats.standings.wins;
+                              data.loss = week.stats.standings.losses;
+                              data.tie = week.stats.standings.ties;
+                              data.otWin = week.stats.standings.otWins;
+                              data.otLoss = week.stats.standings.otLosses;                  
+                            }
+                          }
+                        } 
                       }
 
                      this.groups = this.myData.reduce(function (r, a) {

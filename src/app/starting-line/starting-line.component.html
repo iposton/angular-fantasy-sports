@@ -82,11 +82,20 @@
                     <div *ngIf="data?.offensePlayers[0]?.playerObj['gameId'] == null" class="content-wrapper-teams">
                       <p style="font-size:22px;">Bye</p> 
                     </div>
-                    <p>
+                    <p *ngIf="data?.offensePlayers[0]?.playerObj['teamScore'] == null && data?.offensePlayers[0]?.playerObj['opponentScore'] == null">
                       <span *ngIf="data?.offensePlayers[0]?.playerObj.team?.opponent">Opponent:
                         {{data?.offensePlayers[0]?.playerObj.team?.opponentName}} <br> <span [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj?.opponentColor ? data?.offensePlayers[0]?.playerObj?.opponentColor : 'black' }">O-Rank:  {{data?.offensePlayers[0]?.playerObj['opponentOR']}} &nbsp; &nbsp; D-Rank: {{data?.offensePlayers[0]?.playerObj['opponentDR']}}</span> <br>
                         Game: {{data?.offensePlayers[0]?.playerObj.player.gameTime | date: 'shortTime'}} PST, {{data?.offensePlayers[0]?.playerObj.team.gameField}} </span> 
                     </p>
+                    <p *ngIf="data?.offensePlayers[0]?.playerObj['teamScore'] >= 0 || data?.offensePlayers[0]?.playerObj['opponentScore'] >= 0">
+                        <span>Score: &nbsp;
+                          {{data?.offensePlayers[0]?.playerObj.team?.name}} {{data?.offensePlayers[0]?.playerObj['teamScore']}} &nbsp;&nbsp;
+                          {{data?.offensePlayers[0]?.playerObj.team?.opponentName}} {{data?.offensePlayers[0]?.playerObj['opponentScore']}} <br></span>
+                          <span *ngIf="data?.offensePlayers[0]?.playerObj['win'] === 1">{{data?.offensePlayers[0]?.playerObj.team?.city}} won<span *ngIf="data?.offensePlayers[0]?.playerObj['otWin'] === 1"> in overtime</span>!</span>
+                          <span *ngIf="data?.offensePlayers[0]?.playerObj['loss'] === 1">{{data?.offensePlayers[0]?.playerObj.team?.city}} lost<span *ngIf="data?.offensePlayers[0]?.playerObj['otLoss'] === 1"> in overtime</span>!</span>
+                          <span *ngIf="data?.offensePlayers[0]?.playerObj['tie'] === 1">{{data?.offensePlayers[0]?.playerObj.team?.city}} tied!</span>
+                           
+                      </p>
                   </div>
             </div>
             <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
