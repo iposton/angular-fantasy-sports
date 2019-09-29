@@ -24,6 +24,7 @@ export class NFLDataService {
   public schedule: Observable <any> = null;
   public stats: Observable <any> = null;
   public daily: Observable <any> = null;
+  public weekly: Observable <any> = null;
   public score: Observable <any> = null;
   public allstats: Observable <any> = null;
   public teamstats: Observable <any> = null;
@@ -173,6 +174,16 @@ export class NFLDataService {
   //  }
     return this.daily;
   }
+
+  getWeek(selected) {
+
+       let url = `${this.apiRoot}/week/${selected}/team_gamelogs.json`;
+       console.log(url, 'url')
+       console.log('getting daily stats for pitchers from API...');
+       this.weekly = this.http.get(url, {headers})
+
+     return this.weekly;
+   }
 
   getScore(data) {
     let id = null;
