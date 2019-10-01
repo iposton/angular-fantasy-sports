@@ -87,6 +87,7 @@ export class StartingLineComponent implements OnInit {
    this.dailyStats = [];
    this.myData = [];
    this.showData = [];
+   this.weekStats = [];
    this.specificFastballData = [];
    this.teamsCompletedPlayingToday = [];
    this.previousGames = [];
@@ -236,10 +237,13 @@ export class StartingLineComponent implements OnInit {
             this.teamStats = res['teamStatsTotals'];
             let oSort = [];
             let dSort = [];
+            let tSort = [];
             let dRank = [];
             let oRank = [];
+            let tRank = [];
             oSort = res['teamStatsTotals'];
             dSort = res['teamStatsTotals'];
+            tSort = res['teamStatsTotals'];
 
             this.dataService
               .getWeek(this.selectedWeek).subscribe(res => {
@@ -282,7 +286,28 @@ export class StartingLineComponent implements OnInit {
              }
             }
            });
-            console.log(oRank, 'first index should be least points against');
+
+           tRank = teamRef.slice().sort((a: any, b: any) => {
+  
+            if ((a.oRank + a.dRank)
+            <= (b.oRank + b.dRank)) {
+              return -1;
+            } else if ((a.oRank + a.dRank)
+            >= (b.oRank + b.dRank)) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+          
+         tRank.forEach(function(item, index){
+          for (let team of teamRef) {
+           if (tRank[index].abbreviation === team.abbreviation) { 
+             team.teamRank = index + 1; 
+           }
+          }
+         });
+            console.log(tRank, 'first index should be least points against');
             resolve();
         });
       });
@@ -347,10 +372,21 @@ export class StartingLineComponent implements OnInit {
                               data.flip = 'inactive';
                               data.dRank = team.dRank;
                               data.oRank = team.oRank;
-                              data.teamRank = Math.floor(((team.dRank*1 + team.oRank*1) /2));
-                            }
+                              data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
+                            } 
                           }  
                        }
+
+                       for (let team of this.teamStats) {
+                        for (let data of this.myData) { 
+                           if (data.team.opponentId != null && 
+                             data.team.opponentId === team.team.id) {
+                             data.opponentW = team.stats.standings.wins;
+                             data.opponentL = team.stats.standings.losses;
+                             data.opponentT = team.stats.standings.ties;
+                           }
+                         }  
+                      }
 
                        for (let schedule of this.myData) {
                         for (let sdata of this.myData) {
