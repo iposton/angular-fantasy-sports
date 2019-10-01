@@ -60,27 +60,35 @@
                     <div *ngIf="data?.offensePlayers[0]?.playerObj['player'].gameLocation === 'home'" class="content-wrapper-teams">
                       <div class="left-content-teams">
                         <img src="{{data?.offensePlayers[0]?.playerObj.team.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo">
-                        <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['teamRank']}}</span>
+                        <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['teamRank']}} <br></span>
+                        <span>W-L: {{data?.teamStats?.standings?.wins +'-'+ data?.teamStats?.standings?.losses}}</span><span *ngIf="data?.teamStats?.standings.ties > 0">-{{data?.teamStats?.standings.ties}}</span>
                       </div>
                       <div class="middle-content-teams">vs</div>
                       <div class="right-content-teams">
                         <img src="{{data?.offensePlayers[0]?.playerObj.team.opponentLogo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.opponentName}} logo">
-                        <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['opponentTR']}}</span>
+                        <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['opponentTR']}} <br></span>
+                        <span>W-L: {{data?.offensePlayers[0]?.playerObj['opponentW'] +'-'+ data?.offensePlayers[0]?.playerObj['opponentL']}}</span><span *ngIf="data?.offensePlayers[0]?.playerObj['opponentT'] > 0">-{{data?.offensePlayers[0]?.playerObj['opponentT']}}</span>
+
                       </div>
                     </div>
                     <div *ngIf="data?.offensePlayers[0]?.playerObj['player'].gameLocation === 'away'" class="content-wrapper-teams">
                       <div class="left-content-teams">
                         <img src="{{data?.offensePlayers[0]?.playerObj.team.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo">
-                        <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['teamRank']}}</span>
+                        <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['teamRank']}} <br></span>
+                        <span>W-L: {{data?.teamStats?.standings?.wins +'-'+ data?.teamStats?.standings?.losses}}</span><span *ngIf="data?.teamStats?.standings.ties > 0">-{{data?.teamStats?.standings.ties}}</span>
                       </div>
                       <div class="middle-content-teams">@</div>
                       <div class="right-content-teams">
                         <img src="{{data?.offensePlayers[0]?.playerObj.team.opponentLogo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.opponentName}} logo">
-                        <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['opponentTR']}}</span>
+                        <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['opponentTR']}} <br></span>
+                        <span>W-L: {{data?.offensePlayers[0]?.playerObj['opponentW'] +'-'+ data?.offensePlayers[0]?.playerObj['opponentL']}}</span><span *ngIf="data?.offensePlayers[0]?.playerObj['opponentT'] > 0">-{{data?.offensePlayers[0]?.playerObj['opponentT']}}</span>
+                        
                       </div>
                     </div>
                     <div *ngIf="data?.offensePlayers[0]?.playerObj['gameId'] == null" class="content-wrapper-teams">
-                      <p style="font-size:22px;">Bye</p> 
+                      <p style="font-size:22px;">Bye <br>
+                      <span *ngIf="data?.offensePlayers[0]?.playerObj['teamRank'] != null">Rank: {{data?.offensePlayers[0]?.playerObj['teamRank']}} <br>
+                      <span>W-L: {{data?.teamStats?.standings?.wins +'-'+ data?.teamStats?.standings?.losses}}</span><span *ngIf="data?.teamStats?.standings.ties">-{{data?.teamStats?.standings.ties}}</span></span></p> 
                     </div>
                     <p *ngIf="data?.offensePlayers[0]?.playerObj['teamScore'] == null && data?.offensePlayers[0]?.playerObj['opponentScore'] == null">
                       <span *ngIf="data?.offensePlayers[0]?.playerObj.team?.opponent">Opponent:
