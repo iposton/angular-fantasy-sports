@@ -43,7 +43,7 @@ export class YesterdayResultsComponent implements OnInit {
   tweetDay: any;
   noGamesMsg: any;
   loading: boolean = true;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
 
   constructor(private http: HttpClient, private yesterdayService: YesterdayService, public snackBar: MatSnackBar, public router: Router) {
     this.getJSON();

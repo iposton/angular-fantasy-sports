@@ -79,7 +79,7 @@ export class StartingGoaliesComponent implements OnInit {
   tomorrowDate: any;
   fullFirebaseResponse: any;
   loading: boolean = true;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
 
   stats: boolean = false;
   hitCount: any;
@@ -222,14 +222,14 @@ export class StartingGoaliesComponent implements OnInit {
                 // }
               });
               this.dailySchedule = res['games'];
-              this.gameDate = res['lastUpdatedOn']; //res['games'][0].date;
+              this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['games'][0].date;
               let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
               this.gamesToday = true;
 
               Observable.forkJoin(
                   res['games'].map(
-                    g =>  this.http.get(`${this.apiRoot}/games/`+this.dataService.dailyDate+`-`+ g['schedule'].awayTeam.abbreviation +`-`+ g['schedule'].homeTeam.abbreviation +`/lineup.json?position=Goalie-starter`, {headers})
+                    g =>  this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Goalie-starter`, {headers})
                   )
                 )
                 .subscribe(res => {
@@ -626,8 +626,8 @@ export class StartingGoaliesComponent implements OnInit {
             for (let startid of this.starterIdData) {
 
               for (let startdata of this.myData) {
-
-                if (startid === startdata.team.id && startdata.stats.goaltending.gamesPlayed > 1) {
+                //startdata.stats.goaltending.gamesStarted > 1
+                if (startid === startdata.team.id) {
                   if (this.startersDate != startdata.team.today) {
 
                     startdata.player.startingToday = false;
