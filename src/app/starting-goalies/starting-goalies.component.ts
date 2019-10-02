@@ -22,6 +22,7 @@ let yesterday = null;
 
 let headers = null;
 let dailyTeams = [];
+let teamRef = [];
 let teamString = '';
 
 @Component({
@@ -222,6 +223,7 @@ export class StartingGoaliesComponent implements OnInit {
                 // }
               });
               this.dailySchedule = res['games'];
+              teamRef = res['references'].teamReferences;
               this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['games'][0].date;
               let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
@@ -305,7 +307,7 @@ export class StartingGoaliesComponent implements OnInit {
         .getDaily().subscribe(res => {
           console.log(res, "Daily stats...");
           this.dailyStats = res['gamelogs'];
-          this.teamRef = res['references'].teamReferences;
+         
         })
     } else {
       console.log('No games then no daily stats either. :(');
@@ -325,7 +327,7 @@ export class StartingGoaliesComponent implements OnInit {
 
             for (let sdata of this.myData) {
 
-              for (let team of this.teamRef) {
+              for (let team of teamRef) {
                  
               
               sdata.player.lastweekWins = 0;
