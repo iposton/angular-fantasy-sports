@@ -73,59 +73,42 @@ export class TomorrowResultsComponent implements OnInit {
     '483':'483',
     '5528':'5528',
     '13876':'13876',
-    '5366':'5366'
+    '5366':'5366',
+    '4890':'4890',
+    '15525':'15525',
+    '5420':'5420',
+    '5873':'5873',
+    '5552':'5552',
+    '3647':'3647',
+    '13934':'13934',
+    '5224':'5224',
+    '5842':'5842',
+    '5894':'5894',
+    '10083':'10083',
+    '4294':'4294',
+    '5180':'5180',
+    '4862':'4862',
+    '5163':'5163',
+    '4666':'4666',
+    '4947':'4947',
+    '3810':'3810',
+    '5877':'5877',
+    '4235':'4235',
+    '4326':'4326',
+    '4561':'4561',
+    '4763':'4763',
+    '11724':'11724',
+    '5277':'5277',
+    '5176':'5176',
+    '15442':'15442',
+    '5168':'5168',
+    '5296':'5296',
+    '5227':'5227',
+    '178':'178',
+    '5518':'5518'
   }
 
-  constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
-
-      this.fbService
-      .getStarterData()
-      .subscribe(res => {
-      if (res[0] != null) {
-        this.fullFirebaseResponse = res[0];
-        console.log(res[0][1], 'got response from firebase...');
-        this.startersDate = res[0][2]['tomorrowDate'];
-        this.tomorrowStarters = res[0][3];
-         // This is to change a goalie in view without refresh
-         if(this.showDataTomorrow != null && this.myData != null) {
-
-             for (let show of this.showDataTomorrow) {
-              for (let rep of this.myData) {
-            
-                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[3][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === true ) {
-                    // Found all confirmed goalies
-                    // if any of these confirmed goalies don't match ID's then check if same team id and swap 
-                   console.log(rep, 'update me into the view right now!');
-                   console.log(show.team.matchup[0], 'I have been changed, replace me with new goalie...');
-                   show.team.matchup[0] = rep; 
-                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[3][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === false && this.fullFirebaseResponse[3][rep.player.id].probable === true && rep.player.probable === false) {
-                  rep.player.probable = true;
-                  console.log(rep, 'update me into the view right now! I am probable to start.');
-                  console.log(show.team.matchup[0], 'I have been changed, replace me with probable goalie.');
-                  show.team.matchup[0] = rep;
-                }
-                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[3][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === true ) {
-                    // Found all confirmed goalies
-                    // if any of these confirmed goalies don't match ID's then check if same team id and swap 
-                   console.log(rep, 'update me into the view right now!');
-                   console.log(show.team.matchup[1], 'I have been changed, replace me with new goalie...');
-                   show.team.matchup[1] = rep; 
-                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[3][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === false && this.fullFirebaseResponse[3][rep.player.id].probable === true && rep.player.probable === false) {
-                  rep.player.probable = true;
-                  console.log(rep, 'update me into the view right now! I am probable to start.');
-                  console.log(show.team.matchup[1], 'I have been changed, replace me with probable goalie.');
-                  show.team.matchup[1] = rep;
-                }
-              }
-             }
-
-         }   
-        
-      }
-
-
-       
-      });
+  constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) { 
     yesterday = this.tomorrowService.getYesterday();
     tomorrow = this.tomorrowService.getTomorrow();
     today = this.tomorrowService.getToday();
@@ -158,7 +141,58 @@ export class TomorrowResultsComponent implements OnInit {
     }
   }
 
-  loadData() {
+  async loadData() {
+    let promiseOne;
+    promiseOne = new Promise((resolve, reject) => {
+    this.fbService
+        .getStarterData()
+          .subscribe(res => {
+            if (res[0] != null) {
+              this.fullFirebaseResponse = res[0];
+              console.log(res[0][1], 'got response from firebase...');
+              this.startersDate = res[0][2]['tomorrowDate'];
+              this.tomorrowStarters = res[0][3];
+              // This is to change a goalie in view without refresh
+              if(this.showDataTomorrow != null && this.myData != null) {
+
+                  for (let show of this.showDataTomorrow) {
+                    for (let rep of this.myData) {
+                  
+                      if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[3][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === true ) {
+                          // Found all confirmed goalies
+                          // if any of these confirmed goalies don't match ID's then check if same team id and swap 
+                        console.log(rep, 'update me into the view right now!');
+                        console.log(show.team.matchup[0], 'I have been changed, replace me with new goalie...');
+                        show.team.matchup[0] = rep; 
+                      } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[3][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === false && this.fullFirebaseResponse[3][rep.player.id].probable === true && rep.player.probable === false) {
+                        rep.player.probable = true;
+                        console.log(rep, 'update me into the view right now! I am probable to start.');
+                        console.log(show.team.matchup[0], 'I have been changed, replace me with probable goalie.');
+                        show.team.matchup[0] = rep;
+                      }
+                      if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[3][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === true ) {
+                          // Found all confirmed goalies
+                          // if any of these confirmed goalies don't match ID's then check if same team id and swap 
+                        console.log(rep, 'update me into the view right now!');
+                        console.log(show.team.matchup[1], 'I have been changed, replace me with new goalie...');
+                        show.team.matchup[1] = rep; 
+                      } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[3][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === false && this.fullFirebaseResponse[3][rep.player.id].probable === true && rep.player.probable === false) {
+                        rep.player.probable = true;
+                        console.log(rep, 'update me into the view right now! I am probable to start.');
+                        console.log(show.team.matchup[1], 'I have been changed, replace me with probable goalie.');
+                        show.team.matchup[1] = rep;
+                      }
+                    }
+                  }
+
+              }   
+              
+            }  
+            resolve();
+          });
+        });
+  
+    let resultOne = await promiseOne;
 
     this.tomorrowService
       .getEnv().subscribe(res => {
@@ -437,8 +471,6 @@ export class TomorrowResultsComponent implements OnInit {
                 } 
 
               if (this.tomorrowStarters && this.tomorrowStarters[data.player.id] != null && this.startersDate === data.team.today && this.tomorrowStarters[data.player.id].probable === true) {
-                 
-                
 
                 data.player.startingToday = false;
                 data.player.likelyStartingToday = true;
@@ -586,6 +618,7 @@ export class TomorrowResultsComponent implements OnInit {
 
           //MAKE MATCHUPS BY GAME ID OF STARTERS AND NON STARTERS
           if (this.startersData.length > 0) {
+            console.log(this.startersData, 'starters');
             this.statData = this.startersData.reduce(function(r, a) {
               r[a.team.gameId] = r[a.team.gameId] || [];
 
@@ -681,12 +714,10 @@ export class TomorrowResultsComponent implements OnInit {
   ngOnInit() {
     if (this.sentDataTomorrow === undefined) {
       this.loadData();
-
     } else {
         this.loading = false;  
         this.showDataTomorrow = this.sentDataTomorrow;
-        this.gameDate = this.showDataTomorrow["0"].team.today;
-        
+        this.gameDate = this.showDataTomorrow["0"].team.today;     
     }
 
   }

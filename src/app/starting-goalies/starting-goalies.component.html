@@ -1,8 +1,9 @@
 <router-outlet></router-outlet>
 <span *ngIf="fbService.userDetails != null"><button mat-raised-button class="mat-raised-button" color="warn" (click)="openLastweek($event, showData)">Hot List</button></span>
 <span class="admin-box" *ngIf="fbService.userDetails != null">Admin</span>
-<form (keydown)="openLogin($event)">
-  <input type="text">
+<form>
+  <input type="text" (keydown.shift.arrowdown)="openLogin($event)" #myInput />
+  
 </form>
 <h1 class="center date-header"> {{ gameDate | date:'fullDate' }}</h1>
 <!-- <div class="nhl-playoff">
@@ -12,9 +13,9 @@
 <h1 class="center no-game-header" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1>
 <div class="matchup-layout" *ngIf="fbService.userDetails != null">
   <div class="edit-list-container" *ngIf="fullFirebaseResponse != null">
-    <mat-form-field>
-      <input matInput type="text" class="form-control" [(ngModel)]="fullFirebaseResponse[0]['todayDate']">
-    </mat-form-field>
+    
+      <input type="text" class="form-control" [(ngModel)]="fullFirebaseResponse[0]['todayDate']">
+    
     <ul>
       <li>Confirmed = <i class="material-icons md-18" style="color: #2ecc71; background: #fff; border-radius: 50%;">check_circle</i> Expected = <i class="material-icons md-18" style="color: orange; background: #fff; border-radius: 50%;">check_circle</i>
       </li>
@@ -49,9 +50,9 @@
   </div>
   <!-- edit-list-container -->
   <div class="edit-list-container" *ngIf="fullFirebaseResponse != null">
-    <mat-form-field>
-      <input matInput type="text" class="form-control" [(ngModel)]="fullFirebaseResponse[2]['tomorrowDate']">
-    </mat-form-field>
+    
+      <input type="text" class="form-control" [(ngModel)]="fullFirebaseResponse[2]['tomorrowDate']">
+    
     <ul>
       <li>Confirmed = <i class="material-icons md-18" style="color: #2ecc71; background: #fff; border-radius: 50%;">check_circle</i> Expected = <i class="material-icons md-18" style="color: orange; background: #fff; border-radius: 50%;">check_circle</i> </li>
       <li></li>
@@ -305,8 +306,6 @@
              
         </span>
 
-       
-
       </li>
       <li>#StanleyCup #StartingGoalies #FantasyHockey</li>
     </ul>
@@ -368,9 +367,9 @@
     <br>
     <!-- MAKE AN OBJECT THEN ADD TO MODEL OR ADD DIRECTLY TO FB -->
     <div *ngIf="goalieIdSet === false">
-      <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="Goalie ID" [(ngModel)]="goalieID">
-      </mat-form-field>
+      
+        <input type="text" class="form-control" placeholder="Goalie ID" [(ngModel)]="goalieID">
+      
       <button (click)="setGoalieId()">set id</button>
     </div>
     <!--   <mat-checkbox [(ngModel)]="goalieID.confirmed">Confirmed</mat-checkbox>
@@ -380,18 +379,18 @@
       <br>
       <input type="checkbox" [(ngModel)]="newGoalie[goalieID].probable" name="expected" value="false">Expected
       <br>
-      <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="name" [(ngModel)]="newGoalie[goalieID].name">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="image" [(ngModel)]="newGoalie[goalieID].image">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="twitter name" [(ngModel)]="newGoalie[goalieID].atHandle">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" class="form-control" placeholder="twitter team name" [(ngModel)]="newGoalie[goalieID].twitterHandle">
-      </mat-form-field>
+      
+        <input type="text" class="form-control" placeholder="name" [(ngModel)]="newGoalie[goalieID].name">
+      
+      
+        <input type="text" class="form-control" placeholder="image" [(ngModel)]="newGoalie[goalieID].image">
+      
+      
+        <input type="text" class="form-control" placeholder="twitter name" [(ngModel)]="newGoalie[goalieID].atHandle">
+      
+      
+        <input type="text" class="form-control" placeholder="twitter team name" [(ngModel)]="newGoalie[goalieID].twitterHandle">
+      
       <div>
         <button (click)="addGoalie()">Add New Goalie</button>
       </div>
@@ -1729,7 +1728,7 @@
           <img src="../assets/nhl-logos/{{ data.team.opponentId }}.jpg" alt=""> VS <img src="./assets/nhl-logos/{{ data.team.id }}.jpg" alt="">
           <br> {{data.team.opponent}} @ {{data.team.abbreviation}}
           <br>
-          <span class="green-dot" *ngIf="data.team.matchup[0].player.saves != null || data.team.matchup[1].player.saves != null"></span> Puck drops: {{data.player.gameTime | date: 'shortTime'}} EST @ {{ data.team.gameIce }}
+          <span class="green-dot" *ngIf="data.team.matchup[0].player.saves != null || data.team.matchup[1].player.saves != null"></span> Puck drops: {{data.player.gameTime | date: 'shortTime'}} PST @ {{ data.team.gameIce }}
           <br> <br>
           <a class="score-btn" (click)="toggleFlip(data, data.team.opponentAbbreviation, data.team.abbreviation)"  *ngIf="data.team.matchup[0].player.saves != null">SCORE</a>
          </p>

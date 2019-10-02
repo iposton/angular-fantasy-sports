@@ -1,4 +1,4 @@
-import { Component, ViewChild, Inject, OnInit } from '@angular/core';
+import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren  } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -43,6 +43,8 @@ let teamString = '';
   ]
 })
 export class StartingGoaliesComponent implements OnInit {
+
+  @ViewChildren('myInput') vc;
 
   goalies = new FormControl();
   starters: Array < any > ;
@@ -103,10 +105,25 @@ export class StartingGoaliesComponent implements OnInit {
 
 
 
-  constructor(private http: HttpClient, private dataService: NHLDataService, private fbService: FirebaseService, private yesterdayService: YesterdayService, private tomorrowService: TomorrowService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
+  constructor(private cdr: ChangeDetectorRef, private http: HttpClient, private dataService: NHLDataService, private fbService: FirebaseService, private yesterdayService: YesterdayService, private tomorrowService: TomorrowService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
+    yesterday = this.dataService.getYesterday();
+    tomorrow = this.dataService.getTomorrow();
+    today = this.dataService.getToday();
+    this.tomorrowDate = tomorrow;
+    console.log(yesterday + ' yesterday, ' + today + ' today, ' + tomorrow + ' tomorrow, ');
+    this.sentData = this.dataService.getSentStats();
+    this.sentYesterdayData = this.yesterdayService.getSentStats();
+    this.sentTomorrowData = this.tomorrowService.getSentStats();
+    
+  }
+
+
+  async loadData() {
+    let promiseOne;
+    promiseOne = new Promise((resolve, reject) => {
     this.fbService
       .getStarterData()
-      .subscribe(res => {
+        .subscribe(res => {
 
         if (res[0] != null) {
           console.log(res, 'got response from firebase...');
@@ -172,20 +189,11 @@ export class StartingGoaliesComponent implements OnInit {
             });
         }
 
-      });
-    yesterday = this.dataService.getYesterday();
-    tomorrow = this.dataService.getTomorrow();
-    today = this.dataService.getToday();
-    this.tomorrowDate = tomorrow;
-    console.log(yesterday + ' yesterday, ' + today + ' today, ' + tomorrow + ' tomorrow, ');
-    this.sentData = this.dataService.getSentStats();
-    this.sentYesterdayData = this.yesterdayService.getSentStats();
-    this.sentTomorrowData = this.tomorrowService.getSentStats();
-    
-  }
+        resolve();
+    });
+  });
 
-
-  loadData() {
+  let resultOne = await promiseOne;
 
 
     this.dataService
@@ -665,9 +673,8 @@ export class StartingGoaliesComponent implements OnInit {
               r[a.team.gameId] = r[a.team.gameId] || [];
    
               r[a.team.gameId].push(a);
-              
-         
-return r
+            
+              return r
             }, Object.create(null));
 
             //console.log(this.statData, 'made matchups of starting goalies by game ID...');
@@ -770,9 +777,10 @@ return r
 
 
   ngOnInit() {
-
+    
     if (this.sentData === undefined) {
       this.loadData();
+      this.cdr.detectChanges();
       this.fbService.getHits()
         .subscribe(res => {
             console.log(res[0]['hits'], 'ngOnInit hit count...');
@@ -849,6 +857,10 @@ return r
 
     }
 
+  }
+
+  ngAfterViewInit() {            
+    this.vc.first.nativeElement.focus();
   }
 
 
@@ -987,6 +999,7 @@ return r
   }
 
   public openLogin(event) {
+    console.log(event, 'key code');
     if (event.keyCode === 65 && event.ctrlKey) {
       this.dialog.open(LoginDialog, {
         width: '1025px'
@@ -994,6 +1007,10 @@ return r
     } else {
       //console.log('wrong key...');
     }
+
+    this.dialog.open(LoginDialog, {
+      width: '1025px'
+    });
 
   }
 
@@ -1020,17 +1037,20 @@ return r
   <span *ngIf="fbService.userDetails == null">Login to Edit</span>  <span *ngIf="fbService.userDetails != null">Logout after edit is saved</span>
   <mat-dialog-content>
   <div  *ngIf="fbService.userDetails == null">
-    <div class="login-container">
-      <mat-form-field>
-        <input matInput type="email" class="form-control" [(ngModel)]="user.email" placeholder="Email" required>
-      </mat-form-field>
+    
+      <div class="login-container">
+        <div>
+          <input type="email" class="form-control" [(ngModel)]="user.email" placeholder="Email" required />
+        </div>
 
-      <mat-form-field>
-        <input matInput type="password" class="form-control" [(ngModel)]="user.password" placeholder="Password" required>
-      </mat-form-field>
+        <div>
+          <input type="password" class="form-control" [(ngModel)]="user.password" placeholder="Password" required />
+        </div>
 
-      <button mat-raised-button class="mat-raised-button" (click)="signInWithEmail()">Login</button>
-    </div>  
+        <button mat-raised-button class="mat-raised-button" (click)="signInWithEmail()">Login</button>
+
+      </div>  
+    
   </div>
  
 <div *ngIf="fbService.userDetails != null">
@@ -1313,7 +1333,7 @@ export class TodayDialog implements OnInit {
 
     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
     //let searchterm = 'query=#startingGoalies #nhl ' + this.data.player.FirstName + ' ' + this.data.player.LastName;
-    let searchterm = 'query=' + this.data.player.LastName + ' ' + this.data.player.twitterHandle;
+    let searchterm = 'query=' + this.data.player.lastName + ' ' + this.data.player.twitterHandle;
 
 
     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
