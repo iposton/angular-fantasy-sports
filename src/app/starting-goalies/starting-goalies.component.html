@@ -87,7 +87,7 @@
   <div class="edit-list-container">
     <ul>
       <li *ngFor="let data of showData" class="goalie">
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'away'"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'away'"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[0].player.lastName}} -->
                   <span *ngIf="data.team.matchup[0].player.saves == null">({{ data.team.matchup[0].stats.goaltending.wins + '-' + data.team.matchup[0].stats.goaltending.losses + '-' + data.team.matchup[0].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[0].player.saves != null && data.team.matchup[0].player.wins == '0' && data.team.matchup[0].player.Shutouts == '0' && data.team.matchup[0].player.losses == '0' && data.team.matchup[0].player.OvertimeLosses == '0'">
@@ -106,7 +106,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[1].player.gameLocation === 'home'"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[1].player.gameLocation === 'home'"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[1].player.lastName}} -->
                               <span *ngIf="data.team.matchup[1].player.saves == null">({{ data.team.matchup[1].stats.goaltending.wins + '-' + data.team.matchup[1].stats.goaltending.losses + '-' + data.team.matchup[1].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[1].player.saves != null && data.team.matchup[1].player.wins == '0' && data.team.matchup[1].player.Shutouts == '0' && data.team.matchup[1].player.losses == '0' && data.team.matchup[1].player.OvertimeLosses == '0'">
@@ -125,7 +125,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[1].player.gameLocation === 'away'"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[1].player.gameLocation === 'away'"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[1].player.lastName}} -->
                                 <span *ngIf="data.team.matchup[1].player.saves == null">({{ data.team.matchup[1].stats.goaltending.wins + '-' + data.team.matchup[1].stats.goaltending.losses + '-' + data.team.matchup[1].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[1].player.saves != null && data.team.matchup[1].player.wins == '0' && data.team.matchup[1].player.Shutouts == '0' && data.team.matchup[1].player.losses == '0' && data.team.matchup[1].player.OvertimeLosses == '0'">
@@ -144,7 +144,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'home'"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'home'"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[0].player.lastName}} -->
                 <span *ngIf="data.team.matchup[0].player.saves == null">({{ data.team.matchup[0].stats.goaltending.wins + '-' + data.team.matchup[0].stats.goaltending.losses + '-' + data.team.matchup[0].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[0].player.saves != null && data.team.matchup[0].player.wins == '0' && data.team.matchup[0].player.Shutouts == '0' && data.team.matchup[0].player.losses == '0' && data.team.matchup[0].player.OvertimeLosses == '0'">
@@ -163,7 +163,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'home'"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'home'"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[0].player.lastName}} -->
                 <span *ngIf="data.team.matchup[0].player.saves == null">({{ data.team.matchup[0].stats.goaltending.wins + '-' + data.team.matchup[0].stats.goaltending.losses + '-' + data.team.matchup[0].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[0].player.saves != null && data.team.matchup[0].player.saves &gt; '10' && data.team.matchup[0].player.wins == '0' && data.team.matchup[0].player.Shutouts == '0' && data.team.matchup[0].player.losses == '0' && data.team.matchup[0].player.OvertimeLosses == '0'">
@@ -182,7 +182,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'away'"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'away'"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[0].player.lastName}} -->
                 <span *ngIf="data.team.matchup[0].player.saves == null">({{ data.team.matchup[0].stats.goaltending.wins + '-' + data.team.matchup[0].stats.goaltending.losses + '-' + data.team.matchup[0].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[0].player.saves != null && data.team.matchup[0].player.saves &gt; '10' && data.team.matchup[0].player.wins == '0' && data.team.matchup[0].player.Shutouts == '0' && data.team.matchup[0].player.losses == '0' && data.team.matchup[0].player.OvertimeLosses == '0'">
@@ -201,7 +201,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[1].player.gameLocation === 'away'"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[1].player.gameLocation === 'away'"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[1].player.lastName}} -->
                                 <span *ngIf="data.team.matchup[1].player.saves == null">({{ data.team.matchup[1].stats.goaltending.wins + '-' + data.team.matchup[1].stats.goaltending.losses + '-' + data.team.matchup[1].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[1].player.saves != null && data.team.matchup[1].player.saves &gt; '10' && data.team.matchup[1].player.wins == '0' && data.team.matchup[1].player.Shutouts == '0' && data.team.matchup[1].player.losses == '0' && data.team.matchup[1].player.OvertimeLosses == '0'">
@@ -220,7 +220,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[1].player.gameLocation === 'home'"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[1].player.gameLocation === 'home'"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[1].player.lastName}} -->
                                 <span *ngIf="data.team.matchup[1].player.saves == null">({{ data.team.matchup[1].stats.goaltending.wins + '-' + data.team.matchup[1].stats.goaltending.losses + '-' + data.team.matchup[1].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[1].player.saves != null && data.team.matchup[1].player.saves &gt; '10' && data.team.matchup[1].player.wins == '0' && data.team.matchup[1].player.Shutouts == '0' && data.team.matchup[1].player.losses == '0' && data.team.matchup[1].player.OvertimeLosses == '0'">
@@ -239,7 +239,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[2].player.gameLocation === 'home'"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[2].player.gameLocation === 'home'"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[2].player.lastName}} -->
                 <span *ngIf="data.team.matchup[2].player.saves == null">({{ data.team.matchup[2].stats.goaltending.wins + '-' + data.team.matchup[2].stats.goaltending.losses + '-' + data.team.matchup[2].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[2].player.saves != null && data.team.matchup[2].player.saves &gt; '10' && data.team.matchup[2].player.wins == '0' && data.team.matchup[2].player.Shutouts == '0' && data.team.matchup[2].player.losses == '0' && data.team.matchup[2].player.OvertimeLosses == '0'">
@@ -258,7 +258,7 @@
               L
             </span>
         </span>
-        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[2].player.gameLocation === 'away'"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[2].player.gameLocation === 'away'"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
           <!-- {{data.team.matchup[2].player.lastName}} -->
                 <span *ngIf="data.team.matchup[2].player.saves == null">({{ data.team.matchup[2].stats.goaltending.wins + '-' + data.team.matchup[2].stats.goaltending.losses + '-' + data.team.matchup[2].stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="data.team.matchup[2].player.saves != null && data.team.matchup[2].player.saves &gt; '10' && data.team.matchup[2].player.wins == '0' && data.team.matchup[2].player.Shutouts == '0' && data.team.matchup[2].player.losses == '0' && data.team.matchup[2].player.OvertimeLosses == '0'">
@@ -463,7 +463,7 @@
             </span>
             <br>
             <span *ngIf="data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'away'">
-            <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+            <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -494,7 +494,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] == null && data.team.matchup[1].player.gameLocation === 'away'">
-              <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -526,7 +526,7 @@
             </span>
             
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[2].player.gameLocation === 'away' && data.team.matchup[2].player.wrongStarter == null && data.team.matchup[0].team.id != data.team.matchup[2].team.id && data.team.matchup[1].team.id != data.team.matchup[2].team.id">
-              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -555,7 +555,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'away'  && data.team.matchup[0].team.id != data.team.matchup[2].team.id && data.team.matchup[1].team.id == data.team.matchup[2].team.id">
-              <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -584,7 +584,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'away' && data.team.matchup[2].player.wrongStarter === true  && data.team.matchup[0].team.id == data.team.matchup[2].team.id && data.team.matchup[1].team.id != data.team.matchup[0].team.id">
-              <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -613,7 +613,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].player.gameLocation === 'away'  && data.team.matchup[0].team.id == data.team.matchup[2].team.id && data.team.matchup[1].team.id != data.team.matchup[0].team.id">
-              <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -643,7 +643,7 @@
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[2].player.gameLocation === 'away' && data.team.matchup[2].player.wrongStarter == null && data.team.matchup[0].team.id === data.team.matchup[2].team.id">
                <span class="faded2">
-<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -674,7 +674,7 @@
             <br>
             <span class="faded2">
 
- <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+ <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -705,7 +705,7 @@
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].player.gameLocation === 'away' && data.team.matchup[1].player.wrongStarter == null && data.team.matchup[0].team.id === data.team.matchup[1].team.id">
                <span class="faded2">
-<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -736,7 +736,7 @@
             <br>
             <span class="faded2">
 
- <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+ <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -766,7 +766,7 @@
             </span>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].team.id === data.team.matchup[2].team.id && data.team.matchup[2].player.gameLocation === 'away' && data.team.matchup[1].player.wrongStarter === true">
-              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -795,7 +795,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].team.id === data.team.matchup[2].team.id && data.team.matchup[1].player.gameLocation === 'away' && data.team.matchup[2].player.wrongStarter === true">
-              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -825,7 +825,7 @@
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].team.id === data.team.matchup[2].team.id && data.team.matchup[2].player.gameLocation === 'away' && data.team.matchup[2].player.wrongStarter == null && data.team.matchup[1].player.wrongStarter == null">
                <span class="faded2">
-<span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+<span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -856,7 +856,7 @@
             <br>
             <span class="faded2">
 
- <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+ <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -887,7 +887,7 @@
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[3] != null && data.team.matchup[0].team.id === data.team.matchup[1].team.id && data.team.matchup[2].player.gameLocation === 'away' && data.team.matchup[2].player.wrongStarter == null && data.team.matchup[1].player.wrongStarter == null">
                <span class="faded2">
-<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -918,7 +918,7 @@
             <br>
             <span class="faded2">
 
- <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+ <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -987,7 +987,7 @@
             </span>
             <br>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id != data.team.matchup[1].team.id && data.team.matchup[0].team.id != data.team.matchup[2].team.id && data.team.matchup[0].player.gameLocation === 'home'">
-              <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br><span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -1016,7 +1016,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id === data.team.matchup[1].team.id && data.team.matchup[0].team.id != data.team.matchup[2].team.id && data.team.matchup[2].player.gameLocation === 'home'">
-              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br><span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -1045,7 +1045,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'home'">
-             <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+             <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -1076,7 +1076,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id != data.team.matchup[1].team.id && data.team.matchup[1].team.id != data.team.matchup[2].team.id && data.team.matchup[1].player.gameLocation === 'home' && data.team.matchup[1].player.wrongStarter == null">
-            <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+            <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -1109,7 +1109,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].team.id === data.team.matchup[2].team.id && data.team.matchup[2].player.gameLocation === 'home' && data.team.matchup[1].player.wrongStarter === true">
-              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -1138,7 +1138,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id === data.team.matchup[1].team.id && data.team.matchup[1].player.gameLocation === 'home' && data.team.matchup[0].player.wrongStarter === true">
-              <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -1167,7 +1167,7 @@
             </div>
             </span>
             <span *ngIf="data.team.matchup[2] == null && data.team.matchup[0].team.id != data.team.matchup[1].team.id && data.team.matchup[1].player.gameLocation === 'home'">
-              <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+              <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -1200,7 +1200,7 @@
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id === data.team.matchup[1].team.id && data.team.matchup[0].player.gameLocation === 'home'  && data.team.matchup[0].player.wrongStarter == null">
                <span class="faded2">
-<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -1231,7 +1231,7 @@
             <br>
             <span class="faded2">
 
- <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+ <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -1262,7 +1262,7 @@
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].team.id === data.team.matchup[2].team.id && data.team.matchup[1].player.gameLocation === 'home'  && data.team.matchup[1].player.wrongStarter == null">
                <span class="faded2">
-<span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+<span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -1293,7 +1293,7 @@
             <br>
             <span class="faded2">
 
- <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+ <span (click)="open($event, data.team.matchup[1])" class="player-img"><img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
             </span>
@@ -1324,7 +1324,7 @@
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id === data.team.matchup[2].team.id && data.team.matchup[2].player.gameLocation === 'home' && data.team.matchup[2].player.wrongStarter == null">
                <span class="faded2">
-<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+<span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -1355,7 +1355,7 @@
             <br>
             <span class="faded2">
 
- <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+ <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -1388,7 +1388,7 @@
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[3] != null && data.team.matchup[2].team.id === data.team.matchup[3].team.id && data.team.matchup[2].player.gameLocation === 'home' && data.team.matchup[2].player.wrongStarter == null">
                <span class="faded2">
-<span (click)="open($event, data.team.matchup[3])" class="player-img"><img src="{{ data.team.matchup[3].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+<span (click)="open($event, data.team.matchup[3])" class="player-img"><img src="{{ data.team.matchup[3].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[3].player.firstName + ' ' + data.team.matchup[3].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[3].team.abbreviation + ' - ' + data.team.matchup[3].player.primaryPosition }})
             </span>
@@ -1419,7 +1419,7 @@
             <br>
             <span class="faded2">
 
- <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+ <span (click)="open($event, data.team.matchup[2])" class="player-img"><img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[2].team.abbreviation + ' - ' + data.team.matchup[2].player.primaryPosition }})
             </span>
@@ -1451,7 +1451,7 @@
             </span>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id === data.team.matchup[2].team.id && data.team.matchup[2].player.gameLocation === 'home' && data.team.matchup[2].player.wrongStarter === true">
-            <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+            <span (click)="open($event, data.team.matchup[0])" class="player-img"><img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
             <br> <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[0].team.abbreviation + ' - ' + data.team.matchup[0].player.primaryPosition }})
             </span>
@@ -1490,7 +1490,7 @@
             <br>
             <span *ngIf="data.team.matchup[2] == null">
 
-             <img class="faded" src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+             <img class="faded" src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
             
             <br>
             <span class="faded"><span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
@@ -1507,7 +1507,7 @@
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id === data.team.matchup[1].team.id">
                <span class="faded faded2">
 
-                       <img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+                       <img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
 
                       <br>
                       <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
@@ -1523,7 +1523,7 @@
             <span class="faded faded2">
 
 
-                  <img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+                  <img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
 
                 <br>
                   <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
@@ -1540,7 +1540,7 @@
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id != data.team.matchup[1].team.id">
                 <span class="faded">
 
-                  <img src="{{ data.team.matchup[0].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+                  <img src="{{ data.team.matchup[0].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
 
                 <br>
                   <span style="font-weight: bold;">{{ data.team.matchup[0].player.firstName + ' ' + data.team.matchup[0].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
@@ -1564,7 +1564,7 @@
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             <br>
-            <img class="faded" src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+            <img class="faded" src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
             <br>
             <span class="faded"><span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
@@ -1585,7 +1585,7 @@
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             <br>
-            <img class="faded" src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+            <img class="faded" src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
             <br>
             <span class="faded"><span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
               ({{ data.team.matchup[1].team.abbreviation + ' - ' + data.team.matchup[1].player.primaryPosition }})
@@ -1610,7 +1610,7 @@
             <br>
             <span class="faded faded2">
 
-                       <img src="{{ data.team.matchup[1].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+                       <img src="{{ data.team.matchup[1].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
 
                       <br>
                       <span style="font-weight: bold;">{{ data.team.matchup[1].player.firstName + ' ' + data.team.matchup[1].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
@@ -1626,7 +1626,7 @@
             <span class="faded faded2">
 
 
-                  <img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+                  <img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
 
                 <br>
                   <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
@@ -1650,7 +1650,7 @@
             <br>
             <span class="faded">
 
-                  <img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+                  <img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
 
                 <br>
                   <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
@@ -1674,7 +1674,7 @@
             <span class="faded faded2">
 
 
-                       <img src="{{ data.team.matchup[2].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
+                       <img src="{{ data.team.matchup[2].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'">
 
                       <br>
                       <span style="font-weight: bold;">{{ data.team.matchup[2].player.firstName + ' ' + data.team.matchup[2].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
@@ -1690,7 +1690,7 @@
             <span class="faded faded2">
 
 
-                  <img src="{{ data.team.matchup[3].player.image }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@3x.jpg'">
+                  <img src="{{ data.team.matchup[3].player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@3x.jpg'">
 
                 <br>
                   <span style="font-weight: bold;">{{ data.team.matchup[3].player.firstName + ' ' + data.team.matchup[3].player.lastName }}</span> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
