@@ -52,7 +52,7 @@ export class YesterdayService {
   schedule: Observable < any > = null;
   score: Observable < any > = null;
   play: Observable <any> = null;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
 
   constructor(private http: HttpClient) {}
 
@@ -139,7 +139,7 @@ export class YesterdayService {
     if (!this.gameid) {
       console.log('getting yesterday, today, tomorrow from API...');
 
-      let url = `${this.apiRoot}/full_game_schedule.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
+      let url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
       this.gameid = this.http.get(url, {headers})
         
     }

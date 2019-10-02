@@ -58,7 +58,7 @@ export class NHLDataService {
   score: Observable < any > = null;
   play: Observable <any> = null;
   injured: Observable <any> = null;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.0/pull/nhl/2018-2019-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.0/pull/nhl/2019-2020-regular";
   headers: any;
   public dailyDate: string = '';
 
@@ -208,7 +208,7 @@ export class NHLDataService {
     if (!this.injured) {
       console.log('getting goalie injuries from api...');
 
-      let url = `${this.apiRoot}/player_injuries.json?position=G`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/injuries.json?position=G`;
       this.injured = this.http.get(url, {headers})
         
     }

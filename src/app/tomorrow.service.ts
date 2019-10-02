@@ -52,7 +52,7 @@ export class TomorrowService {
   play: Observable <any> = null;
   injured: Observable <any> = null;
 
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
 
   constructor(private http: HttpClient) {}
 
@@ -139,7 +139,7 @@ export class TomorrowService {
     if (!this.gameid) {
       console.log('getting yesterday, today, tomorrow from API...');
 
-      let url = `${this.apiRoot}/full_game_schedule.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
+      let url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
       this.gameid = this.http.get(url, {headers})
         
     }
@@ -151,7 +151,7 @@ export class TomorrowService {
     if (!this.injured) {
       console.log('getting yesterday, today, tomorrow from API...');
 
-      let url = `${this.apiRoot}/player_injuries.json?position=G`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/injuries.json?position=G`;
       this.injured = this.http.get(url, {headers})
         
     }

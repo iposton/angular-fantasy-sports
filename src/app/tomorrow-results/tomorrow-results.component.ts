@@ -17,8 +17,11 @@ let tomorrow = null;
 let yesterday = null;
 let dailyTeams = [];
 let teamString = '';
+let teamRef = [];
 
 let headers = null;
+
+
 
 
 @Component({
@@ -52,7 +55,26 @@ export class TomorrowResultsComponent implements OnInit {
   startersDate: any;
   loading: boolean = true;
   fullFirebaseResponse: any;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2018-2019-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
+
+  public startingG = {
+    '5571':'5571',
+    '4863':'4863',
+    '5107':'5107',
+    '5908':'5908',
+    '757':'757',
+    '5033':'5033',
+    '5109':'5109',
+    '4874':'4874',
+    '4950':'4950',
+    '3486':'3486',
+    '10074':'10074',
+    '5122':'5122',
+    '483':'483',
+    '5528':'5528',
+    '13876':'13876',
+    '5366':'5366'
+  }
 
   constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
 
@@ -70,25 +92,25 @@ export class TomorrowResultsComponent implements OnInit {
              for (let show of this.showDataTomorrow) {
               for (let rep of this.myData) {
             
-                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.ID] != null && this.fullFirebaseResponse[3][rep.player.ID] != null && rep.team.ID === show.team.matchup[0].team.ID && this.fullFirebaseResponse[3][show.team.matchup[0].player.ID].probable === false && this.fullFirebaseResponse[3][rep.player.ID].confirmed === true ) {
+                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[3][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === true ) {
                     // Found all confirmed goalies
                     // if any of these confirmed goalies don't match ID's then check if same team id and swap 
                    console.log(rep, 'update me into the view right now!');
                    console.log(show.team.matchup[0], 'I have been changed, replace me with new goalie...');
                    show.team.matchup[0] = rep; 
-                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.ID] != null && this.fullFirebaseResponse[3][rep.player.ID] != null && rep.team.ID === show.team.matchup[0].team.ID && this.fullFirebaseResponse[3][show.team.matchup[0].player.ID].probable === false && this.fullFirebaseResponse[3][rep.player.ID].confirmed === false && this.fullFirebaseResponse[3][rep.player.ID].probable === true && rep.player.probable === false) {
+                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[3][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === false && this.fullFirebaseResponse[3][rep.player.id].probable === true && rep.player.probable === false) {
                   rep.player.probable = true;
                   console.log(rep, 'update me into the view right now! I am probable to start.');
                   console.log(show.team.matchup[0], 'I have been changed, replace me with probable goalie.');
                   show.team.matchup[0] = rep;
                 }
-                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.ID] != null && this.fullFirebaseResponse[3][rep.player.ID] != null && rep.team.ID === show.team.matchup[1].team.ID && this.fullFirebaseResponse[3][show.team.matchup[1].player.ID].probable === false && this.fullFirebaseResponse[3][rep.player.ID].confirmed === true ) {
+                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[3][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === true ) {
                     // Found all confirmed goalies
                     // if any of these confirmed goalies don't match ID's then check if same team id and swap 
                    console.log(rep, 'update me into the view right now!');
                    console.log(show.team.matchup[1], 'I have been changed, replace me with new goalie...');
                    show.team.matchup[1] = rep; 
-                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.ID] != null && this.fullFirebaseResponse[3][rep.player.ID] != null && rep.team.ID === show.team.matchup[1].team.ID && this.fullFirebaseResponse[3][show.team.matchup[1].player.ID].probable === false && this.fullFirebaseResponse[3][rep.player.ID].confirmed === false && this.fullFirebaseResponse[3][rep.player.ID].probable === true && rep.player.probable === false) {
+                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[3][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === false && this.fullFirebaseResponse[3][rep.player.id].probable === true && rep.player.probable === false) {
                   rep.player.probable = true;
                   console.log(rep, 'update me into the view right now! I am probable to start.');
                   console.log(show.team.matchup[1], 'I have been changed, replace me with probable goalie.');
@@ -118,14 +140,14 @@ export class TomorrowResultsComponent implements OnInit {
       for (let rep of this.myData) {
       
 
-        if (show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.ID] != null && this.fullFirebaseResponse[3][rep.player.ID] != null && rep.team.ID === show.team.matchup[0].team.ID && this.fullFirebaseResponse[3][show.team.matchup[0].player.ID].probable === false && this.fullFirebaseResponse[3][rep.player.ID].confirmed === true ) {
+        if (show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[3][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === true ) {
             // Found all confirmed goalies
             // if any of these confirmed goalies don't match ID's then check if same team id and swap 
            console.log(rep, 'update me into the view right now!');
            console.log(show.team.matchup[0], 'I have been changed, replace me with new goalie...');
            show.team.matchup[0] = rep; 
         }
-        if (show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.ID] != null && this.fullFirebaseResponse[3][rep.player.ID] != null && rep.team.ID === show.team.matchup[1].team.ID && this.fullFirebaseResponse[3][show.team.matchup[1].player.ID].probable === false && this.fullFirebaseResponse[3][rep.player.ID].confirmed === true ) {
+        if (show.team.matchup != null && this.fullFirebaseResponse[3][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[3][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[3][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[3][rep.player.id].confirmed === true ) {
             // Found all confirmed goalies
             // if any of these confirmed goalies don't match ID's then check if same team id and swap 
            console.log(rep, 'update me into the view right now!');
@@ -160,30 +182,31 @@ export class TomorrowResultsComponent implements OnInit {
 
               let postponed;
 
-              res['games'].gameentry.forEach((item, index) => {
+              res['games'].forEach((item, index) => {
 
-                 
-                dailyTeams.push(item.homeTeam.Abbreviation, item.awayTeam.Abbreviation); 
+                //console.log(item, 'item')
+                dailyTeams.push(item.schedule.homeTeam.abbreviation, item.schedule.awayTeam.abbreviation); 
                 teamString = dailyTeams.join();
                 
                 // postponed = index;
-                // if (res['dailygameschedule'].gameentry[postponed].id === '41392') {
-                //   console.log(res['dailygameschedule'].gameentry[postponed], "hi, iam postponed and causing trouble...");
-                //   res['dailygameschedule'].gameentry.splice(postponed, 1);
+                // if (res['games'][postponed].id === '41392') {
+                //   console.log(res['games'][postponed], "hi, iam postponed and causing trouble...");
+                //   res['games'].splice(postponed, 1);
                 // }
               });
 
               this.gamesToday = true;
-              this.dailySchedule = res['dailygameschedule'].gameentry;
-              this.gameDate = res['lastUpdatedOn']; //res['dailygameschedule'].gameentry[0].date;
+              this.dailySchedule = res['games'];
+              teamRef = res['references'].teamReferences;
+              this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['games'][0].date;
 
               let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
 
               Observable.forkJoin(
-                  res['dailygameschedule'].gameentry.map(
+                  res['games'].map(
                     g =>
-                    this.http.get(`${this.apiRoot}/game_startinglineup.json?gameid=` + g.id + `&position=Goalie-starter`, {headers})
+                    this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Goalie-starter`, {headers})
                     
                   )
                 )
@@ -196,22 +219,22 @@ export class TomorrowResultsComponent implements OnInit {
                   res.forEach((item, index) => {
                     i = index;
                     //console.log(res[i]['gamestartinglineup'].teamLineup, 'got starting lineups data!');
-                    res2 = res[i]['gamestartinglineup'].teamLineup;
+                    res2 = res[i]['teamLineups'];
                     //this.gameTime =  res[i]['gamestartinglineup'].game.date;
                     res2.forEach((item, index) => {
 
                       i2 = index;
                       if (res2[i2].actual != null && res2[i2].expected != null) {
-                        //console.log(res2[i2].actual.starter[0].player.ID, 'got player ID for goalie actualy starting!');
-                        this.starterIdData.push(res2[i2].actual.starter[0].player.ID);
+                        //console.log(res2[i2].actual.starter[0].player.id, 'got player ID for goalie actualy starting!');
+                        this.starterIdData.push(res2[i2].actual.starter[0].player.id);
 
                       } else if (res2[i2].actual == null && res2[i2].expected != null) {
-                        //console.log(res2[i2].expected.starter[0].player.ID, 'got player ID for goalie expected to start!');
-                        this.starterIdData.push(res2[i2].expected.starter[0].player.ID);
+                        //console.log(res2[i2].expected.starter[0].player.id, 'got player ID for goalie expected to start!');
+                        this.starterIdData.push(res2[i2].expected.starter[0].player.id);
                       } else {
                         //console.log(res2[i2].team.City + " " + res2[i2].team.Name, 'no starters yet!');
-                        this.starterIdData.push(res2[i2].team.ID);
-                        //this.starterIdData.push(res2[i2].expected.starter[0].player.ID);
+                        this.starterIdData.push(res2[i2].team.id);
+                        //this.starterIdData.push(res2[i2].expected.starter[0].player.id);
                         //console.log(this.starterIdData, 'this array has ALL the IDs of todays starters');
 
                       }
@@ -229,8 +252,8 @@ export class TomorrowResultsComponent implements OnInit {
 
         this.tomorrowService
           .getInjured().subscribe(res => {
-            console.log(res['playerinjuries'].playerentry, "injured players...");
-            this.playerInjuries = res['playerinjuries'].playerentry;
+            console.log(res, "injured players...");
+            this.playerInjuries = res;
           })
 
         // this.tomorrowService
@@ -241,21 +264,21 @@ export class TomorrowResultsComponent implements OnInit {
 
         this.tomorrowService
           .getGameId().subscribe(res => {
-            console.log(res['fullgameschedule'].gameentry, "scheduled games for yesterday today and tomorrow...");
+            console.log(res['games'], "scheduled games for yesterday today and tomorrow...");
 
             //this removed a postponed game from api to avoid errors
-          //   if (res['fullgameschedule'].gameentry > 0) {
+          //   if (res['games'] > 0) {
           //   let postponed;
-          //   res['fullgameschedule'].gameentry.forEach((item, index) => {
+          //   res['games'].forEach((item, index) => {
           //     postponed = index;
-          //     if (res['fullgameschedule'].gameentry[postponed].id === '41392') {
-          //       console.log(res['fullgameschedule'].gameentry[postponed], "hi, iam postponed and causing trouble...");
-          //       res['fullgameschedule'].gameentry.splice(postponed, 1);
+          //     if (res['games'][postponed].id === '41392') {
+          //       console.log(res['games'][postponed], "hi, iam postponed and causing trouble...");
+          //       res['games'].splice(postponed, 1);
           //     }
           //   });
           // }
 
-            this.fullSchedule = res['fullgameschedule'].gameentry;
+            this.fullSchedule = res['games'];
           })
 
       })
@@ -266,8 +289,8 @@ export class TomorrowResultsComponent implements OnInit {
 
     this.tomorrowService
       .getStats(teamString).subscribe(res => {
-        console.log(res['cumulativeplayerstats'].playerstatsentry, "cumulative stats...");
-        this.myData = res['cumulativeplayerstats'].playerstatsentry;
+        console.log(res['playerStatsTotals'], "cumulative stats...");
+        this.myData = res['playerStatsTotals'];
 
         if (this.myData && this.dailySchedule) {
           console.log('start sorting data for daily schedule...');
@@ -275,27 +298,29 @@ export class TomorrowResultsComponent implements OnInit {
 
             for (let sdata of this.myData) {
 
-              if (schedule.awayTeam.Name === sdata.team.Name) {
-                sdata.player.gameTime = schedule.time;
+              if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
+                
+                sdata.player.gameTime = schedule.schedule.startTime;
+                sdata.team.gameIce = schedule.schedule.venue.name;
 
-                if (schedule.location === 'Nassau Coliseum') {
-                  sdata.team.gameIce = 'Barclays Center';
-                } else if (schedule.location === 'Verizon Center') {
-                  sdata.team.gameIce = 'Capital One Arena';
-                } else if (schedule.location === 'Joe Louis Arena') {
-                  sdata.team.gameIce = 'Little Caesars Arena';
-                } else if (schedule.location === 'Consol Energy Center') {
-                  sdata.team.gameIce = 'PPG Paints Arena';
-                } else {
-                  sdata.team.gameIce = schedule.location;
-                }
+                // if (schedule.schedule.location === 'Nassau Coliseum') {
+                //   sdata.team.gameIce = 'Barclays Center';
+                // } else if (schedule.schedule.location === 'Verizon Center') {
+                //   sdata.team.gameIce = 'Capital One Arena';
+                // } else if (schedule.schedule.location === 'Joe Louis Arena') {
+                //   sdata.team.gameIce = 'Little Caesars Arena';
+                // } else if (schedule.schedule.location === 'Consol Energy Center') {
+                //   sdata.team.gameIce = 'PPG Paints Arena';
+                // } else {
+                //   sdata.team.gameIce = schedule.schedule.location;
+                // }
 
-                sdata.team.gameId = schedule.id;
+                sdata.team.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "away";
-                sdata.team.opponent = schedule.homeTeam.City + ' ' + schedule.homeTeam.Name;
-                sdata.team.opponentId = schedule.homeTeam.ID;
-                sdata.team.opponentCity = schedule.homeTeam.City;
-                sdata.team.opponentName = schedule.homeTeam.Name;
+                sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+                sdata.team.opponentId = schedule.schedule.homeTeam.id;
+                //sdata.team.opponentCity = schedule.schedule.homeTeam.City;
+                sdata.team.opponentName = schedule.schedule.homeTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
                 sdata.team.yesterday = yesterday;
@@ -312,27 +337,28 @@ export class TomorrowResultsComponent implements OnInit {
 
 
               }
-              if (schedule.homeTeam.Name === sdata.team.Name) {
-                sdata.player.gameTime = schedule.time;
+              if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
+                sdata.player.gameTime = schedule.schedule.startTime;
+                sdata.team.gameIce = schedule.schedule.venue.name;
 
-                if (schedule.location === 'Nassau Coliseum') {
-                  sdata.team.gameIce = 'Barclays Center';
-                } else if (schedule.location === 'Verizon Center') {
-                  sdata.team.gameIce = 'Capital One Arena';
-                } else if (schedule.location === 'Joe Louis Arena') {
-                  sdata.team.gameIce = 'Little Caesars Arena';
-                } else if (schedule.location === 'Consol Energy Center') {
-                  sdata.team.gameIce = 'PPG Paints Arena';
-                } else {
-                  sdata.team.gameIce = schedule.location;
-                }
+                // if (schedule.schedule.location === 'Nassau Coliseum') {
+                //   sdata.team.gameIce = 'Barclays Center';
+                // } else if (schedule.schedule.location === 'Verizon Center') {
+                //   sdata.team.gameIce = 'Capital One Arena';
+                // } else if (schedule.schedule.location === 'Joe Louis Arena') {
+                //   sdata.team.gameIce = 'Little Caesars Arena';
+                // } else if (schedule.schedule.location === 'Consol Energy Center') {
+                //   sdata.team.gameIce = 'PPG Paints Arena';
+                // } else {
+                //   sdata.team.gameIce = schedule.schedule.location;
+                // }
 
-                sdata.team.gameId = schedule.id;
+                sdata.team.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "home";
-                sdata.team.opponent = schedule.awayTeam.City + ' ' + schedule.awayTeam.Name;
-                sdata.team.opponentId = schedule.awayTeam.ID;
-                sdata.team.opponentCity = schedule.awayTeam.City;
-                sdata.team.opponentName = schedule.awayTeam.Name;
+                sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+                sdata.team.opponentId = schedule.schedule.awayTeam.id;
+                //sdata.team.opponentCity = schedule.schedule.awayTeam.City;
+                sdata.team.opponentName = schedule.schedule.awayTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
                 sdata.team.yesterday = yesterday;
@@ -357,39 +383,39 @@ export class TomorrowResultsComponent implements OnInit {
 
             for (let btb of this.myData) {
 
-              if (full.awayTeam.ID === btb.team.ID) {
+              if (full.schedule.awayTeam.id === btb.team.id) {
 
-                if (btb.team.yesterday === full.date) {
+                if (btb.team.yesterday === full.schedule.date) {
 
                   btb.team.hadGameYesterday = true;
 
                 }
-                if (btb.team.today === full.date) {
+                if (btb.team.today === full.schedule.date) {
                   btb.team.haveGameToday = true;
                 }
 
 
-                if (btb.team.tomorrow === full.date) {
+                if (btb.team.tomorrow === full.schedule.date) {
 
                   btb.team.haveGameTomorrow = true;
                 }
 
               }
-              if (full.homeTeam.ID === btb.team.ID) {
+              if (full.schedule.homeTeam.id === btb.team.id) {
 
 
-                if (btb.team.yesterday === full.date) {
+                if (btb.team.yesterday === full.schedule.date) {
 
                   btb.team.hadGameYesterday = true;
 
 
                 }
-                if (btb.team.today === full.date) {
+                if (btb.team.today === full.schedule.date) {
                   btb.team.haveGameToday = true;
                 }
 
 
-                if (btb.team.tomorrow === full.date) {
+                if (btb.team.tomorrow === full.schedule.date) {
 
                   btb.team.haveGameTomorrow = true;
                 }
@@ -399,28 +425,25 @@ export class TomorrowResultsComponent implements OnInit {
           }
         }
 
-
-        
           for (let data of this.myData) {
-              console.log('start sorting data for goalie images...');
+              //console.log(data, 'start sorting data for goalie images...');
+              data.player.savePercent = data.stats.goaltending.savePercentage;
 
-             data.player.savePercent = data.stats.stats.SavePercentage['#text'].slice(1);
 
-
-              if ( this.tomorrowStarters[data.player.ID] != null) {
-                   data.player.image = this.tomorrowStarters[data.player.ID].image;
-                   data.player.atHandle = this.tomorrowStarters[data.player.ID].atHandle;
-                   data.player.twitterHandle = this.tomorrowStarters[data.player.ID].twitterHandle;
+              if (this.tomorrowStarters && this.tomorrowStarters[data.player.id] != null) {
+                   data.player.image = this.tomorrowStarters[data.player.id].image;
+                   data.player.atHandle = this.tomorrowStarters[data.player.id].atHandle;
+                   data.player.twitterHandle = this.tomorrowStarters[data.player.id].twitterHandle;
                 } 
 
-              if (this.tomorrowStarters[data.player.ID] != null && this.startersDate === data.team.today && this.tomorrowStarters[data.player.ID].probable === true) {
+              if (this.tomorrowStarters && this.tomorrowStarters[data.player.id] != null && this.startersDate === data.team.today && this.tomorrowStarters[data.player.id].probable === true) {
                  
                 
 
                 data.player.startingToday = false;
                 data.player.likelyStartingToday = true;
-                data.player.confirmed = this.tomorrowStarters[data.player.ID].confirmed;
-                data.player.probable = this.tomorrowStarters[data.player.ID].probable;
+                data.player.confirmed = this.tomorrowStarters[data.player.id].confirmed;
+                data.player.probable = this.tomorrowStarters[data.player.id].probable;
                 this.startersData.push(data);
 
               }
@@ -446,6 +469,31 @@ export class TomorrowResultsComponent implements OnInit {
               }     
 
           }
+
+          for (let team of teamRef) {
+            for (let data of this.myData) { 
+               if (team.id === data.team.id) {
+                 data.team.color = team.teamColoursHex[0];
+                 data.team.accent = team.teamColoursHex[1];
+                 data.team.logo = team.officialLogoImageSrc;
+                 data.team.city = team.city;
+                 data.team.name = team.name;
+               } 
+             }  
+          }
+
+          for (let schedule of this.myData) {
+            for (let sdata of this.myData) {
+              if (sdata.team.opponentId != null && 
+                sdata.team.opponentId === schedule.team.id && 
+                sdata.gameId === schedule.gameId) {
+                sdata.team.opponentLogo = schedule.team.logo;
+                sdata.team.opponentCity = schedule.team.city;
+                sdata.team.opponentName = schedule.team.name;
+                sdata.opponentColor = schedule.team.color;
+              }
+            }
+          }
         
 
         if (this.sentDataToday != null) {
@@ -454,7 +502,7 @@ export class TomorrowResultsComponent implements OnInit {
 
             for (let tomdata of this.myData) {
 
-              if (today.player.saves > 1 && today.player.ID === tomdata.player.ID) {
+              if (today.player.saves > 1 && today.player.id === tomdata.player.id) {
 
                 tomdata.player.finishedYesterday = false;
                 tomdata.player.playedYesterday = true;
@@ -464,9 +512,9 @@ export class TomorrowResultsComponent implements OnInit {
                 tomdata.player.saYesterday = today.player.shotsFaced;
                 tomdata.player.olYesterday = today.player.OvertimeLosses;
                 tomdata.player.shYesterday = today.player.Shutouts;
-                if (today.player.wins == '1') {
+                if (today.player.wins === 1) {
                   tomdata.player.resultYesterday = today.player.FirstName + ' ' + today.player.LastName + ' got the Win tonight with ' + today.player.saves + ' saves against ' + today.player.shotsFaced + ' shots.'
-                } else if (today.player.losses == '1' || today.player.OvertimeLosses == '1') {
+                } else if (today.player.losses === 1 || today.player.OvertimeLosses === 1) {
                   tomdata.player.resultYesterday = today.player.FirstName + ' ' + today.player.LastName + ' got the Loss tonight with ' + today.player.saves + ' saves against ' + today.player.shotsFaced + ' shots.'
                 }
 
@@ -482,7 +530,7 @@ export class TomorrowResultsComponent implements OnInit {
 
             for (let injdata of this.myData) {
 
-              if (inj.player.ID === injdata.player.ID) {
+              if (inj.player.id === injdata.player.id) {
                 //console.log(inj.injury, "injuries...");
 
                 injdata.player.injured = true;
@@ -509,9 +557,11 @@ export class TomorrowResultsComponent implements OnInit {
 
               for (let startdata of this.myData) {
 
-                if (startid === startdata.team.ID) {
+                if (startid === startdata.team.id) {
                   //4449 Jeff Glass is blocked //9072 Lindgren //11721 Lagace //Sateri 13871 //Brossoit 5552 //8952 Wedgewood //9072 Lindgren //13873 DeSmith //10083 Jarry //Lyon 13662
-                  if (this.startersDate != startdata.team.today && startdata.stats.GamesPlayed['#text'] > 1 && startdata.player.injuryOut == null && startdata.player.ID != '11721' && startdata.player.ID != '13871' && startdata.player.ID != '4449' && startdata.player.ID != '5552' && startdata.player.ID != '8952' && startdata.player.ID != '9072' && startdata.player.ID != '10083' && startdata.player.ID != '13662') {
+                  //&& startdata.player.injuryOut == null && startdata.player.id != '11721' && startdata.player.id != '13871' && startdata.player.id != '4449' && startdata.player.id != '5552' && startdata.player.id != '8952' && startdata.player.id != '9072' && startdata.player.id != '10083' && startdata.player.id != '13662'
+                  //startdata.stats.goaltending.gamesStarted > 1
+                  if (this.startersDate != startdata.team.today && startdata.player.currentRosterStatus === "ROSTER" && this.startingG[startdata.player.id] != null) {
               
                     startdata.player.startingToday = false;
                     startdata.player.likelyStartingToday = true;
@@ -520,11 +570,13 @@ export class TomorrowResultsComponent implements OnInit {
 
 
                   }
-                } else if (startid === startdata.player.ID) {
+                } else if (startid === startdata.player.id && startdata.player.currentRosterStatus === "ROSTER" && this.startingG[startdata.player.id] != null) {
                   startdata.player.startingToday = true;
                   //console.log(startdata, 'player data');
                   this.startersData.push(startdata);
 
+                } else {
+                  //console.log('other goalies');
                 }
 
               }
@@ -555,18 +607,22 @@ export class TomorrowResultsComponent implements OnInit {
 
   showMatchups() {
 
-   console.log(this.statData, 'show this');
+  console.log(this.statData, 'show this');
     //THIS FOR LOOP GETS HOME STARTING HOCKEY GOALIES AND THERE STARTING OPPONENT 
     this.startersData.forEach((data) => {
+      //console.log(data, 'start data');
       if (data.player.gameLocation === 'home') {
-        data.team.matchup = this.statData[data.team.gameId];
-        
+       
+        //console.log(this.statData[data.team.gameId], 'checking statData');
+
+        data.team.matchup = this.statData[data.team.gameId]; 
+        data.matchup = true;
         this.statData[data.team.gameId][0].player.twoPossibleStarters = false;
         this.statData[data.team.gameId][1].player.twoPossibleStarters = false;
 
         if (this.statData[data.team.gameId].length > 2) {
-          //console.log(this.statData[data.team.gameId][0].team.Name + ' ' + this.statData[data.team.gameId][1].team.Name + ' ' + this.statData[data.team.gameId][2].team.Name, 'possible starters...');
-          if (this.statData[data.team.gameId][0].team.ID === this.statData[data.team.gameId][1].team.ID) {
+          //console.log(this.statData[data.team.gameId][0].team.abbreviation + ' ' + this.statData[data.team.gameId][1].team.abbreviation + ' ' + this.statData[data.team.gameId][2].team.Name, 'possible starters...');
+          if (this.statData[data.team.gameId][0].team.id === this.statData[data.team.gameId][1].team.id) {
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
             if (this.statData[data.team.gameId][0].player.resultYesterday != null) {
               this.statData[data.team.gameId][0].player.finishedYesterday = true;
@@ -577,7 +633,7 @@ export class TomorrowResultsComponent implements OnInit {
           } else {
             this.statData[data.team.gameId][1].twoPossibleStarters = false;
           }
-          if (this.statData[data.team.gameId][1].team.ID === this.statData[data.team.gameId][2].team.ID) {
+          if (this.statData[data.team.gameId][1].team.id === this.statData[data.team.gameId][2].team.id) {
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
 
 
@@ -593,7 +649,7 @@ export class TomorrowResultsComponent implements OnInit {
             this.statData[data.team.gameId][2].player.twoPossibleStarters = false;
           }
           if (this.statData[data.team.gameId][3] != null) {
-            if (this.statData[data.team.gameId][2].team.ID === this.statData[data.team.gameId][3].team.ID) {
+            if (this.statData[data.team.gameId][2].team.id === this.statData[data.team.gameId][3].team.id) {
               this.statData[data.team.gameId][2].twoPossibleStarters = true;
               this.statData[data.team.gameId][3].twoPossibleStarters = true;
               if (this.statData[data.team.gameId][2].player.resultYesterday != null) {
@@ -613,8 +669,7 @@ export class TomorrowResultsComponent implements OnInit {
 
         this.loading = false;
         this.showDataTomorrow = this.startersData;
-
-
+        //console.log(this.showDataTomorrow, 'show this.')
       }
 
     })
@@ -695,7 +750,7 @@ export class TomorrowDialog implements OnInit {
 
     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
     //let searchterm = 'query=#startingGoalies #nhl ' + this.data.player.FirstName + ' ' + this.data.player.LastName;
-    let searchterm = 'query=' + this.data.player.LastName + ' ' + this.data.player.twitterHandle;
+    let searchterm = 'query=' + this.data.player.lastName + ' ' + this.data.player.twitterHandle;
 
 
     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
