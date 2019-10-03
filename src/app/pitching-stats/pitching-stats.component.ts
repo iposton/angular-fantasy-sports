@@ -60,7 +60,7 @@ export class PitchingStatsComponent implements OnInit {
   public scrollTop: any;
   public stat: string = '';
   public defineToken: string = '';
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-playoff";
   public gameStarter: { gameID: string, playerID: string, score: any, status: any };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
   public specificFastballData: Array <any> = [];
@@ -781,7 +781,7 @@ export class MyDialog {
   public specificFastballData: Array <any> = [];
   public score: Array <any>;
   public myData: Array <any>;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-playoff";
 
   constructor(public dialogRef: MatDialogRef < MyDialog > , 
     @Inject(MAT_DIALOG_DATA) 
@@ -1095,7 +1095,7 @@ export class MyDataSource extends DataSource < Data > {
 //   scrollTop: any;
 //   stat: string = '';
 //   defineToken: string = '';
-//   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
+//   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-playoff";
 
 //   //MAT-TABLE 
 //   displayedColumns = [

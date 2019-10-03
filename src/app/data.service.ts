@@ -30,7 +30,7 @@ export class DataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-playoff";
   public dailyDate: any;
 
   //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,T,C,TE
