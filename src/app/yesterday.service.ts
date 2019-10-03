@@ -149,7 +149,8 @@ export class YesterdayService {
   getScore() {
 
     if (!this.score) {
-      let url = `${this.apiRoot}/scoreboard.json?fordate=`+dailyDate;
+      //let url = `${this.apiRoot}/scoreboard.json?fordate=`+dailyDate;
+      let url = `${this.apiRoot}/date/${dailyDate}/team_gamelogs.json`;
       console.log('getting daily scores of todays games from API...');
       this.score = this.http.get(url, {headers})
         

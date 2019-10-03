@@ -18,7 +18,6 @@ let yesterday = null;
 let dailyTeams = [];
 let teamString = '';
 let teamRef = [];
-
 let headers = null;
 
 
@@ -105,7 +104,16 @@ export class TomorrowResultsComponent implements OnInit {
     '5296':'5296',
     '5227':'5227',
     '178':'178',
-    '5518':'5518'
+    '5518':'5518',
+    '3855':'3855',
+    '4305':'4305',
+    '5481':'5481',
+    '15154':'15154',
+    '5887':'5887',
+    '4351':'4351',
+    '4592':'4592',
+    '15438':'15438',
+    '4575':'4575'
   }
 
   constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) { 
@@ -413,23 +421,25 @@ export class TomorrowResultsComponent implements OnInit {
 
         if (this.myData && this.fullSchedule) {
           console.log('start sorting data for full schedule...');
+          let dPipe = new DatePipe("en-US");
+              this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
           for (let full of this.fullSchedule) {
 
             for (let btb of this.myData) {
 
-              if (full.schedule.awayTeam.id === btb.team.id) {
+              if (full['schedule'].awayTeam.id === btb.team.id) {
 
-                if (btb.team.yesterday === full.schedule.date) {
+                if (btb.team.yesterday === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
                   btb.team.hadGameYesterday = true;
 
                 }
-                if (btb.team.today === full.schedule.date) {
+                if (btb.team.today === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
                   btb.team.haveGameToday = true;
                 }
 
 
-                if (btb.team.tomorrow === full.schedule.date) {
+                if (btb.team.tomorrow === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
                   btb.team.haveGameTomorrow = true;
                 }
@@ -438,18 +448,18 @@ export class TomorrowResultsComponent implements OnInit {
               if (full.schedule.homeTeam.id === btb.team.id) {
 
 
-                if (btb.team.yesterday === full.schedule.date) {
+                if (btb.team.yesterday === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
                   btb.team.hadGameYesterday = true;
 
 
                 }
-                if (btb.team.today === full.schedule.date) {
+                if (btb.team.today === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
                   btb.team.haveGameToday = true;
                 }
 
 
-                if (btb.team.tomorrow === full.schedule.date) {
+                if (btb.team.tomorrow === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
                   btb.team.haveGameTomorrow = true;
                 }

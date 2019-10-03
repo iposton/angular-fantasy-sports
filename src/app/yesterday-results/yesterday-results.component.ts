@@ -12,7 +12,7 @@ import 'rxjs/add/observable/forkJoin';
 let today = null;
 let tomorrow = null;
 let yesterday = null;
-
+let teamRef = [];
 let headers = null;
 
 
@@ -90,6 +90,7 @@ export class YesterdayResultsComponent implements OnInit {
             } else {
               this.gamesToday = true;
               this.dailySchedule = res['games'];
+              teamRef = res['references'].teamReferences;
               this.gameDate = res['lastUpdatedOn']; //res['dailygameschedule'].gameentry[0].date;
             
             let dPipe = new DatePipe("en-US");
@@ -99,7 +100,7 @@ export class YesterdayResultsComponent implements OnInit {
                   res['games'].map(
 
                     g => 
-                          this.http.get(`${this.apiRoot}/game_boxscore.json?gameid=` + g.id + `&playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW`, {headers})
+                          this.http.get(`${this.apiRoot}/games/${g.schedule.id}/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW`, {headers})
                           //.map(response => response.json())
                       
                     
@@ -117,16 +118,16 @@ export class YesterdayResultsComponent implements OnInit {
                     i = index;
                     //console.log(res[i]['gameboxscore'].awayTeam.awayPlayers['playerEntry'], 'got box score data for away team!');
                     //console.log(res[i]['gameboxscore'].homeTeam.homePlayers['playerEntry'], 'got box score data for home team!');
-                    res2 = res[i]['gameboxscore'].awayTeam.awayPlayers['playerEntry'];
-                    res3 = res[i]['gameboxscore'].homeTeam.homePlayers['playerEntry'];
+                    res2 = res[i]['stats'].away.players;
+                    res3 = res[i]['stats'].home.players;
                     //this.gameTime =  res[i]['gamestartinglineup'].game.date;
                     res2.forEach((item, index) => {
 
                       i2 = index;
-                      if (res2[i2].stats != null) {
+                      if (res2[i2]['playerStats'] != null) {
                         this.starterStatData.push(res2[i2]);
-                        //console.log(res2[i2].actual.starter[0].player.ID, 'got player ID for goalie actualy starting!');
-                        this.starterIdData.push(res2[i2].player.ID);
+                        //console.log(res2[i2].actual.starter[0].player.id, 'got player ID for goalie actualy starting!');
+                        this.starterIdData.push(res2[i2].player.id);
 
                       }
 
@@ -135,10 +136,10 @@ export class YesterdayResultsComponent implements OnInit {
                     res3.forEach((item, index) => {
 
                       i3 = index;
-                      if (res3[i3].stats != null) {
+                      if (res3[i3]['playerStats'] != null) {
                         this.starterStatData.push(res3[i3]);
-                        //console.log(res2[i2].actual.starter[0].player.ID, 'got player ID for goalie actualy starting!');
-                        this.starterIdData.push(res3[i3].player.ID);
+                        //console.log(res2[i2].actual.starter[0].player.id, 'got player ID for goalie actualy starting!');
+                        this.starterIdData.push(res3[i3].player.id);
 
                       }
 
@@ -157,19 +158,19 @@ export class YesterdayResultsComponent implements OnInit {
 
         this.yesterdayService
           .getScore().subscribe(res => {
-            console.log(res['scoreboard'].gameScore, "Score...");
-            this.score = res['scoreboard'].gameScore;
+            console.log(res, "Score...");
+            this.score = res['gamelogs'];
           })
 
-        this.yesterdayService
-          .getInfo().subscribe(res => {
-            console.log(res['activeplayers'].playerentry, "active players stats...");
-            this.playerInfo = res['activeplayers'].playerentry;
-          })
+        // this.yesterdayService
+        //   .getInfo().subscribe(res => {
+        //     console.log(res['activeplayers'].playerentry, "active players stats...");
+        //     this.playerInfo = res['activeplayers'].playerentry;
+        //   })
 
         this.yesterdayService
           .getGameId().subscribe(res => {
-            console.log(res['fullgameschedule'].gameentry, "scheduled games for yesterday today and tomorrow...");
+            console.log(res, "scheduled games for yesterday today and tomorrow...");
 
              //this removed a postponed game from api to avoid errors
 // if (res['fullgameschedule'].gameentry > 0) {
@@ -184,7 +185,7 @@ export class YesterdayResultsComponent implements OnInit {
 
 //            }
 
-            this.fullSchedule = res['fullgameschedule'].gameentry;
+            this.fullSchedule = res;
           })
 
       })
@@ -197,8 +198,8 @@ export class YesterdayResultsComponent implements OnInit {
 
     this.yesterdayService
       .getStats().subscribe(res => {
-        console.log(res['cumulativeplayerstats'].playerstatsentry, "cumulative stats...");
-        this.myData = res['cumulativeplayerstats'].playerstatsentry;
+        console.log(res['playerStatsTotals'], "cumulative stats...");
+        this.myData = res['playerStatsTotals'];
 
         if (this.myData && this.dailySchedule) {
           console.log('start sorting data for daily schedule...');
@@ -206,47 +207,51 @@ export class YesterdayResultsComponent implements OnInit {
 
             for (let sdata of this.myData) {
 
-              if (schedule.awayTeam.Name === sdata.team.Name) {
-                sdata.player.gameTime = schedule.time;
-                if (schedule.location === 'Nassau Coliseum') {
-                  sdata.team.gameIce = 'Barclays Center';
-                } else if (schedule.location === 'Verizon Center') {
-                  sdata.team.gameIce = 'Capital One Arena';
-                } else if (schedule.location === 'Joe Louis Arena') {
-                  sdata.team.gameIce = 'Little Caesars Arena';
-                } else {
-                  sdata.team.gameIce = schedule.location;
-                }
-                sdata.team.gameId = schedule.id;
+              if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
+                
+                sdata.player.gameTime = schedule['schedule'].startTime;
+                sdata.team.gameIce = schedule['schedule'].venue.name;
+
+                // if (schedule.schedule.location === 'Nassau Coliseum') {
+                //   sdata.team.gameIce = 'Barclays Center';
+                // } else if (schedule.schedule.location === 'Verizon Center') {
+                //   sdata.team.gameIce = 'Capital One Arena';
+                // } else if (schedule.schedule.location === 'Joe Louis Arena') {
+                //   sdata.team.gameIce = 'Little Caesars Arena';
+                // } else {
+                //   sdata.team.gameIce = schedule.schedule.location;
+                // }
+                sdata.team.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "away";
                 sdata.team.day = this.tweetDay;
-                sdata.team.opponent = schedule.homeTeam.City + ' ' + schedule.homeTeam.Name;
-                sdata.team.opponentId = schedule.homeTeam.ID;
-                sdata.team.opponentCity = schedule.homeTeam.City;
-                sdata.team.opponentName = schedule.homeTeam.Name;
+                sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+                sdata.team.opponentId = schedule.schedule.homeTeam.id;
+                //sdata.team.opponentCity = schedule.schedule.homeTeam.City;
+                sdata.team.opponentName = schedule.schedule.homeTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
                 sdata.team.yesterday = yesterday;
 
               }
-              if (schedule.homeTeam.Name === sdata.team.Name) {
-                sdata.player.gameTime = schedule.time;
-                if (schedule.location === 'Nassau Coliseum') {
-                  sdata.team.gameIce = 'Barclays Center';
-                } else if (schedule.location === 'Verizon Center') {
-                  sdata.team.gameIce = 'Capital One Arena';
-                } else if (schedule.location === 'Joe Louis Arena') {
-                  sdata.team.gameIce = 'Little Caesars Arena';
-                } else {
-                  sdata.team.gameIce = schedule.location;
-                }
-                sdata.team.gameId = schedule.id;
+              if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
+                sdata.player.gameTime = schedule['schedule'].startTime;
+                sdata.team.gameIce = schedule['schedule'].venue.name;
+                // if (schedule.schedule.location === 'Nassau Coliseum') {
+                //   sdata.team.gameIce = 'Barclays Center';
+                // } else if (schedule.schedule.location === 'Verizon Center') {
+                //   sdata.team.gameIce = 'Capital One Arena';
+                // } else if (schedule.schedule.location === 'Joe Louis Arena') {
+                //   sdata.team.gameIce = 'Little Caesars Arena';
+                // } else {
+                //   sdata.team.gameIce = schedule.schedule.location;
+                // }
+                sdata.team.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "home";
                 sdata.team.day = this.tweetDay;
-                sdata.team.opponent = schedule.awayTeam.City + ' ' + schedule.awayTeam.Name;
-                sdata.team.opponentId = schedule.awayTeam.ID;
-                sdata.team.opponentCity = schedule.awayTeam.City;
-                sdata.team.opponentName = schedule.awayTeam.Name;
+                sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+                sdata.team.opponentId = schedule.schedule.awayTeam.id;
+                //sdata.team.opponentCity = schedule.schedule.awayTeam.City;
+                sdata.team.opponentName = schedule.schedule.awayTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
                 sdata.team.yesterday = yesterday;
@@ -261,7 +266,7 @@ export class YesterdayResultsComponent implements OnInit {
 
             for (let btb of this.myData) {
 
-              if (full.awayTeam.ID === btb.team.ID) {
+              if (full.awayTeam.id === btb.team.id) {
 
                 if (btb.team.yesterday === full.date) {
 
@@ -279,7 +284,7 @@ export class YesterdayResultsComponent implements OnInit {
                 }
 
               }
-              if (full.homeTeam.ID === btb.team.ID) {
+              if (full.homeTeam.id === btb.team.id) {
 
 
                 if (btb.team.yesterday === full.date) {
@@ -309,23 +314,23 @@ if (this.starterStatData && this.myData) {
           for (let maindata of this.myData) {
 
 
-            if (statinfo.player.ID === maindata.player.ID) {
+            if (statinfo.player.id === maindata.player.id) {
               //console.log(statinfo, "stats for starters");
-              maindata.player.saves = statinfo.stats.Saves['#text'];
-              maindata.player.wins = statinfo.stats.Wins['#text'];
-              maindata.player.losses = statinfo.stats.Losses['#text'];
-              maindata.player.GamesStarted = statinfo.stats.GamesStarted['#text'];
-              maindata.player.GoalsAgainstAverage = statinfo.stats.GoalsAgainstAverage['#text'];
-              maindata.player.MinutesPlayed = statinfo.stats.MinutesPlayed['#text'];
-              maindata.player.Shutouts = statinfo.stats.Shutouts['#text'];
-              maindata.player.ShotsAgainst = statinfo.stats.ShotsAgainst['#text'];
-              maindata.player.OvertimeLosses = statinfo.stats.OvertimeLosses['#text'];
-              maindata.player.OvertimeWins = statinfo.stats.OvertimeWins['#text'];
-              maindata.player.ga = statinfo.stats.GoalsAgainst['#text']
-                 if (statinfo.stats.GoalsAgainst['#text'] == '1') {
-                   maindata.player.GoalsAgainst = statinfo.stats.GoalsAgainst['#text']+ ' goal';
+              maindata.player.saves = statinfo.playerStats[0].goaltending.saves;
+              maindata.player.wins = statinfo.playerStats[0].goaltending.wins;
+              maindata.player.losses = statinfo.playerStats[0].goaltending.losses;
+              maindata.player.GamesStarted = statinfo.playerStats[0].goaltending.gamesStarted;
+              maindata.player.GoalsAgainstAverage = statinfo.playerStats[0].goaltending.goalsAgainstAverage;
+              maindata.player.MinutesPlayed = statinfo.playerStats[0].goaltending.minutesPlayed;
+              maindata.player.Shutouts = statinfo.playerStats[0].goaltending.shutouts;
+              maindata.player.ShotsAgainst = statinfo.playerStats[0].goaltending.shotsAgainst;
+              maindata.player.OvertimeLosses = statinfo.playerStats[0].goaltending.overtimeLosses;
+              maindata.player.OvertimeWins = statinfo.playerStats[0].goaltending.overtimeWins;
+              maindata.player.ga = statinfo.playerStats[0].goaltending.goalsAgainst
+                 if (statinfo.playerStats[0].goaltending.goalsAgainst === 1) {
+                   maindata.player.GoalsAgainst = statinfo.playerStats[0].goaltending.goalsAgainst+ ' goal';
                  } else {
-                   maindata.player.GoalsAgainst = statinfo.stats.GoalsAgainst['#text']+ ' goals';
+                   maindata.player.GoalsAgainst = statinfo.playerStats[0].goaltending.goalsAgainst+ ' goals';
                  }
 
             }
@@ -335,26 +340,19 @@ if (this.starterStatData && this.myData) {
 
       }
 
-if (this.playerInfo && this.myData) {
-        console.log('start sorting data for starters...');
-        for (let info of this.playerInfo) {
+
 
           for (let data of this.myData) {
 
+                if(this.twitterHandles[data.team.id] != null) {
 
-            if (info.player.ID === data.player.ID) {
+                //console.log(this.twitterHandles[data.team.id].twitterHashTag);
 
-              data.player.image = info.player.officialImageSrc;
-
-                if(this.twitterHandles[data.team.ID] != null) {
-
-                //console.log(this.twitterHandles[data.team.ID].twitterHashTag);
-
-                data.player.twitterHandle = this.twitterHandles[data.team.ID].twitterHashTag;
+                  data.player.twitterHandle = this.twitterHandles[data.team.id].twitterHashTag;
 
                   //INCASE API CHANGES TEAM IDS AGAIN CATCH IT HERE
-                  if (this.twitterHandles[data.team.ID][data.player.ID] != null) {
-                    data.player.atHandle = this.twitterHandles[data.team.ID][data.player.ID] + ' ';
+                  if (this.twitterHandles[data.team.id][data.player.id] != null) {
+                    data.player.atHandle = this.twitterHandles[data.team.id][data.player.id] + ' ';
                   } else {
                     data.player.atHandle = '';
                   }
@@ -366,7 +364,7 @@ if (this.playerInfo && this.myData) {
                if (data.team.hadGameYesterday === true) {
                 //console.log(data, 'game yesterday');
                 if (data.team.haveGameToday === true) {
-                  data.team.secondBacktoBack = " 2nd game of a Back-to-Back for the "+data.team.Name;
+                  data.team.secondBacktoBack = " 2nd game of a Back-to-Back for the "+data.team.abbreviation;
                 } else {
                   data.team.secondBacktoBack = "";
                 }
@@ -377,19 +375,13 @@ if (this.playerInfo && this.myData) {
               if (data.team.haveGameToday === true) {
                 //console.log(data, 'game today');
                 if (data.team.haveGameTomorrow === true) {
-                  data.team.firstBacktoBack = " 1st game of a Back-to-Back for the "+data.team.Name;
+                  data.team.firstBacktoBack = " 1st game of a Back-to-Back for the "+data.team.abbreviation;
                 } else {
                   data.team.firstBacktoBack = "";
                 }
               }
 
-
-            }
-
           }
-        }
-
-      }
 
 
         if (this.myData && this.gamesToday === true) {
@@ -398,7 +390,7 @@ if (this.playerInfo && this.myData) {
             for (let startid of this.starterIdData) {
 
               for (let startdata of this.myData) {
-                if (startid === startdata.player.ID && startdata.player.saves > 0 || startid === startdata.player.ID && startdata.player.wins == '1' || startid === startdata.player.ID && startdata.player.losses == '1' || startid === startdata.player.ID && startdata.player.OvertimeLosses == '1') {
+                if (startid === startdata.player.id && startdata.player.saves > 0 || startid === startdata.player.id && startdata.player.wins === 1 || startid === startdata.player.id && startdata.player.losses === 1 || startid === startdata.player.id && startdata.player.OvertimeLosses === 1) {
                   startdata.player.startingToday = true;
                   startdata.player.subedInToday = false;
                   //console.log(startdata, 'player data');
@@ -415,25 +407,46 @@ if (this.playerInfo && this.myData) {
             console.log('start sorting data for scoreboard stats...');
             for (let sc of this.score) {
               for (let pdata of this.myData) {
+                console.log(sc, 'score items');
+                // if (sc.game.awayTeamAbbreviation === pdata.team.abbreviation) {
+                //   pdata.team.awayGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
 
-                if (sc.game.awayTeam.ID === pdata.team.ID) {
+                // }
+                // if (sc.game.homeTeamAbbreviation === pdata.team.abbreviation) {
+                //   pdata.team.homeGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
 
-                  //console.log(sc, 'score items');
-                  pdata.team.awayGoalie = pdata.player.FirstName + ' ' + pdata.player.LastName;
-                  pdata.team.opponentAbbreviation = sc.game.homeTeam.Abbreviation;
-                  pdata.team.teamScore = sc.awayScore;
-                  pdata.team.opponentScore = sc.homeScore;
-
+                // }
+                if (sc.team.id === pdata.team.id) {
+                  pdata.team.teamScore = sc.stats.miscellaneous.goalsFor;
+                  pdata.team.opponentScore = sc.stats.miscellaneous.goalsAgainst;
                 }
-                if (sc.game.homeTeam.ID === pdata.team.ID) {
+                
 
-                  pdata.team.homeGoalie = pdata.player.FirstName + ' ' + pdata.player.LastName;
-                  pdata.team.opponentAbbreviation = sc.game.awayTeam.Abbreviation;
-                  pdata.team.opponentScore = sc.awayScore;
-                  pdata.team.teamScore = sc.homeScore;
+              }
+            }
+          }
 
-                }
+          for (let team of teamRef) {
+            for (let data of this.myData) { 
+               if (team.id === data.team.id) {
+                 data.team.color = team.teamColoursHex[0];
+                 data.team.accent = team.teamColoursHex[1];
+                 data.team.logo = team.officialLogoImageSrc;
+                 data.team.city = team.city;
+                 data.team.name = team.name;
+               } 
+             }  
+          }
 
+          for (let schedule of this.myData) {
+            for (let sdata of this.myData) {
+              if (sdata.team.opponentId != null && 
+                sdata.team.opponentId === schedule.team.id && 
+                sdata.gameId === schedule.gameId) {
+                sdata.team.opponentLogo = schedule.team.logo;
+                sdata.team.opponentCity = schedule.team.city;
+                sdata.team.opponentName = schedule.team.name;
+                sdata.opponentColor = schedule.team.color;
               }
             }
           }
@@ -473,8 +486,8 @@ if (this.playerInfo && this.myData) {
         this.statData[data.team.gameId][1].player.twoPossibleStarters = false;
 
         if (this.statData[data.team.gameId].length > 2) {
-          //console.log(this.statData[data.team.gameId][0].team.Name + ' ' + this.statData[data.team.gameId][1].team.Name + ' ' + this.statData[data.team.gameId][2].team.Name, 'possible starters...');
-          if (this.statData[data.team.gameId][0].team.ID === this.statData[data.team.gameId][1].team.ID) {
+          //console.log(this.statData[data.team.gameId][0].team.abbreviation + ' ' + this.statData[data.team.gameId][1].team.abbreviation + ' ' + this.statData[data.team.gameId][2].team.abbreviation, 'possible starters...');
+          if (this.statData[data.team.gameId][0].team.id === this.statData[data.team.gameId][1].team.id) {
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
              if (this.statData[data.team.gameId][0].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
                console.log(this.statData[data.team.gameId][0].player, 'this is not a starter. api got it wrong');
@@ -490,7 +503,7 @@ if (this.playerInfo && this.myData) {
               this.statData[data.team.gameId][1].player.importantStat = this.statData[data.team.gameId][1].player.FirstName +' '+ this.statData[data.team.gameId][1].player.LastName + " made a lot of saves last night";
             }
           }
-          if (this.statData[data.team.gameId][1].team.ID === this.statData[data.team.gameId][2].team.ID) {
+          if (this.statData[data.team.gameId][1].team.id === this.statData[data.team.gameId][2].team.id) {
             // this.statData[data.team.gameId][1].twoPossibleStarters = true;
             this.statData[data.team.gameId][2].player.twoPossibleStarters = true;
              if (this.statData[data.team.gameId][2].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
@@ -511,7 +524,7 @@ if (this.playerInfo && this.myData) {
             this.statData[data.team.gameId][2].player.twoPossibleStarters = false;
           }
           if (this.statData[data.team.gameId][3] != null) {
-            if (this.statData[data.team.gameId][2].team.ID === this.statData[data.team.gameId][3].team.ID) {
+            if (this.statData[data.team.gameId][2].team.id === this.statData[data.team.gameId][3].team.id) {
               this.statData[data.team.gameId][2].twoPossibleStarters = true;
               this.statData[data.team.gameId][3].twoPossibleStarters = true;
             } else {
