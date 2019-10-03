@@ -93,7 +93,7 @@
                     <p *ngIf="data?.offensePlayers[0]?.playerObj['teamScore'] == null && data?.offensePlayers[0]?.playerObj['opponentScore'] == null">
                       <span *ngIf="data?.offensePlayers[0]?.playerObj.team?.opponent">Opponent:
                         {{data?.offensePlayers[0]?.playerObj.team?.opponentName}} <br> <span [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj?.opponentColor ? data?.offensePlayers[0]?.playerObj?.opponentColor : 'black' }">O-Rank:  {{data?.offensePlayers[0]?.playerObj['opponentOR']}} &nbsp; &nbsp; D-Rank: {{data?.offensePlayers[0]?.playerObj['opponentDR']}}</span> <br>
-                        Game: {{data?.offensePlayers[0]?.playerObj.player.gameTime | date: 'shortTime'}} PST, {{data?.offensePlayers[0]?.playerObj.team.gameField}} </span> 
+                        Game: {{data?.offensePlayers[0]?.playerObj.player.gameTime | date: 'EEEE, h:mm a'}} PST, {{data?.offensePlayers[0]?.playerObj.team.gameField}} </span> 
                     </p>
                     <p *ngIf="data?.offensePlayers[0]?.playerObj['teamScore'] >= 0 || data?.offensePlayers[0]?.playerObj['opponentScore'] >= 0">
                         <span>Score: &nbsp;
@@ -182,7 +182,7 @@
               <!-- <ng-template #content>{{data[0].team.opponent}}</ng-template>
               <ng-template #other_content>No game today.</ng-template> -->
               <!-- <br>SP Opponent: {{data.player.pitchingOpponent}} -->
-              <!-- <span *ngIf="data[0].team.opponent"><br>Game: {{data[0].player.gameTime | date: 'shortTime'}} PST,
+              <!-- <span *ngIf="data[0].team.opponent"><br>Game: {{data[0].player.gameTime | date: 'EEEE, h:mm a'}} PST,
                 {{data[0].team.gameField}} </span> -->
               <!-- <br> in progress: {{data.playingRightNow}} -->
               <!-- <br> game over: {{data.playingOver}} -->
