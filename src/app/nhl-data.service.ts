@@ -215,11 +215,12 @@ export class NHLDataService {
     return this.injured;
   }
 
-  getScore(a, h) {
+  getScore(id) {
 
     if (!this.score) {
       //games/20181211-CHI-WPJ/boxscore.json
-      let url = `${this.apiRoot}/games/`+dailyDate+`-`+a+`-`+h+`/boxscore.json`;
+      let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
+      // ${this.apiRoot}/games/`+id+`/boxscore.json`;
       console.log('getting daily scores of todays games from API...');
       this.score = this.http.get(url, {headers})     
     }

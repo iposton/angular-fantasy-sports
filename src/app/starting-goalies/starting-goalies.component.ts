@@ -195,7 +195,6 @@ export class StartingGoaliesComponent implements OnInit {
 
   let resultOne = await promiseOne;
 
-
     this.dataService
       .getEnv().subscribe(res => {
         
@@ -308,18 +307,23 @@ export class StartingGoaliesComponent implements OnInit {
   }
 
 
-  sortData() {
-
+ async sortData() {
+    let promiseOne;
+    promiseOne = new Promise((resolve, reject) => {
     if (this.gamesToday === true) {
       this.dataService
         .getDaily().subscribe(res => {
           console.log(res, "Daily stats...");
           this.dailyStats = res['gamelogs'];
-         
+          resolve();
         })
     } else {
       console.log('No games then no daily stats either. :(');
+      resolve();
     }
+  })
+
+  let resultOne = await promiseOne;
 
     this.dataService
       .getStats(teamString).subscribe(res => {
@@ -428,6 +432,31 @@ export class StartingGoaliesComponent implements OnInit {
           }
         }
 
+        for (let team of teamRef) {
+          for (let data of this.myData) { 
+             if (team.id === data.team.id) {
+               data.team.color = team.teamColoursHex[0];
+               data.team.accent = team.teamColoursHex[1];
+               data.team.logo = team.officialLogoImageSrc;
+               data.team.city = team.city;
+               data.team.name = team.name;
+             } 
+           }  
+        }
+
+        for (let schedule of this.myData) {
+          for (let sdata of this.myData) {
+            if (sdata.team.opponentId != null && 
+              sdata.team.opponentId === schedule.team.id && 
+              sdata.gameId === schedule.gameId) {
+              sdata.team.opponentLogo = schedule.team.logo;
+              sdata.team.opponentCity = schedule.team.city;
+              sdata.team.opponentName = schedule.team.name;
+              sdata.opponentColor = schedule.team.color;
+            }
+          }
+        }
+
         if (this.myData && this.dailyStats) {
           console.log('start sorting data for daily stats...');
           for (let daily of this.dailyStats) {
@@ -448,7 +477,7 @@ export class StartingGoaliesComponent implements OnInit {
                   this.startingGoaliesToday.push(daily.player.id);
                 }
 
-                if (daily.stats.goaltending.goalsAgainst == '1') {
+                if (daily.stats.goaltending.goalsAgainst === 1) {
                   mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goal';
                 } else {
                   mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goals';
@@ -936,38 +965,54 @@ export class StartingGoaliesComponent implements OnInit {
   }
 
 
-  public toggleFlip(data, a, h) {
+  public toggleFlip(data, gid) {
     
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
 
     this.dataService
-          .getScore(a, h).subscribe(res => {
+          .getScore(gid).subscribe(res => {
             console.log(res, "Score...");
             this.score = res;
+
+            if (res != null) {
+              console.log(res, "Score, Game...");
+              this.score = res['scoring'];
+              let game = null;
+              game = res['game'].playedStatus; //"COMPLETED" playedStatus: "COMPLETED_PENDING_REVIEW"
+  
+              if (data.player.gameLocation === 'home') {
+                data.team.teamScore = this.score['homeScoreTotal'];
+                data.team.opponentScore = this.score['awayScoreTotal'];
+              } else if (data.player.gameLocation === 'away') {
+                data.team.teamScore = this.score['awayScoreTotal'];
+                data.team.opponentScore = this.score['homeScoreTotal'];
+              }
+
+              data.gameStatus = game;
             //this.awayScore = this.score.awayScoreTotal;
             //this.homeScore = this.score.homeScoreTotal;
 
-            if (res == null) {
+          //   if (res == null) {
               
-              this.noScores = true;
-              this.noScoresMsg = "The game is not live yet."
-              console.log('There are no games in progress at the moment.');
-            } else {
+          //     this.noScores = true;
+          //     this.noScoresMsg = "The game is not live yet."
+          //     console.log('There are no games in progress at the moment.');
+          //   } else {
 
-            console.log('start sorting data for scoreboard stats...');
-            for (let sc of this.score) {
-              for (let pdata of this.showData) {
+          //   console.log('start sorting data for scoreboard stats...');
+          //   for (let sc of this.score) {
+          //     for (let pdata of this.showData) {
 
-                if (sc.game.homeTeam.abbreviation === pdata.team.abbreviation) {
-                  pdata.team.homeGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
-                  pdata.team.opponentAbbreviation = sc.game.awayTeam.abbreviation;
-                  pdata.team.opponentScore = sc.scoring.awayScoreTotal;
-                  pdata.team.teamScore = sc.scoring.homeScoreTotal;
-                }
+          //       if (sc.game.homeTeam.abbreviation === pdata.team.abbreviation) {
+          //         pdata.team.homeGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
+          //         pdata.team.opponentAbbreviation = sc.game.awayTeam.abbreviation;
+          //         pdata.team.opponentScore = sc.scoring.awayScoreTotal;
+          //         pdata.team.teamScore = sc.scoring.homeScoreTotal;
+          //       }
 
-              }
-            }
-          }
+          //     }
+          //   }
+           }
 
           })
   }
