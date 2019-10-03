@@ -1709,15 +1709,15 @@
         <!-- SCORE BACK OF CARD -->
         <div class="tp-box__side tp-box__back"> 
           <div class="goalies-inline-score">
-            <img src="./assets/nhl-logos/{{ data.team.opponentId }}.jpg" alt="">
+            <img src="{{ data.team.opponentLogo }}" alt="">
             <h1>{{data.team.opponentScore}}</h1>
           </div>
           <div class="goalies-inline-score">
-            <img src="./assets/nhl-logos/{{ data.team.id }}.jpg" alt="">
+            <img src="{{ data.team.logo }}" alt="">
             <h1>{{data.team.teamScore}}</h1>
           </div>
           <h1 class="game-info" *ngIf="data.player.wins == '1' || data.player.losses == '1' || data.player.OvertimeLosses == '1'">The <span *ngIf="data.team.opponentScore < data.team.teamScore; then home else away"></span>
-          <ng-template #home>{{data.team.abbreviation}}</ng-template>
+          <ng-template #home>{{data.team.name}}</ng-template>
           <ng-template #away>{{data.team.opponentName}}</ng-template> Win!</h1>
          <p class="game-info"><a (click)="toggleFlip(data)">STATS</a></p>
         </div>
@@ -1725,12 +1725,12 @@
 
         <div class="tp-box__side tp-box__front">
         <p class="game-info">
-          <img src="../assets/nhl-logos/{{ data.team.opponentId }}.jpg" alt=""> VS <img src="./assets/nhl-logos/{{ data.team.id }}.jpg" alt="">
+          <img src=".{{ data.team.opponentLogo }}" alt=""> VS <img src="{{ data.team.logo }}" alt="">
           <br> {{data.team.opponent}} @ {{data.team.abbreviation}}
           <br>
           <span class="green-dot" *ngIf="data.team.matchup[0].player.saves != null || data.team.matchup[1].player.saves != null"></span> Puck drops: {{data.player.gameTime | date: 'shortTime'}} PST @ {{ data.team.gameIce }}
           <br> <br>
-          <a class="score-btn" (click)="toggleFlip(data, data.team.opponentAbbreviation, data.team.abbreviation)"  *ngIf="data.team.matchup[0].player.saves != null">SCORE</a>
+          <a class="score-btn" (click)="toggleFlip(data, data.team.gameId)"  *ngIf="data.team.matchup[0].player.saves != null">SCORE</a>
          </p>
           <!-- <p class="game-info" *ngIf="fbService.userDetails != null">
           <span *ngIf="data.player.startingToday === true && data.player.startingTodayNow === false &&  data.team.matchup[0].player.startingTodayNow === false && data.team.matchup[1].player.gameLocation === 'home'">
