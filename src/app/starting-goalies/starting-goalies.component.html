@@ -413,50 +413,50 @@
           <div class="goalies-inline" *ngIf="data.player.startingToday === true">
             <span *ngIf="data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'away'">
             <span *ngIf="data.team.matchup[0].team.haveGameToday === true && data.team.matchup[0].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'away' &&  data.team.matchup[0].team.id != data.team.matchup[2].team.id">
             <span *ngIf="data.team.matchup[0].team.haveGameToday === true && data.team.matchup[0].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].player.gameLocation === 'away' &&  data.team.matchup[0].team.id === data.team.matchup[2].team.id">
             <span *ngIf="data.team.matchup[1].team.haveGameToday === true && data.team.matchup[1].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'away' &&  data.team.matchup[0].team.id === data.team.matchup[2].team.id">
             <span *ngIf="data.team.matchup[0].team.haveGameToday === true && data.team.matchup[0].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] == null && data.team.matchup[1].player.gameLocation === 'away'">
             <span *ngIf="data.team.matchup[1].team.haveGameToday === true && data.team.matchup[1].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[2].player.gameLocation === 'away' &&  data.team.matchup[1].team.id === data.team.matchup[2].team.id">
             <span *ngIf="data.team.matchup[2].team.haveGameToday === true && data.team.matchup[2].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[2].player.gameLocation === 'away' &&  data.team.matchup[0].team.id === data.team.matchup[1].team.id">
             <span *ngIf="data.team.matchup[2].team.haveGameToday === true && data.team.matchup[2].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
@@ -475,7 +475,7 @@
             <span *ngIf="fullFirebaseResponse != null && allGoalies[0][data.team.matchup[0].player.id] != null && allGoalies[0][data.team.matchup[0].player.id].confirmed === false && data.team.matchup[0].player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
             
             
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -506,7 +506,7 @@
             <span *ngIf="fullFirebaseResponse != null && allGoalies[0][data.team.matchup[1].player.id] != null && allGoalies[0][data.team.matchup[1].player.id].confirmed === true && data.team.matchup[1].player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
             <span *ngIf="fullFirebaseResponse != null && allGoalies[0][data.team.matchup[1].player.id] != null && allGoalies[0][data.team.matchup[1].player.id].confirmed === false && data.team.matchup[1].player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
             
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -536,7 +536,7 @@
             <br>
             
             <br>
-            <div *ngIf="data.team.matchup[2].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[2].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[2]?.team?.color ? data.team.matchup[2]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[2].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[2].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[2].player.wins == '1' && data.team.matchup[2].player.Shutouts != '1'">
@@ -565,7 +565,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[0].player.injured === true && data.team.matchup[0].player.saves == null" style="color:red;">{{data.team.matchup[0].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -594,7 +594,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[0].player.injured === true && data.team.matchup[0].player.saves == null" style="color:red;">{{data.team.matchup[0].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -623,7 +623,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[1].player.injured === true && data.team.matchup[1].player.saves == null" style="color:red;">{{data.team.matchup[1].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -653,7 +653,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[0].player.injured === true && data.team.matchup[0].player.saves == null" style="color:red;">{{data.team.matchup[0].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -684,7 +684,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[2].player.injured === true && data.team.matchup[2].player.saves == null" style="color:red;">{{data.team.matchup[2].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[2].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[2].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[2]?.team?.color ? data.team.matchup[2]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[2].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[2].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[2].player.wins == '1' && data.team.matchup[2].player.Shutouts != '1'">
@@ -715,7 +715,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[0].player.injured === true && data.team.matchup[0].player.saves == null" style="color:red;">{{data.team.matchup[0].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -746,7 +746,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[1].player.injured === true && data.team.matchup[1].player.saves == null" style="color:red;">{{data.team.matchup[1].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -776,7 +776,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[2].player.injured === true && data.team.matchup[2].player.saves == null" style="color:red;">{{data.team.matchup[2].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[2].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[2].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[2]?.team?.color ? data.team.matchup[2]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[2].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[2].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[2].player.wins == '1' && data.team.matchup[2].player.Shutouts != '1'">
@@ -805,7 +805,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[1].player.injured === true && data.team.matchup[1].player.saves == null" style="color:red;">{{data.team.matchup[1].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -835,7 +835,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[2].player.injured === true && data.team.matchup[2].player.saves == null" style="color:red;">{{data.team.matchup[2].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[2].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[2].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[2]?.team?.color ? data.team.matchup[2]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[2].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[2].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[2].player.wins == '1' && data.team.matchup[2].player.Shutouts != '1'">
@@ -866,7 +866,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[1].player.injured === true && data.team.matchup[1].player.saves == null" style="color:red;">{{data.team.matchup[1].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -897,7 +897,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[0].player.injured === true && data.team.matchup[0].player.saves == null" style="color:red;">{{data.team.matchup[0].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -928,7 +928,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[1].player.injured === true && data.team.matchup[1].player.saves == null" style="color:red;">{{data.team.matchup[1].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -951,36 +951,36 @@
           <div class="goalies-inline" *ngIf="data.player.startingToday === true">
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id != data.team.matchup[2].team.id && data.team.matchup[0].player.gameLocation === 'home'">
             <span *ngIf="data.team.matchup[0].team.haveGameToday === true && data.team.matchup[0].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'home'">
             <span *ngIf="data.team.matchup[0].team.haveGameToday === true && data.team.matchup[0].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[0].team.id != data.team.matchup[1].team.id && data.team.matchup[1].player.gameLocation === 'home'">
             <span *ngIf="data.team.matchup[1].team.haveGameToday === true && data.team.matchup[1].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id === data.team.matchup[2].team.id  && data.team.matchup[2].player.gameLocation === 'home'">
             <span *ngIf="data.team.matchup[2].team.haveGameToday === true && data.team.matchup[2].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[0].team.id === data.team.matchup[1].team.id  && data.team.matchup[2].player.gameLocation === 'home'">
             <span *ngIf="data.team.matchup[2].team.haveGameToday === true && data.team.matchup[2].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             </span>
@@ -997,7 +997,7 @@
             <br>
            
             <br>
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -1057,7 +1057,7 @@
             <span *ngIf="fullFirebaseResponse != null && allGoalies[0][data.team.matchup[0].player.id] != null && allGoalies[0][data.team.matchup[0].player.id].confirmed === true && data.team.matchup[0].player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
             <span *ngIf="fullFirebaseResponse != null && allGoalies[0][data.team.matchup[0].player.id] != null && allGoalies[0][data.team.matchup[0].player.id].confirmed === false && data.team.matchup[0].player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
            
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -1090,7 +1090,7 @@
             <span *ngIf="fullFirebaseResponse != null && allGoalies[0][data.team.matchup[1].player.id] != null && allGoalies[0][data.team.matchup[1].player.id].confirmed === false && data.team.matchup[1].player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
             
             
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -1148,7 +1148,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[1].player.injured === true && data.team.matchup[1].player.saves == null" style="color:red;">{{data.team.matchup[1].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -1180,7 +1180,7 @@
             <span *ngIf="fullFirebaseResponse != null && allGoalies[0][data.team.matchup[1].player.id] != null && allGoalies[0][data.team.matchup[1].player.id].confirmed === false && data.team.matchup[1].player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
             
             
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -1210,7 +1210,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[0].player.injured === true && data.team.matchup[0].player.saves == null" style="color:red;">{{data.team.matchup[0].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -1241,7 +1241,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[1].player.injured === true && data.team.matchup[1].player.saves == null" style="color:red;">{{data.team.matchup[1].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -1303,7 +1303,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[1].player.injured === true && data.team.matchup[1].player.saves == null" style="color:red;">{{data.team.matchup[1].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[1].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }" [ngStyle]="{'backgroundColor': data.team.matchup[1]?.team?.color ? data.team.matchup[1]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[1].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[1].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[1].player.wins == '1' && data.team.matchup[1].player.Shutouts != '1'">
@@ -1334,7 +1334,7 @@
             <br>
             <!-- <span *ngIf="data.team.matchup[0].player.injured === true && data.team.matchup[0].player.saves == null" style="color:red;">{{data.team.matchup[0].player.injury}}</span> -->
             <br>
-            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block">
+            <div *ngIf="data.team.matchup[0].player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': data.team.matchup[0]?.team?.color ? data.team.matchup[0]?.team?.color : 'black' }">
               <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}
               <br>
               <span *ngIf="data.team.matchup[0].player.wins == '1' && data.team.matchup[0].player.Shutouts != '1'">
@@ -1482,8 +1482,8 @@
           </div>
           <div class="goalies-inline" *ngIf="data.player.startingToday === false && data.player.likelyStartingToday === true">
             <span *ngIf="data.team.matchup[0].team.haveGameToday === true && data.team.matchup[0].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[0].team.hadGameYesterday === true && data.team.matchup[0].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             <br>
@@ -1558,8 +1558,8 @@
             <span *ngIf="data.team.matchup[2] == null"> 
 
                <span *ngIf="data.team.matchup[1].team.haveGameToday === true && data.team.matchup[1].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             <br>
@@ -1579,8 +1579,8 @@
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].team.id === data.team.matchup[2].team.id && data.team.matchup[2].player.finishedYesterday === true"> 
 
                <span *ngIf="data.team.matchup[1].team.haveGameToday === true && data.team.matchup[1].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             <br>
@@ -1602,8 +1602,8 @@
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[1].team.id === data.team.matchup[2].team.id && data.team.matchup[2].player.finishedYesterday == null">
 
                <span *ngIf="data.team.matchup[1].team.haveGameToday === true && data.team.matchup[1].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[1].team.hadGameYesterday === true && data.team.matchup[1].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             <br>
@@ -1642,8 +1642,8 @@
             <span *ngIf="data.team.matchup[2] != null && data.team.matchup[3] == null && data.team.matchup[1].team.id != data.team.matchup[2].team.id">
 
                <span *ngIf="data.team.matchup[2].team.haveGameToday === true && data.team.matchup[2].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             <br>
@@ -1665,8 +1665,8 @@
             </span>
             <span *ngIf="data.team.matchup[3] != null"> 
                <span *ngIf="data.team.matchup[2].team.haveGameToday === true && data.team.matchup[2].team.haveGameTomorrow === true;then y else n"></span>
-            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to</span></ng-template>
-            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to</span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
+            <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
+            <ng-template #n><span style="color: #ccc;">back</span><span style="color: #ccc;"> to </span></ng-template><span *ngIf="data.team.matchup[2].team.hadGameYesterday === true && data.team.matchup[2].team.haveGameToday === true;then yes else no"></span>
             <ng-template #yes><span style="color: #e74c3c;">back</span></ng-template>
             <ng-template #no><span style="color: #ccc;">back</span></ng-template>
             <br>
@@ -1726,7 +1726,7 @@
         <div class="tp-box__side tp-box__front">
         <p class="game-info">
           <img src=".{{ data.team.opponentLogo }}" alt=""> VS <img src="{{ data.team.logo }}" alt="">
-          <br> {{data.team.opponent}} @ {{data.team.abbreviation}}
+          <br> {{data.team.opponent}} @ {{data.team.city}}
           <br>
           <span class="green-dot" *ngIf="data.team.matchup[0].player.saves != null || data.team.matchup[1].player.saves != null"></span> Puck drops: {{data.player.gameTime | date: 'shortTime'}} PST @ {{ data.team.gameIce }}
           <br> <br>

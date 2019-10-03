@@ -348,18 +348,19 @@ export class StartingGoaliesComponent implements OnInit {
 
               if (schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule['schedule'].startTime;
+                sdata.team.gameIce = schedule['schedule'].venue.name;
 
-                 if (schedule['schedule'].venue.name === 'Nassau Coliseum') {
-                  sdata.team.gameIce = 'Barclays Center';
-                } else if (schedule['schedule'].venue.name === 'Verizon Center') {
-                  sdata.team.gameIce = 'Capital One Arena';
-                } else if (schedule['schedule'].venue.name === 'Joe Louis Arena') {
-                  sdata.team.gameIce = 'Little Caesars Arena';
-                } else if (schedule['schedule'].venue.name === 'Consol Energy Center') {
-                  sdata.team.gameIce = 'PPG Paints Arena';
-                } else {
-                  sdata.team.gameIce = schedule['schedule'].venue.name;
-                }
+                //  if (schedule['schedule'].venue.name === 'Nassau Coliseum') {
+                //   sdata.team.gameIce = 'Barclays Center';
+                // } else if (schedule['schedule'].venue.name === 'Verizon Center') {
+                //   sdata.team.gameIce = 'Capital One Arena';
+                // } else if (schedule['schedule'].venue.name === 'Joe Louis Arena') {
+                //   sdata.team.gameIce = 'Little Caesars Arena';
+                // } else if (schedule['schedule'].venue.name === 'Consol Energy Center') {
+                //   sdata.team.gameIce = 'PPG Paints Arena';
+                // } else {
+                //   sdata.team.gameIce = schedule['schedule'].venue.name;
+                // }
 
                 sdata.team.gameId = schedule['schedule'].id;
                 sdata.player.gameLocation = "away";
@@ -388,18 +389,19 @@ export class StartingGoaliesComponent implements OnInit {
               }
               if (schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule['schedule'].startTime;
+                sdata.team.gameIce = schedule['schedule'].venue.name;
 
-                if (schedule['schedule'].venue.name === 'Nassau Coliseum') {
-                  sdata.team.gameIce = 'Barclays Center';
-                } else if (schedule['schedule'].venue.name === 'Verizon Center') {
-                  sdata.team.gameIce = 'Capital One Arena';
-                } else if (schedule['schedule'].venue.name === 'Joe Louis Arena') {
-                  sdata.team.gameIce = 'Little Caesars Arena';
-                } else if (schedule['schedule'].venue.name === 'Consol Energy Center') {
-                  sdata.team.gameIce = 'PPG Paints Arena';
-                } else {
-                  sdata.team.gameIce = schedule['schedule'].venue.name;
-                }
+                // if (schedule['schedule'].venue.name === 'Nassau Coliseum') {
+                //   sdata.team.gameIce = 'Barclays Center';
+                // } else if (schedule['schedule'].venue.name === 'Verizon Center') {
+                //   sdata.team.gameIce = 'Capital One Arena';
+                // } else if (schedule['schedule'].venue.name === 'Joe Louis Arena') {
+                //   sdata.team.gameIce = 'Little Caesars Arena';
+                // } else if (schedule['schedule'].venue.name === 'Consol Energy Center') {
+                //   sdata.team.gameIce = 'PPG Paints Arena';
+                // } else {
+                //   sdata.team.gameIce = schedule['schedule'].venue.name;
+                // }
 
                 sdata.team.gameId = schedule['schedule'].id;
                 sdata.player.gameLocation = "home";
