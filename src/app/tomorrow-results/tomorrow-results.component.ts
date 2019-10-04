@@ -57,7 +57,7 @@ export class TomorrowResultsComponent implements OnInit {
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
 
   public startingG = {
-    '5571':'5571',
+    '5617':'5617', //Copley'5571':'5571',
     '4863':'4863',
     '5107':'5107',
     '5908':'5908',
@@ -104,10 +104,10 @@ export class TomorrowResultsComponent implements OnInit {
     '5296':'5296',
     '5227':'5227',
     '178':'178',
-    '5518':'5518',
+    '4310':'4310',   //LD '5518':'5518',
     '3855':'3855',
     '4305':'4305',
-    '5481':'5481',
+    '4867':'4867',  //forsberg'5481':'5481',
     '15154':'15154',
     '5887':'5887',
     '4351':'4351',
@@ -117,7 +117,8 @@ export class TomorrowResultsComponent implements OnInit {
     '3793':'3793',
     '4271':'4271',
     '4333':'4333',
-    '5271':'5271'
+    '5271':'5271',
+    '15690':'15690'
   }
 
   constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) { 
