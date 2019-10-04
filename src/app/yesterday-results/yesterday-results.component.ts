@@ -91,7 +91,7 @@ export class YesterdayResultsComponent implements OnInit {
               this.gamesToday = true;
               this.dailySchedule = res['games'];
               teamRef = res['references'].teamReferences;
-              this.gameDate = res['lastUpdatedOn']; //res['dailygameschedule'].gameentry[0].date;
+              this.gameDate = this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['dailygameschedule'].gameentry[0].date;
             
             let dPipe = new DatePipe("en-US");
             this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
@@ -191,8 +191,6 @@ export class YesterdayResultsComponent implements OnInit {
       })
 
   }
-
-
 
   sortData() {
 

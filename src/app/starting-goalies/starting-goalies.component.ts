@@ -974,23 +974,46 @@ export class StartingGoaliesComponent implements OnInit {
     this.dataService
           .getScore(gid).subscribe(res => {
             console.log(res, "Score...");
-            this.score = res;
+            this.score = res['gamelogs'];
 
-            if (res != null) {
-              console.log(res, "Score, Game...");
-              this.score = res['scoring'];
-              let game = null;
-              game = res['game'].playedStatus; //"COMPLETED" playedStatus: "COMPLETED_PENDING_REVIEW"
+            // if (res != null) {
+            //   console.log(res, "Score, Game...");
+            //   this.score = res['scoring'];
+            //   let game = null;
+            //   game = res['game'].playedStatus; //"COMPLETED" playedStatus: "COMPLETED_PENDING_REVIEW"
   
-              if (data.player.gameLocation === 'home') {
-                data.team.teamScore = this.score['homeScoreTotal'];
-                data.team.opponentScore = this.score['awayScoreTotal'];
-              } else if (data.player.gameLocation === 'away') {
-                data.team.teamScore = this.score['awayScoreTotal'];
-                data.team.opponentScore = this.score['homeScoreTotal'];
-              }
+            //   if (data.player.gameLocation === 'home') {
+            //     data.team.teamScore = this.score['homeScoreTotal'];
+            //     data.team.opponentScore = this.score['awayScoreTotal'];
+            //   } else if (data.player.gameLocation === 'away') {
+            //     data.team.teamScore = this.score['awayScoreTotal'];
+            //     data.team.opponentScore = this.score['homeScoreTotal'];
+            //   }
 
-              data.gameStatus = game;
+            //   data.gameStatus = game;
+
+            if (this.myData && this.score) {
+              console.log('start sorting data for scoreboard stats...');
+              for (let sc of this.score) {
+                for (let pdata of this.myData) {
+                  console.log(sc, 'score items');
+                  // if (sc.game.awayTeamAbbreviation === pdata.team.abbreviation) {
+                  //   pdata.team.awayGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
+  
+                  // }
+                  // if (sc.game.homeTeamAbbreviation === pdata.team.abbreviation) {
+                  //   pdata.team.homeGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
+  
+                  // }
+                  if (sc.team.id === pdata.team.id) {
+                    pdata.team.teamScore = sc.stats.miscellaneous.goalsFor;
+                    pdata.team.opponentScore = sc.stats.miscellaneous.goalsAgainst;
+                  }
+                  
+  
+                }
+              }
+            }
             //this.awayScore = this.score.awayScoreTotal;
             //this.homeScore = this.score.homeScoreTotal;
 
@@ -1014,7 +1037,7 @@ export class StartingGoaliesComponent implements OnInit {
 
           //     }
           //   }
-           }
+           //}
 
           })
   }

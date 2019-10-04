@@ -170,6 +170,7 @@ export class DataService {
     //if (!this.score) {
       console.log(`${this.apiRoot}/games/`+id+`/boxscore.json`, 'getting daily scores of todays games from API...');
       let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
+      //let url = `${this.apiRoot}/date/${dailyDate}/team_gamelogs.json`;
       this.score = this.http.get(url, {headers})
         
     //}

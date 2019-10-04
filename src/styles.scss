@@ -197,6 +197,12 @@ footer {
   /* negative value of footer height */
   /*height: 180px;*/
   clear: both;
+
+  .logo-container {
+    img {
+      width: 65%;
+    }
+  }
 }
 
 /* More stats */
