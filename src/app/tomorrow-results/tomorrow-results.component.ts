@@ -113,7 +113,11 @@ export class TomorrowResultsComponent implements OnInit {
     '4351':'4351',
     '4592':'4592',
     '15438':'15438',
-    '4575':'4575'
+    '4575':'4575',
+    '3793':'3793',
+    '4271':'4271',
+    '4333':'4333',
+    '5271':'5271'
   }
 
   constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) { 
