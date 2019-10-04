@@ -1725,7 +1725,7 @@
 
         <div class="tp-box__side tp-box__front">
         <p class="game-info">
-          <img src=".{{ data.team.opponentLogo }}" alt=""> VS <img src="{{ data.team.logo }}" alt="">
+          <img src="{{ data.team.opponentLogo }}" alt=""> VS <img src="{{ data.team.logo }}" alt="">
           <br> {{data.team.opponent}} @ {{data.team.city}}
           <br>
           <span class="green-dot" *ngIf="data.team.matchup[0].player.saves != null || data.team.matchup[1].player.saves != null"></span> Puck drops: {{data.player.gameTime | date: 'shortTime'}} PST @ {{ data.team.gameIce }}
