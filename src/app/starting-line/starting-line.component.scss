@@ -91,6 +91,18 @@
 .right-content {
   flex: 1;
   font-size: 18px;
+  .schedule-box {
+    background: #999;
+    color: #fff;
+    font-size: 12px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+    .week-item {
+      width: 30px;
+    }
+  }
 }
 
 ul {

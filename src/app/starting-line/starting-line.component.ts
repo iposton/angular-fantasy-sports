@@ -7,13 +7,12 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Observable, interval, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { OrderBy } from '../orderby.pipe';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/observable/forkJoin';
 
 let headers = null;
 let playerString = null;
 let today = new Date();
 let teamRef = [];
+
 @Component({
   selector: 'app-starting-line',
   templateUrl: './starting-line.component.html',
@@ -50,6 +49,7 @@ export class StartingLineComponent implements OnInit {
   public playerInfo: Array <any>;
   public groups: Array <any>;
   public tsGroups: Array <any>;
+  public schedGroups: Array <any>;
   public lineGroups: Array <any>;
   public myData: Array <any>;
   public dailyStats: Array <any>;
@@ -64,24 +64,102 @@ export class StartingLineComponent implements OnInit {
   public postponed: boolean = false;
   public noGamesMsg: string = '';
   public errMessage: string = '';
-  public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any };
+  public teamSchedule: { team: string, schedule: [] };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
-  public gameStarters: Array <any> = [];
+  public teamSchedules: Array <any> = [];
   public teamsCompletedPlayingToday: Array <any> = [];
   public selectedWeek: string;
 
-  constructor(
-              private dataService: NFLDataService, 
+  constructor(private dataService: NFLDataService, 
               private http: HttpClient) {
     this.players = this.dataService.getSentStats();
     this.selectedWeek = '1';
+
+    let weekTimes = [
+      {
+        dateBeg: 'Tue Oct 01 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 08 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '5'
+      },
+      {
+        dateBeg: 'Tue Oct 8 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 15 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '6'
+      },
+      {
+        dateBeg: 'Tue Oct 15 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 22 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '7'
+      },
+      {
+        dateBeg: 'Tue Oct 22 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 29 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '8'
+      },
+      {
+        dateBeg: 'Tue Oct 29 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Nov 05 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '9'
+      },
+      {
+        dateBeg: 'Tue Nov 05 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Nov 12 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '10'
+      },
+      {
+        dateBeg: 'Tue Nov 12 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Nov 19 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '11'
+      },
+      {
+        dateBeg: 'Tue Nov 19 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Nov 26 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '12'
+      },
+      {
+        dateBeg: 'Tue Nov 26 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 03 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '13'
+      },
+      {
+        dateBeg: 'Tue Dec 03 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 10 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '14'
+      },
+      {
+        dateBeg: 'Tue Dec 10 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 17 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '15'
+      },
+      {
+        dateBeg: 'Tue Dec 17 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 24 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '16'
+      },
+      {
+        dateBeg: 'Tue Dec 24 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '17'
+      }
+    ]
+
+    for (let week of weekTimes) {
+
+      let date = new Date();
+
+      if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
+        this.selectedWeek = week.week;
+      }
+      
+    }
+
+    
   }
 
   public onChange(week) {
    this.loading = true;
    this.selectedWeek = week;
    this.dailySchedule = [];
-   this.gameStarters = [];
    this.starterIdData = [];
    playerString = null;
    this.dailyStats = [];
@@ -134,74 +212,33 @@ export class StartingLineComponent implements OnInit {
 
               this.gamesToday = true;
               //console.log(this.dailySchedule, 'sched');
-              let d = new Date();
-              let gd = new Date(this.gameDate);
-              if (d.getDay() === gd.getDay()) {
-
-               
+              // let d = new Date();
+              // let gd = new Date(this.gameDate);
+              if (this.teamSchedules.length === 0) {
+                let team;
+                let teamSchedule;
                 forkJoin(
-                  res['games'].map(
+                  teamRef.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=G,C,OT,NT,DT,DE`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g.abbreviation}`, { headers })
                     
                   )
                 )
                 .subscribe(res => {
-                  let i = null;
-                  let i2 = null;
-                  let res2 = null;
-                  let game2 = null;
-                  let score2 = null;
-                
-                  
-                res.forEach((item, index) => {
-                    //console.log(this.dailySchedule[i], 'score for games');
-                    //console.log(res, 'got starting lineups data!');
-                    i = index;
-                    try {
-                      game2 = res[i]['game'];
-                      res2 = res[i]['teamLineups'];
-                      score2 = this.dailySchedule[i].score;
-                    } catch {
-                      console.log('bad endpoint');
+                  //console.log(res, 'get team schedules...');
+
+                  res.forEach((item, index) => {
+                    team = teamRef[index].abbreviation;
+                    teamSchedule = {
+                      team: team,
+                      schedule: res[index]['games']
                     }
+                    this.teamSchedules.push(teamSchedule);
+                    //console.log(this.teamSchedules, 'schedules array...');
 
-                    res2.forEach((item, index) => {
-
-                      i2 = index;
-                      if (res2[i2].actual != null && res2[i2].expected != null) {
-                        //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
-                        this.gameStarter = {
-                          playerID: res2[i2].actual.lineupPositions[0].player.id,
-                          gameID: game2.id,
-                          score: score2,
-                          status: game2.playedStatus,
-                          scheduleStatus: game2.scheduleStatus
-                        }
-                        this.gameStarters.push(this.gameStarter);
-                        this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.firstName+'-'+res2[i2].actual.lineupPositions[0].player.lastName);
-                        playerString = this.starterIdData.join();
-
-                      } else if (res2[i2].actual == null && res2[i2].expected != null) {
-                        //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
-                        this.gameStarter = {
-                          playerID: res2[i2].expected.lineupPositions[0].player.id,
-                          gameID: game2.id,
-                          score: score2,
-                          status: game2.playedStatus,
-                          scheduleStatus: game2.scheduleStatus
-                        }
-                        this.gameStarters.push(this.gameStarter);
-                        this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.firstName+'-'+res2[i2].expected.lineupPositions[0].player.lastName);
-                        playerString = this.starterIdData.join();
-                        
-                      } else {
-                        //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
-                      }
-
-                    });
-                  });
+                  })
+                  
 
                   this.sortData();
 
@@ -237,13 +274,11 @@ export class StartingLineComponent implements OnInit {
             this.teamStats = res['teamStatsTotals'];
             let oSort = [];
             let dSort = [];
-            let tSort = [];
             let dRank = [];
             let oRank = [];
             let tRank = [];
             oSort = res['teamStatsTotals'];
             dSort = res['teamStatsTotals'];
-            tSort = res['teamStatsTotals'];
 
             this.dataService
               .getWeek(this.selectedWeek).subscribe(res => {
@@ -439,8 +474,15 @@ export class StartingLineComponent implements OnInit {
   
                       }, Object.create(null));
 
-                      this.lineGroups = Object.keys(this.groups).map(key => {
-                        return {team: key, offensePlayers: this.groups[key].filter(item => item.of), defensePlayers: this.groups[key].filter(item => item.def), teamStats: this.tsGroups[key][0].stats};
+                      this.schedGroups = this.teamSchedules.reduce(function (r, a) {
+                        r[a.team] = r[a.team] || [];
+                        r[a.team].push(a);
+                        return r;
+  
+                      }, Object.create(null));
+
+                      this.lineGroups = Object.keys(this.groups).map((key, index) => {
+                        return {team: key, offensePlayers: this.groups[key].filter(item => item.of), defensePlayers: this.groups[key].filter(item => item.def), teamStats: this.tsGroups[key][0].stats, seasonSchedule: this.schedGroups[key][0].schedule};
                       });
 
                      this.showTeams();

@@ -2,6 +2,7 @@
 <h1 class="center date-header baseball-header"> Week {{selectedWeek}}</h1>
 <div class="center">
   <select name="week" id="week" (change)="onChange($event.target.value)">
+    <option value="1"> - </option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
@@ -18,6 +19,7 @@
     <option value="14">14</option>
     <option value="15">15</option>
     <option value="16">16</option>
+    <option value="16">17</option>
   </select>
 </div>
 
@@ -97,7 +99,7 @@
                     </p>
                     <p *ngIf="data?.offensePlayers[0]?.playerObj['teamScore'] >= 0 || data?.offensePlayers[0]?.playerObj['opponentScore'] >= 0">
                         <span>Score: &nbsp;
-                          {{data?.offensePlayers[0]?.playerObj.team?.name}} {{data?.offensePlayers[0]?.playerObj['teamScore']}} &nbsp;&nbsp;
+                          {{data?.offensePlayers[0]?.playerObj.team?.name}} {{data?.offensePlayers[0]?.playerObj['teamScore']}} &nbsp;
                           {{data?.offensePlayers[0]?.playerObj.team?.opponentName}} {{data?.offensePlayers[0]?.playerObj['opponentScore']}} <br></span>
                           <span *ngIf="data?.offensePlayers[0]?.playerObj['win'] === 1">{{data?.offensePlayers[0]?.playerObj.team?.city}} won<span *ngIf="data?.offensePlayers[0]?.playerObj['otWin'] === 1"> in overtime</span>!</span>
                           <span *ngIf="data?.offensePlayers[0]?.playerObj['loss'] === 1">{{data?.offensePlayers[0]?.playerObj.team?.city}} lost<span *ngIf="data?.offensePlayers[0]?.playerObj['otLoss'] === 1"> in overtime</span>!</span>
@@ -130,7 +132,34 @@
                           </p>
                       </span>
                     </div>
-            </div>   
+            </div> 
+            <div class="col-info">
+                <div class="right-content">
+                    <div class="schedule-box" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black',  'borderColor': data?.offensePlayers[0]?.playerObj.team?.accent ? data?.offensePlayers[0]?.playerObj.team?.accent : 'black'}">
+                        <div *ngFor="let item of data.seasonSchedule; let i=index">
+                            <span class="week-item">Week {{item?.schedule?.week}}: </span> 
+                            <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.abbreviation === item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+                               {{item?.schedule?.awayTeam?.abbreviation +' @ '+ item.schedule?.homeTeam?.abbreviation}}
+                               <span *ngIf="item?.score?.homeScoreTotal != null">
+                               <span *ngIf="item?.score?.awayScoreTotal > item?.score?.homeScoreTotal" [ngStyle]="{'color': data?.offensePlayers[0]?.playerObj.team?.accent ? data?.offensePlayers[0]?.playerObj.team?.accent : 'gold'}"> W </span> 
+                               <span *ngIf="item?.score?.awayScoreTotal < item?.score?.homeScoreTotal" [ngStyle]="{'color': '#ccc'}"> L </span> 
+                               <span *ngIf="item?.score?.awayScoreTotal === item?.score?.homeScoreTotal" [ngStyle]="{'color': '#ccc'}"> T </span> 
+                               <span *ngIf="item?.score?.homeScoreTotal != null"> ({{item?.score?.awayScoreTotal +' - '+ item?.score?.homeScoreTotal}})</span>
+                               </span>
+                            </span> 
+                            <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.abbreviation === item.schedule?.homeTeam?.abbreviation" class="sched-item">
+                                {{item?.schedule?.homeTeam?.abbreviation +' vs '+ item?.schedule?.awayTeam?.abbreviation}} 
+                                <span *ngIf="item?.score?.homeScoreTotal != null">
+                                <span *ngIf="item?.score?.homeScoreTotal > item?.score?.awayScoreTotal" [ngStyle]="{'color': data?.offensePlayers[0]?.playerObj.team?.accent ? data?.offensePlayers[0]?.playerObj.team?.accent : 'gold'}"> W </span> 
+                                <span *ngIf="item?.score?.homeScoreTotal < item?.score?.awayScoreTotal" [ngStyle]="{'color': '#ccc'}"> L </span> 
+                                <span *ngIf="item?.score?.homeScoreTotal === item?.score?.awayScoreTotal" [ngStyle]="{'color': '#ccc'}"> T </span> 
+                                <span *ngIf="item?.score?.homeScoreTotal != null"> ({{item?.score?.homeScoreTotal +' - '+ item?.score?.awayScoreTotal}})</span>
+                                </span>
+                            </span>   
+                          </div>
+                    </div>
+                  </div>
+            </div>  
             <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
               <p class="center">Sacks: {{data?.teamStats?.tackles?.sacks}} --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
                   Defense Rank: {{data?.offensePlayers[0]?.playerObj['dRank']}} <br>
