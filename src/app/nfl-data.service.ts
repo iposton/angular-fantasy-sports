@@ -6,6 +6,8 @@ let headers = null;
 
 let sending;
 let sent;
+let sendingT;
+let sentT;
 let sendingAll;
 let sentAll;
 
@@ -49,6 +51,17 @@ export class NFLDataService {
   sendHeaderOptions(h) {
     console.log('got headers & options in data service...');
     headers = h;
+  }
+
+  sendTouchStats(statsArray) {
+    console.log("sending stats to service...");
+    sendingT = statsArray;
+  }
+
+  getSentTouchStats() {
+    console.log("stats sent to component...");
+    sentT = sendingT;
+    return sentT;
   }
 
   sendStats(statsArray) {
@@ -173,6 +186,26 @@ export class NFLDataService {
         
   //  }
     return this.daily;
+  }
+
+  getDailyTouches(selected) {
+    // pass in week
+    // if (!this.daily) {
+       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
+       let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
+       console.log(url, 'url')
+       console.log('getting daily stats for pitchers from API...');
+       this.daily = this.http.get(url, {headers})
+         
+   //  }
+     return this.daily;
+   }
+
+  getTouches(players) {
+
+      let url = `${this.apiRoot}/player_stats_totals.json?position=WR,TE,RB,QB`; //&player=${players}`;
+      this.stats = this.http.get(url, {headers})
+    return this.stats;
   }
 
   getWeek(selected) {

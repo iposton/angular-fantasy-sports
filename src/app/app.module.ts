@@ -35,6 +35,7 @@ import { environment } from '../environments/environment';
 import { OrderBy } from './orderby.pipe';
 
 import { StartingLineComponent } from './starting-line/starting-line.component';
+import { TouchesComponent } from './touches/touches.component';
 import { StartingPitcherComponent } from './starting-pitcher/starting-pitcher.component';
 import { PitchingStatsComponent, MyDialog } from './pitching-stats/pitching-stats.component';
 import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from './starting-goalies/starting-goalies.component';
@@ -62,6 +63,10 @@ const routes: Routes = [
         path: 'nfl-line-rank', 
         component: StartingLineComponent 
  },
+ { 
+        path: 'nfl-touches', 
+        component: TouchesComponent 
+ },
  {
         path: 'starting-goalies-yesterday',
         component: YesterdayResultsComponent
@@ -88,6 +93,7 @@ const routes: Routes = [
     StartingLineComponent,
     TomorrowResultsComponent,
     YesterdayResultsComponent,
+    TouchesComponent,
     Info,
     InfoYesterday,
     InfoTomorrow,
