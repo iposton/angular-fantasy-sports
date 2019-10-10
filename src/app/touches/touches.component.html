@@ -165,7 +165,7 @@
                   </div>
             </div>  
             <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
-              <p class="center">Pass Attempts: {{data?.teamStats?.passing?.passAttempts}} / Pass Yards: {{data?.teamStats?.passing?.passNetYards}} / {{ data?.teamStats?.passing?.passAttempts / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}% of touches are Passing Plays /  --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
+              <p class="center">Pass Attempts: {{data?.teamStats?.passing?.passAttempts}} / Pass Yards: {{data?.teamStats?.passing?.passNetYards}} / {{ data?.teamStats?.passing?.passAttempts / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}% of touches are Passing Plays --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
                   Pass Rank: {{data?.offensePlayers[0]?.playerObj['dRank']}} <br>
               </span></p>
             </div> 

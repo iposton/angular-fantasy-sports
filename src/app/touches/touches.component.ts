@@ -354,7 +354,7 @@ export class TouchesComponent implements OnInit {
 
                   //this.myData = res['playerStatsTotals'];
                   this.myData = res['playerStatsTotals'].filter(
-                  player => player.stats.receiving && player.stats.receiving['receptions'] > 10 || player.stats.rushing && player.stats.rushing['rushAttempts'] > 10);
+                  player => player.stats.receiving['receptions'] + player.stats.rushing['rushAttempts'] > 5);
 
                   if (this.myData) {
                     console.log(this.myData, "cumulative stats...");
