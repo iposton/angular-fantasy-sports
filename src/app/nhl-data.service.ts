@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http'
+import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpParams} from '@angular/common/http'
 
 let thisDate = new Date();
 let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
@@ -50,6 +50,7 @@ export class NHLDataService {
 
   info: Observable < any > = null;
   stats: Observable < any > = null;
+  uStats: Observable < any > = null;
   env: Observable < any > = null;
   gameid: Observable < any > = null;
   lastweekgameid: Observable < any > = null;
@@ -214,6 +215,35 @@ export class NHLDataService {
     }
     return this.injured;
   }
+
+  getUnusualStats() {
+    let data = {
+      "user": "ianposton",
+      "pass": "NHLHOCKEYSTATSFSR",
+      "query" : {
+              "type": "find",
+              "collection" : "coaches",
+              "filter" : {
+     "team" : "ARI"
+              },
+              "fields" : {
+                      "name": 1,
+              }
+      }
+  }
+    //let json = JSON.stringify(qObj);
+
+    //this.http.get('url'+'?myobj='+encodeURIComponent(json)
+    let headers = new HttpHeaders({
+      'Content-Type':  'application/json'
+      //'Authorization': 'my-auth-token'
+    }) //.set("Authorization", "Basic " + btoa('ianposton' + ":" + 'NHLHOCKEYSTATSFSR'));
+    //let myParams = new HttpParams().set("user", "ianposton").set("pass", "NHLHOCKEYSTATSFSR").set("query", encodeURIComponent(json));
+    this.uStats = this.http.post('https://morehockeystats.com/api/post.json', data, {headers}) //https://morehockeystats.com/api
+    return this.uStats;
+
+  }
+
 
   getScore(id) {
 

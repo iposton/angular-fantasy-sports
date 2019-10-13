@@ -325,6 +325,11 @@ export class StartingGoaliesComponent implements OnInit {
 
   let resultOne = await promiseOne;
 
+  // this.dataService
+  //     .getUnusualStats().subscribe(res => {
+  //       console.log(res, 'u stats...')
+  //     })
+
     this.dataService
       .getStats(teamString).subscribe(res => {
         console.log(res['playerStatsTotals'], "cumulative stats...");

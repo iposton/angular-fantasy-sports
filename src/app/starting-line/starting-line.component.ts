@@ -359,7 +359,7 @@ export class StartingLineComponent implements OnInit {
 
                   //this.myData = res['playerStatsTotals'];
                   this.myData = res['playerStatsTotals'].filter(
-                  player => player.stats.miscellaneous && player.stats.miscellaneous['gamesStarted'] > 1);
+                  player => player.stats.miscellaneous && player.stats.miscellaneous['gamesStarted'] > 2);
 
                   if (this.myData) {
                     console.log(this.myData, "cumulative stats...");
@@ -434,6 +434,31 @@ export class StartingLineComponent implements OnInit {
                             sdata.opponentOR = schedule.oRank;
                             sdata.opponentTR = schedule.teamRank;
                             sdata.opponentColor = schedule.team.color;
+                          }
+                        }
+                      }
+
+                      for (let schedule of this.dailySchedule) {
+                        for (let data of this.myData) {
+                          if (schedule.schedule.awayTeam.abbreviation === data.team.abbreviation) {
+                              schedule.schedule.awayTeam.color = data.team.color;
+                              schedule.schedule.awayTeam.accent = data.team.accent;
+                              schedule.schedule.awayTeam.logo = data.team.logo;
+                              schedule.schedule.awayTeam.city = data.team.city;
+                              schedule.schedule.awayTeam.name = data.team.name;
+                              schedule.schedule.awayTeam.dRank = data.dRank;
+                              schedule.schedule.awayTeam.oRank = data.oRank;
+                              schedule.schedule.awayTeam.teamRank = data.teamRank;
+                          }
+                          if (schedule.schedule.homeTeam.abbreviation === data.team.abbreviation) {
+                              schedule.schedule.homeTeam.color = data.team.color;
+                              schedule.schedule.homeTeam.accent = data.team.accent;
+                              schedule.schedule.homeTeam.logo = data.team.logo;
+                              schedule.schedule.homeTeam.city = data.team.city;
+                              schedule.schedule.homeTeam.name = data.team.name;
+                              schedule.schedule.homeTeam.dRank = data.dRank;
+                              schedule.schedule.homeTeam.oRank = data.oRank;
+                              schedule.schedule.homeTeam.teamRank = data.teamRank;
                           }
                         }
                       }
@@ -536,6 +561,10 @@ export class StartingLineComponent implements OnInit {
      console.log(this.showData, 'show data');
      this.dataService
        .sendStats(this.showData);
+  }
+
+  public goAnchor(data) {
+    document.querySelector("mat-card[id="+data+"]").scrollIntoView({behavior: "smooth"});
   }
 
   flipBack(data) {

@@ -22,6 +22,38 @@
     <option value="16">17</option>
   </select>
 </div>
+<div class="sched-wrapper" *ngIf="!loading">
+  <div class="schedule-box row">
+    <div *ngFor="let item of dailySchedule; let i=index" class="col">
+        <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+           <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)">{{'#'+ item?.schedule?.awayTeam?.teamRank + '-' + item?.schedule?.awayTeam?.abbreviation}} 
+             <span *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}}</span> 
+             <br>
+          </span>
+          <span> 
+            @ <br>
+          </span>
+          <span class="abb" (click)="goAnchor(item?.schedule?.homeTeam?.abbreviation)">{{'#'+ item?.schedule?.homeTeam?.teamRank + '-' + item.schedule?.homeTeam?.abbreviation}} 
+            <span *ngIf="item?.score?.homeScoreTotal != null">
+              {{item?.score?.homeScoreTotal}}
+              <br>
+            </span>
+            <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'">FINAL</span>
+            <span class="live" *ngIf="item?.schedule?.playedStatus === 'LIVE'">LIVE</span>
+          </span>   
+        </span> 
+        <!-- <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.abbreviation === item.schedule?.homeTeam?.abbreviation" class="sched-item">
+            {{item?.schedule?.homeTeam?.abbreviation +' vs '+ item?.schedule?.awayTeam?.abbreviation}} 
+            <span *ngIf="item?.score?.homeScoreTotal != null">
+            <span *ngIf="item?.score?.homeScoreTotal > item?.score?.awayScoreTotal" [ngStyle]="{'color': data?.offensePlayers[0]?.playerObj.team?.accent ? data?.offensePlayers[0]?.playerObj.team?.accent : 'gold'}"> W </span> 
+            <span *ngIf="item?.score?.homeScoreTotal < item?.score?.awayScoreTotal" [ngStyle]="{'color': '#ccc'}"> L </span> 
+            <span *ngIf="item?.score?.homeScoreTotal === item?.score?.awayScoreTotal" [ngStyle]="{'color': '#ccc'}"> T </span> 
+            <span *ngIf="item?.score?.homeScoreTotal != null"> ({{item?.score?.homeScoreTotal +' - '+ item?.score?.awayScoreTotal}})</span>
+            </span>
+        </span>    -->
+      </div>
+</div>
+</div>
 
 <div class="spinner-msg" *ngIf="loading">
   Retrieving Offensive Line Data...
@@ -32,7 +64,7 @@
 </div>
 <div *ngIf="showData != null">
   <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'nfl'">
-    <mat-card class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
+    <mat-card id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
       <div *ngIf="data?.offensePlayers[0]?.playerObj.flip === 'inactive'" class="ribbon"><span
           [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">{{data?.offensePlayers[0]?.playerObj.team.name}}</span>
       </div>
