@@ -23,6 +23,53 @@
   margin: 0;
 }
 
+.sched-wrapper {
+  // display: flex;
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    background: #999;
+    color: #fff;
+    font-size: 12px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+
+    .week-item {
+      width: 30px;
+    }
+
+    
+    .col {
+      display: flex;
+      // flex-direction: column;
+      flex-basis: 100%;
+      flex: 0 0 7%;
+      .player-box-inline {
+        display: inline-block;
+        // width: 15%;
+      }
+      .abb:hover {
+        cursor: pointer;
+        color: #ccc;
+      }
+
+      .live {
+        color: #2ecc71;
+      }
+    }
+    .col-info {
+      display: flex;
+      flex-basis: 100%;
+      flex: 0 0 25%;
+    }
+
+  }
+}
+
 .content-wrapper {
   // display: flex;
   .row {

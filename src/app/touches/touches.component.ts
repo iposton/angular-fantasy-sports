@@ -433,6 +433,31 @@ export class TouchesComponent implements OnInit {
                         }
                       }
 
+                      for (let schedule of this.dailySchedule) {
+                        for (let data of this.myData) {
+                          if (schedule.schedule.awayTeam.abbreviation === data.team.abbreviation) {
+                              schedule.schedule.awayTeam.color = data.team.color;
+                              schedule.schedule.awayTeam.accent = data.team.accent;
+                              schedule.schedule.awayTeam.logo = data.team.logo;
+                              schedule.schedule.awayTeam.city = data.team.city;
+                              schedule.schedule.awayTeam.name = data.team.name;
+                              schedule.schedule.awayTeam.dRank = data.dRank;
+                              schedule.schedule.awayTeam.oRank = data.oRank;
+                              schedule.schedule.awayTeam.teamRank = data.teamRank;
+                          }
+                          if (schedule.schedule.homeTeam.abbreviation === data.team.abbreviation) {
+                              schedule.schedule.homeTeam.color = data.team.color;
+                              schedule.schedule.homeTeam.accent = data.team.accent;
+                              schedule.schedule.homeTeam.logo = data.team.logo;
+                              schedule.schedule.homeTeam.city = data.team.city;
+                              schedule.schedule.homeTeam.name = data.team.name;
+                              schedule.schedule.homeTeam.dRank = data.dRank;
+                              schedule.schedule.homeTeam.oRank = data.oRank;
+                              schedule.schedule.homeTeam.teamRank = data.teamRank;
+                          }
+                        }
+                      }
+
                       if (this.weekStats.length > 0) {
                         for (let week of this.weekStats) {
                           for (let data of this.myData) {
@@ -531,6 +556,10 @@ export class TouchesComponent implements OnInit {
      console.log(this.showData, 'show data');
      this.dataService
        .sendTouchStats(this.showData);
+  }
+
+  public goAnchor(data) {
+    document.querySelector("mat-card[id="+data+"]").scrollIntoView({behavior: "smooth"});
   }
 
   flipBack(data) {
