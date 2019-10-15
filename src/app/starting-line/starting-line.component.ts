@@ -69,6 +69,8 @@ export class StartingLineComponent implements OnInit {
   public teamSchedules: Array <any> = [];
   public teamsCompletedPlayingToday: Array <any> = [];
   public selectedWeek: string;
+  public tsDate: any;
+  public byes: any;
 
   constructor(private dataService: NFLDataService, 
               private http: HttpClient) {
@@ -143,12 +145,180 @@ export class StartingLineComponent implements OnInit {
       }
     ]
 
+    this.byes = {
+      "ATL": {
+        id: 68,
+        abbreviation: "ATL",
+        bye: 9
+      }, 
+      "CAR": {
+        id: 69,
+        abbreviation: "CAR",
+        bye: 7 
+      },
+      "NO": {
+        id: 70,
+        abbreviation: "NO",
+        bye: 9
+      },
+      "TB": {
+        id: 71,
+        abbreviation: "TB",
+        bye: 7
+      },
+      "HOU": {
+        id: 64,
+        abbreviation: "HOU",
+        bye: 10
+      },
+      "IND": {
+        id: 65,
+        abbreviation: "IND",
+        bye: 6
+      },
+      "JAX": {
+        id: 66,
+        abbreviation: "JAX",
+        bye: 10
+      },
+      "TEN": {
+        id: 67,
+        abbreviation: "TEN",
+        bye: 11
+      },
+      "ARI": {
+        id: 76,
+        abbreviation: "ARI",
+        bye: 12
+      },
+      "LA": {
+        id: 77,
+        abbreviation: "LA",
+        bye: 9
+      },
+      "SF": {
+        id: 78,
+        abbreviation: "SF",
+        bye: 4
+      },
+      "SEA": {
+        id: 79,
+        abbreviation: "SEA",
+        bye: 11
+      },
+      "DEN": {
+        id: 72,
+        abbreviation: "DEN",
+        bye: 10
+      },
+      "KC": {
+        id: 73,
+        abbreviation: "KC",
+        bye: 12
+      },
+      "OAK": {
+        id: 74,
+        abbreviation: "OAK",
+        bye: 6
+      },
+      "LAC": {
+        id: 75,
+        abbreviation: "LAC",
+        bye: 12
+      },
+      "NYJ": {
+        id: 51,
+        abbreviation: "NYJ",
+        bye: 4
+      },
+      "NE": {
+        id: 50,
+        abbreviation: "NE",
+        bye: 10
+      },
+      "MIA": {
+        id: 49,
+        abbreviation: "MIA",
+        bye: 5
+      },
+      "BUF": {
+        id: 48,
+        abbreviation: "BUF",
+        bye: 6
+      },
+      "WAS": {
+        id: 55,
+        abbreviation: "WAS",
+        bye: 10
+      },
+      "PHI": {
+        id: 54,
+        abbreviation: "PHI",
+        bye: 10
+      },
+      "NYG": {
+        id: 53,
+        abbreviation: "NYG",
+        bye: 11
+      },
+      "DAL": {
+        id: 52,
+        abbreviation: "DAL",
+        bye: 8
+      },
+      "PIT": {
+        id: 59,
+        abbreviation: "PIT",
+        bye: 7
+      },
+      "CLE": {
+        id: 58,
+        abbreviation: "CLE",
+        bye: 7
+      },
+      "CIN": {
+        id: 57,
+        abbreviation: "CIN",
+        bye: 9
+      },
+      "BAL": {
+        id: 56,
+        abbreviation: "BAL",
+        bye: 8
+      },
+      "MIN": {
+        id: 63,
+        abbreviation: "MIN",
+        bye: 12
+      },
+      "GB": {
+        id: 62,
+        abbreviation: "GB",
+        bye: 11
+      },
+      "DET": {
+        id: 61,
+        abbreviation: "DET",
+        bye: 5
+      },
+      "CHI": {
+        id: 60,
+        abbreviation: "CHI",
+        bye: 6
+      },
+}
+
     for (let week of weekTimes) {
 
       let date = new Date();
 
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.selectedWeek = week.week;
+        let utcDate = new Date(week.dateBeg);
+        utcDate.setHours(utcDate.getHours() - 8);
+        let myDate = new Date(utcDate);
+        let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+        this.tsDate = dailyDate;  
       }
       
     }
@@ -269,7 +439,7 @@ export class StartingLineComponent implements OnInit {
       let promiseOne;
       promiseOne = new Promise((resolve, reject) => {
         this.dataService
-          .getTeamStats().subscribe(res => {
+          .getTeamStats(this.tsDate).subscribe(res => {
             console.log(res, 'got team stats!');
             this.teamStats = res['teamStatsTotals'];
             let oSort = [];
@@ -287,9 +457,20 @@ export class StartingLineComponent implements OnInit {
             });
             
             dRank = dSort.slice().sort((a: any, b: any) => {
-              if (a['stats'].standings.pointsAgainst <= b['stats'].standings.pointsAgainst) {
+
+              if (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek)) {
+                console.log(a['team'].abbreviation, 'had a bye');
+              }
+
+              if (a['stats'].standings.pointsAgainst +
+              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+               <= b['stats'].standings.pointsAgainst +
+               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return -1;
-              } else if (a['stats'].standings.pointsAgainst >= b['stats'].standings.pointsAgainst) {
+              } else if (a['stats'].standings.pointsAgainst +
+              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+               >= b['stats'].standings.pointsAgainst +
+               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return 1;
               } else {
                 return 0;
@@ -305,9 +486,15 @@ export class StartingLineComponent implements OnInit {
             });
 
             oRank = oSort.slice().sort((a: any, b: any) => {
-              if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards)   >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards)) {
+              if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
+              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+              >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
+              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return -1;
-              } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards)) {
+              } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
+              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+              <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
+              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return 1;
               } else {
                 return 0;

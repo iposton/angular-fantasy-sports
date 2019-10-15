@@ -109,7 +109,7 @@ export class NFLDataService {
       // pass in week
     //get all games for today get game ID and find a pitchers opponent
    // if (!this.schedule) {
-      console.log('getting mlb schedule for today from api...', dailyDate);
+      console.log('getting nfl schedule for today from api...', dailyDate);
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
       let url = `${this.apiRoot}/week/${selected}/games.json`;
@@ -145,9 +145,9 @@ export class NFLDataService {
     return this.allstats;
   }
 
-  getTeamStats() {
+  getTeamStats(date) {
       console.log('getting total team stats from API...');
-      let url = `${this.apiRoot}/team_stats_totals.json`;
+      let url = `${this.apiRoot}/team_stats_totals.json?date=${date}`;
       this.teamstats = this.http.get(url, {headers})
 
     return this.teamstats;
@@ -156,7 +156,7 @@ export class NFLDataService {
   getInfo() {
 
    // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=G,C,OT,NT,DT,DE`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE`;
       console.log('getting active player data from API...');
       this.info = this.http.get(url, {headers})
         
@@ -167,7 +167,7 @@ export class NFLDataService {
   getStarterInfo(players) {
 
    // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=G,C,OT,NT,DT,DE&player=${players}`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE&player=${players}`;
       console.log('getting active player data from API...');
       this.starterInfo = this.http.get(url, {headers})
         
