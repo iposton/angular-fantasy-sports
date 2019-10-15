@@ -479,7 +479,7 @@ export class StartingGoaliesComponent implements OnInit {
                 mdata.player.Shutouts = daily.stats.goaltending.shutouts;
                 mdata.player.ga = daily.stats.goaltending.goalsAgainst;
 
-                if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins == '1') {
+                if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins === 1) {
                   // this.starterIdData.push(daily.player.ID);
                   this.startingGoaliesToday.push(daily.player.id);
                 }
@@ -631,9 +631,9 @@ export class StartingGoaliesComponent implements OnInit {
                 tomdata.player.shYesterday = yesterday.player.Shutouts;
                 tomdata.player.yday = yesterday.team.day;
 
-                if (yesterday.player.wins == '1') {
+                if (yesterday.player.wins === 1) {
                   tomdata.player.resultYesterday = yesterday.player.FirstName + ' ' + yesterday.player.LastName + ' got the Win ' + yesterday.team.day + ' with ' + yesterday.player.saves + ' saves against ' + yesterday.player.ShotsAgainst + ' shots.'
-                } else if (yesterday.player.losses == '1' || yesterday.player.OvertimeLosses == '1') {
+                } else if (yesterday.player.losses === 1 || yesterday.player.OvertimeLosses === 1) {
                   tomdata.player.resultYesterday = yesterday.player.FirstName + ' ' + yesterday.player.LastName + ' got the Loss ' + yesterday.team.day + ' with ' + yesterday.player.saves + ' saves against ' + yesterday.player.ShotsAgainst + ' shots.'
                 }
 
@@ -743,7 +743,7 @@ export class StartingGoaliesComponent implements OnInit {
             if (this.statData[data.team.gameId][0].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
               console.log(this.statData[data.team.gameId][0].player, 'this is not a starter. api got it wrong');
               this.statData[data.team.gameId][0].player.wrongStarter = true;
-            } else if ((this.statData[data.team.gameId][0].player.saves == '0' || this.statData[data.team.gameId][0].player.saves == '1') && this.statData[data.team.gameId][1].player.saves > '0') {
+            } else if ((this.statData[data.team.gameId][0].player.saves == '0' || this.statData[data.team.gameId][0].player.saves === 1) && this.statData[data.team.gameId][1].player.saves > '0') {
               console.log(this.statData[data.team.gameId][0].player, 'this is not a starter. api got it wrong');
               this.statData[data.team.gameId][0].player.wrongStarter = true;
             }
@@ -769,7 +769,7 @@ export class StartingGoaliesComponent implements OnInit {
             if (this.statData[data.team.gameId][2].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
               console.log(this.statData[data.team.gameId][2].player, 'this is not a starter. api got it wrong');
               this.statData[data.team.gameId][2].player.wrongStarter = true;
-            } else if ((this.statData[data.team.gameId][2].player.saves == '0' || this.statData[data.team.gameId][2].player.saves == '1') && this.statData[data.team.gameId][1].player.saves > '0') {
+            } else if ((this.statData[data.team.gameId][2].player.saves == '0' || this.statData[data.team.gameId][2].player.saves === 1) && this.statData[data.team.gameId][1].player.saves > '0') {
               console.log(this.statData[data.team.gameId][1].player, 'this is not a starter. api got it wrong');
               this.statData[data.team.gameId][2].player.wrongStarter = true;
             }
@@ -848,12 +848,12 @@ export class StartingGoaliesComponent implements OnInit {
                         mdata.player.Shutouts = daily.stats.goaltending.shutouts;
                         mdata.player.ga = daily.stats.goaltending.goalsAgainst;
 
-                        if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins == '1') {
+                        if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins === 1) {
                           // this.starterIdData.push(daily.player.ID);
                           this.startingGoaliesToday.push(daily.player.id);
                         }
 
-                        if (daily.stats.goaltending.goalsAgainst == '1') {
+                        if (daily.stats.goaltending.goalsAgainst === 1) {
                           mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goal';
                         } else {
                           mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goals';
@@ -1206,7 +1206,7 @@ export class LastweekDialog implements OnInit {
         Observable.forkJoin(
             res['games'].map(
               g =>
-              this.http.get('https://api.mysportsfeeds.com/v1.2/pull/nhl/2017-2018-regular/game_boxscore.json?gameid=' + g.schedule.id + '&playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
+              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
               //.map(response => response.json())
             )
           )
@@ -1222,40 +1222,40 @@ export class LastweekDialog implements OnInit {
 
             res.forEach((item, index) => {
               i = index;
-              //console.log(res[i]['gameboxscore'].awayTeam.awayPlayers['playerEntry'], 'got box score data for away team!');
-              console.log(res[i]['gameboxscore'].game.date, 'looking for date...');
+              console.log(res[i], 'got box score data for away team!');
+              //console.log(res[i]['games'].game.date, 'looking for date...');
 
-              res2 = res[i]['gameboxscore'].awayTeam.awayPlayers['playerEntry'];
-              res3 = res[i]['gameboxscore'].homeTeam.homePlayers['playerEntry'];
+              res2 = res[i]['stats'].away.players;
+              res3 = res[i]['stats'].home.players;
 
               //this.gameTime =  res[i]['gamestartinglineup'].game.date;
               res2.forEach((item, index) => {
 
                 i2 = index;
-                res2[i2].player.city = res[i]['gameboxscore'].game.awayTeam.City;
-                res2[i2].player.team = res[i]['gameboxscore'].game.awayTeam.Name;
-                res2[i2].player.teamId = res[i]['gameboxscore'].game.awayTeam.ID;
-                //console.log(res[i]['gameboxscore'], 'game score data');
+                res2[i2].player.city = res[i]['game'].awayTeam.abbreviation;
+                //res2[i2].player.team = res[i]['game'].awayTeam.name;
+                res2[i2].player.teamId = res[i]['game'].awayTeam.id;
+                //console.log(res[i]['games'], 'game score data');
                 let dPipe = new DatePipe("en-US");
-                myDate = dPipe.transform(res[i]['gameboxscore'].game.date, 'MMM d');
+                myDate = dPipe.transform(res[i]['game'].startTime, 'MMM d');
 
-                if (res2[i2].stats != null && res2[i2].stats.goaltending.wins == '1') {
+                if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.wins === 1) {
          
-                  res2[i2].player.opponent = {date: myDate, desc: '(W) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.goaltending.goalsAgainst}
+                  res2[i2].player.opponent = {date: myDate, desc: '(W) @ ' + res[i]['game'].homeTeam.abbreviation + ' GA: ' + res2[i2].playerStats[0].goaltending.goalsAgainst}
                   
                 }
-                if (res2[i2].stats != null && res2[i2].stats.goaltending.losses == '1') {
+                if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.losses === 1) {
                   
-                  res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.goaltending.goalsAgainst}
+                  res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['game'].homeTeam.abbreviation + ' GA: ' + res2[i2].playerStats[0].goaltending.goalsAgainst}
                
                 }
-                if (res2[i2].stats != null && res2[i2].stats.goaltending.overtimeLosses == '1') {
+                if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.overtimeLosses === 1) {
                   
-                  res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['gameboxscore'].game.homeTeam.City + ' GA: ' + res2[i2].stats.goaltending.goalsAgainst}
+                  res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['game'].homeTeam.abbreviation + ' GA: ' + res2[i2].playerStats[0].goaltending.goalsAgainst}
                  
                 }
 
-                if (res2[i2].stats != null && res2[i2].stats.goaltending.wins > '0' && res2[i2].player.id != '9072' || res2[i2].stats != null && res2[i2].stats.goaltending.losses > '0' && res2[i2].player.id != '9072' || res2[i2].stats != null && res2[i2].stats.goaltending.overtimeLosses > '0' && res2[i2].player.id != '9072') {
+                if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.wins > 0 && res2[i2].player.id != '9072' || res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.losses > 0 && res2[i2].player.id != '9072' || res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.overtimeLosses > 0 && res2[i2].player.id != '9072') {
                   this.starterStatData.push(res2[i2]);
                   //console.log(res2[i2], 'got player stats for away goalie stats!'); 
 
@@ -1267,27 +1267,28 @@ export class LastweekDialog implements OnInit {
               res3.forEach((item, index) => {
 
                 i3 = index;
-                res3[i3].player.city = res[i]['gameboxscore'].game.homeTeam.City;
-                res3[i3].player.team = res[i]['gameboxscore'].game.homeTeam.Name;
-                res3[i3].player.teamId = res[i]['gameboxscore'].game.homeTeam.ID;
-                if (res3[i3].stats != null && res3[i3].stats.goaltending.wins == '1') {
+                
+                res3[i3].player.city = res[i]['game'].homeTeam.abbreviation;
+                //res3[i3].player.team = res[i]['game'].homeTeam.name;
+                res3[i3].player.teamId = res[i]['game'].homeTeam.id;
+                if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.wins === 1) {
                   
-                  res3[i3].player.opponent = {date: myDate, desc: '(W) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.goaltending.goalsAgainst}
+                  res3[i3].player.opponent = {date: myDate, desc: '(W) ' + res[i]['game'].awayTeam.abbreviation+ ' GA: ' + res3[i3].playerStats[0].goaltending.goalsAgainst}
                   
                 }
-                if (res3[i3].stats != null && res3[i3].stats.goaltending.losses == '1') {
+                if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.losses === 1) {
                   
-                  res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.goaltending.goalsAgainst}
+                  res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['game'].awayTeam.abbreviation+ ' GA: ' + res3[i3].playerStats[0].goaltending.goalsAgainst}
                  
                 }
-                if (res3[i3].stats != null && res3[i3].stats.goaltending.overtimeLosses == '1') {
+                if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.overtimeLosses === 1) {
                   
-                  res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['gameboxscore'].game.awayTeam.City + ' GA: ' + res3[i3].stats.goaltending.goalsAgainst}
+                  res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['game'].awayTeam.abbreviation+ ' GA: ' + res3[i3].playerStats[0].goaltending.goalsAgainst}
                   
                 }
 
-                //res3[i3].player.opponent = res[i]['gameboxscore'].game.awayTeam.Abbreviation;
-                if (res3[i3].stats != null && res3[i3].stats.goaltending.wins > '0' && res3[i3].player.id != '9072' || res3[i3].stats != null && res3[i3].stats.goaltending.losses > '0' && res3[i3].player.id != '9072' || res3[i3].stats != null && res3[i3].stats.goaltending.overtimeLosses > '0' && res3[i3].player.id != '9072') {
+                //res3[i3].player.opponent = res[i]['games'].game.awayTeam.Abbreviation;
+                if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.wins > '0' && res3[i3].player.id != '9072' || res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.losses > '0' && res3[i3].player.id != '9072' || res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.overtimeLosses > '0' && res3[i3].player.id != '9072') {
                   this.starterStatData.push(res3[i3]);
                   //console.log(res3[i3], 'got player stats for home goalie!');
                 }
@@ -1326,12 +1327,12 @@ export class LastweekDialog implements OnInit {
           hash[key] = { wins: 0, losses: 0, otl: 0, name: a.player.firstName + ' ' + a.player.lastName, id: a.player.id, opponents: [], team: a.player.teamId, ga: 0, sa: 0, sv: 0, svpercent: 0, hot: false, image: a.player.image };
           r.push(hash[key]);
         }
-        hash[key].wins += parseInt(a.stats.goaltending.wins);
-        hash[key].losses += parseInt(a.stats.goaltending.losses);
-        hash[key].otl += parseInt(a.stats.goaltending.overtimeLosses);
-        hash[key].ga += parseInt(a.stats.goaltending.goalsAgainst);
-        hash[key].sa += parseInt(a.stats.goaltending.shotsAgainst);
-        hash[key].sv += parseInt(a.stats.goaltending.saves);
+        hash[key].wins += parseInt(a.playerStats[0].goaltending.wins);
+        hash[key].losses += parseInt(a.playerStats[0].goaltending.losses);
+        hash[key].otl += parseInt(a.playerStats[0].goaltending.overtimeLosses);
+        hash[key].ga += parseInt(a.playerStats[0].goaltending.goalsAgainst);
+        hash[key].sa += parseInt(a.playerStats[0].goaltending.shotsAgainst);
+        hash[key].sv += parseInt(a.playerStats[0].goaltending.saves);
         hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
 
         if (hash[key].svpercent < 95) {
