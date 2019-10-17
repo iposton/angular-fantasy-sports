@@ -23,6 +23,99 @@
   margin: 0;
 }
 
+.shed-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    .col {
+      display: flex;
+      flex-direction: column;
+      //flex-basis: 100%;
+      flex: 0 0 31%;
+      width: 100%;
+      background: #999;
+      color: #fff;
+      font-size: 25px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      padding: 5px;
+      margin-bottom: 5px;
+      position: relative;
+
+      .sched-item {
+        margin-left: 20px;
+      }
+
+      .score {
+        font-size: 12px;
+      }
+
+      .week-rank {
+        text-align: center;
+      }
+
+      .abb {
+        vertical-align: bottom;
+        width: 150px;
+        display: inline-block;
+      }
+
+      .abb-single {
+        vertical-align: bottom;
+        width: 100%;
+        display: inline-block;
+      }
+
+      .abb.r{
+        text-align: right;
+      }
+
+      .at {
+        width: 75px;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .rank-num {
+        width: 40px;
+        display: inline-block;
+        text-align: center;
+      }
+    
+      img {
+        width: 25%!important;
+        margin: 0!important;
+        vertical-align: bottom;
+      }
+     
+      .abb:hover,
+      .abb-single:hover {
+        cursor: pointer;
+        color: #ccc;
+      }
+
+      .live {
+        color: #2ecc71;
+      }
+
+    }
+
+}
+
+.single {
+
+  .col {
+
+    img {
+      width: 8%!important;
+      margin: 0!important;
+      vertical-align: bottom;
+    }
+
+  }
+}
+
 .sched-wrapper {
   // display: flex;
   .row {
@@ -41,8 +134,7 @@
     .week-item {
       width: 30px;
     }
-
-    
+ 
     .col {
       display: flex;
       // flex-direction: column;
@@ -360,6 +452,19 @@ h3 {
 
 .mat-form-field-type-mat-input.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-hide-placeholder {
   color: #efefef;
+}
+
+.top-arrow {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.top-arrow:hover {
+  cursor: pointer;
+  color: #ccc;
 }
 
 

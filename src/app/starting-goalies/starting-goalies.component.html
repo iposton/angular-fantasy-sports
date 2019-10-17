@@ -281,7 +281,7 @@
       </li>
     </ul>
     <ul>
-      <li>#NHLPlayoffs Expected Goalies {{ gameDate | date:'fullDate' }}</li>
+      <li>#NHL Expected Goalies {{ gameDate | date:'fullDate' }}</li>
       <li *ngFor="let data of showData" class="goalie">
         <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'away'">
           {{data.team.matchup[0].player.twitterHandle}}
@@ -307,10 +307,10 @@
         </span>
 
       </li>
-      <li>#StanleyCup #StartingGoalies #FantasyHockey</li>
+      <li>#StartingGoalies #FantasyHockey</li>
     </ul>
      <ul>
-      <li>#NHLPlayoffs Goalie Matchups <br> {{ gameDate | date:'fullDate' }}</li>
+      <li>#NHL Goalie Matchups <br> {{ gameDate | date:'fullDate' }}</li>
       <li *ngFor="let data of showData" class="goalie">
         <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'away'">
           {{data.team.matchup[0].player.twitterHandle +' '+ data.team.matchup[0].player.lastName}}<br></span>
@@ -327,11 +327,11 @@
         <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.player.startingToday === true && data.team.matchup[2] != null && data.team.matchup[0].player.gameLocation === 'home'">
           {{data.team.matchup[0].player.twitterHandle +' '+ data.team.matchup[0].player.lastName}}<br></span>
       </li>
-      <li>#StartingGoalies #StanleyCup #FantasyHockey</li>
+      <li>#StartingGoalies #FantasyHockey</li>
     </ul>
     
     <ul>
-      <li>#NHLPlayoffs Expected Goalies {{ tomorrowDate | date:'fullDate' }}</li>
+      <li>#NHL Expected Goalies {{ tomorrowDate | date:'fullDate' }}</li>
       <li *ngFor="let data of showTomorrow" class="goalie">
         <span *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false && data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'away'">
           {{data.team.matchup[0].player.twitterHandle}}
@@ -359,7 +359,7 @@
       
 
       </li>
-       <li>#StartingGoalies #StanleyCup #FantasyHockey</li>
+       <li>#StartingGoalies #FantasyHockey</li>
     </ul>
     <!-- <div *ngIf="data.team.matchup[0].player.saves != null"> -->
     <!-- <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Saves: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SV </span> {{data.team.matchup[0].player.saves}} <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Shots Faced: </span> <span fxHide [fxHide.xs]="isVisibleOnMobile()">SA </span> {{data.team.matchup[0].player.shotsFaced}}<br> -->

@@ -1,4 +1,7 @@
-<h1 class="center date-header baseball-header"> NFL Touches Rankings</h1>
+<div id="top">
+    <h1 class="center date-header baseball-header"> NFL Touches Rankings</h1>
+</div>
+
 <h1 class="center date-header baseball-header"> Week {{selectedWeek}}</h1>
 <div class="center">
   <select name="week" id="week" (change)="onChange($event.target.value)">
@@ -55,6 +58,108 @@
         </div>
   </div>
   </div>
+  <div class="shed-row row" *ngIf="!loading">
+      <div class="schedule-box col">
+          <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span> 
+          <div *ngFor="let item of dailySchedule; let i=index">
+              <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+                  <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)"><img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> {{'#'+ item?.schedule?.awayTeam?.teamRank + '-' + item?.schedule?.awayTeam?.abbreviation}} 
+                    
+                   
+                 </span>
+                 <span class="at"> 
+                    <span class="score" *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}} </span>  
+                    @  
+                    <span class="score" *ngIf="item?.score?.homeScoreTotal != null"> {{item?.score?.homeScoreTotal}} <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'"> F</span></span>
+                 </span>
+                 <span class="abb" (click)="goAnchor(item?.schedule?.homeTeam?.abbreviation)"> {{'#'+ item?.schedule?.homeTeam?.teamRank + '-' + item.schedule?.homeTeam?.abbreviation}} <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo">
+                   
+                   <!-- <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'">FINAL</span>
+                   <span class="live" *ngIf="item?.schedule?.playedStatus === 'LIVE'"> LIVE</span> -->
+                 </span>   
+               </span>  
+            </div>
+      </div>
+      <div class="schedule-box col">
+          <span class="week-rank">Week {{selectedWeek}} - Run Rank<br> </span> 
+          <div *ngFor="let item of dailySchedule; let i=index">
+              <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+                  <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)"><img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> {{'#'+ item?.schedule?.awayTeam?.oRank + '-' + item?.schedule?.awayTeam?.abbreviation}} 
+                    
+                   
+                 </span>
+                 <span class="at"> 
+                    <span class="score" *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}} </span>  
+                    @  
+                    <span class="score" *ngIf="item?.score?.homeScoreTotal != null"> {{item?.score?.homeScoreTotal}} <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'"> F</span></span>
+                 </span>
+                 <span class="abb" (click)="goAnchor(item?.schedule?.homeTeam?.abbreviation)"> {{'#'+ item?.schedule?.homeTeam?.oRank + '-' + item.schedule?.homeTeam?.abbreviation}} <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.homeTeam?.name}} logo"> 
+                   
+                   <!-- <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'">FINAL</span>
+                   <span class="live" *ngIf="item?.schedule?.playedStatus === 'LIVE'"> LIVE</span> -->
+                 </span>   
+               </span>  
+            </div>
+      </div>
+      <div class="schedule-box col">
+          <span class="week-rank">Week {{selectedWeek}} - Pass Rank<br> </span> 
+          <div *ngFor="let item of dailySchedule; let i=index">
+              <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+                  <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)"><img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> {{'#'+ item?.schedule?.awayTeam?.dRank + '-' + item?.schedule?.awayTeam?.abbreviation}} 
+                    
+                   
+                 </span>
+                 <span class="at"> 
+                    <span class="score" *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}} </span>  
+                    @  
+                    <span class="score" *ngIf="item?.score?.homeScoreTotal != null"> {{item?.score?.homeScoreTotal}} <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'"> F</span></span>
+                 </span>
+                 <span class="abb" (click)="goAnchor(item?.schedule?.homeTeam?.abbreviation)">{{'#'+ item?.schedule?.homeTeam?.dRank + '-' + item.schedule?.homeTeam?.abbreviation}} <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.homeTeam?.name}} logo"> 
+                   
+                   <!-- <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'">FINAL</span>
+                   <span class="live" *ngIf="item?.schedule?.playedStatus === 'LIVE'"> LIVE</span> -->
+                 </span>   
+               </span>  
+            </div>
+      </div>
+</div> 
+<div class="shed-row row single" *ngIf="!loading">
+  <div class="schedule-box col">
+      <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span>
+      <div *ngFor="let item of tRank; let i=index">
+          <span *ngIf="item?.abbreviation" class="sched-item">
+              <span class="abb-single" (click)="goAnchor(item?.abbreviation)">
+                 <span class="rank-num">{{(i+1)}}</span> - <img src="{{item?.officialLogoImageSrc}}" alt="{{item?.name}} logo"> 
+                 {{item?.name}}  <span> ({{item?.win}}-{{item?.loss}}-{{item?.tie}})</span> 
+              </span> 
+          </span>  
+        </div>
+  </div>
+  <div class="schedule-box col">
+      <span class="week-rank">Week {{selectedWeek}} - Run Rank<br> </span> 
+      <span class="sub-text">* Percentage of touches are Run plays</span>
+      <div *ngFor="let item of oRank; let i=index">
+          <span *ngIf="item?.team?.abbreviation" class="sched-item">
+              <span class="abb-single" (click)="goAnchor(item?.team?.abbreviation)">
+                 <span class="rank-num">{{(i+1)}}</span> - <img src="{{item?.team?.officialLogoImageSrc}}" alt="{{item?.team?.name}} logo"> 
+                 {{item?.team?.name}} <span class="percent-text"> *{{ item?.stats?.rushing?.rushAttempts / (item?.stats?.rushing?.rushAttempts + item?.stats?.passing?.passAttempts) * 100 | number | slice:0:4 }}% </span>  <span> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span>
+              </span> 
+          </span>  
+        </div>
+  </div>
+  <div class="schedule-box col">
+      <span class="week-rank">Week {{selectedWeek}} - Pass Rank<br> </span> 
+      <span class="sub-text">* Percentage of touches are Pass plays</span>
+      <div *ngFor="let item of dRank; let i=index">
+          <span *ngIf="item?.team?.abbreviation" class="sched-item">
+              <span class="abb-single" (click)="goAnchor(item?.team?.abbreviation)">
+               <span class="rank-num">{{(i+1)}}</span> - <img src="{{item?.team?.officialLogoImageSrc}}" alt="{{item?.team?.name}} logo"> 
+               {{item?.team?.name}} <span class="percent-text"> *{{ item?.stats?.passing?.passAttempts / (item?.stats?.rushing?.rushAttempts + item?.stats?.passing?.passAttempts) * 100 | number | slice:0:4 }}% </span>  <span> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span>
+              </span> 
+          </span>  
+        </div>
+  </div>
+</div> 
 
 <div class="spinner-msg" *ngIf="loading">
   Retrieving Offensive Touches Data...
@@ -268,5 +373,8 @@
         </div>
       </div> <!-- SCORE BACK OF CARD  -->
     </mat-card>
+  </div>
+  <div class="top-arrow">
+      <span (click)="goAnchor('top')">TOP &uarr;</span>
   </div>
 </div>

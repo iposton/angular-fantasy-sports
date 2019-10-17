@@ -34,7 +34,6 @@ export class TouchesComponent implements OnInit {
 
   public dailySchedule: Array <any>;
   public teamRef: Array <any>;
-  public dRank: Array <any>;
   public previousGames: Array <any>;
   public players: Array <any>;
   public teamStats: Array <any>;
@@ -71,6 +70,9 @@ export class TouchesComponent implements OnInit {
   public teamsCompletedPlayingToday: Array <any> = [];
   public selectedWeek: string;
   public tsDate: any;
+  public dRank: Array <any> = [];
+  public oRank: Array <any> = [];
+  public tRank: Array <any> = [];
 
   constructor(private dataService: NFLDataService, 
               private http: HttpClient) {
@@ -528,6 +530,9 @@ export class TouchesComponent implements OnInit {
           }
          });
             console.log(tRank, 'first index should be least points against');
+            this.dRank = dRank;
+            this.oRank = oRank;
+            this.tRank = tRank;
             resolve();
         });
       });
@@ -648,6 +653,17 @@ export class TouchesComponent implements OnInit {
                         }
                       }
 
+                      for (let team of this.teamStats) {
+                        for (let data of teamRef) { 
+                           if (data.id!= null && 
+                             data.id === team.team.id) {
+                             data.win = team.stats.standings.wins;
+                             data.loss = team.stats.standings.losses;
+                             data.tie = team.stats.standings.ties;
+                           }
+                         }  
+                      }
+
                       if (this.weekStats.length > 0) {
                         for (let week of this.weekStats) {
                           for (let data of this.myData) {
@@ -749,7 +765,13 @@ export class TouchesComponent implements OnInit {
   }
 
   public goAnchor(data) {
-    document.querySelector("mat-card[id="+data+"]").scrollIntoView({behavior: "smooth"});
+    let anchor = "";
+    anchor = data;
+    if (data === 'top') {
+      document.querySelector("div[id="+anchor+"]").scrollIntoView();
+    } else {
+      document.querySelector("mat-card[id="+anchor+"]").scrollIntoView({behavior: "smooth"});
+    } 
   }
 
   flipBack(data) {
