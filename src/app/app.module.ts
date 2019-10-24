@@ -34,6 +34,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { OrderBy } from './orderby.pipe';
 
+import { StartingFiveComponent } from './starting-five/starting-five.component';
 import { StartingLineComponent } from './starting-line/starting-line.component';
 import { TouchesComponent } from './touches/touches.component';
 import { StartingPitcherComponent } from './starting-pitcher/starting-pitcher.component';
@@ -79,6 +80,11 @@ const routes: Routes = [
         path: 'starting-goalies',
         component: StartingGoaliesComponent
   }
+  ,
+  {
+        path: 'starting-five',
+        component: StartingFiveComponent
+  }
 
 ];
 
@@ -91,6 +97,7 @@ const routes: Routes = [
     PitchingStatsComponent,
     StartingGoaliesComponent,
     StartingLineComponent,
+    StartingFiveComponent,
     TomorrowResultsComponent,
     YesterdayResultsComponent,
     TouchesComponent,
