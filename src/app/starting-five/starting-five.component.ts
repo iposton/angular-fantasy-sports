@@ -1,22 +1,29 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { NFLDataService } from '../nfl-data.service';
-import { FirebaseService } from '../firebase.service';
+import { NBADataService } from '../nba-data.service';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { OrderBy } from '../orderby.pipe';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 let headers = null;
 let playerString = null;
 let today = new Date();
 let teamRef = [];
+let starterNames = {
+  'Starter1': 'Starter1',
+  'Starter2': 'Starter2',
+  'Starter3': 'Starter3',
+  'Starter4': 'Starter4',
+  'Starter5': 'Starter5'
+}
 
 @Component({
-  selector: 'app-starting-line',
-  templateUrl: './starting-line.component.html',
-  styleUrls: ['./starting-line.component.scss'],
+  selector: 'app-starting-five',
+  templateUrl: './starting-five.component.html',
+  styleUrls: ['./starting-five.component.scss'],
   animations: [
     trigger('flipState', [
       state('active', style({
@@ -30,11 +37,10 @@ let teamRef = [];
     ])
   ],
 })
-export class StartingLineComponent implements OnInit {
+export class StartingFiveComponent implements OnInit {
 
   public dailySchedule: Array <any>;
   public teamRef: Array <any>;
-  //public dRank: Array <any>;
   public previousGames: Array <any>;
   public players: Array <any>;
   public teamStats: Array <any>;
@@ -44,7 +50,7 @@ export class StartingLineComponent implements OnInit {
   public specificFastballDataById: Array <any> = [];
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular";
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
   public groups: Array <any>;
@@ -74,9 +80,12 @@ export class StartingLineComponent implements OnInit {
   public dRank: Array <any> = [];
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
+  public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any };
+  public gameStarters: Array <any> = [];
 
-  constructor(private dataService: NFLDataService, 
-              private http: HttpClient) {
+  constructor(private dataService: NBADataService, 
+              private http: HttpClient,
+              private sanitizer: DomSanitizer) {
     this.players = this.dataService.getSentStats();
     this.selectedWeek = '1';
 
@@ -148,168 +157,6 @@ export class StartingLineComponent implements OnInit {
       }
     ]
 
-    this.byes = {
-      "ATL": {
-        id: 68,
-        abbreviation: "ATL",
-        bye: 9
-      }, 
-      "CAR": {
-        id: 69,
-        abbreviation: "CAR",
-        bye: 7 
-      },
-      "NO": {
-        id: 70,
-        abbreviation: "NO",
-        bye: 9
-      },
-      "TB": {
-        id: 71,
-        abbreviation: "TB",
-        bye: 7
-      },
-      "HOU": {
-        id: 64,
-        abbreviation: "HOU",
-        bye: 10
-      },
-      "IND": {
-        id: 65,
-        abbreviation: "IND",
-        bye: 6
-      },
-      "JAX": {
-        id: 66,
-        abbreviation: "JAX",
-        bye: 10
-      },
-      "TEN": {
-        id: 67,
-        abbreviation: "TEN",
-        bye: 11
-      },
-      "ARI": {
-        id: 76,
-        abbreviation: "ARI",
-        bye: 12
-      },
-      "LA": {
-        id: 77,
-        abbreviation: "LA",
-        bye: 9
-      },
-      "SF": {
-        id: 78,
-        abbreviation: "SF",
-        bye: 4
-      },
-      "SEA": {
-        id: 79,
-        abbreviation: "SEA",
-        bye: 11
-      },
-      "DEN": {
-        id: 72,
-        abbreviation: "DEN",
-        bye: 10
-      },
-      "KC": {
-        id: 73,
-        abbreviation: "KC",
-        bye: 12
-      },
-      "OAK": {
-        id: 74,
-        abbreviation: "OAK",
-        bye: 6
-      },
-      "LAC": {
-        id: 75,
-        abbreviation: "LAC",
-        bye: 12
-      },
-      "NYJ": {
-        id: 51,
-        abbreviation: "NYJ",
-        bye: 4
-      },
-      "NE": {
-        id: 50,
-        abbreviation: "NE",
-        bye: 10
-      },
-      "MIA": {
-        id: 49,
-        abbreviation: "MIA",
-        bye: 5
-      },
-      "BUF": {
-        id: 48,
-        abbreviation: "BUF",
-        bye: 6
-      },
-      "WAS": {
-        id: 55,
-        abbreviation: "WAS",
-        bye: 10
-      },
-      "PHI": {
-        id: 54,
-        abbreviation: "PHI",
-        bye: 10
-      },
-      "NYG": {
-        id: 53,
-        abbreviation: "NYG",
-        bye: 11
-      },
-      "DAL": {
-        id: 52,
-        abbreviation: "DAL",
-        bye: 8
-      },
-      "PIT": {
-        id: 59,
-        abbreviation: "PIT",
-        bye: 7
-      },
-      "CLE": {
-        id: 58,
-        abbreviation: "CLE",
-        bye: 7
-      },
-      "CIN": {
-        id: 57,
-        abbreviation: "CIN",
-        bye: 9
-      },
-      "BAL": {
-        id: 56,
-        abbreviation: "BAL",
-        bye: 8
-      },
-      "MIN": {
-        id: 63,
-        abbreviation: "MIN",
-        bye: 12
-      },
-      "GB": {
-        id: 62,
-        abbreviation: "GB",
-        bye: 11
-      },
-      "DET": {
-        id: 61,
-        abbreviation: "DET",
-        bye: 5
-      },
-      "CHI": {
-        id: 60,
-        abbreviation: "CHI",
-        bye: 6
-      },
-}
 
     for (let week of weekTimes) {
 
@@ -327,6 +174,34 @@ export class StartingLineComponent implements OnInit {
     }
 
     
+  }
+
+  public colorLuminance(hex, lum) {
+
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    lum = lum || 0;
+  
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+      c = parseInt(hex.substr(i*2,2), 16);
+      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+      rgb += ("00"+c).substr(c.length);
+    }
+  
+    return rgb;
+  }
+
+  public getBackground(color) {
+    let lighter = this.colorLuminance(color, 0.6);
+    if (color === "#000000")
+      lighter = "#555555";
+
+    return this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(${color}, ${lighter})`);
   }
 
   public onChange(week) {
@@ -358,8 +233,6 @@ export class StartingLineComponent implements OnInit {
     this.dataService
       .getEnv().subscribe(res => {
 
-        //headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
-
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
 
         this.dataService
@@ -388,49 +261,141 @@ export class StartingLineComponent implements OnInit {
               // let d = new Date();
               // let gd = new Date(this.gameDate);
               if (this.teamSchedules.length === 0) {
-                let team;
-                let teamSchedule;
-                forkJoin(
-                  teamRef.map(
-                    g => 
+              //   let team;
+              //   let teamSchedule;
+              //   forkJoin(
+              //     teamRef.map(
+              //       g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g.abbreviation}`, { headers })
+              //        this.http.get(`${this.apiRoot}/games.json?team=${g.abbreviation}`, { headers })
                     
-                  )
-                )
-                .subscribe(res => {
-                  //console.log(res, 'get team schedules...');
+              //     )
+              //   )
+              //   .subscribe(res => {
+              //     //console.log(res, 'get team schedules...');
 
-                  res.forEach((item, index) => {
-                    team = teamRef[index].abbreviation;
-                    teamSchedule = {
-                      team: team,
-                      schedule: res[index]['games']
-                    }
-                    this.teamSchedules.push(teamSchedule);
-                    //console.log(this.teamSchedules, 'schedules array...');
+              //     res.forEach((item, index) => {
+              //       team = teamRef[index].abbreviation;
+              //       teamSchedule = {
+              //         team: team,
+              //         schedule: res[index]['games']
+              //       }
+              //       this.teamSchedules.push(teamSchedule);
+              //       //console.log(this.teamSchedules, 'schedules array...');
 
-                  })
+              //     })
                   
 
-                  this.sortData();
+              //    // this.sortData();
 
-                }, (err: HttpErrorResponse) => {
+              //   }, (err: HttpErrorResponse) => {
                   
-                  console.log(err, 'error getting lineup');
+              //     console.log(err, 'error getting lineup');
 
-              });
+              // });
 
               } else {
-                this.sortData();
+                //this.sortData();
               }
 
             }
+
+            forkJoin(
+              res['games'].map(
+                g => 
+                
+                 this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json`, { headers })
+                
+              )
+            )
+            .subscribe(res => {
+              let i = null;
+              let i2 = null;
+              let res2 = null;
+              let game2 = null;
+              let score2 = null;
+            
+              
+            res.forEach((item, index) => {
+                //console.log(this.dailySchedule[i], 'score for games');
+                //console.log(res, 'got starting lineups data!');
+                i = index;
+                try {
+                  game2 = res[i]['game'];
+                  res2 = res[i]['teamLineups'];
+                  score2 = this.dailySchedule[i].score;
+                } catch {
+                  console.log('bad endpoint');
+                }
+
+                res2.forEach((item, index) => {
+
+                  i2 = index;
+                  console.log(res2[i2], 'looking of starters');
+                  
+                  if (res2[i2].actual != null && res2[i2].expected != null)  {
+                    //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
+                    res2[i2].actual.lineupPositions.forEach(item => {
+                      if (starterNames[item.position]) {
+
+                        this.gameStarter = {
+                          playerID: item.player.id,
+                          gameID: game2.id,
+                          score: score2,
+                          status: game2.playedStatus,
+                          scheduleStatus: game2.scheduleStatus,
+                          playerStatus: 'actual'
+                        }
+                        this.gameStarters.push(this.gameStarter);
+                        this.starterIdData.push(item.player.id);
+                        playerString = this.starterIdData.join();
+
+                      }
+                    })
+
+                  } else if (res2[i2].actual == null && res2[i2].expected != null) {
+
+                      res2[i2].expected.lineupPositions.forEach(item => {
+                        if (starterNames[item.position]) {
+
+                          this.gameStarter = {
+                            playerID: item.player.id,
+                            gameID: game2.id,
+                            score: score2,
+                            status: game2.playedStatus,
+                            scheduleStatus: game2.scheduleStatus,
+                            playerStatus: 'expected'
+                          }
+                          this.gameStarters.push(this.gameStarter);
+                          this.starterIdData.push(item.player.id);
+                          playerString = this.starterIdData.join();
+
+                        }
+                      })
+                    //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
+                   
+                    
+                  } else {
+                    //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
+                  }
+
+                });
+              });
+
+              this.sortData();
+
+            }, (err: HttpErrorResponse) => {
+              
+              console.log(err, 'error getting lineup');
+
+          });
           }, (err: HttpErrorResponse) => {
 
             console.log(err, 'error getting schedule');
 
           });
+
+          
 
       });
 
@@ -439,324 +404,416 @@ export class StartingLineComponent implements OnInit {
   public async sortData() {
     if (this.gamesToday === true) {
 
-      let promiseOne;
-      promiseOne = new Promise((resolve, reject) => {
-        this.dataService
-          .getTeamStats(this.tsDate).subscribe(res => {
-            console.log(res, 'got team stats!');
-            this.teamStats = res['teamStatsTotals'];
-            let oSort = [];
-            let dSort = [];
-            let dRank = [];
-            let oRank = [];
-            let tRank = [];
-            oSort = res['teamStatsTotals'];
-            dSort = res['teamStatsTotals'];
+      // let promiseOne;
+      // promiseOne = new Promise((resolve, reject) => {
+      //   this.dataService
+      //     .getTeamStats(this.tsDate).subscribe(res => {
+      //       console.log(res, 'got team stats!');
+      //       this.teamStats = res['teamStatsTotals'];
+      //       let oSort = [];
+      //       let dSort = [];
+      //       let dRank = [];
+      //       let oRank = [];
+      //       let tRank = [];
+      //       oSort = res['teamStatsTotals'];
+      //       dSort = res['teamStatsTotals'];
 
-            this.dataService
-              .getWeek(this.selectedWeek).subscribe(res => {
-                console.log(res, "weekly games...");
-                this.weekStats = res['gamelogs'];
-            });
+      //       this.dataService
+      //         .getWeek(this.selectedWeek).subscribe(res => {
+      //           console.log(res, "weekly games...");
+      //           this.weekStats = res['gamelogs'];
+      //       });
             
-            dRank = dSort.slice().sort((a: any, b: any) => {
+      //       dRank = dSort.slice().sort((a: any, b: any) => {
 
-              if (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek)) {
-                console.log(a['team'].abbreviation, 'had a bye');
-                console.log(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) + Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)));
-              }
-              if (a['team'].abbreviation === "NE") {
-                console.log(a['team'].abbreviation, 'new england');
-                console.log(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards));
-              }
+      //         if (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek)) {
+      //           console.log(a['team'].abbreviation, 'had a bye');
+      //         }
 
-              if (a['stats'].standings.pointsAgainst +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
-               <= b['stats'].standings.pointsAgainst +
-               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
-                return -1;
-              } else if (a['stats'].standings.pointsAgainst +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
-               >= b['stats'].standings.pointsAgainst +
-               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
+      //         if (a['stats'].standings.pointsAgainst +
+      //         (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+      //          <= b['stats'].standings.pointsAgainst +
+      //          (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
+      //           return -1;
+      //         } else if (a['stats'].standings.pointsAgainst +
+      //         (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+      //          >= b['stats'].standings.pointsAgainst +
+      //          (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
+      //           return 1;
+      //         } else {
+      //           return 0;
+      //         }
+      //       });
 
-            dRank.forEach(function(item, index){
-              for (let team of teamRef) {
-               if (dRank[index].team.abbreviation === team.abbreviation) { 
-                 team.dRank = index + 1; 
-               }
-              }
-            });
+      //       dRank.forEach(function(item, index){
+      //         for (let team of teamRef) {
+      //          if (dRank[index].team.abbreviation === team.abbreviation) { 
+      //            team.dRank = index + 1; 
+      //          }
+      //         }
+      //       });
 
-            oRank = oSort.slice().sort((a: any, b: any) => {
-              if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
-              >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
-              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
-                return -1;
-              } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
-              <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
-              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
+      //       oRank = oSort.slice().sort((a: any, b: any) => {
+      //         if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
+      //         (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+      //         >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
+      //         (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+      //           return -1;
+      //         } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
+      //         (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+      //         <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
+      //         (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+      //           return 1;
+      //         } else {
+      //           return 0;
+      //         }
+      //       });
             
-           oRank.forEach(function(item, index){
-            for (let team of teamRef) {
-             if (oRank[index].team.abbreviation === team.abbreviation) { 
-               team.oRank = index + 1; 
-             }
-            }
-           });
+      //      oRank.forEach(function(item, index){
+      //       for (let team of teamRef) {
+      //        if (oRank[index].team.abbreviation === team.abbreviation) { 
+      //          team.oRank = index + 1; 
+      //        }
+      //       }
+      //      });
 
-           tRank = teamRef.slice().sort((a: any, b: any) => {
+      //      tRank = teamRef.slice().sort((a: any, b: any) => {
   
-            if ((a.oRank + a.dRank)
-            <= (b.oRank + b.dRank)) {
-              return -1;
-            } else if ((a.oRank + a.dRank)
-            >= (b.oRank + b.dRank)) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
+      //       if ((a.oRank + a.dRank)
+      //       <= (b.oRank + b.dRank)) {
+      //         return -1;
+      //       } else if ((a.oRank + a.dRank)
+      //       >= (b.oRank + b.dRank)) {
+      //         return 1;
+      //       } else {
+      //         return 0;
+      //       }
+      //     });
           
-         tRank.forEach(function(item, index){
-          for (let team of teamRef) {
-           if (tRank[index].abbreviation === team.abbreviation) { 
-             team.teamRank = index + 1; 
-           }
-          }
-         });
-            console.log(tRank, 'first index should be least points against');
-            this.dRank = dRank;
-            this.oRank = oRank;
-            this.tRank = tRank;
-            resolve();
-        });
-      });
+      //    tRank.forEach(function(item, index){
+      //     for (let team of teamRef) {
+      //      if (tRank[index].abbreviation === team.abbreviation) { 
+      //        team.teamRank = index + 1; 
+      //      }
+      //     }
+      //    });
+      //       console.log(tRank, 'first index should be least points against');
+      //       this.dRank = dRank;
+      //       this.oRank = oRank;
+      //       this.tRank = tRank;
+      //       resolve();
+      //   });
+      // });
 
-      let resultOne = await promiseOne;
+      // let resultOne = await promiseOne;
 
       this.dataService
-        .getDaily(this.selectedWeek).subscribe(res => {
-            console.log(res, "Daily stats...");
-            this.dailyStats = res['gamelogs'];
+        .getInfo(playerString).subscribe(res => {
 
-            this.dataService
-              .getStats(playerString).subscribe(res => {
+          console.log(res, 'player info');
+          console.log(this.gameStarters, 'game starters');
 
-                  //this.myData = res['playerStatsTotals'];
-                  this.myData = res['playerStatsTotals'].filter(
-                  player => player.stats.miscellaneous && player.stats.miscellaneous['gamesStarted'] > 3);
+          this.myData = res['players'];
 
-                  if (this.myData) {
-                    console.log(this.myData, "cumulative stats...");
+          for (let schedule of this.dailySchedule) {
 
-                       console.log('start sorting data for real gameID by ID...');
+            for (let sdata of this.myData) {
+
+              if (schedule.schedule.awayTeam.abbreviation === sdata.teamAsOfDate.abbreviation) {
+                sdata.player.gameTime = schedule.schedule.startTime;
+                sdata.teamAsOfDate.gameField = schedule.schedule.venue.name;
+                sdata.gameId = schedule.schedule.id;
+                sdata.player.gameLocation = "away";
+                sdata.teamAsOfDate.opponent = schedule.schedule.homeTeam.abbreviation;
+                sdata.teamAsOfDate.abbreviation = schedule.schedule.awayTeam.abbreviation;
+                sdata.teamAsOfDate.opponentId = schedule.schedule.homeTeam.id;
+              }
+              if (schedule.schedule.homeTeam.abbreviation === sdata.teamAsOfDate.abbreviation) {
+                sdata.player.gameTime = schedule.schedule.startTime;
+                sdata.teamAsOfDate.gameField = schedule.schedule.venue.name;
+                sdata.gameId = schedule.schedule.id;
+                sdata.player.gameLocation = "home";
+                sdata.teamAsOfDate.opponent = schedule.schedule.awayTeam.abbreviation;
+                sdata.teamAsOfDate.abbreviation = schedule.schedule.homeTeam.abbreviation;
+                sdata.teamAsOfDate.opponentId = schedule.schedule.awayTeam.id;
+              }
+            }
+          }
+
+          for (let team of teamRef) {
+            for (let data of this.myData) { 
+              if (team.id === data.teamAsOfDate.id) {
+                data.teamAsOfDate.color = team.teamColoursHex[0];
+                data.teamAsOfDate.accent = team.teamColoursHex[1];
+                data.teamAsOfDate.logo = team.officialLogoImageSrc;
+                data.teamAsOfDate.city = team.city;
+                data.teamAsOfDate.name = team.name;
+                data.flip = 'inactive';
+                // data.dRank = team.dRank;
+                // data.oRank = team.oRank;
+                // data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
+              } 
+            }  
+         }
+
+          for (let starter of this.gameStarters) {
+            for (let data of this.myData) {
+
+              if (starter.playerId === data.player.id) {
+                data.starterInfo = starter;
+              }
+              
+            }
+          }
+       
+
+          this.groups = this.myData.reduce(function (r, a) {
+            r[a.teamAsOfDate.abbreviation] = r[a.teamAsOfDate.abbreviation] || [];
+            r[a.teamAsOfDate.abbreviation].push({'of': 'of', 'playerObj': a});
+            return r;
+           }, Object.create(null));
+
+                      // this.tsGroups = this.teamStats.reduce(function (r, a) {
+                      //   r[a.team.abbreviation] = r[a.team.abbreviation] || [];
+                      //   r[a.team.abbreviation].push(a);
+                      //   return r;
+  
+                      // }, Object.create(null));
+
+                      // this.schedGroups = this.teamSchedules.reduce(function (r, a) {
+                      //   r[a.team] = r[a.team] || [];
+                      //   r[a.team].push(a);
+                      //   return r;
+  
+                      // }, Object.create(null));
+
+          this.lineGroups = Object.keys(this.groups).map((key, index) => {
+              return {team: key, offensePlayers: this.groups[key].filter(item => item.of)};
+          });
+
+          this.showTeams();
+
+      })
+
+      // this.dataService
+      //   .getDaily(this.selectedWeek).subscribe(res => {
+      //       console.log(res, "Daily stats...");
+      //       this.dailyStats = res['gamelogs'];
+
+      //       this.dataService
+      //         .getStats(playerString).subscribe(res => {
+      //             this.myData = res['playerStatsTotals'];
+      //             // .filter(
+      //             //   player => player.team != null);
+      //             // // .filter(
+      //             // player => player.stats.miscellaneous && player.stats.miscellaneous['gamesStarted'] > 2);
+
+      //             if (this.myData) {
+      //               console.log(this.myData, "cumulative stats...");
+
+      //                  console.log('start sorting data for real gameID by ID...');
                     
-                      if (this.myData && this.dailySchedule) {
-                        console.log('start sorting data for daily schedule...');
-                        for (let schedule of this.dailySchedule) {
+      //                 if (this.myData && this.dailySchedule) {
+      //                   console.log('start sorting data for daily schedule...');
+      //                   for (let schedule of this.dailySchedule) {
 
-                          for (let sdata of this.myData) {
+      //                     for (let sdata of this.myData) {
 
-                            if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
+      //                       if (sdata.team != null && schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
 
-                              sdata.player.gameTime = schedule.schedule.startTime;
-                              sdata.team.gameField = schedule.schedule.venue.name;
-                              sdata.gameId = schedule.schedule.id;
-                              sdata.player.gameLocation = "away";
-                              sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
-                              //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
-                              sdata.team.opponentId = schedule.schedule.homeTeam.id;
-                            }
-                            if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
+      //                         sdata.player.gameTime = schedule.schedule.startTime;
+      //                         sdata.team.gameField = schedule.schedule.venue.name;
+      //                         sdata.gameId = schedule.schedule.id;
+      //                         sdata.player.gameLocation = "away";
+      //                         sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+      //                         //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
+      //                         sdata.team.opponentId = schedule.schedule.homeTeam.id;
+      //                       }
+      //                       if (sdata.team != null && schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
 
-                              sdata.player.gameTime = schedule.schedule.startTime;
-                              sdata.team.gameField = schedule.schedule.venue.name;
-                              sdata.gameId = schedule.schedule.id;
-                              sdata.player.gameLocation = "home";
-                              sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
-                              //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
-                              sdata.team.opponentId = schedule.schedule.awayTeam.id;
-                            }
-                          }
-                        }
-                      }
+      //                         sdata.player.gameTime = schedule.schedule.startTime;
+      //                         sdata.team.gameField = schedule.schedule.venue.name;
+      //                         sdata.gameId = schedule.schedule.id;
+      //                         sdata.player.gameLocation = "home";
+      //                         sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+      //                         //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
+      //                         sdata.team.opponentId = schedule.schedule.awayTeam.id;
+      //                       }
+      //                     }
+      //                   }
+      //                 }
 
-                       for (let team of teamRef) {
-                         for (let data of this.myData) { 
-                            if (team.id === data.team.id) {
-                              data.team.color = team.teamColoursHex[0];
-                              data.team.accent = team.teamColoursHex[1];
-                              data.team.logo = team.officialLogoImageSrc;
-                              data.team.city = team.city;
-                              data.team.name = team.name;
-                              data.flip = 'inactive';
-                              data.dRank = team.dRank;
-                              data.oRank = team.oRank;
-                              data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
-                            } 
-                          }  
-                       }
+      //                  for (let team of teamRef) {
+      //                    for (let data of this.myData) { 
+      //                       if (team.id === data.team.id) {
+      //                         data.team.color = team.teamColoursHex[0];
+      //                         data.team.accent = team.teamColoursHex[1];
+      //                         data.team.logo = team.officialLogoImageSrc;
+      //                         data.team.city = team.city;
+      //                         data.team.name = team.name;
+      //                         data.flip = 'inactive';
+      //                         data.dRank = team.dRank;
+      //                         data.oRank = team.oRank;
+      //                         data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
+      //                       } 
+      //                     }  
+      //                  }
 
-                       for (let team of this.teamStats) {
-                        for (let data of this.myData) { 
-                           if (data.team.opponentId != null && 
-                             data.team.opponentId === team.team.id) {
-                             data.opponentW = team.stats.standings.wins;
-                             data.opponentL = team.stats.standings.losses;
-                             data.opponentT = team.stats.standings.ties;
-                           }
-                         }  
-                      }
+                      //  for (let team of this.teamStats) {
+                      //   for (let data of this.myData) { 
+                      //      if (data.team.opponentId != null && 
+                      //        data.team.opponentId === team.team.id) {
+                      //        data.opponentW = team.stats.standings.wins;
+                      //        data.opponentL = team.stats.standings.losses;
+                      //        data.opponentT = team.stats.standings.ties;
+                      //      }
+                      //    }  
+                      // }
 
-                      for (let team of this.teamStats) {
-                        for (let data of teamRef) { 
-                           if (data.id!= null && 
-                             data.id === team.team.id) {
-                             data.win = team.stats.standings.wins;
-                             data.loss = team.stats.standings.losses;
-                             data.tie = team.stats.standings.ties;
-                           }
-                         }  
-                      }
+                      // for (let team of this.teamStats) {
+                      //   for (let data of teamRef) { 
+                      //      if (data.id!= null && 
+                      //        data.id === team.team.id) {
+                      //        data.win = team.stats.standings.wins;
+                      //        data.loss = team.stats.standings.losses;
+                      //        data.tie = team.stats.standings.ties;
+                      //      }
+                      //    }  
+                      // }
 
-                       for (let schedule of this.myData) {
-                        for (let sdata of this.myData) {
-                          if (sdata.team.opponentId != null && 
-                            sdata.team.opponentId === schedule.team.id && 
-                            sdata.gameId === schedule.gameId) {
-                            sdata.team.opponentLogo = schedule.team.logo;
-                            sdata.team.opponentName = schedule.team.name;
-                            sdata.opponentDR = schedule.dRank;
-                            sdata.opponentOR = schedule.oRank;
-                            sdata.opponentTR = schedule.teamRank;
-                            sdata.opponentColor = schedule.team.color;
-                          }
-                        }
-                      }
+                      //  for (let schedule of this.myData) {
+                      //   for (let sdata of this.myData) {
+                      //     if (sdata.team.opponentId != null && 
+                      //       sdata.team.opponentId === schedule.team.id && 
+                      //       sdata.gameId === schedule.gameId) {
+                      //       sdata.team.opponentLogo = schedule.team.logo;
+                      //       sdata.team.opponentName = schedule.team.name;
+                      //       sdata.opponentDR = schedule.dRank;
+                      //       sdata.opponentOR = schedule.oRank;
+                      //       sdata.opponentTR = schedule.teamRank;
+                      //       sdata.opponentColor = schedule.team.color;
+                      //     }
+                      //   }
+                      // }
 
-                      for (let schedule of this.dailySchedule) {
-                        for (let data of this.myData) {
-                          if (schedule.schedule.awayTeam.abbreviation === data.team.abbreviation) {
-                              schedule.schedule.awayTeam.color = data.team.color;
-                              schedule.schedule.awayTeam.accent = data.team.accent;
-                              schedule.schedule.awayTeam.logo = data.team.logo;
-                              schedule.schedule.awayTeam.city = data.team.city;
-                              schedule.schedule.awayTeam.name = data.team.name;
-                              schedule.schedule.awayTeam.dRank = data.dRank;
-                              schedule.schedule.awayTeam.oRank = data.oRank;
-                              schedule.schedule.awayTeam.teamRank = data.teamRank;
-                          }
-                          if (schedule.schedule.homeTeam.abbreviation === data.team.abbreviation) {
-                              schedule.schedule.homeTeam.color = data.team.color;
-                              schedule.schedule.homeTeam.accent = data.team.accent;
-                              schedule.schedule.homeTeam.logo = data.team.logo;
-                              schedule.schedule.homeTeam.city = data.team.city;
-                              schedule.schedule.homeTeam.name = data.team.name;
-                              schedule.schedule.homeTeam.dRank = data.dRank;
-                              schedule.schedule.homeTeam.oRank = data.oRank;
-                              schedule.schedule.homeTeam.teamRank = data.teamRank;
-                          }
-                        }
-                      }
+                      // for (let schedule of this.dailySchedule) {
+                      //   for (let data of this.myData) {
+                      //     if (schedule.schedule.awayTeam.abbreviation === data.team.abbreviation) {
+                      //         schedule.schedule.awayTeam.color = data.team.color;
+                      //         schedule.schedule.awayTeam.accent = data.team.accent;
+                      //         schedule.schedule.awayTeam.logo = data.team.logo;
+                      //         schedule.schedule.awayTeam.city = data.team.city;
+                      //         schedule.schedule.awayTeam.name = data.team.name;
+                      //         schedule.schedule.awayTeam.dRank = data.dRank;
+                      //         schedule.schedule.awayTeam.oRank = data.oRank;
+                      //         schedule.schedule.awayTeam.teamRank = data.teamRank;
+                      //     }
+                      //     if (schedule.schedule.homeTeam.abbreviation === data.team.abbreviation) {
+                      //         schedule.schedule.homeTeam.color = data.team.color;
+                      //         schedule.schedule.homeTeam.accent = data.team.accent;
+                      //         schedule.schedule.homeTeam.logo = data.team.logo;
+                      //         schedule.schedule.homeTeam.city = data.team.city;
+                      //         schedule.schedule.homeTeam.name = data.team.name;
+                      //         schedule.schedule.homeTeam.dRank = data.dRank;
+                      //         schedule.schedule.homeTeam.oRank = data.oRank;
+                      //         schedule.schedule.homeTeam.teamRank = data.teamRank;
+                      //     }
+                      //   }
+                      // }
 
-                      if (this.weekStats.length > 0) {
-                        for (let week of this.weekStats) {
-                          for (let data of this.myData) {
-                            if (data.team.id != null && 
-                              data.team.id === week.team.id) {
-                              data.teamScore = week.stats.standings.pointsFor;
-                              data.opponentScore = week.stats.standings.pointsAgainst; 
-                              data.win = week.stats.standings.wins;
-                              data.loss = week.stats.standings.losses;
-                              data.tie = week.stats.standings.ties;
-                              data.otWin = week.stats.standings.otWins;
-                              data.otLoss = week.stats.standings.otLosses;                  
-                            }
-                          }
-                        } 
-                      }
+                      // if (this.weekStats.length > 0) {
+                      //   for (let week of this.weekStats) {
+                      //     for (let data of this.myData) {
+                      //       if (data.team.id != null && 
+                      //         data.team.id === week.team.id) {
+                      //         data.teamScore = week.stats.standings.pointsFor;
+                      //         data.opponentScore = week.stats.standings.pointsAgainst; 
+                      //         data.win = week.stats.standings.wins;
+                      //         data.loss = week.stats.standings.losses;
+                      //         data.tie = week.stats.standings.ties;
+                      //         data.otWin = week.stats.standings.otWins;
+                      //         data.otLoss = week.stats.standings.otLosses;                  
+                      //       }
+                      //     }
+                      //   } 
+                      // }
 
-                     this.groups = this.myData.reduce(function (r, a) {
-                      r[a.team.abbreviation] = r[a.team.abbreviation] || [];
-                       if (a.player.primaryPosition === 'NT' || a.player.primaryPosition === 'DT' || a.player.primaryPosition === 'DE') {
-                         r[a.team.abbreviation].push({'def': 'def', 'playerObj': a});
-                         return r;
-                       } else {
-                         r[a.team.abbreviation].push({'of': 'of', 'playerObj': a});
-                        return r;
-                       }
+
+    //                   this.showData = this.myData;
+
+
+    //                   console.log(this.showData, 'show data');
+    //  this.dataService
+    //    .sendStats(this.showData);
+
+                    //  this.groups = this.myData.reduce(function (r, a) {
+                    //   r[a.team.abbreviation] = r[a.team.abbreviation] || [];
+                    //    if (a.player.primaryPosition === 'NT' || a.player.primaryPosition === 'DT' || a.player.primaryPosition === 'DE') {
+                    //      r[a.team.abbreviation].push({'def': 'def', 'playerObj': a});
+                    //      return r;
+                    //    } else {
+                    //      r[a.team.abbreviation].push({'of': 'of', 'playerObj': a});
+                    //     return r;
+                    //    }
                           
-                      }, Object.create(null));
+                    //   }, Object.create(null));
 
-                      this.tsGroups = this.teamStats.reduce(function (r, a) {
-                        r[a.team.abbreviation] = r[a.team.abbreviation] || [];
-                        r[a.team.abbreviation].push(a);
-                        return r;
+                      // this.tsGroups = this.teamStats.reduce(function (r, a) {
+                      //   r[a.team.abbreviation] = r[a.team.abbreviation] || [];
+                      //   r[a.team.abbreviation].push(a);
+                      //   return r;
   
-                      }, Object.create(null));
+                      // }, Object.create(null));
 
-                      this.schedGroups = this.teamSchedules.reduce(function (r, a) {
-                        r[a.team] = r[a.team] || [];
-                        r[a.team].push(a);
-                        return r;
+                    //   this.schedGroups = this.teamSchedules.reduce(function (r, a) {
+                    //     r[a.team] = r[a.team] || [];
+                    //     r[a.team].push(a);
+                    //     return r;
   
-                      }, Object.create(null));
+                    //   }, Object.create(null));
 
-                      this.lineGroups = Object.keys(this.groups).map((key, index) => {
-                        return {team: key, offensePlayers: this.groups[key].filter(item => item.of), defensePlayers: this.groups[key].filter(item => item.def), teamStats: this.tsGroups[key][0].stats, seasonSchedule: this.schedGroups[key][0].schedule};
-                      });
+                    //   this.lineGroups = Object.keys(this.groups).map((key, index) => {
+                    //     return {team: key, offensePlayers: this.groups[key].filter(item => item.of), defensePlayers: this.groups[key].filter(item => item.def), seasonSchedule: this.schedGroups[key][0].schedule};
+                    //   });
 
-                     this.showTeams();
+                    //  this.showTeams();
 
-                  } else {
+               //   } else {
                       // this.showData = this.myData;
                       // this.dataService
                       //   .sendStats(this.showData);
-                  }
+        //           }
 
-                  this.loading = false;
+        //           this.loading = false;
 
-                },
-                (err: HttpErrorResponse) => {
-                  if (err instanceof Error) {
-                    console.log('api error', err.error.message);
-                    // client-side error
-                    this.loading = false;
-                    this.errMessage = `An error occured ${err.error.message}`;
-                  } else {
-                    this.loading = false;
-                    console.log('api error', err.message);
-                    this.errMessage = `${err.status}. Sorry :( Please Try again.`;
-                  }
-                }
-              );
-          },
-          (err: HttpErrorResponse) => {
-            if (err instanceof Error) {
-              console.log('api error', err.error.message);
-              // client-side error
-              this.loading = false;
-              this.errMessage = `An error occured ${err.error.message}`;
-            } else {
-              this.loading = false;
-              console.log('api error', err.message);
-              this.errMessage = `${err.status}. Sorry :( Please Try again.`;
-            }
-          }
-        );
+        //         },
+        //         (err: HttpErrorResponse) => {
+        //           if (err instanceof Error) {
+        //             console.log('api error', err.error.message);
+        //             // client-side error
+        //             this.loading = false;
+        //             this.errMessage = `An error occured ${err.error.message}`;
+        //           } else {
+        //             this.loading = false;
+        //             console.log('api error', err.message);
+        //             this.errMessage = `${err.status}. Sorry :( Please Try again.`;
+        //           }
+        //         }
+        //       );
+        //   },
+        //   (err: HttpErrorResponse) => {
+        //     if (err instanceof Error) {
+        //       console.log('api error', err.error.message);
+        //       // client-side error
+        //       this.loading = false;
+        //       this.errMessage = `An error occured ${err.error.message}`;
+        //     } else {
+        //       this.loading = false;
+        //       console.log('api error', err.message);
+        //       this.errMessage = `${err.status}. Sorry :( Please Try again.`;
+        //     }
+        //   }
+        // );
 
     } else {
       console.log('No games then no daily stats either. :(');
@@ -770,6 +827,8 @@ export class StartingLineComponent implements OnInit {
      console.log(this.showData, 'show data');
      this.dataService
        .sendStats(this.showData);
+
+       this.loading = false;
   }
 
   public goAnchor(data) {
