@@ -559,7 +559,7 @@ export class StartingFiveComponent implements OnInit {
           for (let starter of this.gameStarters) {
             for (let data of this.myData) {
 
-              if (starter.playerId === data.player.id) {
+              if (starter.playerID === data.player.id) {
                 data.starterInfo = starter;
               }
               

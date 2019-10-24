@@ -7,6 +7,7 @@
     border: 2px solid #fff;
     border-radius: 50%;
     object-fit: cover;
+    margin-right: 3px;
   }
 
   .rookie {
@@ -16,6 +17,15 @@
     border-radius:2px; 
     // width: 30%;
     // display: block;
+  }
+
+  .lg {
+    font-size: 14px;
+    color: #eee;
+  }
+
+  .player-infos {
+    // vertical-align: top;
   }
 
 }
@@ -188,6 +198,10 @@
     }
   }
 
+  .stat-col {
+    flex: 0 0 20%!important;
+  }
+  
   .team-name-col {
     flex: 0 0 50%!important;
     display: flex;
@@ -226,6 +240,7 @@
   .team-logo {
     img {
       width: 75%!important;
+      margin: 0 15px 0 0!important;
     }
   }
 }
@@ -295,7 +310,7 @@ ul {
     display: inline-block;
     margin: 20px;
     vertical-align: top;
-    width: 30%;
+    width: 33%;
 }
 
 .mat-card-sp:not([class*=mat-elevation-z]) {

@@ -1,6 +1,7 @@
 <div id="top">
     <h1 class="center date-header baseball-header"> NBA Starting Five</h1>
 </div>
+<h1 class="center date-header baseball-header"> {{ gameDate | date:'fullDate' }}</h1>
 <!-- <h1 class="center date-header baseball-header"> Week {{selectedWeek}}</h1>
 <div class="center">
   <select name="week" id="week" (change)="onChange($event.target.value)">
@@ -156,7 +157,7 @@
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>
 <div *ngIf="showData != null">
-  <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'mlb'">
+  <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'nfl'">
     <mat-card id="{{data?.offensePlayers[0]?.playerObj.teamAsOfDate.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
       <!-- <div *ngIf="data?.offensePlayers[0]?.playerObj.flip === 'inactive'" class="ribbon"><span
           [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">{{data?.offensePlayers[0]?.playerObj.teamAsOfDate.name}}</span>
@@ -178,18 +179,31 @@
                 
               </div>
             <div>
-                <div *ngFor="let item of data.offensePlayers; let i=index">
+            <div *ngFor="let item of data.offensePlayers; let i=index">
                  
                     <span [ngClass]="{'left-content' : i<=5, 'dn' : i>5}">
-                        <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
-                        onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
-                     
-                          <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">Rookie</span>
-                          <span> {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} |
-                            #{{item.playerObj.player.jerseyNumber}} <br></span>
+                      
+                          <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
+                          onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
+                          <span class="player-infos">
+                          <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
+                          <span> 
+                            {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
+                            
+                          </span>
+                          <!-- | #{{item.playerObj.player.jerseyNumber}} -->
                           <!-- <span *ngIf="item?.playerObj.player?.age != null"> Age: {{item?.playerObj.player?.age}} <br> Height: {{item?.playerObj.player?.height}}
                             Weight: {{item?.playerObj.player?.weight}} <br> </span> -->
-                       
+                   
+                         <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                         <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                          <!-- <span class="lg"> | 21.4 Pts </span>
+                      
+                     
+                          <span class="lg">30.1 Min</span> -->
+
+                          </span>
+                      
                     </span>
                   </div>
                   
