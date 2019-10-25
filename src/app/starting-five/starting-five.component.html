@@ -25,18 +25,18 @@
     <option value="16">17</option>
   </select>
 </div> -->
-<!-- <div class="sched-wrapper" *ngIf="!loading">
+<div class="sched-wrapper" *ngIf="!loading">
   <div class="schedule-box row">
     <div *ngFor="let item of dailySchedule; let i=index" class="col">
         <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
-           <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)">{{'#'+ item?.schedule?.awayTeam?.teamRank + '-' + item?.schedule?.awayTeam?.abbreviation}} 
+           <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)">{{item?.schedule?.awayTeam?.abbreviation}} 
              <span *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}}</span> 
              <br>
           </span>
           <span> 
             @ <br>
           </span>
-          <span class="abb" (click)="goAnchor(item?.schedule?.homeTeam?.abbreviation)">{{'#'+ item?.schedule?.homeTeam?.teamRank + '-' + item.schedule?.homeTeam?.abbreviation}} 
+          <span class="abb" (click)="goAnchor(item?.schedule?.homeTeam?.abbreviation)">{{item.schedule?.homeTeam?.abbreviation}} 
             <span *ngIf="item?.score?.homeScoreTotal != null">
               {{item?.score?.homeScoreTotal}}
               <br>
@@ -48,7 +48,7 @@
       </div>
   </div>
 </div>
-<div class="shed-row row" *ngIf="!loading">
+<!-- <div class="shed-row row" *ngIf="!loading">
         <div class="schedule-box col">
             <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span> 
             <div *ngFor="let item of dailySchedule; let i=index">
@@ -187,9 +187,13 @@
                           onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
                           <span class="player-infos">
                           <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
-                          <span> 
+                          <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.lastName != 'Antetokounmpo'"> 
                             {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
                             
+                          </span>
+                          <span *ngIf="item.playerObj.player.firstName === 'Giannis' && item.playerObj.player.lastName === 'Antetokounmpo'"> 
+                              G. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
+                              
                           </span>
                           <!-- | #{{item.playerObj.player.jerseyNumber}} -->
                           <!-- <span *ngIf="item?.playerObj.player?.age != null"> Age: {{item?.playerObj.player?.age}} <br> Height: {{item?.playerObj.player?.height}}
@@ -197,10 +201,8 @@
                    
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                          <!-- <span class="lg"> | 21.4 Pts </span>
-                      
-                     
-                          <span class="lg">30.1 Min</span> -->
+                         <span class="lg"> | {{item?.playerObj?.player?.pts > 0 ? item?.playerObj?.player?.pts : item?.playerObj?.player?.ptsAvg}} Pts </span>
+                         <!-- <span class="lg">{{item?.playerObj?.player?.min > 0 ? item?.playerObj?.player?.min : item?.playerObj?.player?.minAvg}} Min</span> -->
 
                           </span>
                       
