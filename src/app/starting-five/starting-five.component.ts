@@ -394,9 +394,6 @@ export class StartingFiveComponent implements OnInit {
             console.log(err, 'error getting schedule');
 
           });
-
-          
-
       });
 
   }
@@ -404,108 +401,109 @@ export class StartingFiveComponent implements OnInit {
   public async sortData() {
     if (this.gamesToday === true) {
 
-      // let promiseOne;
-      // promiseOne = new Promise((resolve, reject) => {
-      //   this.dataService
-      //     .getTeamStats(this.tsDate).subscribe(res => {
-      //       console.log(res, 'got team stats!');
-      //       this.teamStats = res['teamStatsTotals'];
-      //       let oSort = [];
-      //       let dSort = [];
-      //       let dRank = [];
-      //       let oRank = [];
-      //       let tRank = [];
-      //       oSort = res['teamStatsTotals'];
-      //       dSort = res['teamStatsTotals'];
+      let promiseOne;
+      promiseOne = new Promise((resolve, reject) => {
+        this.dataService
+          .getTeamStats(this.tsDate).subscribe(res => {
+            console.log(res, 'got team stats!');
+            this.teamStats = res['teamStatsTotals'];
 
-      //       this.dataService
-      //         .getWeek(this.selectedWeek).subscribe(res => {
-      //           console.log(res, "weekly games...");
-      //           this.weekStats = res['gamelogs'];
-      //       });
+        //     let oSort = [];
+        //     let dSort = [];
+        //     let dRank = [];
+        //     let oRank = [];
+        //     let tRank = [];
+        //     oSort = res['teamStatsTotals'];
+        //     dSort = res['teamStatsTotals'];
+
+        //     this.dataService
+        //       .getWeek(this.selectedWeek).subscribe(res => {
+        //         console.log(res, "weekly games...");
+        //         this.weekStats = res['gamelogs'];
+        //     });
             
-      //       dRank = dSort.slice().sort((a: any, b: any) => {
+        //     dRank = dSort.slice().sort((a: any, b: any) => {
 
-      //         if (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek)) {
-      //           console.log(a['team'].abbreviation, 'had a bye');
-      //         }
+        //       if (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek)) {
+        //         console.log(a['team'].abbreviation, 'had a bye');
+        //       }
 
-      //         if (a['stats'].standings.pointsAgainst +
-      //         (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
-      //          <= b['stats'].standings.pointsAgainst +
-      //          (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
-      //           return -1;
-      //         } else if (a['stats'].standings.pointsAgainst +
-      //         (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
-      //          >= b['stats'].standings.pointsAgainst +
-      //          (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
-      //           return 1;
-      //         } else {
-      //           return 0;
-      //         }
-      //       });
+        //       if (a['stats'].standings.pointsAgainst +
+        //       (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+        //        <= b['stats'].standings.pointsAgainst +
+        //        (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
+        //         return -1;
+        //       } else if (a['stats'].standings.pointsAgainst +
+        //       (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+        //        >= b['stats'].standings.pointsAgainst +
+        //        (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
+        //         return 1;
+        //       } else {
+        //         return 0;
+        //       }
+        //     });
 
-      //       dRank.forEach(function(item, index){
-      //         for (let team of teamRef) {
-      //          if (dRank[index].team.abbreviation === team.abbreviation) { 
-      //            team.dRank = index + 1; 
-      //          }
-      //         }
-      //       });
+        //     dRank.forEach(function(item, index){
+        //       for (let team of teamRef) {
+        //        if (dRank[index].team.abbreviation === team.abbreviation) { 
+        //          team.dRank = index + 1; 
+        //        }
+        //       }
+        //     });
 
-      //       oRank = oSort.slice().sort((a: any, b: any) => {
-      //         if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
-      //         (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
-      //         >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
-      //         (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
-      //           return -1;
-      //         } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
-      //         (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
-      //         <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
-      //         (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
-      //           return 1;
-      //         } else {
-      //           return 0;
-      //         }
-      //       });
+        //     oRank = oSort.slice().sort((a: any, b: any) => {
+        //       if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
+        //       (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+        //       >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
+        //       (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+        //         return -1;
+        //       } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
+        //       (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+        //       <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
+        //       (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+        //         return 1;
+        //       } else {
+        //         return 0;
+        //       }
+        //     });
             
-      //      oRank.forEach(function(item, index){
-      //       for (let team of teamRef) {
-      //        if (oRank[index].team.abbreviation === team.abbreviation) { 
-      //          team.oRank = index + 1; 
-      //        }
-      //       }
-      //      });
+        //    oRank.forEach(function(item, index){
+        //     for (let team of teamRef) {
+        //      if (oRank[index].team.abbreviation === team.abbreviation) { 
+        //        team.oRank = index + 1; 
+        //      }
+        //     }
+        //    });
 
-      //      tRank = teamRef.slice().sort((a: any, b: any) => {
+        //    tRank = teamRef.slice().sort((a: any, b: any) => {
   
-      //       if ((a.oRank + a.dRank)
-      //       <= (b.oRank + b.dRank)) {
-      //         return -1;
-      //       } else if ((a.oRank + a.dRank)
-      //       >= (b.oRank + b.dRank)) {
-      //         return 1;
-      //       } else {
-      //         return 0;
-      //       }
-      //     });
+        //     if ((a.oRank + a.dRank)
+        //     <= (b.oRank + b.dRank)) {
+        //       return -1;
+        //     } else if ((a.oRank + a.dRank)
+        //     >= (b.oRank + b.dRank)) {
+        //       return 1;
+        //     } else {
+        //       return 0;
+        //     }
+        //   });
           
-      //    tRank.forEach(function(item, index){
-      //     for (let team of teamRef) {
-      //      if (tRank[index].abbreviation === team.abbreviation) { 
-      //        team.teamRank = index + 1; 
-      //      }
-      //     }
-      //    });
-      //       console.log(tRank, 'first index should be least points against');
-      //       this.dRank = dRank;
-      //       this.oRank = oRank;
-      //       this.tRank = tRank;
-      //       resolve();
-      //   });
-      // });
+        //  tRank.forEach(function(item, index){
+        //   for (let team of teamRef) {
+        //    if (tRank[index].abbreviation === team.abbreviation) { 
+        //      team.teamRank = index + 1; 
+        //    }
+        //   }
+        //  });
+        //     console.log(tRank, 'first index should be least points against');
+        //     this.dRank = dRank;
+        //     this.oRank = oRank;
+        //     this.tRank = tRank;
+            resolve();
+        });
+      });
 
-      // let resultOne = await promiseOne;
+      let resultOne = await promiseOne;
 
       this.dataService
         .getDaily(playerString).subscribe(res => {
@@ -514,45 +512,45 @@ export class StartingFiveComponent implements OnInit {
       })
 
       this.dataService
-        .getInfo(playerString).subscribe(res => {
+       .getStats(playerString).subscribe(res => {
 
           console.log(res, 'player info');
           console.log(this.gameStarters, 'game starters');
 
-          this.myData = res['players'];
+          this.myData = res['playerStatsTotals'];
 
           for (let schedule of this.dailySchedule) {
             for (let sdata of this.myData) {
 
-              if (schedule.schedule.awayTeam.abbreviation === sdata.teamAsOfDate.abbreviation) {
+              if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
-                sdata.teamAsOfDate.gameField = schedule.schedule.venue.name;
+                sdata.team.gameField = schedule.schedule.venue.name;
                 sdata.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "away";
-                sdata.teamAsOfDate.opponent = schedule.schedule.homeTeam.abbreviation;
-                sdata.teamAsOfDate.abbreviation = schedule.schedule.awayTeam.abbreviation;
-                sdata.teamAsOfDate.opponentId = schedule.schedule.homeTeam.id;
+                sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+                sdata.team.abbreviation = schedule.schedule.awayTeam.abbreviation;
+                sdata.team.opponentId = schedule.schedule.homeTeam.id;
               }
-              if (schedule.schedule.homeTeam.abbreviation === sdata.teamAsOfDate.abbreviation) {
+              if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
-                sdata.teamAsOfDate.gameField = schedule.schedule.venue.name;
+                sdata.team.gameField = schedule.schedule.venue.name;
                 sdata.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "home";
-                sdata.teamAsOfDate.opponent = schedule.schedule.awayTeam.abbreviation;
-                sdata.teamAsOfDate.abbreviation = schedule.schedule.homeTeam.abbreviation;
-                sdata.teamAsOfDate.opponentId = schedule.schedule.awayTeam.id;
+                sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+                sdata.team.abbreviation = schedule.schedule.homeTeam.abbreviation;
+                sdata.team.opponentId = schedule.schedule.awayTeam.id;
               }
             }
           }
 
           for (let team of teamRef) {
             for (let data of this.myData) { 
-              if (team.id === data.teamAsOfDate.id) {
-                data.teamAsOfDate.color = team.teamColoursHex[0];
-                data.teamAsOfDate.accent = team.teamColoursHex[1];
-                data.teamAsOfDate.logo = team.officialLogoImageSrc;
-                data.teamAsOfDate.city = team.city;
-                data.teamAsOfDate.name = team.name;
+              if (team.id === data.team.id) {
+                data.team.color = team.teamColoursHex[0];
+                data.team.accent = team.teamColoursHex[1];
+                data.team.logo = team.officialLogoImageSrc;
+                data.team.city = team.city;
+                data.team.name = team.name;
                 data.flip = 'inactive';
                 // data.dRank = team.dRank;
                 // data.oRank = team.oRank;
@@ -577,17 +575,27 @@ export class StartingFiveComponent implements OnInit {
                 if (daily.player.id === data.player.id) {
                   data.player.pts = daily.stats.offense.pts;
                   data.player.ptsAvg = daily.stats.offense.ptsPerGame;
-                  data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
-                  data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
+                  // data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
+                  // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
                 }
               }
             }
           }
+
+          for (let team of this.teamStats) {
+            for (let data of this.myData) { 
+               if (data.team.opponentId != null && 
+                 data.team.id === team.team.id) {
+                 data.win = team.stats.standings.wins;
+                 data.loss = team.stats.standings.losses;
+               }
+             }  
+          }
        
 
           this.groups = this.myData.reduce(function (r, a) {
-            r[a.teamAsOfDate.abbreviation] = r[a.teamAsOfDate.abbreviation] || [];
-            r[a.teamAsOfDate.abbreviation].push({'of': 'of', 'playerObj': a});
+            r[a.team.abbreviation] = r[a.team.abbreviation] || [];
+            r[a.team.abbreviation].push({'of': 'of', 'playerObj': a});
             return r;
            }, Object.create(null));
 

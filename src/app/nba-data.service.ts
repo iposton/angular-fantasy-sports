@@ -148,7 +148,7 @@ export class NBADataService {
 
   getTeamStats(date) {
       console.log('getting total team stats from API...');
-      let url = `${this.apiRoot}/team_stats_totals.json?date=${date}`;
+      let url = `${this.apiRoot}/team_stats_totals.json`;
       this.teamstats = this.http.get(url, {headers})
 
     return this.teamstats;
@@ -176,7 +176,7 @@ export class NBADataService {
     return this.starterInfo;
   }
 
-   getDaily(data) {
+  getDaily(data) {
    // pass in week
    // if (!this.daily) {
       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;

@@ -158,21 +158,21 @@
 </div>
 <div *ngIf="showData != null">
   <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'nfl'">
-    <mat-card id="{{data?.offensePlayers[0]?.playerObj.teamAsOfDate.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
+    <mat-card id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
       <!-- <div *ngIf="data?.offensePlayers[0]?.playerObj.flip === 'inactive'" class="ribbon"><span
-          [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">{{data?.offensePlayers[0]?.playerObj.teamAsOfDate.name}}</span>
+          [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">{{data?.offensePlayers[0]?.playerObj.team.name}}</span>
       </div> -->
       <div class="tp-box__side tp-box__front">
         <div class="content-wrapper">
           <div class="row">
               <div class="row">
                 <div class="col team-logo">
-                    <img src="{{data?.offensePlayers[0]?.playerObj?.teamAsOfDate?.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.teamAsOfDate.name}} logo">
+                    <img src="{{data?.offensePlayers[0]?.playerObj?.team?.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo">
                 </div>
                 <div class="col team-name-col">
-                  <div class="team-name-box"[style.background-image]="getBackground(data.offensePlayers[0].playerObj.teamAsOfDate.color)" >
+                  <div class="team-name-box"[style.background-image]="getBackground(data.offensePlayers[0].playerObj.team.color)" >
                       <p class="center">
-                          <span *ngIf="data?.offensePlayers[0]?.playerObj?.teamAsOfDate?.name">{{data?.offensePlayers[0]?.playerObj?.teamAsOfDate?.name}}</span> <br>
+                          <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.name">{{data?.offensePlayers[0]?.playerObj?.team?.name}} ({{data?.offensePlayers[0]?.playerObj?.win+'-'+data?.offensePlayers[0]?.playerObj?.loss}})</span> <br>
                       </p>
                   </div>
                 </div>
@@ -183,7 +183,7 @@
                  
                     <span [ngClass]="{'left-content' : i<=5, 'dn' : i>5}">
                       
-                          <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
+                          <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="basketball player"
                           onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
                           <span class="player-infos">
                           <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
@@ -201,8 +201,8 @@
                    
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                         <span class="lg"> | {{item?.playerObj?.player?.pts > 0 ? item?.playerObj?.player?.pts : item?.playerObj?.player?.ptsAvg}} Pts </span>
-                         <!-- <span class="lg">{{item?.playerObj?.player?.min > 0 ? item?.playerObj?.player?.min : item?.playerObj?.player?.minAvg}} Min</span> -->
+                         <span class="lg"> {{item?.playerObj?.player?.pts > 0 ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
+                         <!-- <span class="lg">{{item?.playerObj?.player?.min > 0 ? ((item?.playerObj?.player?.min / 60) | number:'1.0-0') : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span> -->
 
                           </span>
                       
@@ -274,7 +274,7 @@
                 <div *ngFor="let item of data.defensePlayers; let i=index" class="player-box-inline">
                     
                       <span [ngClass]="{'left-content' : i<=4, 'dn' : i>4}">
-                          <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
+                          <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="basketball player"
                           onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
                           <p>
                             <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">Rookie <br> </span>
@@ -346,7 +346,7 @@
         <a class="go-back-btn" (click)="flipBack(data)">GO BACK</a>
         <div class="content-wrapper">
           <div class="left-content">
-            <!-- <img src="{{data?.player?.officialImageSrc}}" alt="football player" onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"> -->
+            <!-- <img src="{{data?.player?.officialImageSrc}}" alt="basketball player" onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"> -->
           </div>
           <div class="right-content">
             <p>
