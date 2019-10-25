@@ -508,6 +508,12 @@ export class StartingFiveComponent implements OnInit {
       // let resultOne = await promiseOne;
 
       this.dataService
+        .getDaily(playerString).subscribe(res => {
+          console.log(res, "Daily stats...");
+          this.dailyStats = res['gamelogs'];
+      })
+
+      this.dataService
         .getInfo(playerString).subscribe(res => {
 
           console.log(res, 'player info');
@@ -516,7 +522,6 @@ export class StartingFiveComponent implements OnInit {
           this.myData = res['players'];
 
           for (let schedule of this.dailySchedule) {
-
             for (let sdata of this.myData) {
 
               if (schedule.schedule.awayTeam.abbreviation === sdata.teamAsOfDate.abbreviation) {
@@ -561,8 +566,21 @@ export class StartingFiveComponent implements OnInit {
 
               if (starter.playerID === data.player.id) {
                 data.starterInfo = starter;
+              }     
+            }
+          }
+
+          if (this.myData && this.dailyStats) {
+            console.log('start sorting data for daily stats...');
+            for (let daily of this.dailyStats) {
+              for (let data of this.myData) {
+                if (daily.player.id === data.player.id) {
+                  data.player.pts = daily.stats.offense.pts;
+                  data.player.ptsAvg = daily.stats.offense.ptsPerGame;
+                  data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
+                  data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
+                }
               }
-              
             }
           }
        

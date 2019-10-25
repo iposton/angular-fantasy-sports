@@ -176,11 +176,11 @@ export class NBADataService {
     return this.starterInfo;
   }
 
-   getDaily(selected) {
+   getDaily(data) {
    // pass in week
    // if (!this.daily) {
       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-      let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=PG,SG,SF,PF,C`;
+      let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?player=${data}`;
       console.log(url, 'url')
       console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})
