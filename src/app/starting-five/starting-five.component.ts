@@ -401,12 +401,20 @@ export class StartingFiveComponent implements OnInit {
   public async sortData() {
     if (this.gamesToday === true) {
 
+      
+
       let promiseOne;
       promiseOne = new Promise((resolve, reject) => {
         this.dataService
           .getTeamStats(this.tsDate).subscribe(res => {
             console.log(res, 'got team stats!');
             this.teamStats = res['teamStatsTotals'];
+
+            this.dataService
+             .getDaily(playerString).subscribe(res => {
+               console.log(res, "Daily stats...");
+               this.dailyStats = res['gamelogs'];
+            })
 
         //     let oSort = [];
         //     let dSort = [];
@@ -504,12 +512,6 @@ export class StartingFiveComponent implements OnInit {
       });
 
       let resultOne = await promiseOne;
-
-      this.dataService
-        .getDaily(playerString).subscribe(res => {
-          console.log(res, "Daily stats...");
-          this.dailyStats = res['gamelogs'];
-      })
 
       this.dataService
        .getStats(playerString).subscribe(res => {
