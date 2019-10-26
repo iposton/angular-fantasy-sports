@@ -199,8 +199,9 @@
                           <!-- <span *ngIf="item?.playerObj.player?.age != null"> Age: {{item?.playerObj.player?.age}} <br> Height: {{item?.playerObj.player?.height}}
                             Weight: {{item?.playerObj.player?.weight}} <br> </span> -->
                    
-                         <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                         <span *ngIf="item?.playerObj?.player?.currentInjury == null && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                         <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null" style="color: #df1313fd;">INJ</span>
                          <span class="lg"> {{item?.playerObj?.player?.pts > 0 ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
                          <!-- <span class="lg">{{item?.playerObj?.player?.min > 0 ? ((item?.playerObj?.player?.min / 60) | number:'1.0-0') : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span> -->
 
