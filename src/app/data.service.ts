@@ -83,7 +83,7 @@ export class DataService {
     //if (!this.gameid) {
       console.log('getting pitch speed data from API...');
 
-      let url = `${this.apiRoot}/games.json?date=from-14-days-ago-to-5-days-ago`;
+      let url = `${this.apiRoot}/games.json?date=from-8-days-ago-to-5-days-ago`;
       this.gameid = this.http.get(url, {headers})
         
     //}
