@@ -107,7 +107,7 @@ export class YesterdayResultsComponent implements OnInit {
                   )
                 )
                 .subscribe(res => {
-                  console.log(res, 'making several calls by GAME ID for starting lineups...');
+                  //console.log(res, 'making several calls by GAME ID for starting lineups...');
 
                   let i;
                   let i2;
@@ -405,7 +405,7 @@ if (this.starterStatData && this.myData) {
             console.log('start sorting data for scoreboard stats...');
             for (let sc of this.score) {
               for (let pdata of this.myData) {
-                console.log(sc, 'score items');
+                //console.log(sc, 'score items');
                 // if (sc.game.awayTeamAbbreviation === pdata.team.abbreviation) {
                 //   pdata.team.awayGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
 

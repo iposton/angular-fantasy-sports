@@ -185,11 +185,11 @@
                         <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
                         onError="this.src='http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/ARM455007.png'">
                         <p>
-                          <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">Rookie <br> </span>
-                          <span>{{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} |
+                          <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
+                          <span> {{ (item.playerObj.player.firstName | slice:0:1) + '. ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} |
                             #{{item.playerObj.player.jerseyNumber}} <br></span>
-                          <span *ngIf="item?.playerObj.player?.age != null"> Age: {{item?.playerObj.player?.age}} <br> Height: {{item?.playerObj.player?.height}}
-                            Weight: {{item?.playerObj.player?.weight}} <br> </span>
+                          <span *ngIf="item?.playerObj.player?.age != null"> Age: {{item?.playerObj.player?.age}} <br> H: {{item?.playerObj.player?.height}}
+                            W: {{item?.playerObj.player?.weight}} <br> </span>
                             Touches: <span>{{item.playerObj.stats.rushing.rushAttempts + item.playerObj.stats.receiving.receptions}} <br></span>
                             <span class="t-percent">{{(item.playerObj.stats.rushing.rushAttempts + item.playerObj.stats.receiving.receptions) / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}%</span>
                         </p>
@@ -264,11 +264,11 @@
                           <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
                           onError="this.src='http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/ARM455007.png'">
                           <p>
-                            <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">Rookie <br> </span>
-                            <span>{{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} |
+                            <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
+                            <span> {{ (item.playerObj.player.firstName | slice:0:1) + '. ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} |
                               #{{item.playerObj.player.jerseyNumber}} <br></span>
-                            <span *ngIf="item?.playerObj.player?.age != null"> Age: {{item?.playerObj.player?.age}} <br> Height: {{item?.playerObj.player?.height}}
-                              Weight: {{item?.playerObj.player?.weight}} <br> </span>
+                            <span *ngIf="item?.playerObj.player?.age != null"> Age: {{item?.playerObj.player?.age}} <br> H: {{item?.playerObj.player?.height}}
+                              W: {{item?.playerObj.player?.weight}} <br> </span>
                               Touches: <span>{{item.playerObj.stats.rushing.rushAttempts + item.playerObj.stats.receiving.receptions}} <br></span>
                               <span class="t-percent">{{(item?.playerObj?.stats?.rushing?.rushAttempts + item?.playerObj?.stats?.receiving?.receptions) / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}%</span>
                           </p>

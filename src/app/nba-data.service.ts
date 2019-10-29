@@ -103,7 +103,7 @@ export class NBADataService {
     return this.gameid;
   }
 
-    getSchedule(selected) {
+    getSchedule() {
       // pass in week
     //get all games for today get game ID and find a pitchers opponent
    // if (!this.schedule) {
@@ -122,7 +122,7 @@ export class NBADataService {
   getStats(players) {
 
     //if (!this.stats) {
-      console.log('getting cumulative_player_stats by player ID from API...', players);
+      //console.log('getting cumulative_player_stats by player ID from API...', players);
       //let url = `${this.apiRoot}/cumulative_player_stats.json?position=PG,SG,SF,PF,C&player=`+playerID;
       //let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2018-2019-regular/player_stats_totals.json?position=PG,SG,SF,PF,C`; 
       let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?player=${players}`;

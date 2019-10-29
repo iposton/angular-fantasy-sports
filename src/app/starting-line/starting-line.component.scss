@@ -12,8 +12,8 @@
     color:#fff; 
     padding:1px; 
     border-radius:2px; 
-    width: 30%;
-    display: block;
+    // width: 30%;
+    // display: block;
   }
 
 }
@@ -34,7 +34,7 @@
       //flex-basis: 100%;
       flex: 0 0 31%;
       width: 100%;
-      background: #999;
+      background: #333;
       color: #fff;
       font-size: 25px;
       border: 2px solid #000;
@@ -219,7 +219,8 @@
   width: 80%;
   display: block;
   p {
-    font-size: 13px;
+    font-size: 12px;
+    font-weight: 200;
   }
 }
 
