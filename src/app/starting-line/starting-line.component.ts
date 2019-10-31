@@ -7,6 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Observable, interval, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { OrderBy } from '../orderby.pipe';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 let headers = null;
 let playerString = null;
@@ -76,7 +77,8 @@ export class StartingLineComponent implements OnInit {
   public tRank: Array <any> = [];
 
   constructor(private dataService: NFLDataService, 
-              private http: HttpClient) {
+              private http: HttpClient,
+              private sanitizer: DomSanitizer) {
     this.players = this.dataService.getSentStats();
     this.selectedWeek = '1';
 
@@ -327,6 +329,38 @@ export class StartingLineComponent implements OnInit {
     }
 
     
+  }
+
+  public colorLuminance(hex, lum) {
+
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    lum = lum || 0;
+  
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+      c = parseInt(hex.substr(i*2,2), 16);
+      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+      rgb += ("00"+c).substr(c.length);
+    }
+  
+    return rgb;
+  }
+
+  public getBackground(color) {
+    let lighter = this.colorLuminance(color, 0.6);
+    if (color === "#c4ced4" || color === "#d3bc8d") {
+      color = "#000000";
+      lighter = "#555555";
+    }    
+    if (color === "#000000")
+      lighter = "#555555";
+
+    return this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(${color}, ${lighter})`);
   }
 
   public onChange(week) {

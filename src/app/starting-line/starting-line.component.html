@@ -147,6 +147,41 @@
           </div>
     </div>
 </div> 
+<div class="shed-row row single" *ngIf="!loading">
+    <div class="schedule-box col">
+        <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span> 
+        <div *ngFor="let item of tRank; let i=index">
+            <span [style.background-image]="getBackground(item?.teamColoursHex[0])" [ngClass]="{'dn' : i>9}" *ngIf="item?.abbreviation" class="sched-item team-name-box">
+                <span class="abb-single" (click)="goAnchor(item?.abbreviation)">
+                   <span class="rank-num-2">{{(i+1)}}</span> <img src="{{item?.officialLogoImageSrc}}" alt="{{item?.name}} logo"> 
+                   {{item?.name}}  <span> ({{item?.win}}-{{item?.loss}}-{{item?.tie}})</span> 
+                </span> 
+            </span>  
+          </div>
+    </div>
+    <div class="schedule-box col">
+        <span class="week-rank">Week {{selectedWeek}} - Offense Rank<br> </span> 
+        <div *ngFor="let item of oRank; let i=index">
+            <span [style.background-image]="getBackground(item?.team?.teamColoursHex[0])" [ngClass]="{'dn' : i>9}" *ngIf="item?.team?.abbreviation" class="sched-item team-name-box">
+                <span class="abb-single" (click)="goAnchor(item?.team?.abbreviation)">
+                   <span class="rank-num-2">{{(i+1)}}</span> <img src="{{item?.team?.officialLogoImageSrc}}" alt="{{item?.team?.name}} logo"> 
+                   {{item?.team?.name}}  <span> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span>
+                </span> 
+            </span>  
+          </div>
+    </div>
+    <div class="schedule-box col">
+        <span class="week-rank">Week {{selectedWeek}} - Defense Rank<br> </span> 
+        <div *ngFor="let item of dRank; let i=index">
+            <span [style.background-image]="getBackground(item?.team?.teamColoursHex[0])" [ngClass]="{'dn' : i>9}" *ngIf="item?.team?.abbreviation" class="sched-item team-name-box">
+                <span class="abb-single" (click)="goAnchor(item?.team?.abbreviation)">
+                 <span class="rank-num-2">{{(i+1)}}</span> <img src="{{item?.team?.officialLogoImageSrc}}" alt="{{item?.team?.name}} logo"> 
+                 {{item?.team?.name}}  <span> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span>
+                </span> 
+            </span>  
+          </div>
+    </div>
+</div> 
 
 <div class="spinner-msg" *ngIf="loading">
   Retrieving Offensive Line Data...
@@ -170,7 +205,7 @@
                     
                     <span [ngClass]="{'left-content' : i<=4, 'dn' : i>4}">
                         <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
-                        onError="this.src='http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/ARM455007.png'">
+                        onError="this.src='./assets/fb-player.png'">
                         <p>
                           <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
                           <span> {{ (item.playerObj.player.firstName | slice:0:1) + '. ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} |
@@ -247,7 +282,7 @@
                     
                       <span [ngClass]="{'left-content' : i<=4, 'dn' : i>4}">
                           <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
-                          onError="this.src='http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/ARM455007.png'">
+                          onError="this.src='./assets/fb-player.png'">
                           <p>
                             <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
                             <span> {{ (item.playerObj.player.firstName | slice:0:1) + '. ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} |
@@ -320,7 +355,7 @@
         <a class="go-back-btn" (click)="flipBack(data)">GO BACK</a>
         <div class="content-wrapper">
           <div class="left-content">
-            <!-- <img src="{{data?.player?.officialImageSrc}}" alt="football player" onError="this.src='http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/ARM455007.png'"> -->
+            <!-- <img src="{{data?.player?.officialImageSrc}}" alt="football player" onError="this.src='fb-player'"> -->
           </div>
           <div class="right-content">
             <p>
