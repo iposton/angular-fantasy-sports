@@ -468,6 +468,48 @@ h3 {
   color: #ccc;
 }
 
+.team-name-box {
+  position: relative;
+  padding: 5px 0 5px 0;
+  // text-align: center;
+  border-radius: 3px;
+  box-shadow: 0px 1px 4px -2px #333;
+  text-shadow: 0px -1px #333;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 100;
+  height: 40px;
+  width: 100%;
+  display: block;
+  .rank-num-2 {
+    background: #111;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    margin: 0 7px;
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+    padding: 1px;
+  }
+  p {
+    margin: 5px auto;
+  }
+}
+
+.team-name-box:after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(100% - 4px);
+  height: 50%;
+  background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+}
+
+.shed-row .col .sched-item.team-name-box {
+  margin-left: 0;
+}
+
 
 @media only screen and (max-width: 600px) {
 
