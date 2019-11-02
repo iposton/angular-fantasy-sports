@@ -7,7 +7,7 @@
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 </div>
-
+<h1 class="center no-game-header date-header baseball-header" *ngIf="noGamesToday === true && !loading">{{noGamesMsg}}</h1>
 <div class="spinner-msg" *ngIf="loading">
   Retrieving pitching data...
   <mat-spinner></mat-spinner>

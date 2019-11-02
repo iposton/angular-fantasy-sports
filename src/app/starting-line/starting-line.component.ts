@@ -704,6 +704,10 @@ export class StartingLineComponent implements OnInit {
                               schedule.schedule.homeTeam.oRank = data.oRank;
                               schedule.schedule.homeTeam.teamRank = data.teamRank;
                           }
+                          if (schedule.schedule.playedStatus === "LIVE") {
+                            this.liveGames = true;
+                            console.log('interval set...');
+                          }
                         }
                       }
 
@@ -712,7 +716,6 @@ export class StartingLineComponent implements OnInit {
                           for (let data of this.myData) {
                             if (data.team.id != null && 
                               data.team.id === week.team.id) {
-                              this.liveGames = true;
                               data.teamScore = week.stats.standings.pointsFor;
                               data.opponentScore = week.stats.standings.pointsAgainst; 
                               data.win = week.stats.standings.wins;
@@ -1119,6 +1122,32 @@ export class StartingLineComponent implements OnInit {
                   console.log('There are no games being played today.');
                 } else {
                   this.dailySchedule = res['games'];
+
+                  for (let schedule of this.dailySchedule) {
+                    for (let data of this.myData) {
+                      if (schedule.schedule.awayTeam.abbreviation === data.team.abbreviation) {
+                          schedule.schedule.awayTeam.color = data.team.color;
+                          schedule.schedule.awayTeam.accent = data.team.accent;
+                          schedule.schedule.awayTeam.logo = data.team.logo;
+                          schedule.schedule.awayTeam.city = data.team.city;
+                          schedule.schedule.awayTeam.name = data.team.name;
+                          schedule.schedule.awayTeam.dRank = data.dRank;
+                          schedule.schedule.awayTeam.oRank = data.oRank;
+                          schedule.schedule.awayTeam.teamRank = data.teamRank;
+                      }
+                      if (schedule.schedule.homeTeam.abbreviation === data.team.abbreviation) {
+                          schedule.schedule.homeTeam.color = data.team.color;
+                          schedule.schedule.homeTeam.accent = data.team.accent;
+                          schedule.schedule.homeTeam.logo = data.team.logo;
+                          schedule.schedule.homeTeam.city = data.team.city;
+                          schedule.schedule.homeTeam.name = data.team.name;
+                          schedule.schedule.homeTeam.dRank = data.dRank;
+                          schedule.schedule.homeTeam.oRank = data.oRank;
+                          schedule.schedule.homeTeam.teamRank = data.teamRank;
+                      }
+                      
+                    }
+                  }
                 }
             })
           } else {

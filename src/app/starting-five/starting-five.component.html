@@ -2,6 +2,7 @@
     <h1 class="center date-header baseball-header"> NBA Starting Five</h1>
 </div>
 <h1 class="center date-header baseball-header"> {{ gameDate | date:'fullDate' }}</h1>
+<h1 class="center no-game-header date-header baseball-header" *ngIf="noGamesToday === true && !loading">{{noGamesMsg}}</h1>
 <!-- <h1 class="center date-header baseball-header"> Week {{selectedWeek}}</h1>
 <div class="center">
   <select name="week" id="week" (change)="onChange($event.target.value)">

@@ -166,7 +166,7 @@ export class StartingFiveComponent implements OnInit {
               this.noGamesMsg = "There Are No Games Scheduled Today :(";
               console.log('There are no games being played today.');
             } else {
-              if (res['games'][0].playedStatus === "LIVE") {
+              if (res['games'][0].schedule.playedStatus === "LIVE") {
                 this.liveGames = true;
                 console.log('interval set...');
               }
