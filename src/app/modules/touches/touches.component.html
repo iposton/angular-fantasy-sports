@@ -308,6 +308,73 @@
               </span></p>
             </div> 
           </div>
+
+          <div class="position-box" *ngIf="!loading">
+            <h2>Touch Percentage</h2>
+              <div>
+                  <div class="content-wrapper">
+                    <div class="row">
+                      <div class="row">
+                        <div class="col team-logo">
+
+                            <img src="{{data?.offensePlayers[0]?.playerObj?.team?.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo">
+                        </div>
+                        <div class="col team-name-col">
+                          <div class="team-name-box" [style.background-image]="getBackground(data.offensePlayers[0].playerObj.team.color)" >
+                              <p class="center">
+                                  <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.name">{{data?.offensePlayers[0]?.playerObj?.team?.name}} ({{data?.teamStats?.standings?.wins +'-'+ data?.teamStats?.standings?.losses}}<span *ngIf="data?.teamStats?.standings.ties > 0">-{{data?.teamStats?.standings.ties}}</span>) </span>   <br>
+                                   <!--  ({{data?.offensePlayers[0]?.playerObj?.win+'-'+data?.offensePlayers[0]?.playerObj?.loss}}) -->
+                              </p>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    <div class="player-col">
+                     <!-- <p>Touch Percentage</p> -->
+                    <div *ngFor="let item of data.offensePlayers; let i=index">
+                         
+                            <span [ngClass]="{'left-content-smaller' : i<=5, 'dn' : i>5}">
+                              
+                                  <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
+                                  onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
+                                  <span class="player-infos">
+                                  <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
+                                  <span> 
+                                    {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} <span class="t-percent"> {{(item.playerObj.stats.rushing.rushAttempts + item.playerObj.stats.receiving.receptions) / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}%</span>
+
+                                  </span>
+                                
+                                
+                                  </span>
+                              
+                            </span>
+                      </div>
+                    </div>
+                    <div class="player-col">
+                      <!-- <p>Recieving Touch Percentage</p> -->
+                      <div *ngFor="let item of data.passPlayers; let i=index">
+                         
+                          <span [ngClass]="{'left-content-smaller' : i<=5, 'dn' : i>5}">
+                            
+                                <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="football player"
+                                onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
+                                <span class="player-infos">
+                                <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
+                                <span> 
+                                  {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} <span class="t-percent"> {{(item?.playerObj?.stats?.rushing?.rushAttempts + item?.playerObj?.stats?.receiving?.receptions) / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}%</span>
+                                </span>
+                            
+                                </span>
+                            
+                          </span>
+                    </div>
+                          
+                    </div>
+                  </div>
+                    </div>
+          
+              </div>
+          </div>
          
        
         </div>

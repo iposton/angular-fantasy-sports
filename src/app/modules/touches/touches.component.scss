@@ -1,6 +1,13 @@
 .left-content {
-  font-size: 12px;
   img {
+    width: 80%;
+    margin: 0;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    border: 2px solid #fff;
+    border-radius: 4px;
+  }
+
+  .smaller img {
     height: 45px;
     width: 45px;
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -19,116 +26,134 @@
     // display: block;
   }
 
-  .player-infos {
-    font-weight: 200;
-    color: #fff;
+  .t-percent {
+    font-size: 20px;
+    text-align: center;
   }
-
-  .lg {
-    font-size: 16px;
-    color: #eee;
-  }
-
-
 
 }
 
-.right-content img {
-  width: 3%;
-  margin: 0;
+.left-content-smaller {
+  img {
+    height: 45px;
+    width: 45px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 3px;
+  }
+
+  .rookie {
+    background:#2ecc71; 
+    color:#fff; 
+    padding:1px; 
+    border-radius:2px; 
+  }
+
 }
 
 .shed-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+  .col {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    
-    .col {
-      display: flex;
-      flex-direction: column;
-      //flex-basis: 100%;
-      flex: 0 0 31%;
-      width: 100%;
-      background: #999;
-      color: #fff;
-      font-size: 25px;
-      border: 2px solid #000;
-      border-radius: 5px;
-      padding: 5px;
-      margin-bottom: 5px;
-      position: relative;
+    flex-direction: column;
+    //flex-basis: 100%;
+    flex: 0 0 32%;
+    width: 100%;
+    background: #333;
+    color: #fff;
+    font-size: 25px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+    position: relative;
 
-      .sched-item {
-        margin-left: 20px;
-      }
-
-      .score {
-        font-size: 12px;
-      }
-
-      .week-rank {
-        text-align: center;
-      }
-
-      .abb {
-        vertical-align: bottom;
-        width: 150px;
-        display: inline-block;
-      }
-
-      .abb-single {
-        vertical-align: bottom;
-        width: 100%;
-        display: inline-block;
-      }
-
-      .abb.r{
-        text-align: right;
-      }
-
-      .at {
-        width: 75px;
-        display: inline-block;
-        text-align: center;
-      }
-
-      .rank-num {
-        width: 40px;
-        display: inline-block;
-        text-align: center;
-      }
-    
-      img {
-        width: 25%!important;
-        margin: 0!important;
-        vertical-align: bottom;
-      }
-     
-      .abb:hover,
-      .abb-single:hover {
-        cursor: pointer;
-        color: #ccc;
-      }
-
-      .live {
-        color: #2ecc71;
-      }
-
+    .sched-item {
+      margin-left: 20px;
     }
+
+    .score {
+      font-size: 12px;
+    }
+
+    .week-rank {
+      text-align: center;
+    }
+
+    .abb {
+      vertical-align: bottom;
+      width: 150px;
+      display: inline-block;
+    }
+
+    .abb-single {
+      vertical-align: bottom;
+      width: 100%;
+      display: inline-block;
+    }
+
+    .abb.r{
+      text-align: right;
+    }
+
+    .at {
+      width: 75px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .rank-num {
+      width: 40px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .sub-text {
+      font-size: 18px;
+      text-align: center;
+      color: #D35400;
+    }
+
+    .percent-text {
+      color: #D35400;
+    }
+  
+    img {
+      width: 25%!important;
+      margin: 0!important;
+      vertical-align: bottom;
+    }
+   
+    .abb:hover,
+    .abb-single:hover {
+      cursor: pointer;
+      color: #ccc;
+    }
+
+    .live {
+      color: #2ecc71;
+    }
+
+  }
 
 }
 
 .single {
 
-  .col {
+.col {
 
-    img {
-      width: 8%!important;
-      margin: 0!important;
-      vertical-align: bottom;
-    }
-
+  img {
+    width: 8%!important;
+    margin: 0!important;
+    vertical-align: bottom;
   }
+
+}
 }
 
 .sched-wrapper {
@@ -149,12 +174,13 @@
     .week-item {
       width: 30px;
     }
- 
+
+    
     .col {
       display: flex;
       // flex-direction: column;
       flex-basis: 100%;
-      flex: 0 0 10%;
+      flex: 0 0 7%;
       .player-box-inline {
         display: inline-block;
         // width: 15%;
@@ -177,6 +203,11 @@
   }
 }
 
+.right-content img {
+  width: 3%;
+  margin: 0;
+}
+
 .content-wrapper {
   // display: flex;
   .row {
@@ -188,7 +219,7 @@
       display: flex;
       // flex-direction: column;
       flex-basis: 100%;
-      flex: 0 0 30%;
+      flex: 0 0 75%;
       .player-box-inline {
         display: inline-block;
         // width: 15%;
@@ -199,14 +230,22 @@
       flex-basis: 100%;
       flex: 0 0 25%;
     }
+ 
   }
 
-  .stat-col {
-    flex: 0 0 20%!important;
+  .player-col {
+    display: flex;
+    flex-basis: 100%;
+    flex: 0 0 26%;
+    flex-direction: column;
+    p {
+      font-weight: 200;
+      color: #fff;
+    }
   }
-  
+
   .team-name-col {
-    flex: 0 0 55%!important;
+    flex: 0 0 30%!important;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -241,10 +280,21 @@
   }
 
   .team-logo {
+    flex: 0 0 8%!important;
     img {
       width: 75%!important;
       margin: 0 15px 0 0!important;
     }
+  }
+
+  .player-infos {
+    font-weight: 200;
+    color: #fff;
+  }
+
+  .t-percent {
+    font-size: 22px;
+    text-align: center;
   }
 }
 
@@ -277,10 +327,11 @@
 }
 
 .left-content {
-  width: 100%;
+  width: 80%;
   display: block;
   p {
-    font-size: 13px;
+    font-size: 12px;
+    font-weight: 200;
   }
 }
 
@@ -313,24 +364,7 @@ ul {
     display: inline-block;
     margin: 20px;
     vertical-align: top;
-    width: 33%;
-}
-
-.card-wrap-sp.position-box {
-  width: 38%!important;
-  padding: 20px;
-  background: #555;
-  color: #fff;
-  .team-image {
-    img {
-      height: 45px;
-      box-shadow: none;
-      margin-left: 3px;
-      object-fit: contain;
-      vertical-align: bottom;
-      border: 0 solid transparent!important;
-    }
-  }
+    width: 90%;
 }
 
 .mat-card-sp:not([class*=mat-elevation-z]) {

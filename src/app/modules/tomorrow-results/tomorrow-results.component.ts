@@ -4,9 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { TomorrowService } from '../tomorrow.service';
-import { NHLDataService } from '../nhl-data.service';
-import { FirebaseService } from '../firebase.service';
+import {
+  NHLDataService,
+  FirebaseService,
+  TomorrowService
+ } from '../../services/index';
 import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/forkJoin';

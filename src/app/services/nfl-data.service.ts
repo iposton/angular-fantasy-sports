@@ -105,7 +105,7 @@ export class NFLDataService {
     return this.gameid;
   }
 
-    getSchedule(selected) {
+  getSchedule(selected) {
       // pass in week
     //get all games for today get game ID and find a pitchers opponent
    // if (!this.schedule) {
@@ -132,7 +132,7 @@ export class NFLDataService {
     return this.stats;
   }
 
-   getAllStats() {
+  getAllStats() {
 
     //if (!this.allstats) {
 
