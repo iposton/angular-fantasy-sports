@@ -1,0 +1,148 @@
+.fixed-button {
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 8;
+}
+
+.stat-block {
+  background: #6740B4;
+  color: #fff;
+  border-radius: 10px;
+  padding: 6px 1px 6px 1px;
+  margin-left: 2px;
+}
+
+.no-game-header {
+  font-weight: 300;
+  color: #555;
+}
+
+.date-header {
+  color: #fff;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  color: #fff;
+  justify-content: center;
+  .col {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 0 0 40%;
+    color: #fff;
+    margin: 20px;
+  }
+}
+
+.shed-row {
+
+  .schedule-box:hover {
+    cursor: pointer;
+    color: #ccc;
+    border: 2px solid #ccc;
+  }
+  .col {
+    overflow: hidden;
+    position: relative;
+    height: 440px;
+    width: 100%;
+    background: #333;
+    color: #fff;
+    font-size: 25px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+    
+    .sched-item {
+      margin-left: 20px;
+    }
+
+    .score {
+      font-size: 12px;
+    }
+
+    .week-rank {
+      text-align: center;
+    }
+
+    .abb {
+      vertical-align: bottom;
+      width: 150px;
+      display: inline-block;
+    }
+
+    .abb-single {
+      vertical-align: bottom;
+      width: 100%;
+      display: inline-block;
+    }
+
+    .abb.r {
+      text-align: right;
+    }
+
+    .at {
+      width: 90px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .rank-num {
+      width: 40px;
+      display: inline-block;
+      text-align: center;
+    }
+  
+    img {
+      width: 25%!important;
+      margin: 0!important;
+      vertical-align: bottom;
+    }
+   
+    // .abb:hover,
+    // .abb-single:hover {
+    //   cursor: pointer;
+    //   color: #ccc;
+    // }
+
+    .live {
+      color: #2ecc71;
+    }
+
+  }
+
+  .showLink {
+    color: #fff;
+    background:  #d35400;
+    top: 100%;
+    position: absolute;
+    transition: all .3s ease-out;
+    height: 100%;
+    width: 100%;
+    h2:hover {
+      color:#ccc;
+      cursor: pointer;
+    }
+  }
+
+  .col:hover > .showLink {
+    top: 0;
+  }
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+@media only screen and (max-width: 600px) {
+  .material-icons.md-48 { 
+    font-size: 38px; 
+  }
+}

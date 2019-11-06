@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { NFLDataService } from '../nfl-data.service';
-import { FirebaseService } from '../firebase.service';
+import { FirebaseService, NFLDataService } from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OrderBy } from '../orderby.pipe';
+import { OrderBy } from '../../pipes/orderby.pipe';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 let headers = null;
 let playerString = null;
@@ -14,9 +14,9 @@ let today = new Date();
 let teamRef = [];
 
 @Component({
-  selector: 'app-touches',
-  templateUrl: './touches.component.html',
-  styleUrls: ['./touches.component.scss'],
+  selector: 'app-starting-line',
+  templateUrl: './starting-line.component.html',
+  styleUrls: ['./starting-line.component.scss'],
   animations: [
     trigger('flipState', [
       state('active', style({
@@ -30,10 +30,11 @@ let teamRef = [];
     ])
   ],
 })
-export class TouchesComponent implements OnInit {
+export class StartingLineComponent implements OnInit {
 
   public dailySchedule: Array <any>;
   public teamRef: Array <any>;
+  //public dRank: Array <any>;
   public previousGames: Array <any>;
   public players: Array <any>;
   public teamStats: Array <any>;
@@ -41,7 +42,6 @@ export class TouchesComponent implements OnInit {
   public starterIdData: Array <any> = [];
   public specificFastballData: Array <any> = [];
   public specificFastballDataById: Array <any> = [];
-  public byes: any;
   public speedResults: Array <any> = [];
   public gameDate: any;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
@@ -70,13 +70,15 @@ export class TouchesComponent implements OnInit {
   public teamsCompletedPlayingToday: Array <any> = [];
   public selectedWeek: string;
   public tsDate: any;
+  public byes: any;
   public dRank: Array <any> = [];
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
 
   constructor(private dataService: NFLDataService, 
-              private http: HttpClient) {
-    this.players = this.dataService.getSentTouchStats();
+              private http: HttpClient,
+              private sanitizer: DomSanitizer) {
+    this.players = this.dataService.getSentStats();
     this.selectedWeek = '1';
 
     let weekTimes = [
@@ -311,17 +313,53 @@ export class TouchesComponent implements OnInit {
 }
 
     for (let week of weekTimes) {
+
       let date = new Date();
+
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.selectedWeek = week.week;
-
         let utcDate = new Date(week.dateBeg);
         utcDate.setHours(utcDate.getHours() - 8);
         let myDate = new Date(utcDate);
         let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-        this.tsDate = dailyDate; 
-      }   
+        this.tsDate = dailyDate;  
+      }
+      
     }
+
+    
+  }
+
+  public colorLuminance(hex, lum) {
+
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    }
+    lum = lum || 0;
+  
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+      c = parseInt(hex.substr(i*2,2), 16);
+      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+      rgb += ("00"+c).substr(c.length);
+    }
+  
+    return rgb;
+  }
+
+  public getBackground(color) {
+    let lighter = this.colorLuminance(color, 0.6);
+    if (color === "#c4ced4" || color === "#d3bc8d") {
+      color = "#000000";
+      lighter = "#555555";
+    }    
+    if (color === "#000000")
+      lighter = "#555555";
+
+    return this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(${color}, ${lighter})`);
   }
 
   public onChange(week) {
@@ -397,6 +435,7 @@ export class TouchesComponent implements OnInit {
                   //console.log(res, 'get team schedules...');
 
                   res.forEach((item, index) => {
+                   
                     team = teamRef[index].abbreviation;
                     teamSchedule = {
                       team: team,
@@ -455,22 +494,25 @@ export class TouchesComponent implements OnInit {
             });
             
             dRank = dSort.slice().sort((a: any, b: any) => {
+
               // if (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek)) {
               //   console.log(a['team'].abbreviation, 'had a bye');
-              //   //console.log(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions), 'current stats')
-              //   //console.log(Math.floor(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)), 'add this to stats');
-              //   //console.log(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) + Math.floor(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)), 'total');
+              //   console.log(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) + Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)));
               // }
-              //console.log((this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? a['stats'].passing.passNetYards + a['stats'].passing.passCompletions / parseInt(this.selectedWeek) - 1 : 0), a['team'].abbreviation, 'either 0 or add sum', this.byes[a['team'].abbreviation].bye, 'bye week' );
-              if (a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) + 
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0) 
-              >= b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) + 
-              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+              // if (a['team'].abbreviation === "NE") {
+              //   console.log(a['team'].abbreviation, 'new england');
+              //   console.log(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards));
+              // }
+
+              if (a['stats'].standings.pointsAgainst +
+              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+               <= b['stats'].standings.pointsAgainst +
+               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return -1;
-              } else if (a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) + 
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0) 
-              <= b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) + 
-              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+              } else if (a['stats'].standings.pointsAgainst +
+              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+               >= b['stats'].standings.pointsAgainst +
+               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return 1;
               } else {
                 return 0;
@@ -486,15 +528,15 @@ export class TouchesComponent implements OnInit {
             });
 
             oRank = oSort.slice().sort((a: any, b: any) => {
-              if (a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)
-               >= b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) + 
-               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+              if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
+              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+              >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
+              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return -1;
-              } else if (a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)
-               <= b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) + 
-               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+              } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
+              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+              <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
+              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return 1;
               } else {
                 return 0;
@@ -540,16 +582,16 @@ export class TouchesComponent implements OnInit {
       let resultOne = await promiseOne;
 
       this.dataService
-        .getDailyTouches(this.selectedWeek).subscribe(res => {
+        .getDaily(this.selectedWeek).subscribe(res => {
             console.log(res, "Daily stats...");
             this.dailyStats = res['gamelogs'];
 
             this.dataService
-              .getTouches(playerString).subscribe(res => {
+              .getStats(playerString).subscribe(res => {
 
                   //this.myData = res['playerStatsTotals'];
                   this.myData = res['playerStatsTotals'].filter(
-                  player => player.stats.receiving['receptions'] + player.stats.rushing['rushAttempts'] > 5 && (player.player['currentInjury'] == null || player.player['currentInjury'].playingProbability === 'PROBABLE'));
+                  player => player.stats.miscellaneous && player.stats.miscellaneous['gamesStarted'] > 3 && (player.player['currentInjury'] == null || player.player['currentInjury'].playingProbability === 'PROBABLE'));
 
                   if (this.myData) {
                     console.log(this.myData, "cumulative stats...");
@@ -613,6 +655,17 @@ export class TouchesComponent implements OnInit {
                          }  
                       }
 
+                      for (let team of this.teamStats) {
+                        for (let data of teamRef) { 
+                           if (data.id!= null && 
+                             data.id === team.team.id) {
+                             data.win = team.stats.standings.wins;
+                             data.loss = team.stats.standings.losses;
+                             data.tie = team.stats.standings.ties;
+                           }
+                         }  
+                      }
+
                        for (let schedule of this.myData) {
                         for (let sdata of this.myData) {
                           if (sdata.team.opponentId != null && 
@@ -657,17 +710,6 @@ export class TouchesComponent implements OnInit {
                         }
                       }
 
-                      for (let team of this.teamStats) {
-                        for (let data of teamRef) { 
-                           if (data.id!= null && 
-                             data.id === team.team.id) {
-                             data.win = team.stats.standings.wins;
-                             data.loss = team.stats.standings.losses;
-                             data.tie = team.stats.standings.ties;
-                           }
-                         }  
-                      }
-
                       if (this.weekStats.length > 0) {
                         for (let week of this.weekStats) {
                           for (let data of this.myData) {
@@ -687,11 +729,11 @@ export class TouchesComponent implements OnInit {
 
                      this.groups = this.myData.reduce(function (r, a) {
                       r[a.team.abbreviation] = r[a.team.abbreviation] || [];
-                       if (a.player.primaryPosition === 'WR' || a.player.primaryPosition === 'TE') {
-                         r[a.team.abbreviation].push({'pass': 'pass', 'playerObj': a});
+                       if (a.player.primaryPosition === 'NT' || a.player.primaryPosition === 'DT' || a.player.primaryPosition === 'DE') {
+                         r[a.team.abbreviation].push({'def': 'def', 'playerObj': a});
                          return r;
                        } else {
-                         r[a.team.abbreviation].push({'run': 'run', 'playerObj': a});
+                         r[a.team.abbreviation].push({'of': 'of', 'playerObj': a});
                         return r;
                        }
                           
@@ -712,7 +754,7 @@ export class TouchesComponent implements OnInit {
                       }, Object.create(null));
 
                       this.lineGroups = Object.keys(this.groups).map((key, index) => {
-                        return {team: key, offensePlayers: this.groups[key].filter(item => item.run), passPlayers: this.groups[key].filter(item => item.pass), teamStats: this.tsGroups[key][0].stats, seasonSchedule: this.schedGroups[key][0].schedule};
+                        return {team: key, offensePlayers: this.groups[key].filter(item => item.of), defensePlayers: this.groups[key].filter(item => item.def), teamStats: this.tsGroups[key][0].stats, seasonSchedule: this.schedGroups[key][0].schedule};
                       });
 
                      this.showTeams();
@@ -765,7 +807,7 @@ export class TouchesComponent implements OnInit {
 
      console.log(this.showData, 'show data');
      this.dataService
-       .sendTouchStats(this.showData);
+       .sendStats(this.showData);
   }
 
   public goAnchor(data) {
@@ -1064,64 +1106,60 @@ export class TouchesComponent implements OnInit {
   ngOnInit() {
      if (this.players === undefined) {
       this.loadData();
-    // get our data every subsequent 10 minutes
-    const MILLISECONDS_IN_TEN_MINUTES = 600000;
-    interval(MILLISECONDS_IN_TEN_MINUTES)
-      .subscribe(() => {
-        if (this.gamesToday === true && this.liveGames === true) {
-          this.dataService
-            .getSchedule(this.selectedWeek).subscribe(res => {
-              console.log(res, "schedule...");
-              if (res['games'].length === 0) {
-                this.loading = false;
-                this.noGamesToday = true;
-                this.noGamesMsg = "There Are No Games Scheduled Today :(";
-                console.log('There are no games being played today.');
-              } else {
-                this.dailySchedule = res['games'];
+      // get our data every subsequent 10 minutes
+      const MILLISECONDS_IN_TEN_MINUTES = 600000;
+      interval(MILLISECONDS_IN_TEN_MINUTES)
+        .subscribe(() => {
+          if (this.gamesToday === true && this.liveGames === true) {
+            this.dataService
+              .getSchedule(this.selectedWeek).subscribe(res => {
+                console.log(res, "schedule...");
+                if (res['games'].length === 0) {
+                  this.loading = false;
+                  this.noGamesToday = true;
+                  this.noGamesMsg = "There Are No Games Scheduled Today :(";
+                  console.log('There are no games being played today.');
+                } else {
+                  this.dailySchedule = res['games'];
 
-                for (let schedule of this.dailySchedule) {
-                  for (let data of this.myData) {
-                    if (schedule.schedule.awayTeam.abbreviation === data.team.abbreviation) {
-                        schedule.schedule.awayTeam.color = data.team.color;
-                        schedule.schedule.awayTeam.accent = data.team.accent;
-                        schedule.schedule.awayTeam.logo = data.team.logo;
-                        schedule.schedule.awayTeam.city = data.team.city;
-                        schedule.schedule.awayTeam.name = data.team.name;
-                        schedule.schedule.awayTeam.dRank = data.dRank;
-                        schedule.schedule.awayTeam.oRank = data.oRank;
-                        schedule.schedule.awayTeam.teamRank = data.teamRank;
+                  for (let schedule of this.dailySchedule) {
+                    for (let data of this.myData) {
+                      if (schedule.schedule.awayTeam.abbreviation === data.team.abbreviation) {
+                          schedule.schedule.awayTeam.color = data.team.color;
+                          schedule.schedule.awayTeam.accent = data.team.accent;
+                          schedule.schedule.awayTeam.logo = data.team.logo;
+                          schedule.schedule.awayTeam.city = data.team.city;
+                          schedule.schedule.awayTeam.name = data.team.name;
+                          schedule.schedule.awayTeam.dRank = data.dRank;
+                          schedule.schedule.awayTeam.oRank = data.oRank;
+                          schedule.schedule.awayTeam.teamRank = data.teamRank;
+                      }
+                      if (schedule.schedule.homeTeam.abbreviation === data.team.abbreviation) {
+                          schedule.schedule.homeTeam.color = data.team.color;
+                          schedule.schedule.homeTeam.accent = data.team.accent;
+                          schedule.schedule.homeTeam.logo = data.team.logo;
+                          schedule.schedule.homeTeam.city = data.team.city;
+                          schedule.schedule.homeTeam.name = data.team.name;
+                          schedule.schedule.homeTeam.dRank = data.dRank;
+                          schedule.schedule.homeTeam.oRank = data.oRank;
+                          schedule.schedule.homeTeam.teamRank = data.teamRank;
+                      }
+                      
                     }
-                    if (schedule.schedule.homeTeam.abbreviation === data.team.abbreviation) {
-                        schedule.schedule.homeTeam.color = data.team.color;
-                        schedule.schedule.homeTeam.accent = data.team.accent;
-                        schedule.schedule.homeTeam.logo = data.team.logo;
-                        schedule.schedule.homeTeam.city = data.team.city;
-                        schedule.schedule.homeTeam.name = data.team.name;
-                        schedule.schedule.homeTeam.dRank = data.dRank;
-                        schedule.schedule.homeTeam.oRank = data.oRank;
-                        schedule.schedule.homeTeam.teamRank = data.teamRank;
-                    }
-                    
                   }
                 }
-              }
-          })
-        } else {
-          console.log('No games then no daily stats either. :(');
-        }
-      });
+            })
+          } else {
+            console.log('No games then no daily stats either. :(');
+          }
+        });
+        
      } else {
       this.loading = false;
       this.showData = this.players;
       this.gameDate = this.showData[0].gamedate;
 
       for (let p of this.players) {
-
-        // if (p.playingRightNow === false) {
-        //   //this.liveGames = false;
-        // } 
-
         if (p.playingRightNow === true) {
           this.liveGames = true;
         } 
@@ -1129,7 +1167,6 @@ export class TouchesComponent implements OnInit {
         if (p.playingOver === true) {
           this.gameover = true;
         }
-
       }
      }
   }

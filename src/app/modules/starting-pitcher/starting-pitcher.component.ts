@@ -1,12 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { DataService } from '../data.service';
-import { FirebaseService } from '../firebase.service';
+import {FirebaseService, DataService} from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OrderBy } from '../orderby.pipe';
+import { OrderBy } from '../../pipes/orderby.pipe';
 // import 'rxjs/add/operator/map';
 // import 'rxjs/add/observable/forkJoin';
 

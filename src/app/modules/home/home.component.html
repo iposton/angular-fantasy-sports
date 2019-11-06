@@ -1,0 +1,112 @@
+<!-- <div id="top">
+  <h1 class="center date-header baseball-header"> NHL Starting Goalies</h1>
+</div>
+<h1 class="center no-game-header" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1> -->
+<h1 class="center date-header"> {{ nbaGameDate | date:'fullDate' }}</h1>
+<!-- <div class="nhl-playoff"> -->
+<!--   <h3 class="center date-header"><img src="../assets/nhl-logos/nhl-playoff.jpg" alt="nhl playoff image"></h3> -->
+<!-- </div> -->
+<div class="spinner-msg" *ngIf="mlbLoading || nflLoading || nhlLoading || nbaLoading">
+  Fetching games...
+  <mat-spinner></mat-spinner>
+</div>
+<div class="shed-row row" *ngIf="!mlbLoading && !nflLoading && !nhlLoading && !nbaLoading">
+    <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap">
+        <span class="week-rank">NBA<br> </span> 
+        <span *ngIf="noMlbGamesMsg">{{noNbaGamesMsg}}</span>
+        <div *ngFor="let item of nbaSchedule; let i=index">
+            <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+                <span class="abb">
+                  <!-- <img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> -->
+                  {{item?.schedule?.awayTeam?.abbreviation}} 
+               </span>
+               <span class="at"> 
+                  <span class="score" *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}} </span>  
+                  @  
+                  <span class="score" *ngIf="item?.score?.homeScoreTotal != null"> {{item?.score?.homeScoreTotal}} <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'"> F</span></span>
+               </span>
+               <span class="abb"> {{item.schedule?.homeTeam?.abbreviation}} 
+                 <!-- <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> -->
+               </span>   
+             </span>  
+          </div>
+          <div class="showLink">
+            <h2 [routerLink]="['/starting-five']">Starting Five</h2>
+          </div>
+    </div>
+    
+    <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap">
+        <span class="week-rank">NFL<br> </span> 
+        <span *ngIf="noMlbGamesMsg">{{noNflGamesMsg}}</span>
+        <div *ngFor="let item of nflSchedule; let i=index">
+            <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+                <span class="abb">
+                  <!-- <img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> -->
+                  {{item?.schedule?.awayTeam?.abbreviation}} 
+               </span>
+               <span class="at"> 
+                  <span class="score" *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}} </span>  
+                  @  
+                  <span class="score" *ngIf="item?.score?.homeScoreTotal != null"> {{item?.score?.homeScoreTotal}} <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'"> F</span></span>
+               </span>
+               <span class="abb"> {{item.schedule?.homeTeam?.abbreviation}} 
+                 <!-- <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> -->
+               </span>   
+             </span>  
+          </div>
+          <div class="showLink hid-box">
+              <h2 [routerLink]="['/nfl-line-rank']">NFL Line Rankings</h2>
+              <h2 [routerLink]="['/nfl-touches']">NFL Touches</h2>
+          </div>
+    </div>
+    <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap" [routerLink]="['/starting-goalies']">
+        <span class="week-rank">NHL<br> </span> 
+        <span *ngIf="noMlbGamesMsg">{{noNhlGamesMsg}}</span>
+        <div *ngFor="let item of nhlSchedule; let i=index">
+            <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+                <span class="abb">
+                  <!-- <img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> -->
+                  {{item?.schedule?.awayTeam?.abbreviation}} 
+               </span>
+               <span class="at"> 
+                  <span class="score" *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}} </span>  
+                  @  
+                  <span class="score" *ngIf="item?.score?.homeScoreTotal != null"> {{item?.score?.homeScoreTotal}} <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'"> F</span></span>
+               </span>
+               <span class="abb"> {{item.schedule?.homeTeam?.abbreviation}} 
+                 <!-- <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> -->
+               </span>   
+             </span>  
+          </div>
+          <div class="showLink hid-box">
+              <h2 [routerLink]="['/starting-goalies']">Starting Goalies</h2>
+              <h2 [routerLink]="['/starting-goalies-tomorrow']">Starting Goalies Tomorrow</h2>
+              <h2 [routerLink]="['/starting-goalies-yesterday']">Starting Goalies Yesterday</h2>
+          </div>
+    </div>
+    <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap" [routerLink]="['/starting-pitchers']">
+        <span class="week-rank">MLB<br> </span> 
+        <span *ngIf="noMlbGamesMsg">{{noMlbGamesMsg}}</span>
+        <div *ngFor="let item of mlbSchedule; let i=index">
+          
+            <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+                <span class="abb">
+                  <!-- <img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> -->
+                  {{item?.schedule?.awayTeam?.abbreviation}} 
+               </span>
+               <span class="at"> 
+                  <span class="score" *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}} </span>  
+                  @  
+                  <span class="score" *ngIf="item?.score?.homeScoreTotal != null"> {{item?.score?.homeScoreTotal}} <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'"> F</span></span>
+               </span>
+               <span class="abb"> {{item.schedule?.homeTeam?.abbreviation}} 
+                 <!-- <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> -->
+               </span>   
+             </span>  
+          </div>
+          <div class="showLink hid-box">
+              <h2 [routerLink]="['/starting-pitchers']">Starting Pitchers</h2>
+              <h2 [routerLink]="['/pitching-stats']">Pitching Stats</h2>
+          </div>
+    </div>
+</div>

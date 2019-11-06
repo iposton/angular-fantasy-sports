@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
-  <span class="toolbar-header">Fantasy Sports Resource</span>
+  <span class="toolbar-header" [routerLink]="['/all-sports']">Fantasy Sports Resource</span>
 
   <span style="flex: 1 1 auto;"></span>
  
@@ -12,10 +12,13 @@
     <mat-sidenav mode="side" #sidenav position="end">
       
       <ul class="category-list">
+          <li [routerLink]="['/all-sports']">
+          🏠Home
+          </li>
           <li [routerLink]="['/starting-five']">
           🏀 NBA Starting Five
           </li>
-        <li [routerLink]="['/all-sports']">
+        <li [routerLink]="['/starting-pitchers']">
           ⚾️ MLB Starting Pitchers
         </li>
          <li [routerLink]="['/pitching-stats']">

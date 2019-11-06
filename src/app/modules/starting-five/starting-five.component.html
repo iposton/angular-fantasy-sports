@@ -158,10 +158,7 @@
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>
 
-
-
-
-<div *ngIf="showData != null">
+<div *ngIf="showData != null" class="row">
   <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'nfl'">
     <mat-card id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
       <!-- <div *ngIf="data?.offensePlayers[0]?.playerObj.flip === 'inactive'" class="ribbon"><span

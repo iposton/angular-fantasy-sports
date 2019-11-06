@@ -2,8 +2,7 @@ import { Component, ViewChild, Inject, OnInit, ElementRef } from '@angular/core'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs/Observable';
-import { DataService } from '../data.service';
-import { FirebaseService } from '../firebase.service';
+import {FirebaseService, DataService} from '../../services/index';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';

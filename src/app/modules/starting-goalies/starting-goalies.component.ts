@@ -7,10 +7,14 @@ import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DatePipe, PercentPipe } from '@angular/common';
-import { NHLDataService } from '../nhl-data.service';
-import { FirebaseService } from '../firebase.service';
-import { YesterdayService } from '../yesterday.service';
-import { TomorrowService } from '../tomorrow.service';
+
+import {
+  NHLDataService,
+  FirebaseService,
+  YesterdayService,
+  TomorrowService
+ } from '../../services/index';
+ 
 import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/forkJoin';
