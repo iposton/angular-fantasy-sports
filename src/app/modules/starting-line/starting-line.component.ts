@@ -495,14 +495,14 @@ export class StartingLineComponent implements OnInit {
             
             dRank = dSort.slice().sort((a: any, b: any) => {
 
-              // if (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek)) {
-              //   console.log(a['team'].abbreviation, 'had a bye');
-              //   console.log(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) + Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)));
-              // }
-              // if (a['team'].abbreviation === "NE") {
-              //   console.log(a['team'].abbreviation, 'new england');
-              //   console.log(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards));
-              // }
+              if (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek)) {
+                console.log(a['team'].abbreviation, 'had a bye');
+                console.log(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) + Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)));
+              }
+              if (a['team'].abbreviation === "HOU") {
+                console.log(a['team'].abbreviation, 'texans');
+                console.log(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards));
+              }
 
               if (a['stats'].standings.pointsAgainst +
               (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)

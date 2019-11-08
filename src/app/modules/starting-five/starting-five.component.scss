@@ -38,7 +38,7 @@
   margin: 0;
 }
 
-.row {
+.main-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -250,7 +250,7 @@
 
   .team-logo {
     img {
-      width: 75%!important;
+      width: 55%!important;
       margin: 0 15px 0 0!important;
     }
   }
