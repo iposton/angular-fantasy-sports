@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/com
 import { Observable } from 'rxjs/Observable';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { interval } from 'rxjs';
 import { 
   NBADataService,
   DataService,
@@ -66,6 +67,7 @@ export class HomeComponent implements OnInit {
   nflLoading: boolean = true;
 
   public showLink: boolean = false;
+  public liveGames: boolean = false;
 
   tweetDay: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
@@ -110,7 +112,7 @@ loadData() {
 
         this.dataService
           .getDailySchedule().subscribe(res => {
-            console.log(res, "schedule...");
+            console.log(res, "mlb schedule...");
             if (res['games'].length === 0) {
               this.mlbLoading = false;
               this.noMlbGamesToday = true;
@@ -120,75 +122,110 @@ loadData() {
               this.mlbLoading = false;
               this.mlbGamesToday = true;
               this.mlbSchedule = res['games'];
-              this.mlbTeamRef = res['references'].teamReferences;
-              this.mlbGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['dailygameschedule'].gameentry[0].date;
-              let dPipe = new DatePipe("en-US");
-              this.tweetDay = dPipe.transform(this.mlbGameDate, 'EEEE');
+              this.mlbTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
+              this.mlbGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+              if (this.mlbTeamRef != null)
+                this.getTeamInfo(this.mlbSchedule, this.mlbTeamRef);
             }
         });
 
         this.nbaDataService
           .getSchedule().subscribe(res => {
-            console.log(res, "schedule...");
+            console.log(res, "NBA schedule...");
             if (res['games'].length === 0) {
               this.nbaLoading = false;
               this.noNbaGamesToday = true;
               this.noNbaGamesMsg = "No Games Scheduled Yesterday :("
-              console.log('There are no MLB games being played today.');
+              console.log('There are no NBA games being played today.');
             } else {
               this.nbaLoading = false;
               this.nbaGamesToday = true;
               this.nbaSchedule = res['games'];
-              teamRef = res['references'].teamReferences;
-              this.nbaGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['dailygameschedule'].gameentry[0].date;
-              let dPipe = new DatePipe("en-US");
-              this.tweetDay = dPipe.transform(this.nbaGameDate, 'EEEE');
+              this.nbaTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
+              this.nbaGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+              if (this.nbaTeamRef != null)
+                this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
             }
         });
 
         this.nhlDataService
           .getDailySchedule().subscribe(res => {
-            console.log(res, "schedule...");
+            console.log(res, "NHL schedule...");
             if (res['games'].length === 0) {
               this.nhlLoading = false;
               this.noNhlGamesToday = true;
               this.noNhlGamesMsg = "No Games Scheduled Yesterday :("
-              console.log('There are no MLB games being played today.');
+              console.log('There are no NHL games being played today.');
             } else {
               this.nhlLoading = false;
               this.nhlGamesToday = true;
               this.nhlSchedule = res['games'];
-              teamRef = res['references'].teamReferences;
-              this.nhlGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['dailygameschedule'].gameentry[0].date;
-              let dPipe = new DatePipe("en-US");
-              this.tweetDay = dPipe.transform(this.nhlGameDate, 'EEEE');
+              this.nhlTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
+              this.nhlGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+              if (this.nhlTeamRef != null)
+                this.getTeamInfo(this.nhlSchedule, this.nhlTeamRef);
             }
         });
 
         this.nflDataService
           .getSchedule(10).subscribe(res => {
-            console.log(res, "schedule...");
+            console.log(res, "NFL schedule...");
             if (res['games'].length === 0) {
               this.nflLoading = false;
               this.noNflGamesToday = true;
               this.noNflGamesMsg = "No Games Scheduled Yesterday :("
-              console.log('There are no MLB games being played today.');
+              console.log('There are no NFL games being played today.');
             } else {
               this.nflLoading = false;
               this.nflGamesToday = true;
               this.nflSchedule = res['games'];
-              teamRef = res['references'].teamReferences;
-              this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['dailygameschedule'].gameentry[0].date;
-              let dPipe = new DatePipe("en-US");
-              this.tweetDay = dPipe.transform(this.nflGameDate, 'EEEE');
+              this.nflTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
+              this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+              if (this.nflTeamRef != null)
+                this.getTeamInfo(this.nflSchedule, this.nflTeamRef);
             }
         });
       })
 }
 
+public getTeamInfo(sched, teamRef) {
+  for (let team of teamRef) {
+    for (let data of sched) {   
+        if (data.schedule.awayTeam.id === team.id) {
+          data.schedule.awayTeam.color = team.teamColoursHex[0];
+          data.schedule.awayTeam.accent = team.teamColoursHex[1];
+          data.schedule.awayTeam.logo = team.officialLogoImageSrc;
+          data.schedule.awayTeam.city = team.city;
+          data.schedule.awayTeam.name = team.name;
+        }
+        if (data.schedule.homeTeam.id === team.id) {
+            data.schedule.homeTeam.color = team.teamColoursHex[0];
+            data.schedule.homeTeam.accent = team.teamColoursHex[1];
+            data.schedule.homeTeam.logo = team.officialLogoImageSrc;
+            data.schedule.homeTeam.city = team.city;
+            data.schedule.homeTeam.name = team.name;
+        }
+        if (data.schedule.playedStatus === "LIVE") {
+          this.liveGames = true;
+          console.log('interval set...');
+        }
+     }  
+  }
+}
+
   ngOnInit() {
     if (this.sentData === undefined) {
       this.loadData();
+      const MILLISECONDS_IN_TEN_MINUTES = 600000;
+      interval(MILLISECONDS_IN_TEN_MINUTES)
+        .subscribe(() => {
+          if (this.liveGames === true) {
+            console.log('games are live get updates...');
+            this.loadData(); 
+          } else {
+            console.log('No games then no daily stats either. :(');
+          }
+        });
 
     } else {
      

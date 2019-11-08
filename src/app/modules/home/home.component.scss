@@ -49,14 +49,14 @@
   .col {
     overflow: hidden;
     position: relative;
-    height: 440px;
+    height: 455px;
     width: 100%;
     background: #333;
     color: #fff;
-    font-size: 25px;
+    font-size: 20px;
     border: 2px solid #000;
     border-radius: 5px;
-    padding: 5px;
+    // padding: 5px;
     margin-bottom: 5px;
     
     .sched-item {
@@ -64,7 +64,7 @@
     }
 
     .score {
-      font-size: 12px;
+      font-size: 20px;
     }
 
     .week-rank {
@@ -73,7 +73,7 @@
 
     .abb {
       vertical-align: bottom;
-      width: 150px;
+      width: 268px;
       display: inline-block;
     }
 
@@ -88,7 +88,7 @@
     }
 
     .at {
-      width: 90px;
+      width: 130px;
       display: inline-block;
       text-align: center;
     }
@@ -100,9 +100,11 @@
     }
   
     img {
-      width: 25%!important;
+      // width: 20%!important;
       margin: 0!important;
       vertical-align: bottom;
+      height: 33px!important;
+      width: 49px!important;
     }
    
     // .abb:hover,
@@ -125,6 +127,7 @@
     transition: all .3s ease-out;
     height: 100%;
     width: 100%;
+    padding: 10px;
     h2:hover {
       color:#ccc;
       cursor: pointer;
