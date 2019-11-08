@@ -189,7 +189,7 @@
                           onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
                           <span class="player-infos">
                           <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
-                          <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai'"> 
+                          <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai' && item.playerObj.player.firstName != 'Kentavious'"> 
                             {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}} 
                           </span>
                           <span *ngIf="item.playerObj.player.firstName === 'Giannis' && item.playerObj.player.lastName === 'Antetokounmpo'"> 
@@ -198,6 +198,9 @@
                           </span>
                           <span *ngIf="item.playerObj.player.firstName === 'Shai'"> 
                               S. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}   
+                          </span>
+                          <span *ngIf="item.playerObj.player.firstName === 'Kentavious'"> 
+                                      K. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
                           </span>
 
                           <!-- | #{{item.playerObj.player.jerseyNumber}} -->
@@ -282,7 +285,7 @@
       </div> <!-- SCORE BACK OF CARD  -->
     </mat-card>
   </div>
-  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+  <!-- <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
     <h2>Starting Centers</h2>
       <div *ngFor="let data of showData | orderBy: 'nfl'">
           <div class="content-wrapper">
@@ -374,12 +377,15 @@
                                   onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
                                   <span class="player-infos">
                                   <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
-                                  <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai'"> 
+                                  <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai' && item.playerObj.player.firstName != 'Kentavious'"> 
                                     {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}} 
                                   </span>
                                   <span *ngIf="item.playerObj.player.firstName === 'Giannis' && item.playerObj.player.lastName === 'Antetokounmpo'"> 
                                       G. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
                                       
+                                  </span>
+                                  <span *ngIf="item.playerObj.player.firstName === 'Kentavious'"> 
+                                      K. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
                                   </span>
     
                                   <span class="team-image"> <img src="{{item?.playerObj?.team?.logo}}" alt="{{item?.playerObj.team.name}} logo"></span>
@@ -480,7 +486,200 @@
                     </div>
           
               </div>
-          </div>
+          </div> -->
+
+          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+              <h2>Top PG</h2>
+                <div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                          <div *ngFor="let item of myData | orderBy: 'nba'">
+                                  <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'PG'}">
+                                    
+                                        <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                        onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
+                                        <span class="player-infos">
+                                        <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                        <span *ngIf="item.player.firstName != 'Giannis' && item.player.firstName != 'Shai'"> 
+                                          {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                        </span>
+                                        <span *ngIf="item.player.firstName === 'Giannis' && item.player.lastName === 'Antetokounmpo'"> 
+                                            G. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
+                                        </span>
+          
+                                       <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                                 
+                                       <span *ngIf="(item?.player?.currentInjury == null || item?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                       <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                       <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
+                                       <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                       <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                      
+                                        </span>
+                                    
+                                  </span>
+                                </div>
+                                
+                      
+                        </div>
+                      </div>
+            
+                </div>
+            </div>
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                <h2>Top SF</h2>
+                  <div>
+                      <div class="content-wrapper">
+                          <div class="row">
+                            <div *ngFor="let item of myData | orderBy: 'nba'">
+                                    <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'SF'}">
+                                      
+                                          <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                          onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
+                                          <span class="player-infos">
+                                          <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                          <span *ngIf="item.player.firstName != 'Giannis' && item.player.firstName != 'Shai'"> 
+                                            {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                          </span>
+                                          <span *ngIf="item.player.firstName === 'Giannis' && item.player.lastName === 'Antetokounmpo'"> 
+                                              G. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
+                                          </span>
+            
+                                         <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                                   
+                                         <span *ngIf="(item?.player?.currentInjury == null || item?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                         <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                         <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
+                                         <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                         <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                        
+                                          </span>
+                                      
+                                    </span>
+                                  </div>
+                                  
+                        
+                          </div>
+                        </div>
+              
+                  </div>
+              </div>
+              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                  <h2>Top Centers</h2>
+                    <div>
+                        <div class="content-wrapper">
+                            <div class="row">
+                              <div *ngFor="let item of myData | orderBy: 'nba'">
+                                      <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'C'}">
+                                        
+                                            <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                            onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
+                                            <span class="player-infos">
+                                            <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                            <span *ngIf="item.player.firstName != 'Giannis' && item.player.firstName != 'Shai'"> 
+                                              {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                            </span>
+                                            <span *ngIf="item.player.firstName === 'Giannis' && item.player.lastName === 'Antetokounmpo'"> 
+                                                G. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
+                                            </span>
+              
+                                           <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                                     
+                                           <span *ngIf="(item?.player?.currentInjury == null || item?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                           <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                           <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
+                                           <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                           <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                          
+                                            </span>
+                                        
+                                      </span>
+                                    </div>
+                                    
+                          
+                            </div>
+                          </div>
+                
+                    </div>
+                </div>
+                
+                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                    <h2>Top PF</h2>
+                      <div>
+                          <div class="content-wrapper">
+                              <div class="row">
+                                <div *ngFor="let item of myData | orderBy: 'nba'">
+                                        <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'PF'}">
+                                          
+                                              <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                              onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
+                                              <span class="player-infos">
+                                              <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                              <span *ngIf="item.player.firstName != 'Giannis' && item.player.firstName != 'Shai'"> 
+                                                {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                              </span>
+                                              <span *ngIf="item.player.firstName === 'Giannis' && item.player.lastName === 'Antetokounmpo'"> 
+                                                  G. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
+                                              </span>
+                
+                                             <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                                       
+                                             <span *ngIf="(item?.player?.currentInjury == null || item?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                             <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                             <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
+                                             <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                             <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                            
+                                              </span>
+                                          
+                                        </span>
+                                      </div>
+                                      
+                            
+                              </div>
+                            </div>
+                  
+                      </div>
+                  </div>
+
+                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                      <h2>Top SG</h2>
+                        <div>
+                            <div class="content-wrapper">
+                                <div class="row">
+                                  <div *ngFor="let item of myData | orderBy: 'nba'">
+                                          <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'SG'}">
+                                            
+                                                <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
+                                                <span class="player-infos">
+                                                <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                                <span *ngIf="item.player.firstName != 'Giannis' && item.player.firstName != 'Shai'"> 
+                                                  {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                </span>
+                                                <span *ngIf="item.player.firstName === 'Giannis' && item.player.lastName === 'Antetokounmpo'"> 
+                                                    G. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
+                                                </span>
+                  
+                                               <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                                         
+                                               <span *ngIf="(item?.player?.currentInjury == null || item?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                               <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                                               <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
+                                               <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                               <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                              
+                                                </span>
+                                            
+                                          </span>
+                                        </div>
+                                        
+                              
+                                </div>
+                              </div>
+                    
+                        </div>
+                    </div>
   <div class="top-arrow">
       <span (click)="goAnchor('top')">TOP &uarr;</span>
   </div>

@@ -22,7 +22,16 @@ transform(array: any[], field: string): any[] {
           } else {
             return 0;
           }
-      }
+      } else if (field === 'nba') {
+       
+        if (a['stats'].offense.ptsPerGame >= b['stats'].offense.ptsPerGame) {
+            return -1;
+          } else if (a['stats'].offense.ptsPerGame <= b['stats'].offense.ptsPerGame) {
+            return 1;
+          } else {
+            return 0;
+          }
+      } 
       
     });
     return array;
