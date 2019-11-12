@@ -6,6 +6,10 @@ let headers = null;
 
 let sending;
 let sent;
+let sendingMyData;
+let sendingSched;
+let sentMyData;
+let sentSched;
 let sendingT;
 let sentT;
 let sendingAll;
@@ -62,15 +66,21 @@ export class NBADataService {
     return sentT;
   }
 
-  sendStats(statsArray) {
+  sendStats(statsArray, myData, schedule) {
     console.log("sending stats to service...");
     sending = statsArray;
+    sendingMyData = myData;
+    sendingSched = schedule;
   }
 
   getSentStats() {
     console.log("stats sent to component...");
+    let allDataArr = [];
     sent = sending;
-    return sent;
+    sentMyData = sendingMyData;
+    sentSched = sendingSched;
+    allDataArr.push(sent, sentMyData, sentSched);
+    return allDataArr;
   }
 
   sendAllStats(allstatsArray) {
