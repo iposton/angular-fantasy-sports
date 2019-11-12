@@ -503,6 +503,9 @@
                                         <span *ngIf="item.player.firstName != 'Giannis' && item.player.firstName != 'Shai'"> 
                                           {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
                                         </span>
+                                        <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                            S. {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}   
+                                        </span>
                                         <span *ngIf="item.player.firstName === 'Giannis' && item.player.lastName === 'Antetokounmpo'"> 
                                             G. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
                                         </span>
@@ -654,11 +657,14 @@
                                                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
                                                 <span class="player-infos">
                                                 <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
-                                                <span *ngIf="item.player.firstName != 'Giannis' && item.player.firstName != 'Shai'"> 
+                                                <span *ngIf="item.player.firstName != 'Giannis' && item.player.firstName != 'Shai' && item.player.firstName != 'Kentavious'"> 
                                                   {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
                                                 </span>
                                                 <span *ngIf="item.player.firstName === 'Giannis' && item.player.lastName === 'Antetokounmpo'"> 
                                                     G. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
+                                                </span>
+                                                <span *ngIf="item?.player?.firstName === 'Kentavious'"> 
+                                                    K. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
                                                 </span>
                   
                                                <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
