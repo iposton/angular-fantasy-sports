@@ -83,6 +83,7 @@ export class StartingFiveComponent implements OnInit {
   public tRank: Array <any> = [];
   public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any };
   public gameStarters: Array <any> = [];
+  public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
@@ -126,28 +127,60 @@ export class StartingFiveComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(${color}, ${lighter})`);
   }
 
-  public onChange(week) {
-   this.loading = true;
-   this.selectedWeek = week;
-   this.dailySchedule = [];
-   this.starterIdData = [];
-   playerString = null;
-   this.dailyStats = [];
-   this.myData = [];
-   this.showData = [];
-   this.weekStats = [];
-   this.specificFastballData = [];
-   this.teamsCompletedPlayingToday = [];
-   this.previousGames = [];
-   this.score = [];
-   this.players = [];
-   this.speedResults = [];
-   this.liveGames = false;
-   this.gameover = false;
-   this.postponed = false;
-   this.gamesToday = false;
-   this.noGamesMsg = '';
-   this.loadData();
+  // public onChange(week) {
+  //  this.loading = true;
+  //  this.selectedWeek = week;
+  //  this.dailySchedule = [];
+  //  this.starterIdData = [];
+  //  playerString = null;
+  //  this.dailyStats = [];
+  //  this.myData = [];
+  //  this.showData = [];
+  //  this.weekStats = [];
+  //  this.specificFastballData = [];
+  //  this.teamsCompletedPlayingToday = [];
+  //  this.previousGames = [];
+  //  this.score = [];
+  //  this.players = [];
+  //  this.speedResults = [];
+  //  this.liveGames = false;
+  //  this.gameover = false;
+  //  this.postponed = false;
+  //  this.gamesToday = false;
+  //  this.noGamesMsg = '';
+  //  this.loadData();
+  // }
+
+  public getByDate(event) {
+    this.loading = true;
+    let thisDate = new Date(event.value);
+    let utcDate = new Date(thisDate.toUTCString());
+    utcDate.setHours(utcDate.getHours());
+    let myDate = new Date(utcDate);
+    let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+    console.log(dailyDate, 'get stats for this selected date');
+    this.dataService.selectedDate(dailyDate);
+
+    //empty old data on data change 
+    this.dailySchedule = [];
+    this.gameStarters = [];
+    this.starterIdData = [];
+    playerString = null;
+    this.dailyStats = [];
+    this.myData = [];
+    this.showData = [];
+    this.specificFastballData = [];
+    this.teamsCompletedPlayingToday = [];
+    this.previousGames = [];
+    this.score = [];
+    this.players = [];
+    this.speedResults = [];
+    this.liveGames = false;
+    this.gameover = false;
+    this.postponed = false;
+    this.gamesToday = false;
+    this.noGamesMsg = '';
+    this.loadData();
   }
 
   loadData() {
