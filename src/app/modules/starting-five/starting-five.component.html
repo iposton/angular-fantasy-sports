@@ -3,29 +3,14 @@
 </div>
 <h1 class="center date-header baseball-header"> {{ gameDate | date:'fullDate' }}</h1>
 <h1 class="center no-game-header date-header baseball-header" *ngIf="noGamesToday === true && !loading">{{noGamesMsg}}</h1>
-<!-- <h1 class="center date-header baseball-header"> Week {{selectedWeek}}</h1>
 <div class="center">
-  <select name="week" id="week" (change)="onChange($event.target.value)">
-    <option value="1"> - </option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
-    <option value="11">11</option>
-    <option value="12">12</option>
-    <option value="13">13</option>
-    <option value="14">14</option>
-    <option value="15">15</option>
-    <option value="16">16</option>
-    <option value="16">17</option>
-  </select>
-</div> -->
+  <mat-form-field color="accent">
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="getByDate($event)" [max]="maxD">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+
 <div class="sched-wrapper" *ngIf="!loading">
   <div class="schedule-box row">
     <div *ngFor="let item of dailySchedule; let i=index" class="col">

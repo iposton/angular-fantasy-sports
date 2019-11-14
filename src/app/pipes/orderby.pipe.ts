@@ -15,7 +15,7 @@ transform(array: any[], field: string): any[] {
           return 0;
         }
       } else if (field === 'nfl') {
-        if (a.offensePlayers[0].playerObj['gameId'] <= b.offensePlayers[0].playerObj['gameId']) {
+          if (a.offensePlayers[0].playerObj['gameId'] <= b.offensePlayers[0].playerObj['gameId']) {
             return -1;
           } else if (a.offensePlayers[0].playerObj['gameId'] >= b.offensePlayers[0].playerObj['gameId']) {
             return 1;
@@ -23,10 +23,10 @@ transform(array: any[], field: string): any[] {
             return 0;
           }
       } else if (field === 'nba') {
-       
-        if (a['stats'].offense.ptsPerGame >= b['stats'].offense.ptsPerGame) {
+        //item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame
+          if ((a['starterInfo'].status != 'UNPLAYED' ? a['player'].pts : a['stats'].offense.ptsPerGame) >= (b['starterInfo'].status != 'UNPLAYED' ? b['player'].pts : b['stats'].offense.ptsPerGame)) {
             return -1;
-          } else if (a['stats'].offense.ptsPerGame <= b['stats'].offense.ptsPerGame) {
+          } else if ((a['starterInfo'].status != 'UNPLAYED' ? a['player'].pts : a['stats'].offense.ptsPerGame) <= (b['starterInfo'].status != 'UNPLAYED' ? b['player'].pts : b['stats'].offense.ptsPerGame)) {
             return 1;
           } else {
             return 0;
