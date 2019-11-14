@@ -145,7 +145,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
+    // width: 100%;
     background: #999;
     color: #fff;
     font-size: 12px;
@@ -556,6 +556,15 @@ h3 {
 
 @media only screen and (max-width: 600px) {
 
+  .card-wrap-sp.position-box {
+    width: 100% !important;
+    padding: 0!important;
+  }
+
+  .mat-card-sp {
+    padding: 3px;
+  }
+
   .card-wrap-sp {
     display: inline-block;
     margin: 0 0 20px 0;
@@ -563,7 +572,7 @@ h3 {
     width: 100%;
   }
 
-   .baseball-header {
+  .baseball-header {
     font-size: 20px;
   }
 

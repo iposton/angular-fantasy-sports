@@ -145,15 +145,13 @@
 
 .single {
 
-.col {
-
-  img {
-    width: 8%!important;
-    margin: 0!important;
-    vertical-align: bottom;
+  .col {
+    img {
+      width: 8%!important;
+      margin: 0!important;
+      vertical-align: bottom;
+    }
   }
-
-}
 }
 
 .sched-wrapper {
@@ -162,7 +160,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
+    // width: 100%;
     background: #999;
     color: #fff;
     font-size: 12px;
@@ -579,8 +577,40 @@ h3 {
   color: #ccc;
 }
 
-
 @media only screen and (max-width: 600px) {
+  .content-wrapper {
+    .player-col {
+      flex: 0 0 100%;
+    }
+  } 
+  .shed-row {
+    .col {
+      flex: 0 0 100%;
+      font-size: 20px;
+    }
+    .abb {
+      width: 130px!important;
+    }
+  }
+  
+  .content-wrapper {
+    .row {
+      .col {
+        flex: 0 0 100%;
+      }
+      .col-info {
+        flex: 0 0 100%;
+      }
+    }
+    
+    .team-name-col {
+      flex: 0 0 50%!important;
+    }
+
+    .team-logo {
+      flex: 0 0 30%!important;
+    }
+  } 
 
   .card-wrap-sp {
     display: inline-block;
@@ -589,7 +619,7 @@ h3 {
     width: 100%;
   }
 
-   .baseball-header {
+  .baseball-header {
     font-size: 20px;
   }
 

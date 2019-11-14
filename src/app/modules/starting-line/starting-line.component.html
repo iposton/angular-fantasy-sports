@@ -69,7 +69,7 @@
                  </span>  
               </div>
         </div>
-        <div class="schedule-box col">
+        <div class="schedule-box col" *ngIf="!mobile">
             <span class="week-rank">Week {{selectedWeek}} - Offense Rank<br> </span> 
             <div *ngFor="let item of dailySchedule; let i=index">
                 <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
@@ -90,7 +90,7 @@
                  </span>  
               </div>
         </div>
-        <div class="schedule-box col">
+        <div class="schedule-box col" *ngIf="!mobile">
             <span class="week-rank">Week {{selectedWeek}} - Defense Rank<br> </span> 
             <div *ngFor="let item of dailySchedule; let i=index">
                 <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
@@ -112,7 +112,7 @@
               </div>
         </div>
 </div> 
-<div class="shed-row row single" *ngIf="!loading">
+<div class="shed-row row single" *ngIf="!loading && !mobile">
     <div class="schedule-box col">
         <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span> 
         <div *ngFor="let item of tRank; let i=index">
@@ -159,7 +159,7 @@
             </span>  
           </div>
     </div>
-    <div class="schedule-box col">
+    <div class="schedule-box col" *ngIf="!mobile">
         <span class="week-rank">Week {{selectedWeek}} - Offense Rank<br> </span> 
         <div *ngFor="let item of oRank; let i=index">
             <span [style.background-image]="getBackground(item?.team?.teamColoursHex[0])" [ngClass]="{'dn' : i>9}" *ngIf="item?.team?.abbreviation" class="sched-item team-name-box">
@@ -170,7 +170,7 @@
             </span>  
           </div>
     </div>
-    <div class="schedule-box col">
+    <div class="schedule-box col" *ngIf="!mobile">
         <span class="week-rank">Week {{selectedWeek}} - Defense Rank<br> </span> 
         <div *ngFor="let item of dRank; let i=index">
             <span [style.background-image]="getBackground(item?.team?.teamColoursHex[0])" [ngClass]="{'dn' : i>9}" *ngIf="item?.team?.abbreviation" class="sched-item team-name-box">

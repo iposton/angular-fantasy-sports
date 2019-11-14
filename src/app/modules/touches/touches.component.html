@@ -80,7 +80,7 @@
                </span>  
             </div>
       </div>
-      <div class="schedule-box col">
+      <div class="schedule-box col" *ngIf="!mobile">
           <span class="week-rank">Week {{selectedWeek}} - Run Rank<br> </span> 
           <div *ngFor="let item of dailySchedule; let i=index">
               <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
@@ -101,7 +101,7 @@
                </span>  
             </div>
       </div>
-      <div class="schedule-box col">
+      <div class="schedule-box col" *ngIf="!mobile">
           <span class="week-rank">Week {{selectedWeek}} - Pass Rank<br> </span> 
           <div *ngFor="let item of dailySchedule; let i=index">
               <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">

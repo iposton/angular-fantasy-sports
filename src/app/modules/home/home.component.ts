@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit {
   public defineToken: string = '';
   public statData: Array <any> = [];
   public playerInfo: Array <any>;
+  public mobile: boolean = false;
 
   mlbGameDate: string = '';
   noMlbGamesToday: boolean;
@@ -168,7 +169,7 @@ loadData() {
         });
 
         this.nflDataService
-          .getSchedule(10).subscribe(res => {
+          .getSchedule(11).subscribe(res => {
             console.log(res, "NFL schedule...");
             if (res['games'].length === 0) {
               this.nflLoading = false;
@@ -214,6 +215,10 @@ public getTeamInfo(sched, teamRef) {
 }
 
   ngOnInit() {
+    //console.log(window.innerWidth, 'screen width', window, 'window');
+    if (window.innerWidth < 700) { // 768px portrait
+      this.mobile = true;
+    }
     if (this.sentData === undefined) {
       this.loadData();
       const MILLISECONDS_IN_TEN_MINUTES = 600000;

@@ -74,6 +74,7 @@ export class StartingLineComponent implements OnInit {
   public dRank: Array <any> = [];
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
+  public mobile: boolean = false;
 
   constructor(private dataService: NFLDataService, 
               private http: HttpClient,
@@ -1104,6 +1105,9 @@ export class StartingLineComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (window.innerWidth < 700) { // 768px portrait
+      this.mobile = true;
+    }
      if (this.players === undefined) {
       this.loadData();
       // get our data every subsequent 10 minutes
