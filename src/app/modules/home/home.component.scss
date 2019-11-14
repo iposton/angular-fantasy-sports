@@ -138,6 +138,25 @@
   }
 }
 
+@media only screen and (max-width: 750px) {
+  .row {
+    .col {
+      flex: 0 0 100%;
+    }
+  }
+  
+  .shed-row {
+    .col{
+      .abb {
+        width: 115px;
+      }
+      .at {
+        width: 100px;
+      }
+    }
+  }  
+}
+
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
