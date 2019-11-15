@@ -30,7 +30,7 @@
   color: #fff;
   justify-content: center;
   .col {
-    display: flex;
+    // display: flex;
     flex-direction: column;
     flex-basis: 100%;
     flex: 0 0 45%;
@@ -68,6 +68,10 @@
 
     .week-rank {
       text-align: center;
+      display: block;
+      font-size: 20px;
+      font-weight: 200;
+      padding: 4px 0 10px 0;
     }
 
     .abb {
@@ -141,18 +145,25 @@
 @media only screen and (max-width: 750px) {
   .row {
     .col {
-      flex: 0 0 100%;
+      flex: 0 0 99%;
+      margin: 0 0 20px 0;
     }
   }
   
   .shed-row {
     .col{
       .abb {
-        width: 115px;
+        width: 117px;
       }
       .at {
         width: 100px;
       }
+    }
+    .showLink {
+      height: 50%;
+    }
+    .col:hover > .showLink {
+      top: 50%;
     }
   }  
 }
