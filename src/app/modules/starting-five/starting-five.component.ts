@@ -84,6 +84,7 @@ export class StartingFiveComponent implements OnInit {
   public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any };
   public gameStarters: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
+  public mobile: boolean = false;
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
@@ -908,6 +909,9 @@ export class StartingFiveComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (window.innerWidth < 700) { // 768px portrait
+      this.mobile = true;
+    }
      if (this.players === undefined) {
       this.loadData();
       console.log('fetch data on init...');
