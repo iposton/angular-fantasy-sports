@@ -5,3 +5,4 @@ export * from './nfl-data.service';
 export * from './tomorrow.service';
 export * from './yesterday.service';
 export * from './firebase.service';
+export * from './util.service';

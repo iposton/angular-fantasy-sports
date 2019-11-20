@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 
 let headers = null;
 
-let sending;
-let sent;
-let sendingT;
-let sentT;
+let sending = [];
+let sent = [];
+let sendingT = [];
+let sentT = [];
 let sendingAll;
 let sentAll;
 
@@ -36,6 +36,9 @@ export class NFLDataService {
   public env: Observable < any > = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular";
   public dailyDate: any;
+  public touchTeamRanks: any;
+  public lineTeamRanks: any;
+  public premiumRanks: any;
 
   //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE
 
@@ -54,23 +57,37 @@ export class NFLDataService {
   }
 
   sendTouchStats(statsArray) {
-    console.log("sending stats to service...");
+    console.log("sending touch stats to service...");
+    if (statsArray.length > 0) {
+      console.log('save touch team ranks');
+      this.touchTeamRanks = statsArray[1][2]; 
+    } 
     sendingT = statsArray;
   }
 
   getSentTouchStats() {
     console.log("stats sent to component...");
+    sentT = [];
     sentT = sendingT;
     return sentT;
   }
 
+  sendPremiumRanks(pRanks) {
+    this.premiumRanks = pRanks;
+  }
+
   sendStats(statsArray) {
     console.log("sending stats to service...");
+    if (statsArray.length > 0) {
+      console.log('save line team ranks');
+      this.lineTeamRanks = statsArray[1][2]; 
+    } 
     sending = statsArray;
   }
 
   getSentStats() {
     console.log("stats sent to component...");
+    sent = [];
     sent = sending;
     return sent;
   }

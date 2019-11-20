@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { FirebaseService, NFLDataService } from '../../services/index';
+import { NFLDataService, UtilService } from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { OrderBy } from '../../pipes/orderby.pipe';
+// import { map } from 'rxjs/operators';
+// import { OrderBy } from '../../pipes/orderby.pipe';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 let headers = null;
@@ -39,8 +39,8 @@ export class TouchesComponent implements OnInit {
   public teamStats: Array <any>;
   public pitcherSpeed: Array <any>;
   public starterIdData: Array <any> = [];
-  public specificFastballData: Array <any> = [];
-  public specificFastballDataById: Array <any> = [];
+  // public specificFastballData: Array <any> = [];
+  // public specificFastballDataById: Array <any> = [];
   public byes: any;
   public speedResults: Array <any> = [];
   public gameDate: any;
@@ -65,7 +65,7 @@ export class TouchesComponent implements OnInit {
   public noGamesMsg: string = '';
   public errMessage: string = '';
   public teamSchedule: { team: string, schedule: [] };
-  public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
+  // public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
   public teamSchedules: Array <any> = [];
   public teamsCompletedPlayingToday: Array <any> = [];
   public selectedWeek: string;
@@ -74,249 +74,32 @@ export class TouchesComponent implements OnInit {
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
   public mobile: boolean = false;
+  public myRanks: Array <any> = [];
+  public allSentData: Array <any>;
+  public isPremiumRank: boolean = false;
 
   constructor(private dataService: NFLDataService, 
               private http: HttpClient,
-              private sanitizer: DomSanitizer) {
-    this.players = this.dataService.getSentTouchStats();
+              private sanitizer: DomSanitizer,
+              private util: UtilService) {
+    this.allSentData = this.dataService.getSentTouchStats(); 
+    console.log(this.allSentData, 'all data');  
+    if (this.allSentData.length > 0) {
+      this.players = this.allSentData[0];
+      this.dRank = this.allSentData[1][0];
+      this.oRank = this.allSentData[1][1];
+      this.tRank = this.allSentData[1][2];
+      this.dailySchedule = this.allSentData[2];
+    }      
+    
     this.selectedWeek = '1';
-
-    let weekTimes = [
-      {
-        dateBeg: 'Tue Oct 01 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 08 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '5'
-      },
-      {
-        dateBeg: 'Tue Oct 8 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 15 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '6'
-      },
-      {
-        dateBeg: 'Tue Oct 15 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 22 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '7'
-      },
-      {
-        dateBeg: 'Tue Oct 22 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 29 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '8'
-      },
-      {
-        dateBeg: 'Tue Oct 29 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 05 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '9'
-      },
-      {
-        dateBeg: 'Tue Nov 05 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 12 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '10'
-      },
-      {
-        dateBeg: 'Tue Nov 12 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 19 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '11'
-      },
-      {
-        dateBeg: 'Tue Nov 19 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 26 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '12'
-      },
-      {
-        dateBeg: 'Tue Nov 26 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 03 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '13'
-      },
-      {
-        dateBeg: 'Tue Dec 03 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 10 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '14'
-      },
-      {
-        dateBeg: 'Tue Dec 10 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 17 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '15'
-      },
-      {
-        dateBeg: 'Tue Dec 17 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 24 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '16'
-      },
-      {
-        dateBeg: 'Tue Dec 24 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '17'
-      }
-    ]
-
-    this.byes = {
-      "ATL": {
-        id: 68,
-        abbreviation: "ATL",
-        bye: 9
-      }, 
-      "CAR": {
-        id: 69,
-        abbreviation: "CAR",
-        bye: 7 
-      },
-      "NO": {
-        id: 70,
-        abbreviation: "NO",
-        bye: 9
-      },
-      "TB": {
-        id: 71,
-        abbreviation: "TB",
-        bye: 7
-      },
-      "HOU": {
-        id: 64,
-        abbreviation: "HOU",
-        bye: 10
-      },
-      "IND": {
-        id: 65,
-        abbreviation: "IND",
-        bye: 6
-      },
-      "JAX": {
-        id: 66,
-        abbreviation: "JAX",
-        bye: 10
-      },
-      "TEN": {
-        id: 67,
-        abbreviation: "TEN",
-        bye: 11
-      },
-      "ARI": {
-        id: 76,
-        abbreviation: "ARI",
-        bye: 12
-      },
-      "LA": {
-        id: 77,
-        abbreviation: "LA",
-        bye: 9
-      },
-      "SF": {
-        id: 78,
-        abbreviation: "SF",
-        bye: 4
-      },
-      "SEA": {
-        id: 79,
-        abbreviation: "SEA",
-        bye: 11
-      },
-      "DEN": {
-        id: 72,
-        abbreviation: "DEN",
-        bye: 10
-      },
-      "KC": {
-        id: 73,
-        abbreviation: "KC",
-        bye: 12
-      },
-      "OAK": {
-        id: 74,
-        abbreviation: "OAK",
-        bye: 6
-      },
-      "LAC": {
-        id: 75,
-        abbreviation: "LAC",
-        bye: 12
-      },
-      "NYJ": {
-        id: 51,
-        abbreviation: "NYJ",
-        bye: 4
-      },
-      "NE": {
-        id: 50,
-        abbreviation: "NE",
-        bye: 10
-      },
-      "MIA": {
-        id: 49,
-        abbreviation: "MIA",
-        bye: 5
-      },
-      "BUF": {
-        id: 48,
-        abbreviation: "BUF",
-        bye: 6
-      },
-      "WAS": {
-        id: 55,
-        abbreviation: "WAS",
-        bye: 10
-      },
-      "PHI": {
-        id: 54,
-        abbreviation: "PHI",
-        bye: 10
-      },
-      "NYG": {
-        id: 53,
-        abbreviation: "NYG",
-        bye: 11
-      },
-      "DAL": {
-        id: 52,
-        abbreviation: "DAL",
-        bye: 8
-      },
-      "PIT": {
-        id: 59,
-        abbreviation: "PIT",
-        bye: 7
-      },
-      "CLE": {
-        id: 58,
-        abbreviation: "CLE",
-        bye: 7
-      },
-      "CIN": {
-        id: 57,
-        abbreviation: "CIN",
-        bye: 9
-      },
-      "BAL": {
-        id: 56,
-        abbreviation: "BAL",
-        bye: 8
-      },
-      "MIN": {
-        id: 63,
-        abbreviation: "MIN",
-        bye: 12
-      },
-      "GB": {
-        id: 62,
-        abbreviation: "GB",
-        bye: 11
-      },
-      "DET": {
-        id: 61,
-        abbreviation: "DET",
-        bye: 5
-      },
-      "CHI": {
-        id: 60,
-        abbreviation: "CHI",
-        bye: 6
-      },
-}
-
+    let weekTimes = this.util.getWeekTimes();
+    this.byes = this.util.getByes();
+    
     for (let week of weekTimes) {
       let date = new Date();
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.selectedWeek = week.week;
-
         let utcDate = new Date(week.dateBeg);
         utcDate.setHours(utcDate.getHours() - 8);
         let myDate = new Date(utcDate);
@@ -326,28 +109,8 @@ export class TouchesComponent implements OnInit {
     }
   }
 
-  public colorLuminance(hex, lum) {
-
-    // validate hex string
-    hex = String(hex).replace(/[^0-9a-f]/gi, '');
-    if (hex.length < 6) {
-      hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-    }
-    lum = lum || 0;
-  
-    // convert to decimal and change luminosity
-    var rgb = "#", c, i;
-    for (i = 0; i < 3; i++) {
-      c = parseInt(hex.substr(i*2,2), 16);
-      c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-      rgb += ("00"+c).substr(c.length);
-    }
-  
-    return rgb;
-  }
-
   public getBackground(color) {
-    let lighter = this.colorLuminance(color, 0.6);
+    let lighter = this.util.colorLuminance(color, 0.6);
     if (color === "#c4ced4") {
       color = "#000000";
       lighter = "#555555";
@@ -368,7 +131,6 @@ export class TouchesComponent implements OnInit {
    this.myData = [];
    this.showData = [];
    this.weekStats = [];
-   this.specificFastballData = [];
    this.teamsCompletedPlayingToday = [];
    this.previousGames = [];
    this.score = [];
@@ -386,9 +148,6 @@ export class TouchesComponent implements OnInit {
 
     this.dataService
       .getEnv().subscribe(res => {
-
-        //headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
-
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
 
         this.dataService
@@ -463,6 +222,45 @@ export class TouchesComponent implements OnInit {
 
       });
 
+  }
+
+  public getPremiumRank() {
+    let lineRank = null;
+    let tRank = [];
+    lineRank = this.dataService.lineTeamRanks;
+    lineRank.forEach(function(item, index){
+      for (let team of teamRef) {
+       if (lineRank[index].abbreviation === team.abbreviation) { 
+         team.lineRank = index + 1; 
+       }
+      }
+     });
+
+     tRank = teamRef.slice().sort((a: any, b: any) => {
+      if ((a.teamRank + a.lineRank)
+      <= (b.teamRank + b.lineRank)) {
+        return -1;
+      } else if ((a.teamRank + a.lineRank)
+      >= (b.teamRank + b.lineRank)) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    tRank.forEach(function(item, index) {
+      for (let team of teamRef) {
+       if (tRank[index].abbreviation === team.abbreviation) { 
+         team.teamRank = index + 1; 
+       }
+      }
+    });
+     
+    this.isPremiumRank = true;
+    console.log('adjusting rank to include touch rank, Premium Rank');
+    this.tRank = tRank;
+    this.dataService.sendPremiumRanks(tRank);
+    this.myRanks.push(this.dRank, this.oRank, this.tRank);
   }
 
   public async sortData() {
@@ -567,6 +365,26 @@ export class TouchesComponent implements OnInit {
             this.dRank = dRank;
             this.oRank = oRank;
             this.tRank = tRank;
+            if (this.dataService.premiumRanks != null) {
+              this.tRank = this.dataService.premiumRanks;
+              let tRank = [];
+              tRank = this.tRank;
+              tRank.forEach(function(item, index) {
+                for (let team of teamRef) {
+                  if (tRank[index].abbreviation === team.abbreviation) { 
+                    team.teamRank = index + 1; 
+                  }
+                }
+              });
+              
+              this.isPremiumRank = true;
+              this.myRanks.push(this.dRank, this.oRank, this.tRank);
+              console.log('already have premium ranks no need to get them again.');
+            } else if (this.dataService.touchTeamRanks != null) {
+              this.getPremiumRank();
+            } else if (this.dataService.premiumRanks == null && this.dataService.touchTeamRanks == null) {
+              this.myRanks.push(this.dRank, this.oRank, this.tRank);
+            }
             resolve();
         });
       });
@@ -798,8 +616,10 @@ export class TouchesComponent implements OnInit {
     this.showData = this.lineGroups;
 
      console.log(this.showData, 'show data');
-     this.dataService
-       .sendTouchStats(this.showData);
+    let sendAllData = [];
+    sendAllData.push(this.showData, this.myRanks, this.dailySchedule);
+    this.dataService
+        .sendTouchStats(sendAllData);
   }
 
   public goAnchor(data) {
@@ -870,74 +690,6 @@ export class TouchesComponent implements OnInit {
    
   }
 
-  // public getAverages(gid) {
-
-  //   this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
-  //     .subscribe(res => {
-  //         console.log(res, 'got play by play game data for ');
-
-  //         if (res != null) {
-
-  //         if (res['atBats'] != null) {
-
-  //         res['atBats'].forEach((item2, index) => {
-
-  //            if (item2 != null && item2.atBatPlay.length > 0)
-  //              item2.atBatPlay.forEach((item3, index) => {
-  //              let f = item3;
-
-  //              if (f.pitch != undefined && f.pitch.ballStartSpeed != undefined) {
-  //                //console.log(f.pitch);
-  //                this.pitcherspeed = {
-  //                  pitcher: f.pitch.pitchingPlayer.id,
-  //                  pitchspeedStart: f.pitch.ballStartSpeed,
-  //                  lastName: f.pitch.pitchingPlayer.lastName,
-  //                }
-  //                this.specificFastballData.push(this.pitcherspeed);
-
-     
-  //              }
-
-  //            })
-  //          })
-
-  //          this.speedResults = this.specificFastballData.reduce(function(r, a) {
-  //            r[a.pitcher] = r[a.pitcher] || [];
-  //            r[a.pitcher].push(a.pitchspeedStart);
-  //            return r
-  //          }, Object.create(null));
-  //          console.log('made groups of pichers pitch speeds by ID...');
-
-  //        }
-  //        this.myData.forEach((data, index) => {
-
-
-  //          if (this.speedResults[data.player.id]) {
-  //            let avg = this.speedResults[data.player.id].reduce((r, a) => {
-
-  //              return r + parseInt(a);
-
-  //            }, 0) / this.speedResults[data.player.id].length;
-
-  //            let max = this.speedResults[data.player.id].reduce(function(a, b) {
-  //              return Math.max(a, b);
-  //            });
-
-  //            data.player.pitchSpeedAvg = Math.floor(avg);
-  //            data.player.fastestPitch = max;
-
-  //            }
-
-  //         });
-
-  //       }
-  //      }, (err: HttpErrorResponse) => {
-
-  //           console.log(err, 'error getting playbyplay');
-
-  //      });
-
-  // }
 
 
   public getGameStats(data, gid) {
@@ -1099,7 +851,7 @@ export class TouchesComponent implements OnInit {
     if (window.innerWidth < 700) { // 768px portrait
       this.mobile = true;
     }
-     if (this.players === undefined) {
+    if (this.players === undefined) {
       this.loadData();
     // get our data every subsequent 10 minutes
     const MILLISECONDS_IN_TEN_MINUTES = 600000;
@@ -1149,6 +901,11 @@ export class TouchesComponent implements OnInit {
         }
       });
      } else {
+      if (this.dataService.premiumRanks != null) {
+        this.tRank = this.dataService.premiumRanks;
+        this.isPremiumRank = true;
+        
+      }
       this.loading = false;
       this.showData = this.players;
       this.gameDate = this.showData[0].gamedate;

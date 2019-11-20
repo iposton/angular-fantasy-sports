@@ -1,5 +1,5 @@
 <div id="top">
-    <h1 class="center date-header baseball-header"> NFL Touches Rankings</h1>
+    <h1 class="center date-header baseball-header"> NFL Touch Rankings</h1>
 </div>
 
 <h1 class="center date-header baseball-header"> Week {{selectedWeek}}</h1>
@@ -26,7 +26,7 @@
   </select>
 </div>
 
-<div class="sched-wrapper" *ngIf="!loading">
+<div class="sched-wrapper" *ngIf="!loading && !mobile">
     <div class="schedule-box row">
       <div *ngFor="let item of dailySchedule; let i=index" class="col">
           <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
@@ -126,6 +126,7 @@
 <div class="shed-row row single" *ngIf="!loading">
   <div class="schedule-box col">
       <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span>
+      <span class="sub-text" *ngIf="isPremiumRank">* Line Rank Included</span> 
       <div *ngFor="let item of tRank; let i=index">
           <span *ngIf="item?.abbreviation" class="sched-item">
               <span class="abb-single" (click)="goAnchor(item?.abbreviation)">
@@ -162,7 +163,7 @@
 </div> 
 
 <div class="spinner-msg" *ngIf="loading">
-  Retrieving Offensive Touches Data...
+  Fetching Touch Data...
   <mat-spinner></mat-spinner>
 </div>
 <div *ngIf="errMessage" class="err center">
@@ -249,7 +250,7 @@
                   </div>
             </div>
             <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
-              <p class="center">Rush Attempts: {{data?.teamStats?.rushing?.rushAttempts}} / Rush Yards: {{data?.teamStats?.rushing?.rushYards}} / {{ data?.teamStats?.rushing?.rushAttempts / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}% of touches are Running Plays  -- <span *ngIf="data?.offensePlayers[0]?.playerObj['oRank'] != null">
+              <p class="center">Rush Attempts: {{data?.teamStats?.rushing?.rushAttempts}} / Rush Yards: {{data?.teamStats?.rushing?.rushYards}} / Run TD: {{data?.teamStats?.rushing?.rushTD}} / Run 20 Yards+: {{data?.teamStats?.rushing?.rush20Plus}} / {{ data?.teamStats?.rushing?.rushAttempts / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}% of touches are Running Plays  -- <span *ngIf="data?.offensePlayers[0]?.playerObj['oRank'] != null">
                   Run Rank: {{data?.offensePlayers[0]?.playerObj['oRank']}}
               </span></p>
             </div>  
@@ -303,7 +304,7 @@
                   </div>
             </div>  
             <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
-              <p class="center">Pass Attempts: {{data?.teamStats?.passing?.passAttempts}} / Pass Yards: {{data?.teamStats?.passing?.passNetYards}} / {{ data?.teamStats?.passing?.passAttempts / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}% of touches are Passing Plays --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
+              <p class="center">Pass Attempts: {{data?.teamStats?.passing?.passAttempts}} / Pass Yards: {{data?.teamStats?.passing?.passNetYards}} / Pass TD: {{data?.teamStats?.passing?.passTD}} / Pass Comp 40 Yards+: {{data?.teamStats?.passing?.pass40Plus}} / {{ data?.teamStats?.passing?.passAttempts / (data?.teamStats?.rushing?.rushAttempts + data?.teamStats?.passing?.passAttempts) * 100 | number | slice:0:4 }}% of touches are Passing Plays --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
                   Pass Rank: {{data?.offensePlayers[0]?.playerObj['dRank']}} <br>
               </span></p>
             </div> 
