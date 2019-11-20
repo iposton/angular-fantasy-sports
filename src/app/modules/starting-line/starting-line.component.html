@@ -24,7 +24,7 @@
     <option value="16">17</option>
   </select>
 </div>
-<div class="sched-wrapper" *ngIf="!loading">
+<div class="sched-wrapper" *ngIf="!loading && !mobile">
   <div class="schedule-box row">
     <div *ngFor="let item of dailySchedule; let i=index" class="col">
         <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
@@ -50,6 +50,7 @@
 <div class="shed-row row" *ngIf="!loading">
         <div class="schedule-box col">
             <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span> 
+            
             <div *ngFor="let item of dailySchedule; let i=index">
                 <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
                     <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)"><img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo"> {{'#'+ item?.schedule?.awayTeam?.teamRank + '-' + item?.schedule?.awayTeam?.abbreviation}} 
@@ -114,7 +115,8 @@
 </div> 
 <div class="shed-row row single" *ngIf="!loading && !mobile">
     <div class="schedule-box col">
-        <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span> 
+        <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span>
+        <span class="sub-text" *ngIf="isPremiumRank">* Touch Rank Included</span> 
         <div *ngFor="let item of tRank; let i=index">
             <span *ngIf="item?.abbreviation" class="sched-item">
                 <span class="abb-single" (click)="goAnchor(item?.abbreviation)">
@@ -269,7 +271,7 @@
                   </div>
             </div>
             <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
-              <p class="center">Total Yards: {{data?.teamStats?.rushing?.rushYards + data?.teamStats?.passing?.passNetYards}} / Sacks Given up: {{data?.teamStats?.passing?.passSacks}} -- <span *ngIf="data?.offensePlayers[0]?.playerObj['oRank'] != null">
+              <p class="center">Total Yards: {{data?.teamStats?.rushing?.rushYards + data?.teamStats?.passing?.passNetYards}} / Avg Yards Per Play: {{data?.teamStats?.miscellaneous?.offenseAvgYds}} / Sacks Given up: {{data?.teamStats?.passing?.passSacks}} / TD's: {{data?.teamStats?.passing?.passTD + data?.teamStats?.rushing?.rushTD}} -- <span *ngIf="data?.offensePlayers[0]?.playerObj['oRank'] != null">
                   Offense Rank: {{data?.offensePlayers[0]?.playerObj['oRank']}}
               </span></p>
             </div>  
@@ -321,7 +323,7 @@
                   </div>
             </div>  
             <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
-              <p class="center">Sacks: {{data?.teamStats?.tackles?.sacks}} --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
+              <p class="center">Sacks: {{data?.teamStats?.tackles?.sacks}} / PA: {{data?.teamStats?.standings?.pointsAgainst}} --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
                   Defense Rank: {{data?.offensePlayers[0]?.playerObj['dRank']}} <br>
               </span></p>
             </div> 
