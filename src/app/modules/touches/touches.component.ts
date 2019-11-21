@@ -380,9 +380,9 @@ export class TouchesComponent implements OnInit {
               this.isPremiumRank = true;
               this.myRanks.push(this.dRank, this.oRank, this.tRank);
               console.log('already have premium ranks no need to get them again.');
-            } else if (this.dataService.touchTeamRanks != null) {
+            } else if (this.dataService.lineTeamRanks != null) {
               this.getPremiumRank();
-            } else if (this.dataService.premiumRanks == null && this.dataService.touchTeamRanks == null) {
+            } else if (this.dataService.premiumRanks == null && this.dataService.lineTeamRanks == null) {
               this.myRanks.push(this.dRank, this.oRank, this.tRank);
             }
             resolve();
