@@ -185,6 +185,43 @@
     </div>
 </div> 
 
+<div class="shed-row row single" *ngIf="!loading && !mobile && !isPremiumRank">
+    <div class="schedule-box col">
+        <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span>
+        <span class="sub-text" *ngIf="isPremiumRank">* Touch Rank Included</span> 
+        <div *ngFor="let item of tRank; let i=index">
+            <span *ngIf="item?.abbreviation" class="sched-item">
+                <span class="abb-single" (click)="goAnchor(item?.abbreviation)">
+                   <span class="rank-num">{{(i+1)}}</span> - <img src="{{item?.officialLogoImageSrc}}" alt="{{item?.name}} logo"> 
+                   {{item?.name}}  <span> ({{item?.win}}-{{item?.loss}}-{{item?.tie}})</span> 
+                </span> 
+            </span>  
+          </div>
+    </div>
+    <div class="schedule-box col">
+        <span class="week-rank">Week {{selectedWeek}} - Win Pct Rank<br> </span> 
+        <div *ngFor="let item of winRank; let i=index">
+            <span *ngIf="item?.team?.abbreviation" class="sched-item">
+                <span class="abb-single" (click)="goAnchor(item?.team?.abbreviation)">
+                   <span class="rank-num">{{(i+1)}}</span> - <img src="{{item?.team?.officialLogoImageSrc}}" alt="{{item?.team?.name}} logo"> 
+                   {{item?.team?.name}}  <span> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span>
+                </span> 
+            </span>  
+          </div>
+    </div>
+    <div class="schedule-box col">
+        <span class="week-rank">Week {{selectedWeek}} - Win Pct Against .500 Rank<br> </span> 
+        <div *ngFor="let item of win500Rank; let i=index">
+            <span *ngIf="item?.team?.abbreviation" class="sched-item">
+                <span class="abb-single" (click)="goAnchor(item?.team?.abbreviation)">
+                 <span class="rank-num">{{(i+1)}}</span> - <img src="{{item?.team?.officialLogoImageSrc}}" alt="{{item?.team?.name}} logo"> 
+                 {{item?.team?.name}}  <span> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span>
+                </span> 
+            </span>  
+          </div>
+    </div>
+</div> 
+
 <div class="spinner-msg" *ngIf="loading">
   Retrieving Offensive Line Data...
   <mat-spinner></mat-spinner>

@@ -80,162 +80,290 @@ export class UtilService {
       "ATL": {
         id: 68,
         abbreviation: "ATL",
-        bye: 9
+        bye: 9,
+        toughestSchedRank: 6,
+        gamesAgainst500Teams: 6,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 5
       }, 
       "CAR": {
         id: 69,
         abbreviation: "CAR",
-        bye: 7 
+        bye: 7,
+        toughestSchedRank: 25,
+        gamesAgainst500Teams: 4,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 3
       },
       "NO": {
         id: 70,
         abbreviation: "NO",
-        bye: 9
+        bye: 9,
+        ttoughestSchedRank: 21,
+        gamesAgainst500Teams: 4,
+        winsAgainst500Teams: 3,
+        lossAgainst500Teams: 1
       },
       "TB": {
         id: 71,
         abbreviation: "TB",
-        bye: 7
+        bye: 7,
+        toughestSchedRank: 10,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 4
       },
       "HOU": {
         id: 64,
         abbreviation: "HOU",
-        bye: 10
+        bye: 10,
+        toughestSchedRank: 9,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 2,
+        lossAgainst500Teams: 3
       },
       "IND": {
         id: 65,
         abbreviation: "IND",
-        bye: 6
+        bye: 6,
+        toughestSchedRank: 26,
+        gamesAgainst500Teams: 3,
+        winsAgainst500Teams: 2,
+        lossAgainst500Teams: 1
       },
       "JAX": {
         id: 66,
         abbreviation: "JAX",
-        bye: 10
+        bye: 10,
+        toughestSchedRank: 16,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 5
       },
       "TEN": {
         id: 67,
         abbreviation: "TEN",
-        bye: 11
+        bye: 11,
+        toughestSchedRank: 28,
+        gamesAgainst500Teams: 3,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 2
       },
       "ARI": {
         id: 76,
         abbreviation: "ARI",
-        bye: 12
+        bye: 12,
+        toughestSchedRank: 17,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 5
       },
       "LA": {
         id: 77,
         abbreviation: "LA",
-        bye: 9
+        bye: 9,
+        toughestSchedRank: 27,
+        gamesAgainst500Teams: 3,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 2
       },
       "SF": {
         id: 78,
         abbreviation: "SF",
-        bye: 4
+        bye: 4,
+        toughestSchedRank: 30,
+        gamesAgainst500Teams: 2,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 1
       },
       "SEA": {
         id: 79,
         abbreviation: "SEA",
-        bye: 11
+        bye: 11,
+        toughestSchedRank: 22,
+        gamesAgainst500Teams: 4,
+        winsAgainst500Teams: 2,
+        lossAgainst500Teams: 2
       },
       "DEN": {
         id: 72,
         abbreviation: "DEN",
-        bye: 10
+        bye: 10,
+        toughestSchedRank: 14,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 5
       },
       "KC": {
         id: 73,
         abbreviation: "KC",
-        bye: 12
+        bye: 12,
+        toughestSchedRank: 2,
+        gamesAgainst500Teams: 6,
+        winsAgainst500Teams: 3,
+        lossAgainst500Teams: 3
       },
       "OAK": {
         id: 74,
         abbreviation: "OAK",
-        bye: 6
+        bye: 6,
+        toughestSchedRank: 12,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 4
       },
       "LAC": {
         id: 75,
         abbreviation: "LAC",
-        bye: 12
+        bye: 12,
+        toughestSchedRank: 7,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 2,
+        lossAgainst500Teams: 3
       },
       "NYJ": {
         id: 51,
         abbreviation: "NYJ",
-        bye: 4
+        bye: 4,
+        toughestSchedRank: 24,
+        gamesAgainst500Teams: 4,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 3
       },
       "NE": {
         id: 50,
         abbreviation: "NE",
-        bye: 10
+        bye: 10,
+        toughestSchedRank: 31,
+        gamesAgainst500Teams: 2,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 1
       },
       "MIA": {
         id: 49,
         abbreviation: "MIA",
-        bye: 5
+        bye: 5,
+        toughestSchedRank: 5,
+        gamesAgainst500Teams: 6,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 5
       },
       "BUF": {
         id: 48,
         abbreviation: "BUF",
-        bye: 6
+        bye: 6,
+        toughestSchedRank: 32,
+        gamesAgainst500Teams: 1,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 1
       },
       "WAS": {
         id: 55,
         abbreviation: "WAS",
-        bye: 10
+        bye: 10,
+        toughestSchedRank: 13,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 5
       },
       "PHI": {
         id: 54,
         abbreviation: "PHI",
-        bye: 10
+        bye: 10,
+        toughestSchedRank: 8,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 2,
+        lossAgainst500Teams: 3
       },
       "NYG": {
         id: 53,
         abbreviation: "NYG",
-        bye: 11
+        bye: 11,
+        toughestSchedRank: 18,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 5
       },
       "DAL": {
         id: 52,
         abbreviation: "DAL",
-        bye: 8
+        bye: 8,
+        toughestSchedRank: 29,
+        gamesAgainst500Teams: 3,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 3
       },
       "PIT": {
         id: 59,
         abbreviation: "PIT",
-        bye: 7
+        bye: 7,
+        toughestSchedRank: 4,
+        gamesAgainst500Teams: 6,
+        winsAgainst500Teams: 2,
+        lossAgainst500Teams: 4
       },
       "CLE": {
         id: 58,
         abbreviation: "CLE",
-        bye: 7
+        bye: 7,
+        toughestSchedRank: 3,
+        gamesAgainst500Teams: 6,
+        winsAgainst500Teams: 2,
+        lossAgainst500Teams: 4
       },
       "CIN": {
         id: 57,
         abbreviation: "CIN",
-        bye: 9
+        bye: 9,
+        toughestSchedRank: 1,
+        gamesAgainst500Teams: 7,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 7
       },
       "BAL": {
         id: 56,
         abbreviation: "BAL",
-        bye: 8
+        bye: 8,
+        toughestSchedRank: 20,
+        gamesAgainst500Teams: 4,
+        winsAgainst500Teams: 3,
+        lossAgainst500Teams: 1
       },
       "MIN": {
         id: 63,
         abbreviation: "MIN",
-        bye: 12
+        bye: 12,
+        toughestSchedRank: 23,
+        gamesAgainst500Teams: 4,
+        winsAgainst500Teams: 2,
+        lossAgainst500Teams: 2
       },
       "GB": {
         id: 62,
         abbreviation: "GB",
-        bye: 11
+        bye: 11,
+        toughestSchedRank: 19,
+        gamesAgainst500Teams: 4,
+        winsAgainst500Teams: 4,
+        lossAgainst500Teams: 0
       },
       "DET": {
         id: 61,
         abbreviation: "DET",
-        bye: 5
+        bye: 5,
+        toughestSchedRank: 15,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 0,
+        lossAgainst500Teams: 5
       },
       "CHI": {
         id: 60,
         abbreviation: "CHI",
-        bye: 6
+        bye: 6,
+        toughestSchedRank: 11,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 1,
+        lossAgainst500Teams: 4
       },
      }
   }

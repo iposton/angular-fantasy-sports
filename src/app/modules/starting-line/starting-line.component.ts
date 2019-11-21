@@ -71,6 +71,8 @@ export class StartingLineComponent implements OnInit {
   public dRank: Array <any> = [];
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
+  public winRank: Array <any> = [];
+  public win500Rank: Array <any> = [];
   public myRanks: Array <any> = [];
   public mobile: boolean = false;
   public allSentData: Array <any>;
@@ -275,16 +277,67 @@ export class StartingLineComponent implements OnInit {
             this.teamStats = res['teamStatsTotals'];
             let oSort = [];
             let dSort = [];
+            let winSort = [];
+            let win500Sort = [];
             let dRank = [];
             let oRank = [];
             let tRank = [];
+            let winRank = [];
+            let win500Rank = [];
             oSort = res['teamStatsTotals'];
             dSort = res['teamStatsTotals'];
+            winSort = res['teamStatsTotals'];
+            win500Sort = res['teamStatsTotals'];
 
             this.dataService
               .getWeek(this.selectedWeek).subscribe(res => {
                 console.log(res, "weekly games...");
                 this.weekStats = res['gamelogs'];
+            });
+
+            winRank = winSort.slice().sort((a: any, b: any) => {
+
+              if (a['stats'].standings.winPct 
+               >= b['stats'].standings.winPct) {
+                return -1;
+              } else if (a['stats'].standings.winPct
+               <= b['stats'].standings.winPct) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+
+            winRank.forEach(function(item, index){
+              for (let team of teamRef) {
+               if (winRank[index].team.abbreviation === team.abbreviation) { 
+                 team.winRank = index + 1; 
+               }
+              }
+            });
+
+            //Divide the number of wins by the total number of competitions. 
+            //Then multiply the quotient by 100 to calculate the win percentage.
+
+            win500Rank = win500Sort.slice().sort((a: any, b: any) => {
+
+              if ((this.byes[a['team'].abbreviation].winsAgainst500Teams / this.byes[a['team'].abbreviation].gamesAgainst500Teams) * 100
+               >= (this.byes[b['team'].abbreviation].winsAgainst500Teams / this.byes[b['team'].abbreviation].gamesAgainst500Teams) * 100) {
+                return -1;
+              } else if ((this.byes[a['team'].abbreviation].winsAgainst500Teams / this.byes[a['team'].abbreviation].gamesAgainst500Teams) * 100
+              <= (this.byes[b['team'].abbreviation].winsAgainst500Teams / this.byes[b['team'].abbreviation].gamesAgainst500Teams) * 100) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+
+            win500Rank.forEach(function(item, index){
+              for (let team of teamRef) {
+               if (win500Rank[index].team.abbreviation === team.abbreviation) { 
+                 team.win500Rank = index + 1; 
+               }
+              }
             });
             
             dRank = dSort.slice().sort((a: any, b: any) => {
@@ -347,11 +400,11 @@ export class StartingLineComponent implements OnInit {
 
            tRank = teamRef.slice().sort((a: any, b: any) => {
   
-            if ((a.oRank + a.dRank)
-            <= (b.oRank + b.dRank)) {
+            if ((a.oRank + a.dRank + a.winRank + a.win500Rank)
+            <= (b.oRank + b.dRank + b.winRank + b.win500Rank)) {
               return -1;
-            } else if ((a.oRank + a.dRank)
-            >= (b.oRank + b.dRank)) {
+            } else if ((a.oRank + a.dRank + a.winRank + a.win500Rank)
+            >= (b.oRank + b.dRank + b.winRank + b.win500Rank)) {
               return 1;
             } else {
               return 0;
@@ -369,6 +422,8 @@ export class StartingLineComponent implements OnInit {
             this.dRank = dRank;
             this.oRank = oRank;
             this.tRank = tRank;
+            this.winRank = winRank;
+            this.win500Rank = win500Rank;
             if (this.dataService.premiumRanks != null) {
               this.tRank = this.dataService.premiumRanks;
               let tRank = [];
@@ -453,6 +508,9 @@ export class StartingLineComponent implements OnInit {
                               data.flip = 'inactive';
                               data.dRank = team.dRank;
                               data.oRank = team.oRank;
+                              data.oRank = team.oRank;
+                              data.winRank = team.winRank;
+                              data.win500Rank = team.win500Rank;
                               data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
                             } 
                           }  
