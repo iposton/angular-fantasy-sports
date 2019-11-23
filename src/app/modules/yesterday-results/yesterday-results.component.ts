@@ -205,7 +205,7 @@ export class YesterdayResultsComponent implements OnInit {
 
             for (let sdata of this.myData) {
 
-              if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
+              if (schedule.schedule.awayTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 
                 sdata.player.gameTime = schedule['schedule'].startTime;
                 sdata.team.gameIce = schedule['schedule'].venue.name;
@@ -231,7 +231,7 @@ export class YesterdayResultsComponent implements OnInit {
                 sdata.team.yesterday = yesterday;
 
               }
-              if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
+              if (schedule.schedule.homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 sdata.player.gameTime = schedule['schedule'].startTime;
                 sdata.team.gameIce = schedule['schedule'].venue.name;
                 // if (schedule.schedule.location === 'Nassau Coliseum') {
@@ -264,7 +264,7 @@ export class YesterdayResultsComponent implements OnInit {
 
             for (let btb of this.myData) {
 
-              if (full.awayTeam.id === btb.team.id) {
+              if (full.awayTeam.id === btb.player.currentTeam.id) {
 
                 if (btb.team.yesterday === full.date) {
 
@@ -282,7 +282,7 @@ export class YesterdayResultsComponent implements OnInit {
                 }
 
               }
-              if (full.homeTeam.id === btb.team.id) {
+              if (full.homeTeam.id === btb.player.currentTeam.id) {
 
 
                 if (btb.team.yesterday === full.date) {
@@ -342,15 +342,15 @@ if (this.starterStatData && this.myData) {
 
           for (let data of this.myData) {
 
-                if(this.twitterHandles[data.team.id] != null) {
+                if(this.twitterHandles[data.player.currentTeam.id] != null) {
 
-                //console.log(this.twitterHandles[data.team.id].twitterHashTag);
+                //console.log(this.twitterHandles[data.player.currentTeam.id].twitterHashTag);
 
-                  data.player.twitterHandle = this.twitterHandles[data.team.id].twitterHashTag;
+                  data.player.twitterHandle = this.twitterHandles[data.player.currentTeam.id].twitterHashTag;
 
                   //INCASE API CHANGES TEAM IDS AGAIN CATCH IT HERE
-                  if (this.twitterHandles[data.team.id][data.player.id] != null) {
-                    data.player.atHandle = this.twitterHandles[data.team.id][data.player.id] + ' ';
+                  if (this.twitterHandles[data.player.currentTeam.id][data.player.id] != null) {
+                    data.player.atHandle = this.twitterHandles[data.player.currentTeam.id][data.player.id] + ' ';
                   } else {
                     data.player.atHandle = '';
                   }
@@ -362,7 +362,7 @@ if (this.starterStatData && this.myData) {
                if (data.team.hadGameYesterday === true) {
                 //console.log(data, 'game yesterday');
                 if (data.team.haveGameToday === true) {
-                  data.team.secondBacktoBack = " 2nd game of a Back-to-Back for the "+data.team.abbreviation;
+                  data.team.secondBacktoBack = " 2nd game of a Back-to-Back for the "+data.player.currentTeam.abbreviation;
                 } else {
                   data.team.secondBacktoBack = "";
                 }
@@ -373,7 +373,7 @@ if (this.starterStatData && this.myData) {
               if (data.team.haveGameToday === true) {
                 //console.log(data, 'game today');
                 if (data.team.haveGameTomorrow === true) {
-                  data.team.firstBacktoBack = " 1st game of a Back-to-Back for the "+data.team.abbreviation;
+                  data.team.firstBacktoBack = " 1st game of a Back-to-Back for the "+data.player.currentTeam.abbreviation;
                 } else {
                   data.team.firstBacktoBack = "";
                 }
@@ -406,15 +406,15 @@ if (this.starterStatData && this.myData) {
             for (let sc of this.score) {
               for (let pdata of this.myData) {
                 //console.log(sc, 'score items');
-                // if (sc.game.awayTeamAbbreviation === pdata.team.abbreviation) {
+                // if (sc.game.awayTeamAbbreviation === pdata.player.currentTeam.abbreviation) {
                 //   pdata.team.awayGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
 
                 // }
-                // if (sc.game.homeTeamAbbreviation === pdata.team.abbreviation) {
+                // if (sc.game.homeTeamAbbreviation === pdata.player.currentTeam.abbreviation) {
                 //   pdata.team.homeGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
 
                 // }
-                if (sc.team.id === pdata.team.id) {
+                if (sc.team.id === pdata.player.currentTeam.id) {
                   pdata.team.teamScore = sc.stats.miscellaneous.goalsFor;
                   pdata.team.opponentScore = sc.stats.miscellaneous.goalsAgainst;
                 }
@@ -426,7 +426,7 @@ if (this.starterStatData && this.myData) {
 
           for (let team of teamRef) {
             for (let data of this.myData) { 
-               if (team.id === data.team.id) {
+               if (team.id === data.player.currentTeam.id) {
                  data.team.color = team.teamColoursHex[0];
                  data.team.accent = team.teamColoursHex[1];
                  data.team.logo = team.officialLogoImageSrc;
@@ -439,7 +439,7 @@ if (this.starterStatData && this.myData) {
           for (let schedule of this.myData) {
             for (let sdata of this.myData) {
               if (sdata.team.opponentId != null && 
-                sdata.team.opponentId === schedule.team.id && 
+                sdata.team.opponentId === schedule.player.currentTeam.id && 
                 sdata.gameId === schedule.gameId) {
                 sdata.team.opponentLogo = schedule.team.logo;
                 sdata.team.opponentCity = schedule.team.city;
@@ -484,8 +484,8 @@ if (this.starterStatData && this.myData) {
         this.statData[data.team.gameId][1].player.twoPossibleStarters = false;
 
         if (this.statData[data.team.gameId].length > 2) {
-          //console.log(this.statData[data.team.gameId][0].team.abbreviation + ' ' + this.statData[data.team.gameId][1].team.abbreviation + ' ' + this.statData[data.team.gameId][2].team.abbreviation, 'possible starters...');
-          if (this.statData[data.team.gameId][0].team.id === this.statData[data.team.gameId][1].team.id) {
+          //console.log(this.statData[data.team.gameId][0].player.currentTeam.abbreviation + ' ' + this.statData[data.team.gameId][1].player.currentTeam.abbreviation + ' ' + this.statData[data.team.gameId][2].player.currentTeam.abbreviation, 'possible starters...');
+          if (this.statData[data.team.gameId][0].player.currentTeam.id === this.statData[data.team.gameId][1].player.currentTeam.id) {
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
              if (this.statData[data.team.gameId][0].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
                console.log(this.statData[data.team.gameId][0].player, 'this is not a starter. api got it wrong');
@@ -501,7 +501,7 @@ if (this.starterStatData && this.myData) {
               this.statData[data.team.gameId][1].player.importantStat = this.statData[data.team.gameId][1].player.FirstName +' '+ this.statData[data.team.gameId][1].player.LastName + " made a lot of saves last night";
             }
           }
-          if (this.statData[data.team.gameId][1].team.id === this.statData[data.team.gameId][2].team.id) {
+          if (this.statData[data.team.gameId][1].player.currentTeam.id === this.statData[data.team.gameId][2].player.currentTeam.id) {
             // this.statData[data.team.gameId][1].twoPossibleStarters = true;
             this.statData[data.team.gameId][2].player.twoPossibleStarters = true;
              if (this.statData[data.team.gameId][2].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
@@ -522,7 +522,7 @@ if (this.starterStatData && this.myData) {
             this.statData[data.team.gameId][2].player.twoPossibleStarters = false;
           }
           if (this.statData[data.team.gameId][3] != null) {
-            if (this.statData[data.team.gameId][2].team.id === this.statData[data.team.gameId][3].team.id) {
+            if (this.statData[data.team.gameId][2].player.currentTeam.id === this.statData[data.team.gameId][3].player.currentTeam.id) {
               this.statData[data.team.gameId][2].twoPossibleStarters = true;
               this.statData[data.team.gameId][3].twoPossibleStarters = true;
             } else {
