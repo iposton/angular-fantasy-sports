@@ -74,7 +74,7 @@ export class TomorrowResultsComponent implements OnInit {
     '483':'483',
     '5528':'5528',
     '13876':'13876',
-    '5366':'5366',
+    '13660': '13660', // hutchinson '5366':'5366',
     '4890':'4890',
     '15525':'15525',
     '5420':'5420',
@@ -115,7 +115,7 @@ export class TomorrowResultsComponent implements OnInit {
     '4351':'4351',
     '4592':'4592',
     '15438':'15438',
-    '4575':'4575',
+    '5518': '5518', // schneider'4575':'4575',
     '3793':'3793',
     '4271':'4271',
     '4333':'4333',
@@ -347,7 +347,7 @@ export class TomorrowResultsComponent implements OnInit {
 
             for (let sdata of this.myData) {
 
-              if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
+              if (schedule.schedule.awayTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameIce = schedule.schedule.venue.name;
@@ -386,7 +386,7 @@ export class TomorrowResultsComponent implements OnInit {
 
 
               }
-              if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
+              if (schedule.schedule.homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameIce = schedule.schedule.venue.name;
 
@@ -521,7 +521,7 @@ export class TomorrowResultsComponent implements OnInit {
 
           for (let team of teamRef) {
             for (let data of this.myData) { 
-               if (team.id === data.team.id) {
+               if (team.id === data.player.currentTeam.id) {
                  data.team.color = team.teamColoursHex[0];
                  data.team.accent = team.teamColoursHex[1];
                  data.team.logo = team.officialLogoImageSrc;
@@ -534,7 +534,7 @@ export class TomorrowResultsComponent implements OnInit {
           for (let schedule of this.myData) {
             for (let sdata of this.myData) {
               if (sdata.team.opponentId != null && 
-                sdata.team.opponentId === schedule.team.id && 
+                sdata.team.opponentId === schedule.player.currentTeam.id && 
                 sdata.gameId === schedule.gameId) {
                 sdata.team.opponentLogo = schedule.team.logo;
                 sdata.team.opponentCity = schedule.team.city;
@@ -606,7 +606,7 @@ export class TomorrowResultsComponent implements OnInit {
 
               for (let startdata of this.myData) {
 
-                if (startid === startdata.team.id) {
+                if (startid === startdata.player.currentTeam.id) {
                   //4449 Jeff Glass is blocked //9072 Lindgren //11721 Lagace //Sateri 13871 //Brossoit 5552 //8952 Wedgewood //9072 Lindgren //13873 DeSmith //10083 Jarry //Lyon 13662
                   //&& startdata.player.injuryOut == null && startdata.player.id != '11721' && startdata.player.id != '13871' && startdata.player.id != '4449' && startdata.player.id != '5552' && startdata.player.id != '8952' && startdata.player.id != '9072' && startdata.player.id != '10083' && startdata.player.id != '13662'
                   //startdata.stats.goaltending.gamesStarted > 1
@@ -672,7 +672,7 @@ export class TomorrowResultsComponent implements OnInit {
 
         if (this.statData[data.team.gameId].length > 2) {
           //console.log(this.statData[data.team.gameId][0].team.abbreviation + ' ' + this.statData[data.team.gameId][1].team.abbreviation + ' ' + this.statData[data.team.gameId][2].team.Name, 'possible starters...');
-          if (this.statData[data.team.gameId][0].team.id === this.statData[data.team.gameId][1].team.id) {
+          if (this.statData[data.team.gameId][0].player.currentTeam.id === this.statData[data.team.gameId][1].player.currentTeam.id) {
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
             if (this.statData[data.team.gameId][0].player.resultYesterday != null) {
               this.statData[data.team.gameId][0].player.finishedYesterday = true;
@@ -683,7 +683,7 @@ export class TomorrowResultsComponent implements OnInit {
           } else {
             this.statData[data.team.gameId][1].twoPossibleStarters = false;
           }
-          if (this.statData[data.team.gameId][1].team.id === this.statData[data.team.gameId][2].team.id) {
+          if (this.statData[data.team.gameId][1].player.currentTeam.id === this.statData[data.team.gameId][2].player.currentTeam.id) {
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
 
 
@@ -699,7 +699,7 @@ export class TomorrowResultsComponent implements OnInit {
             this.statData[data.team.gameId][2].player.twoPossibleStarters = false;
           }
           if (this.statData[data.team.gameId][3] != null) {
-            if (this.statData[data.team.gameId][2].team.id === this.statData[data.team.gameId][3].team.id) {
+            if (this.statData[data.team.gameId][2].player.currentTeam.id === this.statData[data.team.gameId][3].player.currentTeam.id) {
               this.statData[data.team.gameId][2].twoPossibleStarters = true;
               this.statData[data.team.gameId][3].twoPossibleStarters = true;
               if (this.statData[data.team.gameId][2].player.resultYesterday != null) {

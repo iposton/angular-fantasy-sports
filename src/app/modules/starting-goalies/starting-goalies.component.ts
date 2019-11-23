@@ -14,7 +14,7 @@ import {
   YesterdayService,
   TomorrowService
  } from '../../services/index';
- 
+
 import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/forkJoin';
@@ -355,7 +355,7 @@ export class StartingGoaliesComponent implements OnInit {
               sdata.player.lastweekLosses = 0;
               sdata.player.lastweekOtl = 0;
 
-              if (schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
+              if (schedule['schedule'].awayTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 sdata.player.gameTime = schedule['schedule'].startTime;
                 sdata.team.gameIce = schedule['schedule'].venue.name;
 
@@ -384,7 +384,7 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.player.startstatus = '';
                 sdata.flip = 'inactive';
 
-                if(sdata.team.id === team.id) {
+                if(sdata.player.currentTeam.id === team.id) {
                   sdata.team.teamFull = team.city +' '+ team.name;   
                   sdata.team.teamCity = team.city;
                   sdata.team.teamName = team.name;
@@ -396,7 +396,7 @@ export class StartingGoaliesComponent implements OnInit {
                 }
 
               }
-              if (schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
+              if (schedule['schedule'].homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 sdata.player.gameTime = schedule['schedule'].startTime;
                 sdata.team.gameIce = schedule['schedule'].venue.name;
 
@@ -425,7 +425,7 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.player.startstatus = '';
                 sdata.flip = 'inactive';
 
-                if(sdata.team.id === team.id) {
+                if(sdata.player.currentTeam.id === team.id) {
                   sdata.team.teamFull = team.city +' '+ team.name;   
                   sdata.team.teamCity = team.city;
                   sdata.team.teamName = team.name;
@@ -445,7 +445,7 @@ export class StartingGoaliesComponent implements OnInit {
 
         for (let team of teamRef) {
           for (let data of this.myData) { 
-             if (team.id === data.team.id) {
+             if (team.id === data.player.currentTeam.id) {
                data.team.color = team.teamColoursHex[0];
                data.team.accent = team.teamColoursHex[1];
                data.team.logo = team.officialLogoImageSrc;
@@ -458,7 +458,7 @@ export class StartingGoaliesComponent implements OnInit {
         for (let schedule of this.myData) {
           for (let sdata of this.myData) {
             if (sdata.team.opponentId != null && 
-              sdata.team.opponentId === schedule.team.id && 
+              sdata.team.opponentId === schedule.player.currentTeam.id && 
               sdata.gameId === schedule.gameId) {
               sdata.team.opponentLogo = schedule.team.logo;
               sdata.team.opponentCity = schedule.team.city;
@@ -518,7 +518,7 @@ export class StartingGoaliesComponent implements OnInit {
 
             for (let btb of this.myData) {
 
-              if (full['schedule'].awayTeam.id === btb.team.id) {
+              if (full['schedule'].awayTeam.id === btb.player.currentTeam.id) {
               
                 if (btb.team.yesterday === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
 
@@ -536,7 +536,7 @@ export class StartingGoaliesComponent implements OnInit {
                 }
 
               }
-              if (full['schedule'].homeTeam.id === btb.team.id) {
+              if (full['schedule'].homeTeam.id === btb.player.currentTeam.id) {
 
 
                 if (btb.team.yesterday === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
@@ -677,7 +677,7 @@ export class StartingGoaliesComponent implements OnInit {
 
               for (let startdata of this.myData) {
                 //startdata.stats.goaltending.gamesStarted > 1
-                if (startid === startdata.team.id) {
+                if (startid === startdata.player.currentTeam.id) {
                   if (this.startersDate != startdata.team.today) {
 
                     startdata.player.startingToday = false;
@@ -741,7 +741,7 @@ export class StartingGoaliesComponent implements OnInit {
 
         if (this.statData[data.team.gameId].length > 2) {
           //console.log(this.statData[data.team.gameId][0].team.Name + ' ' + this.statData[data.team.gameId][1].team.Name + ' ' + this.statData[data.team.gameId][2].team.Name, 'possible starters...');
-          if (this.statData[data.team.gameId][0].team.id === this.statData[data.team.gameId][1].team.id) {
+          if (this.statData[data.team.gameId][0].player.currentTeam.id === this.statData[data.team.gameId][1].player.currentTeam.id) {
             this.statData[data.team.gameId][1].player.twoPossibleStarters = true;
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
             if (this.statData[data.team.gameId][0].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
@@ -754,7 +754,7 @@ export class StartingGoaliesComponent implements OnInit {
           } else {
             this.statData[data.team.gameId][1].twoPossibleStarters = false;
           }
-          if (this.statData[data.team.gameId][0].team.id === this.statData[data.team.gameId][2].team.id) {
+          if (this.statData[data.team.gameId][0].player.currentTeam.id === this.statData[data.team.gameId][2].player.currentTeam.id) {
             this.statData[data.team.gameId][0].player.twoPossibleStarters = true;
             this.statData[data.team.gameId][0].twoPossibleStarters = true;
             if (this.statData[data.team.gameId][2].player.saves == null && this.statData[data.team.gameId][0].player.saves > '0') {
@@ -767,7 +767,7 @@ export class StartingGoaliesComponent implements OnInit {
           } else {
             this.statData[data.team.gameId][0].twoPossibleStarters = false;
           }
-          if (this.statData[data.team.gameId][1].team.id === this.statData[data.team.gameId][2].team.id) {
+          if (this.statData[data.team.gameId][1].player.currentTeam.id === this.statData[data.team.gameId][2].player.currentTeam.id) {
             this.statData[data.team.gameId][1].twoPossibleStarters = true;
             this.statData[data.team.gameId][2].player.twoPossibleStarters = true;
             if (this.statData[data.team.gameId][2].player.saves == null && this.statData[data.team.gameId][1].player.saves > '0') {
@@ -788,7 +788,7 @@ export class StartingGoaliesComponent implements OnInit {
             this.statData[data.team.gameId][2].player.twoPossibleStarters = false;
           }
           if (this.statData[data.team.gameId][3] != null) {
-            if (this.statData[data.team.gameId][2].team.id === this.statData[data.team.gameId][3].team.id) {
+            if (this.statData[data.team.gameId][2].player.currentTeam.id === this.statData[data.team.gameId][3].player.currentTeam.id) {
               this.statData[data.team.gameId][2].twoPossibleStarters = true;
               this.statData[data.team.gameId][3].twoPossibleStarters = true;
             } else {
@@ -1006,15 +1006,15 @@ export class StartingGoaliesComponent implements OnInit {
               for (let sc of this.score) {
                 for (let pdata of this.myData) {
                   console.log(sc, 'score items');
-                  // if (sc.game.awayTeamAbbreviation === pdata.team.abbreviation) {
+                  // if (sc.game.awayTeamAbbreviation === pdata.player.currentTeam.abbreviation) {
                   //   pdata.team.awayGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
   
                   // }
-                  // if (sc.game.homeTeamAbbreviation === pdata.team.abbreviation) {
+                  // if (sc.game.homeTeamAbbreviation === pdata.player.currentTeam.abbreviation) {
                   //   pdata.team.homeGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
   
                   // }
-                  if (sc.team.id === pdata.team.id) {
+                  if (sc.team.id === pdata.player.currentTeam.id) {
                     pdata.team.teamScore = sc.stats.miscellaneous.goalsFor;
                     pdata.team.opponentScore = sc.stats.miscellaneous.goalsAgainst;
                   }
@@ -1037,7 +1037,7 @@ export class StartingGoaliesComponent implements OnInit {
           //   for (let sc of this.score) {
           //     for (let pdata of this.showData) {
 
-          //       if (sc.game.homeTeam.abbreviation === pdata.team.abbreviation) {
+          //       if (sc.game.homeTeam.abbreviation === pdata.player.currentTeam.abbreviation) {
           //         pdata.team.homeGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
           //         pdata.team.opponentAbbreviation = sc.game.awayTeam.abbreviation;
           //         pdata.team.opponentScore = sc.scoring.awayScoreTotal;

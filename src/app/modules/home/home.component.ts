@@ -8,7 +8,8 @@ import {
   NBADataService,
   DataService,
   NHLDataService,
-  NFLDataService } from '../../services/index';
+  NFLDataService,
+  UtilService } from '../../services/index';
 import { MatSnackBar } from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/forkJoin';
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit {
 
   public showLink: boolean = false;
   public liveGames: boolean = false;
+  public selectedWeek: any;
 
   tweetDay: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
@@ -79,10 +81,26 @@ export class HomeComponent implements OnInit {
      public dataService: DataService,
      public nhlDataService: NHLDataService,
      public nbaDataService: NBADataService,
-     public nflDataService: NFLDataService) {
+     public nflDataService: NFLDataService,
+     public util: UtilService) {
      //this.loading = false;
      //this.getJSON();
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
+    this.selectedWeek = '1';
+    let weekTimes = this.util.getWeekTimes();
+
+    for (let week of weekTimes) {
+      let date = new Date();
+      if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
+        this.selectedWeek = week.week;
+        // let utcDate = new Date(week.dateBeg);
+        // utcDate.setHours(utcDate.getHours() - 8);
+        // let myDate = new Date(utcDate);
+        // let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+        // this.tsDate = dailyDate;  
+      }
+      
+    } 
 
   }
 
@@ -169,7 +187,7 @@ loadData() {
         });
 
         this.nflDataService
-          .getSchedule(11).subscribe(res => {
+          .getSchedule(this.selectedWeek).subscribe(res => {
             console.log(res, "NFL schedule...");
             if (res['games'].length === 0) {
               this.nflLoading = false;
