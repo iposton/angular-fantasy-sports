@@ -38,7 +38,7 @@ import { OrderBy } from './pipes/orderby.pipe';
 import { HomeComponent } from './modules/home/home.component';
 import { StartingFiveComponent } from './modules/starting-five/starting-five.component';
 import { StartingLineComponent } from './modules/starting-line/starting-line.component';
-import { TouchesComponent } from './modules/touches/touches.component';
+import { TouchesComponent, LastweekNFLDialog } from './modules/touches/touches.component';
 import { StartingPitcherComponent } from './modules/starting-pitcher/starting-pitcher.component';
 import { PitchingStatsComponent, MyDialog } from './modules/pitching-stats/pitching-stats.component';
 import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from './modules/starting-goalies/starting-goalies.component';
@@ -47,51 +47,6 @@ import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './module
 
 // import { ShareModule } from 'ng2share/share.module';
 
-
-// const routes: Routes = [
-//  {
-//         path: '',
-//         redirectTo: 'all-sports',
-//         pathMatch: 'full'
-//  },
-//  { 
-//        path: 'all-sports', 
-//        component: HomeComponent 
-//  },
-//  { 
-//         path: 'starting-pitchers', 
-//         component: StartingPitcherComponent 
-//  },
-//  { 
-//         path: 'pitching-stats', 
-//         component: PitchingStatsComponent 
-//  },
-//  { 
-//         path: 'nfl-line-rank', 
-//         component: StartingLineComponent 
-//  },
-//  { 
-//         path: 'nfl-touches', 
-//         component: TouchesComponent 
-//  },
-//  {
-//         path: 'starting-goalies-yesterday',
-//         component: YesterdayResultsComponent
-//   },
-//   {
-//         path: 'starting-goalies-tomorrow',
-//         component: TomorrowResultsComponent
-//   },
-//   {
-//         path: 'starting-goalies',
-//         component: StartingGoaliesComponent
-//   },
-//   {
-//         path: 'starting-five',
-//         component: StartingFiveComponent
-//   }
-
-// ];
 
 @NgModule({
   declarations: [
@@ -112,6 +67,7 @@ import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './module
     InfoTomorrow,
     TodayDialog,
     LastweekDialog,
+    LastweekNFLDialog,
     TomorrowDialog,
     LoginDialog
   ],
@@ -148,7 +104,7 @@ import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './module
   ],
   providers: [],
   entryComponents: [
-   MyDialog, Info, InfoYesterday, InfoTomorrow, TodayDialog, LastweekDialog, TomorrowDialog, LoginDialog
+   MyDialog, Info, InfoYesterday, InfoTomorrow, TodayDialog, LastweekDialog, LastweekNFLDialog, TomorrowDialog, LoginDialog
   ],
   bootstrap: [AppComponent]
 })
