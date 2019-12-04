@@ -1,11 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { NFLDataService, UtilService } from '../../services/index';
+import { NFLDataService, UtilService, FirebaseService } from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
-// import { map } from 'rxjs/operators';
-// import { OrderBy } from '../../pipes/orderby.pipe';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 let headers = null;
@@ -81,7 +80,9 @@ export class TouchesComponent implements OnInit {
   constructor(private dataService: NFLDataService, 
               private http: HttpClient,
               private sanitizer: DomSanitizer,
-              private util: UtilService) {
+              private util: UtilService,
+              private fbService: FirebaseService,
+              public dialog: MatDialog) {
     this.allSentData = this.dataService.getSentTouchStats(); 
     console.log(this.allSentData, 'all data');  
     if (this.allSentData.length > 0) {
@@ -295,14 +296,14 @@ export class TouchesComponent implements OnInit {
               // }
               //console.log((this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? a['stats'].passing.passNetYards + a['stats'].passing.passCompletions / parseInt(this.selectedWeek) - 1 : 0), a['team'].abbreviation, 'either 0 or add sum', this.byes[a['team'].abbreviation].bye, 'bye week' );
               if (a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) + 
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0) 
+              (parseInt(this.selectedWeek) < 13 && this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0) 
               >= b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) + 
-              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+              (parseInt(this.selectedWeek) < 13 && this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return -1;
               } else if (a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) + 
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0) 
+              (parseInt(this.selectedWeek) < 13 && this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].passing.passTD + (a['stats'].passing.passNetYards + a['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0) 
               <= b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) + 
-              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+              (parseInt(this.selectedWeek) < 13 && this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].passing.passTD + (b['stats'].passing.passNetYards + b['stats'].passing.passCompletions) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return 1;
               } else {
                 return 0;
@@ -319,14 +320,14 @@ export class TouchesComponent implements OnInit {
 
             oRank = oSort.slice().sort((a: any, b: any) => {
               if (a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)
+              (parseInt(this.selectedWeek) < 13 && this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)
                >= b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) + 
-               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+               (parseInt(this.selectedWeek) < 13 && this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return -1;
               } else if (a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)
+              (parseInt(this.selectedWeek) < 13 && this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].rushing.rushTD + (a['stats'].rushing.rushYards + a['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)
                <= b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) + 
-               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+               (parseInt(this.selectedWeek) < 13 && this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].rushing.rushTD + (b['stats'].rushing.rushYards + b['stats'].rushing.rush1stDowns) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return 1;
               } else {
                 return 0;
@@ -617,7 +618,7 @@ export class TouchesComponent implements OnInit {
 
      console.log(this.showData, 'show data');
     let sendAllData = [];
-    sendAllData.push(this.showData, this.myRanks, this.dailySchedule);
+    sendAllData.push(this.showData, this.myRanks, this.dailySchedule, this.myData);
     this.dataService
         .sendTouchStats(sendAllData);
   }
@@ -630,6 +631,14 @@ export class TouchesComponent implements OnInit {
     } else {
       document.querySelector("mat-card[id="+anchor+"]").scrollIntoView({behavior: "smooth"});
     } 
+  }
+
+  public openLastweek(event, data) {
+    
+    this.dialog.open(LastweekNFLDialog, {
+      data: data,
+      width: '1025px',
+    });
   }
 
   flipBack(data) {
@@ -926,6 +935,223 @@ export class TouchesComponent implements OnInit {
 
       }
      }
+  }
+
+}
+
+@Component({
+  selector: 'lastweek-dialog',
+  template: `<i (click)="dialogRef.close()" style="float:right; cursor:pointer;" class="material-icons">close</i>
+  <span style="color:#f44336; font-size: 18px;">NFL QB Hot List! | {{sentLastweek | date:'shortDate'}} - {{sentYesterday | date:'shortDate'}}</span>
+  <mat-dialog-content>
+  <div class="spinner-msg" *ngIf="loading" style="background: #fff;">
+  Fetching goalie stats...
+  <mat-spinner></mat-spinner>
+  </div>
+  <ul *ngFor="let data of showData"><li *ngIf="data.hot === true"><span class="player"><img src="{{ data.image}}" alt="" /></span><span style="font-weight: bold;" class="last-week"> {{ data.name }} <img src="../assets/nhl-logos/{{ data.team }}.jpg" alt="" /></span><span style="font-weight: bold;"> </span> <span *ngIf="data.opponents[0] != null"> - <span style="color:#6740B4">{{data.opponents[0].date}}</span> {{data.opponents[0].desc}}</span><span *ngIf="data.opponents[1] != null">, <span style="color:#6740B4">{{data.opponents[1].date}}</span> {{data.opponents[1].desc}}</span><span *ngIf="data.opponents[2] != null">, <span style="color:#6740B4">{{data.opponents[2].date}}</span> {{data.opponents[2].desc}}</span> <span *ngIf="data.opponents[3] != null">, <span style="color:#6740B4">{{data.opponents[3].date}}</span> {{data.opponents[3].desc}}</span> - <span style="font-weight: bold;">Total Yards: {{data.py}} TD: {{data.td}}</span></li></ul>
+  </mat-dialog-content>`,
+})
+
+export class LastweekNFLDialog implements OnInit {
+
+  starterStatData: Array < any > = [];
+  showData: Array < any > ;
+  sentHotData: Array < any > ;
+  sentAllData: Array < any > ;
+  sentYesterday: any;
+  sentLastweek: any;
+  loading: boolean = true;
+  public players: any;
+
+  constructor(public dialogRef: MatDialogRef < LastweekNFLDialog > , @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private dataService: NFLDataService) {
+    this.sentHotData = this.dataService.getSentHotStats();
+    //this.sentAllData = this.dataService.getAllSentStats();
+    this.sentAllData = this.dataService.getSentTouchStats(); 
+    this.sentYesterday = this.dataService.getYesterday();
+    this.sentLastweek = this.dataService.getLastweek();
+
+    if (this.sentAllData.length > 0) {
+      console.log('touch data', this.sentAllData);
+      this.players = this.sentAllData[3];
+    }
+
+  }
+
+  loadLastweek() {
+
+    this.dataService
+      .getLastweekGameId().subscribe(res => {
+        console.log(res['games'], "scheduled games for lastweek...");
+        //this.lastweekSchedule = res['games'];
+
+
+        Observable.forkJoin(
+            res['games'].map(
+              g =>
+              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=passYards,rushYards,passAttempts,passCompletions,passTD,rushTD', {headers})
+              //.map(response => response.json())
+            )
+          )
+          .subscribe(res => {
+            console.log(res, 'making several calls by GAME ID for starting lineups...');
+
+            let i;
+            let i2;
+            let i3;
+            let res2;
+            let res3;
+            let myDate;
+
+            res.forEach((item, index) => {
+              i = index;
+              console.log(res[i], 'got box score data for away team!');
+              //console.log(res[i]['games'].game.date, 'looking for date...');
+
+              res2 = res[i]['stats'].away.players.filter(
+                player => player.playerStats.length > 0 && player.playerStats[0].passing != null && player.playerStats[0].rushing != null);
+              res3 = res[i]['stats'].home.players.filter(
+                player => player.playerStats.length > 0 && player.playerStats[0].passing != null && player.playerStats[0].rushing != null);
+
+              //this.gameTime =  res[i]['gamestartinglineup'].game.date;
+              res2.forEach((item, index) => {
+
+                i2 = index;
+                res2[i2].player.city = res[i]['game'].awayTeam.abbreviation;
+                //res2[i2].player.team = res[i]['game'].awayTeam.name;
+                res2[i2].player.teamId = res[i]['game'].awayTeam.id;
+                //console.log(res[i]['games'], 'game score data');
+                let dPipe = new DatePipe("en-US");
+                myDate = dPipe.transform(res[i]['game'].startTime, 'MMM d');
+
+                if (res2[i2].playerStats.length > 0) {
+         
+                  res2[i2].player.opponent = {date: myDate, desc: '@ ' + res[i]['game'].homeTeam.abbreviation + ' Yards: ' + res2[i2].playerStats[0].passing.passYards}
+                  
+                }
+                // if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.losses === 1) {
+                  
+                //   res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['game'].homeTeam.abbreviation + ' Yards: ' + res2[i2].playerStats[0].passing.passYards}
+               
+                // }
+                // if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.overtimeLosses === 1) {
+                  
+                //   res2[i2].player.opponent = {date: myDate, desc: '(L) @ ' + res[i]['game'].homeTeam.abbreviation + ' Yards: ' + res2[i2].playerStats[0].passing.passYards}
+                 
+                // }
+
+                if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].passing.passYards > 0) {
+                  this.starterStatData.push(res2[i2]);
+                  //console.log(res2[i2], 'got player stats for away goalie stats!'); 
+                }
+
+
+              });
+
+              res3.forEach((item, index) => {
+
+                i3 = index;
+                
+                res3[i3].player.city = res[i]['game'].homeTeam.abbreviation;
+                //res3[i3].player.team = res[i]['game'].homeTeam.name;
+                res3[i3].player.teamId = res[i]['game'].homeTeam.id;
+                if (res3[i3].playerStats.length > 0) {
+                  
+                  res3[i3].player.opponent = {date: myDate, desc: 'vs ' + res[i]['game'].awayTeam.abbreviation+ ' Yards: ' + res3[i3].playerStats[0].passing.passYards}
+                  
+                }
+                // if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.losses === 1) {
+                  
+                //   res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['game'].awayTeam.abbreviation+ ' Yards: ' + res3[i3].playerStats[0].passing.passYards}
+                 
+                // }
+                // if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.overtimeLosses === 1) {
+                  
+                //   res3[i3].player.opponent = {date: myDate, desc: '(L) ' + res[i]['game'].awayTeam.abbreviation+ ' Yards: ' + res3[i3].playerStats[0].passing.passYards}
+                  
+                // }
+
+                //res3[i3].player.opponent = res[i]['games'].game.awayTeam.Abbreviation;
+                if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].passing.passYards > 0) {
+                  this.starterStatData.push(res3[i3]);
+                  //console.log(res3[i3], 'got player stats for home goalie!');
+                }
+
+              });
+            });
+
+            this.sortData();
+
+          });
+      })
+
+  }
+
+  sortData() {
+
+    for (let info of this.players) {
+
+      for (let data of this.starterStatData) {
+        //console.log(info, 'looking for image');
+       
+        if (info.player.id === data.player.id) {
+          //console.log(info, 'looking for image IDS Match!!')
+          data.player.image = info.player.officialImageSrc;
+        }
+
+      }
+    }
+    let opponents = [];
+    this.showData = this.starterStatData.reduce(function(hash) {
+      //console.log(hash, 'hash');
+      return function(r, a) {
+        //console.log(a, 'this is a');
+        let key = a.player.id;
+        if (!hash[key]) {
+          hash[key] = { wins: 0, losses: 0, otl: 0, name: a.player.lastName, id: a.player.id, opponents: [], team: a.player.teamId, py: 0, td: 0, sv: 0, svpercent: 0, hot: false, image: a.player.image };
+          r.push(hash[key]);
+        }
+        // hash[key].wins += parseInt(a.playerStats[0].goaltending.wins);
+        // hash[key].losses += parseInt(a.playerStats[0].goaltending.losses);
+        // hash[key].otl += parseInt(a.playerStats[0].goaltending.overtimeLosses);
+        hash[key].py += parseInt(a.playerStats[0].passing.passYards + a.playerStats[0].rushing.rushYards);
+        hash[key].td += parseInt(a.playerStats[0].passing.passTD + a.playerStats[0].rushing.rushTD);
+        // hash[key].sa += parseInt(a.playerStats[0].goaltending.shotsAgainst);
+        // hash[key].sv += parseInt(a.playerStats[0].goaltending.saves);
+        // hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
+
+        if (hash[key].py < 1100) {
+          hash[key].hot = false;
+        } else {
+          hash[key].hot = true;
+        }
+
+        hash[key].opponents.push(a.player.opponent);
+
+        return r;
+      };
+
+    }(Object.create(null)), []);
+    this.loading = false;
+    console.log(this.showData, 'show reduce array!');
+    this.dataService
+      .sendHotStats(this.showData);
+  }
+
+  ngOnInit() {
+    if (this.sentHotData === undefined) {
+
+      this.loadLastweek();
+
+    } else {
+      console.log('using saved hot list data :)')
+      setInterval(() => {
+        this.loading = false;
+        this.showData = this.sentHotData;
+
+      }, 300)
+
+    }
+
   }
 
 }

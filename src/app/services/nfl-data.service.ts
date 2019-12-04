@@ -11,11 +11,28 @@ let sentT = [];
 let sendingAll;
 let sentAll;
 
+let sendingHot;
+let sentHot;
+
+
 let thisDate = new Date();
 let utcDate = new Date(thisDate.toUTCString());
 utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
 let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+
+let yesterdayDate = new Date(thisDate.getTime() - (24 * 60 * 60 * 1000));
+let lastweekDate = new Date(thisDate.getTime() - (576 * 60 * 60 * 1000));
+let yesterdayUtcDate = new Date(yesterdayDate.toUTCString());
+let lastweekUtcDate = new Date(lastweekDate.toUTCString());
+yesterdayUtcDate.setHours(yesterdayUtcDate.getHours() - 8);
+lastweekUtcDate.setHours(lastweekUtcDate.getHours() - 8);
+let yesterdayMyDate = new Date(yesterdayUtcDate);
+let lastweekMyDate = new Date(lastweekUtcDate);
+let yesterdayDailyDate = yesterdayMyDate.toISOString().slice(0, 10).replace(/-/g, "");
+let lastweekDailyDate = lastweekMyDate.toISOString().slice(0, 10).replace(/-/g, "");
+let yesterday = yesterdayMyDate.toISOString().slice(0, 10);
+let lastweek = lastweekMyDate.toISOString().slice(0, 10);
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +47,7 @@ export class NFLDataService {
   public score: Observable <any> = null;
   public allstats: Observable <any> = null;
   public teamstats: Observable <any> = null;
+  public lastweekgameid: Observable <any> = null;
   public gameid: Observable <any> = null;
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
@@ -49,6 +67,24 @@ export class NFLDataService {
   public selectedDate(d) {
     console.log(d, 'set new date');
     dailyDate = d;
+  }
+
+  sendHotStats(hotstatsArray) {
+    console.log("sending hot stats to service...");
+    sendingHot = hotstatsArray;
+  }
+
+
+  //  getSentAllStats() {
+  //   console.log("stats sent to component...");
+  //   sentAll = sendingAll;
+  //   return sentAll;
+  // }
+
+  getSentHotStats() {
+    console.log("stats sent to component...");
+    sentHot = sendingHot;
+    return sentHot;
   }
 
   sendHeaderOptions(h) {
@@ -107,6 +143,16 @@ export class NFLDataService {
     console.log("trying to get heroku env...");
     this.env = this.http.get('/heroku-env')
     return this.env;
+  }
+
+  getYesterday() {
+    console.log("send yesterday..."); 
+    return yesterday; 
+  }
+
+  getLastweek() {
+    console.log("send lastweek..."); 
+    return lastweek;
   }
 
 
@@ -245,5 +291,17 @@ export class NFLDataService {
         
     //}
     return this.score;
+  }
+
+  getLastweekGameId() {
+
+    if (!this.lastweekgameid) {
+      console.log('getting 1 week of games from API...');
+
+      let url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
+      this.lastweekgameid = this.http.get(url, {headers})
+        
+    }
+    return this.lastweekgameid;
   }
 }

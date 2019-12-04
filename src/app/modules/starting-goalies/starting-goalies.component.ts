@@ -109,7 +109,15 @@ export class StartingGoaliesComponent implements OnInit {
 
 
 
-  constructor(private cdr: ChangeDetectorRef, private http: HttpClient, private dataService: NHLDataService, private fbService: FirebaseService, private yesterdayService: YesterdayService, private tomorrowService: TomorrowService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) {
+  constructor(private cdr: ChangeDetectorRef, 
+    private http: HttpClient,
+    private dataService: NHLDataService, 
+    private fbService: FirebaseService, 
+    private yesterdayService: YesterdayService, 
+    private tomorrowService: TomorrowService, 
+    public snackBar: MatSnackBar, 
+    public router: Router, 
+    public dialog: MatDialog) {
     yesterday = this.dataService.getYesterday();
     tomorrow = this.dataService.getTomorrow();
     today = this.dataService.getToday();

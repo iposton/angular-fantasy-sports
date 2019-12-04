@@ -352,14 +352,14 @@ export class StartingLineComponent implements OnInit {
               // }
 
               if (a['stats'].standings.pointsAgainst +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+              (parseInt(this.selectedWeek) < 13 && this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
                <= b['stats'].standings.pointsAgainst +
-               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
+               (parseInt(this.selectedWeek) < 13 && this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return -1;
               } else if (a['stats'].standings.pointsAgainst +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
+              (parseInt(this.selectedWeek) < 13 && this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)
                >= b['stats'].standings.pointsAgainst +
-               (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
+               (parseInt(this.selectedWeek) < 13 && this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsAgainst / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return 1;
               } else {
                 return 0;
@@ -376,14 +376,14 @@ export class StartingLineComponent implements OnInit {
 
             oRank = oSort.slice().sort((a: any, b: any) => {
               if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+              (parseInt(this.selectedWeek) < 13 && this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
               >= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
-              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+              (parseInt(this.selectedWeek) < 13 && this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return -1;
               } else if (a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) +
-              (this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
+              (parseInt(this.selectedWeek) < 13 && this.byes[a['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(a['stats'].standings.pointsFor + (a['stats'].rushing.rushYards + a['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)
               <= b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) + 
-              (this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
+              (parseInt(this.selectedWeek) < 13 && this.byes[b['team'].abbreviation].bye < parseInt(this.selectedWeek) ? Math.floor(b['stats'].standings.pointsFor + (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards) / (parseInt(this.selectedWeek) - 1)) : 0)) {
                 return 1;
               } else {
                 return 0;
