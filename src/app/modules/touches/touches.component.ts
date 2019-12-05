@@ -11,6 +11,7 @@ let headers = null;
 let playerString = null;
 let today = new Date();
 let teamRef = [];
+let dataItem = null;
 
 @Component({
   selector: 'app-touches',
@@ -51,6 +52,7 @@ export class TouchesComponent implements OnInit {
   public schedGroups: Array <any>;
   public lineGroups: Array <any>;
   public myData: Array <any>;
+  public myDataUnfilter: Array <any>;
   public dailyStats: Array <any>;
   public weekStats: Array <any>;
   public score: Array <any>;
@@ -399,8 +401,8 @@ export class TouchesComponent implements OnInit {
 
             this.dataService
               .getTouches(playerString).subscribe(res => {
-
-                  //this.myData = res['playerStatsTotals'];
+                  this.myDataUnfilter = res['playerStatsTotals'];
+                  this.myData = res['playerStatsTotals'];
                   this.myData = res['playerStatsTotals'].filter(
                   player => player.stats.receiving['receptions'] + player.stats.rushing['rushAttempts'] > 10 && (player.player['currentInjury'] == null || player.player['currentInjury'].playingProbability === 'PROBABLE'));
 
@@ -618,7 +620,7 @@ export class TouchesComponent implements OnInit {
 
      console.log(this.showData, 'show data');
     let sendAllData = [];
-    sendAllData.push(this.showData, this.myRanks, this.dailySchedule, this.myData);
+    sendAllData.push(this.showData, this.myRanks, this.dailySchedule, this.myDataUnfilter);
     this.dataService
         .sendTouchStats(sendAllData);
   }
@@ -633,8 +635,8 @@ export class TouchesComponent implements OnInit {
     } 
   }
 
-  public openLastweek(event, data) {
-    
+  public openLastweek(type, data) {
+    data.type = type;
     this.dialog.open(LastweekNFLDialog, {
       data: data,
       width: '1025px',
@@ -942,13 +944,13 @@ export class TouchesComponent implements OnInit {
 @Component({
   selector: 'lastweek-dialog',
   template: `<i (click)="dialogRef.close()" style="float:right; cursor:pointer;" class="material-icons">close</i>
-  <span style="color:#f44336; font-size: 18px;">NFL QB Hot List! | {{sentLastweek | date:'shortDate'}} - {{sentYesterday | date:'shortDate'}}</span>
+  <span style="color:#f44336; font-size: 18px;">NFL <span style="text-transform:uppercase;">{{data.type}}</span> Hot List! | {{sentLastweek | date:'shortDate'}} - {{sentYesterday | date:'shortDate'}}</span>
   <mat-dialog-content>
   <div class="spinner-msg" *ngIf="loading" style="background: #fff;">
   Fetching goalie stats...
   <mat-spinner></mat-spinner>
   </div>
-  <ul *ngFor="let data of showData"><li *ngIf="data.hot === true"><span class="player"><img src="{{ data.image}}" alt="" /></span><span style="font-weight: bold;" class="last-week"> {{ data.name }} <img src="../assets/nhl-logos/{{ data.team }}.jpg" alt="" /></span><span style="font-weight: bold;"> </span> <span *ngIf="data.opponents[0] != null"> - <span style="color:#6740B4">{{data.opponents[0].date}}</span> {{data.opponents[0].desc}}</span><span *ngIf="data.opponents[1] != null">, <span style="color:#6740B4">{{data.opponents[1].date}}</span> {{data.opponents[1].desc}}</span><span *ngIf="data.opponents[2] != null">, <span style="color:#6740B4">{{data.opponents[2].date}}</span> {{data.opponents[2].desc}}</span> <span *ngIf="data.opponents[3] != null">, <span style="color:#6740B4">{{data.opponents[3].date}}</span> {{data.opponents[3].desc}}</span> - <span style="font-weight: bold;">Total Yards: {{data.py}} TD: {{data.td}}</span></li></ul>
+  <ul *ngFor="let data of showData"><li *ngIf="data.hot === true"><span class="player"><img src="{{ data.image}}" alt="" /></span><span style="font-weight: bold;" class="last-week"> {{ data.name }} <img src="../assets/nhl-logos/{{ data.team }}.jpg" alt="" /></span><span style="font-weight: bold;"> </span> <span *ngIf="data.opponents[0] != null"> - <span style="color:#6740B4">{{data.opponents[0].date}}</span> {{data.opponents[0].desc}}</span><span *ngIf="data.opponents[1] != null">, <span style="color:#6740B4">{{data.opponents[1].date}}</span> {{data.opponents[1].desc}}</span><span *ngIf="data.opponents[2] != null">, <span style="color:#6740B4">{{data.opponents[2].date}}</span> {{data.opponents[2].desc}}</span> <span *ngIf="data.opponents[3] != null">, <span style="color:#6740B4">{{data.opponents[3].date}}</span> {{data.opponents[3].desc}}</span> - <span style="font-weight: bold;">Total Yards: {{data.ty}} TD: {{data.td}} </span><span *ngIf="data.pa &gt; 0" style="font-weight: bold;"> Comp %: {{(data.pc / data.pa) * 100 | number | slice:0:4}}</span></li></ul>
   </mat-dialog-content>`,
 })
 
@@ -962,17 +964,23 @@ export class LastweekNFLDialog implements OnInit {
   sentLastweek: any;
   loading: boolean = true;
   public players: any;
+  public dataItem: any;
 
   constructor(public dialogRef: MatDialogRef < LastweekNFLDialog > , @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private dataService: NFLDataService) {
-    this.sentHotData = this.dataService.getSentHotStats();
+    this.sentHotData = undefined;// this.dataService.getSentHotStats();
     //this.sentAllData = this.dataService.getAllSentStats();
     this.sentAllData = this.dataService.getSentTouchStats(); 
     this.sentYesterday = this.dataService.getYesterday();
     this.sentLastweek = this.dataService.getLastweek();
 
+    dataItem = this.data;
+    console.log(dataItem, 'data passed in');
+
     if (this.sentAllData.length > 0) {
       console.log('touch data', this.sentAllData);
       this.players = this.sentAllData[3];
+      this.players.filter(
+        player => player.stats.rushing.rushAttempts > 30 || player.stats.passing.passAttempts > 30);
     }
 
   }
@@ -1004,7 +1012,7 @@ export class LastweekNFLDialog implements OnInit {
 
             res.forEach((item, index) => {
               i = index;
-              console.log(res[i], 'got box score data for away team!');
+              //console.log(res[i], 'got box score data for away team!');
               //console.log(res[i]['games'].game.date, 'looking for date...');
 
               res2 = res[i]['stats'].away.players.filter(
@@ -1025,7 +1033,7 @@ export class LastweekNFLDialog implements OnInit {
 
                 if (res2[i2].playerStats.length > 0) {
          
-                  res2[i2].player.opponent = {date: myDate, desc: '@ ' + res[i]['game'].homeTeam.abbreviation + ' Yards: ' + res2[i2].playerStats[0].passing.passYards}
+                  res2[i2].player.opponent = {date: myDate, desc: '@ ' + res[i]['game'].homeTeam.abbreviation + ' Yds: ' + (dataItem.type === 'qb' ? res2[i2].playerStats[0].passing.passYards : res2[i2].playerStats[0].rushing.rushYards)}
                   
                 }
                 // if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].goaltending.losses === 1) {
@@ -1039,7 +1047,8 @@ export class LastweekNFLDialog implements OnInit {
                  
                 // }
 
-                if (res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].passing.passYards > 0) {
+                if (dataItem.type === 'qb' && res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].passing.passYards > 0 || 
+                dataItem.type === 'rb' && res2[i2].playerStats.length > 0 && res2[i2].playerStats[0].rushing.rushYards > 0) {
                   this.starterStatData.push(res2[i2]);
                   //console.log(res2[i2], 'got player stats for away goalie stats!'); 
                 }
@@ -1056,7 +1065,7 @@ export class LastweekNFLDialog implements OnInit {
                 res3[i3].player.teamId = res[i]['game'].homeTeam.id;
                 if (res3[i3].playerStats.length > 0) {
                   
-                  res3[i3].player.opponent = {date: myDate, desc: 'vs ' + res[i]['game'].awayTeam.abbreviation+ ' Yards: ' + res3[i3].playerStats[0].passing.passYards}
+                  res3[i3].player.opponent = {date: myDate, desc: 'vs ' + res[i]['game'].awayTeam.abbreviation+ ' Yds: ' + (dataItem.type === 'qb' ? res3[i3].playerStats[0].passing.passYards : res3[i3].playerStats[0].rushing.rushYards)}
                   
                 }
                 // if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].goaltending.losses === 1) {
@@ -1071,7 +1080,8 @@ export class LastweekNFLDialog implements OnInit {
                 // }
 
                 //res3[i3].player.opponent = res[i]['games'].game.awayTeam.Abbreviation;
-                if (res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].passing.passYards > 0) {
+                if (dataItem.type === 'qb' && res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].passing.passYards > 0 ||
+                dataItem.type === 'rb' && res3[i3].playerStats.length > 0 && res3[i3].playerStats[0].rushing.rushYards > 0) {
                   this.starterStatData.push(res3[i3]);
                   //console.log(res3[i3], 'got player stats for home goalie!');
                 }
@@ -1089,14 +1099,24 @@ export class LastweekNFLDialog implements OnInit {
   sortData() {
 
     for (let info of this.players) {
-
       for (let data of this.starterStatData) {
-        //console.log(info, 'looking for image');
-       
+        //console.log(data, 'starter stat data');
         if (info.player.id === data.player.id) {
-          //console.log(info, 'looking for image IDS Match!!')
+          //console.log(info.player, 'looking for image IDS Match!!', data.player, 'this is the match')
           data.player.image = info.player.officialImageSrc;
         }
+        // if (info.player.lastName === data.player.lastName && info.player.lastName === 'Darnold') {
+        //   console.log(info.player, 'looking for image IDS Match!!', data.player, 'this is the match')
+        //   data.player.image = info.player.officialImageSrc;
+        // }
+        // if (info.player.lastName === 'Darnold') {
+        //   console.log(info.player, 'darnold from players')
+        //   //data.player.image = info.player.officialImageSrc;
+        // }
+        // if (data.player.lastName === 'Darnold') {
+        //   console.log(data.player, 'darnold from starters array')
+        //   //data.player.image = info.player.officialImageSrc;
+        // }
 
       }
     }
@@ -1107,23 +1127,46 @@ export class LastweekNFLDialog implements OnInit {
         //console.log(a, 'this is a');
         let key = a.player.id;
         if (!hash[key]) {
-          hash[key] = { wins: 0, losses: 0, otl: 0, name: a.player.lastName, id: a.player.id, opponents: [], team: a.player.teamId, py: 0, td: 0, sv: 0, svpercent: 0, hot: false, image: a.player.image };
+          hash[key] = { wins: 0, losses: 0, otl: 0, name: a.player.lastName, id: a.player.id, opponents: [], team: a.player.teamId, ty: 0, td: 0, ry: 0, py: 0, hot: false, image: a.player.image, pa: 0, pc: 0 };
           r.push(hash[key]);
         }
         // hash[key].wins += parseInt(a.playerStats[0].goaltending.wins);
         // hash[key].losses += parseInt(a.playerStats[0].goaltending.losses);
         // hash[key].otl += parseInt(a.playerStats[0].goaltending.overtimeLosses);
-        hash[key].py += parseInt(a.playerStats[0].passing.passYards + a.playerStats[0].rushing.rushYards);
+        hash[key].ty += parseInt(a.playerStats[0].passing.passYards + a.playerStats[0].rushing.rushYards);
         hash[key].td += parseInt(a.playerStats[0].passing.passTD + a.playerStats[0].rushing.rushTD);
-        // hash[key].sa += parseInt(a.playerStats[0].goaltending.shotsAgainst);
-        // hash[key].sv += parseInt(a.playerStats[0].goaltending.saves);
+        hash[key].py += parseInt(a.playerStats[0].passing.passYards);
+        hash[key].ry += parseInt(a.playerStats[0].rushing.rushYards);
+        if (dataItem.type === 'qb') {
+          hash[key].pa += a.playerStats[0].passing.passAttempts; 
+          hash[key].pc += a.playerStats[0].passing.passCompletions;
+        }
         // hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
-
-        if (hash[key].py < 1100) {
+       if (dataItem.type === 'qb') {
+        if (hash[key].py <= 1100) {
           hash[key].hot = false;
-        } else {
+        }
+        if (hash[key].ty > 1000 && hash[key].td >= 9) {
+          hash[key].hot = true;
+        } 
+        if (hash[key].py > 1100) {
           hash[key].hot = true;
         }
+       } else if (dataItem.type === 'rb') {
+        if (hash[key].ry <= 250) {
+          hash[key].hot = false;
+        } 
+        if (hash[key].py > 300) {
+          hash[key].hot = false;
+        }
+        if (hash[key].td >= 4 && hash[key].py < 300) {
+          hash[key].hot = true;
+        } 
+        if (hash[key].ry > 250 && hash[key].py < 300) {
+          hash[key].hot = true;
+        }
+      }
+        
 
         hash[key].opponents.push(a.player.opponent);
 
