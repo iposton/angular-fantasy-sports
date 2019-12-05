@@ -1,4 +1,5 @@
-<span *ngIf="fbService.userDetails != null"><button mat-raised-button class="mat-raised-button" color="warn" (click)="openLastweek($event, showData)">Hot List QB</button></span>
+<span *ngIf="fbService.userDetails != null"><button mat-raised-button class="mat-raised-button" color="warn" (click)="openLastweek('qb', showData); $event.preventDefault()" >Hot List QB</button></span>
+<span *ngIf="fbService.userDetails != null"><button style="margin-left: 10px;" mat-raised-button class="mat-raised-button" color="warn" (click)="openLastweek('rb', showData); $event.preventDefault()">Hot List RB</button></span>
 <div id="top">
     <h1 class="center date-header baseball-header"> NFL Touch Rankings</h1>
 </div>
