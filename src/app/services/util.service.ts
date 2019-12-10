@@ -100,17 +100,17 @@ export class UtilService {
         abbreviation: "NO",
         bye: 9,
         ttoughestSchedRank: 21,
-        gamesAgainst500Teams: 4,
+        gamesAgainst500Teams: 5,
         winsAgainst500Teams: 3,
-        lossAgainst500Teams: 1
+        lossAgainst500Teams: 2
       },
       "TB": {
         id: 71,
         abbreviation: "TB",
         bye: 7,
         toughestSchedRank: 10,
-        gamesAgainst500Teams: 5,
-        winsAgainst500Teams: 1,
+        gamesAgainst500Teams: 6,
+        winsAgainst500Teams: 2,
         lossAgainst500Teams: 4
       },
       "HOU": {
@@ -145,8 +145,8 @@ export class UtilService {
         abbreviation: "TEN",
         bye: 11,
         toughestSchedRank: 28,
-        gamesAgainst500Teams: 4,
-        winsAgainst500Teams: 2,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 3,
         lossAgainst500Teams: 2
       },
       "ARI": {
@@ -154,17 +154,17 @@ export class UtilService {
         abbreviation: "ARI",
         bye: 12,
         toughestSchedRank: 17,
-        gamesAgainst500Teams: 6,
+        gamesAgainst500Teams: 7,
         winsAgainst500Teams: 0,
-        lossAgainst500Teams: 6
+        lossAgainst500Teams: 7
       },
       "LA": {
         id: 77,
         abbreviation: "LA",
         bye: 9,
         toughestSchedRank: 27,
-        gamesAgainst500Teams: 4,
-        winsAgainst500Teams: 1,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 2,
         lossAgainst500Teams: 3
       },
       "SF": {
@@ -172,8 +172,8 @@ export class UtilService {
         abbreviation: "SF",
         bye: 4,
         toughestSchedRank: 30,
-        gamesAgainst500Teams: 4,
-        winsAgainst500Teams: 2,
+        gamesAgainst500Teams: 5,
+        winsAgainst500Teams: 3,
         lossAgainst500Teams: 2
       },
       "SEA": {
@@ -181,17 +181,17 @@ export class UtilService {
         abbreviation: "SEA",
         bye: 11,
         toughestSchedRank: 22,
-        gamesAgainst500Teams: 5,
+        gamesAgainst500Teams: 6,
         winsAgainst500Teams: 3,
-        lossAgainst500Teams: 2
+        lossAgainst500Teams: 3
       },
       "DEN": {
         id: 72,
         abbreviation: "DEN",
         bye: 10,
         toughestSchedRank: 14,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 0,
+        gamesAgainst500Teams: 7,
+        winsAgainst500Teams: 1,
         lossAgainst500Teams: 6
       },
       "KC": {
@@ -199,8 +199,8 @@ export class UtilService {
         abbreviation: "KC",
         bye: 12,
         toughestSchedRank: 2,
-        gamesAgainst500Teams: 7,
-        winsAgainst500Teams: 4,
+        gamesAgainst500Teams: 8,
+        winsAgainst500Teams: 5,
         lossAgainst500Teams: 3
       },
       "OAK": {
@@ -208,9 +208,9 @@ export class UtilService {
         abbreviation: "OAK",
         bye: 6,
         toughestSchedRank: 12,
-        gamesAgainst500Teams: 6,
+        gamesAgainst500Teams: 7,
         winsAgainst500Teams: 1,
-        lossAgainst500Teams: 5
+        lossAgainst500Teams: 6
       },
       "LAC": {
         id: 75,
@@ -235,9 +235,9 @@ export class UtilService {
         abbreviation: "NE",
         bye: 10,
         toughestSchedRank: 31,
-        gamesAgainst500Teams: 4,
+        gamesAgainst500Teams: 5,
         winsAgainst500Teams: 2,
-        lossAgainst500Teams: 2
+        lossAgainst500Teams: 3
       },
       "MIA": {
         id: 49,
@@ -253,18 +253,18 @@ export class UtilService {
         abbreviation: "BUF",
         bye: 6,
         toughestSchedRank: 32,
-        gamesAgainst500Teams: 2,
+        gamesAgainst500Teams: 3,
         winsAgainst500Teams: 1,
-        lossAgainst500Teams: 1
+        lossAgainst500Teams: 2
       },
       "WAS": {
         id: 55,
         abbreviation: "WAS",
         bye: 10,
         toughestSchedRank: 13,
-        gamesAgainst500Teams: 5,
+        gamesAgainst500Teams: 6,
         winsAgainst500Teams: 0,
-        lossAgainst500Teams: 5
+        lossAgainst500Teams: 6
       },
       "PHI": {
         id: 54,
@@ -325,8 +325,8 @@ export class UtilService {
         abbreviation: "BAL",
         bye: 8,
         toughestSchedRank: 20,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 5,
+        gamesAgainst500Teams: 7,
+        winsAgainst500Teams: 6,
         lossAgainst500Teams: 1
       },
       "MIN": {
@@ -352,17 +352,17 @@ export class UtilService {
         abbreviation: "DET",
         bye: 5,
         toughestSchedRank: 15,
-        gamesAgainst500Teams: 5,
+        gamesAgainst500Teams: 6,
         winsAgainst500Teams: 0,
-        lossAgainst500Teams: 5
+        lossAgainst500Teams: 6
       },
       "CHI": {
         id: 60,
         abbreviation: "CHI",
         bye: 6,
         toughestSchedRank: 11,
-        gamesAgainst500Teams: 5,
-        winsAgainst500Teams: 1,
+        gamesAgainst500Teams: 6,
+        winsAgainst500Teams: 2,
         lossAgainst500Teams: 4
       },
      }
