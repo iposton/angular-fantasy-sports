@@ -64,7 +64,7 @@ export class TomorrowResultsComponent implements OnInit {
     '5107':'5107',
     '5908':'5908',
     '757':'757',
-    '5033':'5033',
+    //'5033':'5033', //Nilsson
     '5109':'5109',
     '4874':'4874',
     '4950':'4950',
@@ -111,16 +111,18 @@ export class TomorrowResultsComponent implements OnInit {
     '4305':'4305',
     '4867':'4867',  //forsberg'5481':'5481',
     '15154':'15154',
-    '5887':'5887',
+    //'5887':'5887', //korpiisalo
     '4351':'4351',
     '4592':'4592',
     '15438':'15438',
-    '5518': '5518', // schneider'4575':'4575',
+    //'5518': '5518', dominique // schneider'4575':'4575',
     //'3793':'3793' Howard,
     '4271':'4271',
     '4333':'4333',
     '5271':'5271',
-    '15690':'15690'
+    '15690':'15690',
+    '17363': '17363', //senn
+    '15452':'15452' //Hogberg
   }
 
   constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) { 

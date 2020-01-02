@@ -154,7 +154,7 @@ loadData() {
             if (res['games'].length === 0) {
               this.nbaLoading = false;
               this.noNbaGamesToday = true;
-              this.noNbaGamesMsg = "No Games Scheduled Yesterday :("
+              this.noNbaGamesMsg = "No Games Scheduled"
               console.log('There are no NBA games being played today.');
             } else {
               this.nbaLoading = false;
@@ -173,7 +173,7 @@ loadData() {
             if (res['games'].length === 0) {
               this.nhlLoading = false;
               this.noNhlGamesToday = true;
-              this.noNhlGamesMsg = "No Games Scheduled Yesterday :("
+              this.noNhlGamesMsg = "No Games Scheduled"
               console.log('There are no NHL games being played today.');
             } else {
               this.nhlLoading = false;
@@ -192,7 +192,7 @@ loadData() {
             if (res['games'].length === 0) {
               this.nflLoading = false;
               this.noNflGamesToday = true;
-              this.noNflGamesMsg = "No Games Scheduled Yesterday :("
+              this.noNflGamesMsg = "No Games Scheduled"
               console.log('There are no NFL games being played today.');
             } else {
               this.nflLoading = false;
