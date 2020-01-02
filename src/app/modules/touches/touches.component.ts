@@ -109,6 +109,14 @@ export class TouchesComponent implements OnInit {
         let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
         this.tsDate = dailyDate; 
       }   
+      if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+        this.selectedWeek = '17';
+        let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
+        utcDate.setHours(utcDate.getHours() - 8);
+        let myDate = new Date(utcDate);
+        let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+        this.tsDate = dailyDate;
+      }
     }
   }
 
