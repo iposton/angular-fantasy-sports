@@ -242,11 +242,12 @@ export class StartingGoaliesComponent implements OnInit {
                 // }
               });
               this.dailySchedule = res['games'];
-              teamRef = res['references'].teamReferences;
-              this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime; //res['games'][0].date;
+              teamRef = res['references'] ? res['references'].teamReferences : [];
+              this.gameDate = res['games'][0] != null ? res['games'][0].schedule.startTime : res['games'][1] != null ? res['games'][1].schedule.startTime : new Date(); //res['games'][0].date;
               let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
               this.gamesToday = true;
+              //this.sortData(); //work around when no games
 
               Observable.forkJoin(
                   res['games'].map(

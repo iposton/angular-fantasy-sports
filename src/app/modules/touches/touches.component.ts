@@ -1148,8 +1148,11 @@ export class LastweekNFLDialog implements OnInit {
         }
         if (hash[key].ty > 1000 && hash[key].td >= 9) {
           hash[key].hot = true;
-        } 
-        if (hash[key].py > 1100) {
+        }
+        if (hash[key].td >= 10) {
+          hash[key].hot = true;
+        }  
+        if (hash[key].py > 1100 && hash[key].td >= 8) {
           hash[key].hot = true;
         }
        } else if (dataItem.type === 'rb') {
