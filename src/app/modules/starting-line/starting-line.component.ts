@@ -490,6 +490,21 @@ export class StartingLineComponent implements OnInit {
                               sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
                               //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
                               sdata.team.opponentId = schedule.schedule.homeTeam.id;
+                              if (schedule.score != null) {
+                                sdata.teamScore = schedule.score.awayScoreTotal;
+                                sdata.opponentScore = schedule.score.homeScoreTotal;
+                              }
+                              if (schedule.schedule.playedStatus === "COMPLETED") {
+                                if (schedule.score.awayScoreTotal > schedule.score.homeScoreTotal) {
+                                  sdata.win = 1;
+                                }
+                                if (schedule.score.awayScoreTotal < schedule.score.homeScoreTotal) {
+                                  sdata.loss = 1;
+                                }
+                                if (schedule.score.awayScoreTotal === schedule.score.homeScoreTotal) {
+                                  sdata.tie = 1;
+                                }
+                              } 
                             }
                             if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
 
@@ -500,6 +515,21 @@ export class StartingLineComponent implements OnInit {
                               sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                               //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
                               sdata.team.opponentId = schedule.schedule.awayTeam.id;
+                              if (schedule.score != null) {
+                                sdata.teamScore = schedule.score.homeScoreTotal;
+                                sdata.opponentScore = schedule.score.awayScoreTotal;
+                              }
+                              if (schedule.schedule.playedStatus === "COMPLETED") {
+                                if (schedule.score.homeScoreTotal > schedule.score.awayScoreTotal) {
+                                  sdata.win = 1;
+                                }
+                                if (schedule.score.homeScoreTotal < schedule.score.awayScoreTotal) {
+                                  sdata.loss = 1;
+                                }
+                                if (schedule.score.homeScoreTotal === schedule.score.awayScoreTotal) {
+                                  sdata.tie = 1;
+                                }
+                              } 
                             }
                           }
                         }
@@ -572,6 +602,7 @@ export class StartingLineComponent implements OnInit {
                               schedule.schedule.awayTeam.dRank = data.dRank;
                               schedule.schedule.awayTeam.oRank = data.oRank;
                               schedule.schedule.awayTeam.teamRank = data.teamRank;
+                              
                           }
                           if (schedule.schedule.homeTeam.abbreviation === data.team.abbreviation) {
                               schedule.schedule.homeTeam.color = data.team.color;
@@ -590,22 +621,22 @@ export class StartingLineComponent implements OnInit {
                         }
                       }
 
-                      if (this.weekStats.length > 0) {
-                        for (let week of this.weekStats) {
-                          for (let data of this.myData) {
-                            if (data.team.id != null && 
-                              data.team.id === week.team.id) {
-                              data.teamScore = week.stats.standings.pointsFor;
-                              data.opponentScore = week.stats.standings.pointsAgainst; 
-                              data.win = week.stats.standings.wins;
-                              data.loss = week.stats.standings.losses;
-                              data.tie = week.stats.standings.ties;
-                              data.otWin = week.stats.standings.otWins;
-                              data.otLoss = week.stats.standings.otLosses;                  
-                            }
-                          }
-                        } 
-                      }
+                      // if (this.weekStats.length > 0) {
+                      //   for (let week of this.weekStats) {
+                      //     for (let data of this.myData) {
+                      //       if (data.team.id != null && 
+                      //         data.team.id === week.team.id) {
+                      //         data.teamScore = week.stats.standings.pointsFor; //.score?.awayScoreTotal
+                      //         data.opponentScore = week.stats.standings.pointsAgainst; 
+                      //         data.win = week.stats.standings.wins;
+                      //         data.loss = week.stats.standings.losses;
+                      //         data.tie = week.stats.standings.ties;
+                      //         data.otWin = week.stats.standings.otWins;
+                      //         data.otLoss = week.stats.standings.otLosses;                  
+                      //       }
+                      //     }
+                      //   } 
+                      // }
 
                      this.groups = this.myData.reduce(function (r, a) {
                       r[a.team.abbreviation] = r[a.team.abbreviation] || [];
@@ -634,7 +665,7 @@ export class StartingLineComponent implements OnInit {
                       }, Object.create(null));
 
                       this.lineGroups = Object.keys(this.groups).map((key, index) => {
-                        return {team: key, offensePlayers: this.groups[key].filter(item => item.of), defensePlayers: this.groups[key].filter(item => item.def), teamStats: this.tsGroups[key][0].stats, seasonSchedule: this.schedGroups[key][0].schedule};
+                        return {team: key, offensePlayers: this.groups[key].filter(item => item.of), defensePlayers: this.groups[key].filter(item => item.def), teamStats: this.tsGroups[key][0].stats, seasonSchedule: this.schedGroups[key] ? this.schedGroups[key][0].schedule : []};
                       });
 
                      this.showTeams();
