@@ -175,7 +175,9 @@ export class NFLDataService {
       console.log('getting nfl schedule for today from api...', dailyDate);
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
-      let url = `${this.apiRoot}/week/${selected}/games.json`;
+      //let url = `${this.apiRoot}/week/${selected}/games.json`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff/week/1/games.json`;
+      
       this.schedule = this.http.get(url, {headers})
        
    // }
