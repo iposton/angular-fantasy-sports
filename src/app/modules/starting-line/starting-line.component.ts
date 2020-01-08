@@ -76,6 +76,7 @@ export class StartingLineComponent implements OnInit {
   public myRanks: Array <any> = [];
   public mobile: boolean = false;
   public allSentData: Array <any>;
+  public isPlayoff: boolean = false;
 
   constructor(private dataService: NFLDataService, 
               private http: HttpClient,
@@ -108,7 +109,8 @@ export class StartingLineComponent implements OnInit {
       }
 
       if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
-        this.selectedWeek = '17';
+        //this.selectedWeek = '17';
+        this.isPlayoff = true;
         let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
         utcDate.setHours(utcDate.getHours() - 8);
         let myDate = new Date(utcDate);
