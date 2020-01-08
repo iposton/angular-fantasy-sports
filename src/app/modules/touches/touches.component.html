@@ -4,7 +4,8 @@
     <h1 class="center date-header baseball-header"> NFL Touch Rankings</h1>
 </div>
 
-<h1 class="center date-header baseball-header"> Week {{selectedWeek}}</h1>
+<h1 class="center date-header baseball-header" *ngIf="!isPlayoff"> Week {{selectedWeek}}</h1>
+<h1 class="center date-header baseball-header" *ngIf="isPlayoff"> Playoffs</h1>
 <div class="center">
   <select name="week" id="week" (change)="onChange($event.target.value)">
     <option value="1"> - </option>

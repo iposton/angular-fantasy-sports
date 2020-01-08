@@ -73,6 +73,26 @@ export class UtilService {
         dateBeg: 'Tue Dec 24 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
         dateEnd: 'Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '17'
+      },
+      {
+        dateBeg: 'Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Jan 07 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '18'
+      },
+      {
+        dateBeg: 'Tue Jan 07 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Jan 14 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '19'
+      },
+      {
+        dateBeg: 'Tue Jan 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Jan 21 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '20' //afc nfc final 4
+      },
+      {
+        dateBeg: 'Tue Jan 21 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Feb 04 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '21' //super bowl
       }
     ]
 
