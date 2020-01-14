@@ -85,7 +85,7 @@ export class UtilService {
         week: '19'
       },
       {
-        dateBeg: 'Tue Jan 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Jan 14 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         dateEnd: 'Tue Jan 21 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '20' //afc nfc final 4
       },

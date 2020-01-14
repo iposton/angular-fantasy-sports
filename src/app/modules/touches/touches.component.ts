@@ -44,7 +44,7 @@ export class TouchesComponent implements OnInit {
   public byes: any;
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
   public groups: Array <any>;
@@ -111,13 +111,13 @@ export class TouchesComponent implements OnInit {
         this.tsDate = dailyDate; 
       }   
       if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
-        this.selectedWeek = '17';
+        //this.selectedWeek = '17';
         this.isPlayoff = true;
-        let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
-        utcDate.setHours(utcDate.getHours() - 8);
-        let myDate = new Date(utcDate);
-        let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-        this.tsDate = dailyDate;
+        // let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
+        // utcDate.setHours(utcDate.getHours() - 8);
+        // let myDate = new Date(utcDate);
+        // let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+        // this.tsDate = dailyDate;
       }
     }
   }
@@ -414,7 +414,7 @@ export class TouchesComponent implements OnInit {
                   this.myDataUnfilter = res['playerStatsTotals'];
                   this.myData = res['playerStatsTotals'];
                   this.myData = res['playerStatsTotals'].filter(
-                  player => player.stats.receiving['receptions'] + player.stats.rushing['rushAttempts'] > 10 && (player.player['currentInjury'] == null || player.player['currentInjury'].playingProbability === 'PROBABLE'));
+                  player => player.stats.receiving['receptions'] + player.stats.rushing['rushAttempts'] > 5 && (player.player['currentInjury'] == null || player.player['currentInjury'].playingProbability === 'PROBABLE'));
 
                   if (this.myData) {
                     console.log(this.myData, "cumulative stats...");
