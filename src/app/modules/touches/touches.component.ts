@@ -12,6 +12,7 @@ let playerString = null;
 let today = new Date();
 let teamRef = [];
 let dataItem = null;
+let weekTimes = null;
 
 @Component({
   selector: 'app-touches',
@@ -44,7 +45,8 @@ export class TouchesComponent implements OnInit {
   public byes: any;
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
+  public serviceRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
   public groups: Array <any>;
@@ -79,6 +81,7 @@ export class TouchesComponent implements OnInit {
   public allSentData: Array <any>;
   public isPremiumRank: boolean = false;
   public isPlayoff: boolean = false;
+  public playoffStats: boolean = false;
 
   constructor(private dataService: NFLDataService, 
               private http: HttpClient,
@@ -97,28 +100,69 @@ export class TouchesComponent implements OnInit {
     }      
     
     this.selectedWeek = '1';
-    let weekTimes = this.util.getWeekTimes();
+    weekTimes = this.util.getWeekTimes();
     this.byes = this.util.getByes();
     
     for (let week of weekTimes) {
       let date = new Date();
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.selectedWeek = week.week;
-        let utcDate = new Date(week.dateBeg);
-        utcDate.setHours(utcDate.getHours() - 8);
-        let myDate = new Date(utcDate);
-        let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-        this.tsDate = dailyDate; 
-      }   
-      if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
-        //this.selectedWeek = '17';
-        this.isPlayoff = true;
-        // let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
-        // utcDate.setHours(utcDate.getHours() - 8);
-        // let myDate = new Date(utcDate);
-        // let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-        // this.tsDate = dailyDate;
+        if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+          //this.selectedWeek = '17';
+          this.isPlayoff = true;
+          this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
+          let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
+          utcDate.setHours(utcDate.getHours() - 8);
+          let myDate = new Date(utcDate);
+          let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+          this.tsDate = dailyDate;
+        } else {
+          let utcDate = new Date(week.dateBeg);
+          utcDate.setHours(utcDate.getHours() - 8);
+          let myDate = new Date(utcDate);
+          let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+          this.tsDate = dailyDate; 
+        }
       }
+    }
+  }
+
+  public getPlayoffStats() {
+    this.serviceRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff";
+    for (let week of weekTimes) {
+      let date = new Date();
+      if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
+        this.selectedWeek = week.week;
+         
+        if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+          //this.selectedWeek = '17';
+          this.isPlayoff = true;
+          let utcDate = new Date(week.dateBeg);
+          utcDate.setHours(utcDate.getHours() - 8);
+          let myDate = new Date(utcDate);
+          let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+          this.tsDate = dailyDate; 
+          this.playoffStats = true;
+        }
+      } 
+    }
+    this.onChange(this.selectedWeek);
+  }
+
+  public getSelectedDate(sWeek) {
+    if (sWeek > 17 && this.isPlayoff) {
+      this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff";
+      this.loadData();
+    } else if (sWeek <= 17 && this.isPlayoff) {
+      this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
+      this.serviceRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
+      let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
+      utcDate.setHours(utcDate.getHours() - 8);
+      let myDate = new Date(utcDate);
+      let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+      this.tsDate = dailyDate;
+      this.teamSchedules = [];
+      this.loadData();
     }
   }
 
@@ -135,6 +179,14 @@ export class TouchesComponent implements OnInit {
   }
 
   public onChange(week) {
+   
+    if (week > 17) {
+      this.isPlayoff = true;
+      this.getSelectedDate(week);
+    } else {
+      //this.isPlayoff = false;
+      this.getSelectedDate(week);
+    }
    this.loading = true;
    this.selectedWeek = week;
    this.dailySchedule = [];
@@ -154,7 +206,7 @@ export class TouchesComponent implements OnInit {
    this.postponed = false;
    this.gamesToday = false;
    this.noGamesMsg = '';
-   this.loadData();
+   //this.loadData();
   }
 
   loadData() {
@@ -164,7 +216,7 @@ export class TouchesComponent implements OnInit {
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
 
         this.dataService
-          .sendHeaderOptions(headers);
+          .sendHeaderOptions(headers, this.selectedWeek, this.serviceRoot);
 
         this.dataService
           .getSchedule(this.selectedWeek).subscribe(res => {

@@ -1,8 +1,10 @@
-<div id="top">
+<span *ngIf="selectedWeek &gt; 18 && !playoffStats"><button mat-raised-button class="mat-raised-button" color="warn" (click)="getPlayoffStats(); $event.preventDefault()">Playoff Stats</button></span>
+<div>
+<div id="top"></div>
     <h1 class="center date-header baseball-header"> NFL Line Rankings</h1>
 </div>
-<h1 class="center date-header baseball-header" *ngIf="!isPlayoff"> Week {{selectedWeek}}</h1>
-<h1 class="center date-header baseball-header" *ngIf="isPlayoff"> Playoffs</h1>
+<h1 class="center date-header baseball-header" *ngIf="selectedWeek &lt; 18"> Week {{selectedWeek}}</h1>
+<h1 class="center date-header baseball-header" *ngIf="isPlayoff && selectedWeek &gt; 17"> Playoffs</h1>
 <div class="center">
   <select name="week" id="week" (change)="onChange($event.target.value)">
     <option value="1"> - </option>
@@ -22,7 +24,11 @@
     <option value="14">14</option>
     <option value="15">15</option>
     <option value="16">16</option>
-    <option value="16">17</option>
+    <option value="17">17</option>
+    <option value="18">wildcard</option>
+    <option value="19">division round</option>
+    <option value="20">conf championship</option>
+    <option value="22">super bowl</option>
   </select>
 </div>
 <div class="sched-wrapper" *ngIf="!loading && !mobile">

@@ -10,6 +10,26 @@ export class UtilService {
   constructor() {
     this.weekTimes = [
       {
+        dateBeg: 'Tue Sep 6 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Sep 11 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '1'
+      },
+      {
+        dateBeg: 'Tue Sep 11 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Sep 18 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '2'
+      },
+      {
+        dateBeg: 'Tue Sep 18 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Sep 25 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '3'
+      },
+      {
+        dateBeg: 'Tue Sep 25 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 01 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        week: '4'
+      },
+      {
         dateBeg: 'Tue Oct 01 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
         dateEnd: 'Tue Oct 08 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '5'
@@ -92,7 +112,7 @@ export class UtilService {
       {
         dateBeg: 'Tue Jan 21 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         dateEnd: 'Tue Feb 04 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '21' //super bowl
+        week: '22' //super bowl
       }
     ]
 
