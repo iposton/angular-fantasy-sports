@@ -101,6 +101,10 @@ export class HomeComponent implements OnInit {
       }
       
     } 
+    let date = new Date();
+    if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+      this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
+    }
 
   }
 
@@ -125,7 +129,7 @@ loadData() {
         this.nbaDataService
           .sendHeaderOptions(headers);
         this.nflDataService
-          .sendHeaderOptions(headers);
+          .sendHeaderOptions(headers, this.selectedWeek, this.apiRoot);
         this.nhlDataService
           .sendHeaderOptions(headers);
 

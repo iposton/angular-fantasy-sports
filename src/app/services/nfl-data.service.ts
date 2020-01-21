@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 let headers = null;
+let sWeek = null;
+let apiRoot = null;
 
 let sending = [];
 let sent = [];
@@ -52,7 +54,8 @@ export class NFLDataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-regular"
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular"; 
+  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-regular"
   public dailyDate: any;
   public touchTeamRanks: any;
   public lineTeamRanks: any;
@@ -87,9 +90,11 @@ export class NFLDataService {
     return sentHot;
   }
 
-  sendHeaderOptions(h) {
+  sendHeaderOptions(h, week, root) {
     console.log('got headers & options in data service...');
     headers = h;
+    sWeek = week;
+    apiRoot = root;
   }
 
   sendTouchStats(statsArray) {
@@ -176,7 +181,7 @@ export class NFLDataService {
 
       let url = null
       if (parseInt(selected) > 17) {
-        url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff/week/${selected}/games.json`;
+        url = `${this.apiRootPO}/week/${selected}/games.json`;
       } else {
         url = `${this.apiRoot}/week/${selected}/games.json`;
       }
@@ -193,7 +198,13 @@ export class NFLDataService {
     //if (!this.stats) {
       //console.log('getting cumulative_player_stats by player ID from API...', players);
       //let url = `${this.apiRoot}/cumulative_player_stats.json?position=G,C,OT,NT,DT,DE&player=`+playerID;
-      let url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`; //&player=${players}`;
+     // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
+      // } else {
+      //   url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
+      // }
+      let url = `${apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`; //&player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     //}
@@ -205,8 +216,14 @@ export class NFLDataService {
     //if (!this.allstats) {
 
       console.log('getting total player stats from API...');
+      // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
+      // } else {
+      //   url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
+      // }
       //cumulative_player_stats.json?position=G,C,OT,NT,DT,DE&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
+      let url = `${apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
       this.allstats = this.http.get(url, {headers})
       
     //}
@@ -215,7 +232,13 @@ export class NFLDataService {
 
   getTeamStats(date) {
       console.log('getting total team stats from API...');
-      let url = `${this.apiRoot}/team_stats_totals.json?date=${date}`;
+      // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/team_stats_totals.json?date=${date}`;
+      // } else {
+      //   url = `${this.apiRoot}/team_stats_totals.json?date=${date}`;
+      // }
+      let url = `${apiRoot}/team_stats_totals.json?date=${date}`;
       this.teamstats = this.http.get(url, {headers})
 
     return this.teamstats;
@@ -247,7 +270,13 @@ export class NFLDataService {
    // pass in week
    // if (!this.daily) {
       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-      let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
+      // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
+      // } else {
+      //   url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
+      // }
+      let url = `${apiRoot}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
       console.log(url, 'url')
       console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})
@@ -260,7 +289,13 @@ export class NFLDataService {
     // pass in week
     // if (!this.daily) {
        //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-       let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
+      // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
+      // } else {
+      //   url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
+      // }
+       let url = `${apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
        console.log(url, 'url')
        console.log('getting daily stats for pitchers from API...');
        this.daily = this.http.get(url, {headers})
@@ -270,16 +305,26 @@ export class NFLDataService {
    }
 
   getTouches(players) {
-
-      let url = `${this.apiRoot}/player_stats_totals.json?position=WR,TE,RB,QB`; //&player=${players}`;
+      // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/player_stats_totals.json?position=WR,TE,RB,QB`;
+      // } else {
+      //   url = `${this.apiRoot}/player_stats_totals.json?position=WR,TE,RB,QB`;
+      // }
+      let url = `${apiRoot}/player_stats_totals.json?position=WR,TE,RB,QB`; //&player=${players}`;
       this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
   getWeek(selected) {
-
-       let url = `${this.apiRoot}/week/${selected}/team_gamelogs.json`;
-       console.log(url, 'url')
+      // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/week/${selected}/team_gamelogs.json`;
+      // } else {
+      //   url = `${this.apiRoot}/week/${selected}/team_gamelogs.json`;
+      // }
+       let url = `${apiRoot}/week/${selected}/team_gamelogs.json`;
+       //console.log(url, 'url')
        console.log('getting daily stats for pitchers from API...');
        this.weekly = this.http.get(url, {headers})
 
@@ -287,23 +332,34 @@ export class NFLDataService {
    }
 
   getScore(data) {
-    let id = null;
-    id = data
+      let id = null;
+      id = data
+      // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/games/`+id+`/boxscore.json`;
+      // } else {
+      //   url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
+      // }
     //if (!this.score) {
-      console.log(`${this.apiRoot}/games/`+id+`/boxscore.json`, 'getting daily scores of todays games from API...');
-      let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
+      //console.log(`${this.apiRoot}/games/`+id+`/boxscore.json`, 'getting daily scores of todays games from API...');
+      let url = `${apiRoot}/games/`+id+`/boxscore.json`;
       this.score = this.http.get(url, {headers})
         
     //}
-    return this.score;
+      return this.score;
   }
 
   getLastweekGameId() {
 
     if (!this.lastweekgameid) {
       console.log('getting 1 week of games from API...');
-
-      let url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
+      // let url = null;
+      // if (parseInt(sWeek) > 17) {
+      //   url = `${this.apiRootPO}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
+      // } else {
+      //   url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
+      // }
+      let url = `${apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
       this.lastweekgameid = this.http.get(url, {headers})
         
     }
