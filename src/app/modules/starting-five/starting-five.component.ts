@@ -10,6 +10,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 
 let headers = null;
 let playerString = null;
+let benchString = null;
 let today = new Date();
 let teamRef = [];
 let starterNames = {
@@ -18,6 +19,10 @@ let starterNames = {
   'Starter3': 'Starter3',
   'Starter4': 'Starter4',
   'Starter5': 'Starter5'
+}
+let benchNames = {
+  'Bench1': 'Bench1',
+  'Bench2': 'Bench2'
 }
 
 @Component({
@@ -47,6 +52,7 @@ export class StartingFiveComponent implements OnInit {
   public teamStats: Array <any>;
   public pitcherSpeed: Array <any>;
   public starterIdData: Array <any> = [];
+  public benchIdData: Array <any> = [];
   public specificFastballData: Array <any> = [];
   public specificFastballDataById: Array <any> = [];
   public speedResults: Array <any> = [];
@@ -59,7 +65,9 @@ export class StartingFiveComponent implements OnInit {
   public schedGroups: Array <any>;
   public lineGroups: Array <any>;
   public myData: Array <any>;
+  public benchData: Array <any>;
   public dailyStats: Array <any>;
+  public benchStats: Array <any>;
   public weekStats: Array <any>;
   public score: Array <any>;
   public gamesToday: boolean = false;
@@ -83,6 +91,7 @@ export class StartingFiveComponent implements OnInit {
   public tRank: Array <any> = [];
   public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any };
   public gameStarters: Array <any> = [];
+  public benchStarters: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
   public mobile: boolean = false;
 
@@ -128,29 +137,6 @@ export class StartingFiveComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(${color}, ${lighter})`);
   }
 
-  // public onChange(week) {
-  //  this.loading = true;
-  //  this.selectedWeek = week;
-  //  this.dailySchedule = [];
-  //  this.starterIdData = [];
-  //  playerString = null;
-  //  this.dailyStats = [];
-  //  this.myData = [];
-  //  this.showData = [];
-  //  this.weekStats = [];
-  //  this.specificFastballData = [];
-  //  this.teamsCompletedPlayingToday = [];
-  //  this.previousGames = [];
-  //  this.score = [];
-  //  this.players = [];
-  //  this.speedResults = [];
-  //  this.liveGames = false;
-  //  this.gameover = false;
-  //  this.postponed = false;
-  //  this.gamesToday = false;
-  //  this.noGamesMsg = '';
-  //  this.loadData();
-  // }
 
   public getByDate(event) {
     this.loading = true;
@@ -295,13 +281,12 @@ export class StartingFiveComponent implements OnInit {
                 res2.forEach((item, index) => {
 
                   i2 = index;
-                  // console.log(res2[i2], 'looking of starters');
+                  console.log(res2[i2], 'looking of starters');
                   
                   if (res2[i2].actual != null && res2[i2].expected != null)  {
                     //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                     res2[i2].actual.lineupPositions.forEach(item => {
                       if (starterNames[item.position]) {
-
                         this.gameStarter = {
                           playerID: item.player.id,
                           gameID: game2.id,
@@ -313,7 +298,19 @@ export class StartingFiveComponent implements OnInit {
                         this.gameStarters.push(this.gameStarter);
                         this.starterIdData.push(item.player.id);
                         playerString = this.starterIdData.join();
-
+                      }
+                      if (benchNames[item.position]) {
+                        this.gameStarter = {
+                          playerID: item.player.id,
+                          gameID: game2.id,
+                          score: score2,
+                          status: game2.playedStatus,
+                          scheduleStatus: game2.scheduleStatus,
+                          playerStatus: 'actual'
+                        }
+                        this.benchStarters.push(this.gameStarter);
+                        this.benchIdData.push(item.player.id);
+                        benchString = this.benchIdData.join();
                       }
                     })
 
@@ -321,7 +318,6 @@ export class StartingFiveComponent implements OnInit {
 
                       res2[i2].expected.lineupPositions.forEach(item => {
                         if (starterNames[item.position]) {
-
                           this.gameStarter = {
                             playerID: item.player.id,
                             gameID: game2.id,
@@ -333,7 +329,19 @@ export class StartingFiveComponent implements OnInit {
                           this.gameStarters.push(this.gameStarter);
                           this.starterIdData.push(item.player.id);
                           playerString = this.starterIdData.join();
-
+                        }
+                        if (benchNames[item.position]) {
+                          this.gameStarter = {
+                            playerID: item.player.id,
+                            gameID: game2.id,
+                            score: score2,
+                            status: game2.playedStatus,
+                            scheduleStatus: game2.scheduleStatus,
+                            playerStatus: 'expected'
+                          }
+                          this.benchStarters.push(this.gameStarter);
+                          this.benchIdData.push(item.player.id);
+                          benchString = this.benchIdData.join();
                         }
                       })
                     //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
@@ -370,6 +378,12 @@ export class StartingFiveComponent implements OnInit {
           .getDaily(playerString).subscribe(res => {
             console.log(res, "Daily stats...");
             this.dailyStats = res['gamelogs'];
+            //resolve();
+        })
+        this.dataService
+          .getDaily(benchString).subscribe(res => {
+            console.log(res, "Daily bench stats...");
+            this.benchStats = res['gamelogs'];
             resolve();
         })
       });
@@ -381,11 +395,11 @@ export class StartingFiveComponent implements OnInit {
             console.log(res, 'got team stats!');
             this.teamStats = res['teamStatsTotals'];
 
-            this.dataService
-             .getDaily(playerString).subscribe(res => {
-               console.log(res, "Daily stats...");
-               this.dailyStats = res['gamelogs'];
-            })
+            // this.dataService
+            //  .getDaily(playerString).subscribe(res => {
+            //    console.log(res, "Daily stats...");
+            //    this.dailyStats = res['gamelogs'];
+            // })
 
         //     let oSort = [];
         //     let dSort = [];
@@ -485,6 +499,79 @@ export class StartingFiveComponent implements OnInit {
       let resultOne = await promiseOne;
 
       this.dataService
+       .getStats(benchString).subscribe(res => {
+        this.benchData = res['playerStatsTotals'];
+
+        for (let schedule of this.dailySchedule) {
+          for (let sdata of this.benchData) {
+
+            if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
+              sdata.player.gameTime = schedule.schedule.startTime;
+              sdata.team.gameField = schedule.schedule.venue.name;
+              sdata.gameId = schedule.schedule.id;
+              sdata.player.gameLocation = "away";
+              sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+              sdata.team.abbreviation = schedule.schedule.awayTeam.abbreviation;
+              sdata.team.opponentId = schedule.schedule.homeTeam.id;
+            }
+            if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
+              sdata.player.gameTime = schedule.schedule.startTime;
+              sdata.team.gameField = schedule.schedule.venue.name;
+              sdata.gameId = schedule.schedule.id;
+              sdata.player.gameLocation = "home";
+              sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+              sdata.team.abbreviation = schedule.schedule.homeTeam.abbreviation;
+              sdata.team.opponentId = schedule.schedule.awayTeam.id;
+            }
+          }
+        }
+
+        for (let team of teamRef) {
+          for (let data of this.benchData) { 
+            if (data.player['currentTeam'] != null && team.id === data.player['currentTeam'].id) {
+              data.team.color = team.teamColoursHex[0];
+              data.team.accent = team.teamColoursHex[1];
+              data.team.logo = team.officialLogoImageSrc;
+              data.team.city = team.city;
+              data.team.name = team.name;
+              data.flip = 'inactive';
+              // data.dRank = team.dRank;
+              // data.oRank = team.oRank;
+              // data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
+            } 
+          }  
+       }
+
+        for (let starter of this.benchStarters) {
+          for (let data of this.benchData) {
+
+            if (starter.playerID === data.player.id) {
+              data.starterInfo = starter;
+              if (starter.status === "LIVE") {
+                //run interval
+                this.liveGames = true;
+                
+              }
+            }     
+          }
+        }
+
+        if (this.benchData && this.benchStats) {
+          console.log('start sorting data for daily stats...');
+          for (let daily of this.benchStats) {
+            for (let data of this.benchData) {
+              if (daily.player.id === data.player.id) {
+                data.player.pts = daily.stats.offense.pts;
+                data.player.ptsAvg = daily.stats.offense.ptsPerGame;
+                data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
+                // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
+              }
+            }
+          }
+        }
+      })
+
+      this.dataService
        .getStats(playerString).subscribe(res => {
 
           console.log(res, 'player info');
@@ -518,7 +605,7 @@ export class StartingFiveComponent implements OnInit {
 
           for (let team of teamRef) {
             for (let data of this.myData) { 
-              if (team.id === data.team.id) {
+              if (data.player['currentTeam'] != null && team.id === data.player['currentTeam'].id) {
                 data.team.color = team.teamColoursHex[0];
                 data.team.accent = team.teamColoursHex[1];
                 data.team.logo = team.officialLogoImageSrc;
