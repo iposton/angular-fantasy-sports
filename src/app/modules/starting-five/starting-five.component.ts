@@ -18,7 +18,9 @@ let starterNames = {
   'Starter2': 'Starter2',
   'Starter3': 'Starter3',
   'Starter4': 'Starter4',
-  'Starter5': 'Starter5'
+  'Starter5': 'Starter5',
+  'Bench1': 'Bench1',
+  'Bench2': 'Bench2'
 }
 let benchNames = {
   'Bench1': 'Bench1',
@@ -89,11 +91,12 @@ export class StartingFiveComponent implements OnInit {
   public dRank: Array <any> = [];
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
-  public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any };
+  public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any, bench: boolean };
   public gameStarters: Array <any> = [];
   public benchStarters: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
   public mobile: boolean = false;
+  public stats: any = '1';
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
@@ -102,7 +105,21 @@ export class StartingFiveComponent implements OnInit {
     this.players = this.allSentData[0];
     this.myData = this.allSentData[1];
     this.dailySchedule = this.allSentData[2];
+    this.stats = '1';
+  }
 
+  public changeStats() {
+    if (this.stats === '1') {
+      this.stats = '2';
+    } else if (this.stats === '2') {
+      this.stats = '3';
+    } else if (this.stats === '3') {
+      this.stats = '4';
+    } else if (this.stats === '4') {
+      this.stats = '5';
+    } else if (this.stats === '5') {
+      this.stats = '1';
+    }
   }
 
   public colorLuminance(hex, lum) {
@@ -151,10 +168,15 @@ export class StartingFiveComponent implements OnInit {
     //empty old data on data change 
     this.dailySchedule = [];
     this.gameStarters = [];
+    this.benchStarters = [];
     this.starterIdData = [];
+    this.benchIdData = [];
     playerString = null;
+    benchString = null;
     this.dailyStats = [];
+    this.benchStats = [];
     this.myData = [];
+    this.benchData = [];
     this.showData = [];
     this.specificFastballData = [];
     this.teamsCompletedPlayingToday = [];
@@ -286,62 +308,53 @@ export class StartingFiveComponent implements OnInit {
                   if (res2[i2].actual != null && res2[i2].expected != null)  {
                     //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                     res2[i2].actual.lineupPositions.forEach(item => {
-                      if (starterNames[item.position]) {
+                     // console.log(item, 'whats up');
+                      if (starterNames[item.position] && item.player != null) {
                         this.gameStarter = {
                           playerID: item.player.id,
                           gameID: game2.id,
                           score: score2,
                           status: game2.playedStatus,
                           scheduleStatus: game2.scheduleStatus,
-                          playerStatus: 'actual'
+                          playerStatus: 'actual',
+                          bench: true ? benchNames[item.position] : false
                         }
                         this.gameStarters.push(this.gameStarter);
                         this.starterIdData.push(item.player.id);
                         playerString = this.starterIdData.join();
                       }
-                      if (benchNames[item.position]) {
-                        this.gameStarter = {
-                          playerID: item.player.id,
-                          gameID: game2.id,
-                          score: score2,
-                          status: game2.playedStatus,
-                          scheduleStatus: game2.scheduleStatus,
-                          playerStatus: 'actual'
-                        }
-                        this.benchStarters.push(this.gameStarter);
-                        this.benchIdData.push(item.player.id);
-                        benchString = this.benchIdData.join();
-                      }
+                      // if (benchNames[item.position]) {
+                      //   this.gameStarter = {
+                      //     playerID: item.player.id,
+                      //     gameID: game2.id,
+                      //     score: score2,
+                      //     status: game2.playedStatus,
+                      //     scheduleStatus: game2.scheduleStatus,
+                      //     playerStatus: 'actual'
+                      //   }
+                      //   this.benchStarters.push(this.gameStarter);
+                      //   this.benchIdData.push(item.player.id);
+                      //   benchString = this.benchIdData.join();
+                      // }
                     })
 
                   } else if (res2[i2].actual == null && res2[i2].expected != null) {
 
                       res2[i2].expected.lineupPositions.forEach(item => {
-                        if (starterNames[item.position]) {
+                       // console.log(item, 'whats up');
+                        if (starterNames[item.position] && item.player != null) {
                           this.gameStarter = {
                             playerID: item.player.id,
                             gameID: game2.id,
                             score: score2,
                             status: game2.playedStatus,
                             scheduleStatus: game2.scheduleStatus,
-                            playerStatus: 'expected'
+                            playerStatus: 'expected',
+                            bench: true ? benchNames[item.position] : false
                           }
                           this.gameStarters.push(this.gameStarter);
                           this.starterIdData.push(item.player.id);
                           playerString = this.starterIdData.join();
-                        }
-                        if (benchNames[item.position]) {
-                          this.gameStarter = {
-                            playerID: item.player.id,
-                            gameID: game2.id,
-                            score: score2,
-                            status: game2.playedStatus,
-                            scheduleStatus: game2.scheduleStatus,
-                            playerStatus: 'expected'
-                          }
-                          this.benchStarters.push(this.gameStarter);
-                          this.benchIdData.push(item.player.id);
-                          benchString = this.benchIdData.join();
                         }
                       })
                     //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
@@ -378,14 +391,14 @@ export class StartingFiveComponent implements OnInit {
           .getDaily(playerString).subscribe(res => {
             console.log(res, "Daily stats...");
             this.dailyStats = res['gamelogs'];
-            //resolve();
-        })
-        this.dataService
-          .getDaily(benchString).subscribe(res => {
-            console.log(res, "Daily bench stats...");
-            this.benchStats = res['gamelogs'];
             resolve();
         })
+        // this.dataService
+        //   .getDaily(benchString).subscribe(res => {
+        //     console.log(res, "Daily bench stats...");
+        //     this.benchStats = res['gamelogs'];
+        //     resolve();
+        // })
       });
 
       let promiseOne;
@@ -498,78 +511,78 @@ export class StartingFiveComponent implements OnInit {
       let resultTwo = await promiseDaily;
       let resultOne = await promiseOne;
 
-      this.dataService
-       .getStats(benchString).subscribe(res => {
-        this.benchData = res['playerStatsTotals'];
+      // this.dataService
+      //  .getStats(benchString).subscribe(res => {
+      //   this.benchData = res['playerStatsTotals'];
 
-        for (let schedule of this.dailySchedule) {
-          for (let sdata of this.benchData) {
+      //   for (let schedule of this.dailySchedule) {
+      //     for (let sdata of this.benchData) {
 
-            if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
-              sdata.player.gameTime = schedule.schedule.startTime;
-              sdata.team.gameField = schedule.schedule.venue.name;
-              sdata.gameId = schedule.schedule.id;
-              sdata.player.gameLocation = "away";
-              sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
-              sdata.team.abbreviation = schedule.schedule.awayTeam.abbreviation;
-              sdata.team.opponentId = schedule.schedule.homeTeam.id;
-            }
-            if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
-              sdata.player.gameTime = schedule.schedule.startTime;
-              sdata.team.gameField = schedule.schedule.venue.name;
-              sdata.gameId = schedule.schedule.id;
-              sdata.player.gameLocation = "home";
-              sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
-              sdata.team.abbreviation = schedule.schedule.homeTeam.abbreviation;
-              sdata.team.opponentId = schedule.schedule.awayTeam.id;
-            }
-          }
-        }
+      //       if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
+      //         sdata.player.gameTime = schedule.schedule.startTime;
+      //         sdata.team.gameField = schedule.schedule.venue.name;
+      //         sdata.gameId = schedule.schedule.id;
+      //         sdata.player.gameLocation = "away";
+      //         sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+      //         sdata.team.abbreviation = schedule.schedule.awayTeam.abbreviation;
+      //         sdata.team.opponentId = schedule.schedule.homeTeam.id;
+      //       }
+      //       if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
+      //         sdata.player.gameTime = schedule.schedule.startTime;
+      //         sdata.team.gameField = schedule.schedule.venue.name;
+      //         sdata.gameId = schedule.schedule.id;
+      //         sdata.player.gameLocation = "home";
+      //         sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+      //         sdata.team.abbreviation = schedule.schedule.homeTeam.abbreviation;
+      //         sdata.team.opponentId = schedule.schedule.awayTeam.id;
+      //       }
+      //     }
+      //   }
 
-        for (let team of teamRef) {
-          for (let data of this.benchData) { 
-            if (data.player['currentTeam'] != null && team.id === data.player['currentTeam'].id) {
-              data.team.color = team.teamColoursHex[0];
-              data.team.accent = team.teamColoursHex[1];
-              data.team.logo = team.officialLogoImageSrc;
-              data.team.city = team.city;
-              data.team.name = team.name;
-              data.flip = 'inactive';
-              // data.dRank = team.dRank;
-              // data.oRank = team.oRank;
-              // data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
-            } 
-          }  
-       }
+      //   for (let team of teamRef) {
+      //     for (let data of this.benchData) { 
+      //       if (data.player['currentTeam'] != null && team.id === data.player['currentTeam'].id) {
+      //         data.team.color = team.teamColoursHex[0];
+      //         data.team.accent = team.teamColoursHex[1];
+      //         data.team.logo = team.officialLogoImageSrc;
+      //         data.team.city = team.city;
+      //         data.team.name = team.name;
+      //         data.flip = 'inactive';
+      //         // data.dRank = team.dRank;
+      //         // data.oRank = team.oRank;
+      //         // data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
+      //       } 
+      //     }  
+      //  }
 
-        for (let starter of this.benchStarters) {
-          for (let data of this.benchData) {
+      //   for (let starter of this.benchStarters) {
+      //     for (let data of this.benchData) {
 
-            if (starter.playerID === data.player.id) {
-              data.starterInfo = starter;
-              if (starter.status === "LIVE") {
-                //run interval
-                this.liveGames = true;
+      //       if (starter.playerID === data.player.id) {
+      //         data.starterInfo = starter;
+      //         if (starter.status === "LIVE") {
+      //           //run interval
+      //           this.liveGames = true;
                 
-              }
-            }     
-          }
-        }
+      //         }
+      //       }     
+      //     }
+      //   }
 
-        if (this.benchData && this.benchStats) {
-          console.log('start sorting data for daily stats...');
-          for (let daily of this.benchStats) {
-            for (let data of this.benchData) {
-              if (daily.player.id === data.player.id) {
-                data.player.pts = daily.stats.offense.pts;
-                data.player.ptsAvg = daily.stats.offense.ptsPerGame;
-                data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
-                // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
-              }
-            }
-          }
-        }
-      })
+      //   if (this.benchData && this.benchStats) {
+      //     console.log('start sorting data for daily stats...');
+      //     for (let daily of this.benchStats) {
+      //       for (let data of this.benchData) {
+      //         if (daily.player.id === data.player.id) {
+      //           data.player.pts = daily.stats.offense.pts;
+      //           data.player.ptsAvg = daily.stats.offense.ptsPerGame;
+      //           data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
+      //           // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
+      //         }
+      //       }
+      //     }
+      //   }
+      // })
 
       this.dataService
        .getStats(playerString).subscribe(res => {
@@ -577,7 +590,8 @@ export class StartingFiveComponent implements OnInit {
           console.log(res, 'player info');
           console.log(this.gameStarters, 'game starters');
 
-          this.myData = res['playerStatsTotals'];
+          this.myData = res['playerStatsTotals'].filter(
+            player => player.player['currentTeam'].abbreviation === player.team.abbreviation);
 
           for (let schedule of this.dailySchedule) {
             for (let sdata of this.myData) {
@@ -605,7 +619,7 @@ export class StartingFiveComponent implements OnInit {
 
           for (let team of teamRef) {
             for (let data of this.myData) { 
-              if (data.player['currentTeam'] != null && team.id === data.player['currentTeam'].id) {
+              if (data.player['currentTeam'] != null && team.id === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
                 data.team.color = team.teamColoursHex[0];
                 data.team.accent = team.teamColoursHex[1];
                 data.team.logo = team.officialLogoImageSrc;
@@ -638,7 +652,11 @@ export class StartingFiveComponent implements OnInit {
             for (let daily of this.dailyStats) {
               for (let data of this.myData) {
                 if (daily.player.id === data.player.id) {
+                  data.player.stl = daily.stats.defense.stl;
+                  data.player.blk = daily.stats.defense.blk;
                   data.player.pts = daily.stats.offense.pts;
+                  data.player.ast = daily.stats.offense.ast;
+                  data.player.reb = daily.stats.rebounds.reb;
                   data.player.ptsAvg = daily.stats.offense.ptsPerGame;
                   data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
                   // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
@@ -659,8 +677,8 @@ export class StartingFiveComponent implements OnInit {
        
 
           this.groups = this.myData.reduce(function (r, a) {
-            r[a.team.abbreviation] = r[a.team.abbreviation] || [];
-            r[a.team.abbreviation].push({'of': 'of', 'playerObj': a});
+            r[a.player['currentTeam'].abbreviation] = r[a.player['currentTeam'].abbreviation] || [];
+            r[a.player['currentTeam'].abbreviation].push({'of': 'of', 'playerObj': a});
             return r;
            }, Object.create(null));
 

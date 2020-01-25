@@ -292,7 +292,7 @@
   }
 }
 
-.dn {
+.dn, .dn2 {
   display: none;
 }
 
@@ -329,6 +329,7 @@ ul {
   padding: 20px;
   background: #555;
   color: #fff;
+  cursor: pointer;
   .team-image {
     img {
       height: 45px;
@@ -347,6 +348,7 @@ ul {
 
 .mat-card-sp {
   padding: 8px;
+  cursor: pointer;
 }
 
 
