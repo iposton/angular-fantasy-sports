@@ -145,7 +145,7 @@
 
 <div *ngIf="showData != null" class="main-row">
   <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'nfl'">
-    <mat-card id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
+    <mat-card id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip" (click)="changeStats()">
       <!-- <div *ngIf="data?.offensePlayers[0]?.playerObj.flip === 'inactive'" class="ribbon"><span
           [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">{{data?.offensePlayers[0]?.playerObj.team.name}}</span>
       </div> -->
@@ -168,7 +168,7 @@
             <div>
             <div *ngFor="let item of data.offensePlayers; let i=index">
                  
-                    <span [ngClass]="{'left-content' : i<=5, 'dn' : i>5}">
+                    <span [ngClass]="{'left-content' : !item?.playerObj?.starterInfo?.bench, 'dn' : item?.playerObj?.starterInfo?.bench}">
                       
                           <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="basketball player"
                           onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
@@ -196,7 +196,11 @@
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                          <span class="lg"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
-                         <span class="lg">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.min : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                         <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.min : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                         <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.reb : item?.playerObj?.stats?.rebounds?.rebPerGame}} Reb </span>
+                         <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.ast : item?.playerObj?.stats.offense?.astPerGame }} Ast</span>
+                         <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.stl : item?.playerObj?.stats?.defense?.stlPerGame}} Stl </span>
+                         <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.blk : item?.playerObj?.stats?.defense?.blkPerGame}} Blk</span>
                         
                           </span>
                       
@@ -473,13 +477,13 @@
               </div>
           </div> -->
 
-          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading" (click)="changeStats()">
               <h2>Top PG</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nba'">
-                                  <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'PG'}">
+                                  <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'PG' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'PG', 'dn2' : item?.player?.primaryPosition == 'PG' && item?.starterInfo?.bench}">
                                     
                                         <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
@@ -508,7 +512,11 @@
                                        <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                        <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                        <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                       <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
                                       
                                         </span>
                                     
@@ -521,13 +529,13 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading" (click)="changeStats()">
                 <h2>Top SF</h2>
                   <div>
                       <div class="content-wrapper">
                           <div class="row">
                             <div *ngFor="let item of myData | orderBy: 'nba'">
-                                    <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'SF'}">
+                                    <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'SF' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'SF', 'dn2' : item?.player?.primaryPosition == 'SF' && item?.starterInfo?.bench}">
                                       
                                           <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                           onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
@@ -553,7 +561,11 @@
                                          <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                          <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                          <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                         <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
                                         
                                           </span>
                                       
@@ -566,13 +578,13 @@
               
                   </div>
               </div>
-              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading" (click)="changeStats()">
                   <h2>Top Centers</h2>
                     <div>
                         <div class="content-wrapper">
                             <div class="row">
                               <div *ngFor="let item of myData | orderBy: 'nba'">
-                                      <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'C'}">
+                                      <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'C' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'C', 'dn2' : item?.player?.primaryPosition == 'C' && item?.starterInfo?.bench}">
                                         
                                             <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                             onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
@@ -600,7 +612,11 @@
                                            <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                            <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                            <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                           <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
                                           
                                             </span>
                                         
@@ -614,13 +630,13 @@
                     </div>
                 </div>
                 
-                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading" (click)="changeStats()">
                     <h2>Top PF</h2>
                       <div>
                           <div class="content-wrapper">
                               <div class="row">
                                 <div *ngFor="let item of myData | orderBy: 'nba'">
-                                        <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'PF'}">
+                                        <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'PF' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'PF', 'dn2' : item?.player?.primaryPosition == 'PF' && item?.starterInfo?.bench}">
                                           
                                               <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                               onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
@@ -647,7 +663,11 @@
                                              <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                              <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                             <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
                                             
                                               </span>
                                           
@@ -661,13 +681,13 @@
                       </div>
                   </div>
 
-                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading" (click)="changeStats()">
                       <h2>Top SG</h2>
                         <div>
                             <div class="content-wrapper">
                                 <div class="row">
                                   <div *ngFor="let item of myData | orderBy: 'nba'">
-                                          <span class="left-content" [ngClass]="{'dn' : item?.player?.primaryPosition != 'SG'}">
+                                          <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'SG' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'SG', 'dn2' : item?.player?.primaryPosition == 'SG' && item?.starterInfo?.bench}">
                                             
                                                 <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
@@ -698,7 +718,11 @@
                                                <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                                <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                                <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                               <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
                                               
                                                 </span>
                                             
@@ -711,13 +735,13 @@
                     
                         </div>
                     </div>
-                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading" (click)="changeStats()">
                       <h2>Top Bench</h2>
                         <div>
                             <div class="content-wrapper">
                                 <div class="row">
-                                  <div *ngFor="let item of benchData | orderBy: 'nba'">
-                                          <span class="left-content">
+                                  <div *ngFor="let item of myData | orderBy: 'nba'">
+                                          <span class="left-content" [ngClass]="{'dn' : !item?.starterInfo?.bench}">
                                             
                                                 <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
@@ -746,7 +770,11 @@
                                                <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                                <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                                <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                               <span class="lg">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
                                               
                                                 </span>
                                             
