@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { NBADataService } from '../../services/index';
+import { NBADataService, UtilService } from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
@@ -87,7 +87,7 @@ export class StartingFiveComponent implements OnInit {
   public teamsCompletedPlayingToday: Array <any> = [];
   public selectedWeek: string;
   public tsDate: any;
-  public byes: any;
+  public teams: any;
   public dRank: Array <any> = [];
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
@@ -97,15 +97,18 @@ export class StartingFiveComponent implements OnInit {
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
   public mobile: boolean = false;
   public stats: any = '1';
+  public twitter: boolean = false;
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              private util: UtilService) {
     this.allSentData = this.dataService.getSentStats();
     this.players = this.allSentData[0];
     this.myData = this.allSentData[1];
     this.dailySchedule = this.allSentData[2];
     this.stats = '1';
+    this.teams = this.util.getNBATeams();
   }
 
   public changeStats() {
@@ -118,6 +121,8 @@ export class StartingFiveComponent implements OnInit {
     } else if (this.stats === '4') {
       this.stats = '5';
     } else if (this.stats === '5') {
+      this.stats = '6';
+    } else if (this.stats === '6') {
       this.stats = '1';
     }
   }
@@ -303,7 +308,7 @@ export class StartingFiveComponent implements OnInit {
                 res2.forEach((item, index) => {
 
                   i2 = index;
-                  console.log(res2[i2], 'looking of starters');
+                  //console.log(res2[i2], 'looking of starters');
                   
                   if (res2[i2].actual != null && res2[i2].expected != null)  {
                     //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
@@ -652,6 +657,7 @@ export class StartingFiveComponent implements OnInit {
             for (let daily of this.dailyStats) {
               for (let data of this.myData) {
                 if (daily.player.id === data.player.id) {
+                  data.player.tpm = daily.stats.fieldGoals.fg3PtMade;
                   data.player.stl = daily.stats.defense.stl;
                   data.player.blk = daily.stats.defense.blk;
                   data.player.pts = daily.stats.offense.pts;
