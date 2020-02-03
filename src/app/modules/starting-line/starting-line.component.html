@@ -120,7 +120,7 @@
               </div>
         </div>
 </div> 
-<div class="shed-row row single" *ngIf="!loading && !mobile">
+<div class="shed-row row single dn" *ngIf="!loading && !mobile">
     <div class="schedule-box col">
         <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span>
         <span class="sub-text" *ngIf="isPremiumRank">* Touch Rank Included</span> 
@@ -192,7 +192,7 @@
     </div>
 </div> 
 
-<div class="shed-row row single" *ngIf="!loading && !mobile && !isPremiumRank">
+<div class="shed-row row single dn" *ngIf="!loading && !mobile && !isPremiumRank">
     <div class="schedule-box col">
         <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span>
         <span class="sub-text" *ngIf="isPremiumRank">* Touch Rank Included</span> 
@@ -367,7 +367,8 @@
                   </div>
             </div>  
             <div class="row" [ngStyle]="{'backgroundColor': data?.offensePlayers[0]?.playerObj.team?.color ? data?.offensePlayers[0]?.playerObj.team?.color : 'black' }">
-              <p class="center">Sacks: {{data?.teamStats?.tackles?.sacks}} / PA: {{data?.teamStats?.standings?.pointsAgainst}} --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
+                <!-- TD: {{ data?.teamStats?.miscellaneous?.totalTD - (data?.teamStats?.passing?.passTD + data?.teamStats?.rushing?.rushTD) }} / -->
+              <p class="center">Sacks: {{data?.teamStats?.tackles?.sacks}} / PA: {{data?.teamStats?.standings?.pointsAgainst}} / TD: {{ data?.teamStats?.interceptions?.intTD + data?.teamStats?.fumbles?.fumTD }} / KR-PR TD: {{ data?.teamStats?.kickoffReturns?.krTD + data?.teamStats?.puntReturns?.prTD }}  --  <span *ngIf="data?.offensePlayers[0]?.playerObj['dRank'] != null">
                   Defense Rank: {{data?.offensePlayers[0]?.playerObj['dRank']}} <br>
               </span></p>
             </div> 

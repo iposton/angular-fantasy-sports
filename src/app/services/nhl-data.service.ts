@@ -59,7 +59,7 @@ export class NHLDataService {
   score: Observable < any > = null;
   play: Observable <any> = null;
   injured: Observable <any> = null;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.0/pull/nhl/2019-2020-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
   headers: any;
   public dailyDate: string = '';
 

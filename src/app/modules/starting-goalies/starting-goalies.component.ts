@@ -290,7 +290,7 @@ export class StartingGoaliesComponent implements OnInit {
                   this.sortData();
 
                 });
-
+                //this.sortData();
             }
 
           })
@@ -1014,7 +1014,7 @@ export class StartingGoaliesComponent implements OnInit {
               console.log('start sorting data for scoreboard stats...');
               for (let sc of this.score) {
                 for (let pdata of this.myData) {
-                  console.log(sc, 'score items');
+                  //console.log(sc, 'score items');
                   // if (sc.game.awayTeamAbbreviation === pdata.player.currentTeam.abbreviation) {
                   //   pdata.team.awayGoalie = pdata.player.firstName + ' ' + pdata.player.lastName;
   

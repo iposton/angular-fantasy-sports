@@ -80,6 +80,7 @@ export class StartingLineComponent implements OnInit {
   public allSentData: Array <any>;
   public isPlayoff: boolean = false;
   public playoffStats: boolean = false;
+  public teams: any;
 
   constructor(private dataService: NFLDataService, 
               private http: HttpClient,
@@ -100,6 +101,7 @@ export class StartingLineComponent implements OnInit {
     
     weekTimes = this.util.getWeekTimes();
     this.byes = this.util.getByes();
+    this.teams = this.util.getNFLTeams();
 
     for (let week of weekTimes) {
       let date = new Date();
@@ -222,6 +224,8 @@ export class StartingLineComponent implements OnInit {
         this.dataService
           .sendHeaderOptions(headers, this.selectedWeek, this.serviceRoot);
 
+      
+
         this.dataService
           .getSchedule(this.selectedWeek).subscribe(res => {
             console.log(res, "schedule...");
@@ -234,8 +238,10 @@ export class StartingLineComponent implements OnInit {
             } else {
 
               this.dailySchedule = res['games'];
-              this.teamRef = res['references'].teamReferences;
-              teamRef = res['references'].teamReferences;
+              //this.teamRef = res['references'].teamReferences;
+              //teamRef = res['references'].teamReferences;
+              this.teamRef = this.teams;
+              teamRef = this.teams;
               console.log(this.teamRef, 'tream ref');
               this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
               let dPipe = new DatePipe("en-US");
