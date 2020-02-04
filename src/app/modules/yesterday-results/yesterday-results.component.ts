@@ -1,12 +1,13 @@
+
+import {forkJoin as observableForkJoin,  Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http'
-import { Observable } from 'rxjs/Observable';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { YesterdayService } from '../../services/index';
 import { MatSnackBar } from '@angular/material';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/forkJoin';
+
+
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = null;
@@ -96,7 +97,7 @@ export class YesterdayResultsComponent implements OnInit {
             let dPipe = new DatePipe("en-US");
             this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
 
-              Observable.forkJoin(
+              observableForkJoin(
                   res['games'].map(
 
                     g => 
