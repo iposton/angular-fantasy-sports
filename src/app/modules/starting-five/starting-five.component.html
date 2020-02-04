@@ -513,12 +513,12 @@
                                        <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                        <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                        <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                       <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                       <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
-                                       <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
-                                       <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
-                                       <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
-                                       <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM</span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                       
                                         </span>
                                     
@@ -563,12 +563,12 @@
                                          <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                          <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                          <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                         <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                         <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
-                                         <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
-                                         <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
-                                         <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
-                                         <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM</span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                         <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                         
                                           </span>
                                       
@@ -615,12 +615,12 @@
                                            <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                            <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                            <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                           <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                           <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
-                                           <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
-                                           <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
-                                           <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
-                                           <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM</span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '5' && stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                           
                                             </span>
                                         
@@ -667,12 +667,12 @@
                                              <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                              <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                             <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                             <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
-                                             <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
-                                             <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
-                                             <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
-                                             <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM</span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                             
                                               </span>
                                           
@@ -723,12 +723,12 @@
                                                <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                                <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                                <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                               
                                                 </span>
                                             
@@ -754,11 +754,14 @@
                                                 <span class="player-infos">
                                                 <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
                                                 <span class="names" *ngIf="!mobile">
-                                                    <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                    <span *ngIf="item.player.firstName != 'Shai' && item.player.firstName != 'Kentavious'"> 
                                                         {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
                                                       </span>
                                                       <span *ngIf="item?.player?.firstName === 'Shai'"> 
                                                           S. {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}   
+                                                      </span>
+                                                      <span *ngIf="item?.player?.firstName === 'Kentavious'"> 
+                                                          K. {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}
                                                       </span>
                                                 </span>
         
@@ -776,12 +779,12 @@
                                                <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                                <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                                <span class="lg"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast</span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '4'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk</span>
-                                               <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '5' && stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                               
                                                 </span>
                                             

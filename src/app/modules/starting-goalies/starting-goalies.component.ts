@@ -1,9 +1,10 @@
+
+import { Observable, interval, forkJoin } from 'rxjs';
 import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren  } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { IntervalObservable } from "rxjs/observable/IntervalObservable";
+//import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DatePipe, PercentPipe } from '@angular/common';
@@ -16,8 +17,8 @@ import {
  } from '../../services/index';
 
 import { MatSnackBar } from '@angular/material';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/forkJoin';
+
+
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = null;
@@ -249,7 +250,7 @@ export class StartingGoaliesComponent implements OnInit {
               this.gamesToday = true;
               //this.sortData(); //work around when no games
 
-              Observable.forkJoin(
+              forkJoin(
                   res['games'].map(
                     g =>  this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Goalie-starter`, {headers})
                   )
@@ -838,7 +839,7 @@ export class StartingGoaliesComponent implements OnInit {
 
       // get our data every subsequent 10 minutes
       const MILLISECONDS_IN_TEN_MINUTES = 600000;
-      IntervalObservable.create(MILLISECONDS_IN_TEN_MINUTES)
+      interval(MILLISECONDS_IN_TEN_MINUTES)
         .subscribe(() => {
           if (this.gamesToday === true) {
             this.dataService
@@ -1216,7 +1217,7 @@ export class LastweekDialog implements OnInit {
         //this.lastweekSchedule = res['games'];
 
 
-        Observable.forkJoin(
+        forkJoin(
             res['games'].map(
               g =>
               this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
@@ -1224,7 +1225,7 @@ export class LastweekDialog implements OnInit {
             )
           )
           .subscribe(res => {
-            console.log(res, 'making several calls by GAME ID for starting lineups...');
+            //console.log(res, 'making several calls by GAME ID for starting lineups...');
 
             let i;
             let i2;
@@ -1235,7 +1236,7 @@ export class LastweekDialog implements OnInit {
 
             res.forEach((item, index) => {
               i = index;
-              console.log(res[i], 'got box score data for away team!');
+              //console.log(res[i], 'got box score data for away team!');
               //console.log(res[i]['games'].game.date, 'looking for date...');
 
               res2 = res[i]['stats'].away.players;
