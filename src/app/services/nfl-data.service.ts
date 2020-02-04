@@ -238,7 +238,12 @@ export class NFLDataService {
       // } else {
       //   url = `${this.apiRoot}/team_stats_totals.json?date=${date}`;
       // }
-      let url = `${apiRoot}/team_stats_totals.json?date=${date}`;
+      let url = null;
+      if (date != null) {
+        url = `${apiRoot}/team_stats_totals.json?date=${date}`;
+      } else {
+        url = `${apiRoot}/team_stats_totals.json`;
+      }
       this.teamstats = this.http.get(url, {headers})
 
     return this.teamstats;
