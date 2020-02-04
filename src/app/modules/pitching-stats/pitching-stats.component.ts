@@ -1,18 +1,21 @@
+
+import {merge as observableMerge, of as observableOf, forkJoin as observableForkJoin,  Observable } from 'rxjs';
+
+import {map} from 'rxjs/operators';
 import { Component, ViewChild, Inject, OnInit, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
-import { Observable } from 'rxjs/Observable';
 import {FirebaseService, DataService} from '../../services/index';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse} from '@angular/common/http';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/publishReplay';
-import 'rxjs/add/observable/forkJoin';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
+
+
+
+
+
+
+
+
+
 
 
 let headers = null;
@@ -110,7 +113,7 @@ export class PitchingStatsComponent implements OnInit {
             } else {
               this.gamesToday = true;
 
-              Observable.forkJoin(
+              observableForkJoin(
                   res['games'].map(
                     g =>
 
@@ -967,13 +970,13 @@ export class MyDataSource extends DataSource < Data > {
   connect(): Observable < Data[] > {
     //return Observable.of(this.data);
     const displayDataChanges = [
-      Observable.of(this.datas),
+      observableOf(this.datas),
       this.sort.sortChange,
     ];
 
-    return Observable.merge(...displayDataChanges).map(() => {
+    return observableMerge(...displayDataChanges).pipe(map(() => {
       return this.getSortedData();
-    });
+    }));
   }
 
   disconnect() {}
