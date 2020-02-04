@@ -1,6 +1,7 @@
+
+import {forkJoin as observableForkJoin,  Observable } from 'rxjs';
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http'
-import { Observable } from 'rxjs/Observable';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -10,8 +11,8 @@ import {
   TomorrowService
  } from '../../services/index';
 import { MatSnackBar } from '@angular/material';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/forkJoin';
+
+
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = null;
@@ -255,7 +256,7 @@ export class TomorrowResultsComponent implements OnInit {
               let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
 
-              Observable.forkJoin(
+              observableForkJoin(
                   res['games'].map(
                     g =>
                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Goalie-starter`, {headers})

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http'
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  interval } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { interval } from 'rxjs';
 import { 
   NBADataService,
   DataService,
@@ -11,8 +10,8 @@ import {
   NFLDataService,
   UtilService } from '../../services/index';
 import { MatSnackBar } from '@angular/material';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/forkJoin';
+
+
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = null;

@@ -1085,7 +1085,7 @@ export class LastweekNFLDialog implements OnInit {
         //this.lastweekSchedule = res['games'];
 
 
-        Observable.forkJoin(
+        forkJoin(
             res['games'].map(
               g =>
               this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=passYards,rushYards,passAttempts,passCompletions,passTD,rushTD', {headers})
