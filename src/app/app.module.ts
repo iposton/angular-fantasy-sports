@@ -36,7 +36,7 @@ import { environment } from '../environments/environment';
 import { OrderBy } from './pipes/orderby.pipe';
 
 import { HomeComponent } from './modules/home/home.component';
-import { StartingFiveComponent } from './modules/starting-five/starting-five.component';
+import { StartingFiveComponent, NBATodayDialog, NBAInfo } from './modules/starting-five/starting-five.component';
 import { StartingLineComponent } from './modules/starting-line/starting-line.component';
 import { TouchesComponent, LastweekNFLDialog } from './modules/touches/touches.component';
 import { StartingPitcherComponent } from './modules/starting-pitcher/starting-pitcher.component';
@@ -63,9 +63,11 @@ import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './module
     TouchesComponent,
     HomeComponent,
     Info,
+    NBAInfo,
     InfoYesterday,
     InfoTomorrow,
     TodayDialog,
+    NBATodayDialog,
     LastweekDialog,
     LastweekNFLDialog,
     TomorrowDialog,
@@ -104,7 +106,7 @@ import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './module
   ],
   providers: [],
   entryComponents: [
-   MyDialog, Info, InfoYesterday, InfoTomorrow, TodayDialog, LastweekDialog, LastweekNFLDialog, TomorrowDialog, LoginDialog
+   MyDialog, Info, NBAInfo, InfoYesterday, InfoTomorrow, TodayDialog, NBATodayDialog, LastweekDialog, LastweekNFLDialog, TomorrowDialog, LoginDialog
   ],
   bootstrap: [AppComponent]
 })

@@ -1,3 +1,14 @@
+.fixed-button {
+  position: fixed;
+  right: 12px;
+  bottom: 50px;
+  z-index: 8;
+}
+
+.material-icons.md-48 {
+  font-size: 48px;
+}
+
 .left-content {
   font-size: 12px;
   img {
@@ -322,6 +333,9 @@ ul {
     margin: 20px;
     vertical-align: top;
     width: 33%;
+    .point {
+      cursor: pointer;
+    }
 }
 
 .card-wrap-sp.position-box {
@@ -329,7 +343,10 @@ ul {
   padding: 20px;
   background: #555;
   color: #fff;
-  cursor: pointer;
+  // cursor: pointer;
+  .point {
+    cursor: pointer;
+  }
   .team-image {
     img {
       height: 45px;
@@ -351,7 +368,10 @@ ul {
 
 .mat-card-sp {
   padding: 8px;
-  cursor: pointer;
+  // cursor: pointer;
+  .point {
+    cursor: pointer;
+  }
 }
 
 

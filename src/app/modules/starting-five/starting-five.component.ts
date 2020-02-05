@@ -1,18 +1,19 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { NBADataService, UtilService } from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { OrderBy } from '../../pipes/orderby.pipe';
+//import { map } from 'rxjs/operators';
+//import { OrderBy } from '../../pipes/orderby.pipe';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 
 let headers = null;
 let playerString = null;
-let benchString = null;
 let today = new Date();
 let teamRef = [];
+let teams = null;
 let starterNames = {
   'Starter1': 'Starter1',
   'Starter2': 'Starter2',
@@ -98,17 +99,21 @@ export class StartingFiveComponent implements OnInit {
   public mobile: boolean = false;
   public stats: any = '1';
   public twitter: boolean = false;
+  public selected: any;
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
               private sanitizer: DomSanitizer,
-              private util: UtilService) {
+              private util: UtilService,
+              public dialog: MatDialog,
+              public snackBar: MatSnackBar) {
     this.allSentData = this.dataService.getSentStats();
     this.players = this.allSentData[0];
     this.myData = this.allSentData[1];
     this.dailySchedule = this.allSentData[2];
     this.stats = '1';
     this.teams = this.util.getNBATeams();
+    teams = this.teams;
   }
 
   public changeStats() {
@@ -177,7 +182,6 @@ export class StartingFiveComponent implements OnInit {
     this.starterIdData = [];
     this.benchIdData = [];
     playerString = null;
-    benchString = null;
     this.dailyStats = [];
     this.benchStats = [];
     this.myData = [];
@@ -1019,6 +1023,22 @@ export class StartingFiveComponent implements OnInit {
 
   }
 
+  public open(event, data, type) {
+    data.area = type;
+    this.selected = data;
+    console.log(data, 'ok you clicked on player img...');
+    this.dialog.open(NBATodayDialog, {
+      data: data,
+      width: '600px',
+    });
+  }
+
+  openSnackBar() {
+    this.snackBar.openFromComponent(NBAInfo, {
+      // duration: 500,
+    });
+  }
+
   ngOnInit() {
     if (window.innerWidth < 700) { // 768px portrait
       this.mobile = true;
@@ -1093,4 +1113,77 @@ export class StartingFiveComponent implements OnInit {
      }
   }
 
+}
+
+@Component({
+  selector: 'nba-today-dialog',
+  template: `<i (click)="dialogRef.close()" style="float:right; cursor:pointer;" class="material-icons">close</i>
+  <span style="color:#00aced;">Twitter Updates!</span> 
+  <mat-dialog-content>
+  <span style="font-size: 26px; font-weight: light; color: #555; text-align: center;">{{ noPosts }}</span>
+  <ul *ngFor="let item of tweetsData" style="font-size:14px">
+    <li>{{item.text}} <span style="color:#6740B4; font-weight: bold;">{{item.created_at | date:'fullDate'}}</span></li>
+</ul>
+</mat-dialog-content>`,
+})
+
+export class NBATodayDialog implements OnInit {
+  noPosts: any;
+  tweetsData: any;
+  constructor(public dialogRef: MatDialogRef < NBATodayDialog > , @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {
+
+  }
+
+  loadStuff() {
+    let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
+
+    this.http.post('/authorize', {headers}).subscribe((res) => {
+      this.searchCall();
+    })
+
+
+  }
+
+  searchCall() {
+    console.log(this.data, 'data passed in');
+
+    let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
+    //let searchterm = 'query=#startingGoalies #nhl ' + this.data.player.FirstName + ' ' + this.data.player.LastName;
+    let searchterm = null;
+    if (this.data.area === 'top') {
+      searchterm = 'query=' + this.data.playerObj.player.lastName + ' ' + teams[this.data.playerObj.player['currentTeam'].abbreviation].twitter;
+    } else {
+      searchterm = 'query=' + this.data.player.lastName + ' ' + teams[this.data.player['currentTeam'].abbreviation].twitter;
+    }
+
+
+    this.http.post('/search', searchterm, {headers}).subscribe((res) => {
+       console.log(res['data'].statuses, 'twitter stuff');
+      this.tweetsData = res['data'].statuses;
+      if (this.tweetsData.length === 0) {
+        this.noPosts = "No Tweets.";
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.loadStuff();
+  }
+}
+
+@Component({
+  selector: 'nba-info',
+  template: `<i (click)="close()" class="material-icons close">close</i><br />
+  <span style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Expected Starter <br />
+  <span style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Confirmed Starter <br />
+<span>Click on player image for twitter updates!</span> <br />
+<span>Click on player stats for MORE stats!</span>`,
+  styles: [`.close { float:right; cursor:pointer; font-size: 20px; } .green-dot { height: 10px; width: 10px; background:#2ecc71; border-radius: 50%; display: inline-block; }`]
+})
+
+export class NBAInfo {
+  constructor(public snackBar: MatSnackBar) {}
+  close() {
+    this.snackBar.dismiss();
+  }
 }

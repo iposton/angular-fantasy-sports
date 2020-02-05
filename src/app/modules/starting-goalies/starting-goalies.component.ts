@@ -3,7 +3,7 @@ import { Observable, interval, forkJoin } from 'rxjs';
 import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren  } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http'
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar  } from '@angular/material';
 //import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -15,10 +15,6 @@ import {
   YesterdayService,
   TomorrowService
  } from '../../services/index';
-
-import { MatSnackBar } from '@angular/material';
-
-
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = null;
@@ -33,7 +29,7 @@ let teamString = '';
 @Component({
   selector: 'app-starting-goalies',
   templateUrl: './starting-goalies.component.html',
-  styleUrls: ['./starting-goalies.component.css'],
+  styleUrls: ['./starting-goalies.component.scss'],
    animations: [
     trigger('flipState', [
       state('active', style({
