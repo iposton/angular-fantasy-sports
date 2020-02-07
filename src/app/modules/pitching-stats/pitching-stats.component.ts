@@ -3,7 +3,9 @@ import {merge as observableMerge, of as observableOf, forkJoin as observableFork
 
 import {map} from 'rxjs/operators';
 import { Component, ViewChild, Inject, OnInit, ElementRef } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSort } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSort } from '@angular/material/sort';
+import {  MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import {FirebaseService, DataService} from '../../services/index';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse} from '@angular/common/http';
