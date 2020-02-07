@@ -4,7 +4,7 @@ import { NFLDataService, UtilService, FirebaseService } from '../../services/ind
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 let headers = null;

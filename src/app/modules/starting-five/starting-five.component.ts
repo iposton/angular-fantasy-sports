@@ -7,7 +7,8 @@ import { Observable, interval, forkJoin } from 'rxjs';
 //import { map } from 'rxjs/operators';
 //import { OrderBy } from '../../pipes/orderby.pipe';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 let headers = null;
 let playerString = null;
