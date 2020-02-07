@@ -9,7 +9,7 @@ import {
   NHLDataService,
   NFLDataService,
   UtilService } from '../../services/index';
-import { MatSnackBar } from '@angular/material';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -75,7 +75,6 @@ export class HomeComponent implements OnInit {
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
 
   constructor(private http: HttpClient,
-     public snackBar: MatSnackBar, 
      public router: Router,
      public dataService: DataService,
      public nhlDataService: NHLDataService,
