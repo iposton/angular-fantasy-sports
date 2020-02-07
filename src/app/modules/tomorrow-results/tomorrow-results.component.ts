@@ -2,7 +2,7 @@
 import {forkJoin as observableForkJoin,  Observable } from 'rxjs';
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http'
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import {
@@ -10,7 +10,7 @@ import {
   FirebaseService,
   TomorrowService
  } from '../../services/index';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
