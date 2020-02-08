@@ -601,7 +601,7 @@ export class StartingFiveComponent implements OnInit {
           console.log(this.gameStarters, 'game starters');
 
           this.myData = res['playerStatsTotals'].filter(
-            player => player.player['currentTeam'].abbreviation === player.team.abbreviation);
+            player => player.team != null && player.player['currentTeam'].abbreviation === player.team.abbreviation);
 
           for (let schedule of this.dailySchedule) {
             for (let sdata of this.myData) {
