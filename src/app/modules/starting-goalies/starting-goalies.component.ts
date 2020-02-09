@@ -346,7 +346,7 @@ export class StartingGoaliesComponent implements OnInit {
         console.log(res['playerStatsTotals'], "cumulative stats...");
     
         this.myData = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'].abbreviation === player.team.abbreviation); 
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation); 
 
         if (this.myData && this.dailySchedule) {
           console.log('start sorting data for daily schedule...');
