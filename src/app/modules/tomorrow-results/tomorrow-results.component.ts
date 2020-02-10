@@ -76,7 +76,7 @@ export class TomorrowResultsComponent implements OnInit {
     '5528':'5528',
     '13876':'13876',
     '5366':'5366', //hutchinson //kask '13660': '13660',
-    '5540': '5540', //drieger //'15525':'15525', //sam montebolt
+    //'5540': '5540', //drieger //'15525':'15525', //sam montebolt
     '4890':'4890',
     '5420':'5420',
     '5873':'5873',
@@ -343,7 +343,8 @@ export class TomorrowResultsComponent implements OnInit {
     this.tomorrowService
       .getStats(teamString).subscribe(res => {
         console.log(res['playerStatsTotals'], "cumulative stats...");
-        this.myData = res['playerStatsTotals'];
+        this.myData = res['playerStatsTotals'].filter(
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation);
 
         if (this.myData && this.dailySchedule) {
           console.log('start sorting data for daily schedule...');
