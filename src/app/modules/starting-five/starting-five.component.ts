@@ -101,6 +101,7 @@ export class StartingFiveComponent implements OnInit {
   public stats: any = '1';
   public twitter: boolean = false;
   public selected: any;
+  public playerImages: any;
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
@@ -114,6 +115,7 @@ export class StartingFiveComponent implements OnInit {
     this.dailySchedule = this.allSentData[2];
     this.stats = '1';
     this.teams = this.util.getNBATeams();
+    this.playerImages = this.util.getNBAImages();
     teams = this.teams;
   }
 
@@ -623,6 +625,9 @@ export class StartingFiveComponent implements OnInit {
                 sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                 sdata.team.abbreviation = schedule.schedule.homeTeam.abbreviation;
                 sdata.team.opponentId = schedule.schedule.awayTeam.id;
+              }
+              if (sdata.player.officialImageSrc == null) {
+                sdata.player.officialImageSrc = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
               }
             }
           }

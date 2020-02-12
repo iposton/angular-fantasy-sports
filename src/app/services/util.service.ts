@@ -8,6 +8,8 @@ export class UtilService {
   public byes: any; 
   public nbaTeams: any;
   public nflTeams: any;
+  public NBAImages: any;
+  public NHLImages: any;
 
   constructor() {
     this.weekTimes = [
@@ -117,6 +119,137 @@ export class UtilService {
         week: '22' //super bowl
       }
     ]
+
+    this.NHLImages = {
+      "17374": {
+        firstName: "Igor",
+        lastName: "Shesterkin",
+        image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8478048@2x.jpg"
+      },
+      "17380": {
+        firstName: "Jonas",
+        lastName: "Johansson",
+        image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8477992@2x.jpg"
+      },
+      "15384": {
+        firstName: "Calvin",
+        lastName: "Petersen",
+        image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8477361@2x.jpg"
+      },
+      "17341": {
+        firstName: "Matiss",
+        lastName: "Kivlenieks",
+        image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8480162@2x.jpg"
+      },
+      // "17374": {
+      //   firstName: "Igor",
+      //   lastName: "Shesterkin",
+      //   image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8478048@2x.jpg"
+      // }
+    }
+
+    this.NBAImages = {
+      "16958": {
+        firstName: "Zion",
+        lastName: "Williamson",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612740/2019/260x190/1629627.png"
+      },
+      "17189": {
+        firstName: "Ja",
+        lastName: "Morant",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612763/2019/260x190/1629630.png"
+      },
+      "17191": {
+        firstName: "Darius",
+        lastName: "Garland",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612739/2019/260x190/1629636.png"
+      },
+      "17273": {
+        firstName: "P.J.",
+        lastName: "Washington",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612766/2019/260x190/1629023.png"
+      },
+      "15252": {
+        firstName: "Kendrick",
+        lastName: "Nunn",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612748/2019/260x190/1629134.png"
+      },
+      "17181": {
+        firstName: "RJ",
+        lastName: "Barrett",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612752/2019/260x190/1629628.png"
+      },
+      "17196": {
+        firstName: "Cam",
+        lastName: "Reddish",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612737/2019/260x190/1629629.png"
+      },
+      "17192": {
+        firstName: "Jarett",
+        lastName: "Culver",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612750/2019/260x190/1629633.png"
+      },
+      "17190": {
+        firstName: "De'Andre",
+        lastName: "Hunter",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612737/2019/260x190/1629631.png"
+      },
+      "17195": {
+        firstName: "Rui",
+        lastName: "Hachimura",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612764/2019/260x190/1629060.png"
+      },
+      "17286": {
+        firstName: "Kevin",
+        lastName: "Porter Jr.",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612739/2019/260x190/1629645.png"
+      },
+      "17331": {
+        firstName: "Ky",
+        lastName: "Bowman",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612744/2019/260x190/1629065.png"
+      },
+      "17197": {
+        firstName: "Cameron",
+        lastName: "Johnson",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612756/2019/260x190/1629661.png"
+      },
+      "17251": {
+        firstName: "Brandon",
+        lastName: "Clarke",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612763/2019/260x190/1629634.png"
+      },
+      "17256": {
+        firstName: "Sekou",
+        lastName: "Doumbouya",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612765/2019/260x190/1629635.png"
+      },
+      "17216": {
+        firstName: "Terence",
+        lastName: "Davis",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612761/2019/260x190/1629056.png"
+      },
+      // "111": {
+      //   firstName: "Kevin",
+      //   lastName: "Porter Jr.",
+      //   image: "png"
+      // },
+      // "111": {
+      //   firstName: "Kevin",
+      //   lastName: "Porter Jr.",
+      //   image: "png"
+      // },
+      // "111": {
+      //   firstName: "Kevin",
+      //   lastName: "Porter Jr.",
+      //   image: "png"
+      // },
+      // "111": {
+      //   firstName: "Kevin",
+      //   lastName: "Porter Jr.",
+      //   image: "png"
+      // }
+    }
 
     this.byes = {
       "ATL": {
@@ -1371,6 +1504,14 @@ export class UtilService {
 
   public getNBATeams() {
     return this.nbaTeams;
+  }
+
+  public getNBAImages() {
+    return this.NBAImages;
+  }
+
+  public getNHLImages() {
+    return this.NHLImages;
   }
 
   public getNFLTeams() {
