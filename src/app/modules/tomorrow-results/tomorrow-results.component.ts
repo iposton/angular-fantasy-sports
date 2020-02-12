@@ -8,7 +8,8 @@ import { DatePipe } from '@angular/common';
 import {
   NHLDataService,
   FirebaseService,
-  TomorrowService
+  TomorrowService,
+  UtilService
  } from '../../services/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -58,6 +59,7 @@ export class TomorrowResultsComponent implements OnInit {
   loading: boolean = true;
   fullFirebaseResponse: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
+  public playerImages: any;
 
   public startingG = {
     '5617':'5617', //Copley'5571':'5571',
@@ -75,16 +77,18 @@ export class TomorrowResultsComponent implements OnInit {
     '483':'483',
     '5528':'5528',
     '13876':'13876',
-    '5366':'5366', //hutchinson //kask '13660': '13660',
+    //'5366':'5366', //hutchinson //kask '13660': '13660',
     //'5540': '5540', //drieger //'15525':'15525', //sam montebolt
     '4890':'4890',
     '5420':'5420',
     '5873':'5873',
     '5552':'5552',
     '3647':'3647',
-    '13934':'13934',
+    //'13934':'13934' Georgiv,
+    '17374':'17374', //shesterkin
     '5224':'5224',
-    '5842':'5842',
+    //'5842':'5842', //ullmark
+    '17380':'17380', //johansson
     '5894':'5894',
     '10083':'10083',
     '4294':'4294',
@@ -127,13 +131,21 @@ export class TomorrowResultsComponent implements OnInit {
     '15452':'15452' //Hogberg
   }
 
-  constructor(private http: HttpClient, private tomorrowService: TomorrowService, private todayService: NHLDataService, private fbService: FirebaseService, public snackBar: MatSnackBar, public router: Router, public dialog: MatDialog) { 
+  constructor(private http: HttpClient, 
+    private tomorrowService: TomorrowService, 
+    private todayService: NHLDataService, 
+    private fbService: FirebaseService, 
+    public snackBar: MatSnackBar, 
+    public router: Router, 
+    public dialog: MatDialog,
+    public util: UtilService) { 
     yesterday = this.tomorrowService.getYesterday();
     tomorrow = this.tomorrowService.getTomorrow();
     today = this.tomorrowService.getToday();
     console.log(yesterday + ' yesterday, ' + today + ' today, ' + tomorrow + ' tomorrow, ');
     this.sentDataTomorrow = this.tomorrowService.getSentStats();
     this.sentDataToday = this.todayService.getSentStats();
+    this.playerImages = this.util.getNHLImages();
   }
 
 
@@ -426,6 +438,9 @@ export class TomorrowResultsComponent implements OnInit {
                 sdata.player.saYesterday = '0';
                 sdata.player.olYesterday = '0';
                 sdata.player.shYesterday = '0';
+              }
+              if (sdata.player.officialImageSrc == null) {
+                sdata.player.officialImageSrc = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
               }
             }
           }

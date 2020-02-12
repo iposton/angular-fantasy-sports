@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http'
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { YesterdayService } from '../../services/index';
+import { YesterdayService, UtilService } from '../../services/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -45,14 +45,20 @@ export class YesterdayResultsComponent implements OnInit {
   noGamesMsg: any;
   loading: boolean = true;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
+  public playerImages: any;
 
-  constructor(private http: HttpClient, private yesterdayService: YesterdayService, public snackBar: MatSnackBar, public router: Router) {
+  constructor(private http: HttpClient, 
+    private yesterdayService: YesterdayService, 
+    public snackBar: MatSnackBar, 
+    public router: Router,
+    public util: UtilService) {
     this.getJSON();
     yesterday = this.yesterdayService.getYesterday();
     tomorrow = this.yesterdayService.getTomorrow();
     today = this.yesterdayService.getToday();
     console.log(yesterday + ' yesterday, ' + today + ' today, ' + tomorrow + ' tomorrow, ');
     this.sentYesterdayData = this.yesterdayService.getSentStats();
+    this.playerImages = this.util.getNHLImages();
 
   }
 
@@ -255,6 +261,9 @@ export class YesterdayResultsComponent implements OnInit {
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
                 sdata.team.yesterday = yesterday;
+              }
+              if (sdata.player.officialImageSrc == null) {
+                sdata.player.officialImageSrc = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
               }
             }
           }

@@ -14,7 +14,8 @@ import {
   NHLDataService,
   FirebaseService,
   YesterdayService,
-  TomorrowService
+  TomorrowService,
+  UtilService
  } from '../../services/index';
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
@@ -88,6 +89,7 @@ export class StartingGoaliesComponent implements OnInit {
 
   stats: boolean = false;
   hitCount: any;
+  public playerImages: any;
 
 
   goalieIdSet: boolean = false;
@@ -115,7 +117,8 @@ export class StartingGoaliesComponent implements OnInit {
     private tomorrowService: TomorrowService, 
     public snackBar: MatSnackBar, 
     public router: Router, 
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    public util: UtilService) {
     yesterday = this.dataService.getYesterday();
     tomorrow = this.dataService.getTomorrow();
     today = this.dataService.getToday();
@@ -124,6 +127,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.sentData = this.dataService.getSentStats();
     this.sentYesterdayData = this.yesterdayService.getSentStats();
     this.sentTomorrowData = this.tomorrowService.getSentStats();
+    this.playerImages = this.util.getNHLImages();
     
   }
 
@@ -444,6 +448,10 @@ export class StartingGoaliesComponent implements OnInit {
                   sdata.team.opponentName = team.name;
                 }
 
+              }
+
+              if (sdata.player.officialImageSrc == null) {
+                sdata.player.officialImageSrc = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
               }
 
             }
