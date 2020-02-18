@@ -6,7 +6,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Observable, interval, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { OrderBy } from '../../pipes/orderby.pipe';
-
+import * as CryptoJS from 'crypto-js';
 
 let headers = null;
 let playerString = null;
@@ -110,10 +110,9 @@ export class StartingPitcherComponent implements OnInit {
 
     this.dataService
       .getEnv().subscribe(res => {
-
-        //headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
-
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
 
         this.dataService
           .sendHeaderOptions(headers);

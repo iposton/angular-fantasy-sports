@@ -9,6 +9,7 @@ import { Observable, interval, forkJoin } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as CryptoJS from 'crypto-js';
 
 let headers = null;
 let playerString = null;
@@ -131,6 +132,8 @@ export class StartingFiveComponent implements OnInit {
     } else if (this.stats === '5') {
       this.stats = '6';
     } else if (this.stats === '6') {
+      this.stats = '7';
+    } else if (this.stats === '7') {
       this.stats = '1';
     }
   }
@@ -208,8 +211,9 @@ export class StartingFiveComponent implements OnInit {
 
     this.dataService
       .getEnv().subscribe(res => {
-
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
 
         this.dataService
           .sendHeaderOptions(headers);
@@ -675,6 +679,7 @@ export class StartingFiveComponent implements OnInit {
                   data.player.reb = daily.stats.rebounds.reb;
                   data.player.ptsAvg = daily.stats.offense.ptsPerGame;
                   data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
+                  //data.player.startsdaily.stats.miscellaneous.gamesStarted
                   // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
                 }
               }

@@ -6,8 +6,7 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { YesterdayService, UtilService } from '../../services/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-
+import * as CryptoJS from 'crypto-js';
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = null;
@@ -76,7 +75,9 @@ export class YesterdayResultsComponent implements OnInit {
 
     this.yesterdayService
       .getEnv().subscribe(res => {
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
         //headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
         
         this.yesterdayService

@@ -9,6 +9,9 @@ import { MatSnackBar  } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DatePipe, PercentPipe } from '@angular/common';
+import * as CryptoJS from 'crypto-js';
+
+
 
 import {
   NHLDataService,
@@ -211,8 +214,9 @@ export class StartingGoaliesComponent implements OnInit {
 
     this.dataService
       .getEnv().subscribe(res => {
-        
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
        
         this.dataService
           .sendHeaderOptions(headers);
@@ -1244,7 +1248,9 @@ export class LastweekDialog implements OnInit {
               i = index;
               //console.log(res[i], 'got box score data for away team!');
               //console.log(res[i]['games'].game.date, 'looking for date...');
+             if (res[i] != null) {
 
+             
               res2 = res[i]['stats'].away.players;
               res3 = res[i]['stats'].home.players;
 
@@ -1314,6 +1320,7 @@ export class LastweekDialog implements OnInit {
                 }
 
               });
+            }
             });
 
             this.sortData();

@@ -7,6 +7,7 @@ import { Observable, interval, forkJoin } from 'rxjs';
 // import { map } from 'rxjs/operators';
 // import { OrderBy } from '../../pipes/orderby.pipe';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import * as CryptoJS from 'crypto-js';
 
 let headers = null;
 let playerString = null;
@@ -219,7 +220,9 @@ export class StartingLineComponent implements OnInit {
 
     this.dataService
       .getEnv().subscribe(res => {
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
 
         this.dataService
           .sendHeaderOptions(headers, this.selectedWeek, this.serviceRoot);

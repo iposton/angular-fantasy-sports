@@ -3,13 +3,14 @@ import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/com
 import { Observable ,  interval } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { Meta } from '@angular/platform-browser';
 import { 
   NBADataService,
   DataService,
   NHLDataService,
   NFLDataService,
   UtilService } from '../../services/index';
-// import { MatSnackBar } from '@angular/material/snack-bar';
+import * as CryptoJS from 'crypto-js';
 
 
 
@@ -80,7 +81,13 @@ export class HomeComponent implements OnInit {
      public nhlDataService: NHLDataService,
      public nbaDataService: NBADataService,
      public nflDataService: NFLDataService,
-     public util: UtilService) {
+     public util: UtilService,
+     private meta: Meta) {
+      this.meta.addTag({ name: 'twitter:card', content: 'summary_large_image' });
+      this.meta.addTag({ name: 'twitter:site', content: '@FanSpRes' });
+      this.meta.addTag({ name: 'twitter:title', content: 'NHL and NBA Stats & Starters' });
+      this.meta.addTag({ name: 'twitter:description', content: 'NHL Starting Golaies and NBA Starting 5' });
+      this.meta.addTag({ name: 'twitter:image', content: 'www.fantasy-sports-resources/assets/fsr.png' });
      //this.loading = false;
      //this.getJSON();
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
@@ -120,7 +127,9 @@ loadData() {
 
      this.dataService
        .getEnv().subscribe(res => {
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
         
         this.dataService
           .sendHeaderOptions(headers);

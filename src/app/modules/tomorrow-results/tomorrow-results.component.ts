@@ -12,8 +12,7 @@ import {
   UtilService
  } from '../../services/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-
+import * as CryptoJS from 'crypto-js';
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = null;
@@ -227,7 +226,9 @@ export class TomorrowResultsComponent implements OnInit {
 
     this.tomorrowService
       .getEnv().subscribe(res => {
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
         //headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
    
         this.tomorrowService
