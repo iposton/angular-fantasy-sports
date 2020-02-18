@@ -9,7 +9,7 @@ import {  MatTableDataSource } from '@angular/material/table';
 import { DataSource } from '@angular/cdk/table';
 import {FirebaseService, DataService} from '../../services/index';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse} from '@angular/common/http';
-
+import * as CryptoJS from 'crypto-js';
 
 
 
@@ -97,8 +97,9 @@ export class PitchingStatsComponent implements OnInit {
     // LOAD SOME DATA WHEN CLICK ON DIALOG TO SAVE LOADING TIME. 
     this.dataService
       .getEnv().subscribe(res => {
-        //headers = new HttpHeaders().set("Authorization", "Basic " + btoa('ianposton' + ":" + res));
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(res + ":" + 'MYSPORTSFEEDS'));
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
         this.dataService
           .sendHeaderOptions(headers);
 

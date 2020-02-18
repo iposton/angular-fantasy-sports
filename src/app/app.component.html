@@ -1,8 +1,9 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
-  <span class="toolbar-header" [routerLink]="['/all-sports']">Fantasy Sports Resource</span>
+  <span class="toolbar-header" [routerLink]="['/all-sports']">Fantasy Sports Resources</span>
 
   <span style="flex: 1 1 auto;"></span>
- 
+  <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KZMBHYDYN2RUJ&source=url" target="_blank">Donate</a>
+    
   <i matTooltip="Menu" [matTooltipPosition]="position" (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
 
 </mat-toolbar>
@@ -18,7 +19,7 @@
           <li [routerLink]="['/starting-five']">
           🏀 NBA Starting Five
           </li>
-        <li [routerLink]="['/starting-pitchers']">
+        <!-- <li [routerLink]="['/starting-pitchers']">
           ⚾️ MLB Starting Pitchers
         </li>
          <li [routerLink]="['/pitching-stats']">
@@ -29,7 +30,7 @@
         </li>
         <li [routerLink]="['/nfl-touches']">
           🏈 NFL Touch Rankings
-         </li>
+         </li> -->
         <li [routerLink]="['/starting-goalies']">
           🥅 NHL Starting Goalies
         </li>
@@ -63,9 +64,9 @@
         </div>
         <div class="docs-footer-links">
           <ul fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
-            <li matTooltip="This is a fantasy sports resource. In this app I am using Angular 8 and sourcing pro sports data from mysportsfeeds.com. Find todays starting MLB Pitchers and starting NHL Goalies! Enjoy! ☺" [matTooltipPosition]="position">About</li>
+            <li matTooltip="This is a fantasy sports resource. In this app I am using Angular 9 and sourcing pro sports data from mysportsfeeds.com. Find todays starting MLB Pitchers and starting NHL Goalies! Enjoy! ☺" [matTooltipPosition]="position">About</li>
           </ul>
-          <ul fxHide [fxHide.xs]="isVisibleOnMobile()" style="font-size: 9px; max-width: 80px; text-align: justify;"><li>This app uses Angular 8 with the MySportsFeeds API.</li></ul>
+          <ul fxHide [fxHide.xs]="isVisibleOnMobile()" style="font-size: 9px; max-width: 80px; text-align: justify;"><li>This app uses Angular 9 with the MySportsFeeds API.</li></ul>
         </div>
       </div>
     </footer>

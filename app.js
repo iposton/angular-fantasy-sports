@@ -4,8 +4,9 @@ const request = require('request');
 const cors = require('cors');
 const http = require('http');
 const path = require('path');
-const Heroku = require('heroku-client')
-
+const Heroku = require('heroku-client');
+const CryptoJS = require("crypto-js");
+let ciphertext = null;
 
 const heroku = new Heroku({ token: process.env.API_TOKEN })
 
@@ -63,7 +64,8 @@ heroku.request({
   },
   parseJSON: true
 }).then(response => {
-  TOKEN = response.TOKEN;
+  ciphertext = CryptoJS.AES.encrypt(response.TOKEN, 'footballSack').toString();
+  TOKEN = ciphertext;
 })
 
 app.get('/heroku-env', (req, res) => {

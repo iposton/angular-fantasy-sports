@@ -48,7 +48,7 @@
           </div>
     </div>
     
-    <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap">
+    <!-- <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap">
         <span class="week-rank">NFL<br> </span> 
         <span *ngIf="noMlbGamesMsg">{{noNflGamesMsg}}</span>
         <div *ngFor="let item of nflSchedule; let i=index">
@@ -84,7 +84,7 @@
               <h2 [routerLink]="['/nfl-line-rank']">NFL Line Rankings</h2>
               <h2 [routerLink]="['/nfl-touches']">NFL Touches</h2>
           </div>
-    </div>
+    </div> -->
     <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap" [routerLink]="['/starting-goalies']">
         <span class="week-rank">NHL<br> </span> 
         <span *ngIf="noMlbGamesMsg">{{noNhlGamesMsg}}</span>
@@ -123,7 +123,7 @@
               <h2 [routerLink]="['/starting-goalies-yesterday']">Starting Goalies Yesterday</h2>
           </div>
     </div>
-    <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap" [routerLink]="['/starting-pitchers']">
+    <!-- <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap" [routerLink]="['/starting-pitchers']">
         <span class="week-rank">MLB<br> </span> 
         <span *ngIf="noMlbGamesMsg">{{noMlbGamesMsg}}</span>
         <div *ngFor="let item of mlbSchedule; let i=index">
@@ -160,5 +160,5 @@
               <h2 [routerLink]="['/starting-pitchers']">Starting Pitchers</h2>
               <h2 [routerLink]="['/pitching-stats']">Pitching Stats</h2>
           </div>
-    </div>
+    </div> -->
 </div>
