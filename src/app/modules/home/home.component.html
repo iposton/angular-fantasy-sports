@@ -15,7 +15,7 @@
         <span class="week-rank">NBA<br> </span> 
         <span *ngIf="noMlbGamesMsg">{{noNbaGamesMsg}}</span>
         <div *ngFor="let item of nbaSchedule; let i=index">
-            <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+            <span *ngIf="item?.schedule?.awayTeam?.abbreviation && item?.schedule?.startTime &lt; tomorrowDate" class="sched-item">
                  <span class="abb" *ngIf="!mobile">
                     <img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo">
                     <span *ngIf="item?.schedule?.awayTeam?.city != 'Minnesota' && item?.schedule?.awayTeam?.city != 'Los Angeles'">{{item?.schedule?.awayTeam?.city + ' ' + item?.schedule?.awayTeam?.name}}</span> 

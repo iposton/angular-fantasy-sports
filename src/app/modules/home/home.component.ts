@@ -71,6 +71,7 @@ export class HomeComponent implements OnInit {
   public showLink: boolean = false;
   public liveGames: boolean = false;
   public selectedWeek: any;
+  public tomorrowDate: any;
 
   tweetDay: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
@@ -93,6 +94,8 @@ export class HomeComponent implements OnInit {
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
     this.selectedWeek = '1';
     let weekTimes = this.util.getWeekTimes();
+    let thisDate = new Date();
+    this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
 
     for (let week of weekTimes) {
       let date = new Date();
@@ -172,7 +175,7 @@ loadData() {
               this.nbaGamesToday = true;
               this.nbaSchedule = res['games'];
               this.nbaTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
-              this.nbaGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+              this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
               if (this.nbaTeamRef != null)
                 this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
             }

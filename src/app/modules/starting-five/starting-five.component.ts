@@ -103,6 +103,7 @@ export class StartingFiveComponent implements OnInit {
   public twitter: boolean = false;
   public selected: any;
   public playerImages: any;
+  public tomorrowDate: any;
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
@@ -118,6 +119,8 @@ export class StartingFiveComponent implements OnInit {
     this.teams = this.util.getNBATeams();
     this.playerImages = this.util.getNBAImages();
     teams = this.teams;
+    let thisDate = new Date();
+    this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
   }
 
   public changeStats() {
@@ -236,7 +239,7 @@ export class StartingFiveComponent implements OnInit {
               this.teamRef = res['references'].teamReferences;
               teamRef = res['references'].teamReferences;
               console.log(this.teamRef, 'tream ref');
-              this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+              this.gameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
               let dPipe = new DatePipe("en-US");
 
               this.gamesToday = true;
