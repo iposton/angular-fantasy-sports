@@ -11,13 +11,13 @@ import { YesterdayResultsComponent, InfoYesterday } from '../modules/yesterday-r
 import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from '../modules/tomorrow-results/tomorrow-results.component';
 
 const routes: Routes = [
-  {
-         path: '',
-         redirectTo: 'all-sports',
-         pathMatch: 'full'
-  },
+//   {
+//          path: '',
+//          redirectTo: '',
+//          pathMatch: 'full'
+//   },
   { 
-        path: 'all-sports', 
+        path: '', 
         component: HomeComponent 
   },
   { 
@@ -51,6 +51,10 @@ const routes: Routes = [
    {
          path: 'starting-five',
          component: StartingFiveComponent
+   },
+   {
+          path: '**', 
+          component: HomeComponent
    }
  
  ];

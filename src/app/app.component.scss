@@ -152,4 +152,15 @@ input {
     padding: 0 0 0 0;
   }
 
+  .toolbar-header {
+    font-size: 15px;
+  }
+
+  mat-toolbar {
+    a {
+      margin: 10px;
+      font-size: 10px;
+    }
+  } 
+
 }

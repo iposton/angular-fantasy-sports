@@ -82,8 +82,8 @@ export class TomorrowResultsComponent implements OnInit {
     '5420':'5420',
     '5873':'5873',
     '5552':'5552',
-    '3647':'3647',
-    //'13934':'13934' Georgiv,
+    //'3647':'3647', //Lundqvist
+    '13934':'13934', //Georgiv,
     '17374':'17374', //shesterkin
     '5224':'5224',
     //'5842':'5842', //ullmark
