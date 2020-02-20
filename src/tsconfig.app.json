@@ -6,8 +6,8 @@
     "types": []
   },
   "exclude": [
-    "src/test.ts",
+    "test.ts",
     "**/*.spec.ts"
-    // "environments/*.ts"
+    //"environments/*.ts"
   ]
 }
