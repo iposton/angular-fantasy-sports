@@ -77,7 +77,8 @@ export class TomorrowResultsComponent implements OnInit {
     '5528':'5528',
     '13876':'13876',
     //'5366':'5366', //hutchinson //kask '13660': '13660',
-    //'5540': '5540', //drieger //'15525':'15525', //sam montebolt
+    '15525':'15525', //sam montebolt
+    //'5540': '5540', //drieger 
     '4890':'4890',
     '5420':'5420',
     '5873':'5873',
@@ -115,7 +116,7 @@ export class TomorrowResultsComponent implements OnInit {
     '4305':'4305',
     '4867':'4867',  //forsberg'5481':'5481',
     '15154':'15154',
-    //'5887':'5887', //korpiisalo
+    '5887':'5887', //korpiisalo
     '4351':'4351',
     '4592':'4592',
     '15438':'15438',
@@ -127,7 +128,8 @@ export class TomorrowResultsComponent implements OnInit {
     '5271':'5271',
     '15690':'15690',
    // '17363': '17363', //senn
-    '15452':'15452' //Hogberg
+    '15452':'15452', //Hogberg
+    '15384':'15384' //Petersen
   }
 
   constructor(private http: HttpClient, 
