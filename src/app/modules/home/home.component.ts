@@ -125,6 +125,13 @@ export class HomeComponent implements OnInit {
   //     })
 
   // }
+public compareDate (start) {
+  if (new Date(start) < this.tomorrowDate) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 loadData() {
 

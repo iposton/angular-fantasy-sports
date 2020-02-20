@@ -14,7 +14,7 @@
 <div class="sched-wrapper" *ngIf="!loading && dailySchedule != null">
   <div class="schedule-box row">
     <div *ngFor="let item of dailySchedule; let i=index" class="col">
-        <span *ngIf="item?.schedule?.awayTeam?.abbreviation && item?.schedule?.startTime &lt; tomorrowDate" class="sched-item">
+        <span *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" class="sched-item">
            <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)">{{item?.schedule?.awayTeam?.abbreviation}} 
              <span *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}}</span> 
              <br>

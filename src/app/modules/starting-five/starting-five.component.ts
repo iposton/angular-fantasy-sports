@@ -123,6 +123,14 @@ export class StartingFiveComponent implements OnInit {
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
   }
 
+  public compareDate (start) {
+    if (new Date(start) < this.tomorrowDate) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public changeStats() {
     if (this.stats === '1') {
       this.stats = '2';
