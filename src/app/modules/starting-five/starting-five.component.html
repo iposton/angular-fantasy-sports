@@ -196,7 +196,7 @@
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                          <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                          <span (click)="changeStats()" class="point">
-                         <span class="lg" [ngClass]="{'dn' : stats == '7'}"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
+                         <span class="lg" [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
                          <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.min : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
                          <span class="lg" [ngClass]="{'dn' : stats != '2'}"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.reb : item?.playerObj?.stats?.rebounds?.rebPerGame}} Reb </span>
                          <span class="lg" [ngClass]="{'dn' : stats != '3'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.ast : item?.playerObj?.stats.offense?.astPerGame }} Ast</span>
@@ -204,6 +204,7 @@
                          <span class="lg" [ngClass]="{'dn' : stats != '5'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.blk : item?.playerObj?.stats?.defense?.blkPerGame}} Blk</span>
                          <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.tpm : item?.playerObj?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM</span>
                          <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.playerObj?.stats?.miscellaneous?.gamesStarted / item?.playerObj?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                         <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.playerObj?.team?.gamesThisWeek}} Games This Week</span>
                         </span>
                           </span>
                       
@@ -515,7 +516,7 @@
                                        <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                        <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                        <span (click)="changeStats()" class="point">
-                                       <span class="lg" [ngClass]="{'dn' : stats == '7'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                       <span class="lg" [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
                                        <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
                                        <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
                                        <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
@@ -523,6 +524,7 @@
                                        <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
                                        <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                        <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                       <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                        </span>
                                         </span>
                                     
@@ -567,7 +569,7 @@
                                          <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                          <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                          <span (click)="changeStats()" class="point">
-                                            <span class="lg" [ngClass]="{'dn' : stats == '7'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                            <span class="lg" [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
                                             <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
                                             <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
                                             <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
@@ -575,6 +577,7 @@
                                             <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
                                             <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                             <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                            <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                          </span>
                                           </span>
                                       
@@ -621,7 +624,7 @@
                                            <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                            <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                            <span (click)="changeStats()" class="point">
-                                           <span class="lg" [ngClass]="{'dn' : stats == '7'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                           <span class="lg" [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
                                            <span class="lg" [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
                                            <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
                                            <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
@@ -629,6 +632,7 @@
                                            <span class="lg" [ngClass]="{'dn' : stats != '5' && stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
                                            <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                            <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                           <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                           </span>
                                             </span>
                                         
@@ -675,7 +679,7 @@
                                              <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                              <span (click)="changeStats()" class="point">
-                                             <span class="lg" [ngClass]="{'dn' : stats == '7'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                             <span class="lg" [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
                                              <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
                                              <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
                                              <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
@@ -683,6 +687,7 @@
                                              <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
                                              <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                              <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                             <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                             </span>
                                               </span>
                                           
@@ -733,7 +738,7 @@
                                                <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                                <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                                <span (click)="changeStats()" class="point">
-                                               <span class="lg" [ngClass]="{'dn' : stats == '7'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
@@ -741,6 +746,7 @@
                                                <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                               </span>
                                                 </span>
                                             
@@ -791,7 +797,7 @@
                                                <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                                                <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
                                                <span (click)="changeStats()" class="point">
-                                               <span class="lg" [ngClass]="{'dn' : stats == '7'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                               <span class="lg" [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6' && !mobile || stats != '1' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '5' && !mobile || stats != '2' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2' && !mobile || stats != '3' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
@@ -799,6 +805,7 @@
                                                <span class="lg" [ngClass]="{'dn' : stats != '4' && !mobile || stats != '5' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5' && !mobile || stats != '6' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
                                                <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                               <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                               </span>
                                                 </span>
                                             
