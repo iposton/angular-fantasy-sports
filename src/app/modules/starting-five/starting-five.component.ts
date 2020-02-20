@@ -145,6 +145,8 @@ export class StartingFiveComponent implements OnInit {
     } else if (this.stats === '6') {
       this.stats = '7';
     } else if (this.stats === '7') {
+      this.stats = '8';
+    } else if (this.stats === '8') {
       this.stats = '1';
     }
   }
@@ -255,38 +257,38 @@ export class StartingFiveComponent implements OnInit {
               // let d = new Date();
               // let gd = new Date(this.gameDate);
               if (this.teamSchedules.length === 0) {
-              //   let team;
-              //   let teamSchedule;
-              //   forkJoin(
-              //     teamRef.map(
-              //       g => 
+                let team;
+                let teamSchedule;
+                forkJoin(
+                  teamRef.map(
+                    g => 
                     
-              //        this.http.get(`${this.apiRoot}/games.json?team=${g.abbreviation}`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g.abbreviation}&date=from-20200217-to-20200223`, { headers })
                     
-              //     )
-              //   )
-              //   .subscribe(res => {
-              //     //console.log(res, 'get team schedules...');
+                  )
+                )
+                .subscribe(res => {
+                  //console.log(res, 'get team schedules...');
 
-              //     res.forEach((item, index) => {
-              //       team = teamRef[index].abbreviation;
-              //       teamSchedule = {
-              //         team: team,
-              //         schedule: res[index]['games']
-              //       }
-              //       this.teamSchedules.push(teamSchedule);
-              //       //console.log(this.teamSchedules, 'schedules array...');
+                  res.forEach((item, index) => {
+                    team = teamRef[index].abbreviation;
+                    teamSchedule = {
+                      team: team,
+                      schedule: res[index]['games']
+                    }
+                    this.teamSchedules.push(teamSchedule);
+                    //console.log(this.teamSchedules, 'schedules array...');
 
-              //     })
+                  })
                   
 
-              //    // this.sortData();
+                 // this.sortData();
 
-              //   }, (err: HttpErrorResponse) => {
+                }, (err: HttpErrorResponse) => {
                   
-              //     console.log(err, 'error getting lineup');
+                  console.log(err, 'error getting schedule');
 
-              // });
+              });
 
               } else {
                 //this.sortData();
@@ -661,6 +663,15 @@ export class StartingFiveComponent implements OnInit {
                 // data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
               } 
             }  
+         }
+         
+         for (let team of this.teamSchedules) {
+          for (let data of this.myData) { 
+            if (data.player['currentTeam'] != null && team.team === data.player['currentTeam'].abbreviation && data.player['currentTeam'].id === data.team.id) {
+              data.team.gamesThisWeek = team['schedule'].length;
+              data.team.weekSchedule = team['schedule'];
+            } 
+          }  
          }
 
           for (let starter of this.gameStarters) {

@@ -229,26 +229,26 @@ export class UtilService {
         lastName: "Davis",
         image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612761/2019/260x190/1629056.png"
       },
-      // "111": {
-      //   firstName: "Kevin",
-      //   lastName: "Porter Jr.",
-      //   image: "png"
-      // },
-      // "111": {
-      //   firstName: "Kevin",
-      //   lastName: "Porter Jr.",
-      //   image: "png"
-      // },
-      // "111": {
-      //   firstName: "Kevin",
-      //   lastName: "Porter Jr.",
-      //   image: "png"
-      // },
-      // "111": {
-      //   firstName: "Kevin",
-      //   lastName: "Porter Jr.",
-      //   image: "png"
-      // }
+      "17193": {
+        firstName: "Coby",
+        lastName: "White",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629632.png"
+      },
+      "17330": {
+        firstName: "Eric",
+        lastName: "Paschall",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629672.png"
+      },
+      "17329": {
+        firstName: "Jordan",
+        lastName: "Poole",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629673.png"
+      },
+      "17312": {
+        firstName: "Caleb",
+        lastName: "Martin",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1628997.png"
+      }
     }
 
     this.byes = {

@@ -10,7 +10,7 @@ export class AppComponent {
 
   constructor (private meta: Meta,
     private title: Title) {
-      this.title.setTitle('NHL and NBA Live Stats & Starters');
+      this.title.setTitle('NHL & NBA Stats');
       //dynamic//this.meta.updateTag({ 
       //   name: 'NHL Starting Goalies and NBA Starting Lineup', 
       //   content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.'
