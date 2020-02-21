@@ -2,10 +2,9 @@
 import { Observable, interval, forkJoin } from 'rxjs';
 import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren  } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http'
+import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar  } from '@angular/material/snack-bar';
-//import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DatePipe, PercentPipe } from '@angular/common';

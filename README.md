@@ -18,15 +18,15 @@ This app can help explain how to fetch data using [Angular's HttpClient Module](
 * Angular (version 9.0.0) 
 * Angular CLI (version 9.0.1)
 * Node.js (version 10.16.2)     
-* [angular material2](https://github.com/angular/material2) (version 5.2.3)
+* [@angular/material](https://github.com/angular/material2) (version 9.0.0)
 * Heroku [Set up a free account ](https://www.heroku.com/)
 * [Firebase](https://firebase.google.com/) (version 4.10.1) 
-* AngularFire2 (version 5.0.0-rc.6)
-* [ng2share](https://github.com/cedvdb/ng2share) (version 1.3.6) 
-* NPM (version 5.6.0)
-* Heroku Client (version 3.0.3)
-* rxjs (version 5.5.6)
+* @angular/fire (version 5.2.1)
+* NPM (version 6.13.7)
+* Heroku Client (version 3.0.7)
+* rxjs (version 6.5.4)
 * [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#)
+* [Crypto-js](https://github.com/brix/crypto-js) (version 4.0.0)
 
 ### Clone and serve this app
 * First you will need to be given access MySportsFeeds NHL endpoints. As a developer working on a non-commercial app you can be given access to the NHL endpoints. Sign up at MySportsFeeds and use the username and password in the header request to authenticate the api get request. `let headers = new Headers({ "Authorization": "Basic " + btoa('username' + ":" + 'password') });`
@@ -50,10 +50,15 @@ I created a small cms to allow me to update the goalies status by clicking on th
   //firebase.service.ts
 
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Observable';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
+
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Injectable()
 export class FirebaseService {
@@ -361,10 +366,15 @@ The `this.fullFirebaseResponse` will keep track of the player status updates as 
   //firebase.service.ts
 
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Observable } from 'rxjs/Observable';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
+
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Injectable()
 export class FirebaseService {
@@ -412,7 +422,713 @@ For my app I am making updates all the time to a lot of players and this approac
 
 The best thing is as soon as I do this Firebase pulls in the new data to the view my angular component constructor function is hot and watches the change and anyone using this app will see the change without having to refresh the view like magic. I have an app live on heroku and I have made changes to my firebase db and seen the data change realtime on other devices to test this theory. It's a great user experience!
 
-Angular5 and Angular6 have made changes to the http module and also changes to how angular works with the latest firebase modules. I hope to add these updates soon. 
+### Clone and serve this app
+* First you will need to be given access MySportsFeeds endpoints. As a developer working on a non-commercial app you can be given access to the api endpoints. Sign up at MySportsFeeds and use the username and password in the header request to authenticate the api get request. `let headers = new HttpHeaders().set("Authorization", "Basic " + btoa(apiKey + ":" + 'MYSPORTSFEEDS'));`
+* When the api headers are in place clone this repo and run <code>npm install</code> then run <code>ng serve</code> to serve the app on `localhost:4200`. Be careful not to push your `apiKey` to github.
+
+### Get data from api with HttpClient module
+The first thing I want to do in this app is get a list of all the starting NHL goalies. I used the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#) to find the correct endpoint to get all goalies. I am able to use Angular's http client module to send a GET request for data using this endpoint `https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json?position=G` found in the api's documentation. 
+
+```ts
+
+//app.component.ts 
+
+import { Component, ViewChild, Inject, OnInit  } from '@angular/core';
+import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http';
+
+let headers = new HttpHeaders().set("Authorization", "Basic " + btoa(apiKey + ":" + 'MYSPORTSFEEDS'));
+let url = 'https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json?position=G';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+   
+   public statData: Array<any>;
+
+   constructor(private http: Http) {}
+
+   loadData() {
+    this.http.get(url, {headers})
+      .subscribe(res => {
+        console.log(res['playerStatsTotals'], 'got player info res!');
+        this.statData = res['playerStatsTotals'];
+      });
+   }
+
+   ngOnInit() {
+    loadData();
+   }
+}
+
+```
+
+```html
+
+//app.component.html
+
+ <ul>
+  <li *ngFor="let data of statData"> 
+    {{ data.player.firstName + ' ' + data.player.lastName + ' - ' + data.team.abbreviation }}
+  </li>
+ </ul>
+
+```
+
+### Deploy an Angular 9 app to Heroku and Encrypt and Decrypt apiKey.
+* For Heroku this app uses a node.js / express server file <code>app.js</code>.
+* All routes will be going to <code>dist/index.html</code>. 
+* Run <code>ng build</code> to build the app in the dist directory.
+* Run <code>node app.js</code> to serve the app at `http://localhost:3001`.
+* The <code>Procfile</code> in this app's root specifies the server for heroku to use.
+
+```
+//Procfile
+
+web: node app.js
+
+```
+
+* This <code>"main": "app.js"</code> line in package.json specifies how to tell heroku to look for <code>app.js</code>.
+* Before pushing to github, before heroku deploy set Config Variables.  
+
+Adding the environment variable for the MySportsFeeds api. I didn't want to share my `apiKey` headers information in my github repository so I added my password to my Config Variables for heroku to use in the app settings from the Heroku dashboard. I stored the `apiKey` in my heroku app by going to the app settings in my heroku dashboard. Click on Config Variables and add the key (name) and value (apiKey) there. It will be secured privately away from view. You can call it to the client side by adding this code to the app.js file. I called my env `TOKEN` and made the value MySportsFeeds `apiKey`.
+
+
+* Use the [Heroku Client API](https://github.com/heroku/node-heroku-client) to retrieve the `TOKEN` from the app and then send it to the front-end of the angular app like this.
+
+* I used my heroku account token to authenticate Heroku Client. I saved it to the config vars of this app as `API_TOKEN`.
+* To set up a node.js express server run `npm i express http path`
+* Install heroku-client to be able to fetch config variables `npm i heroku-client`
+* To encrypt the apiKey (TOKEN) before sending to client run `npm i crypto-js`
+
+```ts
+
+//app.js 
+
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const Heroku = require('heroku-client')
+const heroku = new Heroku({ token: process.env.API_TOKEN })
+const CryptoJS = require("crypto-js");
+const app = express();
+
+let TOKEN = '';
+let ciphertext = null;
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+//GET CONFIG VAR FROM SPECIFIC HEROKU APP
+heroku.request({
+  method: 'GET',
+  path: 'https://api.heroku.com/apps/my-app-name/config-vars',
+  headers: {
+    "Accept": "application/vnd.heroku+json; version=3",
+    "Authorization": "Bearer "+process.env.API_TOKEN
+  },
+  parseJSON: true
+}).then(response => {
+  ciphertext = CryptoJS.AES.encrypt(response.TOKEN, 'myPassword').toString();
+  TOKEN = ciphertext;
+})
+
+//SEND API KEY TO FRONT-END APP.COMPONENT.TS
+app.get('/heroku-env', function(req, res){
+  res.json(TOKEN);
+});
+
+//SPECIFY NG-BUILD PATH
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'))
+});
+
+//HEROKU PORT
+const port = process.env.PORT || '3001';
+app.set('port', port);
+
+const server = http.createServer(app);
+server.listen(port, () => console.log(`Running on localhost:${port}`));
+
+```
+* Get the environment variable sent from heroku to the client side app.component using Http. 
+* Decrypt the apiKey (TOKEN) when fetched from server by importing Crypto-js.
+
+```ts
+
+//app.component.ts 
+
+import { Component, ViewChild, Inject, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import * as CryptoJS from 'crypto-js';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+   
+  defineToken: string = '';
+
+   constructor(private http: Http) {}
+
+   getEnv() {
+      console.log("trying to get heroku env...");
+      this.http.get('/heroku-env')
+      .subscribe(res => {
+        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
+      });
+   }
+
+   ngOnInit() {
+    this.getEnv();
+   }
+}
+
+```
+
+After you <code>git push</code> to your repo follow the steps below. Assuming you have a heroku account and installed the heroku toolbelt. 
+<ol>
+  <li>run <code>heroku log in</code></li>
+  <li>run <code>heroku create name-of-app</code></li>
+  <li>run <code>git push heroku master</code></li>
+  <li>If deploy is successful run <code>heroku open</code></li>
+</ol>
+  If there were problems during deploy and you are trying this from scratch here are some requirements heroku needs to deploy.
+<ol>
+  <li>Have <code>@angular/cli</code> and <code>@angular/compiler-cli</code> listend under dependencies in <code>package.json</code>.</li>
+  <li>Add `"postinstall": "ng build"` to the package.json's `"scripts"` object.</li>
+</ol>
+
+```js
+//package.json
+
+"main": "app.js",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "postinstall": "ng build"
+  },
+  "engines": {
+    "node": "~10.16.2",
+    "npm": "~6.13.7"
+  }
+
+  ...
+
+```
+
+
+References for deploying Angular4 to heroku: [https://medium.com/@ervib/deploy-angular-4-app-with-express-to-heroku-6113146915ca](https://medium.com/@ervib/deploy-angular-4-app-with-express-to-heroku-6113146915ca)
+
+### Setting up FireBase.
+* Install these modules for firebase config. Run `npm install @angular/fire firebase --save`.
+* Import Firebase settings to `app.module.ts`. 
+* Create a [firebase db](https://firebase.google.com/) and config the db in `app.module.ts`.  
+* Initialize app in the imports array in `ngModule`.
+
+```ts
+
+//app.module.ts
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+export const firebaseConfig = {
+  apiKey: *******,
+  authDomain: *******,
+  databaseURL: *******,
+  storageBucket: *******
+};
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(firebaseConfig)
+  ]
+  
+  ...
+
+})
+
+``` 
+
+### Save Data to FireBase.
+* Create a `firebase.service.ts` with an addData function to call the firebase db. 
+* Import the `firebase.service` into the `app.component` and call the addData function passing in the data to be save. 
+
+```ts
+
+//firebase.service.ts
+
+import { Injectable } from '@angular/core';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase/app';
+
+@Injectable()
+export class FirebaseService {
+
+  items:FirebaseListObservable<any[]>;
+
+  constructor(public af: AngularFireDatabase) {
+    this.items = af.list('/data') 
+  }
+
+  addData(stat) {
+    this.items.push(stat);
+  }
+
+  getData() {
+    return  this.items = this.af.list('/data');
+  }
+}
+
+```
+
+### Get Data from FireBase. 
+* Make a function called getData in the `firebase.service` file.
+* Call the getData function from `app.component` and save into an array to access it in the html.
+
+```ts
+
+//app.compoent.ts
+
+import { Component, ViewChild, Inject, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { FirebaseService } from './firebase.service';
+import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+let headers = new Headers({ "Authorization": "Basic " + btoa('username' + ":" + 'password') });
+let options = new RequestOptions({ headers: headers });
+let url = 'https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-regular/active_players.json?position=P';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+
+   playerData: Array<any>;
+   showData: Array<any>;
+
+   constructor(private firebaseService: FirebaseService, private http: Http) {}
+  
+    loadData() {
+      this.http.get(url, options)
+     .map(response => response.json())
+      .subscribe(res => {
+        console.log(res['activeplayers'].playerentry, 'got active player data from api!');
+        this.playerData = res['activeplayers'].playerentry;
+      });
+
+      for (let info of this.playerData) { 
+         this.firebaseService
+           .addData(info.player);
+      }
+      
+      this.loadOtherData();
+
+   }
+
+   loadOtherData() {
+    this.firebaseService
+      .getData()
+        .subscribe(firebaseData => {
+        console.log(firebaseData, 'got response from firebase...');
+        this.showData = firebaseData;
+      });
+   }
+    
+   ngOnInit() {
+    this.loadData();
+   }
+
+}
+
+```
+
+```html
+
+//app.compoent.html
+
+<ul>
+  <li *ngFor="let data of showData"> 
+    {{ data.player.FirstName + ' ' + data.player.LastName + ' - ' + data.team.Abbreviation }}
+  </li>
+</ul>
+
+```
+
+* Above is a very basic way to save and get data from firebase. Normally this wouldn't be a way to use firebase if you already have data coming in from the api. In this app I use firebase to store a week's worth of game data in firebase to avoid having to call the api 70 times to get the data when the app loads. This is a reason to use firebase, to store large amounts of data. See below for example of making several api calls dynamically. 
+
+### Make multiple api calls dynamically.
+In this app I needed to get a week worth of game data. To do this I need to get the schedule for the week and strip all the game ID's then dynamically assign the id to call for each game and get detailed stats from that game.
+
+* In `app.component.ts` `import 'rxjs/add/observable/forkJoin';`. 
+* Make an api call to MySportsFeeds api to get all games played last week.
+* ForEach loop through the response and use forkJoin to call for sever game results by using the game ID dynamically in the url (endpoint).
+
+```ts
+
+//app.compoent.ts
+
+import { Component, ViewChild, Inject, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/forkJoin';
+
+let headers = new Headers({ "Authorization": "Basic " + btoa('username' + ":" + 'password') });
+let options = new RequestOptions({ headers: headers });
+let url = 'https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-playoff/full_game_schedule.json?date=from-8-days-ago-to-2-days-ago';
+
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+
+   activePlayerData: Array<any>;
+   cumulativePlayerStatData: Array<any>;
+   showData: Array<any>;
+
+   constructor(private http: Http) {}
+  
+    loadData() {
+      this.http.get(url, options)
+        .map(response => response.json())
+          .subscribe(res => {
+            console.log( res['fullgameschedule'].gameentry, 'games from last week!');
+            
+            //FORKJOIN HELPS MAKE SEVERAL API CALLS
+            //STRIP THE GAME ID AND USE IT dynamically IN THE API CALL + g.id +
+            Observable.forkJoin(
+              res['fullgameschedule'].gameentry.map(
+                 g =>
+                 this.http.get('https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-regular/game_playbyplay.json?gameid=' + g.id + '&status=final', options)
+                 .map(response => response.json())
+               )
+             ).subscribe(res => {
+                 //THIS WILL LOG GAME RESULTS SUCH AS HITS/PITCHES/STOLENBASES/RUNS...
+                 let i;
+                 res.forEach((item, index) => {
+                   i = index;
+                   console.log(res[i]['gameplaybyplay'], 'got game data!');
+                 })
+              })
+          })
+   }
+
+    
+   ngOnInit() {
+    this.loadData();
+   }
+
+}
+
+```
+
+* This is an example of getting lots of data to store to your db in firebase. Avoid making a lot of api calls like shown above each time the app loads. 
+* Tread carefully when making this many get requests to an api. Most api's have request limits. MySportsFeeds has a 250 request limit which resets every 5 minutes. Meaning if there are more than 250 requests in less than 5 minutes, following requests will be rejected until the 5 minute hold resets.  
+
+### Make custom data.
+In this app I use one array to show all data in the views. I use 5 different endpoints to get different information about each player. In order to sort the data and apply it to the correct player I use the responses returned by the endpoints, for each loop through the response and match data by player ID so that the custom data can be added to the player object and stored in one array for the view. 
+
+* Call two api endpoints when the app is loaded. 
+* Use a condition to wait for the response to come back before sorting data by player ID. 
+* Use a nested forEach loop to get the response items. 
+* If player ID is a match create a new key on the player object and assign a value.
+* After the forEach loop is done assign the array to a new Array for the view to display the custom data. 
+
+```ts
+
+//app.compoent.ts
+
+import { Component, ViewChild, Inject, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+let headers = new Headers({ "Authorization": "Basic " + btoa('username' + ":" + 'password') });
+let options = new RequestOptions({ headers: headers });
+let url1 = 'https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-regular/active_players.json?position=P';
+let url2 = 'https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-regular/cumulative_player_stats.json?position=P&sort=STATS.Pitching-NP.D&limit=275';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+
+   activePlayerData: Array<any>;
+   cumulativePlayerStatData: Array<any>;
+   showData: Array<any>;
+
+   constructor(private http: Http) {}
+  
+    loadData() {
+      this.http.get(url, options)
+        .map(response => response.json())
+          .subscribe(res => {
+          console.log(res['activeplayers'].playerentry, 'got active player data from api!');
+          this.activePlayerData = res['activeplayers'].playerentry;
+      });
+      
+      this.loadOtherData();
+
+   }
+
+   loadOtherdata() {
+    this.http.get(url, options)
+     .map(response => response.json())
+      .subscribe(res => {
+        console.log(res['cumulativeplayerstats'].playerstatsentry, 'got player info res!');
+        this.cumulativePlayerStatData = res['cumulativeplayerstats'].playerstatsentry;
+      });
+      
+      //USE A CONDITION TO CHECK BOTH ARRAYS
+      if (this.cumulativePlayerStatData && this.activePlayerData) {
+        //NESTED FOREACH LOOP
+        for (let info of this.activePlayerData) { 
+          for (let data of this.cumulativePlayerStatData) {
+            //CHECK IF PLAYER ID IS MATCH THEN APPLY CUSTOM DATA TO BE ADDED
+            //TO cumulativePlayerStatData PLAYER ITEMS
+            if (data.player.ID === info.player.ID) {
+              data.player.image = info.player.officialImageSrc;
+              data.player.age = info.player.Age;
+              data.player.city = info.player.BirthCity;
+              data.player.country = info.player.BirthCountry;
+              data.player.Height = info.player.Height;
+              data.player.Weight = info.player.Weight;
+              data.player.IsRookie = info.player.IsRookie;
+
+              //SHOWDATA IS CALLED IN THE HTML WITH NEW CUSTOM DATA ADDED
+              this.showData = this.cumulativePlayerStatData;
+            } 
+          }
+        }
+      } 
+   }
+    
+   ngOnInit() {
+     this.loadData();
+   }
+
+}
+
+```
+
+```html
+
+//app.compoent.html
+
+<div *ngFor="let data of showData">
+ <p>{{ data.player.FirstName + ' ' + data.player.LastName + ' (' + data.team.Name + ' - ' + data.player.Position + ')'}} <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+      <br> Age: {{data.player.age}} Height: {{data.player.Height}} Weight: {{data.player.Weight}}
+      <br> Birth City: {{data.player.city +', '+ data.player.country}}
+      <br> Number: {{data.player.JerseyNumber}}</p>
+</div>
+
+```
+
+### Angular-material2 mdDialog module.
+In a single page app modals are a cool way to show some specific data in the same view. In this app there are 275 rows of individual baseball players and their stats. I have made each row enabled to be clicked to pop up a modal with more specific real time stats. 
+
+This app uses [angular material2 pop up modal](https://material.angular.io/components/dialog/overview) to show baseball player data. 
+
+* Run `npm install --save @angular/material @angular/cdk`
+* Import it to `app.module` `import {MdDialogModule} from '@angular/material`;
+* Set it up in `app.component` and make an open function for the modal.
+* Create a click event in `app.component.html` to pass in the player data and open the modal from the dataTable. `<md-row (click)="open($event, data)" *cdkRowDef="let data; columns: displayedColumns; let i=index;"></md-row>` 
+* Import the MyDialog component to `app.module`. `import { AppComponent, MyDiaog } from './app.component';` and add MyDialog to the `ngModule`.
+
+```ts
+
+//app.module.ts
+
+import { AppComponent, MyDiaog } from './app.component';
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    MyDialog
+  ],
+  imports: [
+    MdTableModule,
+    MdDialogModule
+  ]
+  providers: [FirebaseService],
+  entryComponents: [
+    MyDialog
+  ],
+  bootstrap: [AppComponent]
+})
+
+
+
+```
+
+```ts
+
+//app.compoent.ts
+
+import { Component, ViewChild, Inject, OnInit } from '@angular/core';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { DataSource } from '@angular/cdk';
+import { Observable } from 'rxjs/Observable';
+import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+
+let headers = new Headers({ "Authorization": "Basic " + btoa('username' + ":" + 'password') });
+let options = new RequestOptions({ headers: headers });
+let url = 'https://api.mysportsfeeds.com/v1.1/pull/mlb/2017-regular/cumulative_player_stats.json?position=P&sort=STATS.Pitching-NP.D&limit=275';
+
+export interface Data {}
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+
+   cumulativePlayerStatData: Array<any>;
+   showData: Array<any>;
+   displayedColumns = [
+    'id',
+    'pitches',
+    'strikeouts',
+    'pitcherWalks',
+    'inningsPitched',
+    'pitchesPerInning',
+    'pitcherWildPitches',
+    'pickoffAttempts'
+  ];
+  dataSource: MyDataSource;
+
+   constructor(private http: Http, public dialog: MdDialog) {}
+  
+    loadData() {
+      this.http.get(url, options)
+     .map(response => response.json())
+      .subscribe(res => {
+        console.log(res['cumulativeplayerstats'].playerstatsentry, 'got player info res!');
+        this.cumulativePlayerStatData = res['cumulativeplayerstats'].playerstatsentry;
+      });
+
+      this.showData = this.cumulativePlayerStatData;
+
+      //This fills the dataTable with data
+      this.dataSource = new MyDataSource(this.showData);
+
+   }
+   
+   ngOnInit() {
+    this.loadData();
+   }
+  
+  //THIS FUNCTION IS CALLED FROM APP.COMPONENT
+  //WHEN A TABLE ROW IS CLICKED PASSING IN THAT PLAYERS DATA 
+  //TO THE MODAL. THEN MODAL IS CALLED TO OPEN. 
+  //HTML FOR MODAL BELOW
+  public open(event, data) {
+    this.selected = data;
+    console.log(data, 'ok you clicked on a table row....');
+    this.dialog.open(MyDialog, {
+      data: data,
+      width: '600px',
+    });
+  }
+
+}
+
+@Component({
+  selector: 'my-dialog',
+  template: `<md-dialog-content>
+  <md-icon (click)="dialogRef.close()" style="float:right; cursor:pointer;">close</md-icon>
+</md-dialog-content>
+<md-grid-list cols="3" rowHeight="200px" class="dialog-head">
+  <md-grid-tile [colspan]="1">
+    <img src="{{ data.player.image }}">
+  </md-grid-tile>
+  <md-grid-tile [colspan]="2">
+    <p>{{ data.player.FirstName + ' ' + data.player.LastName + ' (' + data.team.Name + ' - ' + data.player.Position + ')'}} <span *ngIf="data.player.IsRookie == 'true'" style="background:#2ecc71; color:#fff; padding:1px; border-radius:2px;">Rookie</span>
+      <br> Age: {{data.player.age}} Height: {{data.player.Height}} Weight: {{data.player.Weight}}
+      <br> Birth City: {{data.player.city +', '+ data.player.country}}
+      <br> Number: {{data.player.JerseyNumber}}</p>
+  </md-grid-tile>
+</md-grid-list>
+<md-grid-list cols="3" rowHeight="50px">
+  <md-grid-tile [colspan]="1">
+    <h1><b>W-L:</b> {{ data.stats.Wins['#text'] +'-'+ data.stats.Losses['#text'] }}</h1>
+  </md-grid-tile>
+  <md-grid-tile [colspan]="1">
+    <h1><b>ERA:</b> {{ data.stats.EarnedRunAvg['#text'] }}</h1>
+  </md-grid-tile>
+  <md-grid-tile [colspan]="1">
+    <h1><b>K's:</b> {{ data.stats.PitcherStrikeouts['#text'] }}</h1>
+  </md-grid-tile>
+</md-grid-list>`,
+})
+
+export class MyDialog {
+  constructor(public dialogRef: MdDialogRef < MyDialog > , @Inject(MD_DIALOG_DATA) public data: any) {}
+}
+
+export class MyDataSource extends DataSource <Data> {
+
+  constructor(private datas: Data[]) {
+    super();
+  }
+
+  connect(): Observable <Data[]> {
+    return Observable.of(this.data); 
+  }
+
+  disconnect() {}
+
+}
+
+```
+
+```html
+
+//app.compoent.html
+
+
+```
+
+* My example shows the older naming conventions for MdDialog which is now called MatDialog. The main difference is the import would look like this `import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';`
 
 
 
