@@ -353,7 +353,7 @@ export class StartingGoaliesComponent implements OnInit {
         console.log(res['playerStatsTotals'], "cumulative stats...");
     
         this.myData = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation); 
+          player => player.team != null && player.player['currentTeam'] != null); 
 
         if (this.myData && this.dailySchedule) {
           console.log('start sorting data for daily schedule...');
@@ -756,7 +756,8 @@ export class StartingGoaliesComponent implements OnInit {
         data.team.matchup = this.statData[data.team.gameId];
        
         this.statData[data.team.gameId][0].player.twoPossibleStarters = false;
-        this.statData[data.team.gameId][1].player.twoPossibleStarters = false;
+        if (this.statData[data.team.gameId][1] != null) 
+          this.statData[data.team.gameId][1].player.twoPossibleStarters = false;
 
         if (this.statData[data.team.gameId].length > 2) {
           //console.log(this.statData[data.team.gameId][0].team.Name + ' ' + this.statData[data.team.gameId][1].team.Name + ' ' + this.statData[data.team.gameId][2].team.Name, 'possible starters...');
