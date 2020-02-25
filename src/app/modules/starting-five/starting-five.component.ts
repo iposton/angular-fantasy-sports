@@ -703,6 +703,7 @@ export class StartingFiveComponent implements OnInit {
                   data.player.ast = daily.stats.offense.ast;
                   data.player.reb = daily.stats.rebounds.reb;
                   data.player.ptsAvg = daily.stats.offense.ptsPerGame;
+                  data.player.fga = daily.stats.fieldGoals.fgAtt;
                   data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
                   //data.player.startsdaily.stats.miscellaneous.gamesStarted
                   // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
