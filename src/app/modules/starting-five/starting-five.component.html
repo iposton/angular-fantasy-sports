@@ -819,6 +819,185 @@
                         </div>
                        
                     </div>
+                    <div class="card-wrap-sp mat-elevation-z6 position-box full-box" *ngIf="!loading && dailySchedule != null">
+                        <h2>Weekly Team Schedule</h2>
+                          <div>
+                              Games This Week
+                              <div class="content-wrapper">
+                                  <div class="row">
+                                    <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length &lt; 4 }">
+                                            <span class="left-content">
+                                              
+                                                <!-- <span (click)="open($event, item, 'bottom')" class="point"> <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                  onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> -->
+                                                  <span class="player-infos">
+                                                  <!-- <span *ngIf="item.player?.rookie === true" class="rookie">R</span> -->
+                                                  <!-- <span class="names">
+                                                     {{item.team}}
+                                                  </span> -->
+          
+                                                  <!-- <span class="names" *ngIf="mobile">
+                                                      <span> 
+                                                          {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                      </span>
+                                                  </span> -->
+                                                  
+                                                
+                    
+                                                 <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"></span>
+                                           
+                                                 <!-- <span class="lg"> {{item.schedule.length}} </span> -->
+                                                 <span *ngFor="let g of item.schedule">
+                                                   <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
+                                                      vs {{g.schedule.awayTeam.abbreviation}}  
+                                                   </span>
+                                                   <span class="lg" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
+                                                      @ {{g.schedule.homeTeam.abbreviation}} 
+                                                   </span>,
+                                                 </span>
+                                                  </span>
+                                              
+                                            </span>
+                                          </div>
+                                          
+                                
+                                  </div>
+                                </div>
+                      
+                          </div>
+                         
+                      </div>
+                      <div class="card-wrap-sp mat-elevation-z6 position-box full-box" *ngIf="!loading && dailySchedule != null">
+                          <h2>Weekly Team Schedule</h2>
+                            <div>
+                                Games This Week
+                                <div class="content-wrapper">
+                                    <div class="row">
+                                      <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length > 3 }">
+                                              <span class="left-content">
+                                                
+                                                  <!-- <span (click)="open($event, item, 'bottom')" class="point"> <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                    onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> -->
+                                                    <span class="player-infos">
+                                                    <!-- <span *ngIf="item.player?.rookie === true" class="rookie">R</span> -->
+                                                    <!-- <span class="names">
+                                                       {{item.team}}
+                                                    </span> -->
+            
+                                                    <!-- <span class="names" *ngIf="mobile">
+                                                        <span> 
+                                                            {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                        </span>
+                                                    </span> -->
+                                                    
+                                                  
+                      
+                                                   <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"></span>
+                                             
+                                                   <!-- <span class="lg"> {{item.schedule.length}} </span> -->
+                                                   <span *ngFor="let g of item.schedule">
+                                                     <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
+                                                        vs {{g.schedule.awayTeam.abbreviation}}  
+                                                     </span>
+                                                     <span class="lg" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
+                                                        @ {{g.schedule.homeTeam.abbreviation}} 
+                                                     </span>,
+                                                   </span>
+                                                    </span>
+                                                
+                                              </span>
+                                            </div>
+                                            
+                                  
+                                    </div>
+                                  </div>
+                        
+                            </div>
+                           
+                        </div>
+                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+                          <h2>Weekly Team Schedule</h2>
+                            <div>
+                                #NBATwitter Teams playing 4 games this week
+                                <div class="content-wrapper">
+                                    <div class="row">
+                                      <div *ngFor="let item of teamSchedules">
+                                              <span class="left-content">
+                                                
+                                                  <!-- <span (click)="open($event, item, 'bottom')" class="point"> <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                    onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> -->
+                                                    <span class="player-infos">
+                                                    <!-- <span *ngIf="item.player?.rookie === true" class="rookie">R</span> -->
+                                                    <!-- <span class="names">
+                                                       {{item.team}}
+                                                    </span> -->
+            
+                                                    <!-- <span class="names" *ngIf="mobile">
+                                                        <span> 
+                                                            {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                        </span>
+                                                    </span> -->
+                                                    
+                                                  
+                      
+                                                    <span *ngIf="item.schedule.length === 4" class="lg">
+                                                        {{item.teamInfo.twitter}}
+                                                     </span>
+                                                    </span>
+                                                
+                                              </span>
+                                            </div>
+                                            
+                                  
+                                    </div>
+                                  </div>
+                               
+                            </div>
+                           
+                        </div>
+
+                        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+                            <h2>Weekly Team Schedule</h2>
+                              <div>
+                                  #NBATwitter Teams playing less than 4 games this week
+                                  <div class="content-wrapper">
+                                      <div class="row">
+                                        <div *ngFor="let item of teamSchedules">
+                                                <span class="left-content">
+                                                  
+                                                    <!-- <span (click)="open($event, item, 'bottom')" class="point"> <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                      onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> -->
+                                                      <span class="player-infos">
+                                                      <!-- <span *ngIf="item.player?.rookie === true" class="rookie">R</span> -->
+                                                      <!-- <span class="names">
+                                                         {{item.team}}
+                                                      </span> -->
+              
+                                                      <!-- <span class="names" *ngIf="mobile">
+                                                          <span> 
+                                                              {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                          </span>
+                                                      </span> -->
+                                                      
+                                                    
+                        
+                                                      <span *ngIf="item.schedule.length &lt; 4" class="lg">
+                                                          {{item.teamInfo.twitter}}
+                                                       </span>
+                                                      </span>
+                                                  
+                                                </span>
+                                              </div>
+                                              
+                                    
+                                      </div>
+                                    </div>
+                                 
+                              </div>
+                             
+                          </div>
+                     
+                      
                     <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
                         <div>
                             <button (click)="twitter = !twitter">Twitter</button>

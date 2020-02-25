@@ -259,11 +259,12 @@ export class StartingFiveComponent implements OnInit {
               if (this.teamSchedules.length === 0) {
                 let team;
                 let teamSchedule;
+                const nbaTeamsArray = Object.values(teams);
                 forkJoin(
-                  teamRef.map(
+                  nbaTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g.abbreviation}&date=from-20200217-to-20200223`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200224-to-20200301`, { headers })
                     
                   )
                 )
@@ -271,13 +272,15 @@ export class StartingFiveComponent implements OnInit {
                   //console.log(res, 'get team schedules...');
 
                   res.forEach((item, index) => {
-                    team = teamRef[index].abbreviation;
+                    team = nbaTeamsArray[index]['abbreviation'];
+                    //team = teamRef[index].abbreviation;
                     teamSchedule = {
                       team: team,
-                      schedule: res[index]['games']
+                      schedule: res[index]['games'],
+                      teamInfo: nbaTeamsArray[index]
                     }
                     this.teamSchedules.push(teamSchedule);
-                    //console.log(this.teamSchedules, 'schedules array...');
+                    console.log(this.teamSchedules, 'schedules array...');
 
                   })
                   
