@@ -44,6 +44,7 @@ export class TomorrowService {
 
   info: Observable < any > = null;
   stats: Observable < any > = null;
+  teamstats: Observable < any > = null;
   env: Observable < any > = null;
   gameid: Observable < any > = null;
   daily: Observable < any > = null;
@@ -132,6 +133,14 @@ export class TomorrowService {
         
     }
     return this.stats;
+  }
+
+  getTeamStats() {
+    console.log('getting total team stats from API...');
+    let url = `${this.apiRoot}/team_stats_totals.json`;
+    this.teamstats = this.http.get(url, {headers})
+
+    return this.teamstats;
   }
 
   getGameId() {

@@ -39,6 +39,7 @@ export class TomorrowResultsComponent implements OnInit {
   starterIdData: Array < any > = [];
   startersData: Array < any > = [];
   myData: Array < any > ;
+  teamStats: Array <any>;
   showDataTomorrow: Array < any > ;
   sentDataTomorrow: Array < any > ;
   sentDataToday: Array < any > ;
@@ -83,9 +84,9 @@ export class TomorrowResultsComponent implements OnInit {
     '5420':'5420',
     '5873':'5873',
     '5552':'5552',
-    //'3647':'3647', //Lundqvist
+    '3647':'3647', //Lundqvist
     '13934':'13934', //Georgiv,
-    '17374':'17374', //shesterkin
+    //'17374':'17374', //shesterkin
     '5224':'5224',
     //'5842':'5842', //ullmark
     '17380':'17380', //johansson
@@ -114,7 +115,7 @@ export class TomorrowResultsComponent implements OnInit {
     '4310':'4310',
     '3855':'3855',
     '4305':'4305',
-    '4867':'4867',  //forsberg'5481':'5481',
+    //'4867':'4867', //lehner  //forsberg'5481':'5481',
     '15154':'15154',
     '5887':'5887', //korpiisalo
     '4351':'4351',
@@ -353,7 +354,18 @@ export class TomorrowResultsComponent implements OnInit {
 
   }
 
-  sortData() {
+  async sortData() {
+    let promiseTwo;
+    promiseTwo = new Promise((resolve, reject) => {
+      this.tomorrowService
+        .getTeamStats().subscribe(res => {
+          console.log(res, 'got team stats!');
+          this.teamStats = res['teamStatsTotals'];
+          resolve();
+      });
+    })
+
+    let resultTwo = await promiseTwo;
 
     this.tomorrowService
       .getStats(teamString).subscribe(res => {
@@ -654,6 +666,18 @@ export class TomorrowResultsComponent implements OnInit {
               }
             }
           }
+        if (this.teamStats != null) {
+          for (let team of this.teamStats) {
+            for (let data of this.myData) { 
+               if (data.team.opponentId != null && 
+                 data.team.id === team.team.id) {
+                 data.team.win = team.stats.standings.wins;
+                 data.team.loss = team.stats.standings.losses;
+               }
+             }  
+          }
+        }
+          
 
 
           //MAKE MATCHUPS BY GAME ID OF STARTERS AND NON STARTERS

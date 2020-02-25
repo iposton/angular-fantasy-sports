@@ -59,6 +59,7 @@ export class NHLDataService {
   score: Observable < any > = null;
   play: Observable <any> = null;
   injured: Observable <any> = null;
+  teamstats: Observable <any> = null;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
   headers: any;
   public dailyDate: string = '';
@@ -165,6 +166,14 @@ export class NHLDataService {
         
     }
     return this.stats;
+  }
+
+  getTeamStats() {
+    console.log('getting total team stats from API...');
+    let url = `${this.apiRoot}/team_stats_totals.json`;
+    this.teamstats = this.http.get(url, {headers})
+
+    return this.teamstats;
   }
 
   getGameId() {
