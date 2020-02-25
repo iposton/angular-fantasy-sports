@@ -955,7 +955,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.fullFirebaseResponse[1][this.goalieID] = this.newGoalie[this.goalieID];
     this.fullFirebaseResponse[3][this.goalieID] = this.newGoalie[this.goalieID];
     console.log(this.newGoalie, 'goalie updated');
-    //console.log(this.fullFirebaseResponse, 'added new goalie ready to save to fb....');   
+    console.log(this.fullFirebaseResponse, 'added new goalie ready to save to fb....');   
   }
 
   public updateTodayStarters() {

@@ -69,7 +69,7 @@ export class TomorrowResultsComponent implements OnInit {
     '757':'757',
     //'5033':'5033', //Nilsson
     '5109':'5109',
-    '4874':'4874',
+    //'4874':'4874', //markstrom
     '4950':'4950',
     '3486':'3486',
     '10074':'10074',
@@ -94,7 +94,7 @@ export class TomorrowResultsComponent implements OnInit {
     '10083':'10083',
     '4294':'4294',
     //KInkaid '5180':'5180',
-    '4862':'4862',
+    //'4862':'4862', //reimer
     '5163':'5163',
     '4666':'4666',
     '4947':'4947',
@@ -106,7 +106,7 @@ export class TomorrowResultsComponent implements OnInit {
     '4763':'4763',
     '11724':'11724',
     '5277':'5277',
-    '5176':'5176',
+    //'5176':'5176', //grubauer
     '15442':'15442',
     //'5168':'5168', //kuemper
     '5296':'5296',
@@ -115,7 +115,8 @@ export class TomorrowResultsComponent implements OnInit {
     '4310':'4310',
     '3855':'3855',
     '4305':'4305',
-    //'4867':'4867', //lehner  //forsberg'5481':'5481',
+    //'4867':'4867', //lehner  
+    '5481':'5481', //forsberg
     '15154':'15154',
     '5887':'5887', //korpiisalo
     '4351':'4351',
@@ -130,7 +131,8 @@ export class TomorrowResultsComponent implements OnInit {
     '15690':'15690',
    // '17363': '17363', //senn
     '15452':'15452', //Hogberg
-    '15384':'15384' //Petersen
+    '15384':'15384', //Petersen
+    '18296':'18296' //ayres
   }
 
   constructor(private http: HttpClient, 

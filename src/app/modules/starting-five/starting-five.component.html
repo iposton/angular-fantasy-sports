@@ -205,6 +205,8 @@
                          <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.tpm : item?.playerObj?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM</span>
                          <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.playerObj?.stats?.miscellaneous?.gamesStarted / item?.playerObj?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
                          <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.playerObj?.team?.gamesThisWeek}} Games This Week</span>
+                         
+                         <!-- <span class="lg" [ngClass]="{'dn' : stats != '6'}">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.fga : item?.playerObj?.stats?.fieldGoals?.fgAttPerGame}} FGA</span> -->
                         </span>
                           </span>
                       
