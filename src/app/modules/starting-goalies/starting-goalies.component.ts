@@ -4,7 +4,7 @@ import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren  
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar  } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { DatePipe, PercentPipe } from '@angular/common';
@@ -17,7 +17,8 @@ import {
   FirebaseService,
   YesterdayService,
   TomorrowService,
-  UtilService
+  UtilService,
+  GoogleAnalyticsService
  } from '../../services/index';
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
@@ -120,7 +121,8 @@ export class StartingGoaliesComponent implements OnInit {
     public snackBar: MatSnackBar, 
     public router: Router, 
     public dialog: MatDialog,
-    public util: UtilService) {
+    public util: UtilService,
+    public gaService: GoogleAnalyticsService) {
     yesterday = this.dataService.getYesterday();
     tomorrow = this.dataService.getTomorrow();
     today = this.dataService.getToday();
@@ -997,7 +999,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
   public toggleFlip(data, gid) {
-    
+    this.gaService.eventEmitter("flip nhl score", "startinggoalie", "score", "click", 10);
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
 
     this.dataService
@@ -1081,6 +1083,7 @@ export class StartingGoaliesComponent implements OnInit {
   }
 
   public open(event, data) {
+    this.gaService.eventEmitter("nhl goalie player info "+data.player.lastName, "nhltwitter", "tweets", "click", 10);
     this.selected = data;
     console.log(data, 'ok you clicked on player img...');
     this.dialog.open(TodayDialog, {

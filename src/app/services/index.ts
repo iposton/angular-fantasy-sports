@@ -6,3 +6,4 @@ export * from './tomorrow.service';
 export * from './yesterday.service';
 export * from './firebase.service';
 export * from './util.service';
+export * from './google-analytics.service';
