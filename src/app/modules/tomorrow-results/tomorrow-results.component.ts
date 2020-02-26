@@ -9,7 +9,8 @@ import {
   NHLDataService,
   FirebaseService,
   TomorrowService,
-  UtilService
+  UtilService,
+  GoogleAnalyticsService
  } from '../../services/index';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as CryptoJS from 'crypto-js';
@@ -142,7 +143,8 @@ export class TomorrowResultsComponent implements OnInit {
     public snackBar: MatSnackBar, 
     public router: Router, 
     public dialog: MatDialog,
-    public util: UtilService) { 
+    public util: UtilService,
+    public gaService: GoogleAnalyticsService) { 
     yesterday = this.tomorrowService.getYesterday();
     tomorrow = this.tomorrowService.getTomorrow();
     today = this.tomorrowService.getToday();
@@ -800,6 +802,7 @@ export class TomorrowResultsComponent implements OnInit {
 
 
   public open(event, data) {
+    this.gaService.eventEmitter("nhl tomorrow goalie player info "+data.player.lastName, "nhltwittertomorrow", "tweetstomorrow", "click", 10);
     this.selected = data;
     console.log(data, 'ok you clicked on player img...');
     this.dialog.open(TomorrowDialog, {

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { NBADataService, UtilService } from '../../services/index';
+import { NBADataService, UtilService, GoogleAnalyticsService } from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
@@ -110,7 +110,8 @@ export class StartingFiveComponent implements OnInit {
               private sanitizer: DomSanitizer,
               private util: UtilService,
               public dialog: MatDialog,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              public gaService: GoogleAnalyticsService) {
     this.allSentData = this.dataService.getSentStats();
     this.players = this.allSentData[0];
     this.myData = this.allSentData[1];
@@ -132,6 +133,7 @@ export class StartingFiveComponent implements OnInit {
   }
 
   public changeStats() {
+    this.gaService.eventEmitter("nba player stats", "nba", "stats", "click", 10);
     if (this.stats === '1') {
       this.stats = '2';
     } else if (this.stats === '2') {
@@ -906,7 +908,7 @@ export class StartingFiveComponent implements OnInit {
 
 
   public getGameStats(data, gid) {
-    console.log(data, 'whats going on');
+    //console.log(data, 'whats going on');
 
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
    
@@ -1061,6 +1063,7 @@ export class StartingFiveComponent implements OnInit {
   }
 
   public open(event, data, type) {
+    this.gaService.eventEmitter("nba player info "+data.playerObj.player.lastName, "nbatwitter", "tweet", "click", 10);
     data.area = type;
     this.selected = data;
     console.log(data, 'ok you clicked on player img...');
