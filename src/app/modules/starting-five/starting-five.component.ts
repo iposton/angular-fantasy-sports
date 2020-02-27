@@ -94,7 +94,7 @@ export class StartingFiveComponent implements OnInit {
   public dRank: Array <any> = [];
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
-  public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any, bench: boolean };
+  public gameStarter: { currentTeam: string, gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any, bench: boolean };
   public gameStarters: Array <any> = [];
   public benchStarters: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
@@ -104,6 +104,10 @@ export class StartingFiveComponent implements OnInit {
   public selected: any;
   public playerImages: any;
   public tomorrowDate: any;
+  public startersSection: boolean = true;
+  public positionSection: boolean = false;
+  public scheduleSection: boolean = false;
+  public weekResults: boolean = false;
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
@@ -282,7 +286,7 @@ export class StartingFiveComponent implements OnInit {
                       teamInfo: nbaTeamsArray[index]
                     }
                     this.teamSchedules.push(teamSchedule);
-                    console.log(this.teamSchedules, 'schedules array...');
+                    //console.log(this.teamSchedules, 'schedules array...');
 
                   })
                   
@@ -342,9 +346,10 @@ export class StartingFiveComponent implements OnInit {
                   if (res2[i2].actual != null && res2[i2].expected != null)  {
                     //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                     res2[i2].actual.lineupPositions.forEach(item => {
-                     // console.log(item, 'whats up');
+                      //console.log(item, 'whats up');
                       if (starterNames[item.position] && item.player != null) {
                         this.gameStarter = {
+                          currentTeam: res2[i2]['team'].abbreviation,
                           playerID: item.player.id,
                           gameID: game2.id,
                           score: score2,
@@ -378,6 +383,7 @@ export class StartingFiveComponent implements OnInit {
                        // console.log(item, 'whats up');
                         if (starterNames[item.position] && item.player != null) {
                           this.gameStarter = {
+                            currentTeam: res2[i2]['team'].abbreviation,
                             playerID: item.player.id,
                             gameID: game2.id,
                             score: score2,
@@ -627,6 +633,22 @@ export class StartingFiveComponent implements OnInit {
           this.myData = res['playerStatsTotals'].filter(
             player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation);
 
+            for (let starter of this.gameStarters) {
+              for (let data of this.myData) {
+  
+                if (starter.playerID === data.player.id) {
+                  data.starterInfo = starter;
+                  data.player['currentTeam'].abbreviation = starter.currentTeam;
+                  data.player.lineupTeam = starter.currentTeam;
+                  if (starter.status === "LIVE") {
+                    //run interval
+                    this.liveGames = true;
+                    
+                  }
+                }     
+              }
+            }
+
           for (let schedule of this.dailySchedule) {
             for (let sdata of this.myData) {
 
@@ -666,6 +688,13 @@ export class StartingFiveComponent implements OnInit {
                 // data.dRank = team.dRank;
                 // data.oRank = team.oRank;
                 // data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
+              } else if (data.player.lineupTeam === team.abbreviation) {
+                data.team.color = team.teamColoursHex[0];
+                data.team.accent = team.teamColoursHex[1];
+                data.team.logo = team.officialLogoImageSrc;
+                data.team.city = team.city;
+                data.team.name = team.name;
+                data.flip = 'inactive';
               } 
             }  
          }
@@ -679,19 +708,7 @@ export class StartingFiveComponent implements OnInit {
           }  
          }
 
-          for (let starter of this.gameStarters) {
-            for (let data of this.myData) {
-
-              if (starter.playerID === data.player.id) {
-                data.starterInfo = starter;
-                if (starter.status === "LIVE") {
-                  //run interval
-                  this.liveGames = true;
-                  
-                }
-              }     
-            }
-          }
+         
 
           if (this.myData && this.dailyStats) {
             console.log('start sorting data for daily stats...');
@@ -718,6 +735,9 @@ export class StartingFiveComponent implements OnInit {
             for (let data of this.myData) { 
                if (data.team.opponentId != null && 
                  data.team.id === team.team.id) {
+                 data.win = team.stats.standings.wins;
+                 data.loss = team.stats.standings.losses;
+               } else if (data.player.lineupTeam === team.team.abbreviation) { 
                  data.win = team.stats.standings.wins;
                  data.loss = team.stats.standings.losses;
                }
@@ -1140,7 +1160,7 @@ export class StartingFiveComponent implements OnInit {
      } else {
         this.loading = false;
         this.showData = this.players;
-        this.gameDate = this.showData[0].gamedate;
+        this.gameDate = this.showData[0].offensePlayers[0].playerObj['player'].gameTime;
 
         for (let p of this.players) {
           if (p.playingRightNow === true) {

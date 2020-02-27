@@ -40,11 +40,11 @@
 }
 
 .shed-row {
-  .schedule-box:hover {
-    cursor: pointer;
-    color: #ccc;
-    border: 2px solid #ccc;
-  }
+  // .schedule-box:hover {
+  //   cursor: pointer;
+  //   color: #ccc;
+  //   border: 2px solid #ccc;
+  // }
   .col {
     overflow: hidden;
     position: relative;
@@ -122,24 +122,24 @@
 
   }
 
-  .showLink {
-    color: #fff;
-    background:  #d35400;
-    top: 100%;
-    position: absolute;
-    transition: all .3s ease-out;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
-    h2:hover {
-      color:#ccc;
-      cursor: pointer;
-    }
-  }
+  // .showLink {
+  //   color: #fff;
+  //   background:  #d35400;
+  //   top: 100%;
+  //   position: absolute;
+  //   transition: all .3s ease-out;
+  //   height: 100%;
+  //   width: 100%;
+  //   padding: 10px;
+  //   h2:hover {
+  //     color:#ccc;
+  //     cursor: pointer;
+  //   }
+  // }
 
-  .col:hover > .showLink {
-    top: 0;
-  }
+  // .col:hover > .showLink {
+  //   top: 0;
+  // }
 }
 
 @media only screen and (max-width: 750px) {
@@ -150,22 +150,22 @@
     }
   }
   
-  .shed-row {
-    .col{
-      .abb {
-        width: 117px;
-      }
-      .at {
-        width: 100px;
-      }
-    }
-    .showLink {
-      height: 50%;
-    }
-    .col:hover > .showLink {
-      top: 50%;
-    }
-  }  
+  // .shed-row {
+  //   .col{
+  //     .abb {
+  //       width: 117px;
+  //     }
+  //     .at {
+  //       width: 100px;
+  //     }
+  //   }
+  //   .showLink {
+  //     height: 50%;
+  //   }
+  //   .col:hover > .showLink {
+  //     top: 50%;
+  //   }
+  // }  
 }
 
 .material-icons.md-18 { font-size: 18px; }

@@ -20,6 +20,11 @@ let tomorrow = null;
 let yesterday = null;
 let teamRef = [];
 let headers = null;
+let thisDate = new Date();
+let utcDate = new Date(thisDate.toUTCString());
+utcDate.setHours(utcDate.getHours() - 8);
+let myDate = new Date(utcDate);
+let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 @Component({
   selector: 'app-home',
@@ -92,6 +97,7 @@ export class HomeComponent implements OnInit {
      //this.loading = false;
      //this.getJSON();
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
+    this.nbaDataService.selectedDate(dailyDate);
     this.selectedWeek = '1';
     let weekTimes = this.util.getWeekTimes();
     let thisDate = new Date();

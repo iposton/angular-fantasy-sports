@@ -34,6 +34,30 @@
       </div>
   </div>
 </div>
+<div class="button-wrapper" *ngIf="!loading && dailySchedule != null">
+    <div class="schedule-box row">
+      <div [ngClass]="{'active': startersSection}" class="col" (click)="startersSection = true; positionSection = false; scheduleSection = false">
+          <span class="sched-item">
+            Starters
+          </span> 
+      </div>
+      <div [ngClass]="{'active': positionSection}" class="col" (click)="startersSection = false; positionSection = true; scheduleSection = false">
+          <span class="sched-item">
+            Starters By Position
+          </span> 
+      </div>
+      <div [ngClass]="{'active': scheduleSection}" class="col" (click)="startersSection = false; positionSection = false; scheduleSection = true">
+          <span class="sched-item">
+            Weekly Schedule
+          </span> 
+      </div>
+      <!-- <div class="col">
+          <span class="sched-item">
+            Team Ranks
+          </span> 
+      </div> -->
+    </div>
+</div>
 <!-- <div class="shed-row row" *ngIf="!loading && dailySchedule != null">
         <div class="schedule-box col">
             <span class="week-rank">Week {{selectedWeek}} - Team Rank<br> </span> 
@@ -144,6 +168,7 @@
 </div>
 
 <div *ngIf="showData != null" class="main-row">
+  <section [ngClass]="{'dn' : !startersSection}">
   <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'nfl'">
     <mat-card id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
       <!-- <div *ngIf="data?.offensePlayers[0]?.playerObj.flip === 'inactive'" class="ribbon"><span
@@ -154,7 +179,7 @@
           <div class="row">
               <div class="row">
                 <div class="col team-logo">
-                    <img src="{{data?.offensePlayers[0]?.playerObj?.team?.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo">
+                    <img src="{{data?.offensePlayers[0]?.playerObj?.team?.logo ? data?.offensePlayers[0]?.playerObj?.team?.logo :  data?.offensePlayers[1]?.playerObj?.team?.logo}}" alt="{{data?.offensePlayers[0]?.playerObj.team.name}} logo">
                 </div>
                 <div class="col team-name-col">
                   <div class="team-name-box" [style.background-image]="getBackground(data.offensePlayers[0].playerObj.team.color)" >
@@ -279,210 +304,11 @@
         </div>
       </div> <!-- SCORE BACK OF CARD  -->
     </mat-card>
-  </div>
-  <!-- <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
-    <h2>Starting Centers</h2>
-      <div *ngFor="let data of showData | orderBy: 'nfl'">
-          <div class="content-wrapper">
-              <div class="row">
-                <div *ngFor="let item of data.offensePlayers; let i=index">
-                        <span [ngClass]="{'left-content' : i<=5, 'dn' : item?.playerObj.player?.primaryPosition != 'C'}">
-                          
-                              <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="basketball player"
-                              onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
-                              <span class="player-infos">
-                              <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
-                              <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai'"> 
-                                {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}} 
-                              </span>
-                              <span *ngIf="item.playerObj.player.firstName === 'Giannis' && item.playerObj.player.lastName === 'Antetokounmpo'"> 
-                                  G. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
-                                  
-                              </span>
-
-                              <span class="team-image"> <img src="{{item?.playerObj?.team?.logo}}" alt="{{item?.playerObj.team.name}} logo"></span>
-                       
-                             <span *ngIf="(item?.playerObj?.player?.currentInjury == null || item?.playerObj?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                             <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                             <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
-                             <span class="lg"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
-                             <span class="lg">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.min : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                            
-                              </span>
-                          
-                        </span>
-                      </div>
-                      
-            
-              </div>
-            </div>
   
-      </div>
   </div>
-
-  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
-      <h2>Starting Power Forwards</h2>
-        <div *ngFor="let data of showData | orderBy: 'nfl'">
-            <div class="content-wrapper">
-                <div class="row">
-                  <div *ngFor="let item of data.offensePlayers; let i=index">
-                          <span [ngClass]="{'left-content' : i<=5, 'dn' : item?.playerObj.player?.primaryPosition != 'PF'}">
-                            
-                                <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="basketball player"
-                                onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
-                                <span class="player-infos">
-                                <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
-                                <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai'"> 
-                                  {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}} 
-                                </span>
-                                <span *ngIf="item.playerObj.player.firstName === 'Giannis' && item.playerObj.player.lastName === 'Antetokounmpo'"> 
-                                    G. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
-                                    
-                                </span>
-  
-                                <span class="team-image"> <img src="{{item?.playerObj?.team?.logo}}" alt="{{item?.playerObj.team.name}} logo"></span>
-                         
-                               <span *ngIf="(item?.playerObj?.player?.currentInjury == null || item?.playerObj?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                               <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                               <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
-                               <span class="lg"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
-                               <span class="lg">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.min : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                              
-                                </span>
-                            
-                          </span>
-                        </div>
-                        
-              
-                </div>
-              </div>
-    
-        </div>
-    </div>
-
-    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
-        <h2>Starting Shooting Guards</h2>
-          <div *ngFor="let data of showData | orderBy: 'nfl'">
-              <div class="content-wrapper">
-                  <div class="row">
-                    <div *ngFor="let item of data.offensePlayers; let i=index">
-                            <span [ngClass]="{'left-content' : i<=5, 'dn' : item?.playerObj.player?.primaryPosition != 'SG'}">
-                              
-                                  <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="basketball player"
-                                  onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
-                                  <span class="player-infos">
-                                  <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
-                                  <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai' && item.playerObj.player.firstName != 'Kentavious'"> 
-                                    {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}} 
-                                  </span>
-                                  <span *ngIf="item.playerObj.player.firstName === 'Giannis' && item.playerObj.player.lastName === 'Antetokounmpo'"> 
-                                      G. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
-                                      
-                                  </span>
-                                  <span *ngIf="item.playerObj.player.firstName === 'Kentavious'"> 
-                                      K. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
-                                  </span>
-    
-                                  <span class="team-image"> <img src="{{item?.playerObj?.team?.logo}}" alt="{{item?.playerObj.team.name}} logo"></span>
-                           
-                                 <span *ngIf="(item?.playerObj?.player?.currentInjury == null || item?.playerObj?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                                 <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                                 <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
-                                 <span class="lg"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
-                                 <span class="lg">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.min : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                
-                                  </span>
-                              
-                            </span>
-                          </div>
-                          
-                
-                  </div>
-                </div>
-      
-          </div>
-      </div>
-
-      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
-          <h2>Starting Point Guards</h2>
-            <div *ngFor="let data of showData | orderBy: 'nfl'">
-                <div class="content-wrapper">
-                    <div class="row">
-                      <div *ngFor="let item of data.offensePlayers; let i=index">
-                              <span [ngClass]="{'left-content' : i<=5, 'dn' : item?.playerObj.player?.primaryPosition != 'PG'}">
-                                
-                                    <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="basketball player"
-                                    onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
-                                    <span class="player-infos">
-                                    <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
-                                    <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai'"> 
-                                      {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}} 
-                                    </span>
-                                   
-                                    <span *ngIf="item.playerObj.player.firstName === 'Shai'"> 
-                                        S. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}   
-                                    </span>
-      
-                                    <span class="team-image"> <img src="{{item?.playerObj?.team?.logo}}" alt="{{item?.playerObj.team.name}} logo"></span>
-                             
-                                   <span *ngIf="(item?.playerObj?.player?.currentInjury == null || item?.playerObj?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                                   <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                                   <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
-                                   <span class="lg"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
-                                   <span class="lg">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.min : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                  
-                                    </span>
-                                
-                              </span>
-                            </div>
-                            
-                  
-                    </div>
-                  </div>
-        
-            </div>
-        </div>
-
-        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
-            <h2>Starting Small Forwards</h2>
-              <div *ngFor="let data of showData | orderBy: 'nfl'">
-                  <div class="content-wrapper">
-                      <div class="row">
-                        <div *ngFor="let item of data.offensePlayers; let i=index">
-                                <span [ngClass]="{'left-content' : i<=5, 'dn' : item?.playerObj.player?.primaryPosition != 'SF'}">
-                                  
-                                      <img src="{{item?.playerObj.player?.officialImageSrc}}" alt="basketball player"
-                                      onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'">
-                                      <span class="player-infos">
-                                      <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
-                                      <span *ngIf="item.playerObj.player.firstName != 'Giannis' && item.playerObj.player.firstName != 'Shai'"> 
-                                        {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}} 
-                                      </span>
-                                      <span *ngIf="item.playerObj.player.firstName === 'Giannis' && item.playerObj.player.lastName === 'Antetokounmpo'"> 
-                                          G. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
-                                          
-                                      </span>
-        
-                                     <span class="team-image"> <img src="{{item?.playerObj?.team?.logo}}" alt="{{item?.playerObj.team.name}} logo"></span>
-                               
-                                     <span *ngIf="(item?.playerObj?.player?.currentInjury == null || item?.playerObj?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                                     <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                                     <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
-                                     <span class="lg"> {{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.pts : item?.playerObj?.stats?.offense?.ptsPerGame}} Pts </span>
-                                     <span class="lg">{{item?.playerObj?.starterInfo?.status != 'UNPLAYED' ? item?.playerObj?.player?.min : ((item?.playerObj?.stats.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min</span>
-                                    
-                                      </span>
-                                  
-                                </span>
-                              </div>
-                              
-                    
-                      </div>
-                    </div>
-          
-              </div>
-          </div> -->
-
+</section>
+ 
+          <section [ngClass]="{'dn' : !positionSection}">
           <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
               <h2>Top PG</h2>
                 <div>
@@ -821,14 +647,16 @@
                         </div>
                        
                     </div>
+                    </section>
+                    <section [ngClass]="{'dn' : !scheduleSection}">
                     <div class="card-wrap-sp mat-elevation-z6 position-box full-box" *ngIf="!loading && dailySchedule != null">
                         <h2>Weekly Team Schedule</h2>
                           <div>
-                              Games This Week
+                              Games This Week <button (click)="weekResults = !weekResults"> Team Results</button>
                               <div class="content-wrapper">
                                   <div class="row">
                                     <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length &lt; 4 }">
-                                            <span class="left-content">
+                                            <span class="left-content" [ngClass]="{'results': weekResults}">
                                               
                                                 <!-- <span (click)="open($event, item, 'bottom')" class="point"> <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                   onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> -->
@@ -851,9 +679,13 @@
                                                  <!-- <span class="lg"> {{item.schedule.length}} </span> -->
                                                  <span *ngFor="let g of item.schedule">
                                                    <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
+                                                      <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
+                                                      <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &lt; g.score?.awayScoreTotal">(L <span class="minus">-{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span> 
                                                       vs {{g.schedule.awayTeam.abbreviation}}  
                                                    </span>
                                                    <span class="lg" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
+                                                      <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
+                                                      <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
                                                       @ {{g.schedule.homeTeam.abbreviation}} 
                                                    </span>,
                                                  </span>
@@ -872,11 +704,11 @@
                       <div class="card-wrap-sp mat-elevation-z6 position-box full-box" *ngIf="!loading && dailySchedule != null">
                           <h2>Weekly Team Schedule</h2>
                             <div>
-                                Games This Week
+                                Games This Week <button (click)="weekResults = !weekResults"> Team Results</button>
                                 <div class="content-wrapper">
                                     <div class="row">
                                       <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length > 3 }">
-                                              <span class="left-content">
+                                              <span class="left-content" [ngClass]="{'results': weekResults}">
                                                 
                                                   <!-- <span (click)="open($event, item, 'bottom')" class="point"> <img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                     onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> -->
@@ -899,10 +731,14 @@
                                                    <!-- <span class="lg"> {{item.schedule.length}} </span> -->
                                                    <span *ngFor="let g of item.schedule">
                                                      <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
+                                                        <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
+                                                        <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &lt; g.score?.awayScoreTotal">(L <span class="minus">-{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span> 
                                                         vs {{g.schedule.awayTeam.abbreviation}}  
                                                      </span>
                                                      <span class="lg" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
-                                                        @ {{g.schedule.homeTeam.abbreviation}} 
+                                                        <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
+                                                        <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
+                                                         @ {{g.schedule.homeTeam.abbreviation}} 
                                                      </span>,
                                                    </span>
                                                     </span>
@@ -999,7 +835,7 @@
                              
                           </div>
                      
-                      
+                        </section>
                     <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
                         <div>
                             <button (click)="twitter = !twitter">Twitter</button>
@@ -1016,7 +852,7 @@
                                           #NBA {{ gameDate | date:'fullDate' }}
                                       </div>
                                       <div class="w100">
-                                          #Top10 Starting/Expected PG
+                                          #Top5 Starting/Expected PG
                                       </div>
                                     <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
                                             <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'PG' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'PG', 'dn2' : item?.player?.primaryPosition == 'PG' && item?.starterInfo?.bench}">
@@ -1038,6 +874,15 @@
                                                         {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
                                                       </span>
                                                   </span>
+                                                  <span [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                                  <span [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                                  <span [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                                  <span [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                                  <span [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                                  <span [ngClass]="{'dn' : stats != '5' && stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                                  <span [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
+                                                  <span [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                                  <span [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                                 
                                                   </span>
                                               
@@ -1061,7 +906,7 @@
                                             #NBA {{ gameDate | date:'fullDate' }}
                                         </div>
                                         <div class="w100">
-                                            #Top10 Starting/Expected SF
+                                            #Top5 Starting/Expected SF
                                         </div>
                                       <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
                                               <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'SF' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'SF', 'dn2' : item?.player?.primaryPosition == 'SF' && item?.starterInfo?.bench}">
@@ -1082,6 +927,16 @@
                                                           {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
                                                         </span>
                                                     </span>
+
+                                                    <span [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                                    <span [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                                    <span [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                                    <span [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                                    <span [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                                    <span [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                                    <span [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
+                                                    <span [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                                    <span [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                                   
                                                     </span>
                                                 
@@ -1105,7 +960,7 @@
                                               #NBA {{ gameDate | date:'fullDate' }}
                                           </div>
                                           <div class="w100">
-                                              #Top10 Starting/Expected Centers
+                                              #Top5 Starting/Expected Centers
                                           </div>
                                         <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
                                                 <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'C' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'C', 'dn2' : item?.player?.primaryPosition == 'C' && item?.starterInfo?.bench}">
@@ -1128,7 +983,15 @@
                                                             {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
                                                           </span>
                                                       </span>
-                        
+                                                      <span [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                                      <span [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                                      <span [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                                      <span [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                                      <span [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                                      <span [ngClass]="{'dn' : stats != '5' && stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                                      <span [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
+                                                      <span [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                                      <span [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                                     
                                                       </span>
                                                   
@@ -1153,7 +1016,7 @@
                                                 #NBA {{ gameDate | date:'fullDate' }}
                                             </div>
                                             <div class="w100">
-                                                #Top10 Starting/Expected PF
+                                                #Top5 Starting/Expected PF
                                             </div>
                                           <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
                                                   <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'PF' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'PF', 'dn2' : item?.player?.primaryPosition == 'PF' && item?.starterInfo?.bench}">
@@ -1175,7 +1038,15 @@
                                                               {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
                                                             </span>
                                                         </span>
-                          
+                                                        <span [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                                        <span [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                                        <span [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                                        <span [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                                        <span [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                                        <span [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                                        <span [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
+                                                        <span [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                                        <span [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                                       
                                                         </span>
                                                     
@@ -1200,7 +1071,7 @@
                                                   #NBA {{ gameDate | date:'fullDate' }}
                                               </div>
                                               <div class="w100">
-                                                  #Top10 Starting/Expected SG
+                                                  #Top5 Starting/Expected SG
                                               </div>
                                             <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
                                                     <span [ngClass]="{'left-content' : item?.player?.primaryPosition == 'SG' && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != 'SG', 'dn2' : item?.player?.primaryPosition == 'SG' && item?.starterInfo?.bench}">
@@ -1225,7 +1096,15 @@
                                                                 {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
                                                               </span>
                                                           </span>
-                                                        
+                                                          <span [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                                          <span [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                                          <span [ngClass]="{'dn' : stats != '2' && stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                                          <span [ngClass]="{'dn' : stats != '3' && stats != '2' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                                          <span [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                                          <span [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                                          <span [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
+                                                          <span [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                                          <span [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                                         
                                                           </span>
                                                       
@@ -1249,7 +1128,7 @@
                                                 #NBA {{ gameDate | date:'fullDate' }}
                                             </div>
                                             <div class="w100">
-                                                #Top10 Off the #Bench
+                                                #Top5 Off the #Bench
                                             </div>
                                             <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
                                                     <span class="left-content" [ngClass]="{'dn' : !item?.starterInfo?.bench}">
@@ -1270,7 +1149,15 @@
                                                                 {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}  
                                                               </span>
                                                           </span>
-                                                          
+                                                          <span [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                                          <span [ngClass]="{'dn' : stats != '1' && stats != '6' && !mobile || stats != '1' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                                          <span [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '5' && !mobile || stats != '2' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                                          <span [ngClass]="{'dn' : stats != '3' && stats != '2' && !mobile || stats != '3' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                                          <span [ngClass]="{'dn' : stats != '4' && stats != '3' && !mobile || stats != '4' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                                          <span [ngClass]="{'dn' : stats != '4' && !mobile || stats != '5' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                                          <span [ngClass]="{'dn' : stats != '6' && stats != '5' && !mobile || stats != '6' && mobile}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
+                                                          <span [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                                          <span [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                                         
                                                         
                                                           </span>
