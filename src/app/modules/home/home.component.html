@@ -3,19 +3,74 @@
 </div>
 <h1 class="center no-game-header" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1> -->
 <h1 class="center date-header"> {{ nbaGameDate | date:'fullDate' }}</h1>
+<h1 class="center date-header"> Games</h1>
 <!-- <div class="nhl-playoff"> -->
 <!--   <h3 class="center date-header"><img src="../assets/nhl-logos/nhl-playoff.jpg" alt="nhl playoff image"></h3> -->
 <!-- </div> -->
-<div class="spinner-msg" *ngIf="mlbLoading || nflLoading || nhlLoading || nbaLoading">
+<div class="button-wrapper" *ngIf="!nbaLoading">
+      <div class="schedule-box row">
+        <div [ngClass]="{'active': nbaSched}" class="col" (click)="nbaSched = true; nhlSched = false;">
+            <span class="sched-item">
+              NBA
+            </span> 
+        </div>
+        <div [ngClass]="{'active': nhlSched}" class="col" (click)="nbaSched = false; nhlSched = true;">
+            <span class="sched-item">
+              NHL
+            </span> 
+        </div>
+        <!-- <div [ngClass]="{'active': scheduleSection}" class="col" (click)="startersSection = false; positionSection = false; scheduleSection = true">
+            <span class="sched-item">
+              Weekly Schedule
+            </span> 
+        </div> -->
+        <!-- <div class="col">
+            <span class="sched-item">
+              Team Ranks
+            </span> 
+        </div> -->
+      </div>
+  </div>
+<div class="spinner-msg" *ngIf="nbaLoading">
   Fetching games...
   <mat-spinner></mat-spinner>
 </div>
-<div class="shed-row row" *ngIf="!mlbLoading && !nflLoading && !nhlLoading && !nbaLoading">
-    <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap">
-        <span class="week-rank">NBA<br> </span> 
+<div class="row" *ngIf="!nbaLoading">
+   
+    <!-- <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap"> -->
+       <div *ngIf="nbaSched" class="row schedule">
+        <!-- <span class="week-rank">NBA<br> </span>  -->
         <span *ngIf="noMlbGamesMsg">{{noNbaGamesMsg}}</span>
-        <div *ngFor="let item of nbaSchedule; let i=index">
-            <span *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" class="sched-item">
+        <div *ngFor="let item of nbaSchedule; let i=index" class="col">
+            <span class="score-container" *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,36,61,0.7) 80%), url('+ item?.schedule?.homeTeam?.logo +')' }">
+                 
+                  <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
+                        <span class="lg">{{item?.schedule?.homeTeam?.abbreviation}} </span> <br>
+                        <span class="lg">{{item?.score?.homeScoreTotal}}</span>
+                   </div> 
+                
+            </span>
+          
+            <span class="score-container" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,36,61,0.7) 80%), url('+ item?.schedule?.awayTeam?.logo +')' }">
+                  <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
+                        <span class="lg"> {{item?.schedule?.awayTeam?.abbreviation}} </span> <br>
+                        <span class="lg"> {{item?.score?.awayScoreTotal}} </span>
+                   </div>
+            </span>
+            <div class="ab-center" *ngIf="item?.score?.homeScoreTotal == null && item?.schedule?.startTime">
+                  {{item?.schedule?.homeTeam?.abbreviation}} vs {{item?.schedule?.awayTeam?.abbreviation}} <br>
+               Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{item.schedule?.venue?.name}}
+            </div>
+            <div class="score-footer">
+               <span>
+                     Home Team: <span class="accent" [ngStyle]="{'color': item?.schedule?.homeTeam?.color}">{{item?.schedule?.homeTeam?.name}}</span>
+               </span>
+               <br>
+               <span *ngIf="item?.score?.homeScoreTotal != null">
+                     <span class="live">LIVE</span> {{(item?.score?.currentQuarterSecondsRemaining / 60) | number:'1.0-0'}} {{item?.score?.currentQuarter}} quarter
+               </span>
+            </div>
+            <!-- <span *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" class="sched-item">
                  <span class="abb" *ngIf="!mobile">
                     <img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo">
                     <span *ngIf="item?.schedule?.awayTeam?.city != 'Minnesota' && item?.schedule?.awayTeam?.city != 'Los Angeles'">{{item?.schedule?.awayTeam?.city + ' ' + item?.schedule?.awayTeam?.name}}</span> 
@@ -41,7 +96,7 @@
                     <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.homeTeam?.name}} logo">
                     <span>{{item?.schedule?.homeTeam?.name}}</span> 
                  </span>  
-               </span> 
+               </span>  -->
           </div>
           <!-- <div class="showLink">
             <h2 [routerLink]="['/starting-five']">Starting Five</h2>
@@ -85,11 +140,39 @@
               <h2 [routerLink]="['/nfl-touches']">NFL Touches</h2>
           </div>
     </div> -->
-    <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap" [routerLink]="['/starting-goalies']">
-        <span class="week-rank">NHL<br> </span> 
+    <div *ngIf="nhlSched" class="row schedule">
+        <!-- <span class="week-rank">NHL<br> </span>  -->
         <span *ngIf="noMlbGamesMsg">{{noNhlGamesMsg}}</span>
-        <div *ngFor="let item of nhlSchedule; let i=index">
-            <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
+        <div *ngFor="let item of nhlSchedule; let i=index" class="col">
+            <span class="score-container" *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,36,61,0.7) 80%), url('+ item?.schedule?.homeTeam?.logo +')' }">
+                 
+                  <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
+                        <span class="lg">{{item?.schedule?.homeTeam?.abbreviation}} </span> <br>
+                        <span class="lg">{{item?.score?.homeScoreTotal}}</span>
+                   </div> 
+                
+            </span>
+          
+            <span class="score-container" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,36,61,0.7) 80%), url('+ item?.schedule?.awayTeam?.logo +')' }">
+                  <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
+                        <span class="lg"> {{item?.schedule?.awayTeam?.abbreviation}} </span> <br>
+                        <span class="lg"> {{item?.score?.awayScoreTotal}} </span>
+                   </div>
+            </span>
+            <div class="ab-center" *ngIf="item?.score?.homeScoreTotal == null && item?.schedule?.startTime">
+                  {{item?.schedule?.homeTeam?.abbreviation}} vs {{item?.schedule?.awayTeam?.abbreviation}} <br>
+               Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{item.schedule?.venue?.name}}
+            </div>
+            <div class="score-footer">
+               <span>
+                     Home Team: <span class="accent" [ngStyle]="{'color': item?.schedule?.homeTeam?.color}">{{item?.schedule?.homeTeam?.name}}</span>
+               </span>
+               <br>
+               <span *ngIf="item?.score?.homeScoreTotal != null">
+                     <span class="live">LIVE</span> {{(item?.score?.currentQuarterSecondsRemaining / 60) | number:'1.0-0'}} {{item?.score?.currentQuarter}} quarter
+               </span>
+            </div>
+            <!-- <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">
                <span class="abb" *ngIf="!mobile">
                     <img src="{{item?.schedule?.awayTeam?.logo}}" alt="{{item?.schedule?.awayTeam?.name}} logo">
                     <span *ngIf="item?.schedule?.awayTeam?.city != 'Minnesota' && item?.schedule?.awayTeam?.city != 'Los Angeles'">{{item?.schedule?.awayTeam?.city + ' ' + item?.schedule?.awayTeam?.name}}</span> 
@@ -115,7 +198,7 @@
                     <img src="{{item?.schedule?.homeTeam?.logo}}" alt="{{item?.schedule?.homeTeam?.name}} logo">
                     <span>{{item?.schedule?.homeTeam?.name}}</span> 
                  </span>   
-             </span>  
+             </span>   -->
           </div>
           <!-- <div class="showLink hid-box">
               <h2 [routerLink]="['/starting-goalies']">Starting Goalies</h2>
