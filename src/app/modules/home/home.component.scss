@@ -5,6 +5,30 @@
   z-index: 8;
 }
 
+.lg {
+  font-size: 30px;
+}
+
+.score-container {
+  border-radius: 10px;
+  // background: #808787;
+  // box-shadow:  5px 5px 10px #7c8383, 
+  //            -5px -5px 10px #848b8b;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 230px !important;
+  width: 127px;
+  height: 128px;
+  display: inline-block;
+  text-align: center;
+}
+// .score-container:first-child {
+//   // border-right: 1px #fff solid;
+//   // border-bottom-right-radius: 0;
+//   // border-top-right-radius: 0;
+// }
+
+
 .stat-block {
   background: #6740B4;
   color: #fff;
@@ -22,7 +46,7 @@
   color: #fff;
 }
 
-.row {
+.row.schedule {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -33,113 +57,90 @@
     // display: flex;
     flex-direction: column;
     flex-basis: 100%;
-    flex: 0 0 45%;
+    flex: 0 0 20%;
     color: #fff;
     margin: 20px;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    position: relative;
+    .vertical {
+      display: flex;
+      align-items: center;
+      height: 128px;
+      width: 128px;
+      justify-content: center;
+    }
+    .ab-center {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      text-align: center;
+    }
+    .score-footer {
+      background: #fff;
+      color: #222;
+      border-bottom-left-radius: 9px;
+      border-bottom-right-radius: 9px;
+      font-size: 14px;
+      padding: 5px;
+      .accent {
+        font-weight: bold;
+      }
+    }
   }
 }
 
-.shed-row {
-  // .schedule-box:hover {
-  //   cursor: pointer;
-  //   color: #ccc;
-  //   border: 2px solid #ccc;
-  // }
-  .col {
-    overflow: hidden;
-    position: relative;
-    height: 500px;
-    width: 100%;
-    background: #333;
+
+.button-wrapper {
+  margin: 0 auto;
+  width: 26%;
+  .row {
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: #d35400;
     color: #fff;
-    font-size: 14px;
-    border: 2px solid #000;
-    border-radius: 5px;
-    // padding: 5px;
+    font-size: 13px;
     margin-bottom: 5px;
-    
-    .sched-item {
-      margin-left: 20px;
-    }
+    // width: 25%;
+    background: rgba(211,84,0,1);
 
-    .score {
-      font-size: 14px;
+    .week-item {
+      width: 30px;
     }
-
-    .week-rank {
-      text-align: center;
-      display: block;
-      font-size: 20px;
-      font-weight: 200;
-      padding: 4px 0 10px 0;
+ 
+    .col {
+      display: flex;
+      // flex-direction: column;
+      flex-basis: 100%;
+      flex: 1 0 49%;
+      border-right: 1px #fff solid;
+      justify-content: center;
+      .sched-item {
+        margin-left: 0;
+        padding: 10px;
+      }
     }
-
-    .abb {
-      vertical-align: bottom;
-      width: 178px;
-      display: inline-block;
+    .col:hover, .col.active {
+      cursor: pointer;
+      color: #ccc;
+      background: rgb(133,56,6);
     }
-
-    .abb-single {
-      vertical-align: bottom;
-      width: 100%;
-      display: inline-block;
+    .col:last-child {
+      border-right: 1px transparent solid;
     }
-
-    .abb.r {
-      text-align: right;
-    }
-
-    .at {
-      width: 110px;
-      display: inline-block;
-      text-align: center;
-    }
-
-    .rank-num {
-      width: 40px;
-      display: inline-block;
-      text-align: center;
-    }
-  
-    img {
-      // width: 20%!important;
-      margin: 0!important;
-      vertical-align: bottom;
-      height: 28px!important;
-      width: 28px!important;
-    }
-   
-    // .abb:hover,
-    // .abb-single:hover {
-    //   cursor: pointer;
-    //   color: #ccc;
-    // }
-
-    .live {
-      color: #2ecc71;
+    .col-info {
+      display: flex;
+      flex-basis: 100%;
+      flex: 0 0 25%;
     }
 
   }
-
-  // .showLink {
-  //   color: #fff;
-  //   background:  #d35400;
-  //   top: 100%;
-  //   position: absolute;
-  //   transition: all .3s ease-out;
-  //   height: 100%;
-  //   width: 100%;
-  //   padding: 10px;
-  //   h2:hover {
-  //     color:#ccc;
-  //     cursor: pointer;
-  //   }
-  // }
-
-  // .col:hover > .showLink {
-  //   top: 0;
-  // }
 }
 
 @media only screen and (max-width: 750px) {
@@ -150,22 +151,6 @@
     }
   }
   
-  // .shed-row {
-  //   .col{
-  //     .abb {
-  //       width: 117px;
-  //     }
-  //     .at {
-  //       width: 100px;
-  //     }
-  //   }
-  //   .showLink {
-  //     height: 50%;
-  //   }
-  //   .col:hover > .showLink {
-  //     top: 50%;
-  //   }
-  // }  
 }
 
 .material-icons.md-18 { font-size: 18px; }
