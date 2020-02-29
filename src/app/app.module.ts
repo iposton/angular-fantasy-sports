@@ -45,6 +45,7 @@ import { PitchingStatsComponent, MyDialog } from './modules/pitching-stats/pitch
 import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from './modules/starting-goalies/starting-goalies.component';
 import { YesterdayResultsComponent, InfoYesterday } from './modules/yesterday-results/yesterday-results.component';
 import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './modules/tomorrow-results/tomorrow-results.component';
+import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
 
 // import { ShareModule } from 'ng2share/share.module';
 
@@ -72,7 +73,8 @@ import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './module
     LastweekDialog,
     LastweekNFLDialog,
     TomorrowDialog,
-    LoginDialog
+    LoginDialog,
+    MinuteSecondsPipe
   ],
   imports: [
     BrowserModule,

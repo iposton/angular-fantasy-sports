@@ -17,7 +17,7 @@
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 230px !important;
-  width: 127px;
+  width: 50%;
   height: 128px;
   display: inline-block;
   text-align: center;
@@ -64,10 +64,13 @@
     border-radius: 10px;
     position: relative;
     .vertical {
-      display: flex;
+      display: -webkit-box;
+      /* display: flex; */
+      -webkit-box-align: center;
       align-items: center;
-      height: 50%;
+      height: 128px;
       width: 128px;
+      -webkit-box-pack: center;
       justify-content: center;
     }
     .ab-center {
@@ -86,8 +89,10 @@
       border-bottom-right-radius: 9px;
       font-size: 14px;
       padding: 5px;
+      text-align: center;
       .accent {
         font-weight: bold;
+        text-transform: uppercase;
       }
     }
   }
@@ -147,8 +152,11 @@
   .row {
     .col {
       flex: 0 0 99%;
-      margin: 0 0 20px 0;
+      // margin: 0 0 20px 0;
     }
+  }
+  .row.schedule .col {
+    flex: 0 0 50%;
   }
   
 }

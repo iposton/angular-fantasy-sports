@@ -13,6 +13,42 @@
   display: inline-block;
 }
 
+.card-wrap-sp.position-box {
+  width: 38%!important;
+  padding: 20px;
+  background: #555;
+  color: #fff;
+  // cursor: pointer;
+  .point {
+    cursor: pointer;
+  }
+  .team-image {
+    img {
+      height: 45px;
+      box-shadow: none;
+      margin-left: 3px;
+      object-fit: contain;
+      vertical-align: bottom;
+      border: 0 solid transparent!important;
+    }
+  }
+  .w100 {
+    width: 100%;
+  }
+}
+
+.card-wrap-sp.full-box {
+  width: 80%!important;
+  .left-content {
+    width: 300px;
+  }
+  .lg {
+    width: 33%;
+  }
+  .left-content.results {
+    width: 500px;
+  }
+}
 
 .stat-block {
   background: #000;
