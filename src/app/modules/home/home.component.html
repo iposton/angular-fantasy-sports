@@ -62,12 +62,20 @@
                Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{item.schedule?.venue?.name}}
             </div>
             <div class="score-footer">
-               <span>
+               <span *ngIf="item.schedule?.playedStatus === 'UNPLAYED'">
                      Home Team: <span class="accent" [ngStyle]="{'color': item?.schedule?.homeTeam?.color}">{{item?.schedule?.homeTeam?.name}}</span>
                </span>
-               <br>
-               <span *ngIf="item?.score?.homeScoreTotal != null">
-                     <span class="live">LIVE</span> {{(item?.score?.currentQuarterSecondsRemaining / 60) | number:'1.0-0'}} {{item?.score?.currentQuarter}} quarter
+               
+               <span *ngIf="item.schedule?.playedStatus === 'LIVE'">
+                     <span class="live">LIVE</span> {{item?.score?.currentQuarterSecondsRemaining | minuteSeconds }} {{item?.score?.currentQuarter}}<span *ngIf="item?.score?.currentQuarter === 1">st</span><span *ngIf="item?.score?.currentQuarter === 4">th</span><span *ngIf="item?.score?.currentQuarter === 3">rd</span><span *ngIf="item?.score?.currentQuarter === 2">nd</span> Quarter
+               </span>
+               <span *ngIf="item.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW' || item.schedule?.playedStatus === 'COMPLETED'">
+                     <span *ngIf="item?.score?.homeScoreTotal &gt; item?.score?.awayScoreTotal">
+                        <span class="accent" [ngStyle]="{'color': item?.schedule?.homeTeam?.color}">{{item?.schedule?.homeTeam?.name}} Win!</span>
+                    </span>
+                    <span *ngIf="item?.score?.awayScoreTotal &gt; item?.score?.homeScoreTotal">
+                         <span class="accent" [ngStyle]="{'color': item?.schedule?.awayTeam?.color}">{{item?.schedule?.awayTeam?.name}} Win!</span>
+                    </span>
                </span>
             </div>
             <!-- <span *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" class="sched-item">
@@ -164,12 +172,20 @@
                Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{item.schedule?.venue?.name}}
             </div>
             <div class="score-footer">
-               <span>
+               <span *ngIf="item.schedule?.playedStatus === 'UNPLAYED'">
                      Home Team: <span class="accent" [ngStyle]="{'color': item?.schedule?.homeTeam?.color}">{{item?.schedule?.homeTeam?.name}}</span>
                </span>
-               <br>
-               <span *ngIf="item?.score?.homeScoreTotal != null">
-                     <span class="live">LIVE</span> {{(item?.score?.currentQuarterSecondsRemaining / 60) | number:'1.0-0'}} {{item?.score?.currentQuarter}} quarter
+               
+               <span *ngIf="item.schedule?.playedStatus === 'LIVE'">
+                     <span class="live">LIVE</span> {{item?.score?.currentPeriodSecondsRemaining | minuteSeconds }} {{item?.score?.currentPeriod}}<span *ngIf="item?.score?.currentQuarter === 1">st</span><span *ngIf="item?.score?.currentQuarter === 3">rd</span><span *ngIf="item?.score?.currentQuarter === 2">nd</span> Period
+               </span>
+               <span *ngIf="item.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW' || item.schedule?.playedStatus === 'COMPLETED'">
+                 <span *ngIf="item?.score?.homeScoreTotal &gt; item?.score?.awayScoreTotal">
+                    <span class="accent" [ngStyle]="{'color': item?.schedule?.homeTeam?.color}">{{item?.schedule?.homeTeam?.name}} Win!</span>
+                </span>
+                <span *ngIf="item?.score?.awayScoreTotal &gt; item?.score?.homeScoreTotal">
+                     <span class="accent" [ngStyle]="{'color': item?.schedule?.awayTeam?.color}">{{item?.schedule?.awayTeam?.name}} Win!</span>
+                </span>
                </span>
             </div>
             <!-- <span *ngIf="item?.schedule?.awayTeam?.abbreviation" class="sched-item">

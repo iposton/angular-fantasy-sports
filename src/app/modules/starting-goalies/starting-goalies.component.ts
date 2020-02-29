@@ -2,7 +2,7 @@
 import { Observable, interval, forkJoin } from 'rxjs';
 import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren  } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
@@ -30,6 +30,7 @@ let headers = null;
 let dailyTeams = [];
 let teamRef = [];
 let teamString = '';
+let teams = null;
 
 @Component({
   selector: 'app-starting-goalies',
@@ -89,10 +90,13 @@ export class StartingGoaliesComponent implements OnInit {
   fullFirebaseResponse: any;
   loading: boolean = true;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
+  public teamSchedules: Array <any> = [];
 
-  stats: boolean = false;
+  public stats: boolean = false;
+  public weekResults: boolean = false;
   hitCount: any;
   public playerImages: any;
+  public teams: any;
 
 
   goalieIdSet: boolean = false;
@@ -132,6 +136,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.sentYesterdayData = this.yesterdayService.getSentStats();
     this.sentTomorrowData = this.tomorrowService.getSentStats();
     this.playerImages = this.util.getNHLImages();
+    teams = this.util.getNHLTeams();
     
   }
 
@@ -255,6 +260,47 @@ export class StartingGoaliesComponent implements OnInit {
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
               this.gamesToday = true;
               //this.sortData(); //work around when no games
+
+              if (this.teamSchedules.length === 0) {
+                let team;
+                let teamSchedule;
+                const nhlTeamsArray = Object.values(teams);
+                forkJoin(
+                  nhlTeamsArray.map(
+                    g => 
+                    
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200224-to-20200301`, { headers })
+                    
+                  )
+                )
+                .subscribe(res => {
+                  //console.log(res, 'get team schedules...');
+
+                  res.forEach((item, index) => {
+                    team = nhlTeamsArray[index]['abbreviation'];
+                    //team = teamRef[index].abbreviation;
+                    teamSchedule = {
+                      team: team,
+                      schedule: res[index]['games'],
+                      teamInfo: nhlTeamsArray[index]
+                    }
+                    this.teamSchedules.push(teamSchedule);
+                    //console.log(this.teamSchedules, 'schedules array...');
+
+                  })
+                  
+
+                 // this.sortData();
+
+                }, (err: HttpErrorResponse) => {
+                  
+                  console.log(err, 'error getting schedule');
+
+              });
+
+              } else {
+                //this.sortData();
+              }
 
               forkJoin(
                   res['games'].map(
