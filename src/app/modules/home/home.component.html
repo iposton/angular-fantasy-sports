@@ -42,32 +42,54 @@
         <!-- <span class="week-rank">NBA<br> </span>  -->
         <span *ngIf="noMlbGamesMsg">{{noNbaGamesMsg}}</span>
         <div *ngFor="let item of nbaSchedule; let i=index" class="col">
-            <span class="score-container" *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,36,61,0.7) 80%), url('+ item?.schedule?.homeTeam?.logo +')' }">
+           <div class="teams-container" [ngStyle]="{'background': '#303030'}">
+               <span class="score-container" *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url('+ item?.schedule?.homeTeam?.logo +')' }">
                  
-                  <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-                        <span class="lg">{{item?.schedule?.homeTeam?.abbreviation}} </span> <br>
-                        <span class="lg">{{item?.score?.homeScoreTotal}}</span>
-                   </div> 
-                
-            </span>
-          
-            <span class="score-container" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,36,61,0.7) 80%), url('+ item?.schedule?.awayTeam?.logo +')' }">
-                  <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-                        <span class="lg"> {{item?.schedule?.awayTeam?.abbreviation}} </span> <br>
-                        <span class="lg"> {{item?.score?.awayScoreTotal}} </span>
-                   </div>
-            </span>
-            <div class="ab-center" *ngIf="item?.score?.homeScoreTotal == null && item?.schedule?.startTime">
+                     <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
+                           <span class="lg">{{item?.schedule?.homeTeam?.abbreviation}} </span> <br>
+                           <span class="lg">{{item?.score?.homeScoreTotal}}</span>
+                      </div> 
+                   
+               </span>
+             
+               <span class="score-container" *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url('+ item?.schedule?.awayTeam?.logo +')' }">
+                     <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
+                           <span class="lg"> {{item?.schedule?.awayTeam?.abbreviation}} </span> <br>
+                           <span class="lg"> {{item?.score?.awayScoreTotal}} </span>
+                      </div>
+               </span>
+            </div>
+            
+            <span class="ab-center" *ngIf="item?.score?.homeScoreTotal == null && item?.schedule?.startTime">
                   {{item?.schedule?.homeTeam?.abbreviation}} vs {{item?.schedule?.awayTeam?.abbreviation}} <br>
                Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{item.schedule?.venue?.name}}
-            </div>
+            </span>
             <div class="score-footer">
                <span *ngIf="item.schedule?.playedStatus === 'UNPLAYED'">
                      Home Team: <span class="accent" [ngStyle]="{'color': item?.schedule?.homeTeam?.color}">{{item?.schedule?.homeTeam?.name}}</span>
                </span>
                
                <span *ngIf="item.schedule?.playedStatus === 'LIVE'">
-                     <span class="live">LIVE</span> {{item?.score?.currentQuarterSecondsRemaining | minuteSeconds }} {{item?.score?.currentQuarter}}<span *ngIf="item?.score?.currentQuarter === 1">st</span><span *ngIf="item?.score?.currentQuarter === 4">th</span><span *ngIf="item?.score?.currentQuarter === 3">rd</span><span *ngIf="item?.score?.currentQuarter === 2">nd</span> Quarter
+                     <span class="live">LIVE</span> 
+                     <span *ngIf="currentIntermission === 1">
+                           Intermission 1st Quarter
+                     </span>
+                     <span *ngIf="currentIntermission === 2">
+                       HALFTIME
+                     </span>
+                     <span *ngIf="currentIntermission === 3">
+                           Intermission 3rd Quarter
+                     </span>
+                     <span *ngIf="currentIntermission === 4">
+                           Game Over
+                     </span>
+                     <span *ngIf="currentIntermission == null">
+                        {{item?.score?.currentQuarterSecondsRemaining | minuteSeconds }} 
+                        {{item?.score?.currentQuarter}}<span *ngIf="item?.score?.currentQuarter === 1">st</span>
+                        <span *ngIf="item?.score?.currentQuarter === 4">th</span>
+                        <span *ngIf="item?.score?.currentQuarter === 3">rd</span>
+                        <span *ngIf="item?.score?.currentQuarter === 2">nd</span> Quarter
+                     </span>
                </span>
                <span *ngIf="item.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW' || item.schedule?.playedStatus === 'COMPLETED'">
                      <span *ngIf="item?.score?.homeScoreTotal &gt; item?.score?.awayScoreTotal">
@@ -152,7 +174,8 @@
         <!-- <span class="week-rank">NHL<br> </span>  -->
         <span *ngIf="noMlbGamesMsg">{{noNhlGamesMsg}}</span>
         <div *ngFor="let item of nhlSchedule; let i=index" class="col">
-            <span class="score-container" *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,36,61,0.7) 80%), url('+ item?.schedule?.homeTeam?.logo +')' }">
+            <div class="teams-container" [ngStyle]="{'background': '#303030'}">
+            <span class="score-container" *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url('+ item?.schedule?.homeTeam?.logo +')' }">
                  
                   <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
                         <span class="lg">{{item?.schedule?.homeTeam?.abbreviation}} </span> <br>
@@ -161,23 +184,39 @@
                 
             </span>
           
-            <span class="score-container" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,36,61,0.7) 80%), url('+ item?.schedule?.awayTeam?.logo +')' }">
+            <span class="score-container" [ngStyle]="{'background': 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url('+ item?.schedule?.awayTeam?.logo +')' }">
                   <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
                         <span class="lg"> {{item?.schedule?.awayTeam?.abbreviation}} </span> <br>
                         <span class="lg"> {{item?.score?.awayScoreTotal}} </span>
                    </div>
             </span>
-            <div class="ab-center" *ngIf="item?.score?.homeScoreTotal == null && item?.schedule?.startTime">
+            </div>
+            <span class="ab-center" *ngIf="item?.score?.homeScoreTotal == null && item?.schedule?.startTime">
                   {{item?.schedule?.homeTeam?.abbreviation}} vs {{item?.schedule?.awayTeam?.abbreviation}} <br>
                Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{item.schedule?.venue?.name}}
-            </div>
+            </span>
             <div class="score-footer">
                <span *ngIf="item.schedule?.playedStatus === 'UNPLAYED'">
                      Home Team: <span class="accent" [ngStyle]="{'color': item?.schedule?.homeTeam?.color}">{{item?.schedule?.homeTeam?.name}}</span>
                </span>
-               
+               <!-- if currentIntermission: 2 half time or intermission -->
                <span *ngIf="item.schedule?.playedStatus === 'LIVE'">
-                     <span class="live">LIVE</span> {{item?.score?.currentPeriodSecondsRemaining | minuteSeconds }} {{item?.score?.currentPeriod}}<span *ngIf="item?.score?.currentQuarter === 1">st</span><span *ngIf="item?.score?.currentQuarter === 3">rd</span><span *ngIf="item?.score?.currentQuarter === 2">nd</span> Period
+                     <span *ngIf="currentIntermission === 1">
+                           Intermission 1st Period
+                     </span>
+                     <span *ngIf="currentIntermission === 2">
+                           Intermission 2nd Period
+                     </span>
+                     <span *ngIf="currentIntermission === 3">
+                           Game Over
+                     </span>
+                     <span class="live">LIVE</span> 
+                     <span *ngIf="currentIntermission == null">
+                        {{item?.score?.currentPeriodSecondsRemaining | minuteSeconds }} 
+                        {{item?.score?.currentPeriod}}<span *ngIf="item?.score?.currentPeriod === 1">st</span>
+                        <span *ngIf="item?.score?.currentPeriod === 3">rd</span>
+                        <span *ngIf="item?.score?.currentPeriod === 2">nd</span> Period
+                     </span>
                </span>
                <span *ngIf="item.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW' || item.schedule?.playedStatus === 'COMPLETED'">
                  <span *ngIf="item?.score?.homeScoreTotal &gt; item?.score?.awayScoreTotal">
