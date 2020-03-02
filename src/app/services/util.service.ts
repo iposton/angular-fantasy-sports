@@ -11,6 +11,7 @@ export class UtilService {
   public nhlTeams: any;
   public NBAImages: any;
   public NHLImages: any;
+  public startingGoalies: any;
 
   constructor() {
     this.weekTimes = [
@@ -1719,6 +1720,657 @@ export class UtilService {
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/54.svg"
       }
     }
+
+    this.startingGoalies = {
+      '5617':{
+        id: 5617,
+        firstName: "Ilya",
+        lastName: "Samsonov",
+        teamId: 5,
+        active: true,
+        abbreviation: "WSH",
+        numberOne: false
+      }, 
+      '4863':{
+        id: 4863,
+        firstName: "Braden",
+        lastName: "Holtby",
+        teamId: 5,
+        active: true,
+        abbreviation: "WSH",
+        numberOne: true
+      },
+      '5107':{
+        id: 5107,
+        firstName: "Jake",
+        lastName: "Allen",
+        teamId: 17,
+        abbreviation: "STL",
+        active: true,
+        numberOne: false
+      },
+      '5908': {
+        id: 5908,
+        firstName: "Jordan",
+        lastName: "Binnington",
+        teamId: 17,
+        abbreviation: "STL",
+        active: true,
+        numberOne: true
+      },
+      '757': {
+        id: 757,
+        firstName: "Craig",
+        lastName: "Anderson",
+        teamId: 13,
+        abbreviation: "OTT",
+        active: true,
+        numberOne: false
+      },
+      '5033': {
+        id: 5033,
+        firstName: "Anders",
+        lastName: "Nilsson",
+        teamId: 13,
+        abbreviation: "OTT",
+        active: false,
+        numberOne: false
+      },
+      '5109': {
+        id: 5109,
+        firstName: "Frederik",
+        lastName: "Andersen",
+        teamId: 12,
+        abbreviation: "TOR",
+        active: true,
+        numberOne: true
+      },
+      '4874': {
+        id: 4874,
+        firstName: "Jacob",
+        lastName: "Markstrom",
+        teamId: 21,
+        abbreviation: "VAN",
+        active: false,
+        numberOne: false
+      },
+      '4950': {
+        id: 4950,
+        firstName: "Mikko",
+        lastName: "Koskinen",
+        teamId: 24,
+        abbreviation: "EDM",
+        active: true,
+        numberOne: false
+      },
+      '3486': {
+        id: 3486,
+        firstName: "Mike",
+        lastName: "Smith",
+        teamId: 24,
+        abbreviation: "EDM",
+        active: true,
+        numberOne: true
+      },
+      '10074': {
+        id: 10074,
+        firstName: "Aaron",
+        lastName: "Dell",
+        teamId: 26,
+        abbreviation: "SJS",
+        active: true,
+        numberOne: true
+      },
+      '5122': {
+        id: 5122,
+        firstName: "Martin",
+        lastName: "Jones",
+        teamId: 26,
+        abbreviation: "SJS",
+        active: true,
+        numberOne: false
+      },
+      '483': {
+        id: 483,
+        firstName: "Marc-Andre",
+        lastName: "Fleury",
+        teamId: 142,
+        abbreviation: "VGK",
+        active: true,
+        numberOne: true
+      },
+      '5528': {
+        id: 5528,
+        firstName: "Malcolm",
+        lastName: "Subban",
+        teamId: 20,
+        abbreviation: "CHI",
+        active: true,
+        numberOne: false
+      },
+      '13876': {
+        id: 13876,
+        firstName: "Thatcher",
+        lastName: "Demko",
+        teamId: 21,
+        abbreviation: "VAN",
+        active: true,
+        numberOne: true
+      },
+      '5366': {
+        id: 5366,
+        firstName: "Michael",
+        lastName: "Hutchinson",
+        teamId: 22,
+        abbreviation: "COL",
+        active: false,
+        numberOne: false
+      }, 
+      '13660': {
+        id: 13660,
+        firstName: "Kasimir",
+        lastName: "Kaskisuo",
+        teamId: 12,
+        abbreviation: "TOR",
+        active: false,
+        numberOne: false
+      },
+      '15525': {
+        id: 15525,
+        firstName: "Sam",
+        lastName: "Montembeault",
+        teamId: 4,
+        abbreviation: "FLO",
+        active: true,
+        numberOne: false
+      },
+      '5540': {
+        id: 5540,
+        firstName: "Chris",
+        lastName: "Driedger",
+        teamId: 4,
+        abbreviation: "FLO",
+        active: false,
+        numberOne: false
+      },
+      '4890': {
+        id: 4890,
+        firstName: "Sergei",
+        lastName: "Bobrovsky",
+        teamId: 4,
+        abbreviation: "FLO",
+        active: true,
+        numberOne: true
+      },
+      '5420': {
+        id: 5420,
+        firstName: "Andrei",
+        lastName: "Vasilevskiy",
+        teamId: 1,
+        abbreviation: "TBL",
+        active: true,
+        numberOne: true
+      },
+      '5873': {
+        id: 5873,
+        firstName: "Connor",
+        lastName: "Hellebuyck",
+        teamId: 2,
+        abbreviation: "WPJ",
+        active: true,
+        numberOne: true
+      },
+      '5552': {
+        id: 5552,
+        firstName: "Laurent",
+        lastName: "Brossoit",
+        teamId: 2,
+        abbreviation: "WPJ",
+        active: true,
+        numberOne: false
+      },
+      '3647': {
+        id: 3647,
+        firstName: "Henrik",
+        lastName: "Lundqvist",
+        teamId: 9,
+        abbreviation: "NYR",
+        active: true,
+        numberOne: false
+      }, 
+      '13934': {
+        id: 13934,
+        firstName: "Alexandar",
+        lastName: "Georgiev",
+        teamId: 9,
+        abbreviation: "NYR",
+        active: true,
+        numberOne: true
+      },
+      '17374': {
+        id: 17374,
+        firstName: "Igor",
+        lastName: "Shesterkin",
+        teamId: 9,
+        abbreviation: "NYR",
+        active: false,
+        numberOne: false
+      },
+      '5224': {
+        id: 5224,
+        firstName: "Carter",
+        lastName: "Hutton",
+        teamId: 15,
+        abbreviation: "BUF",
+        active: true,
+        numberOne: true
+      },
+      '5842': {
+        id: 5842,
+        firstName: "Linus",
+        lastName: "Ullmark",
+        teamId: 15,
+        abbreviation: "BUF",
+        active: false,
+        numberOne: false
+      }, 
+      '17380': {
+        id: 17380,
+        firstName: "Jonas",
+        lastName: "Johansson",
+        teamId: 15,
+        abbreviation: "BUF",
+        active: true,
+        numberOne: false
+      },
+      '5894': {
+        id: 5894,
+        firstName: "Matt",
+        lastName: "Murray",
+        teamId: 10,
+        abbreviation: "PIT",
+        active: true,
+        numberOne: false
+      },
+      '10083': {
+        id: 10083,
+        firstName: "Tristan",
+        lastName: "Jarry",
+        teamId: 10,
+        abbreviation: "PIT",
+        active: true,
+        numberOne: true
+      },
+      '4294': {
+        id: 4294,
+        firstName: "Carey",
+        lastName: "Price",
+        teamId: 14,
+        abbreviation: "MTL",
+        active: true,
+        numberOne: true
+      },
+      '4862': {
+        id: 4862,
+        firstName: "James",
+        lastName: "Reimer",
+        teamId: 3,
+        abbreviation: "CAR",
+        active: false,
+        numberOne: false
+      },
+      '5163': {
+        id: 5163,
+        firstName: "Petr",
+        lastName: "Mrazek",
+        teamId: 3,
+        abbreviation: "CAR",
+        active: false,
+        numberOne: false
+      },
+      '4666': {
+        id: 4666,
+        firstName: "Devan",
+        lastName: "Dubnyk",
+        teamId: 25,
+        abbreviation: "MIN",
+        active: true,
+        numberOne: false
+      },
+      '4947': {
+        id: 4947,
+        firstName: "Alex",
+        lastName: "Stalock",
+        teamId: 25,
+        abbreviation: "MIN",
+        active: true,
+        numberOne: true
+      },
+      '3810': {
+        id: 3810,
+        firstName: "Pekka",
+        lastName: "Rinne",
+        teamId: 18,
+        abbreviation: "NSH",
+        active: true,
+        numberOne: false
+      },
+      '5877': {
+        id: 5877,
+        firstName: "Juuse",
+        lastName: "Saros",
+        teamId: 18,
+        abbreviation: "NSH",
+        active: true,
+        numberOne: true
+      },
+      '4235': {
+        id: 4235,
+        firstName: "Jaroslav",
+        lastName: "Halak",
+        teamId: 11,
+        abbreviation: "BOS",
+        active: true,
+        numberOne: false
+      },
+      '4326': {
+        id: 4326,
+        firstName: "Tuukka",
+        lastName: "Rask",
+        teamId: 11,
+        abbreviation: "BOS",
+        active: true,
+        numberOne: true
+      },
+      '4561': {
+        id: 4561,
+        firstName: "Ben",
+        lastName: "Bishop",
+        teamId: 27,
+        abbreviation: "DAL",
+        active: true,
+        numberOne: true
+      },
+      '4763': {
+        id: 4763,
+        firstName: "Anton",
+        lastName: "Khudobin",
+        teamId: 27,
+        abbreviation: "DAL",
+        active: true,
+        numberOne: false
+      },
+      '11724': {
+        id: 11724,
+        firstName: "David",
+        lastName: "Rittich",
+        teamId:  23,
+        abbreviation: "CGY",
+        active: true,
+        numberOne: true
+      },
+      '5277': {
+        id: 5277,
+        firstName: "Cam",
+        lastName: "Talbot",
+        teamId:  23,
+        abbreviation: "CGY",
+        active: true,
+        numberOne: false
+      },
+      '5176': {
+        id: 5176,
+        firstName: "Philipp",
+        lastName: "Grubauer",
+        teamId: 22,
+        abbreviation: "COL",
+        active: false,
+        numberOne: false
+      },
+      '15442': {
+        id: 15442,
+        firstName: "Pavel",
+        lastName: "Francouz",
+        teamId: 22,
+        abbreviation: "COL",
+        active: true,
+        numberOne: true
+      },
+      '5168': {
+        id: 5168,
+        firstName: "Darcy",
+        lastName: "Kuemper",
+        teamId: 30,
+        abbreviation: "ARI",
+        active: true,
+        numberOne: true
+      },
+      '5296': {
+        id: 5296,
+        firstName: "Antti",
+        lastName: "Raanta",
+        teamId: 30,
+        abbreviation: "ARI",
+        active: true,
+        numberOne: false
+      },
+      '5227': {
+        id: 5227,
+        firstName: "John",
+        lastName: "Gibson",
+        teamId: 29,
+        abbreviation: "ANA",
+        active: true,
+        numberOne: true
+      },
+      '178': {
+        d: 178,
+        firstName: "Ryan",
+        lastName: "Miller",
+        teamId: 29,
+        abbreviation: "ANA",
+        active: true,
+        numberOne: false
+      },
+      '4310': {
+        id: 4310,
+        firstName: "Curtis",
+        lastName: "McElhinney",
+        teamId: 1,
+        abbreviation: "TBL",
+        active: true,
+        numberOne: false
+      },
+      '3855': {
+        id: 3855,
+        firstName: "Corey",
+        lastName: "Crawford",
+        teamId: 20,
+        abbreviation: "CHI",
+        active: true,
+        numberOne: true
+      },
+      '4305': {
+        id: 4305,
+        firstName: "Brian",
+        lastName: "Elliott",
+        teamId: 6,
+        abbreviation: "PHI",
+        active: true,
+        numberOne: false
+      },
+      '4867': {
+        id: 4867,
+        firstName: "Robin",
+        lastName: "Lehner",
+        teamId: 142,
+        abbreviation: "VGK",
+        active: true,
+        numberOne: false
+      },  
+      '5481': {
+        id: 5481,
+        firstName: "Anton",
+        lastName: "Forsberg",
+        teamId: 3,
+        abbreviation: "CAR",
+        active: true,
+        numberOne: true
+      },
+      '15154': {
+        id: 15154,
+        firstName: "Carter",
+        lastName: "Hart",
+        teamId: 6,
+        abbreviation: "PHI",
+        active: true,
+        numberOne: true
+      },
+      '5887': {
+        id: 5887,
+        firstName: "Joonas",
+        lastName: "Korpisalo",
+        teamId: 19,
+        abbreviation: "CBJ",
+        active: true,
+        numberOne: true
+      },
+      '4351': {
+        id: 4351,
+        firstName: "Thomas",
+        lastName: "Greiss",
+        teamId: 8,
+        abbreviation: "NYI",
+        active: true,
+        numberOne: false
+      },
+      '4592': {
+        id: 4592,
+        firstName: "Semyon",
+        lastName: "Varlamov",
+        teamId: 8,
+        abbreviation: "NYI",
+        active: true,
+        numberOne: true
+      },
+      '15438': {
+        id: 15438,
+        firstName: "Mackenzie",
+        lastName: "Blackwood",
+        teamId: 7,
+        abbreviation: "NJD",
+        active: true,
+        numberOne: true
+      },
+      '5518': {
+        id: 5518,
+        firstName: "Louis",
+        lastName: "Domingue",
+        teamId: 21,
+        abbreviation: "VAN",
+        active: true,
+        numberOne: false
+      }, 
+      '4575': {
+        id: 4575,
+        firstName: "Cory",
+        lastName: "Schneider",
+        teamId: 7,
+        abbreviation: "NJD",
+        active: true,
+        numberOne: false
+      },
+      '3793': {
+        id: 3793,
+        firstName: "Jimmy",
+        lastName: "Howard",
+        teamId: 16,
+        abbreviation: "DET",
+        active: true,
+        numberOne: false
+      }, 
+      '4271': {
+        id: 4271,
+        firstName: "Jonathan",
+        lastName: "Bernier",
+        teamId: 16,
+        abbreviation: "DET",
+        active: true,
+        numberOne: true
+      },
+      '5671': {
+        id: 5671,
+        firstName: "Adin",
+        lastName: "Hill",
+        teamId: 30,
+        abbreviation: "ARI",
+        active: false,
+        numberOne: false
+      },
+      '4333': {
+        id: 4333,
+        firstName: "Jonathan",
+        lastName: "Quick",
+        teamId: 28,
+        abbreviation: "LAK",
+        active: true,
+        numberOne: true
+      },
+      '5271': {
+        id: 5271,
+        firstName: "Jack",
+        lastName: "Campbell",
+        teamId: 12,
+        abbreviation: "TOR",
+        active: true,
+        numberOne: false
+      },
+      '15690': {
+        id: 15690,
+        firstName: "Elvis",
+        lastName: "Merzlikins",
+        teamId: 19,
+        abbreviation: "CBJ",
+        active: false,
+        numberOne: false
+      },
+      '15452': {
+        id: 15452,
+        firstName: "Marcus",
+        lastName: "Hogberg",
+        teamId: 13,
+        abbreviation: "OTT",
+        active: true,
+        numberOne: true
+      },
+      '15384': {
+        id: 15384,
+        firstName: "Calvin",
+        lastName: "Petersen",
+        teamId: 28,
+        abbreviation: "LAK",
+        active: true,
+        numberOne: false
+      },
+      '18296': {
+        id: 18296,
+        firstName: "David",
+        lastName: "Ayres",
+        teamId: 3,
+        abbreviation: "CAR",
+        active: false,
+        numberOne: false
+      },
+      '11703': {
+        id: 11703,
+        firstName: "Alex",
+        lastName: "Nedeljkovic",
+        teamId: 3,
+        abbreviation: "CAR",
+        active: true,
+        numberOne: false
+      }
+    }
   }
 
   public getWeekTimes() {
@@ -1735,6 +2387,10 @@ export class UtilService {
 
   public getNHLTeams() {
     return this.nhlTeams;
+  }
+
+  public getStartingGoalies() {
+    return this.startingGoalies;
   }
 
   public getNBAImages() {

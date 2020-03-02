@@ -61,80 +61,7 @@ export class TomorrowResultsComponent implements OnInit {
   fullFirebaseResponse: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
   public playerImages: any;
-
-  public startingG = {
-    '5617':'5617', //Copley'5571':'5571',
-    '4863':'4863',
-    '5107':'5107',
-    '5908':'5908',
-    '757':'757',
-    //'5033':'5033', //Nilsson
-    '5109':'5109',
-    //'4874':'4874', //markstrom
-    '4950':'4950',
-    '3486':'3486',
-    '10074':'10074',
-    '5122':'5122',
-    '483':'483',
-    '5528':'5528',
-    '13876':'13876',
-    //'5366':'5366', //hutchinson //kask '13660': '13660',
-    '15525':'15525', //sam montebolt
-    //'5540': '5540', //drieger 
-    '4890':'4890',
-    '5420':'5420',
-    '5873':'5873',
-    '5552':'5552',
-    '3647':'3647', //Lundqvist
-    '13934':'13934', //Georgiv,
-    //'17374':'17374', //shesterkin
-    '5224':'5224',
-    //'5842':'5842', //ullmark
-    '17380':'17380', //johansson
-    '5894':'5894',
-    '10083':'10083',
-    '4294':'4294',
-    //KInkaid '5180':'5180',
-    //'4862':'4862', //reimer
-    '5163':'5163',
-    '4666':'4666',
-    '4947':'4947',
-    '3810':'3810',
-    '5877':'5877',
-    '4235':'4235',
-    '4326':'4326',
-    '4561':'4561',
-    '4763':'4763',
-    '11724':'11724',
-    '5277':'5277',
-    //'5176':'5176', //grubauer
-    '15442':'15442',
-    //'5168':'5168', //kuemper
-    '5296':'5296',
-    '5227':'5227',
-    '178':'178',
-    '4310':'4310',
-    '3855':'3855',
-    '4305':'4305',
-    //'4867':'4867', //lehner  
-    '5481':'5481', //forsberg
-    '15154':'15154',
-    '5887':'5887', //korpiisalo
-    '4351':'4351',
-    '4592':'4592',
-    '15438':'15438',
-    '5518': '5518', //dominique // schneider'4575':'4575',
-    '3793':'3793', // Howard
-    '4271':'4271',
-    '5671': '5671', //hill
-    '4333':'4333',
-    '5271':'5271',
-    '15690':'15690',
-   // '17363': '17363', //senn
-    '15452':'15452', //Hogberg
-    '15384':'15384', //Petersen
-    '18296':'18296' //ayres
-  }
+  public startingG: any;
 
   constructor(private http: HttpClient, 
     private tomorrowService: TomorrowService, 
@@ -152,6 +79,7 @@ export class TomorrowResultsComponent implements OnInit {
     this.sentDataTomorrow = this.tomorrowService.getSentStats();
     this.sentDataToday = this.todayService.getSentStats();
     this.playerImages = this.util.getNHLImages();
+    this.startingG = this.util.getStartingGoalies();
   }
 
 
@@ -649,7 +577,7 @@ export class TomorrowResultsComponent implements OnInit {
                   //4449 Jeff Glass is blocked //9072 Lindgren //11721 Lagace //Sateri 13871 //Brossoit 5552 //8952 Wedgewood //9072 Lindgren //13873 DeSmith //10083 Jarry //Lyon 13662
                   //&& startdata.player.injuryOut == null && startdata.player.id != '11721' && startdata.player.id != '13871' && startdata.player.id != '4449' && startdata.player.id != '5552' && startdata.player.id != '8952' && startdata.player.id != '9072' && startdata.player.id != '10083' && startdata.player.id != '13662'
                   //startdata.stats.goaltending.gamesStarted > 1
-                  if (this.startersDate != startdata.team.today && startdata.player.currentRosterStatus === "ROSTER" && this.startingG[startdata.player.id] != null) {
+                  if (this.startersDate != startdata.team.today && this.startingG[startdata.player.id] != null && this.startingG[startdata.player.id].active === true) {
               
                     startdata.player.startingToday = false;
                     startdata.player.likelyStartingToday = true;
@@ -658,7 +586,7 @@ export class TomorrowResultsComponent implements OnInit {
 
 
                   }
-                } else if (startid === startdata.player.id && startdata.player.currentRosterStatus === "ROSTER" && this.startingG[startdata.player.id] != null) {
+                } else if (startid === startdata.player.id && this.startingG[startdata.player.id] != null && this.startingG[startdata.player.id].active === true) {
                   startdata.player.startingToday = true;
                   //console.log(startdata, 'player data');
                   this.startersData.push(startdata);
