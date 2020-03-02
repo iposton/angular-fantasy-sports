@@ -41,6 +41,12 @@
   width: 80%!important;
   .left-content {
     width: 300px;
+    display: block;
+    text-align: left;
+    img {
+      width: 15%;
+      margin: 0;
+    }
   }
   .lg {
     width: 33%;

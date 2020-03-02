@@ -31,6 +31,7 @@ let dailyTeams = [];
 let teamRef = [];
 let teamString = '';
 let teams = null;
+let startingGoalieArray = null;
 
 @Component({
   selector: 'app-starting-goalies',
@@ -85,18 +86,19 @@ export class StartingGoaliesComponent implements OnInit {
   noGamesMsg: any;
   noScoresMsg: any;
   noScores: any;
-  startersDate: any;
+  public startersDate: any;
+  public startersDateTomorrow: any;
   tomorrowDate: any;
   fullFirebaseResponse: any;
   loading: boolean = true;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
   public teamSchedules: Array <any> = [];
-
   public stats: boolean = false;
   public weekResults: boolean = false;
   hitCount: any;
   public playerImages: any;
   public teams: any;
+  public startingG: any;
 
 
   goalieIdSet: boolean = false;
@@ -137,7 +139,8 @@ export class StartingGoaliesComponent implements OnInit {
     this.sentTomorrowData = this.tomorrowService.getSentStats();
     this.playerImages = this.util.getNHLImages();
     teams = this.util.getNHLTeams();
-    
+    this.startingG = this.util.getStartingGoalies();
+    startingGoalieArray = Object.values(this.startingG);
   }
 
 
@@ -152,6 +155,7 @@ export class StartingGoaliesComponent implements OnInit {
           console.log(res, 'got response from firebase...');
           this.fullFirebaseResponse = res[0];
           this.startersDate = res[0][0]['todayDate'];
+          this.startersDateTomorrow = res[0][2]['tomorrowDate'];
           this.todayStarters = res[0][1];
           this.allGoalies = Array.of(res[0][1]);
           this.allGoaliesTomorrow = Array.of(res[0][3]);
@@ -374,6 +378,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
  async sortData() {
+  
     let promiseOne;
     promiseOne = new Promise((resolve, reject) => {
     if (this.gamesToday === true) {
@@ -404,7 +409,18 @@ export class StartingGoaliesComponent implements OnInit {
           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null || player.player.lastName === 'Lehner' && player.team != null); 
 
         if (this.myData && this.dailySchedule) {
+          if (this.startersDate != today) {
+            //reset firebase probable and confirms
+            this.reset();
+          }
+          if (this.startersDateTomorrow != tomorrow) {
+             //reset firebase probable and confirms
+             this.selectAll();
+          }
           console.log('start sorting data for daily schedule...');
+          // for (let data of startingGoalieArray) {
+          //   data.tormorrow = tomorrow;
+          // }
           for (let schedule of this.dailySchedule) {
 
               //console.log(this.myData, 'filtered myData')
@@ -578,12 +594,28 @@ export class StartingGoaliesComponent implements OnInit {
         }
 
         if (this.myData && this.fullSchedule) {
+          // const startingGoalieArray = Object.values(this.startingG);
+          
           console.log('start sorting data for full schedule...');
           let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
+              for (let fs of this.fullSchedule) {
+                for (let sg of startingGoalieArray) {
+                  if (this.startersDateTomorrow != tomorrow && tomorrow === dPipe.transform(fs['schedule'].startTime, 'yyyy-MM-dd')) {
+                    if (fs['schedule'].awayTeam.id == sg['teamId'] || fs['schedule'].homeTeam.id == sg['teamId']) {
+                      if (sg['numberOne']) {
+                        this.fullFirebaseResponse[3][sg['id']].probable = true;
+                      }
+                    }
+    
+                  }
+                }
+              }
           for (let full of this.fullSchedule) {
 
             for (let btb of this.myData) {
+
+             
 
               if (full['schedule'].awayTeam.id === btb.player.currentTeam.id) {
               
@@ -598,8 +630,12 @@ export class StartingGoaliesComponent implements OnInit {
 
 
                 if (btb.team.tomorrow === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd')) {
-
+                  console.log(btb.team.tomorrow, dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd'), btb.team.tomorrow === dPipe.transform(full['schedule'].startTime, 'yyyy-MM-dd'))
                   btb.team.haveGameTomorrow = true;
+                  // let starterWins = [];
+                  // starterWins.push(btb.player.stats.goaltending.wins);
+                  // btb.team.starterWins = starterWins;
+                  // btb.team.starterWinsMax = Math.max(...starterWins);
                 }
 
               }
@@ -676,8 +712,6 @@ export class StartingGoaliesComponent implements OnInit {
               data.team.firstBacktoBack = "";
             }
           }
-
-
 
         }
 
@@ -759,11 +793,21 @@ export class StartingGoaliesComponent implements OnInit {
                     console.log(startdata.player, 'expected goalies from api');
                     startdata.player.startingToday = true;
                     startdata.player.startingTodayNow = false;
-                    
+                    if (this.fullFirebaseResponse[1][startdata.player.id] != null) {
+                      this.fullFirebaseResponse[1][startdata.player.id].probable = true;
+                    }
+     
                     this.startersData.push(startdata);
                   }
 
-                }
+                } 
+                // if (this.startersDateTomorrow != startdata.team.tomorrow && startdata.team.haveGameTomorrow === true) {
+                 
+                //   if (this.fullFirebaseResponse[3][startdata.player.id] != null && this.startingG[startdata.player.id] != null) {
+                //    if (startdata.stats.goaltending != null && startdata.stats.goaltending.wins > 10)
+                //      this.fullFirebaseResponse[3][startdata.player.id].probable = true;
+                //    }
+                // }
 
               }
             }
@@ -1038,6 +1082,16 @@ export class StartingGoaliesComponent implements OnInit {
       if (this.fullFirebaseResponse[3][info.player.id] != null) {
         this.fullFirebaseResponse[3][info.player.id].confirmed = false;
         this.fullFirebaseResponse[3][info.player.id].probable = false;
+        //console.log(this.fullFirebaseResponse, "make all starters false");
+      }
+    }
+  }
+
+  public reset() {
+    for (let info of this.myData) {
+      if (this.fullFirebaseResponse[1][info.player.id] != null) {
+        this.fullFirebaseResponse[1][info.player.id].confirmed = false;
+        this.fullFirebaseResponse[1][info.player.id].probable = false;
         //console.log(this.fullFirebaseResponse, "make all starters false");
       }
     }

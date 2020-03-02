@@ -349,3 +349,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .live {
   color:#2ecc71; 
 }
+
+.plus {
+  color: #2ecc71;
+}
+.minus {
+  color: #f44336;
+}
+
+section {
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.dn {
+  display: none;
+}
