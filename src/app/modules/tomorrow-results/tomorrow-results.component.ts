@@ -605,6 +605,7 @@ export class TomorrowResultsComponent implements OnInit {
                  data.team.id === team.team.id) {
                  data.team.win = team.stats.standings.wins;
                  data.team.loss = team.stats.standings.losses;
+                 data.team.gamesPlayed = team.stats.gamesPlayed;
                }
              }  
           }

@@ -273,7 +273,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200224-to-20200301`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200302-to-20200308`, { headers })
                     
                   )
                 )
@@ -406,7 +406,7 @@ export class StartingGoaliesComponent implements OnInit {
         console.log(res['playerStatsTotals'], "cumulative stats...");
     
         this.myData = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null || player.player.lastName === 'Lehner' && player.team != null); 
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null || player.player.lastName === 'Lehner' && player.team != null || player.player.lastName === 'Hutchinson' && player.team != null); 
 
         if (this.myData && this.dailySchedule) {
           if (this.startersDate != today) {

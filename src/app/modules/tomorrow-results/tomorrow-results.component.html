@@ -31,7 +31,7 @@
             <br> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[0].stats.goaltending.wins + ' - ' + data.team.matchup[0].stats.goaltending.losses+ ' - ' + data.team.matchup[0].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{ data.team.matchup[0].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[0].stats.goaltending.goalsAgainstAverage }}</span> <br>
-              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / (data.team.matchup[0]?.team?.win + data.team.matchup[0]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / data.team.matchup[0]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[0].player.injured === true" style="color:red;">{{data.team.matchup[0].player.injury}}</span>
             <br>
              <span *ngIf="data.team.matchup[0].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[0].player.lastName}} gave up {{ data.team.matchup[0].player.saYesterday - data.team.matchup[0].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[0].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[0].player.lossesYesterday === '1'"> and lost</span>.
@@ -51,7 +51,7 @@
             <br> <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[1].stats.goaltending.wins + ' - ' + data.team.matchup[1].stats.goaltending.losses + ' - ' + data.team.matchup[1].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[1].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[1].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / (data.team.matchup[1]?.team?.win + data.team.matchup[1]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / data.team.matchup[1]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[1].player.injured === true" style="color:red;">{{data.team.matchup[1].player.injury}}</span>
             <br>
              <span *ngIf="data.team.matchup[1].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[1].player.lastName}} gave up {{ data.team.matchup[1].player.saYesterday - data.team.matchup[1].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[1].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[0].player.lossesYesterday === '1'"> and lost</span>.
@@ -75,7 +75,7 @@
                 <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[0].stats.goaltending.wins + ' - ' +  data.team.matchup[0].stats.goaltending.losses+ ' - ' + data.team.matchup[0].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[0].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[0].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / (data.team.matchup[0]?.team?.win + data.team.matchup[0]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / data.team.matchup[0]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[0].player.injured === true" style="color:red;">{{data.team.matchup[0].player.injury}}</span>
             <br>
              <span *ngIf="data.team.matchup[0].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[0].player.lastName}} gave up {{ data.team.matchup[0].player.saYesterday - data.team.matchup[0].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[0].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[0].player.lossesYesterday === '1'"> and lost</span>.
@@ -98,7 +98,7 @@
                 <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[1].stats.goaltending.wins + ' - ' +  data.team.matchup[1].stats.goaltending.losses+ ' - ' + data.team.matchup[1].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[1].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[1].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / (data.team.matchup[1]?.team?.win + data.team.matchup[1]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / data.team.matchup[1]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[1].player.injured === true" style="color:red;">{{data.team.matchup[1].player.injury}}</span>
             <br>
              <span *ngIf="data.team.matchup[1].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[1].player.lastName}} gave up {{ data.team.matchup[1].player.saYesterday - data.team.matchup[1].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[1].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[1].player.lossesYesterday === '1'"> and lost</span>.
@@ -121,7 +121,7 @@
                 <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[0].stats.goaltending.wins + ' - ' +  data.team.matchup[0].stats.goaltending.losses+ ' - ' + data.team.matchup[0].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[0].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[0].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / (data.team.matchup[0]?.team?.win + data.team.matchup[0]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / data.team.matchup[0]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[0].player.injured === true" style="color:red;">{{data.team.matchup[0].player.injury}}</span>
             <br>
              <span *ngIf="data.team.matchup[1].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[1].player.lastName}} gave up {{ data.team.matchup[1].player.saYesterday - data.team.matchup[1].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[1].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[1].player.lossesYesterday === '1'"> and lost</span>.
@@ -146,7 +146,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[0].stats.goaltending.wins + ' - ' +  data.team.matchup[0].stats.goaltending.losses+ ' - ' + data.team.matchup[0].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[0].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[0].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / (data.team.matchup[0]?.team?.win + data.team.matchup[0]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / data.team.matchup[0]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[0].player.injured === true" style="color:red;">{{data.team.matchup[0].player.injury}}</span>
             <br>
              <span *ngIf="data.team.matchup[0].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[0].player.lastName}} gave up {{ data.team.matchup[0].player.saYesterday - data.team.matchup[0].player.savesYesterday}} goals today<span *ngIf="data.team.matchup[0].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[0].player.lossesYesterday === '1'"> and lost</span>.
@@ -165,7 +165,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[1].stats.goaltending.wins + ' - ' +  data.team.matchup[1].stats.goaltending.losses + ' - ' + data.team.matchup[1].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[1].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[1].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / (data.team.matchup[1]?.team?.win + data.team.matchup[1]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / data.team.matchup[1]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[1].player.injured === true" style="color:red;">{{data.team.matchup[1].player.injury}}</span>
             <br>
              <span *ngIf="data.team.matchup[1].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[1].player.lastName}} gave up {{ data.team.matchup[1].player.saYesterday - data.team.matchup[1].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[1].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[1].player.lossesYesterday === '1'"> and lost</span>.
@@ -191,7 +191,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[0].stats.goaltending.wins + ' - ' +  data.team.matchup[0].stats.goaltending.losses+ ' - ' + data.team.matchup[0].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[0].player.saves == null"><br> 
               {{data.team.matchup[0].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[0].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / (data.team.matchup[0]?.team?.win + data.team.matchup[0]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / data.team.matchup[0]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[0].player.injured === true" style="color:red;">{{data.team.matchup[0].player.injury}}</span>
             <br>
              <span *ngIf="data.team.matchup[0].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[0].player.lastName}} gave up {{ data.team.matchup[0].player.saYesterday - data.team.matchup[0].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[0].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[0].player.lossesYesterday === '1'"> and lost</span>.
@@ -216,7 +216,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[1].stats.goaltending.wins + ' - ' +  data.team.matchup[1].stats.goaltending.losses + ' - ' + data.team.matchup[1].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[1].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[1].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / (data.team.matchup[1]?.team?.win + data.team.matchup[1]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / data.team.matchup[1]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[1].player.injured === true" style="color:red;">{{data.team.matchup[1].player.injury}}</span>
               <br>
              <span *ngIf="data.team.matchup[1].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[1].player.lastName}} gave up {{ data.team.matchup[1].player.saYesterday - data.team.matchup[1].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[1].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[1].player.lossesYesterday === '1'"> and lost</span>.
@@ -241,7 +241,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[0].stats.goaltending.wins + ' - ' +  data.team.matchup[0].stats.goaltending.losses + ' - ' + data.team.matchup[0].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[0].player.saves == null"><br> 
               {{data.team.matchup[0].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[0].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / (data.team.matchup[0]?.team?.win + data.team.matchup[0]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[0]?.stats?.goaltending?.gamesStarted / data.team.matchup[0]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[0].player.injured === true" style="color:red;">{{data.team.matchup[0].player.injury}}</span>
               <br>
              <span *ngIf="data.team.matchup[0].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[0].player.lastName}} gave up {{ data.team.matchup[0].player.saYesterday - data.team.matchup[0].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[0].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[0].player.lossesYesterday === '1'"> and lost</span>.
@@ -267,7 +267,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[1].stats.goaltending.wins + ' - ' +  data.team.matchup[1].stats.goaltending.losses + ' - ' + data.team.matchup[1].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[1].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[1].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / (data.team.matchup[1]?.team?.win + data.team.matchup[1]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / data.team.matchup[1]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[1].player.injured === true" style="color:red;">{{data.team.matchup[1].player.injury}}</span>
               <br>
              <span *ngIf="data.team.matchup[1].player.playedYesterday === true" style="color:#6740B4;">
@@ -298,7 +298,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[1].stats.goaltending.wins + ' - ' +  data.team.matchup[1].stats.goaltending.losses + ' - ' + data.team.matchup[1].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[1].player.saves == null"><br> 
               {{data.team.matchup[1].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[1].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / (data.team.matchup[1]?.team?.win + data.team.matchup[1]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[1]?.stats?.goaltending?.gamesStarted / data.team.matchup[1]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[1].player.injured === true" style="color:red;">{{data.team.matchup[1].player.injury}}</span>
               <br>
              <span *ngIf="data.team.matchup[1].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[1].player.lastName}} gave up {{ data.team.matchup[1].player.saYesterday - data.team.matchup[1].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[1].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[1].player.lossesYesterday === '1'"> and lost</span>.
@@ -317,7 +317,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[2].stats.goaltending.wins + ' - ' +  data.team.matchup[2].stats.goaltending.losses + ' - ' + data.team.matchup[2].stats.goaltending.overtimeLosses}} <span *ngIf="data.team.matchup[2].player.saves == null"><br> 
               {{data.team.matchup[2].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[2].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[2]?.stats?.goaltending?.gamesStarted / (data.team.matchup[2]?.team?.win + data.team.matchup[2]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[2]?.stats?.goaltending?.gamesStarted / data.team.matchup[2]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[2].player.injured === true" style="color:red;">{{data.team.matchup[2].player.injury}}</span>
               <br>
              <span *ngIf="data.team.matchup[2].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[2].player.lastName}} gave up {{ data.team.matchup[2].player.saYesterday - data.team.matchup[2].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[2].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[2].player.lossesYesterday === '1'"> and lost</span>.
@@ -344,7 +344,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[2].stats.goaltending.wins + ' - ' +  data.team.matchup[2].stats.goaltending.losses + ' - ' + data.team.matchup[2].stats.goaltending.overtimeLosses}} <span *ngIf="data.team.matchup[2].player.saves == null"><br> 
               {{data.team.matchup[2].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[2].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[2]?.stats?.goaltending?.gamesStarted / (data.team.matchup[2]?.team?.win + data.team.matchup[2]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[2]?.stats?.goaltending?.gamesStarted / data.team.matchup[2]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[2].player.injured === true" style="color:red;">{{data.team.matchup[2].player.injury}}</span>
               <br>
              <span *ngIf="data.team.matchup[2].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[2].player.lastName}} gave up {{ data.team.matchup[2].player.saYesterday - data.team.matchup[2].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[2].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[2].player.lossesYesterday === '1'"> and lost</span>.
@@ -371,7 +371,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[2].stats.goaltending.wins + ' - ' +  data.team.matchup[2].stats.goaltending.losses + ' - ' + data.team.matchup[2].stats.goaltending.overtimeLosses}} <span *ngIf="data.team.matchup[2].player.saves == null"><br> 
               {{data.team.matchup[2].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[2].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[2]?.stats?.goaltending?.gamesStarted / (data.team.matchup[2]?.team?.win + data.team.matchup[2]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[2]?.stats?.goaltending?.gamesStarted / data.team.matchup[2]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[2].player.injured === true" style="color:red;">{{data.team.matchup[2].player.injury}}</span>
               <br>
              <span *ngIf="data.team.matchup[2].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[2].player.lastName}} gave up {{ data.team.matchup[2].player.saYesterday - data.team.matchup[2].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[2].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[2].player.lossesYesterday === '1'"> and lost</span>.
@@ -390,7 +390,7 @@
                   <span fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">Wins - Losses:</span> {{ data.team.matchup[3].stats.goaltending.wins + ' - ' +  data.team.matchup[3].stats.goaltending.losses+ ' - ' + data.team.matchup[3].stats.goaltending.overtimeLosses }} <span *ngIf="data.team.matchup[3].player.saves == null"><br> 
               {{data.team.matchup[3].stats.goaltending.goalsAgainst}} Goals given up <br>
               Season GAA: {{data.team.matchup[3].stats.goaltending.goalsAgainstAverage}}</span> <br>
-              <span> Likely Start {{ data.team.matchup[3]?.stats?.goaltending?.gamesStarted / (data.team.matchup[3]?.team?.win + data.team.matchup[3]?.team?.loss) * 100 | number | slice:0:4}}%</span><br>
+              <span> Likely Start {{ data.team.matchup[3]?.stats?.goaltending?.gamesStarted / data.team.matchup[3]?.team?.gamesPlayed * 100 | number | slice:0:4}}%</span><br>
             <span *ngIf="data.team.matchup[3].player.injured === true" style="color:red;">{{data.team.matchup[3].player.injury}}</span>
               <br>
              <span *ngIf="data.team.matchup[3].player.playedYesterday === true" style="color:#6740B4;">{{data.team.matchup[3].player.lastName}} gave up {{ data.team.matchup[3].player.saYesterday - data.team.matchup[3].player.savesYesterday}} goals today <span *ngIf="data.team.matchup[3].player.winsYesterday === '1'"> and won</span><span *ngIf="data.team.matchup[3].player.lossesYesterday === '1'"> and lost</span>.
