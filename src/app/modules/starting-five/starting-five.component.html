@@ -874,15 +874,15 @@
                                                         {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
                                                       </span>
                                                   </span>
-                                                  <span [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
-                                                  <span [ngClass]="{'dn' : stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
-                                                  <span [ngClass]="{'dn' : stats != '2' && stats != '1' && stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
-                                                  <span [ngClass]="{'dn' : stats != '3' && stats != '2'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
-                                                  <span [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
-                                                  <span [ngClass]="{'dn' : stats != '5' && stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
-                                                  <span [ngClass]="{'dn' : stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
-                                                  <span [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
-                                                  <span [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats == '7' || stats == '8'}"> {{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.pts : item?.stats?.offense?.ptsPerGame}} Pts </span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats != '1' && stats != '6'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.min : ((item?.stats?.miscellaneous.minSecondsPerGame / 60) | number:'1.0-0')}} Min </span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats != '2' && stats != '1'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.reb : item?.stats?.rebounds?.rebPerGame}} Reb </span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats != '3' && stats != '2' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.ast : item?.stats.offense?.astPerGame }} Ast </span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats != '4' && stats != '3'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.stl : item?.stats?.defense?.stlPerGame}} Stl </span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats != '4'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.blk : item?.stats?.defense?.blkPerGame}} Blk </span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats != '6' && stats != '5'}">{{item?.starterInfo?.status != 'UNPLAYED' ? item?.player?.tpm : item?.stats?.fieldGoals?.fg3PtMadePerGame}} TPM </span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats != '7'}"> Likely Start {{ item?.stats?.miscellaneous?.gamesStarted / item?.stats?.gamesPlayed * 100 | number | slice:0:4}}%</span>
+                                                  <span class="lg" [ngClass]="{'dn' : stats != '8'}"> {{item?.team?.gamesThisWeek}} Games This Week</span>
                                                 
                                                   </span>
                                               
