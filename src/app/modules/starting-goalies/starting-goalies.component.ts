@@ -265,7 +265,7 @@ export class StartingGoaliesComponent implements OnInit {
               this.gamesToday = true;
               //this.sortData(); //work around when no games
 
-              if (this.teamSchedules.length === 0) {
+              if (this.teamSchedules.length === 0 && res['games'].length === 0) {
                 let team;
                 let teamSchedule;
                 const nhlTeamsArray = Object.values(teams);
@@ -406,10 +406,10 @@ export class StartingGoaliesComponent implements OnInit {
         console.log(res['playerStatsTotals'], "cumulative stats...");
     
         this.myData = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null || player.player.lastName === 'Lehner' && player.team != null || player.player.lastName === 'Hutchinson' && player.team != null); 
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null); 
 
         if (this.myData && this.dailySchedule) {
-          if (this.startersDate != today) {
+          if (this.startersDate != today && this.startersDateTomorrow != tomorrow) {
             //reset firebase probable and confirms
             this.reset();
           }

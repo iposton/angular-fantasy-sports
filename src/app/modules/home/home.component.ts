@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
       this.meta.addTag({ name: 'twitter:site', content: '@FanSpRes' });
       this.meta.addTag({ name: 'twitter:title', content: 'NHL and NBA Stats & Starters' });
       this.meta.addTag({ name: 'twitter:description', content: 'NHL Starting Golaies and NBA Starting 5' });
-      this.meta.addTag({ name: 'twitter:image', content: 'https://fantasy-sports-resources/assets/fsr.png' });
+      this.meta.addTag({ name: 'twitter:image', content: 'https://fantasy-sports-resources.com/assets/fsr.png' });
      //this.loading = false;
      //this.getJSON();
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
