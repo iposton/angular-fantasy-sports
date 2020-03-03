@@ -4,14 +4,10 @@ const request = require('request');
 const cors = require('cors');
 const http = require('http');
 const path = require('path');
-const Heroku = require('heroku-client');
 const CryptoJS = require("crypto-js");
 let ciphertext = null;
 
-const heroku = new Heroku({ token: process.env.API_TOKEN })
-
 const app = express();
-
 let TOKEN = '';
 let consumerkey = process.env.TWITTER_KEY;
 let consumersecret = process.env.TWITTER_SECRET;
@@ -50,23 +46,7 @@ app.post('/search', function(req, res) {
          })
     });
 
-
-
 app.use(express.static(path.join(__dirname, 'dist')));
-
-
-// heroku.request({
-//   method: 'GET',
-//   path: 'https://api.heroku.com/apps/fantasy-sports-resource/config-vars',
-//   headers: {
-//     "Accept": "application/vnd.heroku+json; version=3",
-//     "Authorization": "Bearer "+process.env.API_TOKEN
-//   },
-//   parseJSON: true
-// }).then(response => {
-//   ciphertext = CryptoJS.AES.encrypt(response.TOKEN, 'footballSack').toString();
-//   TOKEN = ciphertext;
-// })
 
 app.get('/heroku-env', (req, res) => {
         ciphertext = CryptoJS.AES.encrypt(process.env.TOKEN, 'footballSack').toString();
@@ -74,11 +54,9 @@ app.get('/heroku-env', (req, res) => {
         res.json(TOKEN);
 });
 
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'))
 });
-
 
 const port = process.env.PORT || '3001';
 app.set('port', port);
