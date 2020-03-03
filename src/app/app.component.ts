@@ -19,7 +19,7 @@ export class AppComponent {
       //   content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.'
       // });
       this.meta.addTag({ name: 'description', content: 'NHL Starting Goalies and NBA Starting Lineup' });
-      this.meta.addTag({ name: 'keywords', content: 'Hockey, Fantasy, BasketBall, Stats' });
+      this.meta.addTag({ name: 'keywords', content: 'Hockey, Fantasy, Basketball, Stats' });
       this.meta.addTag({ property: 'og:type', content: 'website' });
       this.meta.addTag({ property: 'og:site_name', content: 'Fantasy Sports Resources' });
       this.meta.addTag({ property: 'og:title', content: 'NHL and NBA Live Stats & Starters' });
