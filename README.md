@@ -23,7 +23,6 @@ This app can help explain how to fetch data using [Angular's HttpClient Module](
 * [Firebase](https://firebase.google.com/) (version 4.10.1) 
 * @angular/fire (version 5.2.1)
 * NPM (version 6.13.7)
-* Heroku Client (version 3.0.7)
 * rxjs (version 6.5.4)
 * [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#)
 * [Crypto-js](https://github.com/brix/crypto-js) (version 4.0.0)
@@ -502,7 +501,6 @@ Adding the environment variable for the MySportsFeeds api. I didn't want to shar
 
 * I used my heroku account token to authenticate Heroku Client. I saved it to the config vars of this app as `API_TOKEN`.
 * To set up a node.js express server run `npm i express http path`
-* Install heroku-client to be able to fetch config variables `npm i heroku-client`
 * To encrypt the apiKey (TOKEN) before sending to client run `npm i crypto-js`
 
 ```ts
@@ -513,7 +511,6 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const Heroku = require('heroku-client')
-const heroku = new Heroku({ token: process.env.API_TOKEN })
 const CryptoJS = require("crypto-js");
 const app = express();
 
@@ -522,22 +519,10 @@ let ciphertext = null;
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-//GET CONFIG VAR FROM SPECIFIC HEROKU APP
-heroku.request({
-  method: 'GET',
-  path: 'https://api.heroku.com/apps/my-app-name/config-vars',
-  headers: {
-    "Accept": "application/vnd.heroku+json; version=3",
-    "Authorization": "Bearer "+process.env.API_TOKEN
-  },
-  parseJSON: true
-}).then(response => {
-  ciphertext = CryptoJS.AES.encrypt(response.TOKEN, 'myPassword').toString();
-  TOKEN = ciphertext;
-})
-
 //SEND API KEY TO FRONT-END APP.COMPONENT.TS
 app.get('/heroku-env', function(req, res){
+  ciphertext = CryptoJS.AES.encrypt(response.TOKEN, 'myPassword').toString();
+  TOKEN = ciphertext;
   res.json(TOKEN);
 });
 
@@ -562,7 +547,6 @@ server.listen(port, () => console.log(`Running on localhost:${port}`));
 //app.component.ts 
 
 import { Component, ViewChild, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
 
@@ -574,8 +558,6 @@ import * as CryptoJS from 'crypto-js';
 
 export class AppComponent implements OnInit {
    
-  defineToken: string = '';
-
    constructor(private http: Http) {}
 
    getEnv() {

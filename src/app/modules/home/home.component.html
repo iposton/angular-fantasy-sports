@@ -71,19 +71,19 @@
                
                <span *ngIf="item.schedule?.playedStatus === 'LIVE'">
                      <span class="live">LIVE</span> 
-                     <span *ngIf="currentIntermission === 1">
+                     <span *ngIf="item?.score?.currentIntermission === 1">
                            Intermission 1st Quarter
                      </span>
-                     <span *ngIf="currentIntermission === 2">
+                     <span *ngIf="item?.score?.currentIntermission === 2">
                        HALFTIME
                      </span>
-                     <span *ngIf="currentIntermission === 3">
+                     <span *ngIf="item?.score?.currentIntermission === 3">
                            Intermission 3rd Quarter
                      </span>
-                     <span *ngIf="currentIntermission === 4">
+                     <span *ngIf="item?.score?.currentIntermission === 4">
                            Game Over
                      </span>
-                     <span *ngIf="currentIntermission == null">
+                     <span *ngIf="item?.score?.currentIntermission == null">
                         {{item?.score?.currentQuarterSecondsRemaining | minuteSeconds }} 
                         {{item?.score?.currentQuarter}}<span *ngIf="item?.score?.currentQuarter === 1">st</span>
                         <span *ngIf="item?.score?.currentQuarter === 4">th</span>
@@ -201,17 +201,17 @@
                </span>
                <!-- if currentIntermission: 2 half time or intermission -->
                <span *ngIf="item.schedule?.playedStatus === 'LIVE'">
-                     <span *ngIf="currentIntermission === 1">
+                     <span *ngIf="item?.score?.currentIntermission === 1">
                            Intermission 1st Period
                      </span>
-                     <span *ngIf="currentIntermission === 2">
+                     <span *ngIf="item?.score?.currentIntermission === 2">
                            Intermission 2nd Period
                      </span>
-                     <span *ngIf="currentIntermission === 3">
+                     <span *ngIf="item?.score?.currentIntermission === 3">
                            Game Over
                      </span>
                      <span class="live">LIVE</span> 
-                     <span *ngIf="currentIntermission == null">
+                     <span *ngIf="item?.score?.currentIntermission == null">
                         {{item?.score?.currentPeriodSecondsRemaining | minuteSeconds }} 
                         {{item?.score?.currentPeriod}}<span *ngIf="item?.score?.currentPeriod === 1">st</span>
                         <span *ngIf="item?.score?.currentPeriod === 3">rd</span>
