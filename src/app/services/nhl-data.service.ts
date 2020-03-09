@@ -78,7 +78,7 @@ export class NHLDataService {
   getDailySchedule() {
     
     if (!this.schedule) {
-      console.log('getting schedule data from API...');
+      console.log('getting nhl schedule data from API...');
       
       let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
       this.schedule = this.http.get(url, {headers})
@@ -223,34 +223,6 @@ export class NHLDataService {
         
     }
     return this.injured;
-  }
-
-  getUnusualStats() {
-    let data = {
-      "user": "ianposton",
-      "pass": "NHLHOCKEYSTATSFSR",
-      "query" : {
-              "type": "find",
-              "collection" : "coaches",
-              "filter" : {
-     "team" : "ARI"
-              },
-              "fields" : {
-                      "name": 1,
-              }
-      }
-  }
-    //let json = JSON.stringify(qObj);
-
-    //this.http.get('url'+'?myobj='+encodeURIComponent(json)
-    let headers = new HttpHeaders({
-      'Content-Type':  'application/json'
-      //'Authorization': 'my-auth-token'
-    }) //.set("Authorization", "Basic " + btoa('ianposton' + ":" + 'NHLHOCKEYSTATSFSR'));
-    //let myParams = new HttpParams().set("user", "ianposton").set("pass", "NHLHOCKEYSTATSFSR").set("query", encodeURIComponent(json));
-    this.uStats = this.http.post('https://morehockeystats.com/api/post.json', data, {headers}) //https://morehockeystats.com/api
-    return this.uStats;
-
   }
 
 

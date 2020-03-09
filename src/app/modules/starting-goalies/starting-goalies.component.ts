@@ -265,7 +265,7 @@ export class StartingGoaliesComponent implements OnInit {
               this.gamesToday = true;
               //this.sortData(); //work around when no games
 
-              if (this.teamSchedules.length === 0 && res['games'].length === 0) {
+              if (this.teamSchedules.length === 0) {
                 let team;
                 let teamSchedule;
                 const nhlTeamsArray = Object.values(teams);
@@ -273,7 +273,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200302-to-20200308`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200309-to-20200315`, { headers })
                     
                   )
                 )
