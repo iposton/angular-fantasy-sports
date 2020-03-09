@@ -117,7 +117,7 @@ export class NBADataService {
       // pass in week
     //get all games for today get game ID and find a pitchers opponent
    // if (!this.schedule) {
-      console.log('getting nfl schedule for today from api...', dailyDate);
+      console.log('getting nba schedule for today from api...', dailyDate);
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
       let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;

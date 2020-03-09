@@ -270,7 +270,7 @@ export class StartingFiveComponent implements OnInit {
                   nbaTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200302-to-20200308`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200309-to-20200315`, { headers })
                     
                   )
                 )
@@ -1083,7 +1083,7 @@ export class StartingFiveComponent implements OnInit {
   }
 
   public open(event, data, type) {
-    this.gaService.eventEmitter("nba player info "+data.playerObj.player.lastName, "nbatwitter", "tweet", "click", 10);
+    this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
     data.area = type;
     this.selected = data;
     console.log(data, 'ok you clicked on player img...');

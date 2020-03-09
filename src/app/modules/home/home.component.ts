@@ -151,12 +151,12 @@ loadData() {
         let originalText = bytes.toString(CryptoJS.enc.Utf8);
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
         
-        this.dataService
-          .sendHeaderOptions(headers);
+        // this.dataService
+        //   .sendHeaderOptions(headers);
         this.nbaDataService
           .sendHeaderOptions(headers);
-        this.nflDataService
-          .sendHeaderOptions(headers, this.selectedWeek, this.apiRoot);
+        // this.nflDataService
+        //   .sendHeaderOptions(headers, this.selectedWeek, this.apiRoot);
         this.nhlDataService
           .sendHeaderOptions(headers);
 
