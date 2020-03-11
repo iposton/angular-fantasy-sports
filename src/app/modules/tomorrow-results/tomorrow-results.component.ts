@@ -225,20 +225,21 @@ export class TomorrowResultsComponent implements OnInit {
                     res2.forEach((item, index) => {
 
                       i2 = index;
-                      if (res2[i2].actual != null && res2[i2].expected != null) {
-                        //console.log(res2[i2].actual.starter[0].player.id, 'got player ID for goalie actualy starting!');
-                        this.starterIdData.push(res2[i2].actual.starter[0].player.id);
+                      this.starterIdData.push(res2[i2].team.id);
+                      // if (res2[i2].actual != null && res2[i2].expected != null) {
+                      //   //console.log(res2[i2].actual.starter[0].player.id, 'got player ID for goalie actualy starting!');
+                      //   this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.id);
 
-                      } else if (res2[i2].actual == null && res2[i2].expected != null) {
-                        //console.log(res2[i2].expected.starter[0].player.id, 'got player ID for goalie expected to start!');
-                        this.starterIdData.push(res2[i2].expected.starter[0].player.id);
-                      } else {
-                        //console.log(res2[i2].team.City + " " + res2[i2].team.Name, 'no starters yet!');
-                        this.starterIdData.push(res2[i2].team.id);
-                        //this.starterIdData.push(res2[i2].expected.starter[0].player.id);
-                        //console.log(this.starterIdData, 'this array has ALL the IDs of todays starters');
+                      // } else if (res2[i2].actual == null && res2[i2].expected != null) {
+                      //   //console.log(res2[i2].expected.starter[0].player.id, 'got player ID for goalie expected to start!');
+                      //   this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.id);
+                      // } else {
+                      //   //console.log(res2[i2].team.City + " " + res2[i2].team.Name, 'no starters yet!');
+                      //   this.starterIdData.push(res2[i2].team.id);
+                      //   //this.starterIdData.push(res2[i2].expected.starter[0].player.id);
+                      //   //console.log(this.starterIdData, 'this array has ALL the IDs of todays starters');
 
-                      }
+                      // }
 
                     });
                   });
@@ -316,17 +317,6 @@ export class TomorrowResultsComponent implements OnInit {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameIce = schedule.schedule.venue.name;
 
-                // if (schedule.schedule.location === 'Nassau Coliseum') {
-                //   sdata.team.gameIce = 'Barclays Center';
-                // } else if (schedule.schedule.location === 'Verizon Center') {
-                //   sdata.team.gameIce = 'Capital One Arena';
-                // } else if (schedule.schedule.location === 'Joe Louis Arena') {
-                //   sdata.team.gameIce = 'Little Caesars Arena';
-                // } else if (schedule.schedule.location === 'Consol Energy Center') {
-                //   sdata.team.gameIce = 'PPG Paints Arena';
-                // } else {
-                //   sdata.team.gameIce = schedule.schedule.location;
-                // }
 
                 sdata.team.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "away";
@@ -353,18 +343,6 @@ export class TomorrowResultsComponent implements OnInit {
               if (schedule.schedule.homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameIce = schedule.schedule.venue.name;
-
-                // if (schedule.schedule.location === 'Nassau Coliseum') {
-                //   sdata.team.gameIce = 'Barclays Center';
-                // } else if (schedule.schedule.location === 'Verizon Center') {
-                //   sdata.team.gameIce = 'Capital One Arena';
-                // } else if (schedule.schedule.location === 'Joe Louis Arena') {
-                //   sdata.team.gameIce = 'Little Caesars Arena';
-                // } else if (schedule.schedule.location === 'Consol Energy Center') {
-                //   sdata.team.gameIce = 'PPG Paints Arena';
-                // } else {
-                //   sdata.team.gameIce = schedule.schedule.location;
-                // }
 
                 sdata.team.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "home";
@@ -563,8 +541,6 @@ export class TomorrowResultsComponent implements OnInit {
           }
         }
 
-
-
         if (this.myData && this.gamesToday === true) {
 
           if (this.starterIdData.length > 0) {
@@ -587,7 +563,9 @@ export class TomorrowResultsComponent implements OnInit {
 
                   }
                 } else if (startid === startdata.player.id && this.startingG[startdata.player.id] != null && this.startingG[startdata.player.id].active === true) {
-                  startdata.player.startingToday = true;
+                  //startdata.player.startingToday = true;
+                  startdata.player.startingToday = false;
+                  startdata.player.likelyStartingToday = true;
                   //console.log(startdata, 'player data');
                   this.startersData.push(startdata);
 
