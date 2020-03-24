@@ -778,7 +778,8 @@ export class StartingGoaliesComponent implements OnInit {
 
               for (let startdata of this.myData) {
                 //startdata.stats.goaltending.gamesStarted > 1
-                if (startid === startdata.player.currentTeam.id) {
+               // this.startersDate != startdata.team.today && this.startingG[startdata.player.id] != null && this.startingG[startdata.player.id].active === true
+                if (startid === startdata.player.currentTeam.id && this.startingG[startdata.player.id] != null && this.startingG[startdata.player.id].active === true) {
                   if (this.startersDate != startdata.team.today) {
 
                     startdata.player.startingToday = false;
