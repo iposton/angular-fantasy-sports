@@ -1731,7 +1731,8 @@
           <img src="{{ data.team.opponentLogo }}" alt=""> VS <img src="{{ data.team.logo }}" alt="">
           <br> {{data.team.opponent}} @ {{data.team.city +' '+ data.team.name}}
           <br>
-          <span class="green-dot" *ngIf="data.team.matchup[0].player.saves != null || data.team.matchup[1].player.saves != null"></span> Puck drops: {{data.player.gameTime | date: 'shortTime'}} PST @ {{ data.team.gameIce }}
+          <span class="green-dot" *ngIf="data.team.matchup[0].player.saves != null || data.team.matchup[1].player.saves != null"></span> Puck drops: PPD @ {{ data.team.gameIce }}
+          <!-- {{data.player.gameTime | date: 'shortTime'}} PST -->
           <br> <br>
           <a class="score-btn" (click)="toggleFlip(data, data.team.gameId)"  *ngIf="data.team.matchup[0].player.saves != null">SCORE</a>
          </p>

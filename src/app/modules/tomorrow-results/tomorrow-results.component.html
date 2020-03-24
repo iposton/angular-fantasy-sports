@@ -403,7 +403,8 @@
         <p class="game-info">
           <img src="{{ data.team.opponentLogo }}" alt="{{data.team.opponentCity +' '+ data.team.opponentName}} logo"> VS <img src="{{ data.team.logo }}" alt="{{data.team.city +' '+ data.team.name}} logo">
           <br> {{data.team.opponentCity +' '+ data.team.opponentName}} @ {{data.team.city +' '+ data.team.name}}
-          <br> Puck drops: {{data.player.gameTime | date: 'shortTime'}} PST @ {{ data.team.gameIce }}
+          <br> Puck drops: PPD @ {{ data.team.gameIce }}
+          <!-- {{data.player.gameTime | date: 'shortTime'}} PST -->
           <br>
           <br>
           <!-- <span *ngIf="data.player.startingToday === true">
