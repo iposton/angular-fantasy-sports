@@ -136,7 +136,6 @@ export class NBADataService {
       //let url = `${this.apiRoot}/cumulative_player_stats.json?position=PG,SG,SF,PF,C&player=`+playerID;
       //let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2018-2019-regular/player_stats_totals.json?position=PG,SG,SF,PF,C`; 
       let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?player=${players}`;
-      //let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?position=P&player=${players}`;//&player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     //}
@@ -149,7 +148,7 @@ export class NBADataService {
 
       console.log('getting total player stats from API...');
       //cumulative_player_stats.json?position=PG,SG,SF,PF,C&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2018-2019-regular/player_stats_totals.json?position=PG,SG,SF,PF,C`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?position=PG,SG,SF,PF,C`;
       this.allstats = this.http.get(url, {headers})
       
     //}

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from '../modules/home/home.component';
 import { StartingFiveComponent } from '../modules/starting-five/starting-five.component';
 import { StartingLineComponent } from '../modules/starting-line/starting-line.component';
+import { StatLeadersComponent } from '../modules/stat-leaders/stat-leaders.component';
 import { TouchesComponent } from '../modules/touches/touches.component';
 import { StartingPitcherComponent } from '../modules/starting-pitcher/starting-pitcher.component';
 import { PitchingStatsComponent, MyDialog } from '../modules/pitching-stats/pitching-stats.component';
@@ -51,6 +52,10 @@ const routes: Routes = [
    {
          path: 'starting-five',
          component: StartingFiveComponent
+   },
+   {
+       path: 'stat-leaders',
+       component: StatLeadersComponent
    },
    {
           path: '**', 
