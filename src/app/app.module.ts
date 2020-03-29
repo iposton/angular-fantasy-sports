@@ -37,6 +37,7 @@ import { environment } from '../environments/environment';
 import { OrderBy } from './pipes/orderby.pipe';
 
 import { HomeComponent } from './modules/home/home.component';
+import { StatLeadersComponent } from './modules/stat-leaders/stat-leaders.component';
 import { StartingFiveComponent, NBATodayDialog, NBAInfo } from './modules/starting-five/starting-five.component';
 import { StartingLineComponent } from './modules/starting-line/starting-line.component';
 import { TouchesComponent, LastweekNFLDialog } from './modules/touches/touches.component';
@@ -64,6 +65,7 @@ import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
     YesterdayResultsComponent,
     TouchesComponent,
     HomeComponent,
+    StatLeadersComponent,
     Info,
     NBAInfo,
     InfoYesterday,

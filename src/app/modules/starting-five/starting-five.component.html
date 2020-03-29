@@ -34,7 +34,7 @@
       </div>
   </div>
 </div>
-<div class="button-wrapper" *ngIf="!loading && dailySchedule != null">
+<div class="button-wrapper" *ngIf="!loading && dailySchedule != null && starterIdData.length > 0">
     <div class="schedule-box row">
       <div [ngClass]="{'active': startersSection}" class="col" (click)="startersSection = true; positionSection = false; scheduleSection = false">
           <span class="sched-item">
@@ -66,8 +66,12 @@
 <div *ngIf="errMessage" class="err center">
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>
+<div *ngIf="!loading && starterIdData.length === 0" class="center">
+  <h1 class="date-header baseball-header">All Games Are Postponed</h1>
+  <button [routerLink]="['/stat-leaders']">Stat Leaders</button>
+</div>
 
-<div *ngIf="showData != null" class="main-row">
+<div *ngIf="showData != null && starterIdData.length > 0" class="main-row">
   <section [ngClass]="{'dn' : !startersSection}">
   <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'nfl'">
     <mat-card id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="tp-box mat-card-sp" [@flipState]="data?.offensePlayers[0]?.playerObj?.flip">
