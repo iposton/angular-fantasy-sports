@@ -50,6 +50,7 @@ export class NHLDataService {
 
   info: Observable < any > = null;
   stats: Observable < any > = null;
+  allstats: Observable < any > = null;
   uStats: Observable < any > = null;
   env: Observable < any > = null;
   gameid: Observable < any > = null;
@@ -166,6 +167,17 @@ export class NHLDataService {
         
     }
     return this.stats;
+  }
+
+  getAllStats() {
+    if (!this.allstats) {
+      console.log('getting cumulative nhl player stats from API...');
+     
+      let url = `${this.apiRoot}/player_stats_totals.json`;
+      this.allstats = this.http.get(url, {headers})
+        
+    }
+    return this.allstats;
   }
 
   getTeamStats() {

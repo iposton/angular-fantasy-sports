@@ -110,6 +110,75 @@ transform(array: any[], field: string): any[] {
       } else {
         return 0;
       }
+    } else if (field === 'nhlGoals') {
+      if (a['stats'].scoring.goals >= b['stats'].scoring.goals) {
+        return -1;
+      } else if (a['stats'].scoring.goals <= b['stats'].scoring.goals) {
+        return 1;
+      } else {
+        return 0;
+      }
+  } else if (field === 'nhlAst') {
+    if (a['stats'].scoring.assists >= b['stats'].scoring.assists) {
+      return -1;
+    } else if (a['stats'].scoring.assists <= b['stats'].scoring.assists) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else if (field === 'nhlPPG') {
+    if (a['stats'].scoring.powerplayGoals >= b['stats'].scoring.powerplayGoals) {
+      return -1;
+    } else if (a['stats'].scoring.powerplayGoals <= b['stats'].scoring.powerplayGoals) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else if (field === 'nhlPPA') {
+    if (a['stats'].scoring.powerplayAssists >= b['stats'].scoring.powerplayAssists) {
+      return -1;
+    } else if (a['stats'].scoring.powerplayAssists <= b['stats'].scoring.powerplayAssists) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else if (field === 'nhlGWG') {
+    if (a['stats'].scoring.gameWinningGoals >= b['stats'].scoring.gameWinningGoals) {
+      return -1;
+    } else if (a['stats'].scoring.gameWinningGoals <= b['stats'].scoring.gameWinningGoals) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else if (field === 'nhlPts') {
+    if (a['stats'].scoring.points >= b['stats'].scoring.points) {
+      return -1;
+    } else if (a['stats'].scoring.points <= b['stats'].scoring.points) {
+      return 1;
+    } else {
+      return 0;
+    }
+  } else if (field === 'nhlShots') {
+    if (a['stats'].skating != null && b['stats'].skating) {
+      if (a['stats'].skating.shots >= b['stats'].skating.shots) {
+        return -1;
+      } else if (a['stats'].skating.shots <= b['stats'].skating.shots) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    
+  } else if (field === 'nhlBlk') {
+    if (a['stats'].skating != null && b['stats'].skating) {
+      if (a['stats'].skating.blockedShots >= b['stats'].skating.blockedShots) {
+        return -1;
+      } else if (a['stats'].skating.blockedShots <= b['stats'].skating.blockedShots) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
   }
       
     });

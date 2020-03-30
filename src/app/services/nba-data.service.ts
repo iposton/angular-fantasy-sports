@@ -142,13 +142,18 @@ export class NBADataService {
     return this.stats;
   }
 
-   getAllStats() {
+   getAllStats(full) {
 
     //if (!this.allstats) {
 
       console.log('getting total player stats from API...');
       //cumulative_player_stats.json?position=PG,SG,SF,PF,C&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?position=PG,SG,SF,PF,C`;
+      let url = null;
+      if(full) {
+        url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?position=PG,SG,SF,PF,C`;
+      } else {
+        url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?date=from-20200209-to-20200310`;
+      }
       this.allstats = this.http.get(url, {headers})
       
     //}
