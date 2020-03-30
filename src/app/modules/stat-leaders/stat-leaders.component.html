@@ -1,8 +1,7 @@
 <div id="top">
-    <h1 class="center date-header baseball-header">NBA Stat Leaders</h1>
+    <h1 class="center date-header baseball-header">{{nbaSection ? 'NBA' : nhlSection ? 'NHL' : ''}} Stat Leaders</h1>
 </div>
-<h1 class="center date-header baseball-header"> {{ gameDate | date:'fullDate' }}</h1>
-<h1 class="center no-game-header date-header baseball-header" *ngIf="noGamesToday === true && !loading">{{noGamesMsg}}</h1>
+
 <!-- <div class="center">
   <mat-form-field color="accent">
     <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="getByDate($event)" [max]="maxD">
@@ -11,52 +10,36 @@
   </mat-form-field>
 </div> -->
 
-<div class="sched-wrapper" *ngIf="!loading && dailySchedule != null">
-  <div class="schedule-box row" *ngIf="!mobile">
-    <div *ngFor="let item of dailySchedule; let i=index" class="col">
-        <span *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" class="sched-item">
-           <span class="abb" (click)="goAnchor(item?.schedule?.awayTeam?.abbreviation)">{{item?.schedule?.awayTeam?.abbreviation}} 
-             <span *ngIf="item?.score?.homeScoreTotal != null">{{item?.score?.awayScoreTotal}}</span> 
-             <br>
-          </span>
-          <span> 
-            @ <br>
-          </span>
-          <span class="abb" (click)="goAnchor(item?.schedule?.homeTeam?.abbreviation)">{{item.schedule?.homeTeam?.abbreviation}} 
-            <span *ngIf="item?.score?.homeScoreTotal != null">
-              {{item?.score?.homeScoreTotal}}
-              <br>
-            </span>
-            <span *ngIf="item?.schedule?.playedStatus === 'COMPLETED' || item?.schedule?.playedStatus === 'COMPLETED_PENDING_REVIEW'">FINAL</span>
-            <span class="live" *ngIf="item?.schedule?.playedStatus === 'LIVE'">LIVE</span>
-          </span>   
-        </span> 
-      </div>
-  </div>
-</div>
-<!-- <div class="button-wrapper" *ngIf="!loading && dailySchedule != null">
+
+<div class="button-wrapper" *ngIf="!loading">
     <div class="schedule-box row">
-      <div [ngClass]="{'active': startersSection}" class="col" (click)="startersSection = true; positionSection = false; scheduleSection = false">
+      <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbSection = false">
           <span class="sched-item">
-            Starters
+            NBA
           </span> 
       </div>
-      <div [ngClass]="{'active': positionSection}" class="col" (click)="startersSection = false; positionSection = true; scheduleSection = false">
+      <div [ngClass]="{'active': nhlSection}" class="col" (click)="nbaSection = false; nhlSection = true; mlbSection = false">
           <span class="sched-item">
-            Starters By Position
-          </span> 
-      </div>
-      <div [ngClass]="{'active': scheduleSection}" class="col" (click)="startersSection = false; positionSection = false; scheduleSection = true">
-          <span class="sched-item">
-            Weekly Schedule
+            NHL
           </span> 
       </div>
       <div class="col">
           <span class="sched-item">
-            Team Ranks
+            MLB
           </span> 
       </div>
+      <!-- <div class="col">
+          <span class="sched-item">
+            NFL
+          </span> 
+      </div> -->
     </div>
+</div>
+<div class="center">
+  <button (click)="page = 19; amount = -1">1 - 20</button> &nbsp;&nbsp; <button (click)="page = 39; amount = 19">21 - 40</button>
+</div>
+<!-- <div class="center">
+    <button (click)="getByDate(false)">last 4 weeks</button> &nbsp;&nbsp; <button (click)="getByDate(true)">Season</button>
 </div> -->
 
 <div class="spinner-msg" *ngIf="loading">
@@ -68,20 +51,21 @@
 </div>
 
 
-<div *ngIf="showData != null" class="main-row">
+<div *ngIf="myData != null" class="main-row">
   
-          <section [ngClass]="{'dn' : !positionSection}">
-          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+          <section [ngClass]="{'dn' : !nbaSection}">
+          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Points</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleaders'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
+                                          
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
                                         <span class="names" *ngIf="!mobile">
                                             <span *ngIf="item.player.firstName != 'Shai'"> 
@@ -100,7 +84,7 @@
                                         
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
   
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.offense?.pts}} Pts</span>
            
                                        </span>
@@ -115,14 +99,14 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Point Avg</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersavg'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -144,7 +128,7 @@
                                         
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
   
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.offense?.ptsPerGame}} Pts Avg</span>
            
                                        </span>
@@ -159,14 +143,14 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Rebounds</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersreb'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -190,7 +174,7 @@
           
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
                                  
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.rebounds?.reb}} Reb </span>
            
                                        </span>
@@ -205,14 +189,14 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Assists</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersast'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -236,7 +220,7 @@
           
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
 
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.offense?.ast}} Ast </span>
            
                                        </span>
@@ -251,14 +235,14 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Steals</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersstl'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -277,12 +261,10 @@
                                                 {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
                                             </span>
                                         </span>
-                                        
-                                      
-          
+                      
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
 
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.defense?.stl}} Stl </span>
            
                                        </span>
@@ -297,14 +279,14 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Three Pointers</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersthree'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -328,7 +310,7 @@
           
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
 
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> 3PM {{item?.stats?.fieldGoals?.fg3PtMade}} </span>
            
                                        </span>
@@ -343,14 +325,14 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Blocks</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersblk'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -374,7 +356,7 @@
           
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
                                  
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.defense?.blk}} Blk </span>
            
                                        </span>
@@ -389,14 +371,14 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Shots</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersshots'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -417,7 +399,7 @@
                                         </span>
                                         
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.fieldGoals?.fgAtt}} Shots </span>
            
                                        </span>
@@ -425,21 +407,20 @@
                                     
                                   </span>
                                 </div>
-                                
-                      
+  
                         </div>
                       </div>
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>FieldGoal %</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersfgpct'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -463,7 +444,7 @@
           
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
                                  
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.fieldGoals?.fgPct}} FG%</span>
            
                                        </span>
@@ -478,14 +459,14 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
               <h2>Turn Overs</h2>
                 <div>
                     <div class="content-wrapper">
                         <div class="row">
                           <div *ngFor="let item of myData | orderBy: 'nbaleaderstov'; let i=index">
-                                  <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
-                                    
+                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                      {{i + 1}} 
                                       <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
@@ -506,7 +487,7 @@
                                         </span>
                                         
                                        <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
-                                       <span (click)="changeStats()" class="point">
+                                       <span class="point">
                                        <span class="lg"> {{item?.stats?.defense?.tov}} TO</span>
            
                                        </span>
@@ -523,15 +504,362 @@
             </div>
           
         </section>
+        <section [ngClass]="{'dn' : !nhlSection}">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlloading">
+                <h2>Goals</h2>
+                  <div>
+                      <div class="content-wrapper">
+                          <div class="row">
+                            <div *ngFor="let item of nhlData | orderBy: 'nhlGoals'; let i=index">
+                                    <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                        {{i + 1}} 
+                                        <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                          onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+                                          <span class="player-infos">
+                                            
+                                          <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                          <span class="names" *ngIf="!mobile">
+                                             
+                                                  {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                               
+                                                
+                                          </span>
+  
+                                          <span class="names" *ngIf="mobile">
+                                              <span> 
+                                                  {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                              </span>
+                                          </span>
+                                          
+                                         <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+    
+                                         <span class="point">
+                                         <span class="lg"> {{item?.stats?.scoring?.goals}} Gls</span>
+             
+                                         </span>
+                                          </span>
+                                      
+                                    </span>
+                                  </div>
+                                  
+                        
+                          </div>
+                        </div>
+              
+                  </div>
+              </div>
+              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlloading">
+                  <h2>Assists</h2>
+                    <div>
+                        <div class="content-wrapper">
+                            <div class="row">
+                              <div *ngFor="let item of nhlData | orderBy: 'nhlAst'; let i=index">
+                                      <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                          {{i + 1}} 
+                                          <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                            onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+                                            <span class="player-infos">
+                                              
+                                            <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                            <span class="names" *ngIf="!mobile">
+                                               
+                                                    {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                 
+                                                  
+                                            </span>
+    
+                                            <span class="names" *ngIf="mobile">
+                                                <span> 
+                                                    {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                </span>
+                                            </span>
+                                            
+                                           <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
       
-                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+                                           <span class="point">
+                                           <span class="lg"> {{item?.stats?.scoring?.assists}} Ast</span>
+               
+                                           </span>
+                                            </span>
+                                        
+                                      </span>
+                                    </div>
+                                    
+                          
+                            </div>
+                          </div>
+                
+                    </div>
+                </div>
+                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlloading">
+                    <h2>PowerPlay Goals</h2>
+                      <div>
+                          <div class="content-wrapper">
+                              <div class="row">
+                                <div *ngFor="let item of nhlData | orderBy: 'nhlPPG'; let i=index">
+                                        <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                            {{i + 1}} 
+                                            <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                              onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+                                              <span class="player-infos">
+                                                
+                                              <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                              <span class="names" *ngIf="!mobile">
+                                                 
+                                                      {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                   
+                                                    
+                                              </span>
+      
+                                              <span class="names" *ngIf="mobile">
+                                                  <span> 
+                                                      {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                  </span>
+                                              </span>
+                                              
+                                             <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+        
+                                             <span class="point">
+                                             <span class="lg"> {{item?.stats?.scoring?.powerplayGoals}} PPG</span>
+                 
+                                             </span>
+                                              </span>
+                                          
+                                        </span>
+                                      </div>
+                                      
+                            
+                              </div>
+                            </div>
+                  
+                      </div>
+                  </div>
+                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlloading">
+                      <h2>PowerPlay Assist</h2>
+                        <div>
+                            <div class="content-wrapper">
+                                <div class="row">
+                                  <div *ngFor="let item of nhlData | orderBy: 'nhlPPA'; let i=index">
+                                          <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                              {{i + 1}} 
+                                              <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+                                                <span class="player-infos">
+                                                  
+                                                <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                                <span class="names" *ngIf="!mobile">
+                                                   
+                                                        {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                     
+                                                      
+                                                </span>
+        
+                                                <span class="names" *ngIf="mobile">
+                                                    <span> 
+                                                        {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                    </span>
+                                                </span>
+                                                
+                                               <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+          
+                                               <span class="point">
+                                               <span class="lg"> {{item?.stats?.scoring?.powerplayAssists}} PPA</span>
+                   
+                                               </span>
+                                                </span>
+                                            
+                                          </span>
+                                        </div>
+                                        
+                              
+                                </div>
+                              </div>
+                    
+                        </div>
+                    </div>
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlloading">
+                        <h2>Points</h2>
+                          <div>
+                              <div class="content-wrapper">
+                                  <div class="row">
+                                    <div *ngFor="let item of nhlData | orderBy: 'nhlPts'; let i=index">
+                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                {{i + 1}} 
+                                                <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                  onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+                                                  <span class="player-infos">
+                                                    
+                                                  <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                                  <span class="names" *ngIf="!mobile">
+                                                     
+                                                          {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                       
+                                                        
+                                                  </span>
+          
+                                                  <span class="names" *ngIf="mobile">
+                                                      <span> 
+                                                          {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                      </span>
+                                                  </span>
+                                                  
+                                                 <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+            
+                                                 <span class="point">
+                                                 <span class="lg"> {{item?.stats?.scoring?.points}} Pts</span>
+                     
+                                                 </span>
+                                                  </span>
+                                              
+                                            </span>
+                                          </div>
+                                          
+                                
+                                  </div>
+                                </div>
+                      
+                          </div>
+                      </div>
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlloading">
+                        <h2>Game Winning Goals</h2>
+                          <div>
+                              <div class="content-wrapper">
+                                  <div class="row">
+                                    <div *ngFor="let item of nhlData | orderBy: 'nhlGWG'; let i=index">
+                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                {{i + 1}} 
+                                                <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                  onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+                                                  <span class="player-infos">
+                                                    
+                                                  <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                                  <span class="names" *ngIf="!mobile">
+                                                     
+                                                          {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                       
+                                                        
+                                                  </span>
+          
+                                                  <span class="names" *ngIf="mobile">
+                                                      <span> 
+                                                          {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                      </span>
+                                                  </span>
+                                                  
+                                                 <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+            
+                                                 <span class="point">
+                                                 <span class="lg"> {{item?.stats?.scoring?.gameWinningGoals}} GWG</span>
+                     
+                                                 </span>
+                                                  </span>
+                                              
+                                            </span>
+                                          </div>
+                                          
+                                
+                                  </div>
+                                </div>
+                      
+                          </div>
+                      </div>
+                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlloading">
+                          <h2>Shots</h2>
+                            <div>
+                                <div class="content-wrapper">
+                                    <div class="row">
+                                      <div *ngFor="let item of nhlData | orderBy: 'nhlShots'; let i=index">
+                                              <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                  {{i + 1}} 
+                                                  <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                    onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+                                                    <span class="player-infos">
+                                                      
+                                                    <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                                    <span class="names" *ngIf="!mobile">
+                                                       
+                                                            {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                         
+                                                          
+                                                    </span>
+            
+                                                    <span class="names" *ngIf="mobile">
+                                                        <span> 
+                                                            {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                        </span>
+                                                    </span>
+                                                    
+                                                   <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+              
+                                                   <span class="point">
+                                                   <span class="lg"> {{item?.stats?.skating?.shots}} Shots</span>
+                       
+                                                   </span>
+                                                    </span>
+                                                
+                                              </span>
+                                            </div>
+                                            
+                                  
+                                    </div>
+                                  </div>
+                        
+                            </div>
+                        </div>
+                        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlloading">
+                            <h2>Blocks</h2>
+                              <div>
+                                  <div class="content-wrapper">
+                                      <div class="row">
+                                        <div *ngFor="let item of nhlData | orderBy: 'nhlBlk'; let i=index">
+                                                <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                    {{i + 1}} 
+                                                    <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                      onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+                                                      <span class="player-infos">
+                                                        
+                                                      <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+                                                      <span class="names" *ngIf="!mobile">
+                                                         
+                                                              {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                           
+                                                            
+                                                      </span>
+              
+                                                      <span class="names" *ngIf="mobile">
+                                                          <span> 
+                                                              {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                          </span>
+                                                      </span>
+                                                      
+                                                     <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                
+                                                     <span class="point">
+                                                     <span class="lg"> {{item?.stats?.skating?.blockedShots}} Blk</span>
+                         
+                                                     </span>
+                                                      </span>
+                                                  
+                                                </span>
+                                              </div>
+                                              
+                                    
+                                      </div>
+                                    </div>
+                          
+                              </div>
+                          </div>
+
+        </section>
+      
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
                         <div>
                             <button (click)="twitter = !twitter">Twitter</button>
                         </div>
                     </div>
                     <div *ngIf="twitter">
                        
-                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
+                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
                         <h2>Points</h2>
                           <div>
                               <div class="content-wrapper">
@@ -543,7 +871,7 @@
                                           #Top5 Points
                                       </div>
                                     <div *ngFor="let item of myData | orderBy: 'nbaleaders'; let i=index" class="w100">
-                                            <span [ngClass]="{'left-content' : i<=20, 'dn' : i>20}">
+                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                               <span class="player-infos">
                                                   <span class="names" *ngIf="!mobile">
                                                       <span *ngIf="item.player.firstName != 'Shai'"> 
@@ -574,6 +902,396 @@
                       
                           </div>
                       </div>
+
+                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                          <h2>Point Avg</h2>
+                            <div>
+                                <div class="content-wrapper">
+                                    <div class="row">
+                                        <div class="w100">
+                                            #NBA {{ gameDate | date:'fullDate' }}
+                                        </div>
+                                        <div class="w100">
+                                            #Top5 Points Per Game
+                                        </div>
+                                      <div *ngFor="let item of myData | orderBy: 'nbaleadersavg'; let i=index" class="w100">
+                                              <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                <span class="player-infos">
+                                                    <span class="names" *ngIf="!mobile">
+                                                        <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                            {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                          </span>
+                                                          <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                            {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                          </span>
+                                                    </span>
+            
+                                                    <span class="names" *ngIf="mobile">
+                                                        <span> 
+                                                          {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                        </span>
+                                                    </span>
+                                                    <span class="lg"> {{item?.stats?.offense?.ptsPerGame}} Pts Avg</span>
+                                                  
+                                                    </span>
+                                                
+                                              </span>
+                                            </div>
+                                            <div class="w100">
+                                                #NBATwitter #Stats
+                                            </div>
+                                  
+                                    </div>
+                                  </div>
+                        
+                            </div>
+                        </div>
+
+                        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                            <h2>Rebounds</h2>
+                              <div>
+                                  <div class="content-wrapper">
+                                      <div class="row">
+                                          <div class="w100">
+                                              #NBA {{ gameDate | date:'fullDate' }}
+                                          </div>
+                                          <div class="w100">
+                                              #Top5 Rebounds
+                                          </div>
+                                        <div *ngFor="let item of myData | orderBy: 'nbaleadersreb'; let i=index" class="w100">
+                                                <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                  <span class="player-infos">
+                                                      <span class="names" *ngIf="!mobile">
+                                                          <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                              {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                            </span>
+                                                            <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                              {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                            </span>
+                                                      </span>
+              
+                                                      <span class="names" *ngIf="mobile">
+                                                          <span> 
+                                                            {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                          </span>
+                                                      </span>
+                                                      <span class="lg"> {{item?.stats?.rebounds?.reb}} Reb</span>
+                                                    
+                                                      </span>
+                                                  
+                                                </span>
+                                              </div>
+                                              <div class="w100">
+                                                  #NBATwitter #Stats
+                                              </div>
+                                    
+                                      </div>
+                                    </div>
+                          
+                              </div>
+                          </div>
+                          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                              <h2>Assists</h2>
+                                <div>
+                                    <div class="content-wrapper">
+                                        <div class="row">
+                                            <div class="w100">
+                                                #NBA {{ gameDate | date:'fullDate' }}
+                                            </div>
+                                            <div class="w100">
+                                                #Top5 Assists
+                                            </div>
+                                          <div *ngFor="let item of myData | orderBy: 'nbaleadersast'; let i=index" class="w100">
+                                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                    <span class="player-infos">
+                                                        <span class="names" *ngIf="!mobile">
+                                                            <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                                {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                              </span>
+                                                              <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                                {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                              </span>
+                                                        </span>
+                
+                                                        <span class="names" *ngIf="mobile">
+                                                            <span> 
+                                                              {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                            </span>
+                                                        </span>
+                                                        <span class="lg"> {{item?.stats?.offense?.ast}} Ast</span>
+                                                      
+                                                        </span>
+                                                    
+                                                  </span>
+                                                </div>
+                                                <div class="w100">
+                                                    #NBATwitter #Stats
+                                                </div>
+                                      
+                                        </div>
+                                      </div>
+                            
+                                </div>
+                            </div>
+                            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                                <h2>Steals</h2>
+                                  <div>
+                                      <div class="content-wrapper">
+                                          <div class="row">
+                                              <div class="w100">
+                                                  #NBA {{ gameDate | date:'fullDate' }}
+                                              </div>
+                                              <div class="w100">
+                                                  #Top5 Steals
+                                              </div>
+                                            <div *ngFor="let item of myData | orderBy: 'nbaleadersstl'; let i=index" class="w100">
+                                                    <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                      <span class="player-infos">
+                                                          <span class="names" *ngIf="!mobile">
+                                                              <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                                  {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                                </span>
+                                                                <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                                  {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                                </span>
+                                                          </span>
+                  
+                                                          <span class="names" *ngIf="mobile">
+                                                              <span> 
+                                                                {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                              </span>
+                                                          </span>
+                                                          <span class="lg"> {{item?.stats?.defense?.stl}} Stl</span>
+                                                        
+                                                          </span>
+                                                      
+                                                    </span>
+                                                  </div>
+                                                  <div class="w100">
+                                                      #NBATwitter #Stats
+                                                  </div>
+                                        
+                                          </div>
+                                        </div>
+                              
+                                  </div>
+                              </div>
+                              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                                  <h2>Blocks</h2>
+                                    <div>
+                                        <div class="content-wrapper">
+                                            <div class="row">
+                                                <div class="w100">
+                                                    #NBA {{ gameDate | date:'fullDate' }}
+                                                </div>
+                                                <div class="w100">
+                                                    #Top5 Blocks
+                                                </div>
+                                              <div *ngFor="let item of myData | orderBy: 'nbaleadersblk'; let i=index" class="w100">
+                                                      <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                        <span class="player-infos">
+                                                            <span class="names" *ngIf="!mobile">
+                                                                <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                                    {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                                  </span>
+                                                                  <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                                    {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                                  </span>
+                                                            </span>
+                    
+                                                            <span class="names" *ngIf="mobile">
+                                                                <span> 
+                                                                  {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                                </span>
+                                                            </span>
+                                                            <span class="lg"> {{item?.stats?.defense?.blk}} blk</span>
+                                                          
+                                                            </span>
+                                                        
+                                                      </span>
+                                                    </div>
+                                                    <div class="w100">
+                                                        #NBATwitter #Stats
+                                                    </div>
+                                          
+                                            </div>
+                                          </div>
+                                
+                                    </div>
+                                </div>
+                                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                                    <h2>Three Pointers</h2>
+                                      <div>
+                                          <div class="content-wrapper">
+                                              <div class="row">
+                                                  <div class="w100">
+                                                      #NBA {{ gameDate | date:'fullDate' }}
+                                                  </div>
+                                                  <div class="w100">
+                                                      #Top5 Three Pointers
+                                                  </div>
+                                                <div *ngFor="let item of myData | orderBy: 'nbaleadersthree'; let i=index" class="w100">
+                                                        <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                          <span class="player-infos">
+                                                              <span class="names" *ngIf="!mobile">
+                                                                  <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                                    </span>
+                                                                    <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                                    </span>
+                                                              </span>
+                      
+                                                              <span class="names" *ngIf="mobile">
+                                                                  <span> 
+                                                                    {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                                  </span>
+                                                              </span>
+                                                              <span class="lg"> 3PM {{item?.stats?.fieldGoals?.fg3PtMade}} </span>
+                                                            
+                                                              </span>
+                                                          
+                                                        </span>
+                                                      </div>
+                                                      <div class="w100">
+                                                          #NBATwitter #Stats
+                                                      </div>
+                                            
+                                              </div>
+                                            </div>
+                                  
+                                      </div>
+                                  </div>
+                                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                                    <h2>Shots</h2>
+                                      <div>
+                                          <div class="content-wrapper">
+                                              <div class="row">
+                                                  <div class="w100">
+                                                      #NBA {{ gameDate | date:'fullDate' }}
+                                                  </div>
+                                                  <div class="w100">
+                                                      #Top5 Shots
+                                                  </div>
+                                                <div *ngFor="let item of myData | orderBy: 'nbaleadersshots'; let i=index" class="w100">
+                                                        <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                          <span class="player-infos">
+                                                              <span class="names" *ngIf="!mobile">
+                                                                  <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                                    </span>
+                                                                    <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                                    </span>
+                                                              </span>
+                      
+                                                              <span class="names" *ngIf="mobile">
+                                                                  <span> 
+                                                                    {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                                  </span>
+                                                              </span>
+                                                              <span class="lg"> {{item?.stats?.fieldGoals?.fgAtt}} Shots</span>
+                                                            
+                                                              </span>
+                                                          
+                                                        </span>
+                                                      </div>
+                                                      <div class="w100">
+                                                          #NBATwitter #Stats
+                                                      </div>
+                                            
+                                              </div>
+                                            </div>
+                                  
+                                      </div>
+                                  </div>
+                                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                                      <h2>FG %</h2>
+                                        <div>
+                                            <div class="content-wrapper">
+                                                <div class="row">
+                                                    <div class="w100">
+                                                        #NBA {{ gameDate | date:'fullDate' }}
+                                                    </div>
+                                                    <div class="w100">
+                                                        #Top5 FG %
+                                                    </div>
+                                                  <div *ngFor="let item of myData | orderBy: 'nbaleadersfgpct'; let i=index" class="w100">
+                                                          <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                            <span class="player-infos">
+                                                                <span class="names" *ngIf="!mobile">
+                                                                    <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                                      </span>
+                                                                      <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                                        {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                                      </span>
+                                                                </span>
+                        
+                                                                <span class="names" *ngIf="mobile">
+                                                                    <span> 
+                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                                    </span>
+                                                                </span>
+                                                                <span class="lg"> {{item?.stats?.fieldGoals?.fgPct}} FG%</span>
+                                                              
+                                                                </span>
+                                                            
+                                                          </span>
+                                                        </div>
+                                                        <div class="w100">
+                                                            #NBATwitter #Stats
+                                                        </div>
+                                              
+                                                </div>
+                                              </div>
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+                                        <h2>Turn Over</h2>
+                                          <div>
+                                              <div class="content-wrapper">
+                                                  <div class="row">
+                                                      <div class="w100">
+                                                          #NBA {{ gameDate | date:'fullDate' }}
+                                                      </div>
+                                                      <div class="w100">
+                                                          #Top5 Turn Over
+                                                      </div>
+                                                    <div *ngFor="let item of myData | orderBy: 'nbaleaderstov'; let i=index" class="w100">
+                                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                              <span class="player-infos">
+                                                                  <span class="names" *ngIf="!mobile">
+                                                                      <span *ngIf="item.player.firstName != 'Shai'"> 
+                                                                          {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                                                                        </span>
+                                                                        <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                                                          {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                                                                        </span>
+                                                                  </span>
+                          
+                                                                  <span class="names" *ngIf="mobile">
+                                                                      <span> 
+                                                                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                                                                      </span>
+                                                                  </span>
+                                                                  <span class="lg"> {{item?.stats?.defense?.tov}} TO</span>
+                                                                
+                                                                  </span>
+                                                              
+                                                            </span>
+                                                          </div>
+                                                          <div class="w100">
+                                                              #NBATwitter #Stats
+                                                          </div>
+                                                
+                                                  </div>
+                                                </div>
+                                      
+                                          </div>
+                                      </div>
+                                  
                      
                     </div>
                     <button mat-icon-button color="accent" class="fixed-button" (click)="openSnackBar()">
