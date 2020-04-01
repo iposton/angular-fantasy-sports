@@ -179,6 +179,76 @@ transform(array: any[], field: string): any[] {
         return 0;
       }
     }
+  } else if (field === 'nhlSaves') {
+    if (a['stats'].goaltending != null && b['stats'].goaltending) {
+      if (a['stats'].goaltending.saves >= b['stats'].goaltending.saves) {
+        return -1;
+      } else if (a['stats'].goaltending.saves <= b['stats'].goaltending.saves) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  } else if (field === 'nhlWins') {
+    if (a['stats'].goaltending != null && b['stats'].goaltending) {
+      if (a['stats'].goaltending.wins >= b['stats'].goaltending.wins) {
+        return -1;
+      } else if (a['stats'].goaltending.wins <= b['stats'].goaltending.wins) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  } else if (field === 'nhlOTW') {
+    if (a['stats'].goaltending != null && b['stats'].goaltending) {
+      if (a['stats'].goaltending.overtimeWins >= b['stats'].goaltending.overtimeWins) {
+        return -1;
+      } else if (a['stats'].goaltending.overtimeWins <= b['stats'].goaltending.overtimeWins) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  } else if (field === 'nhlGA') {
+    if (a['stats'].goaltending != null && b['stats'].goaltending) {
+      if (a['stats'].goaltending.goalsAgainst >= b['stats'].goaltending.goalsAgainst) {
+        return -1;
+      } else if (a['stats'].goaltending.goalsAgainst <= b['stats'].goaltending.goalsAgainst) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  } else if (field === 'nhlLosses') {
+    if (a['stats'].goaltending != null && b['stats'].goaltending) {
+      if (a['stats'].goaltending.losses >= b['stats'].goaltending.losses) {
+        return -1;
+      } else if (a['stats'].goaltending.losses <= b['stats'].goaltending.losses) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }  else if (field === 'nhlSO') {
+    if (a['stats'].goaltending != null && b['stats'].goaltending) {
+      if (a['stats'].goaltending.shutouts >= b['stats'].goaltending.shutouts) {
+        return -1;
+      } else if (a['stats'].goaltending.shutouts <= b['stats'].goaltending.shutouts) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }  else if (field === 'nhlOTL') {
+    if (a['stats'].goaltending != null && b['stats'].goaltending) {
+      if (a['stats'].goaltending.overtimeLosses >= b['stats'].goaltending.overtimeLosses) {
+        return -1;
+      } else if (a['stats'].goaltending.overtimeLosses <= b['stats'].goaltending.overtimeLosses) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
   }
       
     });

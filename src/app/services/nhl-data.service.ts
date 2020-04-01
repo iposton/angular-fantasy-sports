@@ -169,14 +169,22 @@ export class NHLDataService {
     return this.stats;
   }
 
-  getAllStats() {
-    if (!this.allstats) {
-      console.log('getting cumulative nhl player stats from API...');
+  getAllStats(type) {
+    //if (!this.allstats) {
+      
      
-      let url = `${this.apiRoot}/player_stats_totals.json`;
+      let url = null;
+      if (type === 'skaters') {
+        console.log(type, 'getting nhl skater stats from API...');
+        url = `${this.apiRoot}/player_stats_totals.json?position=RW,LW,D,C`;
+      } else {
+        console.log(type, 'getting nhl goalie stats from API...');
+        url = `${this.apiRoot}/player_stats_totals.json?position=G`;
+      }
+      
       this.allstats = this.http.get(url, {headers})
         
-    }
+   // }
     return this.allstats;
   }
 
