@@ -22,9 +22,11 @@ export class StatLeadersComponent implements OnInit {
   public allSentData: Array <any>;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular";
   public myData: Array <any>;
-  public nhlData: Array <any>;
+  public nhlSkaters: Array <any>;
+  public nhlGoaltenders: Array <any>;
   public loading: boolean = true;
-  public nhlloading: boolean = true;
+  public nhlSkaterloading: boolean = true;
+  public nhlGoalieloading: boolean = true;
   public noGamesMsg: string = '';
   public errMessage: string = '';
   public tsDate: any;
@@ -39,6 +41,7 @@ export class StatLeadersComponent implements OnInit {
   public mlbSection: boolean = false;
   public nbaSection: boolean = true;
   public nhlSection: boolean = false;
+  public nhlGoalies: boolean = false;
   public weekResults: boolean = false;
   public page: number = 19;
   public amount: number = -1;
@@ -69,7 +72,8 @@ export class StatLeadersComponent implements OnInit {
     this.loading = true;
     this.getAll = event;
     this.myData = [];
-    this.nhlData = [];
+    this.nhlSkaters = [];
+    this.nhlGoaltenders = [];
     this.loadData();
   }
 
@@ -94,17 +98,15 @@ export class StatLeadersComponent implements OnInit {
 
   public sortNHL() {
     this.nhlService
-       .getAllStats().subscribe(res => {
-
-        console.log(res, 'nhl player info');
-        this.nhlloading = false;
+       .getAllStats('goalies').subscribe(res => {
+        console.log(res, 'nhl goalies player info');
         const nhlTeamsArray = Object.values(this.nhlTeams);
-
-        this.nhlData = res['playerStatsTotals'].filter(
+        this.nhlGoalieloading = false;
+        this.nhlGoaltenders = res['playerStatsTotals'].filter(
           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
 
           for (let team of nhlTeamsArray) {
-            for (let data of this.nhlData) { 
+            for (let data of this.nhlGoaltenders) { 
               if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
                 data.team.logo = team['officialLogoImageSrc'];
                 data.team.city = team['city'];
@@ -117,6 +119,34 @@ export class StatLeadersComponent implements OnInit {
               
             }  
           }
+
+    })
+
+    this.nhlService
+       .getAllStats('skaters').subscribe(res => {
+
+        console.log(res, 'nhl skaters player info');
+        this.nhlSkaterloading = false;
+        const nhlTeamsArray = Object.values(this.nhlTeams);
+
+        this.nhlSkaters = res['playerStatsTotals'].filter(
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
+
+          for (let team of nhlTeamsArray) {
+            for (let data of this.nhlSkaters) { 
+              if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+                data.team.logo = team['officialLogoImageSrc'];
+                data.team.city = team['city'];
+                data.team.name = team['name'];
+              }
+
+              if (data.player.officialImageSrc == null) {
+                data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+              }
+              
+            }  
+          }
+
 
     })
   }
