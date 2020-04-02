@@ -129,9 +129,9 @@ export class StatLeadersComponent implements OnInit {
         this.nhlSkaterloading = false;
         const nhlTeamsArray = Object.values(this.nhlTeams);
 
-        this.nhlSkaters = res['playerStatsTotals'].filter(
+        this.nhlSkaters = 
+res['playerStatsTotals'].filter(
           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
-
           for (let team of nhlTeamsArray) {
             for (let data of this.nhlSkaters) { 
               if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
