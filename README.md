@@ -28,7 +28,7 @@ This app can help explain how to fetch data using [Angular's HttpClient Module](
 * [Crypto-js](https://github.com/brix/crypto-js) (version 4.0.0)
 
 ### Clone and serve this app
-* First you will need to be given access MySportsFeeds NHL endpoints. As a developer working on a non-commercial app you can be given access to the NHL endpoints. Sign up at MySportsFeeds and use the username and password in the header request to authenticate the api get request. `let headers = new Headers({ "Authorization": "Basic " + btoa('username' + ":" + 'password') });`
+* First you will need to be given access MySportsFeeds endpoints. As a developer working on a non-commercial app you can be given access to the endpoints. Let MSF that you are working on a non-commercial project and they will send you an api token. Sign up at MySportsFeeds and use the api token in the header request to authenticate the api get request. `let headers = new HttpHeaders().set("Authorization", "Basic " + btoa(apiToken + ":" + 'MYSPORTSFEEDS'));`
 * When the api headers are in place clone this repo and run <code>npm install</code> then run <code>ng serve</code> to serve the app on `localhost:4200`. Be careful not to push your api password to github.
 
 ### Create user authentication with firebase
@@ -426,35 +426,49 @@ The best thing is as soon as I do this Firebase pulls in the new data to the vie
 * When the api headers are in place clone this repo and run <code>npm install</code> then run <code>ng serve</code> to serve the app on `localhost:4200`. Be careful not to push your `apiKey` to github.
 
 ### Get data from api with HttpClient module
-The first thing I want to do in this app is get a list of all the starting NHL goalies. I used the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#) to find the correct endpoint to get all goalies. I am able to use Angular's http client module to send a GET request for data using this endpoint `https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json?position=G` found in the api's documentation. 
+This is for sports stats lovers trying to build something with the latest angular framework. This article will show you how to get started using Angular 9 with the MySportsFeed API. 
+
+I will fetch a list of NBA players, filter the response and sort the NBA players with the highest point total.
+
+You will learn
+* Make an api request with the HttpClient Module
+* Filter the api response
+* Display the data 
+
+First you will need to be given access MySportsFeeds endpoints. As a developer working on a non-commercial app you can be given access to the endpoints. Let MSF know that you are working on a non-commercial project and they will send you an api token. Sign up at [MySportsFeeds](https://www.mysportsfeeds.com) and use the api token in the header request to authenticate the api get request. `let headers = new HttpHeaders().set("Authorization", "Basic " + btoa(apiToken + ":" + 'MYSPORTSFEEDS'));`
+
+The first thing I want to do in this app is get a list of all the active NBA players and their current season stats. I used the [MySportsFeeds API Documentation](https://www.mysportsfeeds.com/data-feeds/api-docs/#) to find the correct endpoint to get NBA player stats for 2019-2020. I am able to use Angular's [HttpClient](https://angular.io/guide/http) module to send a GET request for data using this endpoint `https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?position=PG,SG,SF,PF,C` found in the api's documentation. 
+
+This api request will send 718 items which is a rather large payload especially for the ui. I will filter the response with javascript so that I will only have relative NBA players before I define the array for the ui. I can use the `gamesPlayed` data attribute to remove irrelevant players from the array.
 
 ```ts
 
 //app.component.ts 
 
-import { Component, ViewChild, Inject, OnInit  } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http';
 
-let headers = new HttpHeaders().set("Authorization", "Basic " + btoa(apiKey + ":" + 'MYSPORTSFEEDS'));
-let url = 'https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json?position=G';
+let headers = new HttpHeaders().set("Authorization", "Basic " + btoa(apiToken + ":" + 'MYSPORTSFEEDS'));
+let url = 'https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?position=PG,SG,SF,PF,C';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 
 export class AppComponent implements OnInit {
    
-   public statData: Array<any>;
+   public nbaData: Array<any>;
 
    constructor(private http: Http) {}
 
    loadData() {
     this.http.get(url, {headers})
       .subscribe(res => {
-        console.log(res['playerStatsTotals'], 'got player info res!');
-        this.statData = res['playerStatsTotals'];
+        console.log(res['playerStatsTotals'], 'NBA players and stats');
+        this.nbaData = res['playerStatsTotals'].filter(
+          player => player.stats != null && player.stats.gamesPlayed > 5);
       });
    }
 
@@ -469,13 +483,30 @@ export class AppComponent implements OnInit {
 
 //app.component.html
 
- <ul>
-  <li *ngFor="let data of statData"> 
-    {{ data.player.firstName + ' ' + data.player.lastName + ' - ' + data.team.abbreviation }}
-  </li>
- </ul>
+ <div class="card" *ngIf="nbaData != null">
+   <h2>Points</h2>
+   <div *ngFor="let item of nbaData">
+     <img src="{{item?.player?.officialImageSrc}}" alt="basketball player">
+     {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} {{item?.stats?.offense?.pts}} Pts
+   </div>
+ </div>
 
 ```
+
+```scss
+
+//app.component.scss
+.card {
+  width: 33%;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+}
+
+
+```
+
+This will produce a very long list of players and their point total on the season. I am showing my list of players inside a simple card. In the next part I will sort the list from most points to least and I will set up a simple pagination to make the list easier to read.
 
 ### Deploy an Angular 9 app to Heroku and Encrypt and Decrypt apiKey.
 * For Heroku this app uses a node.js / express server file <code>app.js</code>.
