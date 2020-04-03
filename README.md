@@ -508,6 +508,142 @@ export class AppComponent implements OnInit {
 
 This will produce a very long list of players and their point total on the season. I am showing my list of players inside a simple card. In the next part I will sort the list from most points to least and I will set up a simple pagination to make the list easier to read.
 
+### Sort data for ui with a custom pipe
+Ok, we left off with a very long list NBA players with a large player image. I want to do a few things here.
+
+Things TODO
+* Sort the order of the list
+* Show top 20
+* Paginate next 20
+* Style the list 
+
+To help me sort the players by their point totals I am going to use angular cli to generate a pipe. I can add some code in the pipe that will sort my data from most points to least. Then I will add the pipe to the `*ngFor` directive. I run `ng g pipe orderby` in the root of my angular app. I enhence the html by adding the pipe `<div *ngFor="let item of nbaData | orderBy: 'nbaPts'; let i=index">`. I am using the index to show the number order in the list.
+
+I want to make the list shorter and only show the top 20 players. There are a few ways to do this, but I am using `[ngClass]` to pull this off. First I'll create a css class `.dn {display: none;}` and then update the html `<span [ngClass]="{'content' : i<=19, 'dn' : i>19}">`. I am wrapping the player info with a span. The index is binary so if the index is less than or equal to 19 apply a class if the index is greater than 19 display none. This will show the top 20 players and hide the rest.
+
+Now it would be nice to show more players after the top 20. I can define some variables in the controller and use a button click event to paginate next. The default will be `public page: number = 19;` and `public amount: number = -1;` to show the top 20. I can use a button to change the values on click `<button (click)="page = 19; amount = -1">1 - 20</button> &nbsp;&nbsp; <button (click)="page = 39; amount = 19">21 - 40</button>`. This will allow me to toggle between 1 - 20 to 21 - 40.
+
+```ts
+
+//orderby.pipe.ts
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({name: 'orderBy', pure: false})
+export class OrderBy implements PipeTransform {
+ 
+  transform(array: any[], field: string): any[] {
+    array.sort((a: any, b: any) => {
+      if (field === 'nbaPts') {
+          if (a['stats'].offense.pts >= b['stats'].offense.pts) {
+            return -1;
+          } else if (a['stats'].offense.pts <= b['stats'].offense.pts) {
+            return 1;
+          } else {
+            return 0;
+          }
+      }
+    })
+  }
+
+}
+
+
+```
+ 
+
+```ts
+
+//app.component.ts 
+
+import { Component, OnInit  } from '@angular/core';
+import { HttpClient, HttpResponse, HttpHeaders, HttpRequest} from '@angular/common/http';
+
+let headers = new HttpHeaders().set("Authorization", "Basic " + btoa(apiToken + ":" + 'MYSPORTSFEEDS'));
+let url = 'https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular/player_stats_totals.json?position=PG,SG,SF,PF,C';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+
+export class AppComponent implements OnInit {
+   
+   public nbaData: Array<any>;
+   public page: number = 19;
+   public amount: number = -1;
+
+   constructor(private http: Http) {}
+
+   loadData() {
+    this.http.get(url, {headers})
+      .subscribe(res => {
+        console.log(res['playerStatsTotals'], 'NBA players and stats');
+        this.nbaData = res['playerStatsTotals'].filter(
+          player => player.stats != null && player.stats.gamesPlayed > 5);
+      });
+   }
+
+   ngOnInit() {
+    loadData();
+   }
+}
+
+```
+
+```html
+
+//app.component.html
+
+<div>
+  <button (click)="page = 19; amount = -1">1 - 20</button> &nbsp;&nbsp; <button (click)="page = 39; amount = 19">21 - 40</button>
+</div>
+
+ <div class="card" *ngIf="nbaData != null">
+   <h2>Points</h2>
+   <div *ngFor="let item of myData | orderBy: 'nbaPts'; let i=index">
+     <span [ngClass]="{'content' : i<=page, 'dn' : i>page || i<=amount}">
+       {{i + 1}} 
+       <img src="{{item?.player?.officialImageSrc}}" alt="basketball player">
+       {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} {{item?.stats?.offense?.pts}} Pts
+     </span>
+   </div>
+ </div>
+
+```
+
+```scss
+
+//app.component.scss
+.card {
+  background: #444;
+  width: 33%;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+
+  .content {
+    font-size: 16px;
+    img {
+      height: 45px;
+      width: 45px;
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 3px;
+    }
+  }
+}
+
+
+```
+
+This will give you a nice ui friendly list with some basic pagination to increase the user experience. This will lay the groundwork for listing and sorting other stats as well. Enjoy :)
+
+Part 1: [Getting Started with Angular 9 and MSF](https://www.ianposton.com/angular-9-and-mysportsfeed-api-part-1/)
+
 ### Deploy an Angular 9 app to Heroku and Encrypt and Decrypt apiKey.
 * For Heroku this app uses a node.js / express server file <code>app.js</code>.
 * All routes will be going to <code>dist/index.html</code>. 
