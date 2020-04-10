@@ -1507,6 +1507,7 @@ export class UtilService {
         city: "Tampa Bay",
         name: "Lightning",
         abbreviation: "TBL",
+        twitter: "#GoBolts",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/14.svg"
       },
       "WPJ": {
@@ -1514,6 +1515,7 @@ export class UtilService {
         city: "Winnipeg",
         name: "Jets",
         abbreviation: "WPJ",
+        twitter: "#GoJetsGo",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/52.svg"
       },
      "CAR": {
@@ -1521,6 +1523,7 @@ export class UtilService {
         city: "Carolina",
         name: "Hurricanes",
         abbreviation: "CAR",
+        twitter: "#LetsGoCanes",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/12.svg"
       },
       "FLO": {
@@ -1528,6 +1531,7 @@ export class UtilService {
         city: "Florida",
         name: "Panthers",
         abbreviation: "FLO",
+        twitter: "#FlaPanthers",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/13.svg"
       },
       "WSH": {
@@ -1535,6 +1539,7 @@ export class UtilService {
         city: "Washington",
         name: "Capitals",
         abbreviation: "WSH",
+        twitter: "#ALLCAPS",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/15.svg"
       },
       "PHI": {
@@ -1542,6 +1547,7 @@ export class UtilService {
         city: "Philadelphia",
         name: "Flyers",
         abbreviation: "PHI",
+        twitter: "#NowOrNever",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/4.svg"
       },
       "NJD": {
@@ -1549,6 +1555,7 @@ export class UtilService {
         city: "New Jersey",
         name: "Devils",
         abbreviation: "NJD",
+        twitter: "#NJDevils",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/1.svg"
       },
       "NYI" : {
@@ -1556,6 +1563,7 @@ export class UtilService {
         city: "New York",
         name: "Islanders",
         abbreviation: "NYI",
+        twitter: "#Isles",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/2.svg"
       },
       "NYR": {
@@ -1563,6 +1571,7 @@ export class UtilService {
         city: "New York",
         name: "Rangers",
         abbreviation: "NYR",
+        twitter: "#PlayLikeANewYorker",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/3.svg"
       },
       "PIT": {
@@ -1570,6 +1579,7 @@ export class UtilService {
         city: "Pittsburgh",
         name: "Penguins",
         abbreviation: "PIT",
+        twitter: "#LetsGoPens",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/5.svg"
       },
       "BOS": {
@@ -1577,6 +1587,7 @@ export class UtilService {
         city: "Boston",
         name: "Bruins",
         abbreviation: "BOS",
+        twitter: "#NHLBruins",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/6.svg"
       },
       "TOR": {
@@ -1584,6 +1595,7 @@ export class UtilService {
         city: "Toronto",
         name: "Maple Leafs",
         abbreviation: "TOR",
+        twitter: "#LeafsForever",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/10.svg"
       },
       "OTT": {
@@ -1591,6 +1603,7 @@ export class UtilService {
         city: "Ottawa",
         name: "Senators",
         abbreviation: "OTT",
+        twitter: "#GoSensGo",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/9.svg"
       },
       "MTL": {
@@ -1598,6 +1611,7 @@ export class UtilService {
         city: "Montreal",
         name: "Canadiens",
         abbreviation: "MTL",
+        twitter: "#Canadiens",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/8.svg"
       },
       "BUF": {
@@ -1605,6 +1619,7 @@ export class UtilService {
         city: "Buffalo",
         name: "Sabres",
         abbreviation: "BUF",
+        twitter: "#Sabres50",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/7.svg"
       },
       "DET": {
@@ -1612,6 +1627,7 @@ export class UtilService {
         city: "Detroit",
         name: "Red Wings",
         abbreviation: "DET",
+        twitter: "#LGRW",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/17.svg"
       },
      "STL": {
@@ -1619,6 +1635,7 @@ export class UtilService {
         city: "St. Louis",
         name: "Blues",
         abbreviation: "STL",
+        twitter: "#STLBlues",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/19.svg"
       },
       "NSH": {
@@ -1626,6 +1643,7 @@ export class UtilService {
         city: "Nashville",
         name: "Predators",
         abbreviation: "NSH",
+        twitter: "#Preds",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/18.svg"
       },
       "CBJ": {
@@ -1633,6 +1651,7 @@ export class UtilService {
         city: "Columbus",
         name: "Blue Jackets",
         abbreviation: "CBJ",
+        twitter: "#CBJ",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/29.svg"
       },
       "CHI": {
@@ -1640,6 +1659,7 @@ export class UtilService {
         city: "Chicago",
         name: "Blackhawks",
         abbreviation: "CHI",
+        twitter: "#Blackhawks",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/16.svg"
       },
       "VAN": {
@@ -1647,6 +1667,7 @@ export class UtilService {
         city: "Vancouver",
         name: "Canucks",
         abbreviation: "VAN",
+        twitter: "#Canucks",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/23.svg"
       },
       "COL": {
@@ -1654,6 +1675,7 @@ export class UtilService {
         city: "Colorado",
         name: "Avalanche",
         abbreviation: "COL",
+        twitter: "#GoAvsGo",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/21.svg"
       },
       "CGY": {
@@ -1661,6 +1683,7 @@ export class UtilService {
         city: "Calgary",
         name: "Flames",
         abbreviation: "CGY",
+        twitter: "#Flames",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/20.svg"
       },
      "EDM": {
@@ -1668,6 +1691,7 @@ export class UtilService {
         city: "Edmonton",
         name: "Oilers",
         abbreviation: "EDM",
+        twitter: "#LetsGoOilers",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/22.svg"
       },
       "MIN": {
@@ -1675,6 +1699,7 @@ export class UtilService {
         city: "Minnesota",
         name: "Wild",
         abbreviation: "MIN",
+        twitter: "#Wild",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/30.svg"
       },
       "SJS": {
@@ -1682,6 +1707,7 @@ export class UtilService {
         city: "San Jose",
         name: "Sharks",
         abbreviation: "SJS",
+        twitter: "#SJSharks",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/28.svg"
       },
       "DAL": {
@@ -1689,6 +1715,7 @@ export class UtilService {
         city: "Dallas",
         name: "Stars",
         abbreviation: "DAL", 
+        twitter: "#GoStarsGo",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/25.svg"
       },
       "LAK": {
@@ -1696,6 +1723,7 @@ export class UtilService {
         city: "Los Angeles",
         name: "Kings",
         abbreviation: "LAK",
+        twitter: "#GoKingsGo",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/26.svg"
       },
       "ANA": {
@@ -1703,6 +1731,7 @@ export class UtilService {
         city: "Anaheim",
         name: "Ducks",
         abbreviation: "ANA",
+        twitter: "#LetsGoDucks",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/24.svg"
       },
       "ARI": {
@@ -1710,6 +1739,7 @@ export class UtilService {
         city: "Arizona",
         name: "Coyotes",
         abbreviation: "ARI",
+        twitter: "#Yotes",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/53.svg"
       },
       "VGK": {
@@ -1717,6 +1747,7 @@ export class UtilService {
         city: "Vegas",
         name: "Golden Knights",
         abbreviation: "VGK",
+        twitter: "#VegasBorn",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/54.svg"
       }
     }
