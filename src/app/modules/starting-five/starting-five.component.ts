@@ -1199,7 +1199,7 @@ export class NBATodayDialog implements OnInit {
 
     this.http.post('/authorize', {headers}).subscribe((res) => {
       this.searchCall();
-    })
+    });
 
 
   }

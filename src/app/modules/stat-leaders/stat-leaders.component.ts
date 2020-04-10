@@ -46,6 +46,11 @@ export class StatLeadersComponent implements OnInit {
   public page: number = 19;
   public amount: number = -1;
   public getAll: boolean = true;
+  public isOpen: boolean = false;
+  public tweetsData: Array <any> = [];
+  public noPosts: any;
+  public submitting: boolean = false;
+  public selectedPlayer: any;
   
   constructor(private dataService: NBADataService,
               private nhlService: NHLDataService,
@@ -66,6 +71,40 @@ export class StatLeadersComponent implements OnInit {
     
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
+  }
+
+  public authorize(player, type) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
+
+    this.http.post('/authorize', {headers}).subscribe((res) => {
+      this.openModal(player, headers, type);
+    });
+  }
+
+  public openModal(player, headers, type) {
+    this.isOpen = true;
+    this.submitting = true;
+    this.selectedPlayer = null;
+    this.noPosts = '';
+    this.selectedPlayer = player;
+    console.log(player, 'data passed in');
+    //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
+
+    //let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
+    //let searchterm = 'query=#startingGoalies #nhl ' + player.player.FirstName + ' ' + player.player.LastName;
+    let twitter = null;
+    twitter = type === 'nba' ? this.nbaTeams[player.player['currentTeam'].abbreviation].twitter : this.nhlTeams[player.player['currentTeam'].abbreviation].twitter;
+    let searchterm = null;
+    searchterm = 'query=' + player.player.lastName + ' ' + twitter;
+    console.log(searchterm, 'search term');
+    this.http.post('/search', searchterm, {headers}).subscribe((res) => {
+      console.log(res['data'].statuses, 'twitter stuff');
+      this.submitting = false;
+      this.tweetsData = res['data'].statuses;
+      if (this.tweetsData.length === 0) {
+        this.noPosts = "No Tweets.";
+      }
+    });
   }
 
   public getByDate(event) {
@@ -206,18 +245,6 @@ res['playerStatsTotals'].filter(
     } 
   }
 
-
-  public open(event, data, type) {
-    this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
-    data.area = type;
-    this.selected = data;
-    console.log(data, 'ok you clicked on player img...');
-    // this.dialog.open(NBATodayDialog, {
-    //   data: data,
-    //   width: '600px',
-    // });
-  }
-
   openSnackBar() {
     // this.snackBar.openFromComponent(NBAInfo, {
     //   // duration: 500,
@@ -237,62 +264,6 @@ res['playerStatsTotals'].filter(
   }
 
 }
-
-// @Component({
-//   selector: 'nba-today-dialog',
-//   template: `<i (click)="dialogRef.close()" style="float:right; cursor:pointer;" class="material-icons">close</i>
-//   <span style="color:#00aced;">Twitter Updates!</span> 
-//   <mat-dialog-content>
-//   <span style="font-size: 26px; font-weight: light; color: #555; text-align: center;">{{ noPosts }}</span>
-//   <ul *ngFor="let item of tweetsData" style="font-size:14px">
-//     <li>{{item.text}} <span style="color:#6740B4; font-weight: bold;">{{item.created_at | date:'fullDate'}}</span></li>
-// </ul>
-// </mat-dialog-content>`,
-// })
-
-// export class NBATodayDialog implements OnInit {
-//   noPosts: any;
-//   tweetsData: any;
-//   constructor(public dialogRef: MatDialogRef < NBATodayDialog > , @Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient) {
-
-//   }
-
-//   loadStuff() {
-//     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
-
-//     this.http.post('/authorize', {headers}).subscribe((res) => {
-//       this.searchCall();
-//     })
-
-
-//   }
-
-//   searchCall() {
-//     console.log(this.data, 'data passed in');
-
-//     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
-//     //let searchterm = 'query=#startingGoalies #nhl ' + this.data.player.FirstName + ' ' + this.data.player.LastName;
-//     let searchterm = null;
-//     if (this.data.area === 'top') {
-//       searchterm = 'query=' + this.data.playerObj.player.lastName + ' ' + teams[this.data.playerObj.player['currentTeam'].abbreviation].twitter;
-//     } else {
-//       searchterm = 'query=' + this.data.player.lastName + ' ' + teams[this.data.player['currentTeam'].abbreviation].twitter;
-//     }
-
-
-//     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
-//        console.log(res['data'].statuses, 'twitter stuff');
-//       this.tweetsData = res['data'].statuses;
-//       if (this.tweetsData.length === 0) {
-//         this.noPosts = "No Tweets.";
-//       }
-//     });
-//   }
-
-//   ngOnInit() {
-//     this.loadStuff();
-//   }
-// }
 
 // @Component({
 //   selector: 'nba-info',

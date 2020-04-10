@@ -2,15 +2,39 @@
     <h1 class="center date-header baseball-header">{{nbaSection ? 'NBA' : nhlSection ? 'NHL' : nhlGoalies ? 'NHL' : ''}} Stat Leaders</h1>
 </div>
 
-<!-- <div class="center">
-  <mat-form-field color="accent">
-    <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="getByDate($event)" [max]="maxD">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-</div> -->
-
-
+<div id="overlay" [ngClass]="{'active': isOpen}" (click)="isOpen = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header" *ngIf="!submitting">
+          <span> Twitter Updates - <span><img src="{{selectedPlayer?.player?.officialImageSrc}}" alt="basketball player"
+            onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> 
+            <span>{{selectedPlayer?.player?.firstName + ' ' + selectedPlayer?.player?.lastName}} - {{selectedPlayer?.player?.primaryPosition}} | #{{selectedPlayer?.player.jerseyNumber}} </span>
+            <!-- <span class="team-image"> <img src="{{selectedPlayer?.team?.logo}}" alt="{{selectedPlayer?.team?.name}} logo"></span> -->
+          </span>
+          <span class="right" (click)="isOpen = false">X</span>
+      </div>
+        
+        <div class="center" *ngIf="submitting">
+            <div class="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+        </div>
+        <div class="center" *ngIf="noPosts">
+            <span style="font-size: 26px; font-weight: light; color: #555;">{{ noPosts }}</span>
+        </div>
+        
+        <div class="content" *ngIf="!submitting"> 
+          
+            <ul *ngFor="let item of tweetsData" style="font-size:14px">
+              <li>{{item.text}} <span style="color:#6740B4; font-weight: bold;">{{item.created_at | date:'fullDate'}}</span></li>
+            </ul>
+          
+        </div>  
+    </div>
+</div>
+         
 <div class="button-wrapper" *ngIf="!loading">
     <div class="schedule-box row">
       <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbSection = false; nhlGoalies = false;">
@@ -62,7 +86,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleaders'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nba')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                           
@@ -107,7 +131,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersavg'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nba')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -151,7 +175,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersreb'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nba')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -197,7 +221,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersast'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nba')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -243,7 +267,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersstl'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nba')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -287,7 +311,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersthree'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nba')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -333,7 +357,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersblk'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nba')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -379,7 +403,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersshots'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -421,7 +445,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleadersfgpct'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -467,7 +491,7 @@
                           <div *ngFor="let item of myData | orderBy: 'nbaleaderstov'; let i=index">
                                   <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                       {{i + 1}} 
-                                      <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                      <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                         onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                         <span class="player-infos">
                                         <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
@@ -513,7 +537,7 @@
                             <div *ngFor="let item of nhlGoaltenders | orderBy: 'nhlSaves'; let i=index">
                                     <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                         {{i + 1}} 
-                                        <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                        <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                           onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                           <span class="player-infos">
                                             
@@ -556,7 +580,7 @@
                               <div *ngFor="let item of nhlGoaltenders | orderBy: 'nhlSO'; let i=index">
                                       <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                           {{i + 1}} 
-                                          <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                          <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                             onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                             <span class="player-infos">
                                               
@@ -599,7 +623,7 @@
                               <div *ngFor="let item of nhlGoaltenders | orderBy: 'nhlWins'; let i=index">
                                       <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                           {{i + 1}} 
-                                          <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                          <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                             onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                             <span class="player-infos">
                                               
@@ -642,7 +666,7 @@
                                 <div *ngFor="let item of nhlGoaltenders | orderBy: 'nhlLosses'; let i=index">
                                         <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                             {{i + 1}} 
-                                            <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                            <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                               onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                               <span class="player-infos">
                                                 
@@ -685,7 +709,7 @@
                                 <div *ngFor="let item of nhlGoaltenders | orderBy: 'nhlOTW'; let i=index">
                                         <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                             {{i + 1}} 
-                                            <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                            <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                               onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                               <span class="player-infos">
                                                 
@@ -728,7 +752,7 @@
                                   <div *ngFor="let item of nhlGoaltenders | orderBy: 'nhlOTL'; let i=index">
                                           <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                               {{i + 1}} 
-                                              <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                              <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                                 <span class="player-infos">
                                                   
@@ -771,7 +795,7 @@
                                   <div *ngFor="let item of nhlGoaltenders | orderBy: 'nhlGA'; let i=index">
                                           <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                               {{i + 1}} 
-                                              <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                              <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                                 <span class="player-infos">
                                                   
@@ -816,7 +840,7 @@
                             <div *ngFor="let item of nhlSkaters | orderBy: 'nhlGoals'; let i=index">
                                     <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                         {{i + 1}} 
-                                        <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                        <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                           onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                           <span class="player-infos">
                                             
@@ -859,7 +883,7 @@
                               <div *ngFor="let item of nhlSkaters | orderBy: 'nhlAst'; let i=index">
                                       <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                           {{i + 1}} 
-                                          <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                          <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                             onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                             <span class="player-infos">
                                               
@@ -902,7 +926,7 @@
                                 <div *ngFor="let item of nhlSkaters | orderBy: 'nhlPPG'; let i=index">
                                         <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                             {{i + 1}} 
-                                            <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                            <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                               onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                               <span class="player-infos">
                                                 
@@ -945,7 +969,7 @@
                                   <div *ngFor="let item of nhlSkaters | orderBy: 'nhlPPA'; let i=index">
                                           <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                               {{i + 1}} 
-                                              <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                              <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                                 <span class="player-infos">
                                                   
@@ -988,7 +1012,7 @@
                                     <div *ngFor="let item of nhlSkaters | orderBy: 'nhlPts'; let i=index">
                                             <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                                 {{i + 1}} 
-                                                <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                   onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                                   <span class="player-infos">
                                                     
@@ -1031,7 +1055,7 @@
                                     <div *ngFor="let item of nhlSkaters | orderBy: 'nhlGWG'; let i=index">
                                             <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                                 {{i + 1}} 
-                                                <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                   onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                                   <span class="player-infos">
                                                     
@@ -1074,7 +1098,7 @@
                                       <div *ngFor="let item of nhlSkaters | orderBy: 'nhlShots'; let i=index">
                                               <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                                   {{i + 1}} 
-                                                  <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                  <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                     onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                                     <span class="player-infos">
                                                       
@@ -1117,7 +1141,7 @@
                                         <div *ngFor="let item of nhlSkaters | orderBy: 'nhlBlk'; let i=index">
                                                 <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                                     {{i + 1}} 
-                                                    <span (click)="open($event, item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                                                    <span (click)="authorize(item, 'nhl')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                                                       onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
                                                       <span class="player-infos">
                                                         
