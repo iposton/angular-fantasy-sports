@@ -9,6 +9,7 @@ export class UtilService {
   public nbaTeams: any;
   public nflTeams: any;
   public nhlTeams: any;
+  public mlbTeams: any;
   public NBAImages: any;
   public NHLImages: any;
   public startingGoalies: any;
@@ -549,6 +550,552 @@ export class UtilService {
         lossAgainst500Teams: 5
       },
      }
+
+     this.mlbTeams = [
+        {
+        id: 111,
+        city: "Baltimore",
+        name: "Orioles",
+        abbreviation: "BAL",
+        homeVenue: {
+        id: 123,
+        name: "Oriole Park at Camden Yards"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Orioles"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/110.svg"
+        },
+        {
+        id: 112,
+        city: "Toronto",
+        name: "Blue Jays",
+        abbreviation: "TOR",
+        homeVenue: {
+        id: 127,
+        name: "Rogers Centre"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "BlueJays"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/141.svg"
+        },
+        {
+        id: 113,
+        city: "Boston",
+        name: "Red Sox",
+        abbreviation: "BOS",
+        homeVenue: {
+        id: 114,
+        name: "Fenway Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "RedSox"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/111.svg"
+        },
+        {
+        id: 114,
+        city: "New York",
+        name: "Yankees",
+        abbreviation: "NYY",
+        homeVenue: {
+        id: 134,
+        name: "Yankee Stadium"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Yankees"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/147.svg"
+        },
+        {
+        id: 115,
+        city: "Tampa Bay",
+        name: "Rays",
+        abbreviation: "TB",
+        homeVenue: {
+        id: 130,
+        name: "Tropicana Field"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "RaysBaseball"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/139.svg"
+        },
+        {
+        id: 116,
+        city: "Cleveland",
+        name: "Indians",
+        abbreviation: "CLE",
+        homeVenue: {
+        id: 126,
+        name: "Progressive Field"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Indians"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/114.svg"
+        },
+        {
+        id: 117,
+        city: "Detroit",
+        name: "Tigers",
+        abbreviation: "DET",
+        homeVenue: {
+        id: 111,
+        name: "Comerica Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "tigers"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/116.svg"
+        },
+        {
+        id: 118,
+        city: "Kansas City",
+        name: "Royals",
+        abbreviation: "KC",
+        homeVenue: {
+        id: 117,
+        name: "Kauffman Stadium"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Royals"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/118.svg"
+        },
+        {
+        id: 119,
+        city: "Chicago",
+        name: "White Sox",
+        abbreviation: "CWS",
+        homeVenue: {
+        id: 132,
+        name: "Guaranteed Rate Field"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "whitesox"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/145.svg"
+        },
+        {
+        id: 120,
+        city: "Minnesota",
+        name: "Twins",
+        abbreviation: "MIN",
+        homeVenue: {
+        id: 129,
+        name: "Target Field"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Twins"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/142.svg"
+        },
+        {
+        id: 121,
+        city: "Texas",
+        name: "Rangers",
+        abbreviation: "TEX",
+        homeVenue: {
+        id: 153,
+        name: "Globe Life Field"
+        },
+        teamColoursHex: [
+        "#003278",
+        "#c0111f"
+        ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Rangers"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/140.svg"
+        },
+        {
+        id: 122,
+        city: "Houston",
+        name: "Astros",
+        abbreviation: "HOU",
+        homeVenue: {
+        id: 120,
+        name: "Minute Maid Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "astros"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/117.svg"
+        },
+        {
+        id: 123,
+        city: "Seattle",
+        name: "Mariners",
+        abbreviation: "SEA",
+        homeVenue: {
+        id: 128,
+        name: "T-Mobile Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Mariners"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/136.svg"
+        },
+        {
+        id: 124,
+        city: "Los Angeles",
+        name: "Angels",
+        abbreviation: "LAA",
+        homeVenue: {
+        id: 105,
+        name: "Angel Stadium"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Angels"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/108.svg"
+        },
+        {
+        id: 125,
+        city: "Oakland",
+        name: "Athletics",
+        abbreviation: "OAK",
+        homeVenue: {
+        id: 64,
+        name: "Oakland-Alameda County Coliseum"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Athletics"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/133.svg"
+        },
+        {
+        id: 126,
+        city: "Washington",
+        name: "Nationals",
+        abbreviation: "WAS",
+        homeVenue: {
+        id: 121,
+        name: "Nationals Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Nationals"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/120.svg"
+        },
+        {
+        id: 127,
+        city: "New York",
+        name: "Mets",
+        abbreviation: "NYM",
+        homeVenue: {
+        id: 109,
+        name: "Citi Field"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Mets"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/121.svg"
+        },
+        {
+        id: 128,
+        city: "Miami",
+        name: "Marlins",
+        abbreviation: "MIA",
+        homeVenue: {
+        id: 118,
+        name: "Marlins Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Marlins"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/146.svg"
+        },
+        {
+        id: 129,
+        city: "Philadelphia",
+        name: "Phillies",
+        abbreviation: "PHI",
+        homeVenue: {
+        id: 110,
+        name: "Citizens Bank Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Phillies"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/143.svg"
+        },
+        {
+        id: 130,
+        city: "Atlanta",
+        name: "Braves",
+        abbreviation: "ATL",
+        homeVenue: {
+        id: 136,
+        name: "SunTrust Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Braves"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/144.svg"
+        },
+        {
+        id: 131,
+        city: "Chicago",
+        name: "Cubs",
+        abbreviation: "CHC",
+        homeVenue: {
+        id: 133,
+        name: "Wrigley Field"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Cubs"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/112.svg"
+        },
+        {
+        id: 132,
+        city: "Pittsburgh",
+        name: "Pirates",
+        abbreviation: "PIT",
+        homeVenue: {
+        id: 125,
+        name: "PNC Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Pirates"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/134.svg"
+        },
+        {
+        id: 133,
+        city: "St. Louis",
+        name: "Cardinals",
+        abbreviation: "STL",
+        homeVenue: {
+        id: 107,
+        name: "Busch Stadium"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Cardinals"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/138.svg"
+        },
+        {
+        id: 134,
+        city: "Milwaukee",
+        name: "Brewers",
+        abbreviation: "MIL",
+        homeVenue: {
+        id: 119,
+        name: "Miller Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Brewers"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/158.svg"
+        },
+        {
+        id: 135,
+        city: "Cincinnati",
+        name: "Reds",
+        abbreviation: "CIN",
+        homeVenue: {
+        id: 116,
+        name: "Great American Ball Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Reds"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/113.svg"
+        },
+        {
+        id: 136,
+        city: "San Francisco",
+        name: "Giants",
+        abbreviation: "SF",
+        homeVenue: {
+        id: 106,
+        name: "AT&T Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "SFGiants"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/137.svg"
+        },
+        {
+        id: 137,
+        city: "Los Angeles",
+        name: "Dodgers",
+        abbreviation: "LAD",
+        homeVenue: {
+        id: 113,
+        name: "Dodger Stadium"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Dodgers"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/119.svg"
+        },
+        {
+        id: 138,
+        city: "Colorado",
+        name: "Rockies",
+        abbreviation: "COL",
+        homeVenue: {
+        id: 112,
+        name: "Coors Field"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Rockies"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/115.svg"
+        },
+        {
+        id: 139,
+        city: "San Diego",
+        name: "Padres",
+        abbreviation: "SD",
+        homeVenue: {
+        id: 124,
+        name: "Petco Park"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Padres"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/135.svg"
+        },
+        {
+        id: 140,
+        city: "Arizona",
+        name: "Diamondbacks",
+        abbreviation: "ARI",
+        homeVenue: {
+        id: 108,
+        name: "Chase Field"
+        },
+        teamColoursHex: [ ],
+        socialMediaAccounts: [
+        {
+        mediaType: "TWITTER",
+        value: "Dbacks"
+        }
+        ],
+        officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/109.svg"
+        }
+    ]
 
      this.nflTeams = [
       {
@@ -2414,6 +2961,10 @@ export class UtilService {
 
   public getNBATeams() {
     return this.nbaTeams;
+  }
+
+  public getMLBTeams() {
+    return this.mlbTeams;
   }
 
   public getNHLTeams() {

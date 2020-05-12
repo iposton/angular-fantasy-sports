@@ -46,8 +46,8 @@ export class TouchesComponent implements OnInit {
   public byes: any;
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
-  public serviceRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
+  public serviceRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
   public groups: Array <any>;
@@ -111,7 +111,7 @@ export class TouchesComponent implements OnInit {
         if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
           //this.selectedWeek = '17';
           this.isPlayoff = true;
-          this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
+          this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2020-2021-regular";
           let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
           utcDate.setHours(utcDate.getHours() - 8);
           let myDate = new Date(utcDate);
@@ -155,8 +155,8 @@ export class TouchesComponent implements OnInit {
       this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff";
       this.loadData();
     } else if (sWeek <= 17 && this.isPlayoff) {
-      this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
-      this.serviceRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular";
+      this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
+      this.serviceRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
       let utcDate = new Date('Mon Dec 30 2019 00:00:00 GMT-0700 (Pacific Daylight Time)');
       utcDate.setHours(utcDate.getHours() - 8);
       let myDate = new Date(utcDate);
@@ -1091,7 +1091,7 @@ export class LastweekNFLDialog implements OnInit {
         forkJoin(
             res['games'].map(
               g =>
-              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-2020-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=passYards,rushYards,passAttempts,passCompletions,passTD,rushTD', {headers})
+              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=passYards,rushYards,passAttempts,passCompletions,passTD,rushTD', {headers})
               //.map(response => response.json())
             )
           )

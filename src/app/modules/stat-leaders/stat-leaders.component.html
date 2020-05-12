@@ -1,5 +1,5 @@
 <div id="top">
-    <h1 class="center date-header baseball-header">{{nbaSection ? 'NBA' : nhlSection ? 'NHL' : nhlGoalies ? 'NHL' : ''}} Stat Leaders</h1>
+    <h1 class="center date-header baseball-header">{{mlbSection ? 'MLB' : nbaSection ? 'NBA' : nhlSection ? 'NHL' : nhlGoalies ? 'NHL' : ''}} Stat Leaders</h1>
 </div>
 
 <div id="overlay" [ngClass]="{'active': isOpen}" (click)="isOpen = false">
@@ -42,12 +42,12 @@
             NBA
           </span> 
       </div>
-      <div [ngClass]="{'active': nhlSection || nhlGoalies}" class="col" (click)="nbaSection = false; nhlSection = true; mlbSection = false; nhlGoalies = false;">
+      <div [ngClass]="{'active': nhlSection || nhlGoalies}" class="col" (click)="sortNHL()">
           <span class="sched-item">
             NHL
           </span> 
       </div>
-      <div class="col">
+      <div [ngClass]="{'active': mlbSection}" class="col" (click)="loadMLB()">
           <span class="sched-item">
             MLB
           </span> 
@@ -66,8 +66,8 @@
     <button (click)="getByDate(false)">last 4 weeks</button> &nbsp;&nbsp; <button (click)="getByDate(true)">Season</button>
 </div> -->
 
-<div class="spinner-msg" *ngIf="loading">
-  Retrieving Starting Five Data...
+<div class="spinner-msg" *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading">
+  Retrieving Stat Leader Data...
   <mat-spinner></mat-spinner>
 </div>
 <div *ngIf="errMessage" class="err center">
@@ -78,7 +78,7 @@
 <div *ngIf="myData != null" class="main-row">
   
           <section [ngClass]="{'dn' : !nbaSection}">
-          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Points</h2>
                 <div>
                     <div class="content-wrapper">
@@ -123,7 +123,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Point Avg</h2>
                 <div>
                     <div class="content-wrapper">
@@ -167,7 +167,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Rebounds</h2>
                 <div>
                     <div class="content-wrapper">
@@ -213,7 +213,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Assists</h2>
                 <div>
                     <div class="content-wrapper">
@@ -259,7 +259,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Steals</h2>
                 <div>
                     <div class="content-wrapper">
@@ -303,7 +303,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Three Pointers</h2>
                 <div>
                     <div class="content-wrapper">
@@ -349,7 +349,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Blocks</h2>
                 <div>
                     <div class="content-wrapper">
@@ -395,7 +395,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Shots</h2>
                 <div>
                     <div class="content-wrapper">
@@ -437,7 +437,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>FieldGoal %</h2>
                 <div>
                     <div class="content-wrapper">
@@ -483,7 +483,7 @@
             
                 </div>
             </div>
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">
               <h2>Turn Overs</h2>
                 <div>
                     <div class="content-wrapper">
@@ -529,7 +529,7 @@
           
         </section>
         <section [ngClass]="{'dn' : !nhlGoalies}">
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading && nhlGoaltenders != null">
                 <h2>Saves</h2>
                   <div>
                       <div class="content-wrapper">
@@ -572,7 +572,7 @@
               
                   </div>
               </div>
-              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading">
+              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading && nhlGoaltenders != null">
                   <h2>ShutOuts</h2>
                     <div>
                         <div class="content-wrapper">
@@ -615,7 +615,7 @@
                 
                     </div>
                 </div>
-              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading">
+              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading && nhlGoaltenders != null">
                   <h2>Wins</h2>
                     <div>
                         <div class="content-wrapper">
@@ -658,7 +658,7 @@
                 
                     </div>
                 </div>
-                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading">
+                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading && nhlGoaltenders != null">
                     <h2>Losses</h2>
                       <div>
                           <div class="content-wrapper">
@@ -701,7 +701,7 @@
                   
                       </div>
                   </div>
-                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading">
+                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading && nhlGoaltenders != null">
                     <h2>OverTime Wins</h2>
                       <div>
                           <div class="content-wrapper">
@@ -744,7 +744,7 @@
                   
                       </div>
                   </div>
-                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading">
+                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading && nhlGoaltenders != null">
                       <h2>OverTime Losses</h2>
                         <div>
                             <div class="content-wrapper">
@@ -787,7 +787,7 @@
                     
                         </div>
                     </div>
-                  <!-- <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading">
+                  <!-- <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlGoalieloading && nhlGoaltenders != null">
                       <h2>Goals Against</h2>
                         <div>
                             <div class="content-wrapper">
@@ -832,7 +832,7 @@
                     </div> -->
         </section>
         <section [ngClass]="{'dn' : !nhlSection}">
-            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading && nhlSkaters != null">
                 <h2>Goals</h2>
                   <div>
                       <div class="content-wrapper">
@@ -875,7 +875,7 @@
               
                   </div>
               </div>
-              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading">
+              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading && nhlSkaters != null">
                   <h2>Assists</h2>
                     <div>
                         <div class="content-wrapper">
@@ -918,7 +918,7 @@
                 
                     </div>
                 </div>
-                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading">
+                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading && nhlSkaters != null">
                     <h2>PowerPlay Goals</h2>
                       <div>
                           <div class="content-wrapper">
@@ -961,7 +961,7 @@
                   
                       </div>
                   </div>
-                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading">
+                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading && nhlSkaters != null">
                       <h2>PowerPlay Assist</h2>
                         <div>
                             <div class="content-wrapper">
@@ -1004,7 +1004,7 @@
                     
                         </div>
                     </div>
-                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading">
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading && nhlSkaters != null">
                         <h2>Points</h2>
                           <div>
                               <div class="content-wrapper">
@@ -1047,7 +1047,7 @@
                       
                           </div>
                       </div>
-                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading">
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading && nhlSkaters != null">
                         <h2>Game Winning Goals</h2>
                           <div>
                               <div class="content-wrapper">
@@ -1090,7 +1090,7 @@
                       
                           </div>
                       </div>
-                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading">
+                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading && nhlSkaters != null">
                           <h2>Shots</h2>
                             <div>
                                 <div class="content-wrapper">
@@ -1133,7 +1133,7 @@
                         
                             </div>
                         </div>
-                        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading">
+                        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nhlSkaterloading && nhlSkaters != null && nhlSkaters != null">
                             <h2>Blocks</h2>
                               <div>
                                   <div class="content-wrapper">
@@ -1178,13 +1178,191 @@
                           </div>
 
         </section>
+        <section [ngClass]="{'dn' : !mlbSection}">
+            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbPitchingLoading && mlbPitchingData != null">
+                <h2>Strikeouts</h2>
+                  <div>
+                      <div class="content-wrapper">
+                          <div class="row">
+                            <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbK'; let i=index">
+                                    <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                        {{i + 1}} 
+                                        <span (click)="authorize(item, 'nba')" class="point">
+                                            <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                          <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                          <span class="player-infos">
+                                            
+                                          <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                          <span class="names" *ngIf="!mobile">
+                                              <span *ngIf="item?.player?.firstName"> 
+                                                  {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                </span>
+                                                
+                                          </span>
+  
+                                          <span class="names" *ngIf="mobile">
+                                              <span> 
+                                                  {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                              </span>
+                                          </span>
+                                          
+                                         <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+    
+                                         <span class="point">
+                                         <span class="lg"> {{item?.stats?.pitching?.pitcherStrikeouts}} Ks</span>
+             
+                                         </span>
+                                          </span>
+                                      
+                                    </span>
+                                  </div>
+                                  
+                        
+                          </div>
+                        </div>
+              
+                  </div>
+              </div>
+              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbPitchingLoading && mlbPitchingData != null">
+                  <h2>Wins</h2>
+                    <div>
+                        <div class="content-wrapper">
+                            <div class="row">
+                              <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbW'; let i=index">
+                                      <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                          {{i + 1}} 
+                                          <span (click)="authorize(item, 'nba')" class="point">
+                                              <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                            <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                            <span class="player-infos">
+                                              
+                                            <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                            <span class="names" *ngIf="!mobile">
+                                                <span *ngIf="item?.player?.firstName"> 
+                                                    {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                  </span>
+                                                  
+                                            </span>
+    
+                                            <span class="names" *ngIf="mobile">
+                                                <span> 
+                                                    {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                </span>
+                                            </span>
+                                            
+                                           <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
       
+                                           <span class="point">
+                                           <span class="lg"> {{item?.stats?.pitching?.wins}} W</span>
+               
+                                           </span>
+                                            </span>
+                                        
+                                      </span>
+                                    </div>
+                                    
+                          
+                            </div>
+                          </div>
+                
+                    </div>
+                </div>
+                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbPitchingLoading && mlbPitchingData != null">
+                    <h2>ERA</h2>
+                      <div>
+                          <div class="content-wrapper">
+                              <div class="row">
+                                <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbEra'; let i=index">
+                                        <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                            {{i + 1}} 
+                                            <span (click)="authorize(item, 'nba')" class="point">
+                                                <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                              <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                              <span class="player-infos">
+                                                
+                                              <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                              <span class="names" *ngIf="!mobile">
+                                                  <span *ngIf="item?.player?.firstName"> 
+                                                      {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                    </span>
+                                                    
+                                              </span>
+      
+                                              <span class="names" *ngIf="mobile">
+                                                  <span> 
+                                                      {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                  </span>
+                                              </span>
+                                              
+                                             <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+        
+                                             <span class="point">
+                                             <span class="lg"> {{item?.stats?.pitching?.earnedRunAvg}} ERA</span>
+                 
+                                             </span>
+                                              </span>
+                                          
+                                        </span>
+                                      </div>
+                                      
+                            
+                              </div>
+                            </div>
+                  
+                      </div>
+                  </div>
+                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbPitchingLoading && mlbPitchingData != null">
+                      <h2>Saves</h2>
+                        <div>
+                            <div class="content-wrapper">
+                                <div class="row">
+                                  <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbSv'; let i=index">
+                                          <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                              {{i + 1}} 
+                                              <span (click)="authorize(item, 'nba')" class="point">
+                                                  <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                <span class="player-infos">
+                                                  
+                                                <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                <span class="names" *ngIf="!mobile">
+                                                    <span *ngIf="item?.player?.firstName"> 
+                                                        {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                      </span>
+                                                      
+                                                </span>
+        
+                                                <span class="names" *ngIf="mobile">
+                                                    <span> 
+                                                        {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                    </span>
+                                                </span>
+                                                
+                                               <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+          
+                                               <span class="point">
+                                               <span class="lg"> {{item?.stats?.pitching?.saves}} SV</span>
+                   
+                                               </span>
+                                                </span>
+                                            
+                                          </span>
+                                        </div>
+                                        
+                              
+                                </div>
+                              </div>
+                    
+                        </div>
+                    </div>
+              </section>
+<!--       
                     <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
                         <div>
                             <button (click)="twitter = !twitter">Twitter</button>
                         </div>
-                    </div>
-                    <div *ngIf="twitter">
+                    </div> -->
+                    <!-- <div *ngIf="twitter">
                        
                       <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
                         <h2>Points</h2>
@@ -1620,7 +1798,7 @@
                                       </div>
                                   
                      
-                    </div>
+                    </div> -->
                     <button mat-icon-button color="accent" class="fixed-button" (click)="openSnackBar()">
                         <i class="material-icons md-48">info</i>
                     </button>

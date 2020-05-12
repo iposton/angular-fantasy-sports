@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { NBADataService, NHLDataService, UtilService, GoogleAnalyticsService } from '../../services/index';
+import { NBADataService, 
+  NHLDataService, 
+  DataService,
+  UtilService, 
+  GoogleAnalyticsService } from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { interval, forkJoin } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
@@ -22,16 +26,22 @@ export class StatLeadersComponent implements OnInit {
   public allSentData: Array <any>;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular";
   public myData: Array <any>;
+  public mlbPitchingData: Array <any>;
+  public mlbHittingData: Array <any>;
   public nhlSkaters: Array <any>;
   public nhlGoaltenders: Array <any>;
   public loading: boolean = true;
-  public nhlSkaterloading: boolean = true;
-  public nhlGoalieloading: boolean = true;
+  public nhlSkaterloading: boolean;
+  public nhlGoalieloading: boolean;
+  public mlbPitchingLoading: boolean;
+  public mlbHittingLoading: boolean;
   public noGamesMsg: string = '';
   public errMessage: string = '';
   public tsDate: any;
   public nbaTeams: any;
   public nhlTeams: any;
+  public mlbTeams: any;
+  public nflTeams: any;
   public mobile: boolean = false;
   public stats: any = '1';
   public twitter: boolean = false;
@@ -52,21 +62,23 @@ export class StatLeadersComponent implements OnInit {
   public submitting: boolean = false;
   public selectedPlayer: any;
   
-  constructor(private dataService: NBADataService,
+  constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
+              private mlbService: DataService,
               private http: HttpClient,
               private sanitizer: DomSanitizer,
               private util: UtilService,
               public dialog: MatDialog,
               public snackBar: MatSnackBar,
               public gaService: GoogleAnalyticsService) {
-    //this.allSentData = this.dataService.getSentStats();
+    //this.allSentData = this.nbaService.getSentStats();
     //this.players = this.allSentData[0];
     //this.myData = this.allSentData[1];
     //this.dailySchedule = this.allSentData[2];
     this.stats = '1';
     this.nbaTeams = this.util.getNBATeams();
     this.nhlTeams = this.util.getNHLTeams();
+    this.mlbTeams = this.util.getMLBTeams();
     this.playerImages = this.util.getNBAImages();
     
     let thisDate = new Date();
@@ -118,54 +130,66 @@ export class StatLeadersComponent implements OnInit {
 
   loadData() {
 
-    this.dataService
+    this.nbaService
       .getEnv().subscribe(res => {
         let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
         let originalText = bytes.toString(CryptoJS.enc.Utf8);
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
 
-        this.dataService
+        this.nbaService
           .sendHeaderOptions(headers);
         this.nhlService
           .sendHeaderOptions(headers);
+        this.mlbService
+          .sendHeaderOptions(headers);
 
-        this.sortData();
-        this.sortNHL();
+        this.sortNBA();
+        //this.sortNHL();
       });
 
   }
 
   public sortNHL() {
-    this.nhlService
-       .getAllStats('goalies').subscribe(res => {
-        console.log(res, 'nhl goalies player info');
-        const nhlTeamsArray = Object.values(this.nhlTeams);
-        this.nhlGoalieloading = false;
-        this.nhlGoaltenders = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
+    this.nbaSection = false; 
+    this.nhlSection = true; 
+    this.mlbSection = false; 
+    this.nhlGoalies = false;
 
-          for (let team of nhlTeamsArray) {
-            for (let data of this.nhlGoaltenders) { 
-              if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-                data.team.logo = team['officialLogoImageSrc'];
-                data.team.city = team['city'];
-                data.team.name = team['name'];
-              }
-
-              if (data.player.officialImageSrc == null) {
-                data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
-              }
-              
-            }  
-          }
-
-    })
+    if (this.nhlGoaltenders == null) {
+      this.nhlGoalieloading = true;
+      this.nhlSkaterloading = true;
+  
+  
+      this.nhlService
+         .getAllStats('goalies').subscribe(res => {
+          console.log(res, 'nhl goalies player info');
+          const nhlTeamsArray = Object.values(this.nhlTeams);
+          this.nhlGoaltenders = res['playerStatsTotals'].filter(
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
+  
+            for (let team of nhlTeamsArray) {
+              for (let data of this.nhlGoaltenders) { 
+                if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+                  data.team.logo = team['officialLogoImageSrc'];
+                  data.team.city = team['city'];
+                  data.team.name = team['name'];
+                }
+  
+                if (data.player.officialImageSrc == null) {
+                  data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+                }
+                
+              }  
+            }
+            this.nhlGoalieloading = false;
+      })
+    
+    
 
     this.nhlService
        .getAllStats('skaters').subscribe(res => {
 
         console.log(res, 'nhl skaters player info');
-        this.nhlSkaterloading = false;
         const nhlTeamsArray = Object.values(this.nhlTeams);
 
         this.nhlSkaters = 
@@ -186,16 +210,16 @@ res['playerStatsTotals'].filter(
             }  
           }
 
-
+       this.nhlSkaterloading = false;
     })
+
+  }
   }
 
-  public async sortData() {
-      this.dataService
+  public async sortNBA() {
+      this.nbaService
        .getAllStats(this.getAll).subscribe(res => {
-
           console.log(res, 'player info');
-          this.loading = false;
           const nbaTeamsArray = Object.values(this.nbaTeams);
 
           this.myData = res['playerStatsTotals'].filter(
@@ -207,6 +231,7 @@ res['playerStatsTotals'].filter(
                 data.team.logo = team['officialLogoImageSrc'];
                 data.team.city = team['city'];
                 data.team.name = team['name'];
+                this.loading = false;
               }
 
               if (data.player.officialImageSrc == null) {
@@ -229,9 +254,9 @@ res['playerStatsTotals'].filter(
           //    }  
           // }
        
-
+         
       })
-
+      
   }
 
 
@@ -261,6 +286,77 @@ res['playerStatsTotals'].filter(
      } else {
         this.loading = false;
      }
+  }
+
+  public loadMLB() {
+    //this.loading = true;
+    this.nbaSection = false; 
+    this.nhlSection = false; 
+    this.mlbSection = true; 
+    this.nhlGoalies = false;
+
+    if (this.mlbPitchingData == null) {
+
+    this.mlbPitchingLoading = true;
+    this.mlbHittingLoading = true;
+
+    this.mlbService
+       .getAllStats().subscribe(res => {
+
+          console.log(res, 'MLB player info');
+          //this.loading = false;
+          //const mlbTeamsArray = Object.values(this.nbaTeams);
+
+          this.mlbPitchingData = res['playerStatsTotals'].filter(
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 10 && player.stats.pitching.pitcherStrikeouts > 25);
+
+          for (let team of this.mlbTeams) {
+            for (let data of this.mlbPitchingData) { 
+              if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+                data.team.logo = team['officialLogoImageSrc'];
+                data.team.city = team['city'];
+                data.team.name = team['name'];
+                //this.loading = false;
+                
+              }
+
+              // if (data.player.officialImageSrc == null) {
+              //   data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+              // }
+              
+            }  
+          }
+          this.mlbPitchingLoading = false;
+      })
+
+      this.mlbService
+        .getAllHitters().subscribe(res => {
+
+         console.log(res, 'player info');
+         //this.loading = false;
+         //const mlbTeamsArray = Object.values(this.nbaTeams);
+
+         this.mlbHittingData = res['playerStatsTotals'].filter(
+           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 10);
+
+         for (let team of this.mlbTeams) {
+           for (let data of this.mlbHittingData) { 
+             if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+               data.team.logo = team['officialLogoImageSrc'];
+               data.team.city = team['city'];
+               data.team.name = team['name'];
+              // this.loading = false;
+             }
+
+             // if (data.player.officialImageSrc == null) {
+             //   data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+             // }
+             
+           }  
+         }
+         this.mlbHittingLoading = false;
+     })
+    }
   }
 
 }

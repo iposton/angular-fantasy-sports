@@ -26,11 +26,12 @@ export class DataService {
   public daily: Observable <any> = null;
   public score: Observable <any> = null;
   public allstats: Observable <any> = null;
+  public hitstats: Observable <any> = null;
   public gameid: Observable <any> = null;
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-playoff";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
   public dailyDate: any;
 
   //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,T,C,TE
@@ -96,7 +97,7 @@ export class DataService {
       console.log('getting mlb schedule for today from api...', dailyDate);
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
-      let url = `${this.apiRoot}/date/${dailyDate}/games.json`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/date/${dailyDate}/games.json`;
       this.schedule = this.http.get(url, {headers})
        
    // }
@@ -127,6 +128,19 @@ export class DataService {
       
     //}
     return this.allstats;
+  }
+
+  getAllHitters() {
+
+    //if (!this.allstats) {
+
+      console.log('getting cumulative_player_stats by player ID from API...');
+      //cumulative_player_stats.json?position=P&sort=STATS.Miscellaneous-GS.D&limit=180
+      let url = `${this.apiRoot}/player_stats_totals.json?position=OF,1B,2B,3B,C,SS`;
+      this.hitstats = this.http.get(url, {headers})
+      
+    //}
+    return this.hitstats;
   }
 
   getInfo() {

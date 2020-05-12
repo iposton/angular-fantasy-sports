@@ -14,7 +14,7 @@ import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from '../modul
 const routes: Routes = [
 //   {
 //          path: '',
-//          redirectTo: '',
+//          redirectTo: 'stat-leaders',
 //          pathMatch: 'full'
 //   },
   { 
@@ -59,7 +59,7 @@ const routes: Routes = [
    },
    {
           path: '**', 
-          component: HomeComponent
+          component: StatLeadersComponent
    }
  
  ];

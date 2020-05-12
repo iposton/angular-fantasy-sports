@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
   public statData: Array <any> = [];
   public playerInfo: Array <any>;
   public mobile: boolean = false;
+  public mlbTeams: any;
 
   mlbGameDate: string = '';
   noMlbGamesToday: boolean;
@@ -75,15 +76,15 @@ export class HomeComponent implements OnInit {
 
   public showLink: boolean = false;
   public liveGames: boolean = false;
-  public nbaSched: boolean = true;
+  public nbaSched: boolean = false;
   public nhlSched: boolean = false;
   public nflSched: boolean = false;
-  public mlbSched: boolean = false;
+  public mlbSched: boolean = true;
   public selectedWeek: any;
   public tomorrowDate: any;
 
   tweetDay: any;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-regular";
 
   constructor(private http: HttpClient,
      public router: Router,
@@ -101,6 +102,7 @@ export class HomeComponent implements OnInit {
      //this.loading = false;
      //this.getJSON();
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
+    this.mlbTeams = this.util.getMLBTeams();
     this.nbaDataService.selectedDate(dailyDate);
     this.selectedWeek = '1';
     let weekTimes = this.util.getWeekTimes();
@@ -151,12 +153,12 @@ loadData() {
         let originalText = bytes.toString(CryptoJS.enc.Utf8);
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
         
-        // this.dataService
-        //   .sendHeaderOptions(headers);
+        this.dataService
+          .sendHeaderOptions(headers);
         this.nbaDataService
           .sendHeaderOptions(headers);
-        // this.nflDataService
-        //   .sendHeaderOptions(headers, this.selectedWeek, this.apiRoot);
+        this.nflDataService
+          .sendHeaderOptions(headers, this.selectedWeek, this.apiRoot);
         this.nhlDataService
           .sendHeaderOptions(headers);
 
@@ -166,13 +168,15 @@ loadData() {
             if (res['games'].length === 0) {
               this.mlbLoading = false;
               this.noMlbGamesToday = true;
-              this.noMlbGamesMsg = "No Games Scheduled"
+              this.noMlbGamesMsg = "No Games Scheduled";
               console.log('There are no MLB games being played today.');
             } else {
+              // this.noMlbGamesToday = true;
+              // this.noMlbGamesMsg = "No Games Scheduled";
               this.mlbLoading = false;
               this.mlbGamesToday = true;
               this.mlbSchedule = res['games'];
-              this.mlbTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
+              this.mlbTeamRef = this.mlbTeams;  //res['references'].teamReferences ? res['references'].teamReferences : null;
               this.mlbGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
               if (this.mlbTeamRef != null)
                 this.getTeamInfo(this.mlbSchedule, this.mlbTeamRef);
@@ -217,24 +221,24 @@ loadData() {
             }
         });
 
-        this.nflDataService
-          .getSchedule(this.selectedWeek).subscribe(res => {
-            console.log(res, "NFL schedule...");
-            if (res['games'].length === 0) {
-              this.nflLoading = false;
-              this.noNflGamesToday = true;
-              this.noNflGamesMsg = "No Games Scheduled"
-              console.log('There are no NFL games being played today.');
-            } else {
-              this.nflLoading = false;
-              this.nflGamesToday = true;
-              this.nflSchedule = res['games'];
-              this.nflTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
-              this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
-              if (this.nflTeamRef != null)
-                this.getTeamInfo(this.nflSchedule, this.nflTeamRef);
-            }
-        });
+        // this.nflDataService
+        //   .getSchedule(this.selectedWeek).subscribe(res => {
+        //     console.log(res, "NFL schedule...");
+        //     if (res['games'].length === 0) {
+        //       this.nflLoading = false;
+        //       this.noNflGamesToday = true;
+        //       this.noNflGamesMsg = "No Games Scheduled"
+        //       console.log('There are no NFL games being played today.');
+        //     } else {
+        //       this.nflLoading = false;
+        //       this.nflGamesToday = true;
+        //       this.nflSchedule = res['games'];
+        //       this.nflTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
+        //       this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+        //       if (this.nflTeamRef != null)
+        //         this.getTeamInfo(this.nflSchedule, this.nflTeamRef);
+        //     }
+        // });
       })
 }
 

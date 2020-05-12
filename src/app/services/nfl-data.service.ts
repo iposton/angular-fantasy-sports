@@ -54,7 +54,7 @@ export class NFLDataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular"; 
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular"; 
   public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-regular"
   public dailyDate: any;
   public touchTeamRanks: any;
