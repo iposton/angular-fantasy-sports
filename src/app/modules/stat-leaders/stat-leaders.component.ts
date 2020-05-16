@@ -49,6 +49,7 @@ export class StatLeadersComponent implements OnInit {
   public playerImages: any;
   public tomorrowDate: any;
   public mlbSection: boolean = false;
+  public mlbHittingSection: boolean = false;
   public nbaSection: boolean = true;
   public nhlSection: boolean = false;
   public nhlGoalies: boolean = false;
@@ -61,6 +62,7 @@ export class StatLeadersComponent implements OnInit {
   public noPosts: any;
   public submitting: boolean = false;
   public selectedPlayer: any;
+  public type: any;
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -94,6 +96,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public openModal(player, headers, type) {
+    this.type = type;
     this.isOpen = true;
     this.submitting = true;
     this.selectedPlayer = null;
@@ -105,7 +108,7 @@ export class StatLeadersComponent implements OnInit {
     //let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
     //let searchterm = 'query=#startingGoalies #nhl ' + player.player.FirstName + ' ' + player.player.LastName;
     let twitter = null;
-    twitter = type === 'nba' ? this.nbaTeams[player.player['currentTeam'].abbreviation].twitter : this.nhlTeams[player.player['currentTeam'].abbreviation].twitter;
+    twitter = type === 'nba' ? this.nbaTeams[player.player['currentTeam'].abbreviation].twitter : type === 'nhl' ? this.nhlTeams[player.player['currentTeam'].abbreviation].twitter : player.team.twitter;
     let searchterm = null;
     searchterm = 'query=' + player.player.lastName + ' ' + twitter;
     console.log(searchterm, 'search term');
@@ -308,7 +311,7 @@ res['playerStatsTotals'].filter(
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
           this.mlbPitchingData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 10 && player.stats.pitching.pitcherStrikeouts > 25);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 30 && player.stats.pitching.pitcherStrikeouts > 25);
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -316,6 +319,7 @@ res['playerStatsTotals'].filter(
                 data.team.logo = team['officialLogoImageSrc'];
                 data.team.city = team['city'];
                 data.team.name = team['name'];
+                data.team.twitter = team['socialMediaAccounts'][0].value;
                 //this.loading = false;
                 
               }
@@ -337,7 +341,7 @@ res['playerStatsTotals'].filter(
          //const mlbTeamsArray = Object.values(this.nbaTeams);
 
          this.mlbHittingData = res['playerStatsTotals'].filter(
-           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 10);
+           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 30 && player.stats.batting.atBats > 80);
 
          for (let team of this.mlbTeams) {
            for (let data of this.mlbHittingData) { 
@@ -345,6 +349,7 @@ res['playerStatsTotals'].filter(
                data.team.logo = team['officialLogoImageSrc'];
                data.team.city = team['city'];
                data.team.name = team['name'];
+               data.team.twitter = team['socialMediaAccounts'][0].value;
               // this.loading = false;
              }
 

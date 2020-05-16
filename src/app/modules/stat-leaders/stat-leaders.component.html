@@ -5,7 +5,7 @@
 <div id="overlay" [ngClass]="{'active': isOpen}" (click)="isOpen = false">
     <div class="modal" (click)="$event.stopPropagation()">
       <div class="modal-header" *ngIf="!submitting">
-          <span> Twitter Updates - <span><img src="{{selectedPlayer?.player?.officialImageSrc}}" alt="basketball player"
+          <span> Twitter Updates - <span class="{{type}}"><img src="{{selectedPlayer?.player?.officialImageSrc}}" alt="basketball player"
             onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> 
             <span>{{selectedPlayer?.player?.firstName + ' ' + selectedPlayer?.player?.lastName}} - {{selectedPlayer?.player?.primaryPosition}} | #{{selectedPlayer?.player.jerseyNumber}} </span>
             <!-- <span class="team-image"> <img src="{{selectedPlayer?.team?.logo}}" alt="{{selectedPlayer?.team?.name}} logo"></span> -->
@@ -60,7 +60,9 @@
     </div>
 </div>
 <div class="center">
-  <button (click)="page = 19; amount = -1">1 - 20</button> &nbsp;&nbsp; <button (click)="page = 39; amount = 19">21 - 40</button> &nbsp;&nbsp; <button [ngClass]="{'dn' : !nhlSection}" (click)="nhlSection = false; nhlGoalies = true;">NHL Goalies</button> &nbsp;&nbsp; <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false;">NHL Skaters</button>
+  <button (click)="page = 19; amount = -1">1 - 20</button> &nbsp;&nbsp; <button (click)="page = 39; amount = 19">21 - 40</button> 
+  &nbsp;&nbsp; <button [ngClass]="{'dn' : !nhlSection}" (click)="nhlSection = false; nhlGoalies = true;">NHL Goalies</button> &nbsp;&nbsp; <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false;">NHL Skaters</button>
+  &nbsp;&nbsp; <button [ngClass]="{'dn' : !mlbSection}" (click)="mlbSection = false; mlbHittingSection = true;">MLB Hitters</button> &nbsp;&nbsp; <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false;">MLB Pitchers</button>
 </div>
 <!-- <div class="center">
     <button (click)="getByDate(false)">last 4 weeks</button> &nbsp;&nbsp; <button (click)="getByDate(true)">Season</button>
@@ -1187,7 +1189,7 @@
                             <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbK'; let i=index">
                                     <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                         {{i + 1}} 
-                                        <span (click)="authorize(item, 'nba')" class="point">
+                                        <span (click)="authorize(item, 'mlb')" class="point">
                                             <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
                                           <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
                                           <span class="player-infos">
@@ -1231,7 +1233,7 @@
                               <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbW'; let i=index">
                                       <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                           {{i + 1}} 
-                                          <span (click)="authorize(item, 'nba')" class="point">
+                                          <span (click)="authorize(item, 'mlb')" class="point">
                                               <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
                                             <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
                                             <span class="player-infos">
@@ -1275,7 +1277,7 @@
                                 <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbEra'; let i=index">
                                         <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                             {{i + 1}} 
-                                            <span (click)="authorize(item, 'nba')" class="point">
+                                            <span (click)="authorize(item, 'mlb')" class="point">
                                                 <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
                                               <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
                                               <span class="player-infos">
@@ -1319,7 +1321,7 @@
                                   <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbSv'; let i=index">
                                           <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
                                               {{i + 1}} 
-                                              <span (click)="authorize(item, 'nba')" class="point">
+                                              <span (click)="authorize(item, 'mlb')" class="point">
                                                   <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
                                                 <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
                                                 <span class="player-infos">
@@ -1355,7 +1357,449 @@
                     
                         </div>
                     </div>
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbPitchingLoading && mlbPitchingData != null">
+                        <h2>Hits Given Up</h2>
+                          <div>
+                              <div class="content-wrapper">
+                                  <div class="row">
+                                    <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbHitsAgainst'; let i=index">
+                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                {{i + 1}} 
+                                                <span (click)="authorize(item, 'mlb')" class="point">
+                                                    <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                  <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                  <span class="player-infos">
+                                                    
+                                                  <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                  <span class="names" *ngIf="!mobile">
+                                                      <span *ngIf="item?.player?.firstName"> 
+                                                          {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                        </span>
+                                                        
+                                                  </span>
+          
+                                                  <span class="names" *ngIf="mobile">
+                                                      <span> 
+                                                          {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                      </span>
+                                                  </span>
+                                                  
+                                                 <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+            
+                                                 <span class="point">
+                                                 <span class="lg"> {{item?.stats?.pitching?.hitsAllowed}} HA</span>
+                     
+                                                 </span>
+                                                  </span>
+                                              
+                                            </span>
+                                          </div>
+                                          
+                                
+                                  </div>
+                                </div>
+                      
+                          </div>
+                      </div>
+                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbPitchingLoading && mlbPitchingData != null">
+                          <h2>Walk Avg</h2>
+                            <div>
+                                <div class="content-wrapper">
+                                    <div class="row">
+                                      <div *ngFor="let item of mlbPitchingData | orderBy: 'mlbWalks'; let i=index">
+                                              <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                  {{i + 1}} 
+                                                  <span (click)="authorize(item, 'mlb')" class="point">
+                                                      <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                    <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                    <span class="player-infos">
+                                                      
+                                                    <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                    <span class="names" *ngIf="!mobile">
+                                                        <span *ngIf="item?.player?.firstName"> 
+                                                            {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                          </span>
+                                                          
+                                                    </span>
+            
+                                                    <span class="names" *ngIf="mobile">
+                                                        <span> 
+                                                            {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                        </span>
+                                                    </span>
+                                                    
+                                                   <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+              
+                                                   <span class="point">
+                                                   <span class="lg"> {{item?.stats?.pitching?.walksAllowedPer9Innings}} WA</span>
+                       
+                                                   </span>
+                                                    </span>
+                                                
+                                              </span>
+                                            </div>
+                                            
+                                  
+                                    </div>
+                                  </div>
+                        
+                            </div>
+                        </div>
               </section>
+              <section [ngClass]="{'dn' : !mlbHittingSection}">
+                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbHittingLoading && mlbHittingData != null">
+                      <h2>Batting Avg</h2>
+                        <div>
+                            <div class="content-wrapper">
+                                <div class="row">
+                                  <div *ngFor="let item of mlbHittingData | orderBy: 'mlbBA'; let i=index">
+                                          <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                              {{i + 1}} 
+                                              <span (click)="authorize(item, 'mlb')" class="point">
+                                                  <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                <span class="player-infos">
+                                                  
+                                                <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                <span class="names" *ngIf="!mobile">
+                                                    <span *ngIf="item?.player?.firstName"> 
+                                                        {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                      </span>
+                                                      
+                                                </span>
+        
+                                                <span class="names" *ngIf="mobile">
+                                                    <span> 
+                                                        {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                    </span>
+                                                </span>
+                                                
+                                               <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+          
+                                               <span class="point">
+                                               <span class="lg"> {{item?.stats?.batting?.battingAvg}} BA</span>
+                   
+                                               </span>
+                                                </span>
+                                            
+                                          </span>
+                                        </div>
+                                        
+                              
+                                </div>
+                              </div>
+                    
+                        </div>
+                    </div>
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbHittingLoading && mlbHittingData != null">
+                        <h2>RBI</h2>
+                          <div>
+                              <div class="content-wrapper">
+                                  <div class="row">
+                                    <div *ngFor="let item of mlbHittingData | orderBy: 'mlbrbi'; let i=index">
+                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                {{i + 1}} 
+                                                <span (click)="authorize(item, 'mlb')" class="point">
+                                                    <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                  <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                  <span class="player-infos">
+                                                    
+                                                  <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                  <span class="names" *ngIf="!mobile">
+                                                      <span *ngIf="item?.player?.firstName"> 
+                                                          {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                        </span>
+                                                        
+                                                  </span>
+          
+                                                  <span class="names" *ngIf="mobile">
+                                                      <span> 
+                                                          {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                      </span>
+                                                  </span>
+                                                  
+                                                 <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+            
+                                                 <span class="point">
+                                                 <span class="lg"> {{item?.stats?.batting?.runsBattedIn}} RBI</span>
+                     
+                                                 </span>
+                                                  </span>
+                                              
+                                            </span>
+                                          </div>
+                                          
+                                
+                                  </div>
+                                </div>
+                      
+                          </div>
+                      </div>
+                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbHittingLoading && mlbHittingData != null">
+                        <h2>HomeRuns</h2>
+                          <div>
+                              <div class="content-wrapper">
+                                  <div class="row">
+                                    <div *ngFor="let item of mlbHittingData | orderBy: 'mlbhr'; let i=index">
+                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                {{i + 1}} 
+                                                <span (click)="authorize(item, 'mlb')" class="point">
+                                                    <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                  <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                  <span class="player-infos">
+                                                    
+                                                  <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                  <span class="names" *ngIf="!mobile">
+                                                      <span *ngIf="item?.player?.firstName"> 
+                                                          {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                        </span>
+                                                        
+                                                  </span>
+          
+                                                  <span class="names" *ngIf="mobile">
+                                                      <span> 
+                                                          {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                      </span>
+                                                  </span>
+                                                  
+                                                 <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+            
+                                                 <span class="point">
+                                                 <span class="lg"> {{item?.stats?.batting?.homeruns}} HR</span>
+                     
+                                                 </span>
+                                                  </span>
+                                              
+                                            </span>
+                                          </div>
+                                          
+                                
+                                  </div>
+                                </div>
+                      
+                          </div>
+                      </div>
+                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbHittingLoading && mlbHittingData != null">
+                          <h2>Hits</h2>
+                            <div>
+                                <div class="content-wrapper">
+                                    <div class="row">
+                                      <div *ngFor="let item of mlbHittingData | orderBy: 'mlbhits'; let i=index">
+                                              <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                  {{i + 1}} 
+                                                  <span (click)="authorize(item, 'mlb')" class="point">
+                                                      <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                    <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                    <span class="player-infos">
+                                                      
+                                                    <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                    <span class="names" *ngIf="!mobile">
+                                                        <span *ngIf="item?.player?.firstName"> 
+                                                            {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                          </span>
+                                                          
+                                                    </span>
+            
+                                                    <span class="names" *ngIf="mobile">
+                                                        <span> 
+                                                            {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                        </span>
+                                                    </span>
+                                                    
+                                                   <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+              
+                                                   <span class="point">
+                                                   <span class="lg"> {{item?.stats?.batting?.hits}} Hits</span>
+                       
+                                                   </span>
+                                                    </span>
+                                                
+                                              </span>
+                                            </div>
+                                            
+                                  
+                                    </div>
+                                  </div>
+                        
+                            </div>
+                        </div>
+                        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbHittingLoading && mlbHittingData != null">
+                            <h2>Runs</h2>
+                              <div>
+                                  <div class="content-wrapper">
+                                      <div class="row">
+                                        <div *ngFor="let item of mlbHittingData | orderBy: 'mlbruns'; let i=index">
+                                                <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                    {{i + 1}} 
+                                                    <span (click)="authorize(item, 'mlb')" class="point">
+                                                        <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                      <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                      <span class="player-infos">
+                                                        
+                                                      <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                      <span class="names" *ngIf="!mobile">
+                                                          <span *ngIf="item?.player?.firstName"> 
+                                                              {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                            </span>
+                                                            
+                                                      </span>
+              
+                                                      <span class="names" *ngIf="mobile">
+                                                          <span> 
+                                                              {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                          </span>
+                                                      </span>
+                                                      
+                                                     <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                
+                                                     <span class="point">
+                                                     <span class="lg"> {{item?.stats?.batting?.runs}} Runs</span>
+                         
+                                                     </span>
+                                                      </span>
+                                                  
+                                                </span>
+                                              </div>
+                                              
+                                    
+                                      </div>
+                                    </div>
+                          
+                              </div>
+                          </div>
+                          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbHittingLoading && mlbHittingData != null">
+                              <h2>Doubles</h2>
+                                <div>
+                                    <div class="content-wrapper">
+                                        <div class="row">
+                                          <div *ngFor="let item of mlbHittingData | orderBy: 'mlbDbls'; let i=index">
+                                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                      {{i + 1}} 
+                                                      <span (click)="authorize(item, 'mlb')" class="point">
+                                                          <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                        <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                        <span class="player-infos">
+                                                          
+                                                        <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                        <span class="names" *ngIf="!mobile">
+                                                            <span *ngIf="item?.player?.firstName"> 
+                                                                {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                              </span>
+                                                              
+                                                        </span>
+                
+                                                        <span class="names" *ngIf="mobile">
+                                                            <span> 
+                                                                {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                            </span>
+                                                        </span>
+                                                        
+                                                       <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                  
+                                                       <span class="point">
+                                                       <span class="lg"> {{item?.stats?.batting?.secondBaseHits}} Dbls</span>
+                           
+                                                       </span>
+                                                        </span>
+                                                    
+                                                  </span>
+                                                </div>
+                                                
+                                      
+                                        </div>
+                                      </div>
+                            
+                                </div>
+                            </div>
+                            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbHittingLoading && mlbHittingData != null">
+                                <h2>Stolen Bases</h2>
+                                  <div>
+                                      <div class="content-wrapper">
+                                          <div class="row">
+                                            <div *ngFor="let item of mlbHittingData | orderBy: 'mlbSB'; let i=index">
+                                                    <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                        {{i + 1}} 
+                                                        <span (click)="authorize(item, 'mlb')" class="point">
+                                                            <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                          <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                          <span class="player-infos">
+                                                            
+                                                          <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                          <span class="names" *ngIf="!mobile">
+                                                              <span *ngIf="item?.player?.firstName"> 
+                                                                  {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                                </span>
+                                                                
+                                                          </span>
+                  
+                                                          <span class="names" *ngIf="mobile">
+                                                              <span> 
+                                                                  {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                              </span>
+                                                          </span>
+                                                          
+                                                         <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                    
+                                                         <span class="point">
+                                                         <span class="lg"> {{item?.stats?.batting?.stolenBases}} SB</span>
+                             
+                                                         </span>
+                                                          </span>
+                                                      
+                                                    </span>
+                                                  </div>
+                                                  
+                                        
+                                          </div>
+                                        </div>
+                              
+                                  </div>
+                              </div>
+                              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!mlbHittingLoading && mlbHittingData != null">
+                                  <h2>Plate Appearances</h2>
+                                    <div>
+                                        <div class="content-wrapper">
+                                            <div class="row">
+                                              <div *ngFor="let item of mlbHittingData | orderBy: 'mlbPA'; let i=index">
+                                                      <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                          {{i + 1}} 
+                                                          <span (click)="authorize(item, 'mlb')" class="point">
+                                                              <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                            <img src="{{item?.player?.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"></span>
+                                                            <span class="player-infos">
+                                                              
+                                                            <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                            <span class="names" *ngIf="!mobile">
+                                                                <span *ngIf="item?.player?.firstName"> 
+                                                                    {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                                  </span>
+                                                                  
+                                                            </span>
+                    
+                                                            <span class="names" *ngIf="mobile">
+                                                                <span> 
+                                                                    {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                                </span>
+                                                            </span>
+                                                            
+                                                           <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                      
+                                                           <span class="point">
+                                                           <span class="lg"> {{item?.stats?.batting?.plateAppearances}} PA</span>
+                               
+                                                           </span>
+                                                            </span>
+                                                        
+                                                      </span>
+                                                    </div>
+                                                    
+                                          
+                                            </div>
+                                          </div>
+                                
+                                    </div>
+                                </div>
+                    </section>
 <!--       
                     <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
                         <div>
