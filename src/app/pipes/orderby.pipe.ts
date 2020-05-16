@@ -289,7 +289,108 @@ transform(array: any[], field: string): any[] {
             return 0;
           }
         }
+      } else if (field === 'mlbHitsAgainst') {
+        if (a['stats'].pitching != null && b['stats'].pitching) {
+          if (a['stats'].pitching.hitsAllowed >= b['stats'].pitching.hitsAllowed) {
+            return -1;
+          } else if (a['stats'].pitching.hitsAllowed <= b['stats'].pitching.hitsAllowed) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbWalks') {
+        if (a['stats'].pitching != null && b['stats'].pitching) {
+          if (a['stats'].pitching.walksAllowedPer9Innings <= b['stats'].pitching.walksAllowedPer9Innings) {
+            return -1;
+          } else if (a['stats'].pitching.walksAllowedPer9Innings >= b['stats'].pitching.walksAllowedPer9Innings) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbBA') {
+        if (a['stats'].batting != null && b['stats'].batting) {
+          if (a['stats'].batting.battingAvg >= b['stats'].batting.battingAvg) {
+            return -1;
+          } else if (a['stats'].batting.battingAvg <= b['stats'].batting.battingAvg) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbrbi') {
+        if (a['stats'].batting != null && b['stats'].batting) {
+          if (a['stats'].batting.runsBattedIn >= b['stats'].batting.runsBattedIn) {
+            return -1;
+          } else if (a['stats'].batting.runsBattedIn <= b['stats'].batting.runsBattedIn) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbhr') {
+        if (a['stats'].batting != null && b['stats'].batting) {
+          if (a['stats'].batting.homeruns >= b['stats'].batting.homeruns) {
+            return -1;
+          } else if (a['stats'].batting.homeruns <= b['stats'].batting.homeruns) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbhits') {
+        if (a['stats'].batting != null && b['stats'].batting) {
+          if (a['stats'].batting.hits >= b['stats'].batting.hits) {
+            return -1;
+          } else if (a['stats'].batting.hits <= b['stats'].batting.hits) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbruns') {
+        if (a['stats'].batting != null && b['stats'].batting) {
+          if (a['stats'].batting.runs >= b['stats'].batting.runs) {
+            return -1;
+          } else if (a['stats'].batting.runs <= b['stats'].batting.runs) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbDbls') {
+        if (a['stats'].batting != null && b['stats'].batting) {
+          if (a['stats'].batting.secondBaseHits >= b['stats'].batting.secondBaseHits) {
+            return -1;
+          } else if (a['stats'].batting.secondBaseHits <= b['stats'].batting.secondBaseHits) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbSB') {
+        if (a['stats'].batting != null && b['stats'].batting) {
+          if (a['stats'].batting.stolenBases >= b['stats'].batting.stolenBases) {
+            return -1;
+          } else if (a['stats'].batting.stolenBases <= b['stats'].batting.stolenBases) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'mlbPA') {
+        if (a['stats'].batting != null && b['stats'].batting) {
+          if (a['stats'].batting.plateAppearances >= b['stats'].batting.plateAppearances) {
+            return -1;
+          } else if (a['stats'].batting.plateAppearances <= b['stats'].batting.plateAppearances) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
       }
+      
     });
     return array;
   }
