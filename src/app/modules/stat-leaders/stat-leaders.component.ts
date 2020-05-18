@@ -169,8 +169,11 @@ export class StatLeadersComponent implements OnInit {
   public sortNHL() {
     this.nbaSection = false; 
     this.nhlSection = true; 
-    this.mlbSection = false; 
+    this.mlbSection = false;
+    this.mlbHittingSection = false;
     this.nhlGoalies = false;
+    this.nflSection = false;
+    this.nflDefenseSection = false;
 
     if (this.nhlGoaltenders == null) {
       this.nhlGoalieloading = true;
@@ -311,6 +314,8 @@ res['playerStatsTotals'].filter(
     this.nhlSection = false; 
     this.mlbSection = true; 
     this.nhlGoalies = false;
+    this.nflSection = false;
+    this.nflDefenseSection = false;
 
     if (this.mlbPitchingData == null) {
 
