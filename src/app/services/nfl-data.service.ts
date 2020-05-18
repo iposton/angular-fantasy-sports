@@ -48,14 +48,16 @@ export class NFLDataService {
   public weekly: Observable <any> = null;
   public score: Observable <any> = null;
   public allstats: Observable <any> = null;
+  public offenseStats: Observable <any> = null;
+  public defenseStats: Observable <any> = null;
   public teamstats: Observable <any> = null;
   public lastweekgameid: Observable <any> = null;
   public gameid: Observable <any> = null;
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular"; 
-  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-regular"
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular"; 
+  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-playoff"; //2019-regular"
   public dailyDate: any;
   public touchTeamRanks: any;
   public lineTeamRanks: any;
@@ -228,6 +230,18 @@ export class NFLDataService {
       
     //}
     return this.allstats;
+  }
+
+  getAllOffense() {
+      let url = `${apiRoot}/player_stats_totals.json?position=QB,WR,RB,K,TE`;
+      this.offenseStats = this.http.get(url, {headers})
+      return this.offenseStats;
+  }
+
+  getAllDefense() {
+      let url = `${apiRoot}/player_stats_totals.json?position=CB,S,LB,DT,DE`;
+      this.defenseStats = this.http.get(url, {headers})
+      return this.defenseStats;
   }
 
   getTeamStats(date) {

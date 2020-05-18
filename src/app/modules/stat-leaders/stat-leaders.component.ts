@@ -4,7 +4,8 @@ import { NBADataService,
   NHLDataService, 
   DataService,
   UtilService, 
-  GoogleAnalyticsService } from '../../services/index';
+  GoogleAnalyticsService,
+  NFLDataService } from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { interval, forkJoin } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
@@ -28,6 +29,11 @@ export class StatLeadersComponent implements OnInit {
   public myData: Array <any>;
   public mlbPitchingData: Array <any>;
   public mlbHittingData: Array <any>;
+  public nflOffenseData: Array <any>;
+  public nflQBData: Array <any>;
+  public nflRushData: Array <any>;
+  public nflRecData: Array <any>;
+  public nflDefenseData: Array <any>;
   public nhlSkaters: Array <any>;
   public nhlGoaltenders: Array <any>;
   public loading: boolean = true;
@@ -35,6 +41,8 @@ export class StatLeadersComponent implements OnInit {
   public nhlGoalieloading: boolean;
   public mlbPitchingLoading: boolean;
   public mlbHittingLoading: boolean;
+  public nflOffenseLoading: boolean;
+  public nflDefenseLoading: boolean;
   public noGamesMsg: string = '';
   public errMessage: string = '';
   public tsDate: any;
@@ -52,6 +60,8 @@ export class StatLeadersComponent implements OnInit {
   public mlbHittingSection: boolean = false;
   public nbaSection: boolean = true;
   public nhlSection: boolean = false;
+  public nflSection: boolean = false;
+  public nflDefenseSection: boolean = false;
   public nhlGoalies: boolean = false;
   public weekResults: boolean = false;
   public page: number = 19;
@@ -72,7 +82,8 @@ export class StatLeadersComponent implements OnInit {
               private util: UtilService,
               public dialog: MatDialog,
               public snackBar: MatSnackBar,
-              public gaService: GoogleAnalyticsService) {
+              public gaService: GoogleAnalyticsService,
+              public nflService: NFLDataService) {
     //this.allSentData = this.nbaService.getSentStats();
     //this.players = this.allSentData[0];
     //this.myData = this.allSentData[1];
@@ -81,6 +92,7 @@ export class StatLeadersComponent implements OnInit {
     this.nbaTeams = this.util.getNBATeams();
     this.nhlTeams = this.util.getNHLTeams();
     this.mlbTeams = this.util.getMLBTeams();
+    this.nflTeams = this.util.getNFLTeams();
     this.playerImages = this.util.getNBAImages();
     
     let thisDate = new Date();
@@ -138,16 +150,18 @@ export class StatLeadersComponent implements OnInit {
         let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
         let originalText = bytes.toString(CryptoJS.enc.Utf8);
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
-
+        let nflRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular";
         this.nbaService
           .sendHeaderOptions(headers);
         this.nhlService
           .sendHeaderOptions(headers);
         this.mlbService
           .sendHeaderOptions(headers);
+        this.nflService
+          .sendHeaderOptions(headers, '1', nflRoot);
 
         this.sortNBA();
-        //this.sortNHL();
+        
       });
 
   }
@@ -364,7 +378,88 @@ res['playerStatsTotals'].filter(
     }
   }
 
+  public loadNFL() {
+    //this.loading = true;
+    this.nbaSection = false; 
+    this.nhlSection = false; 
+    this.mlbSection = false; 
+    this.nhlGoalies = false;
+    this.nflSection = true;
+
+    if (this.mlbPitchingData == null) {
+
+    this.nflOffenseLoading = true;
+    this.nflDefenseLoading = true;
+
+    this.nflService
+       .getAllOffense().subscribe(res => {
+
+          console.log(res, 'NFL of player info');
+          //this.loading = false;
+          //const mlbTeamsArray = Object.values(this.nbaTeams);
+
+          this.nflQBData = res['playerStatsTotals'].filter(
+            player => player.stats != null && player.stats.gamesPlayed > 6 && player.player.primaryPosition === 'QB');
+
+          this.nflRushData = res['playerStatsTotals'].filter(
+              player => player.stats != null && player.stats.gamesPlayed > 6 && (player.player.primaryPosition === 'QB' || player.player.primaryPosition === 'RB'));
+
+          this.nflRecData = res['playerStatsTotals'].filter(
+                player => player.stats != null && player.stats.gamesPlayed > 6 && (player.player.primaryPosition === 'WR' || player.player.primaryPosition === 'TE' || player.player.primaryPosition === 'RB'));
+
+          for (let team of this.nflTeams) {
+            for (let data of res['playerStatsTotals']) { 
+              if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+                data.team.logo = team['officialLogoImageSrc'];
+                data.team.city = team['city'];
+                data.team.name = team['name'];
+                data.team.twitter = team['socialMediaAccounts'][0].value;
+                //this.loading = false;
+                
+              }
+
+              // if (data.player.officialImageSrc == null) {
+              //   data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+              // }
+              
+            }  
+          }
+          this.nflOffenseLoading = false;
+      })
+
+      this.nflService
+        .getAllDefense().subscribe(res => {
+
+         console.log(res, 'nfl def player info');
+         //this.loading = false;
+         //const mlbTeamsArray = Object.values(this.nbaTeams);
+
+         this.nflDefenseData = res['playerStatsTotals'].filter(
+           player => player.stats != null && player.stats.gamesPlayed > 6);
+
+         for (let team of this.nflTeams) {
+           for (let data of res['playerStatsTotals']) { 
+             if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+               data.team.logo = team['officialLogoImageSrc'];
+               data.team.city = team['city'];
+               data.team.name = team['name'];
+               data.team.twitter = team['socialMediaAccounts'][0].value;
+              // this.loading = false;
+             }
+
+             // if (data.player.officialImageSrc == null) {
+             //   data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+             // }
+             
+           }  
+         }
+         this.nflDefenseLoading = false;
+     })
+    }
+  }
+
 }
+
 
 // @Component({
 //   selector: 'nba-info',

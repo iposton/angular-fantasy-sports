@@ -52,23 +52,24 @@
             MLB
           </span> 
       </div>
-      <!-- <div class="col">
+      <div [ngClass]="{'active': nflSection}" class="col" (click)="loadNFL()">
           <span class="sched-item">
             NFL
           </span> 
-      </div> -->
+      </div>
     </div>
 </div>
-<div class="center">
-  <button (click)="page = 19; amount = -1">1 - 20</button> &nbsp;&nbsp; <button (click)="page = 39; amount = 19">21 - 40</button> 
-  &nbsp;&nbsp; <button [ngClass]="{'dn' : !nhlSection}" (click)="nhlSection = false; nhlGoalies = true;">NHL Goalies</button> &nbsp;&nbsp; <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false;">NHL Skaters</button>
-  &nbsp;&nbsp; <button [ngClass]="{'dn' : !mlbSection}" (click)="mlbSection = false; mlbHittingSection = true;">MLB Hitters</button> &nbsp;&nbsp; <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false;">MLB Pitchers</button>
+<div class="center buttons">
+  <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button> 
+   <button [ngClass]="{'dn' : !nhlSection}" (click)="nhlSection = false; nhlGoalies = true;">NHL Goalies</button>  <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false;">NHL Skaters</button>
+   <button [ngClass]="{'dn' : !mlbSection}" (click)="mlbSection = false; mlbHittingSection = true;">MLB Hitters</button>  <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false;">MLB Pitchers</button>
+   <button [ngClass]="{'dn' : !nflSection}" (click)="nflSection = false; nflDefenseSection = true;">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
 </div>
 <!-- <div class="center">
     <button (click)="getByDate(false)">last 4 weeks</button> &nbsp;&nbsp; <button (click)="getByDate(true)">Season</button>
 </div> -->
 
-<div class="spinner-msg" *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading">
+<div class="spinner-msg" *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading">
   Retrieving Stat Leader Data...
   <mat-spinner></mat-spinner>
 </div>
@@ -1800,6 +1801,374 @@
                                     </div>
                                 </div>
                     </section>
+
+                    <section [ngClass]="{'dn' : !nflSection}">
+                        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nflOffenseLoading && nflQBData != null">
+                            <h2>Passing Yards</h2>
+                              <div>
+                                  <div class="content-wrapper">
+                                      <div class="row">
+                                        <div *ngFor="let item of nflQBData | orderBy: 'nflPY'; let i=index">
+                                                <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                    {{i + 1}} 
+                                                    <span (click)="authorize(item, 'mlb')" class="point">
+                                                        <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                               <img src="{{item?.player?.officialImageSrc}}" alt="football player"
+                          onError="this.src='./assets/fb-player.png'"></span>
+                                                      <span class="player-infos">
+                                                        
+                                                      <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                      <span class="names" *ngIf="!mobile">
+                                                          <span *ngIf="item?.player?.firstName"> 
+                                                              {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                            </span>
+                                                            
+                                                      </span>
+              
+                                                      <span class="names" *ngIf="mobile">
+                                                          <span> 
+                                                              {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                          </span>
+                                                      </span>
+                                                      
+                                                     <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                
+                                                     <span class="point">
+                                                     <span class="lg"> {{item?.stats?.passing?.passYards}} PY {{item?.stats?.passing?.passTD}} TD</span>
+                         
+                                                     </span>
+                                                      </span>
+                                                  
+                                                </span>
+                                              </div>
+                                              
+                                    
+                                      </div>
+                                    </div>
+                          
+                              </div>
+                          </div>
+                          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nflOffenseLoading && nflRushData != null">
+                              <h2>Rushing Yards</h2>
+                                <div>
+                                    <div class="content-wrapper">
+                                        <div class="row">
+                                          <div *ngFor="let item of nflRushData | orderBy: 'nflRY'; let i=index">
+                                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                      {{i + 1}} 
+                                                      <span (click)="authorize(item, 'mlb')" class="point">
+                                                        
+                                                                 <img src="{{item?.player?.officialImageSrc}}" alt="football player"
+                          onError="this.src='./assets/fb-player.png'"></span>
+                                                        <span class="player-infos">
+                                                          
+                                                        <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                        <span class="names" *ngIf="!mobile">
+                                                            <span *ngIf="item?.player?.firstName"> 
+                                                                {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                              </span>
+                                                              
+                                                        </span>
+                
+                                                        <span class="names" *ngIf="mobile">
+                                                            <span> 
+                                                                {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                            </span>
+                                                        </span>
+                                                        
+                                                       <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                  
+                                                       <span class="point">
+                                                       <span class="lg"> {{item?.stats?.rushing?.rushYards}} RY {{item?.stats?.rushing?.rushTD}} TD</span>
+                           
+                                                       </span>
+                                                        </span>
+                                                    
+                                                  </span>
+                                                </div>
+                                                
+                                      
+                                        </div>
+                                      </div>
+                            
+                                </div>
+                            </div>
+                            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nflOffenseLoading && nflRecData != null">
+                                <h2>Reception Yards</h2>
+                                  <div>
+                                      <div class="content-wrapper">
+                                          <div class="row">
+                                            <div *ngFor="let item of nflRecData | orderBy: 'nflRecY'; let i=index">
+                                                    <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                        {{i + 1}} 
+                                                        <span (click)="authorize(item, 'mlb')" class="point">
+                                                            <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                                   <img src="{{item?.player?.officialImageSrc}}" alt="football player"
+                          onError="this.src='./assets/fb-player.png'"></span>
+                                                          <span class="player-infos">
+                                                            
+                                                          <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                          <span class="names" *ngIf="!mobile">
+                                                              <span *ngIf="item?.player?.firstName"> 
+                                                                  {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                                </span>
+                                                                
+                                                          </span>
+                  
+                                                          <span class="names" *ngIf="mobile">
+                                                              <span> 
+                                                                  {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                              </span>
+                                                          </span>
+                                                          
+                                                         <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                    
+                                                         <span class="point">
+                                                         <span class="lg"> {{item?.stats?.receiving?.recYards}} Rec Yds</span>
+                             
+                                                         </span>
+                                                          </span>
+                                                      
+                                                    </span>
+                                                  </div>
+                                                  
+                                        
+                                          </div>
+                                        </div>
+                              
+                                  </div>
+                              </div>
+                              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nflOffenseLoading && nflRecData != null">
+                                  <h2>Receptions</h2>
+                                    <div>
+                                        <div class="content-wrapper">
+                                            <div class="row">
+                                              <div *ngFor="let item of nflRecData | orderBy: 'nflRec'; let i=index">
+                                                      <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                          {{i + 1}} 
+                                                          <span (click)="authorize(item, 'mlb')" class="point">
+                                                              <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                                     <img src="{{item?.player?.officialImageSrc}}" alt="football player"
+                          onError="this.src='./assets/fb-player.png'"></span>
+                                                            <span class="player-infos">
+                                                              
+                                                            <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                            <span class="names" *ngIf="!mobile">
+                                                                <span *ngIf="item?.player?.firstName"> 
+                                                                    {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                                  </span>
+                                                                  
+                                                            </span>
+                    
+                                                            <span class="names" *ngIf="mobile">
+                                                                <span> 
+                                                                    {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                                </span>
+                                                            </span>
+                                                            
+                                                           <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                      
+                                                           <span class="point">
+                                                           <span class="lg"> {{item?.stats?.receiving?.receptions}} Rec  {{item?.stats?.receiving?.recTD}} TD</span>
+                               
+                                                           </span>
+                                                            </span>
+                                                        
+                                                      </span>
+                                                    </div>
+                                                    
+                                          
+                                            </div>
+                                          </div>
+                                
+                                    </div>
+                                </div>
+                              
+                          </section>
+
+                          <section [ngClass]="{'dn' : !nflDefenseSection}">
+                              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nflDefenseLoading && nflDefenseData != null">
+                                  <h2>Tackles</h2>
+                                    <div>
+                                        <div class="content-wrapper">
+                                            <div class="row">
+                                              <div *ngFor="let item of nflDefenseData | orderBy: 'nflTack'; let i=index">
+                                                      <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                          {{i + 1}} 
+                                                          <span (click)="authorize(item, 'mlb')" class="point">
+                                                              <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                                     <img src="{{item?.player?.officialImageSrc}}" alt="football player"
+                                onError="this.src='./assets/fb-player.png'"></span>
+                                                            <span class="player-infos">
+                                                              
+                                                            <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                            <span class="names" *ngIf="!mobile">
+                                                                <span *ngIf="item?.player?.firstName"> 
+                                                                    {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                                  </span>
+                                                                  
+                                                            </span>
+                    
+                                                            <span class="names" *ngIf="mobile">
+                                                                <span> 
+                                                                    {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                                </span>
+                                                            </span>
+                                                            
+                                                           <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                      
+                                                           <span class="point">
+                                                           <span class="lg"> {{item?.stats?.tackles?.tackleTotal}} Tkls</span>
+                               
+                                                           </span>
+                                                            </span>
+                                                        
+                                                      </span>
+                                                    </div>
+                                                    
+                                          
+                                            </div>
+                                          </div>
+                                
+                                    </div>
+                                </div>
+                                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nflDefenseLoading && nflDefenseData != null">
+                                    <h2>Sacks</h2>
+                                      <div>
+                                          <div class="content-wrapper">
+                                              <div class="row">
+                                                <div *ngFor="let item of nflDefenseData | orderBy: 'nflSack'; let i=index">
+                                                        <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                            {{i + 1}} 
+                                                            <span (click)="authorize(item, 'mlb')" class="point">
+                                                              
+                                                                       <img src="{{item?.player?.officialImageSrc}}" alt="football player"
+                                onError="this.src='./assets/fb-player.png'"></span>
+                                                              <span class="player-infos">
+                                                                
+                                                              <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                              <span class="names" *ngIf="!mobile">
+                                                                  <span *ngIf="item?.player?.firstName"> 
+                                                                      {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                                    </span>
+                                                                    
+                                                              </span>
+                      
+                                                              <span class="names" *ngIf="mobile">
+                                                                  <span> 
+                                                                      {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                                  </span>
+                                                              </span>
+                                                              
+                                                             <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                        
+                                                             <span class="point">
+                                                             <span class="lg"> {{item?.stats?.tackles?.sacks}} Sacks</span>
+                                 
+                                                             </span>
+                                                              </span>
+                                                          
+                                                        </span>
+                                                      </div>
+                                                      
+                                            
+                                              </div>
+                                            </div>
+                                  
+                                      </div>
+                                  </div>
+                                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nflDefenseLoading && nflDefenseData != null">
+                                      <h2>Interceptions</h2>
+                                        <div>
+                                            <div class="content-wrapper">
+                                                <div class="row">
+                                                  <div *ngFor="let item of nflDefenseData | orderBy: 'nflInt'; let i=index">
+                                                          <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                              {{i + 1}} 
+                                                              <span (click)="authorize(item, 'mlb')" class="point">
+                                                                  <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                                         <img src="{{item?.player?.officialImageSrc}}" alt="football player"
+                                onError="this.src='./assets/fb-player.png'"></span>
+                                                                <span class="player-infos">
+                                                                  
+                                                                <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                                <span class="names" *ngIf="!mobile">
+                                                                    <span *ngIf="item?.player?.firstName"> 
+                                                                        {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                                      </span>
+                                                                      
+                                                                </span>
+                        
+                                                                <span class="names" *ngIf="mobile">
+                                                                    <span> 
+                                                                        {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                                    </span>
+                                                                </span>
+                                                                
+                                                               <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                          
+                                                               <span class="point">
+                                                               <span class="lg"> {{item?.stats?.interceptions?.interceptions}} INT</span>
+                                   
+                                                               </span>
+                                                                </span>
+                                                            
+                                                          </span>
+                                                        </div>
+                                                        
+                                              
+                                                </div>
+                                              </div>
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!nflDefenseLoading && nflDefenseData != null">
+                                        <h2>Pass Defended</h2>
+                                          <div>
+                                              <div class="content-wrapper">
+                                                  <div class="row">
+                                                    <div *ngFor="let item of nflDefenseData | orderBy: 'nflPD'; let i=index">
+                                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                                                                {{i + 1}} 
+                                                                <span (click)="authorize(item, 'mlb')" class="point">
+                                                                    <!-- <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'"> -->
+                                                                           <img src="{{item?.player?.officialImageSrc}}" alt="football player"
+                                onError="this.src='./assets/fb-player.png'"></span>
+                                                                  <span class="player-infos">
+                                                                    
+                                                                  <span *ngIf="item?.player?.rookie === true" class="rookie">R</span>
+                                                                  <span class="names" *ngIf="!mobile">
+                                                                      <span *ngIf="item?.player?.firstName"> 
+                                                                          {{ item?.player?.firstName + ' ' + item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}} 
+                                                                        </span>
+                                                                        
+                                                                  </span>
+                          
+                                                                  <span class="names" *ngIf="mobile">
+                                                                      <span> 
+                                                                          {{item?.player?.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                                                                      </span>
+                                                                  </span>
+                                                                  
+                                                                 <span class="team-image mlb"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+                            
+                                                                 <span class="point">
+                                                                 <span class="lg"> {{item?.stats?.interceptions?.passesDefended}} PD</span>
+                                     
+                                                                 </span>
+                                                                  </span>
+                                                              
+                                                            </span>
+                                                          </div>
+                                                          
+                                                
+                                                  </div>
+                                                </div>
+                                      
+                                          </div>
+                                      </div>
+                                    
+                                </section>
 <!--       
                     <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
                         <div>
