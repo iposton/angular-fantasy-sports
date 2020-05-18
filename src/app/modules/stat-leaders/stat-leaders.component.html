@@ -1,5 +1,5 @@
 <div id="top">
-    <h1 class="center date-header baseball-header">{{mlbSection ? 'MLB' : nbaSection ? 'NBA' : nhlSection ? 'NHL' : nhlGoalies ? 'NHL' : ''}} Stat Leaders</h1>
+    <h1 class="center date-header baseball-header">{{mlbHittingSection ? 'MLB' : mlbSection ? 'MLB' : nbaSection ? 'NBA' : nhlSection ? 'NHL' : nhlGoalies ? 'NHL' : nflSection ? 'NFL' : nflDefenseSection ? 'NFL' : ''}} Stat Leaders</h1>
 </div>
 
 <div id="overlay" [ngClass]="{'active': isOpen}" (click)="isOpen = false">
@@ -37,7 +37,7 @@
          
 <div class="button-wrapper" *ngIf="!loading">
     <div class="schedule-box row">
-      <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbSection = false; nhlGoalies = false;">
+      <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbHittingSection = false; mlbSection = false; nhlGoalies = false;">
           <span class="sched-item">
             NBA
           </span> 
