@@ -389,6 +389,86 @@ transform(array: any[], field: string): any[] {
             return 0;
           }
         }
+      } else if (field === 'nflPY') {
+        if (a['stats'].passing != null && b['stats'].passing) {
+          if (a['stats'].passing.passYards >= b['stats'].passing.passYards) {
+            return -1;
+          } else if (a['stats'].passing.passYards <= b['stats'].passing.passYards) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'nflRY') {
+        if (a['stats'].rushing != null && b['stats'].rushing) {
+          if (a['stats'].rushing.rushYards >= b['stats'].rushing.rushYards) {
+            return -1;
+          } else if (a['stats'].rushing.rushYards <= b['stats'].rushing.rushYards) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'nflRecY') {
+        if (a['stats'].receiving != null && b['stats'].receiving) {
+          if (a['stats'].receiving.recYards >= b['stats'].receiving.recYards) {
+            return -1;
+          } else if (a['stats'].receiving.recYards <= b['stats'].receiving.recYards) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'nflRec') {
+        if (a['stats'].receiving != null && b['stats'].receiving) {
+          if (a['stats'].receiving.receptions >= b['stats'].receiving.receptions) {
+            return -1;
+          } else if (a['stats'].receiving.receptions <= b['stats'].receiving.receptions) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'nflTack') {
+        if (a['stats'].tackles != null && b['stats'].tackles) {
+          if (a['stats'].tackles.tackleTotal >= b['stats'].tackles.tackleTotal) {
+            return -1;
+          } else if (a['stats'].tackles.tackleTotal <= b['stats'].tackles.tackleTotal) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'nflSack') {
+        if (a['stats'].tackles != null && b['stats'].tackles) {
+          if (a['stats'].tackles.sacks >= b['stats'].tackles.sacks) {
+            return -1;
+          } else if (a['stats'].tackles.sacks <= b['stats'].tackles.sacks) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'nflInt') {
+        if (a['stats'].interceptions != null && b['stats'].interceptions) {
+          if (a['stats'].interceptions.interceptions >= b['stats'].interceptions.interceptions) {
+            return -1;
+          } else if (a['stats'].interceptions.interceptions <= b['stats'].interceptions.interceptions) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      } else if (field === 'nflPD') {
+        if (a['stats'].interceptions != null && b['stats'].interceptions) {
+          if (a['stats'].interceptions.passesDefended >= b['stats'].interceptions.passesDefended) {
+            return -1;
+          } else if (a['stats'].interceptions.passesDefended <= b['stats'].interceptions.passesDefended) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
       }
       
     });
