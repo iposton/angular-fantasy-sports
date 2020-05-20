@@ -35,7 +35,7 @@
     </div>
 </div>
          
-<div class="button-wrapper" *ngIf="!loading">
+<div class="button-wrapper sl-btns" *ngIf="!loading">
     <div class="schedule-box row">
       <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbHittingSection = false; mlbSection = false; nhlGoalies = false;">
           <span class="sched-item">
@@ -68,17 +68,23 @@
 <!-- <div class="center">
     <button (click)="getByDate(false)">last 4 weeks</button> &nbsp;&nbsp; <button (click)="getByDate(true)">Season</button>
 </div> -->
-
+<div class="center loading-msg" *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading">
+    Retrieving Stat Leader Data...
+</div>
 <div class="spinner-msg" *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading">
-  Retrieving Stat Leader Data...
-  <mat-spinner></mat-spinner>
+      <div class="lds-ring white">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
 </div>
 <div *ngIf="errMessage" class="err center">
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>
 
 
-<div *ngIf="myData != null" class="main-row">
+<div *ngIf="myData != null" class="main-row stat-leaders">
   
           <section [ngClass]="{'dn' : !nbaSection}">
           <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && myData != null">

@@ -47,9 +47,16 @@
         </div> -->
   </div>
 </div>
+<div class="center loading-msg" *ngIf="nbaLoading">
+      Fetching games...
+</div>
 <div class="spinner-msg" *ngIf="nbaLoading">
-  Fetching games...
-  <mat-spinner></mat-spinner>
+   <div class="lds-ring white">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+   </div>
 </div>
 <div class="row" *ngIf="!nbaLoading">
   <!-- <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap"> -->

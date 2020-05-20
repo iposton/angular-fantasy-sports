@@ -121,7 +121,7 @@ export class StartingGoaliesComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,
     private dataService: NHLDataService, 
-    private fbService: FirebaseService, 
+    public fbService: FirebaseService, 
     private yesterdayService: YesterdayService, 
     private tomorrowService: TomorrowService, 
     public snackBar: MatSnackBar, 
@@ -1271,7 +1271,7 @@ export class LoginDialog implements OnInit {
 
   signedIn: any;
 
-  constructor(public dialogRef: MatDialogRef < LastweekDialog > , private fbService: FirebaseService) {}
+  constructor(public dialogRef: MatDialogRef < LastweekDialog > , public fbService: FirebaseService) {}
 
 
    public signInWithEmail() {

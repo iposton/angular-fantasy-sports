@@ -11,7 +11,8 @@ export const environment = {
       projectId: "data-api-a0e77",
       storageBucket: "data-api-a0e77.appspot.com",
       messagingSenderId: "1074759713710"
-  }
+  },
+  googleAnalyticsTrackingCode: 'UA-61983807-3'
 };
 
 /*

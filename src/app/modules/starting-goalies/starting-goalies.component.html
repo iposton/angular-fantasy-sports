@@ -1722,7 +1722,7 @@
           <h1 class="game-info" *ngIf="data.player.wins == '1' || data.player.losses == '1' || data.player.OvertimeLosses == '1'">The <span *ngIf="data.team.opponentScore < data.team.teamScore; then home else away"></span>
           <ng-template #home>{{data.team.name}}</ng-template>
           <ng-template #away>{{data.team.opponentName}}</ng-template> Win!</h1>
-         <p class="game-info"><a (click)="toggleFlip(data)">STATS</a></p>
+         <p class="game-info"><a (click)="toggleFlip(data, data.team.gameId)">STATS</a></p>
         </div>
         <!-- SCORE BACK OF CARD  -->
 
