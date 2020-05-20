@@ -39,14 +39,16 @@ import { OrderBy } from './pipes/orderby.pipe';
 import { HomeComponent } from './modules/home/home.component';
 import { StatLeadersComponent } from './modules/stat-leaders/stat-leaders.component';
 import { StartingFiveComponent, NBATodayDialog, NBAInfo } from './modules/starting-five/starting-five.component';
-import { StartingLineComponent } from './modules/starting-line/starting-line.component';
-import { TouchesComponent, LastweekNFLDialog } from './modules/touches/touches.component';
+// import { StartingLineComponent } from './modules/starting-line/starting-line.component';
+// import { TouchesComponent, LastweekNFLDialog } from './modules/touches/touches.component';
 import { StartingPitcherComponent } from './modules/starting-pitcher/starting-pitcher.component';
-import { PitchingStatsComponent, MyDialog } from './modules/pitching-stats/pitching-stats.component';
+// import { PitchingStatsComponent, MyDialog } from './modules/pitching-stats/pitching-stats.component';
 import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from './modules/starting-goalies/starting-goalies.component';
 import { YesterdayResultsComponent, InfoYesterday } from './modules/yesterday-results/yesterday-results.component';
 import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './modules/tomorrow-results/tomorrow-results.component';
 import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { GoogleAnalyticsGtagComponent } from './components/google-analytics-gtag/google-analytics-gtag.component';
 
 // import { ShareModule } from 'ng2share/share.module';
 
@@ -56,14 +58,10 @@ import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
     AppComponent,
     StartingPitcherComponent,
     OrderBy,
-    MyDialog,
-    PitchingStatsComponent,
     StartingGoaliesComponent,
-    StartingLineComponent,
     StartingFiveComponent,
     TomorrowResultsComponent,
     YesterdayResultsComponent,
-    TouchesComponent,
     HomeComponent,
     StatLeadersComponent,
     Info,
@@ -73,13 +71,13 @@ import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
     TodayDialog,
     NBATodayDialog,
     LastweekDialog,
-    LastweekNFLDialog,
     TomorrowDialog,
     LoginDialog,
-    MinuteSecondsPipe
+    MinuteSecondsPipe,
+    GoogleAnalyticsGtagComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
@@ -107,11 +105,11 @@ import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
     MatSortModule,
     MatTableModule, 
     MatSidenavModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   entryComponents: [
-   MyDialog, 
    Info, 
    NBAInfo, 
    InfoYesterday, 
@@ -119,7 +117,6 @@ import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
    TodayDialog, 
    NBATodayDialog, 
    LastweekDialog, 
-   LastweekNFLDialog, 
    TomorrowDialog, 
    LoginDialog
   ],
