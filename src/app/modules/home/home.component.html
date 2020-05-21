@@ -47,7 +47,8 @@
         </div> -->
   </div>
 </div>
-<div class="center loading-msg" *ngIf="nbaLoading">
+<app-spinner *ngIf="nbaLoading" [size]="'lg'" [color]="'white'" [title]="'Games'"></app-spinner>
+<!-- <div class="center loading-msg">
       Fetching games...
 </div>
 <div class="spinner-msg" *ngIf="nbaLoading">
@@ -57,7 +58,7 @@
       <div></div>
       <div></div>
    </div>
-</div>
+</div> -->
 <div class="row" *ngIf="!nbaLoading">
   <!-- <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap"> -->
   <div *ngIf="nbaSched" class="row schedule">

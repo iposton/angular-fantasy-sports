@@ -1298,8 +1298,7 @@ export class LoginDialog implements OnInit {
   <span style="color:#f44336; font-size: 18px;">NHL Starting Goalies | The Hot List! | {{sentLastweek | date:'shortDate'}} - {{sentYesterday | date:'shortDate'}}</span>
   <mat-dialog-content>
   <div class="spinner-msg" *ngIf="loading" style="background: #fff;">
-  Fetching goalie stats...
-  <mat-spinner></mat-spinner>
+  <app-spinner *ngIf="loading" [size]="'sm'" [color]="'black'" [title]="'Goalie Stats'"></app-spinner>
   </div>
   <ul *ngFor="let data of showData"><li *ngIf="data.wins &gt; 1 && data.hot === true"><span class="player"><img src="{{ data.image}}" alt="" /></span><span style="font-weight: bold;" class="last-week"> {{ data.name }} <img src="../assets/nhl-logos/{{ data.team }}.jpg" alt="" /></span><span style="font-weight: bold;"> ({{ data.wins + '-' + data.losses + '-' + data.otl }})</span> <span *ngIf="data.opponents[0] != null"> - <span style="color:#6740B4">{{data.opponents[0].date}}</span> {{data.opponents[0].desc}}</span><span *ngIf="data.opponents[1] != null">, <span style="color:#6740B4">{{data.opponents[1].date}}</span> {{data.opponents[1].desc}}</span><span *ngIf="data.opponents[2] != null">, <span style="color:#6740B4">{{data.opponents[2].date}}</span> {{data.opponents[2].desc}}</span> <span *ngIf="data.opponents[3] != null">, <span style="color:#6740B4">{{data.opponents[3].date}}</span> {{data.opponents[3].desc}}</span> - <span style="font-weight: bold;">Total Saves: {{data.sv}} Total Shots: {{data.sa}}</span></li></ul>
   </mat-dialog-content>`,

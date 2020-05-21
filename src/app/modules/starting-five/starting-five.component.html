@@ -58,11 +58,7 @@
       </div> -->
     </div>
 </div>
-
-<div class="spinner-msg" *ngIf="loading">
-  Retrieving Starting Five Data...
-  <mat-spinner></mat-spinner>
-</div>
+<app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Starting Five Data'"></app-spinner>
 <div *ngIf="errMessage" class="err center">
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>

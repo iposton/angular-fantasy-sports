@@ -8,10 +8,7 @@
 </mat-form-field>
 </div>
 <h1 class="center no-game-header date-header baseball-header" *ngIf="noGamesToday === true && !loading">{{noGamesMsg}}</h1>
-<div class="spinner-msg" *ngIf="loading">
-  Retrieving pitching data...
-  <mat-spinner></mat-spinner>
-</div>
+<app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Pitching Data'"></app-spinner>
 <div *ngIf="errMessage" class="err center">
      <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>
