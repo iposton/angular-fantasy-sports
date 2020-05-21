@@ -402,10 +402,7 @@
   <!-- edit-list-container number 3 -->
 </div>
 <!-- matchup-layout div -->
-<div class="spinner-msg" *ngIf="loading">
-  Fetching goalie stats for today...
-  <mat-spinner></mat-spinner>
-</div>
+<app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Goalie Stats'"></app-spinner>
 <br>
 <div class="matchup-layout">
   <div *ngFor="let data of showData">

@@ -20,16 +20,13 @@ body {
 }
 
 .mat-toolbar.mat-primary {
-  background:  #d35400;
+  // background:  #d35400;
+  background: rgb(31,32,32);
+  background: linear-gradient(90deg, rgba(31,32,32,1) 0%, rgba(211,84,0,1) 0%, rgba(133,56,6,1) 100%);
 }
 
 .mat-drawer-container {
   background-color: #303030;
-}
-
-.loading-msg {
-  margin-top: 20px;
-  color: #fff;
 }
 
 .center {
@@ -176,13 +173,6 @@ img {
   font-size: 11px;
 }
 
-.spinner-msg {
-  text-align: center; 
-  background: #303030;
-  height:140px; 
-  // padding-top: 80px;
-  color: #fff;
-}
 
 mat-spinner {
   margin: 0 auto;
@@ -526,6 +516,7 @@ h3 {
   width: 75px; height: 75px;
   text-align: right;
 }
+
 .ribbon span {
   font-size: 10px;
   font-weight: bold;
@@ -654,6 +645,9 @@ h3 {
       font-size: 13px;
     }
   }
+  .dn, .dn2 {
+    display: none;
+  }
 }
 
 .main-row {
@@ -777,18 +771,6 @@ h3 {
 .middle-content-teams {
   text-align: center;
   font-size: 40px;
-}
-
-.left-content {
-  width: 100%;
-  display: block;
-  p {
-    font-size: 13px;
-  }
-}
-
-.dn, .dn2 {
-  display: none;
 }
 
 
@@ -2057,13 +2039,27 @@ section {
     
 }
 
+// spinner component
+
+.loading-msg {
+  margin-top: 20px;
+  color: #fff;
+}
+
+.spinner {
+  text-align: center; 
+  background: #303030;
+  height:140px; 
+  color: #fff;
+}
+
 .lds-ring {
   display: inline-block;
   position: relative;
   width: 100px;
   height: 100px;
 }
-.lds-ring.white {
+.lds-ring.lg {
   width: 120px;
   height: 120px;
 }

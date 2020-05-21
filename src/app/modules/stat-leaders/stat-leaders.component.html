@@ -60,7 +60,7 @@
     </div>
 </div>
 <div class="center buttons">
-  <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button> 
+   <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button> 
    <button [ngClass]="{'dn' : !nhlSection}" (click)="nhlSection = false; nhlGoalies = true;">NHL Goalies</button>  <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false;">NHL Skaters</button>
    <button [ngClass]="{'dn' : !mlbSection}" (click)="mlbSection = false; mlbHittingSection = true;">MLB Hitters</button>  <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false;">MLB Pitchers</button>
    <button [ngClass]="{'dn' : !nflSection}" (click)="nflSection = false; nflDefenseSection = true;">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
@@ -68,17 +68,7 @@
 <!-- <div class="center">
     <button (click)="getByDate(false)">last 4 weeks</button> &nbsp;&nbsp; <button (click)="getByDate(true)">Season</button>
 </div> -->
-<div class="center loading-msg" *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading">
-    Retrieving Stat Leader Data...
-</div>
-<div class="spinner-msg" *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading">
-      <div class="lds-ring white">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-</div>
+<app-spinner *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading" [size]="'lg'" [color]="'white'" [title]="'Stat Leader Data'"></app-spinner>
 <div *ngIf="errMessage" class="err center">
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>

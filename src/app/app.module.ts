@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 // import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
@@ -15,18 +15,18 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatChipsModule } from '@angular/material/chips';
+// import { MatTabsModule } from '@angular/material/tabs';
+// import { MatMenuModule } from '@angular/material/menu';
+// import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+// import { MatSelectModule } from '@angular/material/select';
+// import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+// import { MatSortModule } from '@angular/material/sort';
+// import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
+// import { MatListModule } from '@angular/material/list';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import { AngularFireModule } from '@angular/fire';
@@ -49,6 +49,7 @@ import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from './module
 import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { GoogleAnalyticsGtagComponent } from './components/google-analytics-gtag/google-analytics-gtag.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 // import { ShareModule } from 'ng2share/share.module';
 
@@ -74,10 +75,12 @@ import { GoogleAnalyticsGtagComponent } from './components/google-analytics-gtag
     TomorrowDialog,
     LoginDialog,
     MinuteSecondsPipe,
-    GoogleAnalyticsGtagComponent
+    GoogleAnalyticsGtagComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserTransferStateModule,
     BrowserAnimationsModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
@@ -93,17 +96,9 @@ import { GoogleAnalyticsGtagComponent } from './components/google-analytics-gtag
     MatSnackBarModule, 
     MatButtonModule,
     MatNativeDateModule,
-    MatTabsModule, 
-    MatMenuModule,
-    MatListModule,
     MatInputModule,
-    MatChipsModule,
     MatTooltipModule,
     MatDialogModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    MatTableModule, 
     MatSidenavModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
