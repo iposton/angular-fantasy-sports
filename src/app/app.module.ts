@@ -50,6 +50,9 @@ import { MinuteSecondsPipe } from './pipes/minute-seconds.pipe';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { GoogleAnalyticsGtagComponent } from './components/google-analytics-gtag/google-analytics-gtag.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SortByPipe } from './pipes/sort-by.pipe';
+import { StatCardComponent } from './components/stat-card/stat-card.component';
+import { TeamRankComponent } from './components/team-rank/team-rank.component';
 
 // import { ShareModule } from 'ng2share/share.module';
 
@@ -76,7 +79,10 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     LoginDialog,
     MinuteSecondsPipe,
     GoogleAnalyticsGtagComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SortByPipe,
+    StatCardComponent,
+    TeamRankComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
