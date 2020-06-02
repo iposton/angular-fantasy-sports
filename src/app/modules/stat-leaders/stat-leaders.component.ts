@@ -9,7 +9,6 @@ import { NBADataService,
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { interval, forkJoin } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as CryptoJS from 'crypto-js';
 
@@ -62,6 +61,7 @@ export class StatLeadersComponent implements OnInit {
   public nhlSection: boolean = false;
   public nflSection: boolean = false;
   public nflDefenseSection: boolean = false;
+  public nflTeamLoading: boolean = true;
   public nhlGoalies: boolean = false;
   public weekResults: boolean = false;
   public page: number = 19;
@@ -73,6 +73,7 @@ export class StatLeadersComponent implements OnInit {
   public submitting: boolean = false;
   public selectedPlayer: any;
   public type: any;
+  public nflTeamStats: any;
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -80,7 +81,6 @@ export class StatLeadersComponent implements OnInit {
               private http: HttpClient,
               private sanitizer: DomSanitizer,
               private util: UtilService,
-              public dialog: MatDialog,
               public snackBar: MatSnackBar,
               public gaService: GoogleAnalyticsService,
               public nflService: NFLDataService) {
@@ -99,11 +99,12 @@ export class StatLeadersComponent implements OnInit {
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
   }
 
-  public authorize(player, type) {
+  public authorize(event: object) {
+    console.log(event, 'emit function worked!!')
     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
 
     this.http.post('/authorize', {headers}).subscribe((res) => {
-      this.openModal(player, headers, type);
+      this.openModal(event['player'], headers, event['type']);
     });
   }
 
@@ -260,20 +261,7 @@ res['playerStatsTotals'].filter(
               
             }  
           }
-  
-          // for (let team of this.teamStats) {
-          //   for (let data of this.myData) { 
-          //      if (data.team.opponentId != null && 
-          //        data.team.id === team.team.id) {
-          //        data.win = team.stats.standings.wins;
-          //        data.loss = team.stats.standings.losses;
-          //      } else if (data.player.lineupTeam === team.team.abbreviation) { 
-          //        data.win = team.stats.standings.wins;
-          //        data.loss = team.stats.standings.losses;
-          //      }
-          //    }  
-          // }
-       
+
          
       })
       
@@ -290,11 +278,6 @@ res['playerStatsTotals'].filter(
     } 
   }
 
-  openSnackBar() {
-    // this.snackBar.openFromComponent(NBAInfo, {
-    //   // duration: 500,
-    // });
-  }
 
   ngOnInit() {
     if (window.innerWidth < 700) { // 768px portrait
@@ -461,24 +444,15 @@ res['playerStatsTotals'].filter(
          this.nflDefenseLoading = false;
      })
     }
+
+    this.nflService
+      .getTeamStats('').subscribe(res => {
+        console.log(res, 'got team stats!');
+        this.nflTeamStats = res['teamStatsTotals'];
+        this.nflTeamLoading = false;
+    })
+
   }
 
 }
 
-
-// @Component({
-//   selector: 'nba-info',
-//   template: `<i (click)="close()" class="material-icons close">close</i><br />
-//   <span style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Expected Starter <br />
-//   <span style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Confirmed Starter <br />
-// <span>Click on player image for twitter updates!</span> <br />
-// <span>Click on player stats for MORE stats!</span>`,
-//   styles: [`.close { float:right; cursor:pointer; font-size: 20px; } .green-dot { height: 10px; width: 10px; background:#2ecc71; border-radius: 50%; display: inline-block; }`]
-// })
-
-// export class NBAInfo {
-//   constructor(public snackBar: MatSnackBar) {}
-//   close() {
-//     this.snackBar.dismiss();
-//   }
-// }

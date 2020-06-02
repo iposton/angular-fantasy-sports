@@ -1,0 +1,25 @@
+<div class="schedule-box col">
+    <h2>{{title}} Team Rank<br> </h2> 
+    <div *ngFor="let item of getRank(data, teams, title); let i=index">
+        <span *ngIf="item?.abbreviation" class="sched-item">
+            <span class="abb-single">
+             <span class="rank-num">{{(i+1)}}</span>  <img src="{{item?.officialLogoImageSrc}}" alt="{{item?.name}} logo"> 
+             {{item?.name}}  
+             <span> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span> &nbsp; 
+             <span *ngIf="title === 'Defense'">
+                Points Allowed: {{item?.stats?.standings?.pointsAgainst}}   &nbsp;
+                Sacks: {{item?.stats?.tackles.sacks}}   &nbsp;
+                Int: {{item?.stats?.interceptions?.interceptions}}   &nbsp;
+                Passes Defened: {{item?.stats?.interceptions?.passesDefended}}
+             </span>
+             <span *ngIf="title === 'Offense'">
+                Total Yards: {{item?.stats?.rushing?.rushYards + item?.stats?.passing?.passNetYards}}   &nbsp;
+                Avg Yards Per Play: {{item?.stats?.miscellaneous?.offenseAvgYds}}   &nbsp;
+                Sacks Given up: {{item?.stats?.passing?.passSacks}}   &nbsp;
+                Pass TD's: {{item?.stats?.passing?.passTD}}    &nbsp;
+                Rush TD's: {{item?.stats?.rushing?.rushTD}}
+             </span> 
+            </span> 
+        </span>  
+      </div>
+</div>

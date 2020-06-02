@@ -200,6 +200,8 @@ footer {
   }
 }
 
+
+
 // starting-line
 .left-content {
   img {
@@ -608,6 +610,31 @@ h3 {
 }
 
 .main-row.stat-leaders {
+  
+  .schedule-box {
+    margin: 0 auto;
+    width: 85%;
+    padding: 20px;
+    background: #555;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 200;
+    // border: 2px solid #000;
+    // border-radius: 5px;
+    margin-bottom: 5px;
+    .rank-num {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .sched-item {
+      display: block;
+      text-align: left;
+    }
+    img {
+      width: 3%;
+    }
+  }
+
   .left-content {
     width: 100%;
     display: block;

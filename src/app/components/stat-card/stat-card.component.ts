@@ -1,0 +1,47 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-stat-card',
+  templateUrl: './stat-card.component.html',
+  styleUrls: ['./stat-card.component.scss']
+})
+export class StatCardComponent implements OnInit {
+  @Input('data')
+  public data             :Array<any>;
+  @Input('statType')
+  public statType         :string;
+  @Input('statField')
+  public statField        :string;
+  @Input('order')
+  public order            :string;
+  @Input('page')
+  public page             :any;
+  @Input('amount')
+  public amount           :any;
+  @Input('title')
+  public title            :any;
+  @Input('statTag')
+  public statTag          :string;
+  @Input('sport')
+  public sport            :string;
+  @Input('teams')
+  public teams            :any;
+  @Output() open = new EventEmitter<object>();
+
+  public type           :any;
+  public mobile: any;
+
+  constructor() { }
+
+  public authorize(player, type) {
+    console.log('trying to emit', player)
+    this.open.emit({player: player, type: type}); 
+  }
+
+  ngOnInit(): void {
+    if (window.innerWidth < 700) {
+      this.mobile = true;
+    }
+  }
+
+}
