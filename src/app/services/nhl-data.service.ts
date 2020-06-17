@@ -71,7 +71,6 @@ export class NHLDataService {
   }
 
   sendHeaderOptions(h) {
-    console.log('got headers & options in data service...');
     headers = h;
   }
 
@@ -91,7 +90,6 @@ export class NHLDataService {
 
 
   getEnv() {
-    console.log("trying to get heroku env...");
     this.env = this.http.get('/heroku-env')
     return this.env;
   }

@@ -1,0 +1,87 @@
+<div class="card-wrap-sp mat-elevation-z6 position-box">
+  <h2>{{title}}</h2>
+  <div>
+    <div class="content-wrapper">
+      <div class="row">
+        <div *ngFor="let item of myData | orderBy: 'nba'">
+          <span [ngClass]="{'left-content' : item?.player?.primaryPosition == position && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != position, 'dn2' : item?.player?.primaryPosition == position && item?.starterInfo?.bench}">            
+            <span (click)="authorize(item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
+                onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
+            <span class="player-infos">
+              <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+              <span class="names" *ngIf="!mobile">
+                <span *ngIf="item.player.firstName != 'Shai'"> 
+                  {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                </span>
+                <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                    S. {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}   
+                </span>
+              </span>
+              <span class="names" *ngIf="mobile">
+                <span> 
+                    {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                </span>
+              </span>
+              <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
+              <span *ngIf="(item?.player?.currentInjury == null || item?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+              <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
+              <span (click)="changeStats()" class="point"> 
+                <app-stat-toggle
+                  [status]="item?.starterInfo?.status" 
+                  [item]="item" 
+                  [position]="position"
+                  [stats]="stats"></app-stat-toggle>
+              </span>   
+            </span>                
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="twitter">
+   <div class="card-wrap-sp mat-elevation-z6 position-box">
+      <h2>{{title}}</h2>
+      <div>
+        <div class="content-wrapper">
+          <div class="row">
+          <div class="w100">
+              #NBA {{ gameDate | date:'fullDate' }}
+          </div>
+          <div class="w100">
+              #Top5 Starting/Expected {{position}}
+          </div>
+            <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
+              <span [ngClass]="{'left-content' : item?.player?.primaryPosition == position && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != position, 'dn2' : item?.player?.primaryPosition == position && item?.starterInfo?.bench}">
+                <span class="player-infos">
+                  <span class="names" *ngIf="!mobile">
+                      <span *ngIf="item.player.firstName != 'Shai'"> 
+                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
+                      </span>
+                      <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                        {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
+                      </span>
+                    </span>
+                    <span class="names" *ngIf="mobile">
+                      <span> 
+                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                      </span>
+                    </span>
+                      <app-stat-toggle
+                      [status]="item?.starterInfo?.status" 
+                      [item]="item" 
+                      [position]="position"
+                      [stats]="stats"></app-stat-toggle>
+                        
+                  </span>
+                </span>
+            </div>
+            <div class="w100">
+                #NBATwitter #Stats
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

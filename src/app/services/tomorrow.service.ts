@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 
 
@@ -77,9 +77,7 @@ export class TomorrowService {
 
   }
 
-
   getEnv() {
-    console.log("trying to get heroku env...");
     this.env = this.http.get('/heroku-env')
     return this.env;
   }
@@ -114,8 +112,6 @@ export class TomorrowService {
   getInfo() {
 
     if (!this.info) {
-
-      //let url = `${this.apiRoot}/active_players.json?position=G`;
       let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
       console.log('getting active player data from API...');
       this.info = this.http.get(url, {headers})
@@ -126,8 +122,6 @@ export class TomorrowService {
 
   getStats(teams) {
     if (!this.stats) {
-      console.log('getting cumulative player stats from API...');
-
       let url = `${this.apiRoot}/player_stats_totals.json?position=G&team=`+teams;
       this.stats = this.http.get(url, {headers})
         

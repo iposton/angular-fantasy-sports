@@ -112,12 +112,7 @@ export class HomeComponent implements OnInit {
     for (let week of weekTimes) {
       let date = new Date();
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
-        this.selectedWeek = week.week;
-        // let utcDate = new Date(week.dateBeg);
-        // utcDate.setHours(utcDate.getHours() - 8);
-        // let myDate = new Date(utcDate);
-        // let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-        // this.tsDate = dailyDate;  
+        this.selectedWeek = week.week; 
       }
       
     } 
@@ -128,15 +123,6 @@ export class HomeComponent implements OnInit {
 
   }
 
-  // public getJSON() {
-  //   this.http.get("./assets/twitter.json")
-     
-  //     .subscribe(res => {
-  //       console.log(res['twitterHandles']["0"], 'twitter handles');
-  //       this.twitterHandles = res['twitterHandles']["0"];
-  //     })
-
-  // }
 public compareDate (start) {
   if (new Date(start) < this.tomorrowDate) {
     return true;
@@ -164,7 +150,6 @@ loadData() {
 
         this.dataService
           .getDailySchedule().subscribe(res => {
-            console.log(res, "mlb schedule...");
             if (res['games'].length === 0) {
               this.mlbLoading = false;
               this.noMlbGamesToday = true;
@@ -185,7 +170,7 @@ loadData() {
 
         this.nbaDataService
           .getSchedule().subscribe(res => {
-            console.log(res, "NBA schedule...");
+            
             if (res['games'].length === 0) {
               this.nbaLoading = false;
               this.noNbaGamesToday = true;
@@ -204,7 +189,6 @@ loadData() {
 
         this.nhlDataService
           .getDailySchedule().subscribe(res => {
-            console.log(res, "NHL schedule...");
             if (res['games'].length === 0) {
               this.nhlLoading = false;
               this.noNhlGamesToday = true;
@@ -299,25 +283,4 @@ public getTeamInfo(sched, teamRef) {
   }
 
 
-  // openSnackBar() {
-  //   this.snackBar.openFromComponent(InfoYesterday, {
-  //     // duration: 500,
-  //   });
-  // }
-
 }
-
-// @Component({
-//   selector: 'info-yesterday',
-//   template: `<i (click)="close()" class="material-icons close">close</i><br />
-// <span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to back</span><span> = The first game of a back to back scheduled game.</span><br />
-// <span style="color: #ccc;">back to </span><span style="color: #e74c3c;">back</span><span> = The second game of a back to back scheduled game.</span>`,
-//   styles: [`.close { float:right; cursor:pointer; font-size: 20px;}`]
-// })
-
-// export class InfoYesterday {
-//   constructor(public snackBar: MatSnackBar) {}
-//   close() {
-//     this.snackBar.dismiss();
-//   }
-// }

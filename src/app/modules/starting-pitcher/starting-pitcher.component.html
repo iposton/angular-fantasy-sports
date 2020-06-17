@@ -1,11 +1,7 @@
 <h1 class="center date-header baseball-header"> MLB Starting Pitchers</h1>
 <h1 class="center date-header baseball-header"> {{ gameDate | date:'fullDate' }}</h1>
 <div class="center">
-  <mat-form-field color="accent">
-  <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="getByDate($event)" [max]="maxD">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
+  <app-date-picker (setDate)="getByDate($event)"></app-date-picker>
 </div>
 <h1 class="center no-game-header date-header baseball-header" *ngIf="noGamesToday === true && !loading">{{noGamesMsg}}</h1>
 <app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Pitching Data'"></app-spinner>
@@ -14,7 +10,7 @@
 </div>
 <div *ngIf="showData != null">
   <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'mlb'" [class.hide]="data.playerNotPlayingYet === false">
-    <mat-card class="tp-box mat-card-sp" [@flipState]="data.flip">
+    <div class="tp-box mat-card-sp" [@flipState]="data.flip">
       <div *ngIf="data.flip === 'inactive'" class="ribbon"><span [ngStyle]="{'backgroundColor': data.team.color}">{{data.team.name}}</span></div>
       <div class="tp-box__side tp-box__front">
         <div class="content-wrapper">
@@ -153,13 +149,13 @@
         </div>
          
       </div> <!-- SCORE BACK OF CARD  -->
-    </mat-card>
+    </div>
   </div>
   <div *ngIf="liveGames === true">
     <hr>
     <h3 class="center">Live Games</h3>
     <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData" [class.hide]="data.playingRightNow === false">
-      <mat-card class="tp-box mat-card-sp" [@flipState]="data.flip">
+      <div class="tp-box mat-card-sp" [@flipState]="data.flip">
         <div *ngIf="data.flip === 'inactive'" class="ribbon"><span [ngStyle]="{'backgroundColor': data.team.color}">{{data.team.name}}</span></div>
         <div class="tp-box__side tp-box__front">
           <div class="content-wrapper">
@@ -427,14 +423,14 @@
         </div>
          
       </div> <!-- SCORE BACK OF CARD  -->
-      </mat-card>
+      </div>
     </div>
   </div>
   <div *ngIf="gameover === true">
     <hr>
     <h3 class="center">Completed Games</h3>
     <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData" [class.hide]="data.playingOver === false">
-      <mat-card class="tp-box mat-card-sp" [@flipState]="data.flip">
+      <div class="tp-box mat-card-sp" [@flipState]="data.flip">
         <div class="ribbon" *ngIf="data.flip === 'inactive'"><span [ngStyle]="{'backgroundColor': data.team.color}">{{data.team.name}}</span></div>
         <div class="tp-box__side tp-box__front">
           <div class="content-wrapper">
@@ -703,7 +699,7 @@
         </div>
          
       </div> <!-- SCORE BACK OF CARD  -->
-      </mat-card>
+      </div>
     </div>
   </div>
 </div>

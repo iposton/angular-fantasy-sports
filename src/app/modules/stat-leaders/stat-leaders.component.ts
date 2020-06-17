@@ -6,9 +6,7 @@ import { NBADataService,
   UtilService, 
   GoogleAnalyticsService,
   NFLDataService } from '../../services/index';
-import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
-import { interval, forkJoin } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as CryptoJS from 'crypto-js';
 
@@ -74,6 +72,8 @@ export class StatLeadersComponent implements OnInit {
   public selectedPlayer: any;
   public type: any;
   public nflTeamStats: any;
+  public name: any;
+  public image: any;
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -100,7 +100,8 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public authorize(event: object) {
-    console.log(event, 'emit function worked!!')
+    this.isOpen = true;
+    this.submitting = true;
     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
 
     this.http.post('/authorize', {headers}).subscribe((res) => {
@@ -110,23 +111,17 @@ export class StatLeadersComponent implements OnInit {
 
   public openModal(player, headers, type) {
     this.type = type;
-    this.isOpen = true;
-    this.submitting = true;
     this.selectedPlayer = null;
     this.noPosts = '';
     this.selectedPlayer = player;
-    console.log(player, 'data passed in');
     //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
-
-    //let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
-    //let searchterm = 'query=#startingGoalies #nhl ' + player.player.FirstName + ' ' + player.player.LastName;
     let twitter = null;
     twitter = type === 'nba' ? this.nbaTeams[player.player['currentTeam'].abbreviation].twitter : type === 'nhl' ? this.nhlTeams[player.player['currentTeam'].abbreviation].twitter : player.team.twitter;
     let searchterm = null;
     searchterm = 'query=' + player.player.lastName + ' ' + twitter;
-    console.log(searchterm, 'search term');
+    this.image = player.player.officialImageSrc;
+    this.name = player.player.firstName + ' ' + player.player.lastName +' - '+ player.player.primaryPosition +' | #'+ player.player.jerseyNumber;
     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
-      console.log(res['data'].statuses, 'twitter stuff');
       this.submitting = false;
       this.tweetsData = res['data'].statuses;
       if (this.tweetsData.length === 0) {
@@ -183,7 +178,6 @@ export class StatLeadersComponent implements OnInit {
   
       this.nhlService
          .getAllStats('goalies').subscribe(res => {
-          console.log(res, 'nhl goalies player info');
           const nhlTeamsArray = Object.values(this.nhlTeams);
           this.nhlGoaltenders = res['playerStatsTotals'].filter(
             player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
@@ -209,13 +203,11 @@ export class StatLeadersComponent implements OnInit {
 
     this.nhlService
        .getAllStats('skaters').subscribe(res => {
-
-        console.log(res, 'nhl skaters player info');
         const nhlTeamsArray = Object.values(this.nhlTeams);
 
-        this.nhlSkaters = 
-res['playerStatsTotals'].filter(
+        this.nhlSkaters = res['playerStatsTotals'].filter(
           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
+
           for (let team of nhlTeamsArray) {
             for (let data of this.nhlSkaters) { 
               if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
@@ -240,7 +232,6 @@ res['playerStatsTotals'].filter(
   public async sortNBA() {
       this.nbaService
        .getAllStats(this.getAll).subscribe(res => {
-          console.log(res, 'player info');
           const nbaTeamsArray = Object.values(this.nbaTeams);
 
           this.myData = res['playerStatsTotals'].filter(
@@ -261,12 +252,8 @@ res['playerStatsTotals'].filter(
               
             }  
           }
-
-         
-      })
-      
+      }) 
   }
-
 
   public goAnchor(data) {
     let anchor = "";
@@ -307,8 +294,6 @@ res['playerStatsTotals'].filter(
 
     this.mlbService
        .getAllStats().subscribe(res => {
-
-          console.log(res, 'MLB player info');
           //this.loading = false;
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
@@ -337,8 +322,6 @@ res['playerStatsTotals'].filter(
 
       this.mlbService
         .getAllHitters().subscribe(res => {
-
-         console.log(res, 'player info');
          //this.loading = false;
          //const mlbTeamsArray = Object.values(this.nbaTeams);
 
@@ -381,8 +364,6 @@ res['playerStatsTotals'].filter(
 
     this.nflService
        .getAllOffense().subscribe(res => {
-
-          console.log(res, 'NFL of player info');
           //this.loading = false;
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
@@ -417,8 +398,6 @@ res['playerStatsTotals'].filter(
 
       this.nflService
         .getAllDefense().subscribe(res => {
-
-         console.log(res, 'nfl def player info');
          //this.loading = false;
          //const mlbTeamsArray = Object.values(this.nbaTeams);
 
@@ -447,7 +426,6 @@ res['playerStatsTotals'].filter(
 
     this.nflService
       .getTeamStats('').subscribe(res => {
-        console.log(res, 'got team stats!');
         this.nflTeamStats = res['teamStatsTotals'];
         this.nflTeamLoading = false;
     })

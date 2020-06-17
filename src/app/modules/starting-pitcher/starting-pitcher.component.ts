@@ -76,13 +76,7 @@ export class StartingPitcherComponent implements OnInit {
 
   public getByDate(event) {
     this.loading = true;
-    let thisDate = new Date(event.value);
-    let utcDate = new Date(thisDate.toUTCString());
-    utcDate.setHours(utcDate.getHours());
-    let myDate = new Date(utcDate);
-    let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-    console.log(dailyDate, 'get stats for this selected date');
-    this.dataService.selectedDate(dailyDate);
+    this.dataService.selectedDate(event);
 
     //empty old data on data change 
     this.dailySchedule = [];

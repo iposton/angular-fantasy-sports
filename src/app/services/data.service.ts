@@ -41,12 +41,10 @@ export class DataService {
   }
 
   public selectedDate(d) {
-    console.log(d, 'set new date');
     dailyDate = d;
   }
 
   sendHeaderOptions(h) {
-    console.log('got headers & options in data service...');
     headers = h;
   }
 
@@ -67,34 +65,23 @@ export class DataService {
   }
 
   getAllSentStats() {
-    console.log("all stats sent to component...");
     sentAll = sendingAll;
     return sentAll;
   }
 
   getEnv() {
-    console.log("trying to get heroku env...");
     this.env = this.http.get('/heroku-env')
     return this.env;
   }
 
 
   getPrevGameId() {
-
-    //if (!this.gameid) {
-      console.log('getting pitch speed data from API...');
-
-      let url = `${this.apiRoot}/games.json?date=from-8-days-ago-to-5-days-ago`;
-      this.gameid = this.http.get(url, {headers})
-        
-    //}
+    let url = `${this.apiRoot}/games.json?date=from-8-days-ago-to-5-days-ago`;
+    this.gameid = this.http.get(url, {headers})
     return this.gameid;
   }
 
     getDailySchedule() {
-    //get all games for today get game ID and find a pitchers opponent
-   // if (!this.schedule) {
-      console.log('getting mlb schedule for today from api...', dailyDate);
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
       let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/date/${dailyDate}/games.json`;
@@ -118,28 +105,14 @@ export class DataService {
   }
 
    getAllStats() {
-
-    //if (!this.allstats) {
-
-      console.log('getting cumulative_player_stats by player ID from API...');
-      //cumulative_player_stats.json?position=P&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `${this.apiRoot}/player_stats_totals.json?position=P`;
-      this.allstats = this.http.get(url, {headers})
-      
-    //}
+    let url = `${this.apiRoot}/player_stats_totals.json?position=P`;
+    this.allstats = this.http.get(url, {headers})
     return this.allstats;
   }
 
   getAllHitters() {
-
-    //if (!this.allstats) {
-
-      console.log('getting cumulative_player_stats by player ID from API...');
-      //cumulative_player_stats.json?position=P&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `${this.apiRoot}/player_stats_totals.json?position=OF,1B,2B,3B,C,SS`;
-      this.hitstats = this.http.get(url, {headers})
-      
-    //}
+    let url = `${this.apiRoot}/player_stats_totals.json?position=OF,1B,2B,3B,C,SS`;
+    this.hitstats = this.http.get(url, {headers})
     return this.hitstats;
   }
 
@@ -158,7 +131,6 @@ export class DataService {
 
    // if (!this.info) {
       let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P&player=${players}`;
-      console.log('getting active player data from API...');
       this.starterInfo = this.http.get(url, {headers})
         
    // }
@@ -170,8 +142,6 @@ export class DataService {
    // if (!this.daily) {
       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
       let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=P`;
-      console.log(url, 'url')
-      console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})
         
   //  }
@@ -181,13 +151,9 @@ export class DataService {
   getScore(data) {
     let id = null;
     id = data
-    //if (!this.score) {
-      console.log(`${this.apiRoot}/games/`+id+`/boxscore.json`, 'getting daily scores of todays games from API...');
-      let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
-      //let url = `${this.apiRoot}/date/${dailyDate}/team_gamelogs.json`;
-      this.score = this.http.get(url, {headers})
-        
-    //}
+    let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
+    //let url = `${this.apiRoot}/date/${dailyDate}/team_gamelogs.json`;
+    this.score = this.http.get(url, {headers})
     return this.score;
   }
 }

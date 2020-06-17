@@ -18,14 +18,25 @@ export class AppComponent {
       //   name: 'NHL Starting Goalies and NBA Starting Lineup', 
       //   content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.'
       // });
-      this.meta.addTag({ name: 'description', content: 'NHL Starting Goalies and NBA Starting Lineup' });
-      this.meta.addTag({ name: 'keywords', content: 'Hockey, Fantasy, Basketball, Stats' });
-      this.meta.addTag({ property: 'og:type', content: 'website' });
-      this.meta.addTag({ property: 'og:site_name', content: 'Fantasy Sports Resources' });
-      this.meta.addTag({ property: 'og:title', content: 'NHL and NBA Live Stats & Starters' });
-      this.meta.addTag({ property: 'og:description', content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.' });
-      this.meta.addTag({ property: 'og:url', content: 'https://fantasy-sports-resources.com' });
-      this.meta.addTag({ property: 'og:image', content: 'https://fantasy-sports-resources.com/assets/fsr.png' });
+      this.meta.addTags([
+      { name: 'description', content: 'NHL Starting Goalies, NBA Starting Lineup, Stat Leaders.' },
+      { name: 'keywords', content: 'Hockey, Fantasy, Basketball, Stats' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:site_name', content: 'Fantasy Sports Resources' },
+      { property: 'og:title', content: 'NHL and NBA Live Stats & Starters' },
+      { property: 'og:description', content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.' },
+      { property: 'og:url', content: 'https://fantasy-sports-resources.com' },
+      { property: 'og:image', content: 'https://fantasy-sports-resources.com/assets/fsr.png' },
+      { name: 'robots', content: 'index, follow' },
+      { name: 'author', content: 'Ian Poston' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { charset: 'UTF-8' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:site', content: '@StreamingLists' },
+      { name: 'twitter:title', content: 'NHL & NBA Stats' },
+      { name: 'twitter:description', content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.' },
+      { name: 'twitter:image', content: 'https://fantasy-sports-resources.com/assets/images/home-page.png' },
+      ])
 
       this.router.events.subscribe(event => {
         if(event instanceof NavigationEnd) {
