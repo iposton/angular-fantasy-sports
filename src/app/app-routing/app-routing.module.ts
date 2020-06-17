@@ -47,7 +47,7 @@ const routes: Routes = [
    },
    {
           path: '**', 
-          component: StatLeadersComponent
+          component: HomeComponent
    }
  
  ];
