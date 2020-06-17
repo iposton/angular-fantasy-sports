@@ -408,7 +408,7 @@
   <div *ngFor="let data of showData">
   
     <div *ngIf="data.player.gameLocation === 'home' && data.player.twoPossibleStarters === false" class="card-wrap tp-wrapper">
-      <mat-card class="center tp-box" [@flipState]="data.flip">
+      <div class="center tp-box" [@flipState]="data.flip">
         <div class="tp-box__side tp-box__front">
           <div class="goalies-inline" *ngIf="data.player.startingToday === true">
             <span *ngIf="data.team.matchup[2] == null && data.team.matchup[0].player.gameLocation === 'away'">
@@ -1734,7 +1734,7 @@
           <a class="score-btn" (click)="toggleFlip(data, data.team.gameId)"  *ngIf="data.team.matchup[0].player.saves != null">SCORE</a>
          </p>
       </div>
-      </mat-card>
+    </div>
     </div>
   </div>
  

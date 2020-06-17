@@ -20,12 +20,18 @@ export class StatCardComponent implements OnInit {
   public amount           :any;
   @Input('title')
   public title            :any;
+  @Input('twitter')
+  public twitter          :any;
+  @Input('gameDate')
+  public gameDate         :any;
   @Input('statTag')
   public statTag          :string;
   @Input('sport')
   public sport            :string;
   @Input('teams')
   public teams            :any;
+  @Input('position')
+  public position         :any;
   @Output() open = new EventEmitter<object>();
 
   public type           :any;

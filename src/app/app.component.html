@@ -4,14 +4,13 @@
   <span style="flex: 1 1 auto;"></span>
   <!-- <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KZMBHYDYN2RUJ&source=url" target="_blank">Donate</a> -->
   <!-- <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/ianposton"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span class="coffee">Buy me a coffee</span></a> -->
-  <i matTooltip="Menu" [matTooltipPosition]="position" (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
+  <i (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
 
 </mat-toolbar>
 <div id="wrap">
 <div id="main" class="full-container">
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" #sidenav position="end">
-      
+    <mat-sidenav mode="side" #sidenav position="end"> 
       <ul class="category-list">
           <li [routerLink]="['']">
           🏠Home
@@ -62,12 +61,12 @@
         </div>
         <div class="docs-footer-links">
           <ul>
-            <li matTooltip="Ian Poston, a web developer from Los Angeles." [matTooltipPosition]="position"><a href="https://twitter.com/intent/follow?screen_name=ianposton&commit=Log%20in%20and%20follow%20%40ianposton&session%5Busername_or_email%5D=ianposton&tw_p=followbutton&region=follow_link">Who Built This?</a></li>
+            <li><a href="https://twitter.com/intent/follow?screen_name=ianposton&commit=Log%20in%20and%20follow%20%40ianposton&session%5Busername_or_email%5D=ianposton&tw_p=followbutton&region=follow_link">Who Built This?</a></li>
           </ul>
         </div>
         <div class="docs-footer-links">
           <ul fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
-            <li matTooltip="This is a fantasy sports resource. In this app I am using Angular 9 and sourcing pro sports data from mysportsfeeds.com. Find todays starting MLB Pitchers and starting NHL Goalies! Enjoy! ☺" [matTooltipPosition]="position">About</li>
+            <li>About</li>
           </ul>
           <ul fxHide [fxHide.xs]="isVisibleOnMobile()" style="font-size: 9px; max-width: 80px; text-align: justify;"><li>This app uses Angular 9 with the MySportsFeeds API.</li></ul>
         </div>

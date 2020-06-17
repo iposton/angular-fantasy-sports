@@ -1,0 +1,28 @@
+<div id="overlay" [ngClass]="{'active': isOpen}" (click)="closeModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-header" *ngIf="!submitting">
+      <span> Twitter Updates - <span class="{{type}}"><img src="{{image}}" alt="{{type}} player"
+            onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> 
+        <span>{{name}}</span>
+            <!-- <span class="team-image"> <img src="{{selectedPlayer?.team?.logo}}" alt="{{selectedPlayer?.team?.name}} logo"></span> -->
+      </span>
+      <span class="right" (click)="closeModal()">X</span>
+    </div>
+    <div class="center" *ngIf="submitting">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="center" *ngIf="noPosts">
+        <span style="font-size: 26px; font-weight: light; color: #555;">{{ noPosts }}</span>
+    </div>
+    <div class="content" *ngIf="!submitting"> 
+      <ul *ngFor="let item of tweetsData" style="font-size:14px">
+        <li>{{item.text}} <span style="color:#6740B4; font-weight: bold;">{{item.created_at | date:'fullDate'}}</span></li>
+      </ul>
+    </div>  
+  </div>
+</div>

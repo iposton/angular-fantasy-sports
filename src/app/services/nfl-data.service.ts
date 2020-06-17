@@ -70,7 +70,6 @@ export class NFLDataService {
   }
 
   public selectedDate(d) {
-    console.log(d, 'set new date');
     dailyDate = d;
   }
 
@@ -93,7 +92,6 @@ export class NFLDataService {
   }
 
   sendHeaderOptions(h, week, root) {
-    console.log('got headers & options in data service...');
     headers = h;
     sWeek = week;
     apiRoot = root;

@@ -2,39 +2,18 @@
     <h1 class="center date-header baseball-header">{{mlbHittingSection ? 'MLB' : mlbSection ? 'MLB' : nbaSection ? 'NBA' : nhlSection ? 'NHL' : nhlGoalies ? 'NHL' : nflSection ? 'NFL' : nflDefenseSection ? 'NFL' : ''}} Stat Leaders</h1>
 </div>
 
-<div id="overlay" [ngClass]="{'active': isOpen}" (click)="isOpen = false">
-    <div class="modal" (click)="$event.stopPropagation()">
-      <div class="modal-header" *ngIf="!submitting">
-          <span> Twitter Updates - <span class="{{type}}"><img src="{{selectedPlayer?.player?.officialImageSrc}}" alt="basketball player"
-            onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> 
-            <span>{{selectedPlayer?.player?.firstName + ' ' + selectedPlayer?.player?.lastName}} - {{selectedPlayer?.player?.primaryPosition}} | #{{selectedPlayer?.player.jerseyNumber}} </span>
-            <!-- <span class="team-image"> <img src="{{selectedPlayer?.team?.logo}}" alt="{{selectedPlayer?.team?.name}} logo"></span> -->
-          </span>
-          <span class="right" (click)="isOpen = false">X</span>
-      </div>
-        
-        <div class="center" *ngIf="submitting">
-            <div class="lds-ring">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-        </div>
-        <div class="center" *ngIf="noPosts">
-            <span style="font-size: 26px; font-weight: light; color: #555;">{{ noPosts }}</span>
-        </div>
-        
-        <div class="content" *ngIf="!submitting"> 
-          
-            <ul *ngFor="let item of tweetsData" style="font-size:14px">
-              <li>{{item.text}} <span style="color:#6740B4; font-weight: bold;">{{item.created_at | date:'fullDate'}}</span></li>
-            </ul>
-          
-        </div>  
-    </div>
-</div>
-         
+<app-dialog
+[isOpen]="isOpen"
+[submitting]="submitting"
+[type]="type"
+[area]="'none'"
+[noPosts]="noPosts"
+[tweetsData]="tweetsData"
+[name]="name"
+[image]="image"
+(close)="isOpen = false"
+></app-dialog>
+       
 <div class="button-wrapper sl-btns" *ngIf="!loading">
     <div class="schedule-box row">
       <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbHittingSection = false; mlbSection = false; nhlGoalies = false;">
@@ -88,7 +67,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -101,7 +82,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -114,7 +97,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -127,7 +112,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -140,7 +127,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -153,7 +142,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -166,7 +157,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -179,7 +172,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -192,7 +187,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
@@ -205,7 +202,9 @@
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
         </section>
 
         <section [ngClass]="{'dn' : !nhlGoalies}">
@@ -220,7 +219,9 @@
           [sport]="'nhl'"
           [order]="'DESC'"
           [teams]="nhlTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
           [data]="nhlGoaltenders" 
@@ -233,7 +234,9 @@
           [sport]="'nhl'"
           [order]="'DESC'"
           [teams]="nhlTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
           [data]="nhlGoaltenders" 
@@ -246,7 +249,9 @@
           [sport]="'nhl'"
           [order]="'DESC'"
           [teams]="nhlTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
           [data]="nhlGoaltenders" 
@@ -259,7 +264,9 @@
           [sport]="'nhl'"
           [order]="'DESC'"
           [teams]="nhlTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
           [data]="nhlGoaltenders" 
@@ -272,7 +279,9 @@
           [sport]="'nhl'"
           [order]="'DESC'"
           [teams]="nhlTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
 
           <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
           [data]="nhlGoaltenders" 
@@ -285,7 +294,9 @@
           [sport]="'nhl'"
           [order]="'DESC'"
           [teams]="nhlTeams"
-          (open)="authorize($event)"></app-stat-card>
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
         </section>
 
         <section [ngClass]="{'dn' : !nhlSection}">
@@ -300,7 +311,9 @@
             [sport]="'nhl'"
             [order]="'DESC'"
             [teams]="nhlTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
             [data]="nhlSkaters" 
@@ -313,7 +326,9 @@
             [sport]="'nhl'"
             [order]="'DESC'"
             [teams]="nhlTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
             [data]="nhlSkaters" 
@@ -326,7 +341,9 @@
             [sport]="'nhl'"
             [order]="'DESC'"
             [teams]="nhlTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
             [data]="nhlSkaters" 
@@ -339,7 +356,9 @@
             [sport]="'nhl'"
             [order]="'DESC'"
             [teams]="nhlTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
             [data]="nhlSkaters" 
@@ -352,7 +371,9 @@
             [sport]="'nhl'"
             [order]="'DESC'"
             [teams]="nhlTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
             [data]="nhlSkaters" 
@@ -365,7 +386,9 @@
             [sport]="'nhl'"
             [order]="'DESC'"
             [teams]="nhlTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
             [data]="nhlSkaters" 
@@ -378,7 +401,9 @@
             [sport]="'nhl'"
             [order]="'DESC'"
             [teams]="nhlTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
             [data]="nhlSkaters" 
@@ -391,7 +416,9 @@
             [sport]="'nhl'"
             [order]="'DESC'"
             [teams]="nhlTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
         </section>
 
         <section [ngClass]="{'dn' : !mlbSection}">
@@ -406,7 +433,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
             [data]="mlbPitchingData" 
@@ -419,7 +448,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
             [data]="mlbPitchingData" 
@@ -432,7 +463,9 @@
             [order]="'ASC'"
             [sport]="'mlb'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
             [data]="mlbPitchingData" 
@@ -445,7 +478,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
             [data]="mlbPitchingData" 
@@ -458,7 +493,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
             [data]="mlbPitchingData" 
@@ -471,7 +508,9 @@
             [order]="'ASC'"
             [sport]="'mlb'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
         </section>
 
         <section [ngClass]="{'dn' : !mlbHittingSection}">
@@ -486,7 +525,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null" 
             [data]="mlbHittingData" 
@@ -499,7 +540,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null" 
             [data]="mlbHittingData" 
@@ -512,7 +555,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null" 
             [data]="mlbHittingData" 
@@ -525,7 +570,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null" 
             [data]="mlbHittingData" 
@@ -538,7 +585,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null" 
             [data]="mlbHittingData" 
@@ -551,7 +600,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null" 
             [data]="mlbHittingData" 
@@ -564,7 +615,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null" 
             [data]="mlbHittingData" 
@@ -577,7 +630,9 @@
             [sport]="'mlb'"
             [order]="'DESC'"
             [teams]="mlbTeams"
-            (open)="authorize($event)"></app-stat-card>
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
           </section>
 
           <section [ngClass]="{'dn' : !nflSection}">
@@ -592,7 +647,9 @@
               [sport]="'nfl'"
               [order]="'DESC'"
               [teams]="nflTeams"
-              (open)="authorize($event)"></app-stat-card>
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null" 
               [data]="nflRushData" 
@@ -605,7 +662,9 @@
               [sport]="'nfl'"
               [order]="'DESC'"
               [teams]="nflTeams"
-              (open)="authorize($event)"></app-stat-card>
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
               [data]="nflRecData" 
@@ -618,7 +677,9 @@
               [sport]="'nfl'"
               [order]="'DESC'"
               [teams]="nflTeams"
-              (open)="authorize($event)"></app-stat-card>
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
               [data]="nflRecData" 
@@ -631,7 +692,9 @@
               [sport]="'nfl'"
               [order]="'DESC'"
               [teams]="nflTeams"
-              (open)="authorize($event)"></app-stat-card>
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              ></app-stat-card>
 
               <app-team-rank *ngIf="!nflTeamLoading" 
                 [data]="nflTeamStats" 
@@ -652,7 +715,9 @@
                 [sport]="'nfl'"
                 [order]="'DESC'"
                 [teams]="nflTeams"
-                (open)="authorize($event)"></app-stat-card>
+                (open)="authorize($event)"
+                [twitter]="twitter"
+                ></app-stat-card>
 
                 <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
                 [data]="nflDefenseData" 
@@ -665,7 +730,9 @@
                 [sport]="'nfl'"
                 [order]="'DESC'"
                 [teams]="nflTeams"
-                (open)="authorize($event)"></app-stat-card>
+                (open)="authorize($event)"
+                [twitter]="twitter"
+                ></app-stat-card>
 
                 <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
                 [data]="nflDefenseData" 
@@ -678,7 +745,9 @@
                 [sport]="'nfl'"
                 [order]="'DESC'"
                 [teams]="nflTeams"
-                (open)="authorize($event)"></app-stat-card>
+                (open)="authorize($event)"
+                [twitter]="twitter"
+                ></app-stat-card>
 
                 <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
                 [data]="nflDefenseData" 
@@ -691,7 +760,9 @@
                 [sport]="'nfl'"
                 [order]="'DESC'"
                 [teams]="nflTeams"
-                (open)="authorize($event)"></app-stat-card>
+                (open)="authorize($event)"
+                [twitter]="twitter"
+                ></app-stat-card>
 
                 <app-team-rank *ngIf="!nflTeamLoading" 
                 [data]="nflTeamStats" 
@@ -699,449 +770,12 @@
                 [title]="'Defense'">
                 </app-team-rank>
               </section>
-<!--       
-                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                        <div>
-                            <button (click)="twitter = !twitter">Twitter</button>
-                        </div>
-                    </div> -->
-                    <!-- <div *ngIf="twitter">
-                       
-                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                        <h2>Points</h2>
-                          <div>
-                              <div class="content-wrapper">
-                                  <div class="row">
-                                      <div class="w100">
-                                          #NBA {{ gameDate | date:'fullDate' }}
-                                      </div>
-                                      <div class="w100">
-                                          #Top5 Points
-                                      </div>
-                                    <div *ngFor="let item of myData | orderBy: 'nbaleaders'; let i=index" class="w100">
-                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                              <span class="player-infos">
-                                                  <span class="names" *ngIf="!mobile">
-                                                      <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                          {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                        </span>
-                                                        <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                          {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                        </span>
-                                                  </span>
-          
-                                                  <span class="names" *ngIf="mobile">
-                                                      <span> 
-                                                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                      </span>
-                                                  </span>
-                                                  <span class="lg"> {{item?.stats?.offense?.pts}} Pts</span>
-                                                
-                                                  </span>
-                                              
-                                            </span>
-                                          </div>
-                                          <div class="w100">
-                                              #NBATwitter #Stats
-                                          </div>
-                                
-                                  </div>
-                                </div>
-                      
-                          </div>
-                      </div>
-
-                      <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                          <h2>Point Avg</h2>
-                            <div>
-                                <div class="content-wrapper">
-                                    <div class="row">
-                                        <div class="w100">
-                                            #NBA {{ gameDate | date:'fullDate' }}
-                                        </div>
-                                        <div class="w100">
-                                            #Top5 Points Per Game
-                                        </div>
-                                      <div *ngFor="let item of myData | orderBy: 'nbaleadersavg'; let i=index" class="w100">
-                                              <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                <span class="player-infos">
-                                                    <span class="names" *ngIf="!mobile">
-                                                        <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                            {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                          </span>
-                                                          <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                            {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                          </span>
-                                                    </span>
-            
-                                                    <span class="names" *ngIf="mobile">
-                                                        <span> 
-                                                          {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                        </span>
-                                                    </span>
-                                                    <span class="lg"> {{item?.stats?.offense?.ptsPerGame}} Pts Avg</span>
-                                                  
-                                                    </span>
-                                                
-                                              </span>
-                                            </div>
-                                            <div class="w100">
-                                                #NBATwitter #Stats
-                                            </div>
-                                  
-                                    </div>
-                                  </div>
-                        
-                            </div>
-                        </div>
-
-                        <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                            <h2>Rebounds</h2>
-                              <div>
-                                  <div class="content-wrapper">
-                                      <div class="row">
-                                          <div class="w100">
-                                              #NBA {{ gameDate | date:'fullDate' }}
-                                          </div>
-                                          <div class="w100">
-                                              #Top5 Rebounds
-                                          </div>
-                                        <div *ngFor="let item of myData | orderBy: 'nbaleadersreb'; let i=index" class="w100">
-                                                <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                  <span class="player-infos">
-                                                      <span class="names" *ngIf="!mobile">
-                                                          <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                              {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                            </span>
-                                                            <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                              {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                            </span>
-                                                      </span>
-              
-                                                      <span class="names" *ngIf="mobile">
-                                                          <span> 
-                                                            {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                          </span>
-                                                      </span>
-                                                      <span class="lg"> {{item?.stats?.rebounds?.reb}} Reb</span>
-                                                    
-                                                      </span>
-                                                  
-                                                </span>
-                                              </div>
-                                              <div class="w100">
-                                                  #NBATwitter #Stats
-                                              </div>
-                                    
-                                      </div>
-                                    </div>
-                          
-                              </div>
-                          </div>
-                          <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                              <h2>Assists</h2>
-                                <div>
-                                    <div class="content-wrapper">
-                                        <div class="row">
-                                            <div class="w100">
-                                                #NBA {{ gameDate | date:'fullDate' }}
-                                            </div>
-                                            <div class="w100">
-                                                #Top5 Assists
-                                            </div>
-                                          <div *ngFor="let item of myData | orderBy: 'nbaleadersast'; let i=index" class="w100">
-                                                  <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                    <span class="player-infos">
-                                                        <span class="names" *ngIf="!mobile">
-                                                            <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                                {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                              </span>
-                                                              <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                                {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                              </span>
-                                                        </span>
-                
-                                                        <span class="names" *ngIf="mobile">
-                                                            <span> 
-                                                              {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                            </span>
-                                                        </span>
-                                                        <span class="lg"> {{item?.stats?.offense?.ast}} Ast</span>
-                                                      
-                                                        </span>
-                                                    
-                                                  </span>
-                                                </div>
-                                                <div class="w100">
-                                                    #NBATwitter #Stats
-                                                </div>
-                                      
-                                        </div>
-                                      </div>
-                            
-                                </div>
-                            </div>
-                            <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                                <h2>Steals</h2>
-                                  <div>
-                                      <div class="content-wrapper">
-                                          <div class="row">
-                                              <div class="w100">
-                                                  #NBA {{ gameDate | date:'fullDate' }}
-                                              </div>
-                                              <div class="w100">
-                                                  #Top5 Steals
-                                              </div>
-                                            <div *ngFor="let item of myData | orderBy: 'nbaleadersstl'; let i=index" class="w100">
-                                                    <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                      <span class="player-infos">
-                                                          <span class="names" *ngIf="!mobile">
-                                                              <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                                  {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                                </span>
-                                                                <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                                  {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                                </span>
-                                                          </span>
-                  
-                                                          <span class="names" *ngIf="mobile">
-                                                              <span> 
-                                                                {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                              </span>
-                                                          </span>
-                                                          <span class="lg"> {{item?.stats?.defense?.stl}} Stl</span>
-                                                        
-                                                          </span>
-                                                      
-                                                    </span>
-                                                  </div>
-                                                  <div class="w100">
-                                                      #NBATwitter #Stats
-                                                  </div>
-                                        
-                                          </div>
-                                        </div>
-                              
-                                  </div>
-                              </div>
-                              <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                                  <h2>Blocks</h2>
-                                    <div>
-                                        <div class="content-wrapper">
-                                            <div class="row">
-                                                <div class="w100">
-                                                    #NBA {{ gameDate | date:'fullDate' }}
-                                                </div>
-                                                <div class="w100">
-                                                    #Top5 Blocks
-                                                </div>
-                                              <div *ngFor="let item of myData | orderBy: 'nbaleadersblk'; let i=index" class="w100">
-                                                      <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                        <span class="player-infos">
-                                                            <span class="names" *ngIf="!mobile">
-                                                                <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                                    {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                                  </span>
-                                                                  <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                                    {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                                  </span>
-                                                            </span>
-                    
-                                                            <span class="names" *ngIf="mobile">
-                                                                <span> 
-                                                                  {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                                </span>
-                                                            </span>
-                                                            <span class="lg"> {{item?.stats?.defense?.blk}} blk</span>
-                                                          
-                                                            </span>
-                                                        
-                                                      </span>
-                                                    </div>
-                                                    <div class="w100">
-                                                        #NBATwitter #Stats
-                                                    </div>
-                                          
-                                            </div>
-                                          </div>
-                                
-                                    </div>
-                                </div>
-                                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                                    <h2>Three Pointers</h2>
-                                      <div>
-                                          <div class="content-wrapper">
-                                              <div class="row">
-                                                  <div class="w100">
-                                                      #NBA {{ gameDate | date:'fullDate' }}
-                                                  </div>
-                                                  <div class="w100">
-                                                      #Top5 Three Pointers
-                                                  </div>
-                                                <div *ngFor="let item of myData | orderBy: 'nbaleadersthree'; let i=index" class="w100">
-                                                        <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                          <span class="player-infos">
-                                                              <span class="names" *ngIf="!mobile">
-                                                                  <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                                    </span>
-                                                                    <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                                    </span>
-                                                              </span>
-                      
-                                                              <span class="names" *ngIf="mobile">
-                                                                  <span> 
-                                                                    {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                                  </span>
-                                                              </span>
-                                                              <span class="lg"> 3PM {{item?.stats?.fieldGoals?.fg3PtMade}} </span>
-                                                            
-                                                              </span>
-                                                          
-                                                        </span>
-                                                      </div>
-                                                      <div class="w100">
-                                                          #NBATwitter #Stats
-                                                      </div>
-                                            
-                                              </div>
-                                            </div>
-                                  
-                                      </div>
-                                  </div>
-                                <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                                    <h2>Shots</h2>
-                                      <div>
-                                          <div class="content-wrapper">
-                                              <div class="row">
-                                                  <div class="w100">
-                                                      #NBA {{ gameDate | date:'fullDate' }}
-                                                  </div>
-                                                  <div class="w100">
-                                                      #Top5 Shots
-                                                  </div>
-                                                <div *ngFor="let item of myData | orderBy: 'nbaleadersshots'; let i=index" class="w100">
-                                                        <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                          <span class="player-infos">
-                                                              <span class="names" *ngIf="!mobile">
-                                                                  <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                                    </span>
-                                                                    <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                                    </span>
-                                                              </span>
-                      
-                                                              <span class="names" *ngIf="mobile">
-                                                                  <span> 
-                                                                    {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                                  </span>
-                                                              </span>
-                                                              <span class="lg"> {{item?.stats?.fieldGoals?.fgAtt}} Shots</span>
-                                                            
-                                                              </span>
-                                                          
-                                                        </span>
-                                                      </div>
-                                                      <div class="w100">
-                                                          #NBATwitter #Stats
-                                                      </div>
-                                            
-                                              </div>
-                                            </div>
-                                  
-                                      </div>
-                                  </div>
-                                  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                                      <h2>FG %</h2>
-                                        <div>
-                                            <div class="content-wrapper">
-                                                <div class="row">
-                                                    <div class="w100">
-                                                        #NBA {{ gameDate | date:'fullDate' }}
-                                                    </div>
-                                                    <div class="w100">
-                                                        #Top5 FG %
-                                                    </div>
-                                                  <div *ngFor="let item of myData | orderBy: 'nbaleadersfgpct'; let i=index" class="w100">
-                                                          <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                            <span class="player-infos">
-                                                                <span class="names" *ngIf="!mobile">
-                                                                    <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                                      </span>
-                                                                      <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                                        {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                                      </span>
-                                                                </span>
-                        
-                                                                <span class="names" *ngIf="mobile">
-                                                                    <span> 
-                                                                      {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                                    </span>
-                                                                </span>
-                                                                <span class="lg"> {{item?.stats?.fieldGoals?.fgPct}} FG%</span>
-                                                              
-                                                                </span>
-                                                            
-                                                          </span>
-                                                        </div>
-                                                        <div class="w100">
-                                                            #NBATwitter #Stats
-                                                        </div>
-                                              
-                                                </div>
-                                              </div>
-                                    
-                                        </div>
-                                    </div>
-                                    <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-                                        <h2>Turn Over</h2>
-                                          <div>
-                                              <div class="content-wrapper">
-                                                  <div class="row">
-                                                      <div class="w100">
-                                                          #NBA {{ gameDate | date:'fullDate' }}
-                                                      </div>
-                                                      <div class="w100">
-                                                          #Top5 Turn Over
-                                                      </div>
-                                                    <div *ngFor="let item of myData | orderBy: 'nbaleaderstov'; let i=index" class="w100">
-                                                            <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
-                                                              <span class="player-infos">
-                                                                  <span class="names" *ngIf="!mobile">
-                                                                      <span *ngIf="item.player.firstName != 'Shai'"> 
-                                                                          {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                                                                        </span>
-                                                                        <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                                                          {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                                                                        </span>
-                                                                  </span>
-                          
-                                                                  <span class="names" *ngIf="mobile">
-                                                                      <span> 
-                                                                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                                                                      </span>
-                                                                  </span>
-                                                                  <span class="lg"> {{item?.stats?.defense?.tov}} TO</span>
-                                                                
-                                                                  </span>
-                                                              
-                                                            </span>
-                                                          </div>
-                                                          <div class="w100">
-                                                              #NBATwitter #Stats
-                                                          </div>
-                                                
-                                                  </div>
-                                                </div>
-                                      
-                                          </div>
-                                      </div>
-                                  
-                     
-                    </div> -->
+      
+  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
+      <div>
+          <button (click)="twitter = !twitter">Twitter</button>
+      </div>
+  </div>
   <div class="top-arrow">
       <span (click)="goAnchor('top')">TOP &uarr;</span>
   </div>

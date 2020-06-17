@@ -72,3 +72,52 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="twitter">
+  <div class="card-wrap-sp mat-elevation-z6 position-box">
+    <h2>{{title}}</h2>
+      <div>
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="w100">
+                  #{{sport}} 2020
+              </div>
+              <div class="w100">
+                  #Top5 {{title}}
+              </div>
+              <div *ngFor="let item of data | sortBy: statType:statField:order; let i = index" class="w100">
+                      <span [ngClass]="{'left-content' : i<=page, 'dn' : i>page || i<=amount}">
+                        <span class="player-infos">
+                            <span class="names" *ngIf="!mobile">
+                                <span *ngIf="item.player.firstName != 'Shai'"> 
+                                    {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team.twitter) + ' ' + item?.player?.lastName}}
+                                  </span>
+                                  <span *ngIf="item?.player?.firstName === 'Shai'"> 
+                                    {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team.twitter) }} S. {{item?.player?.lastName}}  
+                                  </span>
+                            </span>
+
+                            <span class="names" *ngIf="mobile">
+                                <span> 
+                                  {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team.twitter) + ' ' + item?.player?.lastName}} 
+                                </span>
+                            </span>
+                            <span class="lg">
+                                {{ (item?.stats)[statType][statField] }} {{ statTag }}
+                                <span *ngIf="sport === 'nfl'">
+                                  <span *ngIf="statType === 'passing'">{{ item?.stats[statType]?.passTD }} TD</span>
+                                  <span *ngIf="statType === 'rushing'">{{ item?.stats[statType]?.rushTD }} TD</span>
+                                  <span *ngIf="statType === 'receiving'">{{ item?.stats[statType]?.recTD }} TD</span>
+                                </span>
+                              </span>
+                        </span>     
+                      </span>
+                    </div>
+                    <div class="w100">
+                        #{{sport}}Twitter #Stats
+                    </div>
+            </div>
+            </div>
+      </div>
+  </div>
+</div>

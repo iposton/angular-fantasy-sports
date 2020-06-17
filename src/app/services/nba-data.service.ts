@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 let headers = null;
-
 let sending;
 let sent;
 let sendingMyData;
@@ -14,12 +13,11 @@ let sendingT;
 let sentT;
 let sendingAll;
 let sentAll;
-
 let thisDate = new Date();
 let utcDate = new Date(thisDate.toUTCString());
 utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
-let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+let dailyDate = '20200309';//myDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 @Injectable({
   providedIn: 'root'
@@ -46,35 +44,29 @@ export class NBADataService {
   }
 
   public selectedDate(d) {
-    console.log(d, 'set new date');
     dailyDate = d;
   }
 
   sendHeaderOptions(h) {
-    console.log('got headers & options in data service...');
     headers = h;
   }
 
   sendTouchStats(statsArray) {
-    console.log("sending stats to service...");
     sendingT = statsArray;
   }
 
   getSentTouchStats() {
-    console.log("stats sent to component...");
     sentT = sendingT;
     return sentT;
   }
 
   sendStats(statsArray, myData, schedule) {
-    console.log("sending stats to service...");
     sending = statsArray;
     sendingMyData = myData;
     sendingSched = schedule;
   }
 
   getSentStats() {
-    console.log("stats sent to component...");
     let allDataArr = [];
     sent = sending;
     sentMyData = sendingMyData;
@@ -84,47 +76,31 @@ export class NBADataService {
   }
 
   sendAllStats(allstatsArray) {
-    console.log("sending all stats to service...");
     sendingAll = allstatsArray;
   }
 
   getAllSentStats() {
-    console.log("all stats sent to component...");
     sentAll = sendingAll;
     return sentAll;
   }
 
   getEnv() {
-    console.log("trying to get heroku env...");
     this.env = this.http.get('/heroku-env')
     return this.env;
   }
 
 
   getPrevGameId() {
-
-    //if (!this.gameid) {
-      console.log('getting pitch speed data from API...');
-
-      let url = `${this.apiRoot}/games.json?date=from-7-days-ago-to-5-days-ago`;
-      this.gameid = this.http.get(url, {headers})
-        
-    //}
+    let url = `${this.apiRoot}/games.json?date=from-7-days-ago-to-5-days-ago`;
+    this.gameid = this.http.get(url, {headers})
     return this.gameid;
   }
 
     getSchedule() {
-      // pass in week
-    //get all games for today get game ID and find a pitchers opponent
-   // if (!this.schedule) {
-      console.log('getting nba schedule for today from api...', dailyDate);
-
-      //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
-      let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
-      //let url = `${this.apiRoot}/games.json`;
-      this.schedule = this.http.get(url, {headers})
-       
-   // }
+    //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
+    let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
+    //let url = `${this.apiRoot}/games.json`;
+    this.schedule = this.http.get(url, {headers})
     return this.schedule;
 
   }
@@ -143,10 +119,6 @@ export class NBADataService {
   }
 
    getAllStats(full) {
-
-    //if (!this.allstats) {
-
-      console.log('getting total player stats from API...');
       //cumulative_player_stats.json?position=PG,SG,SF,PF,C&sort=STATS.Miscellaneous-GS.D&limit=180
       let url = null;
       if(full) {
@@ -161,87 +133,52 @@ export class NBADataService {
   }
 
   getTeamStats(date) {
-      console.log('getting total team stats from API...');
-      let url = `${this.apiRoot}/team_stats_totals.json`;
-      this.teamstats = this.http.get(url, {headers})
-
+    let url = `${this.apiRoot}/team_stats_totals.json`;
+    this.teamstats = this.http.get(url, {headers})
     return this.teamstats;
   }
 
   getInfo(data) {
-
-   // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?player=${data}`;
-      console.log('getting active player data from API...');
-      this.info = this.http.get(url, {headers})
-        
-   // }
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?player=${data}`;
+    this.info = this.http.get(url, {headers})
     return this.info;
   }
 
   getStarterInfo(players) {
-
-   // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?position=PG,SG,SF,PF,C&player=${players}`;
-      console.log('getting active player data from API...');
-      this.starterInfo = this.http.get(url, {headers})
-        
-   // }
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?position=PG,SG,SF,PF,C&player=${players}`;
+    this.starterInfo = this.http.get(url, {headers})
     return this.starterInfo;
   }
 
   getDaily(data) {
-   // pass in week
-   // if (!this.daily) {
-      //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-      let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?player=${data}`;
-      console.log(url, 'url')
-      console.log('getting daily stats for pitchers from API...');
-      this.daily = this.http.get(url, {headers})
-        
-  //  }
+    let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?player=${data}`;
+    this.daily = this.http.get(url, {headers})
     return this.daily;
   }
 
   getDailyTouches(selected) {
-    // pass in week
-    // if (!this.daily) {
-       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-       let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=PG,SG,SF,PF,C`;
-       console.log(url, 'url')
-       console.log('getting daily stats for pitchers from API...');
-       this.daily = this.http.get(url, {headers})
-         
-   //  }
+     let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=PG,SG,SF,PF,C`;
+     this.daily = this.http.get(url, {headers})
      return this.daily;
-   }
+  }
 
   getTouches(players) {
-
-      let url = `${this.apiRoot}/player_stats_totals.json?position=PG,SG,SF,PF,C`; //&player=${players}`;
-      this.stats = this.http.get(url, {headers})
+    let url = `${this.apiRoot}/player_stats_totals.json?position=PG,SG,SF,PF,C`; //&player=${players}`;
+    this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
   getWeek(selected) {
-
-       let url = `${this.apiRoot}/week/${selected}/team_gamelogs.json`;
-       console.log(url, 'url')
-       console.log('getting daily stats for pitchers from API...');
-       this.weekly = this.http.get(url, {headers})
-
+     let url = `${this.apiRoot}/week/${selected}/team_gamelogs.json`;
+     this.weekly = this.http.get(url, {headers})
      return this.weekly;
-   }
+  }
 
   getScore(data) {
     let id = null;
     id = data
-    //if (!this.score) {
-      console.log(`${this.apiRoot}/games/`+id+`/boxscore.json`, 'getting daily scores of todays games from API...');
-      let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
-      this.score = this.http.get(url, {headers})
-        
-    //}
+    let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
+    this.score = this.http.get(url, {headers})
     return this.score;
   }
 }
