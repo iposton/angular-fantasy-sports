@@ -10,8 +10,12 @@ export class DialogComponent implements OnInit {
   public tweetsData         :Array<any>;
   @Input('teams')
   public teams              :Array<any>;
+  @Input('title')
+  public title              :string;
   @Input('type')
   public type               :string;
+  @Input('modalType')
+  public modalType          :string;
   @Input('area')
   public area               :string;
   @Input('noPosts')
