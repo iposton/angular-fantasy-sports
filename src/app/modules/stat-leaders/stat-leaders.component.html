@@ -16,7 +16,7 @@
        
 <div class="button-wrapper sl-btns" *ngIf="!loading">
     <div class="schedule-box row">
-      <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbHittingSection = false; mlbSection = false; nhlGoalies = false;">
+      <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbHittingSection = false; mlbSection = false; nhlGoalies = false; nflSection = false; nflDefenseSection = false;">
           <span class="sched-item">
             NBA
           </span> 
@@ -771,8 +771,8 @@
                 </app-team-rank>
               </section>
       
-  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading">
-      <div>
+  <div class="row" *ngIf="!loading">
+      <div class="center twitter-btn">
           <button (click)="twitter = !twitter">Twitter</button>
       </div>
   </div>

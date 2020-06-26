@@ -460,8 +460,6 @@ export class StartingGoaliesComponent implements OnInit {
           // }
           for (let schedule of this.dailySchedule) {
 
-              console.log(this.myData, 'filtered myData')
-
             for (let sdata of this.myData) {
 
               for (let team of teamRef) {

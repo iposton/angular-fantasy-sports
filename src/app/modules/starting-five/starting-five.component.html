@@ -220,11 +220,13 @@
     [amount]="3">
     </app-team-schedule>
   </section>
-  <div class="card-wrap-sp mat-elevation-z6 position-box" *ngIf="!loading && dailySchedule != null">
-    <div>
+
+  <div class="row" *ngIf="!loading && dailySchedule != null">
+    <div class="center twitter-btn">
         <button (click)="twitter = !twitter">Twitter</button>
     </div>
-  </div>              
+  </div> 
+
   <div class="top-arrow">
       <span (click)="goAnchor('top')">TOP &uarr;</span>
   </div>

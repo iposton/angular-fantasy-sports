@@ -81,7 +81,7 @@ export class TeamRankComponent implements OnInit {
           return 0;
         }
       });
-      console.log('team rank', tRank);
+      //console.log('team rank', tRank);
       this.tRank = tRank;
       return this.tRank;
     } else {
