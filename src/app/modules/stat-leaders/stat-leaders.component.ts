@@ -7,7 +7,6 @@ import { NBADataService,
   GoogleAnalyticsService,
   NFLDataService } from '../../services/index';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import * as CryptoJS from 'crypto-js';
 
 let headers = null;
@@ -81,7 +80,6 @@ export class StatLeadersComponent implements OnInit {
               private http: HttpClient,
               private sanitizer: DomSanitizer,
               private util: UtilService,
-              public snackBar: MatSnackBar,
               public gaService: GoogleAnalyticsService,
               public nflService: NFLDataService) {
     //this.allSentData = this.nbaService.getSentStats();

@@ -30,7 +30,8 @@
       </div>
   </div>
 </div>
-<div class="button-wrapper" *ngIf="!loading && dailySchedule != null && starterIdData.length > 0">
+
+<div class="nba-button-wrapper" *ngIf="!loading && dailySchedule != null && starterIdData.length > 0">
     <div class="schedule-box row">
       <div [ngClass]="{'active': startersSection}" class="col" (click)="startersSection = true; positionSection = false; scheduleSection = false">
           <span class="sched-item">
@@ -54,6 +55,7 @@
       </div> -->
     </div>
 </div>
+
 <app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Starting Five Data'"></app-spinner>
 <div *ngIf="errMessage" class="err center">
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
@@ -237,4 +239,6 @@
 [name]="name"
 [image]="image"
 (close)="isOpen = false"
+[title]="'Twitter Updates -'"
+[modalType]="'twitter'"
 ></app-dialog>

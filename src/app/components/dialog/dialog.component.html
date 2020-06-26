@@ -23,6 +23,42 @@
       <ul *ngFor="let item of tweetsData" style="font-size:14px">
         <li>{{item.text}} <span style="color:#6740B4; font-weight: bold;">{{item.created_at | date:'fullDate'}}</span></li>
       </ul>
+
+  <!-- <ul *ngFor="let data of showData">
+    <li *ngIf="data.wins &gt; 1 && data.hot === true">
+      <span class="player"><img src="{{ data.image}}" alt="" /></span>
+      <span style="font-weight: bold;" class="last-week"> {{ data.name }} 
+        <img src="../assets/nhl-logos/{{ data.team }}.jpg" alt="" /></span>
+        <span style="font-weight: bold;"> ({{ data.wins + '-' + data.losses + '-' + data.otl }})</span> 
+        <span *ngIf="data.opponents[0] != null"> - <span style="color:#6740B4">{{data.opponents[0].date}}</span> {{data.opponents[0].desc}}</span>
+        <span *ngIf="data.opponents[1] != null">, <span style="color:#6740B4">{{data.opponents[1].date}}</span> {{data.opponents[1].desc}}</span>
+        <span *ngIf="data.opponents[2] != null">, <span style="color:#6740B4">{{data.opponents[2].date}}</span> {{data.opponents[2].desc}}</span> <span *ngIf="data.opponents[3] != null">, 
+        <span style="color:#6740B4">{{data.opponents[3].date}}</span> {{data.opponents[3].desc}}</span> - <span style="font-weight: bold;">Total Saves: {{data.sv}} Total Shots: {{data.sa}}</span>
+    </li>
+  </ul> -->
+
+  <!-- <div  *ngIf="fbService.userDetails == null">
+    
+      <div class="login-container">
+        <div>
+          <input type="email" class="form-control" [(ngModel)]="user.email" placeholder="Email" required />
+        </div>
+
+        <div>
+          <input type="password" class="form-control" [(ngModel)]="user.password" placeholder="Password" required />
+        </div>
+
+        <button class="mat-raised-button" (click)="signInWithEmail()">Login</button>
+
+      </div>  
+    
+  </div>
+ 
+<div *ngIf="fbService.userDetails != null">
+ <button class="mat-raised-button" color="warn"  (click)="fbService.logout()">Logout</button>
+</div> -->
+
+
     </div>  
   </div>
 </div>

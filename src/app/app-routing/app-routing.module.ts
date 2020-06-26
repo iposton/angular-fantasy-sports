@@ -7,9 +7,9 @@ import { StatLeadersComponent } from '../modules/stat-leaders/stat-leaders.compo
 // import { TouchesComponent } from '../modules/touches/touches.component';
 import { StartingPitcherComponent } from '../modules/starting-pitcher/starting-pitcher.component';
 // import { PitchingStatsComponent, MyDialog } from '../modules/pitching-stats/pitching-stats.component';
-import { StartingGoaliesComponent, Info, TodayDialog, LastweekDialog, LoginDialog } from '../modules/starting-goalies/starting-goalies.component';
-import { YesterdayResultsComponent, InfoYesterday } from '../modules/yesterday-results/yesterday-results.component';
-import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from '../modules/tomorrow-results/tomorrow-results.component';
+import { StartingGoaliesComponent } from '../modules/starting-goalies/starting-goalies.component';
+//import { YesterdayResultsComponent, InfoYesterday } from '../modules/yesterday-results/yesterday-results.component';
+//import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from '../modules/tomorrow-results/tomorrow-results.component';
 
 const routes: Routes = [
 //   {
@@ -25,14 +25,6 @@ const routes: Routes = [
          path: 'starting-pitchers', 
          component: StartingPitcherComponent 
   },
-  {
-         path: 'starting-goalies-yesterday',
-         component: YesterdayResultsComponent
-   },
-   {
-         path: 'starting-goalies-tomorrow',
-         component: TomorrowResultsComponent
-   },
    {
          path: 'starting-goalies',
          component: StartingGoaliesComponent

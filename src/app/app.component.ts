@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import{ Router, NavigationEnd } from '@angular/router';
-declare let gtag: Function;
+//declare let gtag: Function;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  public menu: boolean = false;
+  public mobile: boolean = false;
 
   constructor (private meta: Meta,
     private title: Title,
@@ -38,20 +40,17 @@ export class AppComponent {
       { name: 'twitter:image', content: 'https://fantasy-sports-resources.com/assets/images/home-page.png' },
       ])
 
-      this.router.events.subscribe(event => {
-        if(event instanceof NavigationEnd) {
-            gtag('config', 'UA-61983807-3', {'page_path': event.urlAfterRedirects});
-         }
-      })
-  }
-  //position for tooltip
-  position = 'above';
-
-  public isVisibleOnMobile() {
-    // console.log('width under 600px');
+      // this.router.events.subscribe(event => {
+      //   if(event instanceof NavigationEnd) {
+      //       gtag('config', 'UA-61983807-3', {'page_path': event.urlAfterRedirects});
+      //    }
+      // })
   }
 
-  public isVisibleOnDesktop() {
-    // console.log('width over 600px');
+  ngOnInit() {
+    if (window.innerWidth < 700) { // 768px portrait
+      this.mobile = true;
+    }
   }
+ 
 }

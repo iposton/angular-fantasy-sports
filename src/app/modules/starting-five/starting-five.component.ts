@@ -4,7 +4,6 @@ import { NBADataService, UtilService, GoogleAnalyticsService } from '../../servi
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import * as CryptoJS from 'crypto-js';
 
 let headers = null;
@@ -102,7 +101,6 @@ export class StartingFiveComponent implements OnInit {
               private http: HttpClient,
               private sanitizer: DomSanitizer,
               private util: UtilService,
-              public snackBar: MatSnackBar,
               public gaService: GoogleAnalyticsService) {
     this.allSentData = this.dataService.getSentStats();
     this.players = this.allSentData[0];
@@ -625,12 +623,6 @@ export class StartingFiveComponent implements OnInit {
     });
   }
 
-  openSnackBar() {
-    this.snackBar.openFromComponent(NBAInfo, {
-      // duration: 500,
-    });
-  }
-
   ngOnInit() {
     if (window.innerWidth < 700) { // 768px portrait
       this.mobile = true;
@@ -704,19 +696,19 @@ export class StartingFiveComponent implements OnInit {
 
 }
 
-@Component({
-  selector: 'nba-info',
-  template: `<i (click)="close()" class="material-icons close">close</i><br />
-  <span style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Expected Starter <br />
-  <span style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Confirmed Starter <br />
-<span>Click on player image for twitter updates!</span> <br />
-<span>Click on player stats for MORE stats!</span>`,
-  styles: [`.close { float:right; cursor:pointer; font-size: 20px; } .green-dot { height: 10px; width: 10px; background:#2ecc71; border-radius: 50%; display: inline-block; }`]
-})
+// @Component({
+//   selector: 'nba-info',
+//   template: `<i (click)="close()" class="material-icons close">close</i><br />
+//   <span style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Expected Starter <br />
+//   <span style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Confirmed Starter <br />
+// <span>Click on player image for twitter updates!</span> <br />
+// <span>Click on player stats for MORE stats!</span>`,
+//   styles: [`.close { float:right; cursor:pointer; font-size: 20px; } .green-dot { height: 10px; width: 10px; background:#2ecc71; border-radius: 50%; display: inline-block; }`]
+// })
 
-export class NBAInfo {
-  constructor(public snackBar: MatSnackBar) {}
-  close() {
-    this.snackBar.dismiss();
-  }
-}
+// export class NBAInfo {
+//   constructor(public snackBar: MatSnackBar) {}
+//   close() {
+//     this.snackBar.dismiss();
+//   }
+// }

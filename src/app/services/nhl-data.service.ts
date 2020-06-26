@@ -68,6 +68,11 @@ export class NHLDataService {
   
   constructor(private http: HttpClient) {
      this.dailyDate = dailyDate;
+     //this.dailyDate = '20200309';
+  }
+
+  public selectedDate(d) {
+    dailyDate = d;
   }
 
   sendHeaderOptions(h) {
@@ -76,16 +81,9 @@ export class NHLDataService {
 
 
   getDailySchedule() {
-    
-    if (!this.schedule) {
-      console.log('getting nhl schedule data from API...');
-      
-      let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
-      this.schedule = this.http.get(url, {headers})
-        
-    }
+    let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
+    this.schedule = this.http.get(url, {headers})
     return this.schedule;
-
   }
 
 
@@ -115,7 +113,6 @@ export class NHLDataService {
   }
 
   sendStats(statsArray, allStats) {
-    console.log("sending stats to service...");
     sending = statsArray;
     sendingAll = allStats;
   }
@@ -126,108 +123,66 @@ export class NHLDataService {
   }
 
   getSentStats() {
-    console.log("stats sent to component...");
     sent = sending;
     return sent;
   }
 
    getSentAllStats() {
-    console.log("stats sent to component...");
     sentAll = sendingAll;
     return sentAll;
   }
 
   getSentHotStats() {
-    console.log("stats sent to component...");
     sentHot = sendingHot;
     return sentHot;
   }
 
   getInfo() {
-
-    if (!this.info) {
-
-      //let url = `${this.apiRoot}/active_players.json?position=G`;
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
-      console.log('getting active player data from API...');
-      this.info = this.http.get(url, {headers})
-        
-    }
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
+    this.info = this.http.get(url, {headers})
     return this.info;
   }
 
   getStats(teams) {
-    if (!this.stats) {
-      console.log('getting cumulative player stats from API...');
-     
-      let url = `${this.apiRoot}/player_stats_totals.json?position=G&team=`+teams;
-      this.stats = this.http.get(url, {headers})
-        
-    }
+    let url = `${this.apiRoot}/player_stats_totals.json?position=G&team=`+teams;
+    this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
   getAllStats(type) {
-    //if (!this.allstats) {
-      
-     
       let url = null;
       if (type === 'skaters') {
-        console.log(type, 'getting nhl skater stats from API...');
         url = `${this.apiRoot}/player_stats_totals.json?position=RW,LW,D,C`;
       } else {
-        console.log(type, 'getting nhl goalie stats from API...');
         url = `${this.apiRoot}/player_stats_totals.json?position=G`;
       }
       
       this.allstats = this.http.get(url, {headers})
-        
-   // }
-    return this.allstats;
+      return this.allstats;
   }
 
   getTeamStats() {
-    console.log('getting total team stats from API...');
     let url = `${this.apiRoot}/team_stats_totals.json`;
     this.teamstats = this.http.get(url, {headers})
-
     return this.teamstats;
   }
 
   getGameId() {
-
-    if (!this.gameid) {
-      console.log('getting yesterday, today, tomorrow from API...');
-
-      let url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
-      this.gameid = this.http.get(url, {headers})
-        
-    }
+    let url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
+    this.gameid = this.http.get(url, {headers})
     return this.gameid;
   }
 
 
-   getLastweekGameId() {
-
-    if (!this.lastweekgameid) {
-      console.log('getting 1 week of games from API...');
-
-      let url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
-      this.lastweekgameid = this.http.get(url, {headers})
-        
-    }
+  getLastweekGameId() {
+    let url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
+    this.lastweekgameid = this.http.get(url, {headers})
     return this.lastweekgameid;
   }
 
-   getDaily() {
-
-    if (!this.daily) {
-      //date/20181103/player_gamelogs.json?team=det
-      let url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=G`;
-      console.log('getting daily stats for goalies from API...');
-      this.daily = this.http.get(url, {headers})
-        
-    }
+  getDaily() {
+    let url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=G`;
+    this.daily = this.http.get(url, {headers})  
     return this.daily;
   }
 
@@ -245,15 +200,8 @@ export class NHLDataService {
 
 
   getScore(id) {
-
-    if (!this.score) {
-      //games/20181211-CHI-WPJ/boxscore.json
-      //let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
-      let url = `${this.apiRoot}/date/${dailyDate}/team_gamelogs.json`;
-      // ${this.apiRoot}/games/`+id+`/boxscore.json`;
-      console.log('getting daily scores of todays games from API...');
-      this.score = this.http.get(url, {headers})     
-    }
+    let url = `${this.apiRoot}/date/${dailyDate}/team_gamelogs.json`;
+    this.score = this.http.get(url, {headers})     
     return this.score;
   }
 

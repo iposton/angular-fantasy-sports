@@ -1,55 +1,49 @@
-<mat-toolbar color="primary" class="mat-elevation-z6">
+<div class="container">
+<header class="navbar">
   <span class="toolbar-header" [routerLink]="['']">Fantasy Sports Resources</span>
+  <span *ngIf="mobile" class="mobile-menu"> 
+    <span (click)="menu = !menu">{{!menu ? 'Menu' : 'X'}}</span>
+  </span>
+  <ul class="category-list" [ngClass]="{'dn' : !menu && mobile, 'mobile-list' : menu}">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['']">
+      Home
+      </li>
+      <li routerLinkActive="active" [routerLink]="['/starting-five']">
+      NBA Starting Five
+      </li>
+    <!-- <li [routerLink]="['/starting-pitchers']">
+      ⚾️ MLB Starting Pitchers
+    </li>
+     <li [routerLink]="['/pitching-stats']">
+      ⚾️ MLB Pitching Stats
+    </li> -->
+    <!-- <li [routerLink]="['/nfl-line-rank']">
+      🏈 NFL Line Rankings
+    </li>
+    <li [routerLink]="['/nfl-touches']">
+      🏈 NFL Touch Rankings
+    </li> -->
+     <li routerLinkActive="active" [routerLink]="['/starting-goalies']">
+      NHL Starting Goalies
+    </li>
+     <!--<li [routerLink]="['/starting-goalies-tomorrow']">
+      🥅 NHL Goalies Tomorrow
+    </li>
+    <li [routerLink]="['/starting-goalies-yesterday']">
+      🥅 NHL Goalies Yesterday
+    </li> -->
+    <li routerLinkActive="active" [routerLink]="['/stat-leaders']">
+      Stat Leaders
+    </li>
+  </ul>
+</header>
 
-  <span style="flex: 1 1 auto;"></span>
-  <!-- <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KZMBHYDYN2RUJ&source=url" target="_blank">Donate</a> -->
-  <!-- <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/ianposton"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span class="coffee">Buy me a coffee</span></a> -->
-  <i (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
-
-</mat-toolbar>
-<div id="wrap">
-<div id="main" class="full-container">
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" #sidenav position="end"> 
-      <ul class="category-list">
-          <li [routerLink]="['']">
-          🏠Home
-          </li>
-          <li [routerLink]="['/starting-five']">
-          🏀 NBA Starting Five
-          </li>
-        <!-- <li [routerLink]="['/starting-pitchers']">
-          ⚾️ MLB Starting Pitchers
-        </li>
-         <li [routerLink]="['/pitching-stats']">
-          ⚾️ MLB Pitching Stats
-        </li> -->
-        <!-- <li [routerLink]="['/nfl-line-rank']">
-          🏈 NFL Line Rankings
-        </li>
-        <li [routerLink]="['/nfl-touches']">
-          🏈 NFL Touch Rankings
-        </li> -->
-        <!-- <li [routerLink]="['/starting-goalies']">
-          🥅 NHL Starting Goalies
-        </li>
-         <li [routerLink]="['/starting-goalies-tomorrow']">
-          🥅 NHL Goalies Tomorrow
-        </li>
-        <li [routerLink]="['/starting-goalies-yesterday']">
-          🥅 NHL Goalies Yesterday
-        </li> -->
-        <li [routerLink]="['/stat-leaders']">
-          Stat Leaders
-        </li>
-      </ul>
-    </mat-sidenav>
-
-    <router-outlet></router-outlet>
-  </mat-sidenav-container>
+<div class="wrapper">
+  <router-outlet></router-outlet>
 </div>
+<div class="push"></div>
 </div>
-    <footer class="docs-footer">
+<footer class="docs-footer">
       <div class="docs-footer-list">
         <div class="footer-logo">
           <div class="logo-container">
@@ -65,12 +59,11 @@
           </ul>
         </div>
         <div class="docs-footer-links">
-          <ul fxHide [fxHide.gt-xs]="isVisibleOnDesktop()">
+          <ul>
             <li>About</li>
           </ul>
-          <ul fxHide [fxHide.xs]="isVisibleOnMobile()" style="font-size: 9px; max-width: 80px; text-align: justify;"><li>This app uses Angular 9 with the MySportsFeeds API.</li></ul>
         </div>
       </div>
-    </footer>
+</footer>
     <app-google-analytics-gtag></app-google-analytics-gtag>
 
