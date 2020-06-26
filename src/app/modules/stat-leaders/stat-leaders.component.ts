@@ -280,7 +280,8 @@ export class StatLeadersComponent implements OnInit {
     //this.loading = true;
     this.nbaSection = false; 
     this.nhlSection = false; 
-    this.mlbSection = true; 
+    this.mlbSection = true;
+    this.mlbHittingSection = false; 
     this.nhlGoalies = false;
     this.nflSection = false;
     this.nflDefenseSection = false;
@@ -353,9 +354,10 @@ export class StatLeadersComponent implements OnInit {
     this.nhlSection = false; 
     this.mlbSection = false; 
     this.nhlGoalies = false;
+    this.mlbHittingSection = false;
     this.nflSection = true;
 
-    if (this.mlbPitchingData == null) {
+    if (this.nflQBData == null) {
 
     this.nflOffenseLoading = true;
     this.nflDefenseLoading = true;

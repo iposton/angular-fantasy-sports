@@ -183,7 +183,8 @@ export class NFLDataService {
       if (parseInt(selected) > 17) {
         url = `${this.apiRootPO}/week/${selected}/games.json`;
       } else {
-        url = `${this.apiRoot}/week/${selected}/games.json`;
+        //url = `${this.apiRoot}/week/${selected}/games.json`;
+        url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/games.json`;
       }
       
       this.schedule = this.http.get(url, {headers})

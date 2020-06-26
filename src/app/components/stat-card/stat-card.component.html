@@ -90,16 +90,16 @@
                         <span class="player-infos">
                             <span class="names" *ngIf="!mobile">
                                 <span *ngIf="item.player.firstName != 'Shai'"> 
-                                    {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team.twitter) + ' ' + item?.player?.lastName}}
+                                    {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team?.twitter) + ' ' + item?.player?.lastName}}
                                   </span>
                                   <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                                    {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team.twitter) }} S. {{item?.player?.lastName}}  
+                                    {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team?.twitter) }} S. {{item?.player?.lastName}}  
                                   </span>
                             </span>
 
                             <span class="names" *ngIf="mobile">
                                 <span> 
-                                  {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team.twitter) + ' ' + item?.player?.lastName}} 
+                                  {{ (sport === 'nba' || 'nhl' ? teams[item.player['currentTeam'].abbreviation]?.twitter : item.team?.twitter) + ' ' + item?.player?.lastName}} 
                                 </span>
                             </span>
                             <span class="lg">

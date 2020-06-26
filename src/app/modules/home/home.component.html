@@ -7,7 +7,7 @@
 <!-- <div class="nhl-playoff"> -->
 <!--   <h3 class="center date-header"><img src="../assets/nhl-logos/nhl-playoff.jpg" alt="nhl playoff image"></h3> -->
 <!-- </div> -->
-<div class="button-wrapper" *ngIf="!nbaLoading">
+<div class="home-button-wrapper" *ngIf="!nbaLoading">
   <div class="schedule-box row">
     <div
       [ngClass]="{ active: nbaSched }"
@@ -36,7 +36,7 @@
         MLB
       </span>
     </div>
-    <!-- <div 
+    <div 
       [ngClass]="{ active: nflSched }"
       class="col"
       (click)="nbaSched = false; nhlSched = false; mlbSched = false; nflSched = true;"
@@ -44,7 +44,7 @@
             <span class="sched-item">
               NFL
             </span> 
-        </div> -->
+    </div>
   </div>
 </div>
 <app-spinner *ngIf="nbaLoading" [size]="'lg'" [color]="'white'" [title]="'Games'"></app-spinner>
@@ -185,13 +185,12 @@
   <div *ngIf="nflSched" class="row schedule">
     <!-- <span class="week-rank">NFL<br> </span>  -->
     <span *ngIf="noNflGamesMsg">{{ noNflGamesMsg }}</span>
-    <div *ngFor="let item of nflSchedule; let i = index">
+    <div *ngFor="let item of nflSchedule; let i = index" class="col">
       <div class="teams-container" [ngStyle]="{ background: '#303030' }">
         <span
           class="score-container"
           *ngIf="
-            item?.schedule?.awayTeam?.abbreviation &&
-            compareDate(item?.schedule?.startTime)
+            item?.schedule?.homeTeam?.abbreviation
           "
           [ngStyle]="{
             background:
@@ -212,8 +211,7 @@
         <span
           class="score-container"
           *ngIf="
-            item?.schedule?.awayTeam?.abbreviation &&
-            compareDate(item?.schedule?.startTime)
+            item?.schedule?.awayTeam?.abbreviation
           "
           [ngStyle]="{
             background:
@@ -238,7 +236,7 @@
       >
         {{ item?.schedule?.homeTeam?.abbreviation }} vs
         {{ item?.schedule?.awayTeam?.abbreviation }} <br />
-        Game: PPD @ {{ item.schedule?.venue?.name }}
+        Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{ item.schedule?.venue?.name }}
         <!-- {{item?.schedule?.startTime | date: 'shortTime'}} PST -->
       </span>
       <div class="score-footer">

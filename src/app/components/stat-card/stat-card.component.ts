@@ -40,7 +40,7 @@ export class StatCardComponent implements OnInit {
   constructor() { }
 
   public authorize(player, type) {
-    console.log('trying to emit', player)
+    //console.log('trying to emit', player)
     this.open.emit({player: player, type: type}); 
   }
 

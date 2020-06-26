@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
   public playerInfo: Array <any>;
   public mobile: boolean = false;
   public mlbTeams: any;
+  public nflTeams: any;
 
   mlbGameDate: string = '';
   noMlbGamesToday: boolean;
@@ -103,6 +104,7 @@ export class HomeComponent implements OnInit {
      //this.getJSON();
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
     this.mlbTeams = this.util.getMLBTeams();
+    this.nflTeams = this.util.getNFLTeams();
     this.nbaDataService.selectedDate(dailyDate);
     this.selectedWeek = '1';
     let weekTimes = this.util.getWeekTimes();
@@ -205,24 +207,23 @@ loadData() {
             }
         });
 
-        // this.nflDataService
-        //   .getSchedule(this.selectedWeek).subscribe(res => {
-        //     console.log(res, "NFL schedule...");
-        //     if (res['games'].length === 0) {
-        //       this.nflLoading = false;
-        //       this.noNflGamesToday = true;
-        //       this.noNflGamesMsg = "No Games Scheduled"
-        //       console.log('There are no NFL games being played today.');
-        //     } else {
-        //       this.nflLoading = false;
-        //       this.nflGamesToday = true;
-        //       this.nflSchedule = res['games'];
-        //       this.nflTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
-        //       this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
-        //       if (this.nflTeamRef != null)
-        //         this.getTeamInfo(this.nflSchedule, this.nflTeamRef);
-        //     }
-        // });
+        this.nflDataService
+          .getSchedule(this.selectedWeek).subscribe(res => {
+            if (res['games'].length === 0) {
+              this.nflLoading = false;
+              this.noNflGamesToday = true;
+              this.noNflGamesMsg = "No Games Scheduled"
+              console.log('There are no NFL games being played today.');
+            } else {
+              this.nflLoading = false;
+              this.nflGamesToday = true;
+              this.nflSchedule = res['games'];
+              this.nflTeamRef = this.nflTeams;
+              this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+              if (this.nflTeamRef != null)
+                this.getTeamInfo(this.nflSchedule, this.nflTeamRef);
+            }
+        });
       })
 }
 
