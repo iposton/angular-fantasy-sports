@@ -43,6 +43,7 @@
    <button [ngClass]="{'dn' : !nhlSection}" (click)="nhlSection = false; nhlGoalies = true;">NHL Goalies</button>  <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false;">NHL Skaters</button>
    <button [ngClass]="{'dn' : !mlbSection}" (click)="mlbSection = false; mlbHittingSection = true;">MLB Hitters</button>  <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false;">MLB Pitchers</button>
    <button [ngClass]="{'dn' : !nflSection}" (click)="nflSection = false; nflDefenseSection = true;">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
+   <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit">Draft Kit</button>
 </div>
 <!-- <div class="center">
     <button (click)="getByDate(false)">last 4 weeks</button> &nbsp;&nbsp; <button (click)="getByDate(true)">Season</button>
@@ -649,6 +650,8 @@
               [teams]="nflTeams"
               (open)="authorize($event)"
               [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
               ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null" 
@@ -664,6 +667,8 @@
               [teams]="nflTeams"
               (open)="authorize($event)"
               [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
               ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
@@ -679,6 +684,8 @@
               [teams]="nflTeams"
               (open)="authorize($event)"
               [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
               ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
@@ -694,13 +701,23 @@
               [teams]="nflTeams"
               (open)="authorize($event)"
               [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
               ></app-stat-card>
 
-              <app-team-rank *ngIf="!nflTeamLoading" 
+              <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && this.teamSchedules.length > 0" 
                 [data]="nflTeamStats" 
                 [teams]="nflTeams"
-                [title]="'Offense'">
+                [title]="'Offense Team Rank'">
               </app-team-rank>
+
+              <app-team-rank *ngIf="!nflTeamLoading && nflDraftKit && this.teamSchedules.length > 0" 
+                [data]="nflTeamStats" 
+                [teams]="nflTeams"
+                [title]="'Toughest Defense Schedule 2020'"
+                (seasonChange)="seasonLength = $event">
+              </app-team-rank>
+
             </section>
 
              <section [ngClass]="{'dn' : !nflDefenseSection}">
@@ -717,6 +734,8 @@
                 [teams]="nflTeams"
                 (open)="authorize($event)"
                 [twitter]="twitter"
+                [ndk]="nflDraftKit"
+                [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
                 <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
@@ -732,6 +751,8 @@
                 [teams]="nflTeams"
                 (open)="authorize($event)"
                 [twitter]="twitter"
+                [ndk]="nflDraftKit"
+                [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
                 <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
@@ -747,6 +768,8 @@
                 [teams]="nflTeams"
                 (open)="authorize($event)"
                 [twitter]="twitter"
+                [ndk]="nflDraftKit"
+                [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
                 <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
@@ -762,12 +785,21 @@
                 [teams]="nflTeams"
                 (open)="authorize($event)"
                 [twitter]="twitter"
+                [ndk]="nflDraftKit"
+                [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
-                <app-team-rank *ngIf="!nflTeamLoading" 
+                <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && this.teamSchedules.length > 0" 
                 [data]="nflTeamStats" 
                 [teams]="nflTeams"
-                [title]="'Defense'">
+                [title]="'Defense Team Rank'">
+                </app-team-rank>
+
+                <app-team-rank *ngIf="!nflTeamLoading && nflDraftKit && this.teamSchedules.length > 0" 
+                [data]="nflTeamStats" 
+                [teams]="nflTeams"
+                [title]="'Toughest Offense Schedule 2020'"
+                (seasonChangeD)="seasonLengthD = $event">
                 </app-team-rank>
               </section>
       

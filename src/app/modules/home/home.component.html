@@ -117,7 +117,7 @@
       >
         {{ item?.schedule?.homeTeam?.abbreviation }} vs
         {{ item?.schedule?.awayTeam?.abbreviation }} <br />
-        Game: PPD @ {{ item.schedule?.venue?.name }}
+        Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{ item.schedule?.venue?.name }}
         <!-- {{item?.schedule?.startTime | date: 'shortTime'}} PST -->
       </span>
       <div class="score-footer">
@@ -452,8 +452,7 @@
       >
         {{ item?.schedule?.homeTeam?.abbreviation }} vs
         {{ item?.schedule?.awayTeam?.abbreviation }} <br />
-        Game: PPD @ {{ item.schedule?.venue?.name }}
-        <!-- {{item?.schedule?.startTime | date: 'shortTime'}} PST -->
+        Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{ item.schedule?.venue?.name }}
       </span>
       <div class="score-footer">
         <span *ngIf="item.schedule?.playedStatus === 'UNPLAYED'">

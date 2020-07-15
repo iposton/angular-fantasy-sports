@@ -260,296 +260,6 @@ export class UtilService {
       
     }
 
-    this.byes = {
-      "ATL": {
-        id: 68,
-        abbreviation: "ATL",
-        bye: 9,
-        toughestSchedRank: 6,
-        gamesAgainst500Teams: 8,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 6
-      }, 
-      "CAR": {
-        id: 69,
-        abbreviation: "CAR",
-        bye: 7,
-        toughestSchedRank: 25,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 1,
-        lossAgainst500Teams: 5
-      },
-      "NO": {
-        id: 70,
-        abbreviation: "NO",
-        bye: 9,
-        ttoughestSchedRank: 21,
-        gamesAgainst500Teams: 5,
-        winsAgainst500Teams: 3,
-        lossAgainst500Teams: 2
-      },
-      "TB": {
-        id: 71,
-        abbreviation: "TB",
-        bye: 7,
-        toughestSchedRank: 10,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 4
-      },
-      "HOU": {
-        id: 64,
-        abbreviation: "HOU",
-        bye: 10,
-        toughestSchedRank: 9,
-        gamesAgainst500Teams: 8,
-        winsAgainst500Teams: 5,
-        lossAgainst500Teams: 3
-      },
-      "IND": {
-        id: 65,
-        abbreviation: "IND",
-        bye: 6,
-        toughestSchedRank: 26,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 4
-      },
-      "JAX": {
-        id: 66,
-        abbreviation: "JAX",
-        bye: 10,
-        toughestSchedRank: 16,
-        gamesAgainst500Teams: 5,
-        winsAgainst500Teams: 0,
-        lossAgainst500Teams: 5
-      },
-      "TEN": {
-        id: 67,
-        abbreviation: "TEN",
-        bye: 11,
-        toughestSchedRank: 28,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 3,
-        lossAgainst500Teams: 3
-      },
-      "ARI": {
-        id: 76,
-        abbreviation: "ARI",
-        bye: 12,
-        toughestSchedRank: 17,
-        gamesAgainst500Teams: 7,
-        winsAgainst500Teams: 0,
-        lossAgainst500Teams: 7
-      },
-      "LA": {
-        id: 77,
-        abbreviation: "LA",
-        bye: 9,
-        toughestSchedRank: 27,
-        gamesAgainst500Teams: 5,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 3
-      },
-      "SF": {
-        id: 78,
-        abbreviation: "SF",
-        bye: 4,
-        toughestSchedRank: 30,
-        gamesAgainst500Teams: 5,
-        winsAgainst500Teams: 3,
-        lossAgainst500Teams: 2
-      },
-      "SEA": {
-        id: 79,
-        abbreviation: "SEA",
-        bye: 11,
-        toughestSchedRank: 22,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 3,
-        lossAgainst500Teams: 3
-      },
-      "DEN": {
-        id: 72,
-        abbreviation: "DEN",
-        bye: 10,
-        toughestSchedRank: 14,
-        gamesAgainst500Teams: 8,
-        winsAgainst500Teams: 1,
-        lossAgainst500Teams: 7
-      },
-      "KC": {
-        id: 73,
-        abbreviation: "KC",
-        bye: 12,
-        toughestSchedRank: 2,
-        gamesAgainst500Teams: 8,
-        winsAgainst500Teams: 5,
-        lossAgainst500Teams: 3
-      },
-      "OAK": {
-        id: 74,
-        abbreviation: "OAK",
-        bye: 6,
-        toughestSchedRank: 12,
-        gamesAgainst500Teams: 7,
-        winsAgainst500Teams: 1,
-        lossAgainst500Teams: 6
-      },
-      "LAC": {
-        id: 75,
-        abbreviation: "LAC",
-        bye: 12,
-        toughestSchedRank: 7,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 4
-      },
-      "NYJ": {
-        id: 51,
-        abbreviation: "NYJ",
-        bye: 4,
-        toughestSchedRank: 24,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 4
-      },
-      "NE": {
-        id: 50,
-        abbreviation: "NE",
-        bye: 10,
-        toughestSchedRank: 31,
-        gamesAgainst500Teams: 5,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 3
-      },
-      "MIA": {
-        id: 49,
-        abbreviation: "MIA",
-        bye: 5,
-        toughestSchedRank: 5,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 1,
-        lossAgainst500Teams: 5
-      },
-      "BUF": {
-        id: 48,
-        abbreviation: "BUF",
-        bye: 6,
-        toughestSchedRank: 32,
-        gamesAgainst500Teams: 4,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 2
-      },
-      "WAS": {
-        id: 55,
-        abbreviation: "WAS",
-        bye: 10,
-        toughestSchedRank: 13,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 0,
-        lossAgainst500Teams: 6
-      },
-      "PHI": {
-        id: 54,
-        abbreviation: "PHI",
-        bye: 10,
-        toughestSchedRank: 8,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 4
-      },
-      "NYG": {
-        id: 53,
-        abbreviation: "NYG",
-        bye: 11,
-        toughestSchedRank: 18,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 0,
-        lossAgainst500Teams: 6
-      },
-      "DAL": {
-        id: 52,
-        abbreviation: "DAL",
-        bye: 8,
-        toughestSchedRank: 29,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 1,
-        lossAgainst500Teams: 5
-      },
-      "PIT": {
-        id: 59,
-        abbreviation: "PIT",
-        bye: 7,
-        toughestSchedRank: 4,
-        gamesAgainst500Teams: 7,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 5
-      },
-      "CLE": {
-        id: 58,
-        abbreviation: "CLE",
-        bye: 7,
-        toughestSchedRank: 3,
-        gamesAgainst500Teams: 7,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 5
-      },
-      "CIN": {
-        id: 57,
-        abbreviation: "CIN",
-        bye: 9,
-        toughestSchedRank: 1,
-        gamesAgainst500Teams: 8,
-        winsAgainst500Teams: 0,
-        lossAgainst500Teams: 8
-      },
-      "BAL": {
-        id: 56,
-        abbreviation: "BAL",
-        bye: 8,
-        toughestSchedRank: 20,
-        gamesAgainst500Teams: 7,
-        winsAgainst500Teams: 6,
-        lossAgainst500Teams: 1
-      },
-      "MIN": {
-        id: 63,
-        abbreviation: "MIN",
-        bye: 12,
-        toughestSchedRank: 23,
-        gamesAgainst500Teams: 5,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 3
-      },
-      "GB": {
-        id: 62,
-        abbreviation: "GB",
-        bye: 11,
-        toughestSchedRank: 19,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 5,
-        lossAgainst500Teams: 1
-      },
-      "DET": {
-        id: 61,
-        abbreviation: "DET",
-        bye: 5,
-        toughestSchedRank: 15,
-        gamesAgainst500Teams: 6,
-        winsAgainst500Teams: 0,
-        lossAgainst500Teams: 6
-      },
-      "CHI": {
-        id: 60,
-        abbreviation: "CHI",
-        bye: 6,
-        toughestSchedRank: 11,
-        gamesAgainst500Teams: 7,
-        winsAgainst500Teams: 2,
-        lossAgainst500Teams: 5
-      },
-     }
 
      this.mlbTeams = [
         {
@@ -1099,28 +809,34 @@ export class UtilService {
 
      this.nflTeams = [
       {
-      id: 48,
-      city: "Buffalo",
-      name: "Bills",
-      abbreviation: "BUF",
-      homeVenue: {
-      id: 46,
-      name: "New Era Field"
-      },
-      teamColoursHex: [
-      "#00338d",
-      "#c60c30"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "BuffaloBills"
-      }
-      ],
-      officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/giphcy6ie9mxbnldntsf"
+        id: 48,
+        bye: 11,
+        defenseRankLs: 3,
+        offenseRankLs: 25,
+        city: "Buffalo",
+        name: "Bills",
+        abbreviation: "BUF",
+        homeVenue: {
+          id: 46,
+          name: "New Era Field"
+        },
+        teamColoursHex: [
+          "#00338d",
+          "#c60c30"
+        ],
+        socialMediaAccounts: [
+          {
+            mediaType: "TWITTER",
+            value: "BuffaloBills"
+          }
+        ],
+        officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/giphcy6ie9mxbnldntsf"
       },
       {
       id: 49,
+      bye: 11,
+      defenseRankLs: 32,
+      offenseRankLs: 26,
       city: "Miami",
       name: "Dolphins",
       abbreviation: "MIA",
@@ -1143,6 +859,9 @@ export class UtilService {
       },
       {
       id: 50,
+      bye: 6,
+      defenseRankLs: 1,
+      offenseRankLs: 14,
       city: "New England",
       name: "Patriots",
       abbreviation: "NE",
@@ -1165,6 +884,9 @@ export class UtilService {
       },
       {
       id: 51,
+      bye: 11,
+      defenseRankLs: 17,
+      offenseRankLs: 32,
       city: "New York",
       name: "Jets",
       abbreviation: "NYJ",
@@ -1187,6 +909,9 @@ export class UtilService {
       },
       {
       id: 52,
+      bye: 10,
+      defenseRankLs: 16,
+      offenseRankLs: 4,
       city: "Dallas",
       name: "Cowboys",
       abbreviation: "DAL",
@@ -1211,6 +936,9 @@ export class UtilService {
       },
       {
       id: 53,
+      bye: 11,
+      defenseRankLs: 28,
+      offenseRankLs: 18,
       city: "New York",
       name: "Giants",
       abbreviation: "NYG",
@@ -1233,6 +961,9 @@ export class UtilService {
       },
       {
       id: 54,
+      bye: 9,
+      defenseRankLs: 13,
+      offenseRankLs: 13,
       city: "Philadelphia",
       name: "Eagles",
       abbreviation: "PHI",
@@ -1257,6 +988,9 @@ export class UtilService {
       },
       {
       id: 55,
+      bye: 8,
+      defenseRankLs: 25,
+      offenseRankLs: 30,
       city: "Washington",
       name: "Redskins",
       abbreviation: "WAS",
@@ -1278,6 +1012,9 @@ export class UtilService {
       },
       {
       id: 56,
+      bye: 8,
+      defenseRankLs: 8,
+      offenseRankLs: 1,
       city: "Baltimore",
       name: "Ravens",
       abbreviation: "BAL",
@@ -1301,6 +1038,9 @@ export class UtilService {
       },
       {
       id: 57,
+      bye: 9,
+      defenseRankLs: 30,
+      offenseRankLs: 28,
       city: "Cincinnati",
       name: "Bengals",
       abbreviation: "CIN",
@@ -1322,6 +1062,9 @@ export class UtilService {
       },
       {
       id: 58,
+      bye: 9,
+      defenseRankLs: 20,
+      offenseRankLs: 23,
       city: "Cleveland",
       name: "Browns",
       abbreviation: "CLE",
@@ -1344,6 +1087,9 @@ export class UtilService {
       },
       {
       id: 59,
+      bye: 8,
+      defenseRankLs: 2,
+      offenseRankLs: 31,
       city: "Pittsburgh",
       name: "Steelers",
       abbreviation: "PIT",
@@ -1368,6 +1114,9 @@ export class UtilService {
       },
       {
       id: 60,
+      bye: 11,
+      defenseRankLs: 14,
+      offenseRankLs: 27,
       city: "Chicago",
       name: "Bears",
       abbreviation: "CHI",
@@ -1389,6 +1138,9 @@ export class UtilService {
       },
       {
       id: 61,
+      bye: 5,
+      defenseRankLs: 27,
+      offenseRankLs: 21,
       city: "Detroit",
       name: "Lions",
       abbreviation: "DET",
@@ -1412,6 +1164,9 @@ export class UtilService {
       },
       {
       id: 62,
+      bye: 5,
+      defenseRankLs: 9,
+      offenseRankLs: 15,
       city: "Green Bay",
       name: "Packers",
       abbreviation: "GB",
@@ -1433,6 +1188,9 @@ export class UtilService {
       },
       {
       id: 63,
+      bye: 7,
+      defenseRankLs: 4,
+      offenseRankLs: 12,
       city: "Minnesota",
       name: "Vikings",
       abbreviation: "MIN",
@@ -1454,6 +1212,9 @@ export class UtilService {
       },
       {
       id: 64,
+      bye: 8,
+      defenseRankLs: 19,
+      offenseRankLs: 11,
       city: "Houston",
       name: "Texans",
       abbreviation: "HOU",
@@ -1475,6 +1236,9 @@ export class UtilService {
       },
       {
       id: 65,
+      bye: 7,
+      defenseRankLs: 23,
+      offenseRankLs: 22,
       city: "Indianapolis",
       name: "Colts",
       abbreviation: "IND",
@@ -1496,6 +1260,9 @@ export class UtilService {
       },
       {
       id: 66,
+      bye: 7,
+      defenseRankLs: 22,
+      offenseRankLs: 24,
       city: "Jacksonville",
       name: "Jaguars",
       abbreviation: "JAX",
@@ -1519,6 +1286,9 @@ export class UtilService {
       },
       {
       id: 67,
+      bye: 7,
+      defenseRankLs: 12,
+      offenseRankLs: 8,
       city: "Tennessee",
       name: "Titans",
       abbreviation: "TEN",
@@ -1544,6 +1314,9 @@ export class UtilService {
       },
       {
       id: 68,
+      bye: 10,
+      defenseRankLs: 29,
+      offenseRankLs: 10,
       city: "Atlanta",
       name: "Falcons",
       abbreviation: "ATL",
@@ -1566,6 +1339,9 @@ export class UtilService {
       },
       {
       id: 69,
+      bye: 13,
+      defenseRankLs: 21,
+      offenseRankLs: 20,
       city: "Carolina",
       name: "Panthers",
       abbreviation: "CAR",
@@ -1588,6 +1364,9 @@ export class UtilService {
       },
       {
       id: 70,
+      bye: 6,
+      defenseRankLs: 7,
+      offenseRankLs: 6,
       city: "New Orleans",
       name: "Saints",
       abbreviation: "NO",
@@ -1609,6 +1388,9 @@ export class UtilService {
       },
       {
       id: 71,
+      bye: 13,
+      defenseRankLs: 15,
+      offenseRankLs: 3,
       city: "Tampa Bay",
       name: "Buccaneers",
       abbreviation: "TB",
@@ -1633,6 +1415,9 @@ export class UtilService {
       },
       {
       id: 72,
+      bye: 8,
+      defenseRankLs: 11,
+      offenseRankLs: 29,
       city: "Denver",
       name: "Broncos",
       abbreviation: "DEN",
@@ -1654,6 +1439,9 @@ export class UtilService {
       },
       {
       id: 73,
+      bye: 10,
+      defenseRankLs: 6,
+      offenseRankLs: 5,
       city: "Kansas City",
       name: "Chiefs",
       abbreviation: "KC",
@@ -1675,9 +1463,12 @@ export class UtilService {
       },
       {
       id: 74,
-      city: "Oakland",
+      bye: 6,
+      defenseRankLs: 26,
+      offenseRankLs: 17,
+      city: "Las Vegas",
       name: "Raiders",
-      abbreviation: "OAK",
+      abbreviation: "LV",
       homeVenue: {
       id: 64,
       name: "RingCentral Coliseum"
@@ -1696,6 +1487,9 @@ export class UtilService {
       },
       {
       id: 75,
+      bye: 10,
+      defenseRankLs: 24,
+      offenseRankLs: 16,
       city: "Los Angeles",
       name: "Chargers",
       abbreviation: "LAC",
@@ -1718,6 +1512,9 @@ export class UtilService {
       },
       {
       id: 76,
+      bye: 8,
+      defenseRankLs: 31,
+      offenseRankLs: 19,
       city: "Arizona",
       name: "Cardinals",
       abbreviation: "ARI",
@@ -1740,6 +1537,9 @@ export class UtilService {
       },
       {
       id: 77,
+      bye: 9,
+      defenseRankLs: 10,
+      offenseRankLs: 9,
       city: "Los Angeles",
       name: "Rams",
       abbreviation: "LA",
@@ -1762,6 +1562,9 @@ export class UtilService {
       },
       {
       id: 78,
+      bye: 11,
+      defenseRankLs: 5,
+      offenseRankLs: 2,
       city: "San Francisco",
       name: "49ers",
       abbreviation: "SF",
@@ -1781,28 +1584,31 @@ export class UtilService {
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/dxibuyxbk0b9ua5ih9hn"
       },
-      {
-      id: 79,
-      city: "Seattle",
-      name: "Seahawks",
-      abbreviation: "SEA",
-      homeVenue: {
-      id: 69,
-      name: "CenturyLink Field"
-      },
-      teamColoursHex: [
-      "#002244",
-      "#69be28",
-      "#a5acaf"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Seahawks"
-      }
-      ],
-      officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/gcytzwpjdzbpwnwxincg"
-      }
+        {
+          id: 79,
+          bye: 6,
+          defenseRankLs: 18,
+          offenseRankLs: 7,
+          city: "Seattle",
+          name: "Seahawks",
+          abbreviation: "SEA",
+          homeVenue: {
+          id: 69,
+          name: "CenturyLink Field"
+          },
+          teamColoursHex: [
+          "#002244",
+          "#69be28",
+          "#a5acaf"
+          ],
+          socialMediaAccounts: [
+          {
+          mediaType: "TWITTER",
+          value: "Seahawks"
+          }
+          ],
+          officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/gcytzwpjdzbpwnwxincg"
+        }
       ]
 
      this.nbaTeams = {

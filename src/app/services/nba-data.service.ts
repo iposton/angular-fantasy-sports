@@ -17,7 +17,8 @@ let thisDate = new Date();
 let utcDate = new Date(thisDate.toUTCString());
 utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
-let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+//let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+let dailyDate = '20200730';
 
 @Injectable({
   providedIn: 'root'

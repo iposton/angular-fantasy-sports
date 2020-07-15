@@ -262,10 +262,66 @@ footer {
       font-weight: bold;
       font-size: 18px;
     }
+
     .sched-item {
-      display: block;
+      .abb-single {
+        .game {
+          cursor: pointer;
+          position: relative;
+          .red {
+            color:#e74c3c;
+          }
+          .orange {
+            color:#e67e22;
+          }
+          .green {
+            color:#2ecc71;
+          }
+
+          .tooltip {
+            display: none;
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 50px;
+            padding: 4px;
+            z-index: 100;
+            background: #000;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 200;
+            text-transform: uppercase;
+            background-color: rgba(0, 0, 0, 0.7);
+          }
+          
+          // .tooltip:before {
+          //   content: '';
+          //   display: block;
+          //   width: 0;
+          //   height: 0;
+          //   position: absolute;
+          //   border-top: 6px solid transparent;
+          //   border-bottom: 6px solid transparent;
+          //   border-right: 6px solid rgba(0, 0, 0, 0.7);
+          //   left: -3px;
+          //   top: 3px;
+          // }
+          
+        }
+
+        .game.hovered:hover {
+          .tooltip  {
+            display: block;
+          }
+        }
+      }
+    }
+
+    .left {
       text-align: left;
     }
+
     img {
       width: 3%;
     }
@@ -449,6 +505,66 @@ ul {
     text-align: left;
     .point {
       cursor: pointer;
+      .sched-rank {
+        font-size: 12px;
+        display: inline-block;
+        position: relative;
+
+        .red {
+          padding: 3px;
+          border-radius: 2px;
+          background-color:#e74c3c;
+        }
+
+        .orange {
+          padding: 3px;
+          border-radius: 2px;
+          background-color:#e67e22;
+        }
+
+        .green {
+          padding: 3px;
+          border-radius: 2px;
+          background-color:#2ecc71;
+        }
+
+        .tooltip {
+          display: none;
+          position: absolute;
+          top: -2px;
+          left: 23px;
+          width: 80px;
+          padding: 4px;
+          z-index: 100;
+          background: #000;
+          color: #fff;
+          border-radius: 5px;
+          font-size: 10px;
+          font-weight: 200;
+          text-transform: uppercase;
+          background-color: rgba(0, 0, 0, 1);
+        }
+        
+        .tooltip:before {
+          content: '';
+          display: block;
+          width: 0;
+          height: 0;
+          position: absolute;
+          border-top: 6px solid transparent;
+          border-bottom: 6px solid transparent;
+          border-right: 6px solid rgba(0, 0, 0, 0.7);
+          left: -3px;
+          top: 3px;
+        }
+      }
+
+      .sched-rank.hovered:hover {
+        .tooltip {
+          display: block;
+        }
+      }
+     
     }
 }
 
@@ -619,6 +735,18 @@ ul {
         vertical-align: bottom;
         width: 100%;
         display: inline-block;
+       
+          .red {
+            color: red;
+          }
+          .orange {
+            color: orange;
+          }
+          .green {
+            color: green;
+          }
+     
+        
       }
 
       .abb.r{
@@ -910,6 +1038,7 @@ ul {
       text-align: left;
       .point {
         cursor: pointer;
+        
       }
   }
 
