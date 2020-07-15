@@ -1,24 +1,47 @@
 <div class="schedule-box col">
-    <h2>{{title}} Team Rank<br> </h2> 
-    <div *ngFor="let item of getRank(data, teams, title); let i=index">
+    <h2>{{title}}<br> <span *ngIf="title === 'Toughest Defense Schedule 2020' || title === 'Toughest Offense Schedule 2020'"><span *ngIf="seasonLength === 'full'">Full </span> <span *ngIf="seasonLength === 'fh'">1st Half of </span> <span *ngIf="seasonLength === 'sh'">2nd Half of </span> Season</span> </h2> 
+
+    <span *ngIf="title === 'Toughest Defense Schedule 2020' || title === 'Toughest Offense Schedule 2020'">
+        <button [ngClass]="{'dn' : seasonLength === 'full'}" (click)="seasonLength = 'full'">Full</button> 
+        <button [ngClass]="{'dn' : seasonLength === 'fh'}" (click)="seasonLength = 'fh'">First Half</button> 
+        <button [ngClass]="{'dn' : seasonLength === 'sh'}" (click)="seasonLength = 'sh'">Second Half</button>
+    </span>
+
+    <div class="left" *ngFor="let item of getRank(data, teams, title, seasonLength); let i=index">
         <span *ngIf="item?.abbreviation" class="sched-item">
             <span class="abb-single">
-             <span class="rank-num">{{(i+1)}}</span>  <img src="{{item?.officialLogoImageSrc}}" alt="{{item?.name}} logo"> 
-             {{item?.name}}  
-             <span> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span> &nbsp; 
-             <span *ngIf="title === 'Defense'">
-                Points Allowed: {{item?.stats?.standings?.pointsAgainst}}   &nbsp;
-                Sacks: {{item?.stats?.tackles.sacks}}   &nbsp;
-                Int: {{item?.stats?.interceptions?.interceptions}}   &nbsp;
-                Passes Defened: {{item?.stats?.interceptions?.passesDefended}}
-             </span>
-             <span *ngIf="title === 'Offense'">
-                Total Yards: {{item?.stats?.rushing?.rushYards + item?.stats?.passing?.passNetYards}}   &nbsp;
-                Avg Yards Per Play: {{item?.stats?.miscellaneous?.offenseAvgYds}}   &nbsp;
-                Sacks Given up: {{item?.stats?.passing?.passSacks}}   &nbsp;
-                Pass TD's: {{item?.stats?.passing?.passTD}}    &nbsp;
-                Rush TD's: {{item?.stats?.rushing?.rushTD}}
-             </span> 
+                <span class="rank-num">{{(i+1)}}</span>  <img src="{{item?.officialLogoImageSrc}}" alt="{{item?.name}} logo"> 
+                {{item?.name}} 
+                <span *ngIf="title === 'Defense Team Rank' || title === 'Offense Team Rank'"> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span> &nbsp; 
+                <span *ngIf="title === 'Defense Team Rank'">
+                    Points Allowed: {{item?.stats?.standings?.pointsAgainst}}   &nbsp;
+                    Sacks: {{item?.stats?.tackles.sacks}}   &nbsp;
+                    Int: {{item?.stats?.interceptions?.interceptions}}   &nbsp;
+                    Passes Defened: {{item?.stats?.interceptions?.passesDefended}}
+                </span>
+                <span *ngIf="title === 'Offense Team Rank'">
+                    Total Yards: {{item?.stats?.rushing?.rushYards + item?.stats?.passing?.passNetYards}}   &nbsp;
+                    Avg Yards Per Play: {{item?.stats?.miscellaneous?.offenseAvgYds}}   &nbsp;
+                    Sacks Given up: {{item?.stats?.passing?.passSacks}}   &nbsp;
+                    Pass TD's: {{item?.stats?.passing?.passTD}}    &nbsp;
+                    Rush TD's: {{item?.stats?.rushing?.rushTD}}
+                </span> 
+                <span *ngIf="title === 'Toughest Defense Schedule 2020' && item?.scheduleTicker != null">
+                    <span *ngFor="let game of item?.scheduleTicker; let i = index;">
+                        <span class="game {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'" (mouseout)="hoveredItem = ''">
+                           <span [ngClass]="{'white' : game?.dRank === 'BYE', 'red' : game?.dRank &lt;= 10, 'orange' : game?.dRank > 10 && game?.dRank &lt;= 21, 'green' : game?.dRank > 21, 'dn' : seasonLength === 'fh' && i > 8 || seasonLength === 'sh' && i &lt;= 8 }">{{game?.printName}}</span>
+                           <span class="tooltip">{{ game?.dRank === 'BYE' ? 'Week '+game?.name : 'D Rank '+ game?.dRank}}</span>
+                        </span> 
+                    </span>
+                </span>
+                <span *ngIf="title === 'Toughest Offense Schedule 2020' && item?.scheduleTicker != null">
+                    <span *ngFor="let game of item?.scheduleTicker; let i = index;">
+                        <span class="game {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'" (mouseout)="hoveredItem = ''">
+                            <span [ngClass]="{'white' : game?.oRank === 'BYE', 'red' : game?.oRank &lt;= 10, 'orange' : game?.oRank > 10 && game?.oRank &lt;= 21, 'green' : game?.oRank > 21, 'dn' : seasonLength === 'fh' && i > 8 || seasonLength === 'sh' && i &lt;= 8 }">{{game?.printName}}</span>
+                            <span class="tooltip">{{ game?.oRank === 'BYE' ? 'Week '+game?.name : 'O Rank '+ game?.oRank}}</span>
+                        </span>
+                    </span>
+                </span>
             </span> 
         </span>  
       </div>

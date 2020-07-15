@@ -32,10 +32,15 @@ export class StatCardComponent implements OnInit {
   public teams            :any;
   @Input('position')
   public position         :any;
+  @Input('seasonLength')
+  public seasonLength     :any;
+  @Input('ndk')
+  public ndk              :boolean;
   @Output() open = new EventEmitter<object>();
 
   public type           :any;
-  public mobile: any;
+  public mobile         :any;
+  public hoveredItem    :string = '';
 
   constructor() { }
 

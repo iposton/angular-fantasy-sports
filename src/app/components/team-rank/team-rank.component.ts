@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-team-rank',
@@ -12,20 +12,30 @@ export class TeamRankComponent implements OnInit {
   public teams            :Array<any>;
   @Input('title')
   public title            :any;
+  @Output() seasonChange = new EventEmitter();
+  @Output() seasonChangeD = new EventEmitter();
 
-  public oRank            :Array<any>;
-  public tRank            :Array<any>;
+  public oRank            :Array<any> = [];
+  public tRank            :Array<any> = [];
+  public seasonLength: string = 'full';
+  public loading: boolean = true;
+  public hoveredItem: string = '';
 
   constructor() { }
 
-  public getRank(d, teams, title) {
+  public getRank(d, teams, title, sl) {
+    this.loading = true;
     let data = [];
     let rank = [];
     let rank2 = [];
     let tRank = [];
     data = d;
+    let statTypeO = '';
+    statTypeO = sl === 'fh' ? 'ofh' : sl === 'sh' ? 'osh' : 'otr';
+    let statTypeD = '';
+    statTypeD = sl === 'fh' ? 'dfh' : sl === 'sh' ? 'dsh' : 'dtr';
     // console.log(d, 'data', teams, 'teams', title, 'title');
-    if (title === 'Defense') {
+    if (title === 'Defense Team Rank') {
       rank = data.slice().sort((a: any, b: any) => {
         // console.log('rank PA');
         if (a['stats'].standings.pointsAgainst
@@ -54,7 +64,7 @@ export class TeamRankComponent implements OnInit {
 
       rank.forEach(function(item, index){
         for (let team of teams) {
-         if (rank[index].team.abbreviation === team.abbreviation) { 
+         if (rank[index].team.id === team.id) { 
            team.dRank = index + 1;
            team.stats = rank[index].stats;
          }
@@ -63,7 +73,7 @@ export class TeamRankComponent implements OnInit {
 
       rank2.forEach(function(item, index){
         for (let team of teams) {
-         if (rank2[index].team.abbreviation === team.abbreviation) { 
+         if (rank2[index].team.id === team.id) { 
            team.sackRank = index + 1; 
          }
         }
@@ -81,11 +91,11 @@ export class TeamRankComponent implements OnInit {
           return 0;
         }
       });
-      //console.log('team rank', tRank);
+      
       this.tRank = tRank;
+      this.loading = false;
       return this.tRank;
-    } else {
-      //offense
+    } else if (title === 'Offense Team Rank') {
       rank = data.slice().sort((a: any, b: any) => {
           if ((a['stats'].rushing.rushYards + a['stats'].passing.passNetYards)
           >= (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards)) {
@@ -113,7 +123,7 @@ export class TeamRankComponent implements OnInit {
 
       rank.forEach(function(item, index){
         for (let team of teams) {
-         if (rank[index].team.abbreviation === team.abbreviation) { 
+         if (rank[index].team.id === team.id) { 
            team.oRank = index + 1;
            team.stats = rank[index].stats;
          }
@@ -122,7 +132,7 @@ export class TeamRankComponent implements OnInit {
 
       rank2.forEach(function(item, index){
         for (let team of teams) {
-         if (rank2[index].team.abbreviation === team.abbreviation) { 
+         if (rank2[index].team.id === team.id) { 
            team.tdRank = index + 1; 
          }
         }
@@ -140,8 +150,44 @@ export class TeamRankComponent implements OnInit {
           return 0;
         }
       });
-      console.log('team rank', tRank);
+      //console.log('team rank', tRank);
       this.tRank = tRank;
+      this.loading = false;
+      return this.tRank;
+    } else if (title === 'Toughest Defense Schedule 2020') {
+      this.seasonChange.emit(sl);
+      rank = teams.slice().sort((a: any, b: any) => {    
+        if (a[statTypeD] 
+         <= b[statTypeD]) {
+          return -1;
+        } else if (a[statTypeD]
+         >= b[statTypeD]) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.tRank = rank;
+      this.loading = false;
+      return this.tRank;
+    }  else if (title === 'Toughest Offense Schedule 2020') {
+      this.seasonChangeD.emit(sl);
+      rank = teams.slice().sort((a: any, b: any) => {
+        // console.log('rank PA');
+        if (a[statTypeO] 
+         <= b[statTypeO]) {
+          return -1;
+        } else if (a[statTypeO]
+         >= b[statTypeO]) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.tRank = rank;
+      this.loading = false;
       return this.tRank;
     }
   

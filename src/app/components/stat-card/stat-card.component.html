@@ -14,17 +14,58 @@
               'left-content': i <= page,
               dn: i > page || i <= amount
             }"
-          >
+            >
             {{ i + 1 }}
             <span (click)="authorize(item, sport)" class="point"
-              ><img
+            ><img
                 src="{{ item?.player?.officialImageSrc }}"
-                alt="basketball player"
+                alt="{{sport}} player"
                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"
-            /></span>
+                
+            />
+            <span class="sched-rank {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem = ''; $event.stopPropagation()">
+                  <span *ngIf="sport === 'nfl' && item?.team?.dtr != null && ndk && seasonLength === 'full'" [ngClass]="{'red' : item?.team?.dtr &lt;= 10, 'orange' : item?.team?.dtr > 10 && item?.team?.dtr &lt;= 21, 'green' : item?.team?.dtr > 21}">
+                    {{item?.team?.dtr}}
+                  </span>
+                  <span *ngIf="sport === 'nfl' && item?.team?.otr != null && ndk && seasonLength === 'full'" [ngClass]="{'red' : item?.team?.otr &lt;= 10, 'orange' : item?.team?.otr > 10 && item?.team?.otr &lt;= 21, 'green' : item?.team?.otr > 21}">
+                     {{item?.team?.otr}}
+                  </span>
+      
+                  <span *ngIf="sport === 'nfl' && item?.team?.dfh != null && ndk && seasonLength === 'fh'" [ngClass]="{'red' : item?.team?.dfh &lt;= 10, 'orange' : item?.team?.dfh > 10 && item?.team?.dfh &lt;= 21, 'green' : item?.team?.dfh > 21}">
+                    {{item?.team?.dfh}}
+                  </span>
+                  <span *ngIf="sport === 'nfl' && item?.team?.ofh != null && ndk && seasonLength === 'fh'" [ngClass]="{'red' : item?.team?.ofh &lt;= 10, 'orange' : item?.team?.ofh > 10 && item?.team?.ofh &lt;= 21, 'green' : item?.team?.ofh > 21}">
+                    {{item?.team?.ofh}}
+                  </span>
+      
+                  <span *ngIf="sport === 'nfl' && item?.team?.dsh != null && ndk && seasonLength === 'sh'" [ngClass]="{'red' : item?.team?.dsh &lt;= 10, 'orange' : item?.team?.dsh > 10 && item?.team?.dsh &lt;= 21, 'green' : item?.team?.dsh > 21}">
+                    {{item?.team?.dsh}}
+                  </span>
+                  <span *ngIf="sport === 'nfl' && item?.team?.osh != null && ndk && seasonLength === 'sh'" [ngClass]="{'red' : item?.team?.osh &lt;= 10, 'orange' : item?.team?.osh > 10 && item?.team?.osh &lt;= 21, 'green' : item?.team?.osh > 21}">
+                    {{item?.team?.osh}}
+                  </span>
+                  <span class="tooltip"> <span 
+                    *ngIf="seasonLength === 'sh' && item?.team?.osh > 21 || seasonLength === 'sh' && item?.team?.dsh > 21 ||
+                    seasonLength === 'fh' && item?.team?.ofh > 21 || seasonLength === 'fh' && item?.team?.dfh > 21 ||
+                    seasonLength === 'full' && item?.team?.otr > 21 || seasonLength === 'full' && item?.team?.dtr > 21"
+                    >Easy</span> 
+                    <span 
+                    *ngIf="seasonLength === 'sh' && item?.team?.osh > 10 && item?.team?.osh &lt;= 21 || seasonLength === 'sh' && item?.team?.dsh > 10 && item?.team?.dsh &lt;= 21 ||
+                    seasonLength === 'fh' && item?.team?.ofh > 10 && item?.team?.ofh &lt;= 21 || seasonLength === 'fh' && item?.team?.dfh > 10 && item?.team?.dfh &lt;= 21 ||
+                    seasonLength === 'full' && item?.team?.otr > 10 && item?.team?.otr &lt;= 21 || seasonLength === 'full' && item?.team?.dtr > 10 && item?.team?.dtr &lt;= 21
+                      ">Good</span>
+                    <span 
+                    *ngIf="seasonLength === 'sh' && item?.team?.osh &lt;= 10 || seasonLength === 'sh' && item?.team?.dsh &lt;= 10 ||
+                    seasonLength === 'fh' && item?.team?.ofh &lt;= 10 || seasonLength === 'fh' && item?.team?.dfh &lt;= 10 ||
+                    seasonLength === 'full' && item?.team?.otr &lt;= 10 || seasonLength === 'full' && item?.team?.dtr &lt;= 10">Hard</span>
+                      Schedule</span>
+                  
+            </span>
+            
+          </span>
 
             <span class="player-infos">
-              <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
+              <span *ngIf="item.player?.rookie === true && !ndk" class="rookie">R</span>
               <span class="names" *ngIf="!mobile">
                 <span *ngIf="item.player.firstName != 'Shai'">
                   {{ item.player.firstName + " " + item.player.lastName }} -

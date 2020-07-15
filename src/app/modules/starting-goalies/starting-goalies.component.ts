@@ -437,7 +437,7 @@ export class StartingGoaliesComponent implements OnInit {
               if (isNew) mySet.add(key);  
               return isNew;
           });
-      }
+        }
       
       let values;
       values = res['playerStatsTotals'];

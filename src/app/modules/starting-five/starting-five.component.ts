@@ -390,7 +390,8 @@ export class StartingFiveComponent implements OnInit {
       promiseDaily = new Promise((resolve, reject) => {
         this.dataService
           .getDaily(playerString).subscribe(res => {
-            this.dailyStats = res['gamelogs'];
+            console.log(res, 'gamelogs');
+            if (res != null) this.dailyStats = res['gamelogs'];
             resolve();
         })
       });
