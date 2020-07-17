@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit {
   public mobile: boolean = false;
   public mlbTeams: any;
   public nflTeams: any;
+  public nbaTeams: any;
 
   mlbGameDate: string = '';
   noMlbGamesToday: boolean;
@@ -105,7 +106,9 @@ export class HomeComponent implements OnInit {
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
     this.mlbTeams = this.util.getMLBTeams();
     this.nflTeams = this.util.getNFLTeams();
-    this.nbaDataService.selectedDate(dailyDate);
+    this.nbaTeams = this.util.getNBATeams();
+    this.nbaDataService.selectedDate('20200730');
+    this.nhlDataService.selectedDate('20200801');
     this.selectedWeek = '1';
     let weekTimes = this.util.getWeekTimes();
     let thisDate = new Date();
@@ -182,10 +185,11 @@ loadData() {
               this.nbaLoading = false;
               this.nbaGamesToday = true;
               this.nbaSchedule = res['games'];
-              this.nbaTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
+              this.nbaTeamRef = Object.values(this.nbaTeams); //res['references'].teamReferences ? res['references'].teamReferences : null;
               this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
               if (this.nbaTeamRef != null)
                 this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
+                console.log(this.nbaSchedule, 'nba sched')
             }
         });
 
@@ -231,15 +235,15 @@ public getTeamInfo(sched, teamRef) {
   for (let team of teamRef) {
     for (let data of sched) {   
         if (data.schedule.awayTeam.id === team.id) {
-          data.schedule.awayTeam.color = team.teamColoursHex[0];
-          data.schedule.awayTeam.accent = team.teamColoursHex[1];
+          data.schedule.awayTeam.color = team.teamColoursHex ? team.teamColoursHex[0] : 'black';
+          data.schedule.awayTeam.accent = team.teamColoursHex ? team.teamColoursHex[1] : 'black';
           data.schedule.awayTeam.logo = team.officialLogoImageSrc;
           data.schedule.awayTeam.city = team.city;
           data.schedule.awayTeam.name = team.name;
         }
         if (data.schedule.homeTeam.id === team.id) {
-            data.schedule.homeTeam.color = team.teamColoursHex[0];
-            data.schedule.homeTeam.accent = team.teamColoursHex[1];
+            data.schedule.homeTeam.color = team.teamColoursHex ? team.teamColoursHex[0] : 'black';
+            data.schedule.homeTeam.accent = team.teamColoursHex ? team.teamColoursHex[1] : 'black';
             data.schedule.homeTeam.logo = team.officialLogoImageSrc;
             data.schedule.homeTeam.city = team.city;
             data.schedule.homeTeam.name = team.name;

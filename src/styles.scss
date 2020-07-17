@@ -1775,10 +1775,31 @@ form input[type="text"] {
           font-size: 18px;
         }
       }
+      .modal-footer {
+        bottom: 0;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        height: 30px;
+        padding: 10px;
+        background: rgb(31,32,32);
+        background: linear-gradient(90deg, rgba(31,32,32,1) 0%, rgba(211,84,0,1) 0%, rgba(133,56,6,1) 100%);
+        color: #fff;
+        font-weight: 100;
+        text-align: center;
+        
+        .twitter-icon {
+          margin-right: 5px;
+         }
+
+        img {
+          width: 2%;
+        }
+      }
       .content {
         overflow: scroll;
         text-align: left;
         margin-top: 80px;
+        padding: 20px 10px;
       }
       
     }

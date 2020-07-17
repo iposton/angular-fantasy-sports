@@ -60,10 +60,44 @@
         </div>
         <div class="docs-footer-links">
           <ul>
-            <li>About</li>
+            <li (click)="isOpen = true">About</li>
           </ul>
         </div>
       </div>
 </footer>
-    <app-google-analytics-gtag></app-google-analytics-gtag>
+<div id="overlay" [ngClass]="{'active': isOpen}" (click)="isOpen = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+          <span class="header-title">About FSR</span>
+          <span class="right" (click)="isOpen = false">X</span>
+      </div>
+      <div class="content">  
+          <p>I made this app because I needed better fantasy sports reserch tools and
+             I wanted to learn how to use angular2.</p>
+
+          <p>With this app I plan to make it easier to find unique fantasy players stats and 
+            rankings with a clean modern user friendly ui.</p>
+          
+          <p>I will be adding new features to come for example 
+            I would like to show the top of a baseball hitting order 1-4 each day and show top hockey lineups by most ice time.</p>
+          
+          <p>I am using <a href="https://www.mysportsfeeds.com/" atl="MSF link" target="_blank">mysportsfeeds.com</a>
+             api to get all the current info I need to build my idea.</p>
+          
+          <p>This is a Progressive Web App using Angular 9, and nguniversal (server side rendering).</p>
+          
+          <p>I am a web developer from Los Angeles and I enjoy building fun apps with angular. Thanks
+             for stopping by! ☺</p>
+          
+      </div>  
+      <div class="modal-footer">
+         Built by Ian Poston 2020 
+            <a class="twitter-icon" href="https://twitter.com/intent/follow?screen_name=FanSpRes&commit=Log%20in%20and%20follow%20%40FanSpRes&session%5Busername_or_email%5D=FanSpRes&tw_p=followbutton&region=follow_link" target="_blank"> 
+              <img src="./assets/images/twitter.png" alt="twitter profile" /></a>
+              <a class="instagram-icon" href="https://www.instagram.com/fantasysportsresources/" target="_blank"> 
+                <img src="./assets/images/instagram.png" alt="instagram profile" /></a>
+      </div>
+    </div>
+</div>
+<app-google-analytics-gtag></app-google-analytics-gtag>
 

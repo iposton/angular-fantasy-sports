@@ -11,6 +11,7 @@ import{ Router, NavigationEnd } from '@angular/router';
 export class AppComponent implements OnInit {
   public menu: boolean = false;
   public mobile: boolean = false;
+  public isOpen: boolean = false;
 
   constructor (private meta: Meta,
     private title: Title,
