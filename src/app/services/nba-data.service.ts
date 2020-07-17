@@ -17,8 +17,7 @@ let thisDate = new Date();
 let utcDate = new Date(thisDate.toUTCString());
 utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
-//let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-let dailyDate = '20200730';
+let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +44,8 @@ export class NBADataService {
   }
 
   public selectedDate(d) {
-    dailyDate = d;
+    //dailyDate = d;
+    dailyDate = '20200730';
   }
 
   sendHeaderOptions(h) {

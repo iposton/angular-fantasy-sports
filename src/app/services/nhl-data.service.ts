@@ -68,7 +68,6 @@ export class NHLDataService {
   
   constructor(private http: HttpClient) {
      this.dailyDate = dailyDate;
-     //this.dailyDate = '20200309';
   }
 
   public selectedDate(d) {
