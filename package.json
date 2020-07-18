@@ -2,10 +2,9 @@
   "name": "fantasy-sports-resource",
   "version": "2.0.0",
   "scripts": {
+    "ng": "ng",
     "start:heroku": "node dist/server/main.js",
     "heroku-postbuild": "npm run build:ssr",
-    "ng": "ng",
-    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
