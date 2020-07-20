@@ -2,7 +2,7 @@
   <h1 class="center date-header baseball-header"> NHL Starting Goalies</h1>
 </div>
 <h1 class="center no-game-header" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1> -->
-<h1 class="center date-header">{{ nbaGameDate | date: "fullDate" }}</h1>
+<h1 class="center date-header">{{ (nbaSched ? nbaGameDate : nflSched ? nflGameDate : mlbSched ? mlbGameDate : nhlSched ? nhlGameDate : nbaGameDate) | date: "fullDate" }}</h1>
 <h1 class="center date-header">Games</h1>
 <!-- <div class="nhl-playoff"> -->
 <!--   <h3 class="center date-header"><img src="../assets/nhl-logos/nhl-playoff.jpg" alt="nhl playoff image"></h3> -->

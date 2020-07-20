@@ -32,7 +32,16 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+                "@firebase/app",
+                "firebase/app",
+                "@firebase/database",
+                "@firebase/util",
+                "@firebase/component",
+                "crypto-js",
+                "@firebase/auth"
+            ]
           },
           "configurations": {
             "production": {

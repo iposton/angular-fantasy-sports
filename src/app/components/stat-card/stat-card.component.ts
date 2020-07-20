@@ -41,6 +41,7 @@ export class StatCardComponent implements OnInit {
   public type           :any;
   public mobile         :any;
   public hoveredItem    :string = '';
+  public hoveredItem2   :string = '';
 
   constructor() { }
 

@@ -97,12 +97,30 @@
               /></span>
 
               <span class="point">
-                <span class="lg">
+                <span class="lg" *ngIf="!ndk">
                   {{ (item?.stats)[statType][statField] }} {{ statTag }}
                   <span *ngIf="sport === 'nfl'">
                     <span *ngIf="statType === 'passing'">{{ item?.stats[statType]?.passTD }} TD</span>
                     <span *ngIf="statType === 'rushing'">{{ item?.stats[statType]?.rushTD }} TD</span>
                     <span *ngIf="statType === 'receiving'">{{ item?.stats[statType]?.recTD }} TD</span>
+                  </span>
+                </span>
+                <span class="lg" *ngIf="ndk && sport === 'nfl'">
+                    <span *ngIf="item?.team?.dtr != null && item?.team?.scheduleTicker != null">
+                      <span *ngFor="let game of item?.team?.scheduleTicker; let i = index;">
+                          <span class="game {{hoveredItem2}}" (mouseover)="hoveredItem2 = 'hovered'" (mouseout)="hoveredItem2 = ''">
+                            <span [ngClass]="{'white' : game?.dRank === 'BYE', 'red' : game?.dRank &lt;= 10, 'orange' : game?.dRank > 10 && game?.dRank &lt;= 21, 'green' : game?.dRank > 21, 'dn' : seasonLength === 'fh' && i > 8 || seasonLength === 'sh' && i &lt;= 8 }">{{game?.printName}}</span>
+                            <span class="tooltip">{{ game?.dRank === 'BYE' ? 'Week '+game?.name : 'D Rank '+ game?.dRank}}</span>
+                          </span> 
+                      </span>
+                  </span>
+                  <span *ngIf="item?.team?.otr != null && item?.team?.scheduleTicker != null">
+                      <span *ngFor="let game of item?.team?.scheduleTicker; let i = index;">
+                          <span class="game {{hoveredItem2}}" (mouseover)="hoveredItem2 = 'hovered'" (mouseout)="hoveredItem2 = ''">
+                            <span [ngClass]="{'white' : game?.oRank === 'BYE', 'red' : game?.oRank &lt;= 10, 'orange' : game?.oRank > 10 && game?.oRank &lt;= 21, 'green' : game?.oRank > 21, 'dn' : seasonLength === 'fh' && i > 8 || seasonLength === 'sh' && i &lt;= 8 }">{{game?.printName}}</span>
+                            <span class="tooltip">{{ game?.oRank === 'BYE' ? 'Week '+game?.name : 'D Rank '+ game?.oRank}}</span>
+                          </span> 
+                      </span>
                   </span>
                 </span>
               </span>
