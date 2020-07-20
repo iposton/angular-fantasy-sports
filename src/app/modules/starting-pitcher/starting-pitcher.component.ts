@@ -246,7 +246,7 @@ export class StartingPitcherComponent implements OnInit {
       this.dataService
         .getDaily().subscribe(res => {
             console.log(res, "Daily stats...");
-            this.dailyStats = res['gamelogs'];
+            this.dailyStats = res != null ? res['gamelogs'] : [];
 
             this.dataService
               .getStats(playerString).subscribe(res => {

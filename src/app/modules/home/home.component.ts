@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http'
-import { Observable ,  interval } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { interval } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { 
   NBADataService,
@@ -52,29 +52,29 @@ export class HomeComponent implements OnInit {
   public nflTeams: any;
   public nbaTeams: any;
 
-  mlbGameDate: string = '';
-  noMlbGamesToday: boolean;
-  mlbGamesToday: boolean;
-  noMlbGamesMsg: any;
-  mlbLoading: boolean = true;
+  public mlbGameDate: string = '';
+  public noMlbGamesToday: boolean;
+  public mlbGamesToday: boolean;
+  public noMlbGamesMsg: any;
+  public mlbLoading: boolean = true;
 
-  nhlGameDate: string = '';
-  noNhlGamesToday: boolean;
-  nhlGamesToday: boolean;
-  noNhlGamesMsg: any;
-  nhlLoading: boolean = true;
+  public nhlGameDate: string = '';
+  public noNhlGamesToday: boolean;
+  public nhlGamesToday: boolean;
+  public noNhlGamesMsg: any;
+  public nhlLoading: boolean = true;
 
-  nbaGameDate: string = '';
-  noNbaGamesToday: boolean;
-  nbaGamesToday: boolean;
-  noNbaGamesMsg: any;
-  nbaLoading: boolean = true;
+  public nbaGameDate: string = '';
+  public noNbaGamesToday: boolean;
+  public nbaGamesToday: boolean;
+  public noNbaGamesMsg: any;
+  public nbaLoading: boolean = true;
 
-  nflGameDate: string = '';
-  noNflGamesToday: boolean;
-  nflGamesToday: boolean;
-  noNflGamesMsg: any;
-  nflLoading: boolean = true;
+  public nflGameDate: string = '';
+  public noNflGamesToday: boolean;
+  public nflGamesToday: boolean;
+  public noNflGamesMsg: any;
+  public nflLoading: boolean = true;
 
   public showLink: boolean = false;
   public liveGames: boolean = false;
@@ -189,7 +189,7 @@ loadData() {
               this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
               if (this.nbaTeamRef != null)
                 this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
-                console.log(this.nbaSchedule, 'nba sched')
+                //console.log(this.nbaSchedule, 'nba sched')
             }
         });
 

@@ -184,6 +184,7 @@ export class StatLeadersComponent implements OnInit {
     this.nhlGoalies = false;
     this.nflSection = false;
     this.nflDefenseSection = false;
+    this.nflDraftKit = false;
 
     if (this.nhlGoaltenders == null) {
       this.nhlGoalieloading = true;
@@ -301,6 +302,7 @@ export class StatLeadersComponent implements OnInit {
     this.nhlGoalies = false;
     this.nflSection = false;
     this.nflDefenseSection = false;
+    this.nflDraftKit = false;
 
     if (this.mlbPitchingData == null) {
 
@@ -377,16 +379,7 @@ export class StatLeadersComponent implements OnInit {
 
     this.nflOffenseLoading = true;
     this.nflDefenseLoading = true;
-    console.log(this.nflTeams, 'nfl teams');
-
-    // function removeDuplicatesBy(keyFn, array) {
-    //   var mySet = new Set();
-    //   return array.filter(function(x) {  
-    //       var key = keyFn(x), isNew = !mySet.has(key);
-    //       if (isNew) mySet.add(key);  
-    //       return isNew;
-    //   });
-    // }
+    //console.log(this.nflTeams, 'nfl teams');
 
     function teamInfo(array, teams, type) {
       for (let team of teams) {
@@ -400,6 +393,7 @@ export class StatLeadersComponent implements OnInit {
             data.team.dfh = team['dfh'];
             data.team.dsh = team['dsh'];
             data.team.abbreviation = team['abbreviation'];
+            data.team.scheduleTicker = team['scheduleTicker'];
           }
 
           if (type === 'd' && data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
@@ -411,6 +405,7 @@ export class StatLeadersComponent implements OnInit {
             data.team.ofh = team['ofh'];
             data.team.osh = team['osh'];
             data.team.abbreviation = team['abbreviation'];
+            data.team.scheduleTicker = team['scheduleTicker'];
           }
         }  
       }
@@ -575,7 +570,7 @@ export class StatLeadersComponent implements OnInit {
       }, (err: HttpErrorResponse) => {       
         console.log(err, 'error getting lineup');
       });
-      console.log(this.teamSchedules, 'team schedules ranks', this.nflTeams, 'nfl teams getting schedule rank sort');
+      //console.log(this.teamSchedules, 'team schedules ranks', this.nflTeams, 'nfl teams getting schedule rank sort');
       
     }
   }

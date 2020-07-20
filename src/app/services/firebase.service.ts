@@ -39,7 +39,7 @@ export class FirebaseService {
 
  signInRegular(email, password) {
    const credential = firebase.auth.EmailAuthProvider.credential( email, password );
-   return this.firebaseAuth.auth.signInWithEmailAndPassword(email, password)
+   return this.firebaseAuth.signInWithEmailAndPassword(email, password)
  }
 
  isLoggedIn() {
@@ -53,7 +53,7 @@ export class FirebaseService {
   }
 
   logout() {
-    this.firebaseAuth.auth.signOut();
+    this.firebaseAuth.signOut();
   }
 
    addData(starters) {
