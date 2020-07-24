@@ -13,8 +13,7 @@ let thisDate = new Date();
 let utcDate = new Date(thisDate.toUTCString());
 utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
-//let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
-let dailyDate = '20200723';
+let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +31,7 @@ export class DataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular";
   public dailyDate: any;
 
   //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,T,C,TE
@@ -98,7 +97,7 @@ export class DataService {
     //if (!this.stats) {
       //console.log('getting cumulative_player_stats by player ID from API...', players);
       //let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&player=`+playerID;
-      let url = `${this.apiRoot}/player_stats_totals.json?position=P&player=${players}`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular/player_stats_totals.json?position=P&player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     //}
@@ -106,13 +105,13 @@ export class DataService {
   }
 
    getAllStats() {
-    let url = `${this.apiRoot}/player_stats_totals.json?position=P`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular/player_stats_totals.json?position=P`;
     this.allstats = this.http.get(url, {headers})
     return this.allstats;
   }
 
   getAllHitters() {
-    let url = `${this.apiRoot}/player_stats_totals.json?position=OF,1B,2B,3B,C,SS`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular/player_stats_totals.json?position=OF,1B,2B,3B,C,SS`;
     this.hitstats = this.http.get(url, {headers})
     return this.hitstats;
   }

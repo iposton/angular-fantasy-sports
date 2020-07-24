@@ -11,7 +11,7 @@
 <div *ngIf="showData != null">
   <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData | orderBy: 'mlb'" [class.hide]="data.playerNotPlayingYet === false">
     <div class="tp-box mat-card-sp" [@flipState]="data.flip">
-      <div *ngIf="data.flip === 'inactive'" class="ribbon"><span [ngStyle]="{'backgroundColor': data.team.color}">{{data.team.name}}</span></div>
+      <div *ngIf="data.flip === 'inactive'" class="ribbon"><span [ngStyle]="{'backgroundColor': data?.team?.color ? data?.team?.color : 'black'}">{{data.team.name}}</span></div>
       <div class="tp-box__side tp-box__front">
         <div class="content-wrapper">
           <div class="left-content">
@@ -36,7 +36,7 @@
             </p>
           </div>
         </div>
-        <div class="bottom-content">
+        <div class="bottom-content" (click)="$event.stopPropagation()">
           <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
           <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
           <p class="name-number">
@@ -76,7 +76,7 @@
       </div>  <!-- FRONT OF CARD -->
      
       <!-- SCORE BACK OF CARD -->
-      <div class="tp-box__side tp-box__back">
+      <div class="tp-box__side tp-box__back" (click)="$event.stopPropagation()">
         <a class="go-back-btn" (click)="flipBack(data)">GO BACK</a>
           <div class="content-wrapper">
           <div class="left-content">
@@ -103,7 +103,7 @@
             </p>
           </div>
         </div>
-        <div class="bottom-content">
+        <div class="bottom-content" (click)="$event.stopPropagation()">
           <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
           <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
           <p class="name-number">
@@ -156,7 +156,7 @@
     <h3 class="center">Live Games</h3>
     <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData" [class.hide]="data.playingRightNow === false">
       <div class="tp-box mat-card-sp" [@flipState]="data.flip">
-        <div *ngIf="data.flip === 'inactive'" class="ribbon"><span [ngStyle]="{'backgroundColor': data.team.color}">{{data.team.name}}</span></div>
+        <div *ngIf="data.flip === 'inactive'" class="ribbon"><span [ngStyle]="{'backgroundColor': data?.team?.color ? data?.team?.color : 'black'}">{{data.team.name}}</span></div>
         <div class="tp-box__side tp-box__front">
           <div class="content-wrapper">
             <div class="left-content">
@@ -179,7 +179,7 @@
                <!--  <br> game id: {{data.gameId}} -->           </p>
             </div>
           </div>
-          <div class="bottom-content">
+          <div class="bottom-content" (click)="$event.stopPropagation()">
             <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
             <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
             <p class="name-number">
@@ -228,7 +228,7 @@
         </div>
         <!-- FRONT OF CARD -->
      <!-- SCORE BACK OF CARD -->
-      <div class="tp-box__side tp-box__back">
+      <div class="tp-box__side tp-box__back" (click)="$event.stopPropagation()">
           <div class="content-wrapper">
           <div class="left-content">
             <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
@@ -254,7 +254,7 @@
             </p>
           </div>
         </div>
-        <div class="bottom-content">
+        <div class="bottom-content" (click)="$event.stopPropagation()">
           <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
           <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
           <p class="name-number">
@@ -431,7 +431,7 @@
     <h3 class="center">Completed Games</h3>
     <div class="card-wrap-sp mat-elevation-z6 tp-wrap" *ngFor="let data of showData" [class.hide]="data.playingOver === false">
       <div class="tp-box mat-card-sp" [@flipState]="data.flip">
-        <div class="ribbon" *ngIf="data.flip === 'inactive'"><span [ngStyle]="{'backgroundColor': data.team.color}">{{data.team.name}}</span></div>
+        <div class="ribbon" *ngIf="data.flip === 'inactive'"><span [ngStyle]="{'backgroundColor': data?.team?.color ? data?.team?.color : 'black'}">{{data.team.name}}</span></div>
         <div class="tp-box__side tp-box__front">
           <div class="content-wrapper">
             <div class="left-content">
@@ -454,7 +454,7 @@
                 <!-- <br> game id: {{data.gameId}}           </p> -->
             </div>
           </div>
-          <div class="bottom-content">
+          <div class="bottom-content" (click)="$event.stopPropagation()">
             <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
             <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
             <p class="name-number">
@@ -507,7 +507,7 @@
         </div>
         <!-- FRONT OF CARD -->
        <!-- SCORE BACK OF CARD -->
-      <div class="tp-box__side tp-box__back">
+      <div class="tp-box__side tp-box__back" (click)="$event.stopPropagation()">
           <div class="content-wrapper">
           <div class="left-content">
             <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
@@ -533,7 +533,7 @@
             </p>
           </div>
         </div>
-        <div class="bottom-content">
+        <div class="bottom-content" (click)="$event.stopPropagation()">
           <!-- <img src="./assets/mlb-logos/{{data.team.id}}.png" alt="mlb team logo"> -->
           <p class="name-number">{{ data.player.firstName + ' ' + data.player.lastName}}<span *ngIf="data?.player?.handedness.throws"> - {{data?.player?.handedness.throws}}</span> - SP | #{{data.player.jerseyNumber}}</p>
           <p class="name-number">
