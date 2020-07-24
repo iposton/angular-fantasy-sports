@@ -16,17 +16,17 @@ export class AppComponent implements OnInit {
   constructor (private meta: Meta,
     private title: Title,
     public router: Router) {
-      this.title.setTitle('NHL & NBA Stats');
+      this.title.setTitle('Stats | NHL, NBA, NHL, NFL');
       //dynamic//this.meta.updateTag({ 
       //   name: 'NHL Starting Goalies and NBA Starting Lineup', 
       //   content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.'
       // });
       this.meta.addTags([
       { name: 'description', content: 'NHL Starting Goalies, NBA Starting Lineup, Stat Leaders.' },
-      { name: 'keywords', content: 'Hockey, Fantasy, Basketball, Stats' },
+      { name: 'keywords', content: 'Hockey, Fantasy, Basketball, Football, Baseball, Stats' },
       { property: 'og:type', content: 'website' },
       { property: 'og:site_name', content: 'Fantasy Sports Resources' },
-      { property: 'og:title', content: 'NHL and NBA Live Stats & Starters' },
+      { property: 'og:title', content: 'NHL, NFL, MLB, NBA Live Stats & Starters' },
       { property: 'og:description', content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.' },
       { property: 'og:url', content: 'https://fantasy-sports-resources.com' },
       { property: 'og:image', content: 'https://fantasy-sports-resources.com/assets/fsr.png' },
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       { charset: 'UTF-8' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:site', content: '@StreamingLists' },
-      { name: 'twitter:title', content: 'NHL & NBA Stats' },
+      { name: 'twitter:title', content: 'Stats | NHL, NBA, NHL, NFL' },
       { name: 'twitter:description', content: 'Fantasy Hockey Daily Stats. Fantasy Basketball Daily Stats.' },
       { name: 'twitter:image', content: 'https://fantasy-sports-resources.com/assets/images/home-page.png' },
       ])

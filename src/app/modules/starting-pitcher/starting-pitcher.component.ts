@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import {FirebaseService, DataService} from '../../services/index';
+import {FirebaseService, DataService, UtilService} from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
@@ -61,10 +61,13 @@ export class StartingPitcherComponent implements OnInit {
   public gameStarters: Array <any> = [];
   public teamsCompletedPlayingToday: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
+  public teams: Array <any>;
+  
 
   constructor(private fbService: FirebaseService, 
               private dataService: DataService, 
-              private http: HttpClient) {
+              private http: HttpClient,
+              private util: UtilService) {
     this.fbService
       .getData().subscribe(res => {
         //console.log(res, 'firebase data');
@@ -72,6 +75,7 @@ export class StartingPitcherComponent implements OnInit {
       });
 
     this.players = this.dataService.getSentStats();
+    this.teams = this.util.getMLBTeams();
   }
 
   public getByDate(event) {
@@ -113,7 +117,7 @@ export class StartingPitcherComponent implements OnInit {
 
         this.dataService
           .getDailySchedule().subscribe(res => {
-            console.log(res, "schedule...");
+            //console.log(res, "schedule...");
 
             if (res['games'].length === 0) {
               this.loading = false;
@@ -123,7 +127,7 @@ export class StartingPitcherComponent implements OnInit {
             } else {
 
               this.dailySchedule = res['games'];
-              this.teamRef = res['references'].teamReferences;
+              this.teamRef = this.teams; //res['references'].teamReferences;
               this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
               let dPipe = new DatePipe("en-US");
 
@@ -235,7 +239,7 @@ export class StartingPitcherComponent implements OnInit {
       promiseOne = new Promise((resolve, reject) => {
         this.dataService
           .getInfo().subscribe(res => {
-            console.log(res, 'got activeplayers from api!');
+            //console.log(res, 'got activeplayers from api!');
             this.playerInfo = res['players'];
             resolve();
         });
@@ -245,16 +249,16 @@ export class StartingPitcherComponent implements OnInit {
 
       this.dataService
         .getDaily().subscribe(res => {
-            console.log(res, "Daily stats...");
+            //console.log(res, "Daily stats...");
             this.dailyStats = res != null ? res['gamelogs'] : [];
 
             this.dataService
               .getStats(playerString).subscribe(res => {
-                  console.log(res, "cumulative stats...");
+                  //console.log(res, "cumulative stats...");
 
                   //this.myData = res['playerStatsTotals'];
                   this.myData = res['playerStatsTotals'].filter(
-                  player => player.player.currentTeam.id === player.team.id);
+                  player => player.player.currentTeam != null && player.player.currentTeam.id === player.team.id);
 
                   if (this.starterIdData.length > 0 || this.noGamesToday === true) {
                     console.log('this.starterIdData.length > 0 || this.noGamesToday === true...');
@@ -318,7 +322,7 @@ export class StartingPitcherComponent implements OnInit {
                     }
 
                     if (this.myData && this.gameStarters) {
-                       console.log('start sorting data for real gameID by PitcherID...');
+                       //console.log('start sorting data for real gameID by PitcherID...');
                     
                       if (this.myData && this.dailySchedule) {
                         console.log('start sorting data for daily schedule...');
@@ -542,14 +546,14 @@ export class StartingPitcherComponent implements OnInit {
 
               this.dataService
                 .getPrevGameId().subscribe(res => {
-                  console.log(res, 'got previous games array!');
+                //  console.log(res, 'got previous games array!');
                   this.previousGames = res['games'];
               });
             }
 
                       //THIS FOR LOOP GETS AVG PITCH SPEED FOR EVERY PITCHER IN THIS LIST
                       this.showData = this.myData;
-                      console.log(this.showData, 'show data');
+                     // console.log(this.showData, 'show data');
                       this.dataService
                         .sendStats(this.showData);
 
@@ -606,8 +610,8 @@ export class StartingPitcherComponent implements OnInit {
 
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
     this.loadingPrevious = false;
-    console.log(data, 'this player has been flipped data...');
-    console.log(this.previousGames, 'previous games find player id');
+   // console.log(data, 'this player has been flipped data...');
+    //console.log(this.previousGames, 'previous games find player id');
     for (let game of this.previousGames) {
       if (game['schedule'].awayTeam.abbreviation === data.team.abbreviation ||
         game['schedule'].homeTeam.abbreviation === data.team.abbreviation) {
@@ -617,7 +621,7 @@ export class StartingPitcherComponent implements OnInit {
         this.dataService
          .getScore(game['schedule'].id).subscribe(res => {
 
-           console.log(res, 'score of this previous game');
+           //console.log(res, 'score of this previous game');
 
            let players = null;
 
@@ -630,7 +634,7 @@ export class StartingPitcherComponent implements OnInit {
              if (item.player.id === data.player.id) {
                 this.getAverages(game['schedule'].id);
                 let stats = item.playerStats[0].pitching;
-                console.log(stats, 'stats for', data.player.lastName);
+               // console.log(stats, 'stats for', data.player.lastName);
                 data.pgBlurb1 = (prevHome ? ' vs ' + game['schedule'].awayTeam.abbreviation : ' @ ' +  game['schedule'].homeTeam.abbreviation) + ': ' + stats.pitchesThrown + ' pitches, ' + stats.hitsAllowed + ' hits allowed, sat down ' + stats.pitcherStrikeouts;
                 data.homeruns1 = stats.homerunsAllowed;
                 data.previousEra1 = parseFloat(stats.earnedRunAvg).toFixed(2);
@@ -660,7 +664,7 @@ export class StartingPitcherComponent implements OnInit {
 
     this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
       .subscribe(res => {
-          console.log(res, 'got play by play game data for ');
+         // console.log(res, 'got play by play game data for ');
 
           if (res != null) {
 
@@ -727,7 +731,7 @@ export class StartingPitcherComponent implements OnInit {
 
 
   getGameStats(data, gid) {
-    console.log(data, 'whats going on');
+  // console.log(data, 'whats going on');
 
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
    
@@ -735,7 +739,7 @@ export class StartingPitcherComponent implements OnInit {
       .getScore(gid).subscribe(res => {
        
           if (res != null) {
-            console.log(res, "Score, Game...");
+          //  console.log(res, "Score, Game...");
             this.score = res['scoring'];
             let game = null;
             game = res['game'].playedStatus; //"COMPLETED" playedStatus: "COMPLETED_PENDING_REVIEW"
@@ -772,7 +776,7 @@ export class StartingPitcherComponent implements OnInit {
     console.log(`${this.apiRoot}/games/`+gid+`/playbyplay.json`);
     this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
       .subscribe(res => {
-            console.log(res, 'got play by play game data for ' + data.player.lastName);
+            //console.log(res, 'got play by play game data for ' + data.player.lastName);
 
           if (res != null) {
 
@@ -891,7 +895,7 @@ export class StartingPitcherComponent implements OnInit {
           if (this.gamesToday === true) {
             this.dataService
               .getDaily().subscribe(res => {
-                console.log(res, "Daily stats updated!");
+                //console.log(res, "Daily stats updated!");
                
                 this.dailyStats = res['gamelogs'];
 
@@ -949,7 +953,7 @@ export class StartingPitcherComponent implements OnInit {
                       if (daily.team.abbreviation === mdata.team.abbreviation) {
                             if (daily.stats.pitching.wins === 1 || daily.stats.pitching.losses === 1) {
                               this.gameover = true;
-                              console.log(daily.team.abbreviation, 'this team has completed their game today...');
+                              //console.log(daily.team.abbreviation, 'this team has completed their game today...');
                               this.teamsCompletedPlayingToday.push(daily.team.abbreviation);
                             }
                           }
