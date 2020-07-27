@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import {FirebaseService, DataService, UtilService} from '../../services/index';
 import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable, interval, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { OrderBy } from '../../pipes/orderby.pipe';
@@ -15,19 +14,7 @@ let today = new Date();
 @Component({
   selector: 'app-starting-pitcher',
   templateUrl: './starting-pitcher.component.html',
-  styleUrls: ['./starting-pitcher.component.scss'],
-  animations: [
-    trigger('flipState', [
-      state('active', style({
-        transform: 'rotateY(180deg)'
-      })),
-      state('inactive', style({
-        transform: 'rotateY(0)'
-      })),
-      transition('active => inactive', animate('500ms ease-out')),
-      transition('inactive => active', animate('500ms ease-in'))
-    ])
-  ],
+  styleUrls: ['./starting-pitcher.component.scss']
 })
 export class StartingPitcherComponent implements OnInit {
 
@@ -62,6 +49,8 @@ export class StartingPitcherComponent implements OnInit {
   public teamsCompletedPlayingToday: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
   public teams: Array <any>;
+  public gameGroups: Array <any>;
+  public statData: Array <any> = [];
   
 
   constructor(private fbService: FirebaseService, 
@@ -233,19 +222,19 @@ export class StartingPitcherComponent implements OnInit {
 
   }
 
-  async sortData() {
+  sortData() {
     if (this.gamesToday === true) {
-      let promiseOne;
-      promiseOne = new Promise((resolve, reject) => {
-        this.dataService
-          .getInfo().subscribe(res => {
-            //console.log(res, 'got activeplayers from api!');
-            this.playerInfo = res['players'];
-            resolve();
-        });
-      });
+      // let promiseOne;
+      // promiseOne = new Promise((resolve, reject) => {
+      //   this.dataService
+      //     .getInfo().subscribe(res => {
+      //       //console.log(res, 'got activeplayers from api!');
+      //       this.playerInfo = res['players'];
+      //       resolve();
+      //   });
+      // });
 
-      let resultOne = await promiseOne;
+      // let resultOne = await promiseOne;
 
       this.dataService
         .getDaily().subscribe(res => {
@@ -264,62 +253,62 @@ export class StartingPitcherComponent implements OnInit {
                     console.log('this.starterIdData.length > 0 || this.noGamesToday === true...');
 
 
-                    if (this.myData && this.pitcherSpeed) {
-                      console.log('start sorting players for pitch speeds from firebase...');
-                      for (let fastballspeed of this.pitcherSpeed) {
-                        for (let speeddata of this.myData) {
+                    // if (this.myData && this.pitcherSpeed) {
+                    //   console.log('start sorting players for pitch speeds from firebase...');
+                    //   for (let fastballspeed of this.pitcherSpeed) {
+                    //     for (let speeddata of this.myData) {
 
-                          speeddata.playerNotPlayingYet = true;
-                          speeddata.playingRightNow = false;
-                          speeddata.playingOver = false;
-                          speeddata.gamedate = this.gameDate;
-                          speeddata.flip = 'inactive';
+                    //       speeddata.playerNotPlayingYet = true;
+                    //       speeddata.playingRightNow = false;
+                    //       speeddata.playingOver = false;
+                    //       speeddata.gamedate = this.gameDate;
+                    //       speeddata.flip = 'inactive';
 
-                          if (speeddata.stats.pitching.pitchesThrown > 0) {
-                            if (speeddata.stats.pitching.pitcher2SeamFastballs >= 0 && 
-                              speeddata.stats.pitching.pitcher4SeamFastballs >= 0 && 
-                              speeddata.stats.pitching.pitcherChangeups >= 0 && 
-                              speeddata.stats.pitching.pitcherCurveballs >= 0 && 
-                              speeddata.stats.pitching.pitcherCutters >= 0 && 
-                              speeddata.stats.pitching.pitcherSliders >= 0 && 
-                              speeddata.stats.pitching.pitcherSinkers >= 0 && 
-                              speeddata.stats.pitching.pitcherSplitters >= 0) {
-                              speeddata.player.favPitch = Math.max(speeddata.stats.pitching.pitcher2SeamFastballs, speeddata.stats.pitching.pitcher4SeamFastballs, speeddata.stats.pitching.pitcherChangeups, speeddata.stats.pitching.pitcherCurveballs, speeddata.stats.pitching.pitcherCutters, speeddata.stats.pitching.pitcherSliders, speeddata.stats.pitching.pitcherSinkers, speeddata.stats.pitching.pitcherSplitters);
-                              speeddata.player.favPitchPercent = Math.floor(speeddata.player.favPitch / speeddata.stats.pitching.pitchesThrown * 100);
-                            }
-                            if (speeddata.stats.pitching.earnedRunAvg)
-                              speeddata.stats.pitching.earnedRunAvg = parseFloat(speeddata.stats.pitching.earnedRunAvg).toFixed(2);
-                          } else {
-                            speeddata.firstStart = "First start this season.";
-                          }
+                    //       if (speeddata.stats.pitching.pitchesThrown > 0) {
+                    //         if (speeddata.stats.pitching.pitcher2SeamFastballs >= 0 && 
+                    //           speeddata.stats.pitching.pitcher4SeamFastballs >= 0 && 
+                    //           speeddata.stats.pitching.pitcherChangeups >= 0 && 
+                    //           speeddata.stats.pitching.pitcherCurveballs >= 0 && 
+                    //           speeddata.stats.pitching.pitcherCutters >= 0 && 
+                    //           speeddata.stats.pitching.pitcherSliders >= 0 && 
+                    //           speeddata.stats.pitching.pitcherSinkers >= 0 && 
+                    //           speeddata.stats.pitching.pitcherSplitters >= 0) {
+                    //           speeddata.player.favPitch = Math.max(speeddata.stats.pitching.pitcher2SeamFastballs, speeddata.stats.pitching.pitcher4SeamFastballs, speeddata.stats.pitching.pitcherChangeups, speeddata.stats.pitching.pitcherCurveballs, speeddata.stats.pitching.pitcherCutters, speeddata.stats.pitching.pitcherSliders, speeddata.stats.pitching.pitcherSinkers, speeddata.stats.pitching.pitcherSplitters);
+                    //           speeddata.player.favPitchPercent = Math.floor(speeddata.player.favPitch / speeddata.stats.pitching.pitchesThrown * 100);
+                    //         }
+                    //         if (speeddata.stats.pitching.earnedRunAvg)
+                    //           speeddata.stats.pitching.earnedRunAvg = parseFloat(speeddata.stats.pitching.earnedRunAvg).toFixed(2);
+                    //       } else {
+                    //         speeddata.firstStart = "First start this season.";
+                    //       }
 
-                          if (parseInt(fastballspeed.ID) === speeddata.player.id) {
+                    //       // if (parseInt(fastballspeed.ID) === speeddata.player.id) {
 
-                            speeddata.player.pitchSpeedAvg = fastballspeed.pitchSpeedAvg;
-                            speeddata.player.fastestPitch = fastballspeed.fastestPitch;
-                            speeddata.player.image = fastballspeed.image;
-                            speeddata.player.contractStartYear = fastballspeed.ContractStartYear;
-                            speeddata.player.contractTotalYears = fastballspeed.ContractTotalYears;
-                            speeddata.player.contractBaseSalary = fastballspeed.ContractBaseSalary;
-                            speeddata.player.contractTotalSalary = fastballspeed.ContractTotalSalary;
-                            speeddata.player.draftYear = fastballspeed.DraftYear;
-                            speeddata.player.draftRound = fastballspeed.DraftRound;
-                            speeddata.player.draftOverallPick = fastballspeed.DraftOverallPick;
-                            speeddata.player.draftRoundPick = fastballspeed.DraftRoundPick;
-                            if (fastballspeed.previousGameID != null) {
-                              speeddata.player.previousGame1 = fastballspeed.previousGameID[0];
-                            }
-                            if (fastballspeed.previousGameID != null && fastballspeed.previousGameID.length > 1) {
-                              speeddata.player.previousGame2 = fastballspeed.previousGameID[1];
-                            }
+                    //       //   speeddata.player.pitchSpeedAvg = fastballspeed.pitchSpeedAvg;
+                    //       //   speeddata.player.fastestPitch = fastballspeed.fastestPitch;
+                    //       //   speeddata.player.image = fastballspeed.image;
+                    //       //   speeddata.player.contractStartYear = fastballspeed.ContractStartYear;
+                    //       //   speeddata.player.contractTotalYears = fastballspeed.ContractTotalYears;
+                    //       //   speeddata.player.contractBaseSalary = fastballspeed.ContractBaseSalary;
+                    //       //   speeddata.player.contractTotalSalary = fastballspeed.ContractTotalSalary;
+                    //       //   speeddata.player.draftYear = fastballspeed.DraftYear;
+                    //       //   speeddata.player.draftRound = fastballspeed.DraftRound;
+                    //       //   speeddata.player.draftOverallPick = fastballspeed.DraftOverallPick;
+                    //       //   speeddata.player.draftRoundPick = fastballspeed.DraftRoundPick;
+                    //       //   if (fastballspeed.previousGameID != null) {
+                    //       //     speeddata.player.previousGame1 = fastballspeed.previousGameID[0];
+                    //       //   }
+                    //       //   if (fastballspeed.previousGameID != null && fastballspeed.previousGameID.length > 1) {
+                    //       //     speeddata.player.previousGame2 = fastballspeed.previousGameID[1];
+                    //       //   }
 
 
-                          }
+                    //       // }
 
-                        }
-                      }
+                    //     }
+                    //   }
 
-                    }
+                    // }
 
                     if (this.myData && this.gameStarters) {
                        //console.log('start sorting data for real gameID by PitcherID...');
@@ -505,62 +494,84 @@ export class StartingPitcherComponent implements OnInit {
                         }
                       }
 
-           if (this.myData && this.playerInfo) {
-            console.log('start sorting data for pictures and other info about player...');
-            for (let info of this.playerInfo) {
-              for (let data of this.myData) {
+          //  if (this.myData && this.playerInfo) {
+          //   console.log('start sorting data for pictures and other info about player...');
+          //   for (let info of this.playerInfo) {
+          //     for (let data of this.myData) {
                 
-                // if (data.team.Abbreviation === 'HOU' || data.team.Abbreviation === 'CLE' || data.team.Abbreviation === 'NYY' || data.team.Abbreviation === 'MIN' || data.team.Abbreviation === 'BOS') {
-                //   data.player.americanLeaguePlayoff = true;
-                // }
+          //       // if (data.team.Abbreviation === 'HOU' || data.team.Abbreviation === 'CLE' || data.team.Abbreviation === 'NYY' || data.team.Abbreviation === 'MIN' || data.team.Abbreviation === 'BOS') {
+          //       //   data.player.americanLeaguePlayoff = true;
+          //       // }
 
-                // if (data.team.Abbreviation === 'LAD' || data.team.Abbreviation === 'WAS' || data.team.Abbreviation === 'CHC' || data.team.Abbreviation === 'ARI' || data.team.Abbreviation === 'COL') {
-                //   data.player.nationalLeaguePlayoff = true;
-                // }
+          //       // if (data.team.Abbreviation === 'LAD' || data.team.Abbreviation === 'WAS' || data.team.Abbreviation === 'CHC' || data.team.Abbreviation === 'ARI' || data.team.Abbreviation === 'COL') {
+          //       //   data.player.nationalLeaguePlayoff = true;
+          //       // }
 
-                if (info.player.id === data.player.id) {
-                  data.player.image = info.player.officialImageSrc;
-                  if (info.player.drafted != null) {
-                    data.player.draftYear = info.player.drafted.year;
-                    data.player.draftRound = info.player.drafted.round;
-                  }
-                  if (info.player.highSchool != null) {
-                    data.player.highSchool = info.player.highSchool;
-                  }
-                  if (info.player.college != null) {
-                    data.player.college = info.player.college;
-                  }
-                  if (info.player.currentContractYear != null) {
-                    data.player.contractStartYear = info.player.currentContractYear.seasonStartYear;
-                    data.player.contractBaseSalary = info.player.currentContractYear.baseSalary;
-                    if (info.player.currentContractYear.overallContract != null)
-                      data.player.contractTotalYears = info.player.currentContractYear.overallContract.totalYears;
-                  }
-                }
-              }
+          //       // if (info.player.id === data.player.id) {
+          //       //   data.player.image = info.player.officialImageSrc;
+          //       //   if (info.player.drafted != null) {
+          //       //     data.player.draftYear = info.player.drafted.year;
+          //       //     data.player.draftRound = info.player.drafted.round;
+          //       //   }
+          //       //   if (info.player.highSchool != null) {
+          //       //     data.player.highSchool = info.player.highSchool;
+          //       //   }
+          //       //   if (info.player.college != null) {
+          //       //     data.player.college = info.player.college;
+          //       //   }
+          //       //   if (info.player.currentContractYear != null) {
+          //       //     data.player.contractStartYear = info.player.currentContractYear.seasonStartYear;
+          //       //     data.player.contractBaseSalary = info.player.currentContractYear.baseSalary;
+          //       //     if (info.player.currentContractYear.overallContract != null)
+          //       //       data.player.contractTotalYears = info.player.currentContractYear.overallContract.totalYears;
+          //       //   }
+          //       // }
+          //     }
 
 
-              }
+          //     }
 
              
 
-              this.dataService
-                .getPrevGameId().subscribe(res => {
-                //  console.log(res, 'got previous games array!');
-                  this.previousGames = res['games'];
-              });
-            }
+          //     this.dataService
+          //       .getPrevGameId().subscribe(res => {
+          //       //  console.log(res, 'got previous games array!');
+          //         this.previousGames = res['games'];
+          //     });
+          //   }
 
-                      //THIS FOR LOOP GETS AVG PITCH SPEED FOR EVERY PITCHER IN THIS LIST
-                      this.showData = this.myData;
-                     // console.log(this.showData, 'show data');
-                      this.dataService
-                        .sendStats(this.showData);
+           
+              this.statData = this.myData.reduce(function(r, a) {
+                if(a.team != null){
+                  r[a.gameId] = r[a.gameId] || [];
+                  r[a.gameId].push({'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
+                }
+                return r
+              }, Object.create(null));
+    
+              this.gameGroups = Object.keys(this.statData).map((key, index) => {
+                  return {game: key, pitchers: this.statData[key].sort((a, b) => a.location.localeCompare(b.location))};
+              });
+  
+              this.showMatchups();
+       
+
+                     
 
                     } else {
-                      this.showData = this.myData;
-                      this.dataService
-                        .sendStats(this.showData);
+                      this.statData = this.myData.reduce(function(r, a) {
+                        if(a.team != null){
+                          r[a.gameId] = r[a.gameId] || [];
+                          r[a.gameId].push({'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
+                        }
+                        return r
+                      }, Object.create(null));
+            
+                      this.gameGroups = Object.keys(this.statData).map((key, index) => {
+                          return {game: key, pitchers: this.statData[key].sort((a, b) => a.location.localeCompare(b.location))};
+                      });
+          
+                      this.showMatchups();
                     }
 
                   }
@@ -602,11 +613,14 @@ export class StartingPitcherComponent implements OnInit {
 
   }
 
-  flipBack(data) {
-    data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
+  public showMatchups() {
+    this.showData = this.gameGroups;
+    console.log(this.showData, 'show data');
+    this.dataService
+      .sendStats(this.showData);
   }
 
-  getPreviousGameStats(data) {
+  public getPreviousGameStats(data) {
 
     data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
     this.loadingPrevious = false;
