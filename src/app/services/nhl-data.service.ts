@@ -61,7 +61,7 @@ export class NHLDataService {
   play: Observable <any> = null;
   injured: Observable <any> = null;
   teamstats: Observable <any> = null;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
+  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
   headers: any;
   public dailyDate: string = '';
 

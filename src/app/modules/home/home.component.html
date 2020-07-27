@@ -73,7 +73,7 @@
           "
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.homeTeam?.logo +
               ')'
           }"
@@ -94,7 +94,7 @@
           "
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.awayTeam?.logo +
               ')'
           }"
@@ -192,7 +192,7 @@
           "
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.homeTeam?.logo +
               ')'
           }"
@@ -213,7 +213,7 @@
           "
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.awayTeam?.logo +
               ')'
           }"
@@ -303,15 +303,13 @@
     <span *ngIf="noNhlGamesMsg">{{ noNhlGamesMsg }}</span>
     <div *ngFor="let item of nhlSchedule; let i = index" class="col">
       <div class="teams-container" [ngStyle]="{ background: '#303030' }">
+          <!-- && compareDate(item?.schedule?.startTime) -->
         <span
           class="score-container"
-          *ngIf="
-            item?.schedule?.awayTeam?.abbreviation &&
-            compareDate(item?.schedule?.startTime)
-          "
+          *ngIf="item?.schedule?.homeTeam?.abbreviation"
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.homeTeam?.logo +
               ')'
           }"
@@ -327,9 +325,10 @@
 
         <span
           class="score-container"
+          *ngIf="item?.schedule?.awayTeam?.abbreviation"
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(25, 28, 46,1.0) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.awayTeam?.logo +
               ')'
           }"
@@ -349,8 +348,7 @@
       >
         {{ item?.schedule?.homeTeam?.abbreviation }} vs
         {{ item?.schedule?.awayTeam?.abbreviation }} <br />
-        Game: PPD @ {{ item.schedule?.venue?.name }}
-        <!-- {{item?.schedule?.startTime | date: 'shortTime'}} PST -->
+        Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{ item.schedule?.venue?.name }}
       </span>
       <div class="score-footer">
         <span *ngIf="item.schedule?.playedStatus === 'UNPLAYED'">

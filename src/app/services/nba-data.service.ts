@@ -44,8 +44,8 @@ export class NBADataService {
   }
 
   public selectedDate(d) {
-    //dailyDate = d;
-    dailyDate = '20200730';
+    dailyDate = d;
+    //dailyDate = '20200730';
   }
 
   sendHeaderOptions(h) {

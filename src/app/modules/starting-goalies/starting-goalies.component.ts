@@ -74,7 +74,7 @@ export class StartingGoaliesComponent implements OnInit {
   public tomorrowDate: any;
   public fullFirebaseResponse: any;
   public loading: boolean = true;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
   public teamSchedules: Array <any> = [];
   public stats: boolean = false;
   public weekResults: boolean = false;
@@ -411,7 +411,7 @@ export class StartingGoaliesComponent implements OnInit {
     if (this.gamesToday === true) {
       this.dataService
         .getDaily().subscribe(res => {
-          this.dailyStats = res['gamelogs'];
+          if (res != null) this.dailyStats = res['gamelogs'];
           resolve();
         })
     } else {
@@ -1202,7 +1202,7 @@ public showMatchups() {
         forkJoin(
             res['games'].map(
               g =>
-              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
+              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
               //.map(response => response.json())
             )
           )
