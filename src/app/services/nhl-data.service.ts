@@ -143,7 +143,7 @@ export class NHLDataService {
   }
 
   getStats(teams) {
-    let url = `${this.apiRoot}/player_stats_totals.json?position=G&team=`+teams;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-regular/player_stats_totals.json?position=G&team=`+teams;
     this.stats = this.http.get(url, {headers})
     return this.stats;
   }

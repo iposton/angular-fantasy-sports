@@ -21,17 +21,63 @@
                   
                 </div>
                 <div class="center-content">
-                    <span class="matup-text">{{data['pitchers'][0]?.playerObj?.player?.lastName}} <br> vs <br> {{data['pitchers'][1]?.playerObj?.player?.lastName}} </span> 
+                    <span class="matup-text">{{data['pitchers'][0] != null ? data['pitchers'][0]?.playerObj?.player?.lastName : data['pitchers'][1]?.playerObj?.player?.po}} <br> vs <br>
+                       {{data['pitchers'][1] != null ? data['pitchers'][1]?.playerObj?.player?.lastName : data['pitchers'][0]?.playerObj?.player?.po}} <br>
+                    </span>
+                    <span class="game-text">
+                      <span class="live" *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'LIVE'">LIVE</span>  
+                      <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
+                      data['pitchers'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['pitchers'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST</span> 
+                      <span class="postponed" *ngIf="data['pitchers'][0]?.playerObj?.sStatus === 'POSTPONED'">PPD</span>  
+                    </span>
                 </div>
-                <div class="right-content" [ngStyle]="{background: 'url(' + data['pitchers'][1]?.playerObj?.team?.logo +')'}">
+                <div class="right-content" [ngStyle]="{background: 'url(' + data['pitchers'][0]?.playerObj?.team?.opponentLogo +')'}">
                   <img src="{{data['pitchers'][1]?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
                 </div>
               </div>
               <div class="bottom-content">
-               <span class="left-stats"> ({{ data['pitchers'][0]?.playerObj?.stats?.pitching?.wins +'-'+ data['pitchers'][0]?.playerObj?.stats?.pitching?.losses }}) / {{ data['pitchers'][0]?.playerObj?.stats?.pitching?.earnedRunAvg }} /
-                {{ data['pitchers'][0]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's</span>  
-                <span class="right-stats"> ({{ data['pitchers'][1]?.playerObj?.stats?.pitching?.wins +'-'+ data['pitchers'][1]?.playerObj?.stats?.pitching?.losses }}) / {{ data['pitchers'][1]?.playerObj?.stats?.pitching?.earnedRunAvg }} /
-                  {{ data['pitchers'][1]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's</span>
+               <span class="left-stats"> 
+                 <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'UNPLAYED'">
+                    ({{ data['pitchers'][0]?.playerObj?.stats?.pitching?.wins +'-'+ data['pitchers'][0]?.playerObj?.stats?.pitching?.losses }}) /
+                    {{ data['pitchers'][0]?.playerObj?.stats?.pitching?.earnedRunAvg }} /
+                  {{ data['pitchers'][0]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's
+                 </span>
+                 <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'LIVE'">
+                    <!-- <span class="live">LIVE</span>  -->
+                    {{ data['pitchers'][0]?.playerObj?.player?.inningsToday }} I's
+                     {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC 
+                    {{ data['pitchers'][0]?.playerObj?.player?.hitsallowedToday }} H's 
+                    {{ data['pitchers'][0]?.playerObj?.player?.earnedrunsToday }} ER's 
+                    {{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's
+                 </span>
+                 <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED'">
+                    {{data['pitchers'][0]?.playerObj?.player?.lastName}} {{data['pitchers'][0]?.playerObj?.player?.winToday === 0 && data['pitchers'][0]?.playerObj?.player?.loseToday === 0 ? 'No D' : 
+                    data['pitchers'][0]?.playerObj?.player?.winToday === 1 ? 'Wins' : data['pitchers'][0]?.playerObj?.player?.loseToday === 1 ? 'Lost' : ''}}
+                    {{ data['pitchers'][0]?.playerObj?.player?.eraToday }} /
+                    {{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday}}K's
+                 </span>
+                
+              </span>  
+                <span class="right-stats"> 
+                  <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'UNPLAYED'">
+                      ({{ data['pitchers'][1]?.playerObj?.stats?.pitching?.wins +'-'+ data['pitchers'][1]?.playerObj?.stats?.pitching?.losses }}) /
+                      {{ data['pitchers'][1]?.playerObj?.stats?.pitching?.earnedRunAvg }} /
+                     {{ data['pitchers'][1]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's
+                  </span>
+                  <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'LIVE'">
+                      {{ data['pitchers'][1]?.playerObj?.player?.inningsToday }} I's
+                       {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC 
+                      {{ data['pitchers'][1]?.playerObj?.player?.hitsallowedToday }} H's 
+                      {{ data['pitchers'][1]?.playerObj?.player?.earnedrunsToday }} ER's 
+                      {{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's
+                   </span>
+                   <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED'">
+                      {{data['pitchers'][1]?.playerObj?.player?.lastName}} {{data['pitchers'][1]?.playerObj?.player?.winToday === 0 && data['pitchers'][1]?.playerObj?.player?.loseToday === 0 ? 'No D' : 
+                      data['pitchers'][1]?.playerObj?.player?.winToday === 1 ? 'Wins' : data['pitchers'][1]?.playerObj?.player?.loseToday === 1 ? 'Lost' : ''}}
+                      {{ data['pitchers'][1]?.playerObj?.player?.eraToday }} /
+                      {{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}}K's
+                   </span>
+                </span>
               </div>
           </div>
     </div>

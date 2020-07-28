@@ -439,8 +439,8 @@ export class StartingGoaliesComponent implements OnInit {
           });
         }
       
-      let values;
-      values = res['playerStatsTotals'];
+      let values = [];
+      if (res != null) values = res['playerStatsTotals'];
       this.myData = removeDuplicatesBy(x => x.player.id, values)
     
         // this.myData = res['playerStatsTotals'].filter(
@@ -990,7 +990,7 @@ public showMatchups() {
             this.dataService
               .getDaily().subscribe(res => {
                 console.log(res, "Daily stats updated!");
-                this.dailyStats = res['gamelogs'];
+                if (res != null) this.dailyStats = res['gamelogs'];
 
                 if (this.myData && this.dailyStats) {
                   console.log('start sorting data for daily stats...');
