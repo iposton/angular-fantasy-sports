@@ -43,7 +43,7 @@ export class StartingPitcherComponent implements OnInit {
   public postponed: boolean = false;
   public noGamesMsg: string = '';
   public errMessage: string = '';
-  public gameStarter: { gameID: string, playerID: string, score: any, status: any, scheduleStatus: any };
+  public gameStarter: { gameID: string, name: any, team: any, playerID: string, score: any, status: any, scheduleStatus: any };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
   public gameStarters: Array <any> = [];
   public teamsCompletedPlayingToday: Array <any> = [];
@@ -153,6 +153,8 @@ export class StartingPitcherComponent implements OnInit {
                   let res2 = null;
                   let game2 = null;
                   let score2 = null;
+                  let originalStart = null;
+                  let gameDay = null;
                 
                   
                 res.forEach((item, index) => {
@@ -168,38 +170,54 @@ export class StartingPitcherComponent implements OnInit {
                     }
 
                     res2.forEach((item, index) => {
-
-                      i2 = index;
-                      if (res2[i2].actual != null && res2[i2].expected != null) {
-                        //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
-                        this.gameStarter = {
-                          playerID: res2[i2].actual.lineupPositions[0].player.id,
-                          gameID: game2.id,
-                          score: score2,
-                          status: game2.playedStatus,
-                          scheduleStatus: game2.scheduleStatus
+                      gameDay = new Date(this.gameDate);
+                      originalStart = new Date(game2.startTime);
+                      console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
+                      if (gameDay.getDay() === originalStart.getDay()) {
+                        i2 = index;
+                        if (res2[i2].actual != null && res2[i2].expected != null) {
+                          //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
+                          this.gameStarter = {
+                            playerID: res2[i2].actual.lineupPositions[0].player.id,
+                            name: res2[i2].actual.lineupPositions[0].player.lastName,
+                            team: res2[i2].team.id,
+                            gameID: game2.id,
+                            score: score2,
+                            status: game2.playedStatus,
+                            scheduleStatus: game2.scheduleStatus
+                          }
+                          this.gameStarters.push(this.gameStarter);
+                          this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.id);
+                          playerString = this.starterIdData.join();
+  
+                        } else if (res2[i2].actual == null && res2[i2].expected != null) {
+                          //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
+                          this.gameStarter = {
+                            playerID: res2[i2].expected.lineupPositions[0].player.id,
+                            name: res2[i2].expected.lineupPositions[0].player.lastName,
+                            team: res2[i2].team.id,
+                            gameID: game2.id,
+                            score: score2,
+                            status: game2.playedStatus,
+                            scheduleStatus: game2.scheduleStatus
+                          }
+                          this.gameStarters.push(this.gameStarter);
+                          this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.id);
+                          playerString = this.starterIdData.join();
+                          
+                        } else if (res2[i2].actual == null && res2[i2].expected == null) {
+                          //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
+                          this.gameStarter = {
+                            playerID: 'UNKNOWN',
+                            name: 'UNKNOWN',
+                            team: res2[i2].team.id,
+                            gameID: game2.id,
+                            score: score2,
+                            status: game2.playedStatus,
+                            scheduleStatus: game2.scheduleStatus
+                          }
                         }
-                        this.gameStarters.push(this.gameStarter);
-                        this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.firstName+'-'+res2[i2].actual.lineupPositions[0].player.lastName);
-                        playerString = this.starterIdData.join();
-
-                      } else if (res2[i2].actual == null && res2[i2].expected != null) {
-                        //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
-                        this.gameStarter = {
-                          playerID: res2[i2].expected.lineupPositions[0].player.id,
-                          gameID: game2.id,
-                          score: score2,
-                          status: game2.playedStatus,
-                          scheduleStatus: game2.scheduleStatus
-                        }
-                        this.gameStarters.push(this.gameStarter);
-                        this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.firstName+'-'+res2[i2].expected.lineupPositions[0].player.lastName);
-                        playerString = this.starterIdData.join();
-                        
-                      } else {
-                        //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
                       }
-
                     });
                   });
 
@@ -243,11 +261,18 @@ export class StartingPitcherComponent implements OnInit {
 
             this.dataService
               .getStats(playerString).subscribe(res => {
-                  //console.log(res, "cumulative stats...");
-
-                  //this.myData = res['playerStatsTotals'];
-                  this.myData = res['playerStatsTotals'].filter(
-                  player => player.player.currentTeam != null && player.player.currentTeam.id === player.team.id);
+                function removeDuplicatesBy(keyFn, array) {
+                  var mySet = new Set();
+                  return array.filter(function(x) {  
+                      var key = keyFn(x), isNew = !mySet.has(key);
+                      if (isNew) mySet.add(key);  
+                      return isNew;
+                  });
+                }
+              
+              let values = [];
+              if (res != null) values = res['playerStatsTotals'];
+              this.myData = removeDuplicatesBy(x => x.player.id, values)
 
                   if (this.starterIdData.length > 0 || this.noGamesToday === true) {
                     console.log('this.starterIdData.length > 0 || this.noGamesToday === true...');
@@ -311,64 +336,15 @@ export class StartingPitcherComponent implements OnInit {
                     // }
 
                     if (this.myData && this.gameStarters) {
-                       //console.log('start sorting data for real gameID by PitcherID...');
-                    
-                      if (this.myData && this.dailySchedule) {
-                        console.log('start sorting data for daily schedule...');
-                        for (let schedule of this.dailySchedule) {
-
-                          for (let sdata of this.myData) {
-
-                            if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
-
-                              sdata.player.gameTime = schedule.schedule.startTime;
-                              sdata.team.gameField = schedule.schedule.venue.name;
-                              //sdata.gameId = schedule.id;
-                              sdata.player.gameLocation = "away";
-                              sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
-                              //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
-                              sdata.team.opponentId = schedule.schedule.homeTeam.id;
-
-                            }
-                            if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
-
-                              sdata.player.gameTime = schedule.schedule.startTime;
-                              sdata.team.gameField = schedule.schedule.venue.name;
-                              //sdata.gameId = schedule.schedule.id;
-                              sdata.player.gameLocation = "home";
-                              sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
-                              //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
-                              sdata.team.opponentId = schedule.schedule.awayTeam.id;
-                            }
-                          }
-                        }
-                      }
-
-                       for (let team of this.teamRef) {
-                         for (let data of this.myData) { 
-                            if (team.id === data.team.id) {
-                              data.team.color = team.teamColoursHex[0];
-                              data.team.accent = team.teamColoursHex[1];
-                              data.team.logo = team.officialLogoImageSrc;
-                              data.team.city = team.city;
-                              data.team.name = team.name;
-                            }
-                          }  
-                       }
-
-                    }
-
-                    if (this.myData && this.dailySchedule) {
-                      console.log('start sorting data for pitching opponent...');
-                      
-                        for (let gs of this.gameStarters) {
-
+                      for (let gs of this.gameStarters) {
                         for (let data of this.myData) {
-
+                          data.player.gameLocation = "none";
                           if (gs.playerID === data.player.id) {
                             data.gameId = gs.gameID;
                             data.score = gs.score;
                             data.gameStatus = gs.status;
+                            data.starterTeam = gs.team;
+                            data.sStatus = gs.scheduleStatus;
 
                             if (gs.status !== "UNPLAYED") {
                               if (data.player.gameLocation === 'home') {
@@ -402,12 +378,61 @@ export class StartingPitcherComponent implements OnInit {
                               data.postponed = true;
                             }
                           }
-
                         }
+                      }
+                       //console.log('start sorting data for real gameID by PitcherID...');
+                    
+                      if (this.myData && this.dailySchedule) {
+                        console.log('start sorting data for daily schedule...');
+                        for (let schedule of this.dailySchedule) {
+                          for (let sdata of this.myData) {
+                            
+                            if (schedule.schedule.awayTeam != null && schedule.schedule.homeTeam != null) {
+                              
+                              if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
 
+                                sdata.player.gameTime = schedule.schedule.startTime;
+                                sdata.team.gameField = schedule.schedule.venue.name;
+                                //sdata.gameId = schedule.id;
+                                sdata.player.gameLocation = "away";
+                                sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+                                //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
+                                sdata.team.opponentId = schedule.schedule.homeTeam.id;
+
+                              }
+                              if (schedule.schedule.homeTeam != null && schedule.schedule.homeTeam.id === sdata.starterTeam) {
+
+                                sdata.player.gameTime = schedule.schedule.startTime;
+                                sdata.team.gameField = schedule.schedule.venue.name;
+                                //sdata.gameId = schedule.schedule.id;
+                                sdata.player.gameLocation = "home";
+                                sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+                                //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
+                                sdata.team.opponentId = schedule.schedule.awayTeam.id;
+                              }
+                            } 
+                           
+                          } 
+                        }
                       }
 
-                   
+                       for (let team of this.teamRef) {
+                         for (let data of this.myData) { 
+                            if (team.id === data.starterTeam) {
+                              data.team.color = team.teamColoursHex[0];
+                              data.team.accent = team.teamColoursHex[1];
+                              data.team.logo = team.officialLogoImageSrc;
+                              data.team.city = team.city;
+                              data.team.name = team.name;
+                            }
+                          }  
+                       }
+
+                    }
+
+                    if (this.myData && this.dailySchedule) {
+                      console.log('start sorting data for pitching opponent...');
+                      
                       for (let schedule of this.myData) {
 
                         for (let sdata of this.myData) {
@@ -417,6 +442,24 @@ export class StartingPitcherComponent implements OnInit {
                             sdata.team.opponentLogo = schedule.team.logo;
                           }
                         }
+                      }
+
+                      for (let gs of this.gameStarters) {
+                        for (let data of this.myData) {
+                          
+                          if (data.team.opponentId === gs.team && 
+                            data.gameId === gs.gameID) {
+                              data.player.po = gs.name;
+                          }
+                        }
+                      }
+
+                      for (let team of this.teamRef) {
+                        for (let data of this.myData) { 
+                           if (team.id === data.team.opponentId) {
+                            data.team.opponentLogo = team.officialLogoImageSrc;;
+                           }
+                         }  
                       }
                     }
 
@@ -924,6 +967,7 @@ export class StartingPitcherComponent implements OnInit {
                             data.gameId = gs.gameID;
                             data.score = gs.score;
                             data.gameStatus = gs.status;
+                            data.starterTeam = gs.team;
 
                             if (gs.status !== "UNPLAYED") {
                               if (data.player.gameLocation === 'home') {
