@@ -172,7 +172,7 @@ export class StartingPitcherComponent implements OnInit {
                     res2.forEach((item, index) => {
                       gameDay = new Date(this.gameDate);
                       originalStart = new Date(game2.startTime);
-                      console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
+                      //console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
                       if (gameDay.getDay() === originalStart.getDay()) {
                         i2 = index;
                         if (res2[i2].actual != null && res2[i2].expected != null) {

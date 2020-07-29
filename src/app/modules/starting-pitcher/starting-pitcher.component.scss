@@ -12,7 +12,7 @@
     border-radius: 2px;
     background: #eee;
     color:#111;
-    min-height: 135px;
+    min-height: 140px;
   
     .content-wrapper {
       display: flex;
@@ -29,16 +29,21 @@
         text-transform: uppercase;
         text-align: center;
         font-weight: 900;
-        padding-top: 20px;
+        padding-top: 15px;
         font-size: 13px;
         .game-text {
           font-size: 10px;
           font-weight: 300;
           .live {
             color:#2ecc71;
+            font-weight: 600;
           }
           .postponed {
             color: red;
+            font-weight: 600;
+          }
+          .final {
+            font-weight: 600;
           }
         }
       }
@@ -90,11 +95,19 @@
       .left-stats {
         display: block;
         float: left;
+        .bold {
+          font-weight: 900;
+          font-size: 15px;
+        }
       }
     
       .right-stats {
         display: block;
         float: right;
+        .bold {
+          font-weight: 900;
+          font-size: 15px;
+        }
       }
     
       img {
