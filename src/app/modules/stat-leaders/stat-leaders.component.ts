@@ -315,7 +315,7 @@ export class StatLeadersComponent implements OnInit {
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
           this.mlbPitchingData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 30 && player.stats.pitching.pitcherStrikeouts > 25);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0 && player.stats.pitching.pitcherStrikeouts > 0);
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -343,7 +343,7 @@ export class StatLeadersComponent implements OnInit {
          //const mlbTeamsArray = Object.values(this.nbaTeams);
 
          this.mlbHittingData = res['playerStatsTotals'].filter(
-           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 30 && player.stats.batting.atBats > 80);
+           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0 && player.stats.batting.atBats > 2);
 
          for (let team of this.mlbTeams) {
            for (let data of this.mlbHittingData) { 

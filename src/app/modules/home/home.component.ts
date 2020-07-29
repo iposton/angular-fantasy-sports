@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
     this.mlbTeams = this.util.getMLBTeams();
     this.nflTeams = this.util.getNFLTeams();
     this.nbaTeams = this.util.getNBATeams();
-    this.nbaDataService.selectedDate('20200730');
+    this.nbaDataService.selectedDate(dailyDate);
     this.nhlDataService.selectedDate('20200801');
     this.selectedWeek = '1';
     let weekTimes = this.util.getWeekTimes();
@@ -250,7 +250,7 @@ public getTeamInfo(sched, teamRef) {
         }
         if (data.schedule.playedStatus === "LIVE") {
           this.liveGames = true;
-          console.log('interval set...');
+          //console.log('interval set...');
         }
      }  
   }

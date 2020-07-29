@@ -73,7 +73,7 @@
           "
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,0, 0,0.7) 80%), url(' +
               item?.schedule?.homeTeam?.logo +
               ')'
           }"
@@ -94,7 +94,7 @@
           "
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.awayTeam?.logo +
               ')'
           }"
@@ -192,7 +192,7 @@
           "
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,0, 0,0.7) 80%), url(' +
               item?.schedule?.homeTeam?.logo +
               ')'
           }"
@@ -213,7 +213,7 @@
           "
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.awayTeam?.logo +
               ')'
           }"
@@ -309,7 +309,7 @@
           *ngIf="item?.schedule?.homeTeam?.abbreviation"
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,0, 0,0.7) 80%), url(' +
               item?.schedule?.homeTeam?.logo +
               ')'
           }"
@@ -328,7 +328,7 @@
           *ngIf="item?.schedule?.awayTeam?.abbreviation"
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' +
               item?.schedule?.awayTeam?.logo +
               ')'
           }"
@@ -414,7 +414,7 @@
       <div class="teams-container" [ngStyle]="{ background: '#303030' }">
             <!-- *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" -->
         <span class="score-container mlb"
-        [ngStyle]="{background:'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0, 0,0.6) 80%), url(' + item?.schedule?.homeTeam?.logo + ')'}">
+        [ngStyle]="{background:'linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,0, 0,0.7) 80%), url(' + item?.schedule?.homeTeam?.logo + ')'}">
           <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
             <span class="lg"
               >{{ item?.schedule?.homeTeam?.abbreviation }}
@@ -428,7 +428,7 @@
           class="score-container mlb"
           [ngStyle]="{
             background:
-              'linear-gradient(-225deg, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.6) 80%), url(' +
+              'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.6) 80%), url(' +
               item?.schedule?.awayTeam?.logo +
               ')'
           }"

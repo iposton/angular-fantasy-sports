@@ -57,7 +57,7 @@ export class FirebaseService {
   }
 
    addData(starters) {
-      console.log(starters, 'starters.json in fb service...');
+      //console.log(starters, 'starters.json in fb service...');
       console.log('deleting data from fb...');
       this.af.list('/Starters').remove().then(_ => {
         console.log('deleted!');
@@ -68,12 +68,12 @@ export class FirebaseService {
   }
 
   getStarterData() {
-    console.log('getting starter data from firebase...');
+    //console.log('getting starter data from firebase...');
     return this.items2 = this.af.list('/Starters').valueChanges();
   }
 
   getHits() {
-    console.log('getting Hits data from firebase...');
+    //console.log('getting Hits data from firebase...');
     return this.hits = this.af.list('/Hits').valueChanges();
   }
 
@@ -95,7 +95,7 @@ export class FirebaseService {
   }
 
   getData() {
-    console.log('getting starter data from firebase...');
+    //console.log('getting starter data from firebase...');
     return this.items = this.af.list('/pitchspeeds').valueChanges();
   }
 

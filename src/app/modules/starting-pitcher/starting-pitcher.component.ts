@@ -205,18 +205,19 @@ export class StartingPitcherComponent implements OnInit {
                           this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.id);
                           playerString = this.starterIdData.join();
                           
-                        } else if (res2[i2].actual == null && res2[i2].expected == null) {
-                          //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
-                          this.gameStarter = {
-                            playerID: 'UNKNOWN',
-                            name: 'UNKNOWN',
-                            team: res2[i2].team.id,
-                            gameID: game2.id,
-                            score: score2,
-                            status: game2.playedStatus,
-                            scheduleStatus: game2.scheduleStatus
-                          }
-                        }
+                        } 
+                        // else if (res2[i2].actual == null && res2[i2].expected == null) {
+                        //   //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
+                        //   this.gameStarter = {
+                        //     playerID: 'UNKNOWN',
+                        //     name: 'UNKNOWN',
+                        //     team: res2[i2].team.id,
+                        //     gameID: game2.id,
+                        //     score: score2,
+                        //     status: game2.playedStatus,
+                        //     scheduleStatus: game2.scheduleStatus
+                        //   }
+                        // }
                       }
                     });
                   });
@@ -275,7 +276,7 @@ export class StartingPitcherComponent implements OnInit {
               this.myData = removeDuplicatesBy(x => x.player.id, values)
 
                   if (this.starterIdData.length > 0 || this.noGamesToday === true) {
-                    console.log('this.starterIdData.length > 0 || this.noGamesToday === true...');
+                  //  console.log('this.starterIdData.length > 0 || this.noGamesToday === true...');
 
 
                     // if (this.myData && this.pitcherSpeed) {
@@ -383,33 +384,42 @@ export class StartingPitcherComponent implements OnInit {
                        //console.log('start sorting data for real gameID by PitcherID...');
                     
                       if (this.myData && this.dailySchedule) {
-                        console.log('start sorting data for daily schedule...');
+                        let gameDay = null;
+                        let originalStart = null;
+                       // console.log('start sorting data for daily schedule...');
                         for (let schedule of this.dailySchedule) {
                           for (let sdata of this.myData) {
+                            gameDay = new Date(this.gameDate);
+                            originalStart = new Date(schedule.schedule.startTime);
                             
-                            if (schedule.schedule.awayTeam != null && schedule.schedule.homeTeam != null) {
-                              
-                              if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
+                            if (schedule.schedule.awayTeam != null && 
+                              schedule.schedule.homeTeam != null) {
+                              if (schedule.schedule.scheduleStatus != "POSTPONED" && gameDay.getDay() === originalStart.getDay()) {
 
-                                sdata.player.gameTime = schedule.schedule.startTime;
-                                sdata.team.gameField = schedule.schedule.venue.name;
-                                //sdata.gameId = schedule.id;
-                                sdata.player.gameLocation = "away";
-                                sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
-                                //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
-                                sdata.team.opponentId = schedule.schedule.homeTeam.id;
+                                if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
+                                  sdata.sStatus = schedule.schedule.scheduleStatus;
+                                  sdata.player.gameTime = schedule.schedule.startTime;
+                                  sdata.team.gameField = schedule.schedule.venue.name;
+                                  //sdata.gameId = schedule.id;
+                                  sdata.player.gameLocation = "away";
+                                  sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+                                  //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
+                                  sdata.team.opponentId = schedule.schedule.homeTeam.id;
+
+                                }
+                                if (schedule.schedule.homeTeam.id === sdata.starterTeam) {
+                                  sdata.sStatus = schedule.schedule.scheduleStatus;
+                                  sdata.player.gameTime = schedule.schedule.startTime;
+                                  sdata.team.gameField = schedule.schedule.venue.name;
+                                  //sdata.gameId = schedule.schedule.id;
+                                  sdata.player.gameLocation = "home";
+                                  sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+                                  //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
+                                  sdata.team.opponentId = schedule.schedule.awayTeam.id;
+                                }
 
                               }
-                              if (schedule.schedule.homeTeam != null && schedule.schedule.homeTeam.id === sdata.starterTeam) {
-
-                                sdata.player.gameTime = schedule.schedule.startTime;
-                                sdata.team.gameField = schedule.schedule.venue.name;
-                                //sdata.gameId = schedule.schedule.id;
-                                sdata.player.gameLocation = "home";
-                                sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
-                                //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
-                                sdata.team.opponentId = schedule.schedule.awayTeam.id;
-                              }
+                                
                             } 
                            
                           } 
@@ -431,7 +441,7 @@ export class StartingPitcherComponent implements OnInit {
                     }
 
                     if (this.myData && this.dailySchedule) {
-                      console.log('start sorting data for pitching opponent...');
+                      //console.log('start sorting data for pitching opponent...');
                       
                       for (let schedule of this.myData) {
 
@@ -457,24 +467,24 @@ export class StartingPitcherComponent implements OnInit {
                       for (let team of this.teamRef) {
                         for (let data of this.myData) { 
                            if (team.id === data.team.opponentId) {
-                            data.team.opponentLogo = team.officialLogoImageSrc;;
+                            data.team.opponentLogo = team.officialLogoImageSrc;
                            }
                          }  
                       }
                     }
 
                     if (this.myData && this.dailyStats) {
-                      console.log('start sorting data for daily stats...');
+                     // console.log('start sorting data for daily stats...');
                       for (let daily of this.dailyStats) {
                         for (let mdata of this.myData) {
 
-                          if (daily.team.abbreviation === mdata.team.abbreviation) {
-                            if (daily.stats.pitching.wins === 1 || daily.stats.pitching.losses === 1) {
-                              this.gameover = true;
-                             // console.log(daily.team.abbreviation, 'this team has completed their game today...');
-                              this.teamsCompletedPlayingToday.push(daily.team.abbreviation);
-                            }
-                          }
+                          // if (daily.team.abbreviation === mdata.team.abbreviation) {
+                          //   if (daily.stats.pitching.wins === 1 || daily.stats.pitching.losses === 1) {
+                          //     this.gameover = true;
+                          //    // console.log(daily.team.abbreviation, 'this team has completed their game today...');
+                          //     this.teamsCompletedPlayingToday.push(daily.team.abbreviation);
+                          //   }
+                          // }
 
                           if (daily.player.id === mdata.player.id) {
                             if (daily.stats.pitching.pitcher2SeamFastballs >= 0 && 
@@ -490,9 +500,6 @@ export class StartingPitcherComponent implements OnInit {
                             }
                             //console.log(daily.game, 'get game info by player id')
                             mdata.gameId = daily.game.id;
-                            mdata.playerNotPlayingYet = false;
-                            //this.liveGames = true;
-                            mdata.player.playingToday = true;
                             mdata.player.winToday = daily.stats.pitching.wins;
                             mdata.player.loseToday = daily.stats.pitching.losses;
                             mdata.player.saveToday = daily.stats.pitching.saves;
@@ -510,32 +517,23 @@ export class StartingPitcherComponent implements OnInit {
                             mdata.stats.pitching.pitcherSlidersToday = daily.stats.pitching.pitcherSliders;
                             mdata.stats.pitching.pitcherSinkersToday = daily.stats.pitching.pitcherSinkers;
                             mdata.stats.pitching.pitcherSplittersToday = daily.stats.pitching.pitcherSplitters;
-                            if (daily.stats.pitching.pitchesThrown > 0 && daily.stats.pitching.wins === 0 && daily.stats.pitching.losses === 0) {
-                              mdata.playingRightNow = true;
-
-                            } else if (daily.stats.pitching.pitchesThrown > 0 && daily.stats.pitching.wins === 1 || daily.stats.pitching.losses === 1) {
-                              mdata.playingRightNow = false;
-                              // mdata.playingOver = true;
-                              this.gameover = true;
-                            }
-                          } else {
-
+                            
                           }
 
                         }
                       }
 
-                      if (this.teamsCompletedPlayingToday != null) {
-                        for (let complete of this.teamsCompletedPlayingToday) {
-                          for (let comdata of this.myData) {
-                            if (comdata.team.abbreviation === complete) {
-                              comdata.playingRightNow = false;
-                              comdata.playingOver = true;
-                            }
+                      // if (this.teamsCompletedPlayingToday != null) {
+                      //   for (let complete of this.teamsCompletedPlayingToday) {
+                      //     for (let comdata of this.myData) {
+                      //       if (comdata.team.abbreviation === complete) {
+                      //         comdata.playingRightNow = false;
+                      //         comdata.playingOver = true;
+                      //       }
 
-                          }
-                        }
-                      }
+                      //     }
+                      //   }
+                      // }
 
           //  if (this.myData && this.playerInfo) {
           //   console.log('start sorting data for pictures and other info about player...');
@@ -753,7 +751,7 @@ export class StartingPitcherComponent implements OnInit {
              r[a.pitcher].push(a.pitchspeedStart);
              return r
            }, Object.create(null));
-           console.log('made groups of pichers pitch speeds by ID...');
+           //console.log('made groups of pichers pitch speeds by ID...');
 
          }
          this.myData.forEach((data, index) => {
@@ -789,8 +787,6 @@ export class StartingPitcherComponent implements OnInit {
 
   getGameStats(data, gid) {
   // console.log(data, 'whats going on');
-
-    data.flip = (data.flip == 'inactive') ? 'active' : 'inactive';
    
     this.dataService
       .getScore(gid).subscribe(res => {
@@ -830,7 +826,7 @@ export class StartingPitcherComponent implements OnInit {
      console.log(err, 'error getting boxscore');
 
    });
-    console.log(`${this.apiRoot}/games/`+gid+`/playbyplay.json`);
+    //console.log(`${this.apiRoot}/games/`+gid+`/playbyplay.json`);
     this.http.get(`${this.apiRoot}/games/`+gid+`/playbyplay.json`, { headers })
       .subscribe(res => {
             //console.log(res, 'got play by play game data for ' + data.player.lastName);
@@ -909,7 +905,7 @@ export class StartingPitcherComponent implements OnInit {
              r[a.pitcher].push(a.pitchspeedStart);
              return r
            }, Object.create(null));
-           console.log('made groups of pichers pitch speeds by ID...');
+          // console.log('made groups of pichers pitch speeds by ID...');
 
          }
          this.myData.forEach((data, index) => {
@@ -957,7 +953,7 @@ export class StartingPitcherComponent implements OnInit {
                 this.dailyStats = res['gamelogs'];
 
                   if (this.myData && this.dailySchedule) {
-                      console.log('start sorting data for pitching opponent...');
+                    //  console.log('start sorting data for pitching opponent...');
                       
                         for (let gs of this.gameStarters) {
 
@@ -1004,7 +1000,7 @@ export class StartingPitcherComponent implements OnInit {
                     }
 
                 if (this.myData && this.dailyStats) {
-                  console.log('start sorting data for daily stats...');
+                  //console.log('start sorting data for daily stats...');
                   for (let daily of this.dailyStats) {
                     for (let mdata of this.myData) {
 

@@ -49,18 +49,18 @@ export class DataService {
   }
 
   sendStats(statsArray) {
-    console.log("sending stats to service...");
+    //console.log("sending stats to service...");
     sending = statsArray;
   }
 
   getSentStats() {
-    console.log("stats sent to component...");
+    //console.log("stats sent to component...");
     sent = sending;
     return sent;
   }
 
   sendAllStats(allstatsArray) {
-    console.log("sending all stats to service...");
+    //console.log("sending all stats to service...");
     sendingAll = allstatsArray;
   }
 
@@ -97,7 +97,7 @@ export class DataService {
     //if (!this.stats) {
       //console.log('getting cumulative_player_stats by player ID from API...', players);
       //let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&player=`+playerID;
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular/player_stats_totals.json?position=P&player=${players}`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=P&player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     //}
@@ -105,13 +105,13 @@ export class DataService {
   }
 
    getAllStats() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular/player_stats_totals.json?position=P`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=P`;
     this.allstats = this.http.get(url, {headers})
     return this.allstats;
   }
 
   getAllHitters() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2019-regular/player_stats_totals.json?position=OF,1B,2B,3B,C,SS`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=OF,1B,2B,3B,C,SS`;
     this.hitstats = this.http.get(url, {headers})
     return this.hitstats;
   }
