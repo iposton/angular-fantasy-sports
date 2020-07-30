@@ -245,7 +245,7 @@ export class StartingFiveComponent implements OnInit {
                   nbaTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200309-to-20200315`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200730-to-20200805`, { headers })
                     
                   )
                 )
@@ -430,6 +430,7 @@ export class StartingFiveComponent implements OnInit {
   
                 if (starter.playerID === data.player.id) {
                   data.starterInfo = starter;
+                  data.gameId = starter.gameID;
                   data.player['currentTeam'].abbreviation = starter.currentTeam;
                   data.player.lineupTeam = starter.currentTeam;
                   if (starter.status === "LIVE") {
@@ -538,26 +539,15 @@ export class StartingFiveComponent implements OnInit {
 
           this.groups = this.myData.reduce(function (r, a) {
             r[a.player['currentTeam'].abbreviation] = r[a.player['currentTeam'].abbreviation] || [];
-            r[a.player['currentTeam'].abbreviation].push({'of': 'of', 'playerObj': a});
+            r[a.player['currentTeam'].abbreviation].push({gid: a.gameId, 'of': 'of', 'playerObj': a});
             return r;
            }, Object.create(null));
 
-                      // this.tsGroups = this.teamStats.reduce(function (r, a) {
-                      //   r[a.team.abbreviation] = r[a.team.abbreviation] || [];
-                      //   r[a.team.abbreviation].push(a);
-                      //   return r;
-  
-                      // }, Object.create(null));
-
-                      // this.schedGroups = this.teamSchedules.reduce(function (r, a) {
-                      //   r[a.team] = r[a.team] || [];
-                      //   r[a.team].push(a);
-                      //   return r;
-  
-                      // }, Object.create(null));
-
           this.lineGroups = Object.keys(this.groups).map((key, index) => {
-              return {team: key, offensePlayers: this.groups[key].filter(item => item.of)};
+            return {id: this.groups[key][0].gid != null ? this.groups[key][0].gid : 
+              this.groups[key][1].gid != null ? this.groups[key][1].gid : 
+              this.groups[key][2].gid, 
+              team: key, offensePlayers: this.groups[key].filter(item => item.of)};   
           });
 
           this.showTeams();
@@ -571,7 +561,12 @@ export class StartingFiveComponent implements OnInit {
   }
 
   public showTeams() {
-    this.showData = this.lineGroups;
+    this.showData = this.lineGroups.sort((a, b) => {
+      if (a.id <= b.id) return -1
+      else if (a.id >= b.id) return 1
+      else return 0
+    });
+    console.log('show data', this.showData);
     this.dataService
        .sendStats(this.showData, this.myData, this.dailySchedule);
     this.loading = false;

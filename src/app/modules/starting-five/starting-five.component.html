@@ -67,7 +67,7 @@
 
 <div *ngIf="showData != null && starterIdData.length > 0" class="main-row starting-five">
   <section [ngClass]="{'dn' : !startersSection}">
-    <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showData | orderBy: 'nfl'">
+    <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showData">
       <div id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="mat-card-sp">
         <div>
           <div class="content-wrapper">
