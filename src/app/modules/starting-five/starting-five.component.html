@@ -124,6 +124,51 @@
           </div>
         </div>
       </div>
+      <div *ngIf="twitter">
+          <div class="card-wrap-sp mat-elevation-z6 position-box twitter">
+             
+             <div>
+               <div class="content-wrapper">
+                 <div class="row">
+                 <div class="w100">
+                     #NBA {{ gameDate | date:'fullDate' }}
+                 </div>
+                 <div class="w100">
+                     #Top5 Starting/Expected
+                 </div>
+                   <div *ngFor="let item of data.offensePlayers; let i=index" class="w100">
+                     <span [ngClass]="{'left-content' : !item?.playerObj?.starterInfo?.bench, 'dn' : item?.playerObj?.starterInfo?.bench}" (click)="$event.stopPropagation()">
+                       <span class="player-infos">
+                         <span class="names" *ngIf="!mobile">
+                             <span *ngIf="item?.playerObj?.player?.firstName != 'Shai'"> 
+                               {{ teams[item.playerObj?.player['currentTeam'].abbreviation].twitter + ' ' + item.playerObj?.player.lastName}}
+                             </span>
+                             <span *ngIf="item?.playerObj?.player?.firstName === 'Shai'"> 
+                               {{ teams[item.playerObj?.player['currentTeam'].abbreviation].twitter }} S. {{item.playerObj?.player.lastName}}  
+                             </span>
+                           </span>
+                           <span class="names" *ngIf="mobile">
+                             <span> 
+                               {{ teams[item.playerObj?.player['currentTeam'].abbreviation].twitter + ' ' + item.playerObj?.player.lastName}} 
+                             </span>
+                           </span>
+                           <app-stat-toggle
+                           [status]="item?.playerObj?.starterInfo?.status" 
+                           [item]="item" 
+                           [position]="'ALL'"
+                           [stats]="stats"></app-stat-toggle>
+                               
+                         </span>
+                       </span>
+                   </div>
+                   <div class="w100">
+                       #NBATwitter #Stats
+                   </div>
+                 </div>
+               </div>
+             </div>
+         </div>
+       </div>
     </div>
   </section>
  

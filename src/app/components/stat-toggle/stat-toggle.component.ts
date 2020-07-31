@@ -21,63 +21,63 @@ export class StatToggleComponent implements OnInit {
   public getData(item, status, pos, s) {
     if (s === '1') {
       if (pos != 'ALL') {
-        this.statArr = status === 'LIVE' ? [`${item.player.pts} Pts`, `${item.player.min} Min`, `${item.player.reb} Reb`] :
+        this.statArr = status != 'UNPLAYED' ? [`${item.player.pts} Pts`, `${item.player.min} Min`, `${item.player.reb} Reb`] :
         [`${item.stats.offense.ptsPerGame} Pts`, `${Math.floor(item.stats.miscellaneous.minSecondsPerGame / 60)} Min`, `${item.stats.rebounds.rebPerGame} Reb`];    
       } else if (pos === 'ALL') {
-        this.statArr = status === 'LIVE' ? [`${item.playerObj.player.pts} Pts`, `${item.playerObj.player.min} Min`] :
+        this.statArr = status != 'UNPLAYED' ? [`${item.playerObj.player.pts} Pts`, `${item.playerObj.player.min} Min`] :
         [`${item.playerObj.stats.offense.ptsPerGame} Pts`, `${Math.floor(item.playerObj.stats.miscellaneous.minSecondsPerGame / 60)} Min`];
       } 
 
     } else if (s === '2') {
       if (pos != 'ALL') { 
-        this.statArr[1] = status === 'LIVE' ? `${item.player.reb} Reb` : `${item.stats.rebounds.rebPerGame} Reb`;
-        this.statArr[2] = status === 'LIVE' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.reb} Reb` : `${item.stats.rebounds.rebPerGame} Reb`;
+        this.statArr[2] = status != 'UNPLAYED' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;
       } else if (pos === 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.playerObj.player.reb} Reb` : 
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.playerObj.player.reb} Reb` : 
         `${item.playerObj.stats.rebounds.rebPerGame} Reb`;  
       } 
 
     } else if (s === '3') {
       if (pos != 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;    
-        this.statArr[2] = status === 'LIVE' ? `${item.player.stl} Stl` : `${item.stats.defense.stlPerGame} Stl`;
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;    
+        this.statArr[2] = status != 'UNPLAYED' ? `${item.player.stl} Stl` : `${item.stats.defense.stlPerGame} Stl`;
       } else if (pos === 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.playerObj.player.ast} Ast` :
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.playerObj.player.ast} Ast` :
         `${item.playerObj.stats.offense.astPerGame} Ast`;  
       }
 
     } else if (s === '4') {
       if (pos != 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.player.stl} Stl` : `${item.stats.defense.stlPerGame} Stl`;          
-        this.statArr[2] = status === 'LIVE' ? `${item.player.blk} Blk` : `${item.stats.defense.blkPerGame} Blk`;
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.stl} Stl` : `${item.stats.defense.stlPerGame} Stl`;          
+        this.statArr[2] = status != 'UNPLAYED' ? `${item.player.blk} Blk` : `${item.stats.defense.blkPerGame} Blk`;
       } else if (pos === 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.playerObj.player.stl} Stl` :
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.playerObj.player.stl} Stl` :
         `${item.playerObj.stats.defense.stlPerGame} Stl`;  
       }
     } else if (s === '5') {
       if (pos != 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;         
-        this.statArr[2] = status === 'LIVE' ? `${item.player.stl} Stl` : `${item.stats.defense.stlPerGame} Stl`;
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;         
+        this.statArr[2] = status != 'UNPLAYED' ? `${item.player.stl} Stl` : `${item.stats.defense.stlPerGame} Stl`;
       } else if (pos === 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.playerObj.player.blk} Blk` :
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.playerObj.player.blk} Blk` :
         `${item.playerObj.stats.defense.blkPerGame} Blk`;
       }
       
     } else if (s === '6') {
       if (pos != 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;         
-        this.statArr[2] = status === 'LIVE' ? `${item.player.tpm} TPM` : `${item.stats.fieldGoals.fg3PtMadePerGame} TPM`;
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;         
+        this.statArr[2] = status != 'UNPLAYED' ? `${item.player.tpm} TPM` : `${item.stats.fieldGoals.fg3PtMadePerGame} TPM`;
       } else if (pos === 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.playerObj.player.tpm} TPM` : 
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.playerObj.player.tpm} TPM` : 
         `${item.playerObj.stats.fieldGoals.fg3PtMadePerGame} TPM`;
       }
 
     } else if (s === '7') {
       if (pos != 'ALL') {          
-        this.statArr[2] = status === 'LIVE' ? `${item.player.fga} FGA` :    
+        this.statArr[2] = status != 'UNPLAYED' ? `${item.player.fga} FGA` :    
         `${item.stats.fieldGoals.fgAttPerGame} FGA`;  
       } else if (pos === 'ALL') {
-        this.statArr[1] = status === 'LIVE' ? `${item.playerObj.player.fga} FGA` :
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.playerObj.player.fga} FGA` :
         this.statArr[1] = `${item.playerObj.stats.fieldGoals.fgAttPerGame} FGA`; 
       }  
     } else if (s === '8') {

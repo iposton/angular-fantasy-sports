@@ -448,7 +448,8 @@
       >
         {{ item?.schedule?.homeTeam?.abbreviation }} vs
         {{ item?.schedule?.awayTeam?.abbreviation }} <br />
-        Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{ item.schedule?.venue?.name }}
+       <span *ngIf="item.schedule?.scheduleStatus === 'NORMAL'">Game: {{item?.schedule?.startTime | date: 'shortTime'}} PST @ {{ item.schedule?.venue?.name }}</span>
+       <span *ngIf="item.schedule?.scheduleStatus === 'POSTPONED'">PPD</span>
       </span>
       <div class="score-footer">
         <span *ngIf="item.schedule?.playedStatus === 'UNPLAYED'">

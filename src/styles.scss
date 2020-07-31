@@ -1062,6 +1062,10 @@ ul {
       }
   }
 
+  .card-wrap-sp.twitter {
+    width: 80%!important;
+  }
+  
   .card-wrap-sp.position-box {
     width: 38%!important;
     padding: 20px;
@@ -1137,7 +1141,7 @@ ul {
 // MLB
 .mlb-page {
   text-align: center;
-  
+
   .card-wrap-sp {
     display: inline-block;
     margin: 20px;
