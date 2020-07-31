@@ -24,6 +24,7 @@ export class StartingPitcherComponent implements OnInit {
   public players: Array <any>;
   public pitcherSpeed: Array <any>;
   public starterIdData: Array <any> = [];
+  public batterIdData: Array <any> = [];
   public specificFastballData: Array <any> = [];
   public specificFastballDataById: Array <any> = [];
   public speedResults: Array <any> = [];
@@ -43,9 +44,20 @@ export class StartingPitcherComponent implements OnInit {
   public postponed: boolean = false;
   public noGamesMsg: string = '';
   public errMessage: string = '';
-  public gameStarter: { gameID: string, name: any, team: any, playerID: string, score: any, status: any, scheduleStatus: any };
+  public gameStarter: { 
+    gameID: string, 
+    name: any, 
+    team: any, 
+    playerID: string, 
+    score: any, 
+    status: any, 
+    scheduleStatus: any,
+    position: any,
+    startType: any 
+  };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
   public gameStarters: Array <any> = [];
+  public gameBatters: Array <any> = [];
   public teamsCompletedPlayingToday: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
   public teams: Array <any>;
@@ -143,7 +155,7 @@ export class StartingPitcherComponent implements OnInit {
                   res['games'].map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=P`, { headers })
+                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=P,BO1,BO2,BO3,BO4`, { headers })
                     
                   )
                 )
@@ -176,48 +188,58 @@ export class StartingPitcherComponent implements OnInit {
                       if (gameDay.getDay() === originalStart.getDay()) {
                         i2 = index;
                         if (res2[i2].actual != null && res2[i2].expected != null) {
-                          //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
-                          this.gameStarter = {
-                            playerID: res2[i2].actual.lineupPositions[0].player.id,
-                            name: res2[i2].actual.lineupPositions[0].player.lastName,
-                            team: res2[i2].team.id,
-                            gameID: game2.id,
-                            score: score2,
-                            status: game2.playedStatus,
-                            scheduleStatus: game2.scheduleStatus
+
+                          for (let position of res2[i2].actual.lineupPositions) {
+                             //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
+                            this.gameStarter = {
+                              playerID: position.player.id,
+                              name: position.player.lastName,
+                              team: res2[i2].team.id,
+                              gameID: game2.id,
+                              score: score2,
+                              status: game2.playedStatus,
+                              scheduleStatus: game2.scheduleStatus,
+                              position: position['position'],
+                              startType: 'actual'
+                            }
+                            if (position['position'] === 'P') {
+                              this.gameStarters.push(this.gameStarter);
+                              this.starterIdData.push(position.player.id);
+                            } else {
+                              this.gameBatters.push(this.gameStarter);
+                              this.batterIdData.push(position.player.id);
+                            }
+                            
                           }
-                          this.gameStarters.push(this.gameStarter);
-                          this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.id);
+                         
                           playerString = this.starterIdData.join();
   
                         } else if (res2[i2].actual == null && res2[i2].expected != null) {
                           //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
-                          this.gameStarter = {
-                            playerID: res2[i2].expected.lineupPositions[0].player.id,
-                            name: res2[i2].expected.lineupPositions[0].player.lastName,
-                            team: res2[i2].team.id,
-                            gameID: game2.id,
-                            score: score2,
-                            status: game2.playedStatus,
-                            scheduleStatus: game2.scheduleStatus
-                          }
-                          this.gameStarters.push(this.gameStarter);
-                          this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.id);
-                          playerString = this.starterIdData.join();
-                          
+                          for (let position of res2[i2].expected.lineupPositions) {
+                            //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
+                           this.gameStarter = {
+                             playerID: position.player.id,
+                             name: position.player.lastName,
+                             team: res2[i2].team.id,
+                             gameID: game2.id,
+                             score: score2,
+                             status: game2.playedStatus,
+                             scheduleStatus: game2.scheduleStatus,
+                             position: position['position'],
+                             startType: 'expected'
+                           }
+                           if (position['position'] === 'P') {
+                             this.gameStarters.push(this.gameStarter);
+                             this.starterIdData.push(position.player.id);
+                           } else {
+                             this.gameBatters.push(this.gameStarter);
+                             this.batterIdData.push(position.player.id);
+                           }
+                           
+                         }
+                          playerString = this.starterIdData.join();        
                         } 
-                        // else if (res2[i2].actual == null && res2[i2].expected == null) {
-                        //   //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
-                        //   this.gameStarter = {
-                        //     playerID: 'UNKNOWN',
-                        //     name: 'UNKNOWN',
-                        //     team: res2[i2].team.id,
-                        //     gameID: game2.id,
-                        //     score: score2,
-                        //     status: game2.playedStatus,
-                        //     scheduleStatus: game2.scheduleStatus
-                        //   }
-                        // }
                       }
                     });
                   });
@@ -656,7 +678,7 @@ export class StartingPitcherComponent implements OnInit {
 
   public showMatchups() {
     this.showData = this.gameGroups;
-    console.log(this.showData, 'show data');
+    //console.log(this.showData, 'show data', this.gameBatters, 'batters');
     this.dataService
       .sendStats(this.showData);
   }
