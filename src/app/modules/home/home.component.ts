@@ -11,6 +11,8 @@ import {
   NFLDataService,
   UtilService } from '../../services/index';
 import * as CryptoJS from 'crypto-js';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser} from '@angular/common';
 
 
 
@@ -84,6 +86,7 @@ export class HomeComponent implements OnInit {
   public mlbSched: boolean = true;
   public selectedWeek: any;
   public tomorrowDate: any;
+  public testBrowser: boolean;
 
   tweetDay: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-regular";
@@ -95,7 +98,8 @@ export class HomeComponent implements OnInit {
      public nbaDataService: NBADataService,
      public nflDataService: NFLDataService,
      public util: UtilService,
-     private meta: Meta) {
+     private meta: Meta,
+     @Inject(PLATFORM_ID) platformId: string) {
       this.meta.addTag({ name: 'twitter:card', content: 'summary_large_image' });
       this.meta.addTag({ name: 'twitter:site', content: '@FanSpRes' });
       this.meta.addTag({ name: 'twitter:title', content: 'NHL and NBA Stats & Starters' });
@@ -126,6 +130,8 @@ export class HomeComponent implements OnInit {
       this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
     }
 
+    this.testBrowser = isPlatformBrowser(platformId);
+
   }
 
 public compareDate (start) {
@@ -138,7 +144,7 @@ public compareDate (start) {
 
 loadData() {
 
-     this.dataService
+  this.nbaDataService
        .getEnv().subscribe(res => {
         let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
         let originalText = bytes.toString(CryptoJS.enc.Utf8);
@@ -257,35 +263,31 @@ public getTeamInfo(sched, teamRef) {
 }
 
   ngOnInit() {
-    //console.log(window.innerWidth, 'screen width', window, 'window');
-    if (window.innerWidth < 700) { // 768px portrait
-      this.mobile = true;
-    }
-    if (this.sentData === undefined) {
-      this.loadData();
-      const MILLISECONDS_IN_TEN_MINUTES = 600000;
-      interval(MILLISECONDS_IN_TEN_MINUTES)
-        .subscribe(() => {
-          if (this.liveGames === true) {
-            console.log('games are live get updates...');
-            this.loadData(); 
-          } else {
-            console.log('No games then no daily stats either. :(');
-          }
-        });
-
-    } else {
-     
-        // this.loading = false;
-        // this.showDataYesterday = this.sentYesterdayData;
-        // this.gameDate = this.showDataYesterday["0"].team.today;
+    if (this.testBrowser) {
+      //console.log(window.innerWidth, 'screen width', window, 'window');
+      if (window.innerWidth < 700) { // 768px portrait
+        this.mobile = true;
+      }
+      if (this.sentData === undefined) {
+        
+        console.log(this.testBrowser, 'isBrowser?');
       
+        console.log('safe to set interval');
+        this.loadData();   
+        const MILLISECONDS_IN_TEN_MINUTES = 600000;
+        interval(MILLISECONDS_IN_TEN_MINUTES)
+          .subscribe(() => {
+            if (this.liveGames === true) {
+              console.log('games are live get updates...');
+              this.loadData(); 
+            } else {
+              console.log('No games then no daily stats either. :(');
+            }
+          });
+      
+
+      } 
     }
   }
-
-  public isVisibleOnDesktop() {
-    // console.log('width over 600px');
-  }
-
 
 }

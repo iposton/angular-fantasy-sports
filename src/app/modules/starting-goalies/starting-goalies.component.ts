@@ -1,10 +1,11 @@
 import { Observable, interval, forkJoin } from 'rxjs';
-import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren  } from '@angular/core';
+import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren, PLATFORM_ID  } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { DatePipe, PercentPipe } from '@angular/common';
+import { DatePipe, PercentPipe, isPlatformBrowser } from '@angular/common';
 import * as CryptoJS from 'crypto-js';
+
 
 import {
   NHLDataService,
@@ -114,6 +115,7 @@ export class StartingGoaliesComponent implements OnInit {
       twitterHandle: null
     }
   };
+  public testBrowser: boolean;
 
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,
@@ -123,7 +125,8 @@ export class StartingGoaliesComponent implements OnInit {
     private tomorrowService: TomorrowService, 
     public router: Router, 
     public util: UtilService,
-    public gaService: GoogleAnalyticsService) {
+    public gaService: GoogleAnalyticsService,
+    @Inject(PLATFORM_ID) platformId: string) {
     yesterday = this.dataService.getYesterday();
     tomorrow = this.dataService.getTomorrow();
     today = this.dataService.getToday();
@@ -142,6 +145,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.sentLastweek = this.dataService.getLastweek();
 
     this.dataService.checkDay();
+    this.testBrowser = isPlatformBrowser(platformId);
   }
 
   public getByDate(event) {
@@ -700,8 +704,7 @@ export class StartingGoaliesComponent implements OnInit {
               data.player.startingToday = true;
               data.player.startingTodayNow = false;
 
-              console.log(data.player, 'confirmed or probable today');
-
+              //console.log(data.player, 'confirmed or probable today');
               this.startersData.push(data);
             }
 
@@ -716,8 +719,7 @@ export class StartingGoaliesComponent implements OnInit {
               data.player.startingToday = true;
               data.player.startingTodayNow = false;
 
-              console.log(data.player, 'confirmed or probable tomorrow');
-
+              //console.log(data.player, 'confirmed or probable tomorrow');
               this.startersData.push(data);
             }
           } else {
@@ -774,9 +776,7 @@ export class StartingGoaliesComponent implements OnInit {
                 } else if (yesterday.player.losses === 1 || yesterday.player.OvertimeLosses === 1) {
                   tomdata.player.resultYesterday = yesterday.player.FirstName + ' ' + yesterday.player.LastName + ' got the Loss ' + yesterday.team.day + ' with ' + yesterday.player.saves + ' saves against ' + yesterday.player.ShotsAgainst + ' shots.'
                 }
-
               }
-
             }
           }
         }
@@ -974,79 +974,75 @@ public showMatchups() {
      }
 
   ngOnInit() {
+    if (this.testBrowser) {
+      if (window.innerWidth < 700) { 
+        this.mobile = true;
+      }
+      
+      if (this.sentData === undefined) {
+        this.loadData();
+        this.cdr.detectChanges();
+        this.fbService.getHits()
+          .subscribe(res => {
+              //console.log(res[0]['hits'], 'ngOnInit hit count...');
+              this.hitCount = res[0]['hits'];
+          });
 
-    if (window.innerWidth < 700) { 
-      this.mobile = true;
-    }
-    
-    if (this.sentData === undefined) {
-      this.loadData();
-      this.cdr.detectChanges();
-      this.fbService.getHits()
-        .subscribe(res => {
-            //console.log(res[0]['hits'], 'ngOnInit hit count...');
-            this.hitCount = res[0]['hits'];
-        });
+        // get our data every subsequent 10 minutes
+        const MILLISECONDS_IN_TEN_MINUTES = 600000;
+        interval(MILLISECONDS_IN_TEN_MINUTES)
+          .subscribe(() => {
+            if (this.gamesToday === true) {
+              this.dataService
+                .getDaily().subscribe(res => {
+                  console.log(res, "Daily stats updated!");
+                  if (res != null) this.dailyStats = res['gamelogs'];
 
-      // get our data every subsequent 10 minutes
-      const MILLISECONDS_IN_TEN_MINUTES = 600000;
-      interval(MILLISECONDS_IN_TEN_MINUTES)
-        .subscribe(() => {
-          if (this.gamesToday === true) {
-            this.dataService
-              .getDaily().subscribe(res => {
-                console.log(res, "Daily stats updated!");
-                if (res != null) this.dailyStats = res['gamelogs'];
+                  if (this.myData && this.dailyStats) {
+                    console.log('start sorting data for daily stats...');
+                    for (let daily of this.dailyStats) {
+                      for (let mdata of this.myData) {
 
-                if (this.myData && this.dailyStats) {
-                  console.log('start sorting data for daily stats...');
-                  for (let daily of this.dailyStats) {
-                    for (let mdata of this.myData) {
+                        if (daily.player.id === mdata.player.id) {
 
-                      if (daily.player.id === mdata.player.id) {
+                          mdata.player.saves = daily.stats.goaltending.saves;
+                          mdata.player.shotsFaced = daily.stats.goaltending.shotsAgainst;
+                          mdata.player.wins = daily.stats.goaltending.wins;
+                          mdata.player.losses = daily.stats.goaltending.losses;
+                          mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses;
+                          mdata.player.Shutouts = daily.stats.goaltending.shutouts;
+                          mdata.player.ga = daily.stats.goaltending.goalsAgainst;
 
-                        mdata.player.saves = daily.stats.goaltending.saves;
-                        mdata.player.shotsFaced = daily.stats.goaltending.shotsAgainst;
-                        mdata.player.wins = daily.stats.goaltending.wins;
-                        mdata.player.losses = daily.stats.goaltending.losses;
-                        mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses;
-                        mdata.player.Shutouts = daily.stats.goaltending.shutouts;
-                        mdata.player.ga = daily.stats.goaltending.goalsAgainst;
+                          if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins === 1) {
+                            // this.starterIdData.push(daily.player.ID);
+                            this.startingGoaliesToday.push(daily.player.id);
+                          }
 
-                        if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins === 1) {
-                          // this.starterIdData.push(daily.player.ID);
-                          this.startingGoaliesToday.push(daily.player.id);
+                          if (daily.stats.goaltending.goalsAgainst === 1) {
+                            mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goal';
+                          } else {
+                            mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goals';
+                          }
                         }
 
-                        if (daily.stats.goaltending.goalsAgainst === 1) {
-                          mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goal';
-                        } else {
-                          mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goals';
-                        }
                       }
-
                     }
                   }
-                }
-              })
+                })
 
-          } else {
-            console.log('No games then no daily stats either. :(');
-          }
-        });
+            } else {
+              console.log('No games then no daily stats either. :(');
+            }
+          });
 
-    } else {
-
-    
+      } else {     
         this.loading = false;
         this.showTomorrow = this.sentTomorrowData;
         this.showData = this.sentData;
         console.log(this.showTomorrow, "show tomorrow");
         this.gameDate = this.showData["0"].team.today;
-    
-
+      }
     }
-
   }
 
   ngAfterViewInit() {            
