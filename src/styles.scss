@@ -157,62 +157,11 @@ h1.date-header {
   color: #fff;
 }
 
-my-dialog .player-headshot {
-  width: 50%;
-  display: inline-block;
-  /*border-radius: 10%;*/
-  /*border: #3F51B5 solid 2px;*/
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  margin: 5px 5px 0 5px;
-}
 
-my-dialog .fav-pitch {
-  background: #d35400;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  color: #fff;
-  border-radius: 4px;
-  text-align: center;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  margin-bottom: 15px;
-}
-
-my-dialog .live-pitch {
-  background: #2ecc71;
-}
-
-my-dialog .live-pitch.live-status {
-  background: #111;
-  p {
-    text-align: left;
-    padding: 10px;
-  }
-  p.center {
-    text-align: center;
-  }
-  p.center:hover {
-    cursor: pointer;
-  }
-}
-
-.mat-dialog-container {
-  width: 600px;
-}
-
-my-dialog p {
-  font-family: Monospace;
-  line-height: 1.4em
-}
-
-my-dialog h1 {
-  color: #222
-}
-
-my-dialog .more-stats-btn {
-  margin-bottom: 8px;
-}
-
-
+// my-dialog p {
+//   font-family: Monospace;
+//   line-height: 1.4em
+// }
 
 ul {
     padding: 0 0 0 15px;
@@ -1065,7 +1014,7 @@ ul {
   .card-wrap-sp.twitter {
     width: 80%!important;
   }
-  
+
   .card-wrap-sp.position-box {
     width: 38%!important;
     padding: 20px;
@@ -1691,7 +1640,7 @@ section {
   flex-wrap: wrap;
   width: 100%;
 }
-.dn {
+.dn, .dn2 {
   display: none;
 }
 
@@ -1874,10 +1823,6 @@ form input[type="text"] {
   width: 330px;
   background: #6740B4;
   color: #fff;
-}
-
-.edit-list-container mat-form-field {
-  margin: 0 0 0 25px;
 }
 
 .admin-box {

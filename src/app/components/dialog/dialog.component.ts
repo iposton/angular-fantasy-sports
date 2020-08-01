@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { FirebaseService } from '../../services/index';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog',
@@ -29,12 +31,27 @@ export class DialogComponent implements OnInit {
   @Input('isOpen')
   public isOpen             :any;
   @Output() close = new EventEmitter();
+  public signedIn: any;
 
-  constructor() { }
+  public user = {
+    email: '',
+    password: ''
+  };
+
+  constructor(public fbService: FirebaseService) { }
 
   public closeModal() {
     this.isOpen = false;
     this.close.emit(); 
+  }
+
+  public signIn() {
+    this.fbService.signInRegular(this.user.email, this.user.password)
+    .then((res) => {
+      //console.log(res);
+      this.signedIn = res;
+    })
+    .catch((err) => console.log('error: ' + err));
   }
 
   ngOnInit(): void {

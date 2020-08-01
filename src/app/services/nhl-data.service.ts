@@ -64,14 +64,29 @@ export class NHLDataService {
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
   headers: any;
   public dailyDate: string = '';
+  public isToday: boolean = false;
+  public isTomorrow: boolean = false;
 
-  
   constructor(private http: HttpClient) {
      this.dailyDate = dailyDate;
   }
 
   public selectedDate(d) {
     dailyDate = d;
+  }
+
+  public checkDay() {
+    if (dailyDate === tomorrowDailyDate) {
+      this.isTomorrow = true;
+    } else {
+      this.isTomorrow = false;
+    }
+    
+    if (dailyDate === this.dailyDate) {
+      this.isToday = true;
+    } else {
+      this.isToday = false;
+    }
   }
 
   sendHeaderOptions(h) {
