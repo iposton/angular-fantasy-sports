@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 import { NBADataService, 
   NHLDataService, 
   DataService,
@@ -89,6 +90,7 @@ export class StatLeadersComponent implements OnInit {
   public nflDraftKit: boolean = false;
   public seasonLength   : string = 'full';
   public seasonLengthD  : string = 'full';
+  public testBrowser: boolean;
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -97,7 +99,8 @@ export class StatLeadersComponent implements OnInit {
               private sanitizer: DomSanitizer,
               private util: UtilService,
               public gaService: GoogleAnalyticsService,
-              public nflService: NFLDataService) {
+              public nflService: NFLDataService,
+              @Inject(PLATFORM_ID) platformId: string) {
     //this.allSentData = this.nbaService.getSentStats();
     //this.players = this.allSentData[0];
     //this.myData = this.allSentData[1];
@@ -111,6 +114,7 @@ export class StatLeadersComponent implements OnInit {
     
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
+    this.testBrowser = isPlatformBrowser(platformId);
   }
 
   public authorize(event: object) {
@@ -280,17 +284,18 @@ export class StatLeadersComponent implements OnInit {
     } 
   }
 
-
   ngOnInit() {
-    if (window.innerWidth < 700) { // 768px portrait
-      this.mobile = true;
+    if (this.testBrowser) {
+      if (window.innerWidth < 700) { // 768px portrait
+        this.mobile = true;
+      }
+      if (this.myData === undefined) {
+        this.loadData();
+        console.log('fetch data on init...');
+      } else {
+          this.loading = false;
+      }
     }
-     if (this.myData === undefined) {
-      this.loadData();
-      console.log('fetch data on init...');
-     } else {
-        this.loading = false;
-     }
   }
 
   public loadMLB() {

@@ -107,22 +107,22 @@ export class NHLDataService {
   }
 
   getYesterday() {
-    console.log("send yesterday..."); 
+    //console.log("send yesterday..."); 
     return yesterday; 
   }
 
   getToday() {
-    console.log("send today..."); 
+    //console.log("send today..."); 
     return today; 
   }
 
   getTomorrow() {
-    console.log("send tomrrow..."); 
+    //console.log("send tomrrow..."); 
     return tomorrow; 
   }
 
   getLastweek() {
-    console.log("send lastweek..."); 
+    //console.log("send lastweek..."); 
     return lastweek;
   }
 

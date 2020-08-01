@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { NBADataService, UtilService, GoogleAnalyticsService } from '../../services/index';
-import { DatePipe, PercentPipe, DecimalPipe } from '@angular/common';
+import { DatePipe, PercentPipe, DecimalPipe, isPlatformBrowser } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import * as CryptoJS from 'crypto-js';
@@ -96,12 +96,14 @@ export class StartingFiveComponent implements OnInit {
   public image: any;
   public name: any;
   public area: any;
+  public testBrowser: boolean;
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
               private sanitizer: DomSanitizer,
               private util: UtilService,
-              public gaService: GoogleAnalyticsService) {
+              public gaService: GoogleAnalyticsService,
+              @Inject(PLATFORM_ID) platformId: string) {
     this.allSentData = this.dataService.getSentStats();
     this.players = this.allSentData[0];
     this.myData = this.allSentData[1];
@@ -112,6 +114,7 @@ export class StartingFiveComponent implements OnInit {
     teams = this.teams;
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
+    this.testBrowser = isPlatformBrowser(platformId);
   }
 
   public compareDate (start) {
@@ -228,7 +231,7 @@ export class StartingFiveComponent implements OnInit {
             } else {
               if (res['games'][0].schedule.playedStatus === "LIVE") {
                 this.liveGames = true;
-                console.log('interval set...');
+                
               }
               this.dailySchedule = res['games'];
               this.teamRef = res['references'].teamReferences;
@@ -302,7 +305,7 @@ export class StartingFiveComponent implements OnInit {
                 i = index;
                 if (res[i]['game'].playedStatus != "UNPLAYED" && res[i]['game'].playedStatus != "COMPLETED") {
                   this.liveGames = true;
-                  console.log('interval set...');
+                  //console.log('interval set...');
                 }
                  
                 try {
@@ -390,7 +393,7 @@ export class StartingFiveComponent implements OnInit {
       promiseDaily = new Promise((resolve, reject) => {
         this.dataService
           .getDaily(playerString).subscribe(res => {
-            console.log(res, 'gamelogs');
+            //console.log(res, 'gamelogs');
             if (res != null) this.dailyStats = res['gamelogs'];
             resolve();
         })
@@ -620,76 +623,77 @@ export class StartingFiveComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (window.innerWidth < 700) { // 768px portrait
-      this.mobile = true;
-    }
-     if (this.players === undefined) {
-      this.loadData();
-      console.log('fetch data on init...');
-      // get our data every subsequent 10 minutes
-      // const MILLISECONDS_IN_TEN_MINUTES = 600000;
-      // interval(MILLISECONDS_IN_TEN_MINUTES)
-      //   .subscribe(() => {
-      //     console.log('starting interval on init...');
-      //     if (this.gamesToday === true && this.liveGames === true) {
-      //       this.loadData();
-      //       // this.dataService
-      //       //   .getSchedule().subscribe(res => {
-      //       //     console.log(res, "schedule...");
-      //       //     if (res['games'].length === 0) {
-      //       //       this.loading = false;
-      //       //       this.noGamesToday = true;
-      //       //       this.noGamesMsg = "There Are No Games Scheduled Today :(";
-      //       //       console.log('There are no games being played today.');
-      //       //     } else {
-      //       //       this.dailySchedule = res['games'];
-      //       //     }
-            
-      //       //   this.dataService
-      //       //     .getDaily(playerString).subscribe(res => {
-      //       //       console.log(res, "Daily stats...");
-      //       //       this.dailyStats = res['gamelogs'];
+    if (this.testBrowser) {
+      if (window.innerWidth < 700) { // 768px portrait
+        this.mobile = true;
+      }
+      if (this.players === undefined) {
+        this.loadData();
+        console.log('fetch data on init...');
+        // get our data every subsequent 10 minutes
+        const MILLISECONDS_IN_TEN_MINUTES = 600000;
+        interval(MILLISECONDS_IN_TEN_MINUTES)
+          .subscribe(() => {
+            console.log('interval get data again...');
+            if (this.gamesToday === true && this.liveGames === true) {
+              this.loadData();
+              this.dataService
+                .getSchedule().subscribe(res => {
+                  //console.log(res, "schedule...");
+                  if (res['games'].length === 0) {
+                    this.loading = false;
+                    this.noGamesToday = true;
+                    this.noGamesMsg = "There Are No Games Scheduled Today :(";
+                    console.log('There are no games being played today.');
+                  } else {
+                    this.dailySchedule = res['games'];
+                  }
+              
+                this.dataService
+                  .getDaily(playerString).subscribe(res => {
+                    console.log(res, "Daily stats...");
+                    this.dailyStats = res['gamelogs'];
 
-      //       //       // if (this.myData && this.dailySchedule) {
-      //       //       //   console.log('start sorting sched data...');     
-      //       //       // }
+                    // if (this.myData && this.dailySchedule) {
+                    //   console.log('start sorting sched data...');     
+                    // }
 
-      //       //     if (this.myData && this.dailyStats) {
-      //       //         console.log('getting daily stats again, live update...');
-      //       //         for (let daily of this.dailyStats) {
-      //       //           for (let data of this.myData) {
-      //       //             if (daily.player.id === data.player.id) {
-      //       //               data.player.pts = daily.stats.offense.pts;
-      //       //               data.player.ptsAvg = daily.stats.offense.ptsPerGame;
-      //       //               data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
-      //       //               // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
-      //       //             }
-      //       //           }
-      //       //         }
-      //       //     }
-      //       //   })
-      //       // })
+                  if (this.myData && this.dailyStats) {
+                      console.log('getting daily stats again, live update...');
+                      for (let daily of this.dailyStats) {
+                        for (let data of this.myData) {
+                          if (daily.player.id === data.player.id) {
+                            data.player.pts = daily.stats.offense.pts;
+                            data.player.ptsAvg = daily.stats.offense.ptsPerGame;
+                            data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
+                            // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
+                          }
+                        }
+                      }
+                  }
+                })
+              })
 
-      //     } else {
-      //       console.log('No games or all complete, nothing to update...');
-      //     }
-      //   });
-     } else {
-        this.loading = false;
-        this.showData = this.players;
-        this.gameDate = this.showData[0].offensePlayers[0].playerObj['player'].gameTime;
+            } else {
+              console.log('No games or all complete, nothing to update...');
+            }
+          });
+      } else {
+          this.loading = false;
+          this.showData = this.players;
+          this.gameDate = this.showData[0].offensePlayers[0].playerObj['player'].gameTime;
 
-        for (let p of this.players) {
-          if (p.playingRightNow === true) {
-            this.liveGames = true;
-          } 
-          if (p.playingOver === true) {
-            this.gameover = true;
+          for (let p of this.players) {
+            if (p.playingRightNow === true) {
+              this.liveGames = true;
+            } 
+            if (p.playingOver === true) {
+              this.gameover = true;
+            }
           }
-        }
-     }
+      }
+    }
   }
-
 }
 
 // @Component({
