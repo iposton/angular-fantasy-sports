@@ -227,8 +227,14 @@
                     Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                   <br>
                   <br>
-                  <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] && allGoalies[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
-                  <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] != null && allGoalies[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
+                  <span *ngIf="startersDate === g.playerObj?.team?.today">
+                      <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] && allGoalies[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
+                      <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] != null && allGoalies[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
+                  </span> 
+                  <span *ngIf="startersDateTomorrow === g.playerObj?.team?.tomporrow">
+                      <span *ngIf="fullFirebaseResponse != null && allGoaliesTomorrow[0][g.playerObj?.player.id] && allGoaliesTomorrow[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
+                      <span *ngIf="fullFirebaseResponse != null && allGoaliesTomorrow[0][g.playerObj?.player.id] != null && allGoaliesTomorrow[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
+                  </span>
                   
                   
                   <div *ngIf="g.playerObj?.player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': g.playerObj?.team?.color ? g.playerObj?.team?.color : 'black' }">
@@ -271,8 +277,15 @@
                     Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                   <br>
                   <br>
-                  <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] && allGoalies[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
-                  <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] != null && allGoalies[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
+                  <span *ngIf="startersDate === g.playerObj?.team?.today">
+                      <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] && allGoalies[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
+                      <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] != null && allGoalies[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
+                  </span> 
+                  <span *ngIf="startersDateTomorrow === g.playerObj?.team?.tomporrow">
+                      <span *ngIf="fullFirebaseResponse != null && allGoaliesTomorrow[0][g.playerObj?.player.id] && allGoaliesTomorrow[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
+                      <span *ngIf="fullFirebaseResponse != null && allGoaliesTomorrow[0][g.playerObj?.player.id] != null && allGoaliesTomorrow[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
+                  </span>
+                  
                   
                   
                   <div *ngIf="g.playerObj?.player.saves != null" class="stat-block" [ngStyle]="{'backgroundColor': g.playerObj?.team?.color ? g.playerObj?.team?.color : 'black' }">
@@ -301,7 +314,8 @@
               <br> {{data['goalies']['home'][0]?.playerObj?.team.opponent}} @ {{data['goalies']['home'][0]?.playerObj?.team.city +' '+ data['goalies']['home'][0]?.playerObj?.team.name}}
               <br>
               <span class="green-dot" *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'LIVE'"></span> 
-              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'">Puck drops: PPD @ {{ data['goalies']['home'][0]?.playerObj?.team.gameIce }}</span> 
+              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED' && data['goalies']['home'][0]?.playerObj?.schedStatus != 'POSTPONED'">Puck drops: {{data['goalies']['home'][0]?.playerObj?.player?.gameTime | date: 'shortTime'}} PST @ {{ data['goalies']['home'][0]?.playerObj?.team.gameIce }}</span> 
+              <span *ngIf="data['goalies']['home'][0]?.playerObj?.schedStatus === 'POSTPONED'">PPD</span> 
               <span *ngIf="data['goalies']['home'][0]?.playerObj?.status != 'UNPLAYED'">{{ data['goalies']['home'][0]?.playerObj?.opponentScore + ' - ' +  data['goalies']['home'][0]?.playerObj?.teamScore}}</span> 
               <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> 
                 <span *ngIf="data['goalies']['home'][0]?.playerObj?.opponentScore &gt; data['goalies']['home'][0]?.playerObj?.teamScore"> {{data['goalies']['home'][0]?.playerObj?.team.opponent}} Win!</span>
@@ -327,12 +341,12 @@
                            
                                  <!-- <span class="lg"> {{item.schedule.length}} </span> -->
                                  <span *ngFor="let g of item.schedule">
-                                   <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
+                                   <span *ngIf="item.team === g.schedule.homeTeam.abbreviation">
                                       <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
                                       <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &lt; g.score?.awayScoreTotal">(L <span class="minus">-{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span> 
                                       vs {{g.schedule.awayTeam.abbreviation}}  
                                    </span>
-                                   <span class="lg" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
+                                   <span *ngIf="item.team === g.schedule.awayTeam.abbreviation">
                                       <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
                                       <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
                                       @ {{g.schedule.homeTeam.abbreviation}} 
@@ -356,20 +370,20 @@
                 Games This Week <button (click)="weekResults = !weekResults"> Team Results</button>
                 <div class="content-wrapper">
                     <div class="row">
-                      <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length > 3 }">
+                      <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length > 3, 'dn2' : item.schedule.length === 0 }">
                               <span class="left-content" [ngClass]="{'results': weekResults}">
 
-                                    <span class="player-infos">
+                                   <span class="player-infos">
                                    <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"></span>
                              
                                    <!-- <span class="lg"> {{item.schedule.length}} </span> -->
                                    <span *ngFor="let g of item.schedule">
-                                     <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
+                                     <span *ngIf="item.team === g.schedule.homeTeam.abbreviation">
                                         <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
                                         <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &lt; g.score?.awayScoreTotal">(L <span class="minus">-{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span> 
                                         vs {{g.schedule.awayTeam.abbreviation}}  
                                      </span>
-                                     <span class="lg" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
+                                     <span *ngIf="item.team === g.schedule.awayTeam.abbreviation">
                                         <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
                                         <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
                                          @ {{g.schedule.homeTeam.abbreviation}} 

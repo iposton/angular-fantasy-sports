@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
     this.nflTeams = this.util.getNFLTeams();
     this.nbaTeams = this.util.getNBATeams();
     this.nbaDataService.selectedDate(dailyDate);
-    this.nhlDataService.selectedDate('20200801');
+    this.nhlDataService.selectedDate(dailyDate);
     this.selectedWeek = '1';
     let weekTimes = this.util.getWeekTimes();
     let thisDate = new Date();

@@ -2328,8 +2328,8 @@ export class UtilService {
         lastName: "Georgiev",
         teamId: 9,
         abbreviation: "NYR",
-        active: true,
-        numberOne: true
+        active: false,
+        numberOne: false
       },
       '17374': {
         id: 17374,
@@ -2337,8 +2337,8 @@ export class UtilService {
         lastName: "Shesterkin",
         teamId: 9,
         abbreviation: "NYR",
-        active: false,
-        numberOne: false
+        active: true,
+        numberOne: true
       },
       '5224': {
         id: 5224,
@@ -2400,7 +2400,7 @@ export class UtilService {
         lastName: "Reimer",
         teamId: 3,
         abbreviation: "CAR",
-        active: false,
+        active: true,
         numberOne: false
       },
       '5163': {
@@ -2409,8 +2409,8 @@ export class UtilService {
         lastName: "Mrazek",
         teamId: 3,
         abbreviation: "CAR",
-        active: false,
-        numberOne: false
+        active: true,
+        numberOne: true
       },
       '4666': {
         id: 4666,
@@ -2598,8 +2598,8 @@ export class UtilService {
         lastName: "Forsberg",
         teamId: 3,
         abbreviation: "CAR",
-        active: true,
-        numberOne: true
+        active: false,
+        numberOne: false
       },
       '15154': {
         id: 15154,
@@ -2751,7 +2751,7 @@ export class UtilService {
         lastName: "Nedeljkovic",
         teamId: 3,
         abbreviation: "CAR",
-        active: true,
+        active: false,
         numberOne: false
       }
     }

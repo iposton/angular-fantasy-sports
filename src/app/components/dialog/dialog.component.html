@@ -1,6 +1,6 @@
 <div id="overlay" [ngClass]="{'active': isOpen}" (click)="closeModal()">
   <div class="modal" (click)="$event.stopPropagation()">
-    <div class="modal-header" *ngIf="!submitting">
+    <div class="modal-header" *ngIf="!submitting && modalType === 'twitter'">
       <span> Twitter Updates - <span class="{{type}}"><img src="{{image}}" alt="{{type}} player"
             onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span> 
         <span>{{name}}</span>
@@ -19,7 +19,7 @@
     <div class="center" *ngIf="noPosts">
         <span style="font-size: 26px; font-weight: light; color: #555;">{{ noPosts }}</span>
     </div>
-    <div class="content" *ngIf="!submitting"> 
+    <div class="content" *ngIf="!submitting && modalType === 'twitter'"> 
       <ul *ngFor="let item of tweetsData" style="font-size:14px">
         <li>{{item.text}} <span style="color:#6740B4; font-weight: bold;">{{item.created_at | date:'fullDate'}}</span></li>
       </ul>
@@ -36,29 +36,22 @@
         <span style="color:#6740B4">{{data.opponents[3].date}}</span> {{data.opponents[3].desc}}</span> - <span style="font-weight: bold;">Total Saves: {{data.sv}} Total Shots: {{data.sa}}</span>
     </li>
   </ul> -->
-
-  <!-- <div  *ngIf="fbService.userDetails == null">
-    
-      <div class="login-container">
-        <div>
-          <input type="email" class="form-control" [(ngModel)]="user.email" placeholder="Email" required />
+    </div> 
+    <div class="content" *ngIf="modalType === 'login'"> 
+        <div  *ngIf="fbService.userDetails == null">
+            <div class="login-container">
+              <div>
+                <input type="email" class="form-control" [(ngModel)]="user.email" placeholder="Email" required />
+              </div>
+              <div>
+                <input type="password" class="form-control" [(ngModel)]="user.password" placeholder="Password" required />
+              </div>
+              <button class="mat-raised-button" (click)="signIn()">Login</button>
+            </div>  
         </div>
-
-        <div>
-          <input type="password" class="form-control" [(ngModel)]="user.password" placeholder="Password" required />
+        <div *ngIf="fbService.userDetails != null">
+        <button class="mat-raised-button" color="warn"  (click)="fbService.logout()">Logout</button>
         </div>
-
-        <button class="mat-raised-button" (click)="signInWithEmail()">Login</button>
-
-      </div>  
-    
-  </div>
- 
-<div *ngIf="fbService.userDetails != null">
- <button class="mat-raised-button" color="warn"  (click)="fbService.logout()">Logout</button>
-</div> -->
-
-
-    </div>  
+    </div> 
   </div>
 </div>
