@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { interval } from 'rxjs';
-import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
 import { 
@@ -11,10 +11,6 @@ import {
   NFLDataService,
   UtilService } from '../../services/index';
 import * as CryptoJS from 'crypto-js';
-import { PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser} from '@angular/common';
-
-
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = null;

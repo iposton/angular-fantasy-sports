@@ -267,6 +267,7 @@ export class UtilService {
         city: "Baltimore",
         name: "Orioles",
         abbreviation: "BAL",
+        twitter: "#Birdland",
         homeVenue: {
         id: 123,
         name: "Oriole Park at Camden Yards"
@@ -285,6 +286,7 @@ export class UtilService {
         city: "Toronto",
         name: "Blue Jays",
         abbreviation: "TOR",
+        twitter: "#BlueJays",
         homeVenue: {
         id: 127,
         name: "Rogers Centre"
@@ -303,6 +305,7 @@ export class UtilService {
         city: "Boston",
         name: "Red Sox",
         abbreviation: "BOS",
+        twitter: "#DirtyWater",
         homeVenue: {
         id: 114,
         name: "Fenway Park"
@@ -321,6 +324,7 @@ export class UtilService {
         city: "New York",
         name: "Yankees",
         abbreviation: "NYY",
+        twitter: "#NYYforNY",
         homeVenue: {
         id: 134,
         name: "Yankee Stadium"
@@ -339,6 +343,7 @@ export class UtilService {
         city: "Tampa Bay",
         name: "Rays",
         abbreviation: "TB",
+        twitter: "#RaysUp",
         homeVenue: {
         id: 130,
         name: "Tropicana Field"
@@ -357,6 +362,7 @@ export class UtilService {
         city: "Cleveland",
         name: "Indians",
         abbreviation: "CLE",
+        twitter: "#OurTribe",
         homeVenue: {
         id: 126,
         name: "Progressive Field"
@@ -375,6 +381,7 @@ export class UtilService {
         city: "Detroit",
         name: "Tigers",
         abbreviation: "DET",
+        twitter: "#DetroitRoots",
         homeVenue: {
         id: 111,
         name: "Comerica Park"
@@ -393,6 +400,7 @@ export class UtilService {
         city: "Kansas City",
         name: "Royals",
         abbreviation: "KC",
+        twitter: "#AlwaysRoyal",
         homeVenue: {
         id: 117,
         name: "Kauffman Stadium"
@@ -411,6 +419,7 @@ export class UtilService {
         city: "Chicago",
         name: "White Sox",
         abbreviation: "CWS",
+        twitter: "#ChangetheGame",
         homeVenue: {
         id: 132,
         name: "Guaranteed Rate Field"
@@ -429,6 +438,7 @@ export class UtilService {
         city: "Minnesota",
         name: "Twins",
         abbreviation: "MIN",
+        twitter: "#MNTwins",
         homeVenue: {
         id: 129,
         name: "Target Field"
@@ -447,6 +457,7 @@ export class UtilService {
         city: "Texas",
         name: "Rangers",
         abbreviation: "TEX",
+        twitter: "#TogetherWe",
         homeVenue: {
         id: 153,
         name: "Globe Life Field"
@@ -468,6 +479,7 @@ export class UtilService {
         city: "Houston",
         name: "Astros",
         abbreviation: "HOU",
+        twitter: "#ForTheH",
         homeVenue: {
         id: 120,
         name: "Minute Maid Park"
@@ -486,6 +498,7 @@ export class UtilService {
         city: "Seattle",
         name: "Mariners",
         abbreviation: "SEA",
+        twitter: "#TrueToTheBlue",
         homeVenue: {
         id: 128,
         name: "T-Mobile Park"
@@ -504,6 +517,7 @@ export class UtilService {
         city: "Los Angeles",
         name: "Angels",
         abbreviation: "LAA",
+        twitter: "#GoAngels",
         homeVenue: {
         id: 105,
         name: "Angel Stadium"
@@ -522,6 +536,7 @@ export class UtilService {
         city: "Oakland",
         name: "Athletics",
         abbreviation: "OAK",
+        twitter: "#RootedInOakland",
         homeVenue: {
         id: 64,
         name: "Oakland-Alameda County Coliseum"
@@ -540,6 +555,7 @@ export class UtilService {
         city: "Washington",
         name: "Nationals",
         abbreviation: "WAS",
+        twitter: "#Natitude",
         homeVenue: {
         id: 121,
         name: "Nationals Park"
@@ -558,6 +574,7 @@ export class UtilService {
         city: "New York",
         name: "Mets",
         abbreviation: "NYM",
+        twitter: "#LGM",
         homeVenue: {
         id: 109,
         name: "Citi Field"
@@ -576,6 +593,7 @@ export class UtilService {
         city: "Miami",
         name: "Marlins",
         abbreviation: "MIA",
+        twitter: "#JuntosMiami",
         homeVenue: {
         id: 118,
         name: "Marlins Park"
@@ -594,6 +612,7 @@ export class UtilService {
         city: "Philadelphia",
         name: "Phillies",
         abbreviation: "PHI",
+        twitter: "#RingTheBell",
         homeVenue: {
         id: 110,
         name: "Citizens Bank Park"
@@ -612,6 +631,7 @@ export class UtilService {
         city: "Atlanta",
         name: "Braves",
         abbreviation: "ATL",
+        twitter: "#ForTheA",
         homeVenue: {
         id: 136,
         name: "SunTrust Park"
@@ -630,6 +650,7 @@ export class UtilService {
         city: "Chicago",
         name: "Cubs",
         abbreviation: "CHC",
+        twitter: "#WhereStoriesPlay",
         homeVenue: {
         id: 133,
         name: "Wrigley Field"
@@ -648,6 +669,7 @@ export class UtilService {
         city: "Pittsburgh",
         name: "Pirates",
         abbreviation: "PIT",
+        twitter: "#LetsGoBucs",
         homeVenue: {
         id: 125,
         name: "PNC Park"
@@ -666,6 +688,7 @@ export class UtilService {
         city: "St. Louis",
         name: "Cardinals",
         abbreviation: "STL",
+        twitter: "#STLCards",
         homeVenue: {
         id: 107,
         name: "Busch Stadium"
@@ -684,6 +707,7 @@ export class UtilService {
         city: "Milwaukee",
         name: "Brewers",
         abbreviation: "MIL",
+        twitter: "#ThisIsMyCrew",
         homeVenue: {
         id: 119,
         name: "Miller Park"
@@ -702,6 +726,7 @@ export class UtilService {
         city: "Cincinnati",
         name: "Reds",
         abbreviation: "CIN",
+        twitter: "#TakeTheCentral",
         homeVenue: {
         id: 116,
         name: "Great American Ball Park"
@@ -720,6 +745,7 @@ export class UtilService {
         city: "San Francisco",
         name: "Giants",
         abbreviation: "SF",
+        twitter: "#SFGiants",
         homeVenue: {
         id: 106,
         name: "AT&T Park"
@@ -738,6 +764,7 @@ export class UtilService {
         city: "Los Angeles",
         name: "Dodgers",
         abbreviation: "LAD",
+        twitter: "#Dodgers",
         homeVenue: {
         id: 113,
         name: "Dodger Stadium"
@@ -756,6 +783,7 @@ export class UtilService {
         city: "Colorado",
         name: "Rockies",
         abbreviation: "COL",
+        twitter: "#Rockies",
         homeVenue: {
         id: 112,
         name: "Coors Field"
@@ -774,6 +802,7 @@ export class UtilService {
         city: "San Diego",
         name: "Padres",
         abbreviation: "SD",
+        twitter: "#FriarFaithful",
         homeVenue: {
         id: 124,
         name: "Petco Park"
@@ -792,6 +821,7 @@ export class UtilService {
         city: "Arizona",
         name: "Diamondbacks",
         abbreviation: "ARI",
+        twitter: "#RattleOn",
         homeVenue: {
         id: 108,
         name: "Chase Field"

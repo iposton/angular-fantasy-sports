@@ -24,6 +24,7 @@ export class DataService {
   public schedule: Observable <any> = null;
   public stats: Observable <any> = null;
   public daily: Observable <any> = null;
+  public dailyBatters: Observable <any> = null;
   public score: Observable <any> = null;
   public allstats: Observable <any> = null;
   public hitstats: Observable <any> = null;
@@ -70,7 +71,7 @@ export class DataService {
   }
 
   getEnv() {
-    this.env = this.http.get('/heroku-env')
+    this.env = this.http.get('/heroku-env');
     return this.env;
   }
 
@@ -81,7 +82,7 @@ export class DataService {
     return this.gameid;
   }
 
-    getDailySchedule() {
+  getDailySchedule() {
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
       let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/date/${dailyDate}/games.json`;
@@ -92,15 +93,15 @@ export class DataService {
 
   }
 
-  getStats(players) {
+  getBatStats(players) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?player=${players}`;
+    this.stats = this.http.get(url, {headers})
+    return this.stats;
+  }
 
-    //if (!this.stats) {
-      //console.log('getting cumulative_player_stats by player ID from API...', players);
-      //let url = `${this.apiRoot}/cumulative_player_stats.json?position=P&player=`+playerID;
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=P&player=${players}`;
-      this.stats = this.http.get(url, {headers})
-      
-    //}
+  getStats(players) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=P&player=${players}`;
+    this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
@@ -138,14 +139,15 @@ export class DataService {
   }
 
    getDaily() {
-
-   // if (!this.daily) {
-      //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-      let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=P`;
-      this.daily = this.http.get(url, {headers})
-        
-  //  }
+    let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=P`;
+    this.daily = this.http.get(url, {headers})
     return this.daily;
+  }
+
+  getDailyBatters() {
+    let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS`;
+    this.dailyBatters = this.http.get(url, {headers})
+    return this.dailyBatters;
   }
 
   getScore(data) {
