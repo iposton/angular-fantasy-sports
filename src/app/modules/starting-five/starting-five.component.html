@@ -60,12 +60,11 @@
 <div *ngIf="errMessage" class="err center">
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>
-<div *ngIf="!loading && starterIdData.length === 0" class="center">
-  <!-- <h1 class="date-header baseball-header">All Games Are Postponed</h1> -->
+<!-- <div *ngIf="!loading && starterIdData.length === 0" class="center">
   <button [routerLink]="['/stat-leaders']">Stat Leaders</button>
-</div>
+</div> -->
 
-<div *ngIf="showData != null && starterIdData.length > 0" class="main-row starting-five">
+<div *ngIf="showData != null" class="main-row starting-five">
   <section [ngClass]="{'dn' : !startersSection}">
     <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showData">
       <div id="{{data?.offensePlayers[0]?.playerObj.team.abbreviation}}" class="mat-card-sp">
