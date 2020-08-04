@@ -4,33 +4,39 @@ import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpParams} from '@
 
 let thisDate = new Date();
 let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
+let daTomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
 let yesterdayDate = new Date(thisDate.getTime() - (24 * 60 * 60 * 1000));
 let lastweekDate = new Date(thisDate.getTime() - (192 * 60 * 60 * 1000));
 
 let utcDate = new Date(thisDate.toUTCString());
 let tomorrowUtcDate = new Date(tomorrowDate.toUTCString());
+let daTomorrowUtcDate = new Date(daTomorrowDate.toUTCString());
 let yesterdayUtcDate = new Date(yesterdayDate.toUTCString());
 let lastweekUtcDate = new Date(lastweekDate.toUTCString());
 
 utcDate.setHours(utcDate.getHours() - 8);
 tomorrowUtcDate.setHours(tomorrowUtcDate.getHours() - 8);
+daTomorrowUtcDate.setHours(daTomorrowUtcDate.getHours() - 8);
 yesterdayUtcDate.setHours(yesterdayUtcDate.getHours() - 8);
 lastweekUtcDate.setHours(lastweekUtcDate.getHours() - 8);
 
 let myDate = new Date(utcDate);
 let tomorrowMyDate = new Date(tomorrowUtcDate);
+let daTomorrowMyDate = new Date(daTomorrowUtcDate);
 let yesterdayMyDate = new Date(yesterdayUtcDate);
 let lastweekMyDate = new Date(lastweekUtcDate);
 
 //DATE FORMAT FOR DAILY SCHEDULE API
 let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
 let tomorrowDailyDate = tomorrowMyDate.toISOString().slice(0, 10).replace(/-/g, "");
+let dayAfterTomorrow = daTomorrowMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 let yesterdayDailyDate = yesterdayMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 let lastweekDailyDate = lastweekMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = myDate.toISOString().slice(0, 10);
 let tomorrow = tomorrowMyDate.toISOString().slice(0, 10);
+let afterTomorrow = daTomorrowMyDate.toISOString().slice(0, 10); 
 let yesterday = yesterdayMyDate.toISOString().slice(0, 10);
 let lastweek = lastweekMyDate.toISOString().slice(0, 10);
 
@@ -107,18 +113,28 @@ export class NHLDataService {
   }
 
   getYesterday() {
-    //console.log("send yesterday..."); 
-    return yesterday; 
+    if (tomorrowDailyDate === dailyDate) {
+      return today; 
+    } else {
+      return yesterday;
+    } 
   }
 
   getToday() {
     //console.log("send today..."); 
-    return today; 
+    if (tomorrowDailyDate === dailyDate) {
+      return tomorrow; 
+    } else {
+      return today;
+    }
   }
 
   getTomorrow() {
-    //console.log("send tomrrow..."); 
-    return tomorrow; 
+    if (tomorrowDailyDate === dailyDate) {
+      return afterTomorrow;
+    } else {
+      return tomorrow;
+    }   
   }
 
   getLastweek() {
@@ -141,7 +157,7 @@ export class NHLDataService {
     return sent;
   }
 
-   getSentAllStats() {
+  getSentAllStats() {
     sentAll = sendingAll;
     return sentAll;
   }
@@ -182,7 +198,12 @@ export class NHLDataService {
   }
 
   getGameId() {
-    let url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
+    let url = null;
+    if (tomorrowDailyDate === dailyDate) {
+      url = `${this.apiRoot}/games.json?date=from-`+this.dailyDate+`-to-`+dayAfterTomorrow;
+    } else {
+      url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
+    }
     this.gameid = this.http.get(url, {headers})
     return this.gameid;
   }
