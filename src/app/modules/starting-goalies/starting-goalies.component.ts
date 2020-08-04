@@ -6,12 +6,9 @@ import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router'
 import { DatePipe, PercentPipe, isPlatformBrowser } from '@angular/common';
 import * as CryptoJS from 'crypto-js';
 
-
 import {
   NHLDataService,
   FirebaseService,
-  YesterdayService,
-  TomorrowService,
   UtilService,
   GoogleAnalyticsService
  } from '../../services/index';
@@ -120,9 +117,7 @@ export class StartingGoaliesComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,
     private dataService: NHLDataService, 
-    public fbService: FirebaseService, 
-    private yesterdayService: YesterdayService, 
-    private tomorrowService: TomorrowService, 
+    public fbService: FirebaseService,  
     public router: Router, 
     public util: UtilService,
     public gaService: GoogleAnalyticsService,
@@ -152,6 +147,11 @@ export class StartingGoaliesComponent implements OnInit {
     this.loading = true;
     this.dataService.selectedDate(event);
     this.dataService.checkDay();
+    yesterday = this.dataService.getYesterday();
+    tomorrow = this.dataService.getTomorrow();
+    today = this.dataService.getToday();
+    this.tomorrowDate = tomorrow;
+    console.log(yesterday + ' yesterday, ' + today + ' today, ' + tomorrow + ' tomorrow, ');
 
     //empty old data on data change 
     this.dailySchedule = [];
@@ -452,14 +452,27 @@ export class StartingGoaliesComponent implements OnInit {
         //   player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null); 
 
         if (this.myData && this.dailySchedule) {
-          if (this.startersDate != today && this.startersDateTomorrow != tomorrow) {
-            //reset firebase probable and confirms
-            this.reset();
+          if (this.dataService.isToday) {
+            if (this.startersDate != today && this.startersDateTomorrow != tomorrow) {
+              //reset firebase probable and confirms
+              this.reset();
+            }
+            if (this.startersDateTomorrow != tomorrow) {
+               //reset firebase probable and confirms
+               this.selectAll();
+            }
           }
-          if (this.startersDateTomorrow != tomorrow) {
-             //reset firebase probable and confirms
-             this.selectAll();
+          if (this.dataService.isTomorrow) {
+            if (this.startersDate != yesterday && this.startersDateTomorrow != today) {
+              //reset firebase probable and confirms
+              this.reset();
+            }
+            if (this.startersDateTomorrow != today) {
+               //reset firebase probable and confirms
+               this.selectAll();
+            }
           }
+          
           // for (let data of startingGoalieArray) {
           //   data.tormorrow = tomorrow;
           // }
@@ -613,13 +626,23 @@ export class StartingGoaliesComponent implements OnInit {
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
               for (let fs of this.fullSchedule) {
                 for (let sg of startingGoalieArray) {
-                  if (this.startersDateTomorrow != tomorrow && tomorrow === dPipe.transform(fs['schedule'].startTime, 'yyyy-MM-dd')) {
-                    if (fs['schedule'].awayTeam.id == sg['teamId'] || fs['schedule'].homeTeam.id == sg['teamId']) {
-                      if (sg['numberOne']) {
-                        this.fullFirebaseResponse[3][sg['id']].probable = true;
+                  if (this.dataService.isToday) {
+                    if (this.startersDateTomorrow != tomorrow && tomorrow === dPipe.transform(fs['schedule'].startTime, 'yyyy-MM-dd')) {
+                      if (fs['schedule'].awayTeam.id == sg['teamId'] || fs['schedule'].homeTeam.id == sg['teamId']) {
+                        if (sg['numberOne']) {
+                          this.fullFirebaseResponse[3][sg['id']].probable = true;
+                        }
                       }
                     }
-    
+                  }
+                  if (this.dataService.isTomorrow) {
+                    if (this.startersDateTomorrow != today && today === dPipe.transform(fs['schedule'].startTime, 'yyyy-MM-dd')) {
+                      if (fs['schedule'].awayTeam.id == sg['teamId'] || fs['schedule'].homeTeam.id == sg['teamId']) {
+                        if (sg['numberOne']) {
+                          this.fullFirebaseResponse[3][sg['id']].probable = true;
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -708,10 +731,10 @@ export class StartingGoaliesComponent implements OnInit {
               this.startersData.push(data);
             }
 
-            if (this.dataService.isTomorrow && data.team != null && this.startersDateTomorrow === data.team.tomorrow && 
+            if (this.dataService.isTomorrow && data.team != null && this.startersDateTomorrow === data.team.today && 
               this.tomorrowStarters[data.player.id] != null && data.player.saves == null && 
               data.player.shotsFaced == null && this.tomorrowStarters[data.player.id].probable === true || 
-              data.team != null && this.startersDateTomorrow === data.team.tomorrow && 
+              data.team != null && this.startersDateTomorrow === data.team.today && 
               this.tomorrowStarters[data.player.id] != null && data.player.saves == 0 && data.player.shotsFaced == 0 && 
               this.tomorrowStarters[data.player.id].probable === true) {
               data.player.confirmed = this.tomorrowStarters[data.player.id].confirmed;
@@ -842,7 +865,7 @@ export class StartingGoaliesComponent implements OnInit {
                   startid === startdata.player.currentTeam.id && 
                   this.startingG[startdata.player.id] != null && 
                   this.startingG[startdata.player.id].active === true) {
-                  if (startdata.team != null && this.startersDateTomorrow != startdata.team.tomorrow) {
+                  if (startdata.team != null && this.startersDateTomorrow != startdata.team.today) {
 
                     startdata.player.startingToday = false;
                     startdata.player.likelyStartingToday = true;
@@ -851,7 +874,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
                   }
-                } else if (startdata.team != null && this.startersDateTomorrow != startdata.team.tomorrow && startid === startdata.player.id) {
+                } else if (startdata.team != null && this.startersDateTomorrow != startdata.team.today && startid === startdata.player.id) {
                   if (startdata.player.saves == null || startdata.player.saves == '0') {
                     //console.log(startdata.player, 'expected goalies from api');
                     startdata.player.startingToday = true;
