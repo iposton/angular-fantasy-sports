@@ -199,29 +199,29 @@ export class StartingGoaliesComponent implements OnInit {
             for (let show of this.showData) {
               for (let rep of this.myData) {
                 //console.log(show, 'showData items...');
-                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team.ID === show.team.matchup[0].team.id && this.fullFirebaseResponse[1][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === true) {
+                if (this.startersDate === today && show.goalies != null && this.fullFirebaseResponse[1][show.goalies[0].playerObj.player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team != null && rep.team.id === show.goalies[0].playerObj.team.id && this.fullFirebaseResponse[1][show.goalies[0].playerObj.player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === true) {
                   // Find goalies with the same team ID
                   // if the view has a goalie that is probable false swap with goalie from firebase that is confirmed
                   console.log(rep, 'update me into the view right now! I am confirmed to start.');
-                  console.log(show.team.matchup[0], 'I have been changed, replace me with confirmed goalie.');
-                  show.team.matchup[0] = rep;
-                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[0].player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team.id === show.team.matchup[0].team.id && this.fullFirebaseResponse[1][show.team.matchup[0].player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === false && this.fullFirebaseResponse[1][rep.player.id].probable === true && rep.player.probable === false) {
+                  console.log(show.goalies[0], 'I have been changed, replace me with confirmed goalie.');
+                  show.goalies[0] = rep;
+                } else if (this.startersDate === today && show.goalies != null && this.fullFirebaseResponse[1][show.goalies[0].playerObj.player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team != null && rep.team.id === show.goalies[0].playerObj.team.id && this.fullFirebaseResponse[1][show.goalies[0].playerObj.player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === false && this.fullFirebaseResponse[1][rep.player.id].probable === true && rep.player.probable === false) {
                   rep.player.probable = true;
                   console.log(rep, 'update me into the view right now! I am probable to start.');
-                  console.log(show.team.matchup[0], 'I have been changed, replace me with probable goalie.');
-                  show.team.matchup[0] = rep;
+                  console.log(show.goalies[0], 'I have been changed, replace me with probable goalie.');
+                  show.goalies[0] = rep;
                 }
-                if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[1][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === true) {
+                if (this.startersDate === today && show.goalies != null && this.fullFirebaseResponse[1][show.goalies[1].playerObj.player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team != null && rep.team.id === show.goalies[1].playerObj.team.id && this.fullFirebaseResponse[1][show.goalies[1].playerObj.player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === true) {
                   // same thing
                   // now check against the 2nd item in the view matchup array
                   console.log(rep, 'update me into the view right now! I am confirmed to start.');
-                  console.log(show.team.matchup[1], 'I have been changed, replace me with new goalie...');
-                  show.team.matchup[1] = rep;
-                } else if (this.startersDate === show.team.today && show.team.matchup != null && this.fullFirebaseResponse[1][show.team.matchup[1].player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team.id === show.team.matchup[1].team.id && this.fullFirebaseResponse[1][show.team.matchup[1].player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === false && this.fullFirebaseResponse[1][rep.player.id].probable === true && rep.player.probable === false) {
+                  console.log(show.goalies[1], 'I have been changed, replace me with new goalie...');
+                  show.goalies[1] = rep;
+                } else if (this.startersDate === today && show.goalies != null && this.fullFirebaseResponse[1][show.goalies[1].playerObj.player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team != null && rep.team.id === show.goalies[1].playerObj.team.id && this.fullFirebaseResponse[1][show.goalies[1].playerObj.player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === false && this.fullFirebaseResponse[1][rep.player.id].probable === true && rep.player.probable === false) {
                   rep.player.probable = true;
                   console.log(rep, 'update me into the view right now! I am probable to start.');
-                  console.log(show.team.matchup[1], 'I have been changed, replace me with probable goalie.');
-                  show.team.matchup[1] = rep;
+                  console.log(show.goalies[1], 'I have been changed, replace me with probable goalie.');
+                  show.goalies[1] = rep;
                 }
 
               }
@@ -495,6 +495,7 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.player.gameLocation = "away";
                 sdata.team.day = this.tweetDay;
                 sdata.team.opponentId = schedule['schedule'].homeTeam.id;
+                sdata.team.id = schedule['schedule'].homeTeam.id;
                 sdata.team.opponentAbbreviation = schedule['schedule'].homeTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
@@ -529,6 +530,7 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.player.gameLocation = "home";
                 sdata.team.day = this.tweetDay;
                 sdata.team.opponentId = schedule['schedule'].awayTeam.id;
+                sdata.team.id = schedule['schedule'].awayTeam.id;
                 sdata.team.opponentAbbreviation = schedule['schedule'].awayTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
@@ -703,8 +705,8 @@ export class StartingGoaliesComponent implements OnInit {
 
 
         for (let data of this.myData) {
-          //console.log(this.dataService.isToday, 'isToday');
-          //console.log(this.dataService.isTomorrow, 'isTomorrow');
+          console.log(this.dataService.isToday, 'isToday?');
+          console.log(this.dataService.isTomorrow, 'isTomorrow?');
           //stats.goaltending.savePercentage
           data.player.savePercent = data.stats.goaltending.savePercentage;
 
@@ -729,9 +731,7 @@ export class StartingGoaliesComponent implements OnInit {
 
               //console.log(data.player, 'confirmed or probable today');
               this.startersData.push(data);
-            }
-
-            if (this.dataService.isTomorrow && data.team != null && this.startersDateTomorrow === data.team.today && 
+            } else if (this.dataService.isTomorrow && data.team != null && this.startersDateTomorrow === data.team.today && 
               this.tomorrowStarters[data.player.id] != null && data.player.saves == null && 
               data.player.shotsFaced == null && this.tomorrowStarters[data.player.id].probable === true || 
               data.team != null && this.startersDateTomorrow === data.team.today && 
@@ -846,7 +846,7 @@ export class StartingGoaliesComponent implements OnInit {
 
                   }
                 } else if (startdata.team != null && this.startersDate != startdata.team.today && startid === startdata.player.id) {
-                  if (startdata.player.saves == null || startdata.player.saves == '0') {
+                  if (startdata.player.saves == null || startdata.player.saves === 0) {
                     //console.log(startdata.player, 'expected goalies from api');
                     startdata.player.startingToday = true;
                     startdata.player.startingTodayNow = false;

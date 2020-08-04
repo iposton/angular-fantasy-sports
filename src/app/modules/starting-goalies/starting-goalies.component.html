@@ -231,7 +231,7 @@
                       <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] && allGoalies[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
                       <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] != null && allGoalies[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
                   </span> 
-                  <span *ngIf="startersDateTomorrow === g.playerObj?.team?.tomporrow">
+                  <span *ngIf="startersDateTomorrow === g.playerObj?.team?.today">
                       <span *ngIf="fullFirebaseResponse != null && allGoaliesTomorrow[0][g.playerObj?.player.id] && allGoaliesTomorrow[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
                       <span *ngIf="fullFirebaseResponse != null && allGoaliesTomorrow[0][g.playerObj?.player.id] != null && allGoaliesTomorrow[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
                   </span>
@@ -281,7 +281,7 @@
                       <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] && allGoalies[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
                       <span *ngIf="fullFirebaseResponse != null && allGoalies[0][g.playerObj?.player.id] != null && allGoalies[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
                   </span> 
-                  <span *ngIf="startersDateTomorrow === g.playerObj?.team?.tomporrow">
+                  <span *ngIf="startersDateTomorrow === g.playerObj?.team?.today">
                       <span *ngIf="fullFirebaseResponse != null && allGoaliesTomorrow[0][g.playerObj?.player.id] && allGoaliesTomorrow[0][g.playerObj?.player.id].confirmed === true && g.playerObj?.player.saves == null" style="color: #2ecc71;"><i class="material-icons md-18">check_circle</i>confirmed</span>
                       <span *ngIf="fullFirebaseResponse != null && allGoaliesTomorrow[0][g.playerObj?.player.id] != null && allGoaliesTomorrow[0][g.playerObj?.player.id].confirmed === false && g.playerObj?.player.saves == null" style="color: orange;"><i class="material-icons md-18">check_circle</i>expected</span>
                   </span>
