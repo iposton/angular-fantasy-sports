@@ -112,7 +112,7 @@ export class DataService {
   }
 
   getAllHitters() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=OF,1B,2B,3B,C,SS`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
     this.hitstats = this.http.get(url, {headers})
     return this.hitstats;
   }
@@ -145,7 +145,7 @@ export class DataService {
   }
 
   getDailyBatters() {
-    let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS`;
+    let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
     this.dailyBatters = this.http.get(url, {headers})
     return this.dailyBatters;
   }

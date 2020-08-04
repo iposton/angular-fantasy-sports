@@ -1168,6 +1168,13 @@ ul {
             margin-top: 10px;
           }
 
+          .stats {
+            background: #333;
+            color: #fff;
+            border-radius: 2px;
+            font-weight: bold;
+          }
+
         }
   
         .left-content,
@@ -1198,6 +1205,11 @@ ul {
   
         }
    
+      }
+
+      .bottom-content.batter {
+        background: #333;
+        color: #fff;
       }
   
       .bottom-content {

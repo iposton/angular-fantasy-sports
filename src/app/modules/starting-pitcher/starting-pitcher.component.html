@@ -476,12 +476,12 @@
                       {{i+1}} <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
                       {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | 
                       <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
-                      data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'">
-                      {{item?.playerObj?.stats?.batting?.hits}} H {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI
+                      data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
+                      &nbsp;{{item?.playerObj?.stats?.batting?.hits}} H {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI&nbsp;
                       </span>
                       <span *ngIf="data['batters'][0]?.playerObj?.gameStatus != 'UNPLAYED' &&
-                      data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'">
-                      {{item?.playerObj?.stats?.hitsToday}} H {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI
+                      data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
+                      &nbsp;{{item?.playerObj?.stats?.hitsToday}} H {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI&nbsp;
                       </span>
                   </div> 
                   
@@ -504,7 +504,7 @@
                   <img src="{{data['batters'][1]?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
                 </div> -->
               </div>
-              <div class="bottom-content">
+              <div class="bottom-content batter">
                   <span class="live" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'LIVE'">LIVE</span>  
                   <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                   data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['batters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['batters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['batters'][0]?.playerObj?.team?.opponent}}</span> </span> 
