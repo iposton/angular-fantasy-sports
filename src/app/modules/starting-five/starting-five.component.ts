@@ -451,7 +451,7 @@ export class StartingFiveComponent implements OnInit {
               if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameField = schedule.schedule.venue.name;
-                sdata.gameId = schedule.schedule.id;
+                //sdata.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "away";
                 sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
                 sdata.team.abbreviation = schedule.schedule.awayTeam.abbreviation;
@@ -460,7 +460,7 @@ export class StartingFiveComponent implements OnInit {
               if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameField = schedule.schedule.venue.name;
-                sdata.gameId = schedule.schedule.id;
+                //sdata.gameId = schedule.schedule.id;
                 sdata.player.gameLocation = "home";
                 sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                 sdata.team.abbreviation = schedule.schedule.homeTeam.abbreviation;
@@ -503,8 +503,6 @@ export class StartingFiveComponent implements OnInit {
             } 
           }  
          }
-
-         
 
           if (this.myData && this.dailyStats) {
             for (let daily of this.dailyStats) {

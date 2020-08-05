@@ -98,6 +98,12 @@
                       {{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}}K's
                    </span>
                 </span>
+                <div *ngIf="twitter">
+                  <br>
+                  <div  *ngFor="let item of data['pitchers']">
+                      {{item?.playerObj?.team.twitter}} {{item?.playerObj?.player.lastName}} 
+                  </div>  
+                </div> 
               </div>
           </div>
     </div>
@@ -510,8 +516,27 @@
                   <span class="postponed" *ngIf="data['batters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
                   data['batters'][0]?.playerObj?.gameStatus != 'LIVE' && 
                   data['batters'][0]?.playerObj?.gameStatus != 'COMPLETED'">PPD</span> 
-                  <span class="final" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'COMPLETED'">FINAL</span> 
+                  <span class="final" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'COMPLETED'">FINAL</span>
+
+                  <span *ngIf="twitter">   
+                    <div  *ngFor="let item of data['batters']">
+                        {{item?.playerObj?.team.twitter}} {{item?.playerObj?.player.lastName}} 
+                      <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
+                        data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
+                        &nbsp;{{item?.playerObj?.stats?.batting?.hits}} H {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI&nbsp;
+                        </span>
+                        <span *ngIf="data['batters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
+                        &nbsp;{{item?.playerObj?.stats?.hitsToday}} H {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI&nbsp;
+                        </span>  
+                    </div>  
+                  </span> 
+
               </div>
           </div>
     </div>
 </div>
+<div class="row" *ngIf="!loading && dailySchedule != null">
+  <div class="center twitter-btn">
+      <button (click)="twitter = !twitter">Twitter</button>
+  </div>
+</div> 

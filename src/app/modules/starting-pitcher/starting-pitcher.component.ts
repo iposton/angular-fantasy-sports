@@ -72,6 +72,7 @@ export class StartingPitcherComponent implements OnInit {
   public statData: Array <any> = [];
   public statBatterData: Array <any> = [];
   public testBrowser: boolean;
+  public twitter: boolean;
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService, 
@@ -181,7 +182,7 @@ export class StartingPitcherComponent implements OnInit {
                       gameDay = new Date(this.gameDate);
                       originalStart = game2.originalStartTime != null ? new Date(game2.originalStartTime) : new Date(game2.startTime);
                       //console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
-                      if (gameDay.getDay() === originalStart.getDay() || game2.playedStatus === 'COMPLETED') {
+                      if (gameDay.getDay() === originalStart.getDay() || game2.playedStatus === 'COMPLETED' || game2.playedStatus === 'LIVE') {
                         i2 = index;
                         if (res2[i2].actual != null && res2[i2].expected != null) {
 
@@ -443,6 +444,7 @@ export class StartingPitcherComponent implements OnInit {
                               data.team.logo = team.officialLogoImageSrc;
                               data.team.city = team.city;
                               data.team.name = team.name;
+                              data.team.twitter = team.twitter;
                             }
                           }  
                        }
@@ -767,6 +769,7 @@ export class StartingPitcherComponent implements OnInit {
                                   data.team.logo = team.officialLogoImageSrc;
                                   data.team.city = team.city;
                                   data.team.name = team.name;
+                                  data.team.twitter = team.twitter;
                                 }
                               }  
                           }
