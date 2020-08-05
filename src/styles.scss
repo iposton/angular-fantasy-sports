@@ -333,7 +333,7 @@ footer {
       font-size: 13px;
     }
   }
-  .dn, .dn2 {
+  .dn, .dn2, .dn3 {
     display: none;
   }
 }
@@ -837,7 +837,7 @@ ul {
       display: flex;
       // flex-direction: column;
       flex-basis: 100%;
-      flex: 0 0 33%;
+      flex: 1 0 33%;
       border-right: 1px #fff solid;
       justify-content: center;
       .sched-item {
@@ -980,7 +980,7 @@ ul {
     }
   }
 
-  .dn, .dn2 {
+  .dn, .dn2, .dn3 {
     display: none;
   }
 

@@ -479,8 +479,7 @@
                       data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
                       &nbsp;{{item?.playerObj?.stats?.batting?.hits}} H {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI&nbsp;
                       </span>
-                      <span *ngIf="data['batters'][0]?.playerObj?.gameStatus != 'UNPLAYED' &&
-                      data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
+                      <span *ngIf="data['batters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
                       &nbsp;{{item?.playerObj?.stats?.hitsToday}} H {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI&nbsp;
                       </span>
                   </div> 
