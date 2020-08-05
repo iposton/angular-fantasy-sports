@@ -203,16 +203,6 @@
     [teams]="teams"></app-position-card>
 
     <app-position-card *ngIf="!loading && dailySchedule != null && myData != null"
-    [title]="'Top Centers'"
-    [myData]="myData"
-    [position]="'C'"
-    [mobile]="mobile"
-    (open)="authorize($event)"
-    [twitter]="twitter"
-    [gameDate]="gameDate"
-    [teams]="teams"></app-position-card>
-
-    <app-position-card *ngIf="!loading && dailySchedule != null && myData != null"
     [title]="'Top PF'"
     [myData]="myData"
     [position]="'PF'"
@@ -233,19 +223,9 @@
     [teams]="teams"></app-position-card>
 
     <app-position-card *ngIf="!loading && dailySchedule != null && myData != null"
-    [title]="'Top PF'"
-    [myData]="myData"
-    [position]="'PF'"
-    [mobile]="mobile"
-    (open)="authorize($event)"
-    [twitter]="twitter"
-    [gameDate]="gameDate"
-    [teams]="teams"></app-position-card>
-
-    <app-position-card *ngIf="!loading && dailySchedule != null && myData != null"
     [title]="'Top Bench'"
     [myData]="myData"
-    [position]="'PG'"
+    [position]="'bench'"
     [mobile]="mobile"
     (open)="authorize($event)"
     [twitter]="twitter"
