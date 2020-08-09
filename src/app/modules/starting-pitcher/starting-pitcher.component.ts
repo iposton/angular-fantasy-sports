@@ -82,6 +82,7 @@ export class StartingPitcherComponent implements OnInit {
   public nflTeamStats: any;
   public name: any;
   public image: any;
+  public spinTitle: string = 'Pitcher Data';
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService, 
@@ -694,6 +695,7 @@ export class StartingPitcherComponent implements OnInit {
 
   public sortBatters() {
     if (this.gamesToday === true) {
+      this.spinTitle = 'Batter Data';
       this.loading = true;
       this.dataService
             .getDailyBatters().subscribe(res => {
