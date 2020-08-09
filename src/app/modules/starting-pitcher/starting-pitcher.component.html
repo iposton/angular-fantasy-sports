@@ -1,5 +1,17 @@
 <h1 class="center date-header baseball-header"> MLB {{pitcherSection ? 'Starting Pitchers' : 'Batting Order'}}</h1>
 <h1 class="center date-header baseball-header"> {{ gameDate | date:'fullDate' }}</h1>
+<app-dialog
+[isOpen]="isOpen"
+[submitting]="submitting"
+[type]="type"
+[area]="'none'"
+[noPosts]="noPosts"
+[tweetsData]="tweetsData"
+[name]="name"
+[image]="image"
+(close)="isOpen = false"
+[modalType]="'twitter'"
+></app-dialog>
 <div class="center">
   <app-date-picker (setDate)="getByDate($event)"></app-date-picker>
 </div>
@@ -29,7 +41,7 @@
               <div class="content-wrapper">
                 <div class="left-content"
                 [ngStyle]="{background: 'url(' + data['pitchers'][0]?.playerObj?.team?.logo +')'}">
-                  <span>
+                  <span class="pointer" (click)="authorize(data['pitchers'][0]?.playerObj)">
                       <img src="{{data['pitchers'][0]?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
                   </span> 
                   
@@ -39,17 +51,39 @@
                        {{data['pitchers'][1] != null ? data['pitchers'][1]?.playerObj?.player?.lastName : data['pitchers'][0]?.playerObj?.player?.po}} <br>
                     </span>
                     <span class="game-text">
-                      <span class="live" *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'LIVE'">LIVE</span>  
+                      <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'LIVE'">
+                        <span class="live">LIVE</span> <br>
+                        <span class="inning">
+                            {{data['pitchers'][0]?.playerObj?.team?.currentInningHalf}} 
+                            {{data['pitchers'][0]?.playerObj?.team?.currentInning}}
+                            <br>
+                        </span>
+                        <span class="score-box">
+                            {{data['pitchers'][0]?.playerObj?.team?.teamScore}} - 
+                            {{data['pitchers'][0]?.playerObj?.team?.opponentScore}}
+                        </span>
+                        
+
+                      </span>  
                       <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                       data['pitchers'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['pitchers'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST</span> 
                       <span class="postponed" *ngIf="data['pitchers'][0]?.playerObj?.sStatus === 'POSTPONED' && 
                       data['pitchers'][0]?.playerObj?.gameStatus != 'LIVE' && 
                       data['pitchers'][0]?.playerObj?.gameStatus != 'COMPLETED'">PPD</span> 
-                      <span class="final" *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED'">FINAL</span> 
+                      <span class="final" *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED'">
+                        FINAL <br>
+                        <span class="score-box">
+                            {{data['pitchers'][0]?.playerObj?.team?.teamScore}} - 
+                            {{data['pitchers'][0]?.playerObj?.team?.opponentScore}} <br>
+                        </span>
+                        {{data['pitchers'][0]?.playerObj?.team?.teamScore > data['pitchers'][0]?.playerObj?.team?.opponentScore ? data['pitchers'][0]?.playerObj?.team?.city +' Wins!' : data['pitchers'][1]?.playerObj?.team?.city +' Wins!'}}
+                      </span> 
                     </span>
                 </div>
                 <div class="right-content" [ngStyle]="{background: 'url(' + data['pitchers'][0]?.playerObj?.team?.opponentLogo +')'}">
-                  <img src="{{data['pitchers'][1]?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+                  <span class="pointer" (click)="authorize(data['pitchers'][1]?.playerObj)">
+                      <img src="{{data['pitchers'][1]?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+                  </span> 
                 </div>
               </div>
               <div class="bottom-content">
@@ -479,7 +513,9 @@
                 <div class="batter-content"
                 [ngStyle]="{background: 'url(' + data['batters'][0]?.playerObj?.team?.logo +')'}">
                   <div  *ngFor="let item of data['batters']; let i = index">
-                      {{i+1}} <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+                      <span class="pointer" (click)="authorize(item?.playerObj)">
+                        {{i+1}} <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+                      </span>
                       {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | 
                       <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                       data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
@@ -510,13 +546,27 @@
                 </div> -->
               </div>
               <div class="bottom-content batter">
-                  <span class="live" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'LIVE'">LIVE</span>  
+                  <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'LIVE'">
+                    <span class="live"> LIVE </span> 
+                      <span class="inning">
+                          {{data['batters'][0]?.playerObj?.team?.currentInningHalf}} 
+                          {{data['batters'][0]?.playerObj?.team?.currentInning}} &nbsp; &nbsp;
+                          
+                      </span>
+                      <span class="score-box">
+                          {{data['batters'][0]?.playerObj?.team?.teamScore}} - 
+                          {{data['batters'][0]?.playerObj?.team?.opponentScore}}
+                      </span>
+                  </span>  
                   <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                   data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['batters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['batters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['batters'][0]?.playerObj?.team?.opponent}}</span> </span> 
                   <span class="postponed" *ngIf="data['batters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
                   data['batters'][0]?.playerObj?.gameStatus != 'LIVE' && 
                   data['batters'][0]?.playerObj?.gameStatus != 'COMPLETED'">PPD</span> 
-                  <span class="final" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'COMPLETED'">FINAL</span>
+                  <span class="final" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'COMPLETED'">
+                      {{data['batters'][0]?.playerObj?.team?.teamScore}} - 
+                      {{data['batters'][0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data['batters'][0]?.playerObj?.team?.teamScore > data['batters'][0]?.playerObj?.team?.opponentScore ? data['batters'][0]?.playerObj?.team?.city +' Wins!' : data['batters'][0]?.playerObj?.team?.city +' Lost!'}}</span>
+                  </span>
 
                   <span *ngIf="twitter">   
                     <div  *ngFor="let item of data['batters']">

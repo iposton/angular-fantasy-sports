@@ -4,7 +4,7 @@
       Games This Week <button (click)="weekResults = !weekResults"> Team Results</button>
       <div class="content-wrapper">
           <div class="row">
-            <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length != amount }">
+            <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount }">
                     <span class="left-content" [ngClass]="{'results': weekResults}">
                       <span class="player-infos">
                           <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"></span>

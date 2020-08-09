@@ -248,7 +248,7 @@ export class StartingFiveComponent implements OnInit {
                   nbaTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200730-to-20200805`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200730-to-20200812`, { headers })
                     
                   )
                 )
@@ -337,9 +337,10 @@ export class StartingFiveComponent implements OnInit {
                         }
                         this.gameStarters.push(this.gameStarter);
                         this.starterIdData.push(item.player.id);
-                        playerString = this.starterIdData.join();
+                        
                       }
                     })
+                    playerString = this.starterIdData.join();
 
                   } else if (res2[i2].actual == null && res2[i2].expected != null) {
 
@@ -358,9 +359,10 @@ export class StartingFiveComponent implements OnInit {
                           }
                           this.gameStarters.push(this.gameStarter);
                           this.starterIdData.push(item.player.id);
-                          playerString = this.starterIdData.join();
+                          
                         }
                       })
+                      playerString = this.starterIdData.join();
                     //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
                    
                     
@@ -451,7 +453,7 @@ export class StartingFiveComponent implements OnInit {
               if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameField = schedule.schedule.venue.name;
-                //sdata.gameId = schedule.schedule.id;
+                sdata.gameId = sdata.gameId == null ? schedule.schedule.id : sdata.gameId;
                 sdata.player.gameLocation = "away";
                 sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
                 sdata.team.abbreviation = schedule.schedule.awayTeam.abbreviation;
@@ -460,7 +462,7 @@ export class StartingFiveComponent implements OnInit {
               if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameField = schedule.schedule.venue.name;
-                //sdata.gameId = schedule.schedule.id;
+                sdata.gameId = sdata.gameId == null ? schedule.schedule.id : sdata.gameId;
                 sdata.player.gameLocation = "home";
                 sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                 sdata.team.abbreviation = schedule.schedule.homeTeam.abbreviation;

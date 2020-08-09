@@ -12,6 +12,7 @@
 [name]="name"
 [image]="image"
 (close)="isOpen = false"
+[modalType]="'twitter'"
 ></app-dialog>
        
 <div class="button-wrapper sl-btns" *ngIf="!loading">
@@ -639,7 +640,7 @@
           <section [ngClass]="{'dn' : !nflSection}">
               <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null" 
               [data]="nflQBData" 
-              [statType]="'passing'" 
+              [statType]="'passing'"
               [statField]="'passYards'"
               [page]="page"
               [amount]="amount"
@@ -652,11 +653,12 @@
               [twitter]="twitter"
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
+              [eliteStat]="1800"
               ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null" 
               [data]="nflRushData" 
-              [statType]="'rushing'" 
+              [statType]="'rushing'"
               [statField]="'rushYards'"
               [page]="page"
               [amount]="amount"
@@ -669,11 +671,12 @@
               [twitter]="twitter"
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
+              [eliteStat]="850"
               ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
               [data]="nflRecData" 
-              [statType]="'receiving'" 
+              [statType]="'receiving'"
               [statField]="'recYards'"
               [page]="page"
               [amount]="amount"
@@ -686,11 +689,12 @@
               [twitter]="twitter"
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
+              [eliteStat]="1000"
               ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
               [data]="nflRecData" 
-              [statType]="'receiving'" 
+              [statType]="'receiving'"
               [statField]="'receptions'"
               [page]="page"
               [amount]="amount"
@@ -703,6 +707,7 @@
               [twitter]="twitter"
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
+              [eliteStat]="70"
               ></app-stat-card>
 
               <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && this.teamSchedules.length > 0" 
