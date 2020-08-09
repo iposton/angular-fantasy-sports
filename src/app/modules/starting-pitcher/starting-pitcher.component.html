@@ -30,7 +30,7 @@
     </div>
 </div>
 <h1 class="center no-game-header date-header baseball-header" *ngIf="noGamesToday === true && !loading">{{noGamesMsg}}</h1>
-<app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Pitching Data'"></app-spinner>
+<app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="spinTitle"></app-spinner>
 <div *ngIf="errMessage" class="err center">
      <h1><strong>Error: </strong> {{ errMessage }}</h1>
 </div>
@@ -76,7 +76,7 @@
                             {{data['pitchers'][0]?.playerObj?.team?.teamScore}} - 
                             {{data['pitchers'][0]?.playerObj?.team?.opponentScore}} <br>
                         </span>
-                        {{data['pitchers'][0]?.playerObj?.team?.teamScore > data['pitchers'][0]?.playerObj?.team?.opponentScore ? data['pitchers'][0]?.playerObj?.team?.city +' Wins!' : data['pitchers'][1]?.playerObj?.team?.city +' Wins!'}}
+                        {{data['pitchers'][0]?.playerObj?.team?.teamScore > data['pitchers'][0]?.playerObj?.team?.opponentScore ? data['pitchers'][0]?.playerObj?.team?.abbreviation +' Wins!' : data['pitchers'][1]?.playerObj?.team?.abbreviation +' Wins!'}}
                       </span> 
                     </span>
                 </div>
@@ -134,9 +134,11 @@
                 </span>
                 <div *ngIf="twitter">
                   <br>
-                  <div  *ngFor="let item of data['pitchers']">
-                      {{item?.playerObj?.team.twitter}} {{item?.playerObj?.player.lastName}} 
-                  </div>  
+                  #MLB Starting Pitcher Matchup
+                  <div  *ngFor="let item of data['pitchers']">                   
+                    {{item?.playerObj?.team.twitter}} {{item?.playerObj?.player.lastName}} 
+                  </div>
+                  #Stats #FantasyBaseball #Baseball
                 </div> 
               </div>
           </div>
@@ -568,7 +570,8 @@
                       {{data['batters'][0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data['batters'][0]?.playerObj?.team?.teamScore > data['batters'][0]?.playerObj?.team?.opponentScore ? data['batters'][0]?.playerObj?.team?.city +' Wins!' : data['batters'][0]?.playerObj?.team?.city +' Lost!'}}</span>
                   </span>
 
-                  <span *ngIf="twitter">   
+                  <span *ngIf="twitter">  
+                    #MLB top of #Batting order 
                     <div  *ngFor="let item of data['batters']">
                         {{item?.playerObj?.team.twitter}} {{item?.playerObj?.player.lastName}} 
                       <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
@@ -578,7 +581,8 @@
                         <span *ngIf="data['batters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
                         &nbsp;{{item?.playerObj?.stats?.hitsToday}} H {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI&nbsp;
                         </span>  
-                    </div>  
+                    </div> 
+                    #Stats #FantasyBaseball #Baseball 
                   </span> 
 
               </div>

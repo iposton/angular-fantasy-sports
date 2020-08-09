@@ -345,7 +345,7 @@ export class StartingGoaliesComponent implements OnInit {
 
               forkJoin(
                   res['games'].map(
-                    g =>  this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=position=Goalie-starter,ForwardLine1-LW,ForwardLine1-RW,ForwardLine1-C,DefensePair1-R,DefensePair1-L`, {headers})
+                    g =>  this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Goalie-starter,ForwardLine1-LW,ForwardLine1-RW,ForwardLine1-C,DefensePair1-R,DefensePair1-L`, {headers})
                   )
                 )
                 .subscribe(res => {
@@ -370,7 +370,9 @@ export class StartingGoaliesComponent implements OnInit {
 
                       i2 = index;
                       if (res2[i2].actual != null && res2[i2].expected != null) { 
+                        //console.log(res2[i2], 'got player ID for goalie actualy starting!');
                           for (let position of res2[i2].actual.lineupPositions) {
+                            //console.log(position, 'got player ID for goalie actualy starting!');
                           //console.log(res2[i2].actual.starter[0].player, 'got player ID for goalie actualy starting!');
                             if (position.player != null) {
                               this.gameStarter = {
@@ -394,7 +396,7 @@ export class StartingGoaliesComponent implements OnInit {
                         }
                       } else if (res2[i2].actual == null && res2[i2].expected != null) {
                         for (let position of res2[i2].expected.lineupPositions) {
-                          //console.log(res2[i2].actual.starter[0].player, 'got player ID for goalie actualy starting!');
+                          //console.log(position, 'got player ID for goalie actualy starting!');
                             if (position.player != null) {
                               this.gameStarter = {
                                 playerID: position.player.id,
@@ -670,8 +672,6 @@ export class StartingGoaliesComponent implements OnInit {
         }
 
         if (this.myData && this.fullSchedule) {
-          // const startingGoalieArray = Object.values(this.startingG);
-          
           let dPipe = new DatePipe("en-US");
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
               for (let fs of this.fullSchedule) {
@@ -945,7 +945,9 @@ export class StartingGoaliesComponent implements OnInit {
           //MAKE MATCHUPS BY GAME ID OF STARTERS AND NON STARTERS
 
           if (this.startersData.length > 0) {
-            //console.log(this.myData, 'my data')
+            //console.log(this.myData, 'my data');
+            //console.log(this.startersData, 'my data');
+            //console.log(this.starterIdData, 'starter id data');
             this.statData = this.startersData.reduce(function(r, a) {
               if(a.team != null){
                 r[a.team.gameId] = r[a.team.gameId] || [];
