@@ -639,6 +639,21 @@ ul {
     .player-infos {
       font-weight: 200;
       color: #fff;
+
+      .injury-circle {
+        font-family: roboto; 
+        border-radius: 50%;
+        color: #fff;
+        padding: 2px 4px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+      .questionable {
+        background: orange;
+      }
+      .out {
+        background: red;
+      }
     }
 
     .lg {
@@ -1676,7 +1691,7 @@ section {
   flex-wrap: wrap;
   width: 100%;
 }
-.dn, .dn2 {
+.dn, .dn2, .d3 {
   display: none;
 }
 
@@ -1684,6 +1699,10 @@ form.date-form {
   label {
     color: #fff;
   }
+}
+
+.pointer:hover {
+  cursor: pointer;
 }
 
 .top-arrow {
@@ -1698,6 +1717,13 @@ form.date-form {
 .top-arrow:hover {
   cursor: pointer;
   color: #ccc;
+}
+
+.title {
+  display: inline-block;
+  font-size: 1.5em;
+  margin: 10px;
+  font-weight: bold;
 }
 
 //starting-goalies

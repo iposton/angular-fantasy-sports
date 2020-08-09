@@ -34,20 +34,50 @@ export class StatCardComponent implements OnInit {
   public position         :any;
   @Input('seasonLength')
   public seasonLength     :any;
+  @Input('eliteStat')
+  public eliteStat     :any;
   @Input('ndk')
   public ndk              :boolean;
   @Output() open = new EventEmitter<object>();
 
   public type           :any;
+  public begin          :any;
+  public end            :any;
   public mobile         :any;
   public hoveredItem    :string = '';
   public hoveredItem2   :string = '';
+  public sortedStats: Array<any>;
 
   constructor() { }
 
   public authorize(player, type) {
     //console.log('trying to emit', player)
     this.open.emit({player: player, type: type}); 
+  }
+
+  public sortStats(array, field1, field2, order, dk, sl, es) {
+    //console.log('sort the data', array);
+    //this.sortedStats = array;
+    array.sort((a: any, b: any) => {
+        if (order === 'ASC') {
+          if (a['stats'][field1][field2] <= b['stats'][field1][field2]) {
+            return -1;
+          } else if (a['stats'][field1][field2] >= b['stats'][field1][field2]) {
+            return 1;
+          } else {
+            return 0;
+          }
+        } else if (order === 'DESC') {
+          if (a['stats'][field1][field2] >= b['stats'][field1][field2]) {
+            return -1;
+          } else if (a['stats'][field1][field2] <= b['stats'][field1][field2]) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }   
+    });
+    return array;
   }
 
   ngOnInit(): void {

@@ -419,7 +419,7 @@ export class StatLeadersComponent implements OnInit {
     this.nflService
       .getAllOffense('qb', '19').subscribe(res => {
         this.nflQBData = res['playerStatsTotals'].filter(
-          player => player.stats != null && player.stats.gamesPlayed > 6);
+          player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.passing.passYards > 700);
 
       this.nflService
         .getAllOffense('qb', '20').subscribe(res => {
@@ -438,22 +438,18 @@ export class StatLeadersComponent implements OnInit {
                 old.team.abbreviation = 'NO';
               }
 
-              // if (n.player.id === 18577) {
-              //   n['stats'] = {passing: {passYards: 1, passTD: 0}};
-              //   n.player['currentTeam'] = {id: n.player.id, abbreviation: n['teamAsOfDate'].abbreviation};
-              //   n['team'] = {id: n.player.id, abbreviation: n['teamAsOfDate'].abbreviation};
-              //   this.nflQBData.push(n);
-              // }
+          
             }
           }
           teamInfo(this.nflQBData, this.nflTeams, 'o');
+          
       });
     });
 
     this.nflService
       .getAllOffense('run', '19').subscribe(res => {
         this.nflRushData = res['playerStatsTotals'].filter(
-          player => player.stats != null && player.stats.gamesPlayed > 6);
+          player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.rushing.rushYards > 500);
 
       this.nflService
         .getAllOffense('run', '20').subscribe(res => {
@@ -480,7 +476,7 @@ export class StatLeadersComponent implements OnInit {
     this.nflService
       .getAllOffense('rec', '19').subscribe(res => {
         this.nflRecData = res['playerStatsTotals'].filter(
-          player => player.stats != null && player.stats.gamesPlayed > 6);
+          player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.receiving.receptions > 40);
 
       this.nflService
         .getAllOffense('rec', '20').subscribe(res => {

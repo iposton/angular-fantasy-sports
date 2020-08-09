@@ -25,7 +25,8 @@
               <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
               <span *ngIf="(item?.player?.currentInjury == null || item?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
               <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
+              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE' && item?.player?.currentInjury?.playingProbability === 'QUESTIONABLE'"><span class="material-icons md-18 injury-circle questionable">Q</span></span>
+              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE' && item?.player?.currentInjury?.playingProbability === 'OUT'"><span class="material-icons md-18 injury-circle out">O</span></span>
               <span (click)="changeStats()" class="point"> 
                 <app-stat-toggle
                   [status]="item?.starterInfo?.status" 
@@ -53,7 +54,7 @@
               #Top5 Starting/Expected {{position}}
           </div>
             <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
-              <span [ngClass]="{'left-content' : item?.player?.primaryPosition == position && !item?.starterInfo?.bench, 'dn' : item?.player?.primaryPosition != position, 'dn2' : item?.player?.primaryPosition == position && item?.starterInfo?.bench}">
+                <span [ngClass]="{'left-content' : (item?.player?.primaryPosition == position && !item?.starterInfo?.bench || position === 'bench' && item?.starterInfo?.bench), 'dn' : item?.player?.primaryPosition != position && position != 'bench', 'dn2' : item?.player?.primaryPosition == position && item?.starterInfo?.bench, 'dn3' : position === 'bench' && !item?.starterInfo?.bench }"> 
                 <span class="player-infos">
                   <span class="names" *ngIf="!mobile">
                       <span *ngIf="item.player.firstName != 'Shai'"> 

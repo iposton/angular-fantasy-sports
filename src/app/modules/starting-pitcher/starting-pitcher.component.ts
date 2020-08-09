@@ -73,6 +73,15 @@ export class StartingPitcherComponent implements OnInit {
   public statBatterData: Array <any> = [];
   public testBrowser: boolean;
   public twitter: boolean;
+  public isOpen: boolean = false;
+  public tweetsData: Array <any> = [];
+  public noPosts: any;
+  public submitting: boolean = false;
+  public selectedPlayer: any;
+  public type: any;
+  public nflTeamStats: any;
+  public name: any;
+  public image: any;
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService, 
@@ -88,6 +97,40 @@ export class StartingPitcherComponent implements OnInit {
     this.players = this.dataService.getSentStats();
     this.teams = this.util.getMLBTeams();
     this.testBrowser = isPlatformBrowser(platformId);
+  }
+
+  public authorize(item) {
+    //console.log(item)
+    if (item != null) {
+      this.isOpen = true;
+      this.submitting = true;
+      let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
+  
+      this.http.post('/authorize', {headers}).subscribe((res) => {
+        this.openModal(item, headers, 'mlb');
+      });
+    }
+  }
+
+  public openModal(player, headers, type) {
+    this.type = type;
+    this.selectedPlayer = null;
+    this.noPosts = '';
+    this.selectedPlayer = player;
+    //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
+    let twitter = null;
+    twitter = player.team.twitter;
+    let searchterm = null;
+    searchterm = 'query=' + player.player.lastName + ' ' + twitter;
+    this.image = player.player.officialImageSrc;
+    this.name = player.player.firstName + ' ' + player.player.lastName +' - '+ player.player.primaryPosition +' | #'+ player.player.jerseyNumber;
+    this.http.post('/search', searchterm, {headers}).subscribe((res) => {
+      this.submitting = false;
+      this.tweetsData = res['data'].statuses;
+      if (this.tweetsData.length === 0) {
+        this.noPosts = "No Tweets.";
+      }
+    });
   }
 
   public getByDate(event) {
@@ -358,13 +401,6 @@ export class StartingPitcherComponent implements OnInit {
                             data.sStatus = gs.scheduleStatus;
 
                             if (gs.status !== "UNPLAYED") {
-                              if (data.player.gameLocation === 'home') {
-                                data.team.teamScore = gs.score['homeScoreTotal'];
-                                data.team.opponentScore = gs.score['awayScoreTotal'];
-                              } else if (data.player.gameLocation === 'away') {
-                                data.team.teamScore = gs.score['awayScoreTotal'];
-                                data.team.opponentScore = gs.score['homeScoreTotal'];
-                              }
                               data.team.currentInning = gs.score['currentInning'];
                               data.team.currentInningHalf = gs.score['currentInningHalf'];
                             }
@@ -467,6 +503,18 @@ export class StartingPitcherComponent implements OnInit {
 
                       for (let gs of this.gameStarters) {
                         for (let data of this.myData) {
+
+                          if (gs.playerID === data.player.id) {
+                            if (gs.status !== "UNPLAYED") {
+                              if (data.player.gameLocation === 'home') {
+                                data.team.teamScore = gs.score['homeScoreTotal'];
+                                data.team.opponentScore = gs.score['awayScoreTotal'];
+                              } else if (data.player.gameLocation === 'away') {
+                                data.team.teamScore = gs.score['awayScoreTotal'];
+                                data.team.opponentScore = gs.score['homeScoreTotal'];
+                              }
+                            }
+                          }
                           
                           if (data.team.opponentId === gs.team && 
                             data.gameId === gs.gameID) {
@@ -683,13 +731,6 @@ export class StartingPitcherComponent implements OnInit {
                                 data.order = gb.position;
 
                                 if (gb.status !== "UNPLAYED") {
-                                  if (data.player.gameLocation === 'home') {
-                                    data.team.teamScore = gb.score['homeScoreTotal'];
-                                    data.team.opponentScore = gb.score['awayScoreTotal'];
-                                  } else if (data.player.gameLocation === 'away') {
-                                    data.team.teamScore = gb.score['awayScoreTotal'];
-                                    data.team.opponentScore = gb.score['homeScoreTotal'];
-                                  }
                                   data.team.currentInning = gb.score['currentInning'];
                                   data.team.currentInningHalf = gb.score['currentInningHalf'];
                                 }
@@ -737,8 +778,7 @@ export class StartingPitcherComponent implements OnInit {
                                       sdata.team.gameField = schedule.schedule.venue.name;
                                       //sdata.gameId = schedule.id;
                                       sdata.player.gameLocation = "away";
-                                      sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
-                                      //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
+                                      sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;   
                                       sdata.team.opponentId = schedule.schedule.homeTeam.id;
 
                                     }
@@ -749,7 +789,6 @@ export class StartingPitcherComponent implements OnInit {
                                       //sdata.gameId = schedule.schedule.id;
                                       sdata.player.gameLocation = "home";
                                       sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
-                                      //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
                                       sdata.team.opponentId = schedule.schedule.awayTeam.id;
                                     }
 
@@ -784,6 +823,27 @@ export class StartingPitcherComponent implements OnInit {
                                 sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
                                 sdata.team.opponentLogo = schedule.team.logo;
                               }
+                            }
+                          }
+                        }
+
+                        for (let gb of this.gameBatters) {
+                          for (let data of this.myBatterData) {
+                            if (gb.playerID === data.player.id) {
+                              if (gb.status !== "UNPLAYED") {
+                                if (data.player.gameLocation === 'home') {
+                                  data.team.teamScore = gb.score['homeScoreTotal'];
+                                  data.team.opponentScore = gb.score['awayScoreTotal'];
+                                } else if (data.player.gameLocation === 'away') {
+                                  data.team.teamScore = gb.score['awayScoreTotal'];
+                                  data.team.opponentScore = gb.score['homeScoreTotal'];
+                                }
+                              }
+                            }
+                            
+                            if (data.team.opponentId === gb.team && 
+                              data.gameId === gb.gameID) {
+                                data.player.po = gb.name;
                             }
                           }
                         }

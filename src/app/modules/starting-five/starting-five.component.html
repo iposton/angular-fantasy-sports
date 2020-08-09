@@ -95,19 +95,19 @@
                           {{ item.playerObj.player.firstName + ' ' + item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}} 
                         </span>
                         <span *ngIf="item.playerObj.player.firstName === 'Giannis' && item.playerObj.player.lastName === 'Antetokounmpo'"> 
-                            G. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
-                            
+                            G. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}  
                         </span>
                         <span *ngIf="item.playerObj.player.firstName === 'Shai'"> 
                             S. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}   
                         </span>
                         <span *ngIf="item.playerObj.player.firstName === 'Kentavious'"> 
-                                    K. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
+                            K. {{item.playerObj.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | #{{item.playerObj.player.jerseyNumber}}
                         </span>
                 
                       <span *ngIf="(item?.playerObj?.player?.currentInjury == null || item?.playerObj?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
                       <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                      <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE'" style="color: #df1313fd;">INJ</span>
+                      <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE' && item?.playerObj?.player?.currentInjury?.playingProbability === 'QUESTIONABLE'"><span class="material-icons md-18 injury-circle questionable">Q</span></span>
+                      <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE' && item?.playerObj?.player?.currentInjury?.playingProbability === 'OUT'"><span class="material-icons md-18 injury-circle out">O</span></span>
                       <span (click)="changeStats()" class="point">
                         <app-stat-toggle
                         [status]="item?.playerObj?.starterInfo?.status" 

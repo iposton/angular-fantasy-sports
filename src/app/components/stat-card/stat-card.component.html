@@ -1,69 +1,41 @@
 <div class="card-wrap-sp mat-elevation-z6 position-box">
-  <h2>{{ title }}</h2>
+  <span class="title">{{ title }}</span> 
+  <span *ngIf="sport === 'nfl' && ndk">
+      <button [ngClass]="{'dn': end === 21}" (click)="begin = 0; end = 21;">Easy</button> <button [ngClass]="{'dn': end === 32}" (click)="begin = 21; end = 32;">Good</button> <button [ngClass]="{'dn': end === 32}" (click)="begin = 10; end = 32;">Hard</button>
+  </span>
   <div>
     <div class="content-wrapper">
       <div class="row">
-        <div
-          *ngFor="
-            let item of data | sortBy: statType:statField:order;
-            let i = index
-          "
-        >
+        <div *ngFor="let item of sortStats(data, statType, statField, order, ndk, seasonLength, eliteStat ? eliteStat : 0); let i = index">
+            <!-- let item of data | sortBy: statType:statField:order;let i = index -->
           <span
             [ngClass]="{
               'left-content': i <= page,
-              dn: i > page || i <= amount
+              'dn': i > page || i <= amount,
+              'dn2': item?.team[seasonLength] > begin && item?.team[seasonLength] <= end,
+              'dn3': begin === 21 &&   item?.team[seasonLength] <= 10
             }"
             >
             {{ i + 1 }}
-            <span (click)="authorize(item, sport)" class="point"
-            ><img
+            <span (click)="authorize(item, sport)" class="point" (mouseover)="$event.stopPropagation()" (mouseout)="$event.stopPropagation()">
+              <img
                 src="{{ item?.player?.officialImageSrc }}"
                 alt="{{sport}} player"
                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"
                 
             />
             <span class="sched-rank {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem = ''; $event.stopPropagation()">
-                  <span *ngIf="sport === 'nfl' && item?.team?.dtr != null && ndk && seasonLength === 'full'" [ngClass]="{'red' : item?.team?.dtr &lt;= 10, 'orange' : item?.team?.dtr > 10 && item?.team?.dtr &lt;= 21, 'green' : item?.team?.dtr > 21}">
-                    {{item?.team?.dtr}}
+                  <span *ngIf="sport === 'nfl' && item?.team[seasonLength] != null && ndk" [ngClass]="{'red' : item?.team[seasonLength] &lt;= 10, 'orange' : item?.team[seasonLength] > 10 && item?.team[seasonLength] &lt;= 21, 'green' : item?.team[seasonLength] > 21}">
+                    {{item?.team[seasonLength]}}
                   </span>
-                  <span *ngIf="sport === 'nfl' && item?.team?.otr != null && ndk && seasonLength === 'full'" [ngClass]="{'red' : item?.team?.otr &lt;= 10, 'orange' : item?.team?.otr > 10 && item?.team?.otr &lt;= 21, 'green' : item?.team?.otr > 21}">
-                     {{item?.team?.otr}}
-                  </span>
-      
-                  <span *ngIf="sport === 'nfl' && item?.team?.dfh != null && ndk && seasonLength === 'fh'" [ngClass]="{'red' : item?.team?.dfh &lt;= 10, 'orange' : item?.team?.dfh > 10 && item?.team?.dfh &lt;= 21, 'green' : item?.team?.dfh > 21}">
-                    {{item?.team?.dfh}}
-                  </span>
-                  <span *ngIf="sport === 'nfl' && item?.team?.ofh != null && ndk && seasonLength === 'fh'" [ngClass]="{'red' : item?.team?.ofh &lt;= 10, 'orange' : item?.team?.ofh > 10 && item?.team?.ofh &lt;= 21, 'green' : item?.team?.ofh > 21}">
-                    {{item?.team?.ofh}}
-                  </span>
-      
-                  <span *ngIf="sport === 'nfl' && item?.team?.dsh != null && ndk && seasonLength === 'sh'" [ngClass]="{'red' : item?.team?.dsh &lt;= 10, 'orange' : item?.team?.dsh > 10 && item?.team?.dsh &lt;= 21, 'green' : item?.team?.dsh > 21}">
-                    {{item?.team?.dsh}}
-                  </span>
-                  <span *ngIf="sport === 'nfl' && item?.team?.osh != null && ndk && seasonLength === 'sh'" [ngClass]="{'red' : item?.team?.osh &lt;= 10, 'orange' : item?.team?.osh > 10 && item?.team?.osh &lt;= 21, 'green' : item?.team?.osh > 21}">
-                    {{item?.team?.osh}}
-                  </span>
-                  <span class="tooltip"> <span 
-                    *ngIf="seasonLength === 'sh' && item?.team?.osh > 21 || seasonLength === 'sh' && item?.team?.dsh > 21 ||
-                    seasonLength === 'fh' && item?.team?.ofh > 21 || seasonLength === 'fh' && item?.team?.dfh > 21 ||
-                    seasonLength === 'full' && item?.team?.otr > 21 || seasonLength === 'full' && item?.team?.dtr > 21"
-                    >Easy</span> 
-                    <span 
-                    *ngIf="seasonLength === 'sh' && item?.team?.osh > 10 && item?.team?.osh &lt;= 21 || seasonLength === 'sh' && item?.team?.dsh > 10 && item?.team?.dsh &lt;= 21 ||
-                    seasonLength === 'fh' && item?.team?.ofh > 10 && item?.team?.ofh &lt;= 21 || seasonLength === 'fh' && item?.team?.dfh > 10 && item?.team?.dfh &lt;= 21 ||
-                    seasonLength === 'full' && item?.team?.otr > 10 && item?.team?.otr &lt;= 21 || seasonLength === 'full' && item?.team?.dtr > 10 && item?.team?.dtr &lt;= 21
-                      ">Good</span>
-                    <span 
-                    *ngIf="seasonLength === 'sh' && item?.team?.osh &lt;= 10 || seasonLength === 'sh' && item?.team?.dsh &lt;= 10 ||
-                    seasonLength === 'fh' && item?.team?.ofh &lt;= 10 || seasonLength === 'fh' && item?.team?.dfh &lt;= 10 ||
-                    seasonLength === 'full' && item?.team?.otr &lt;= 10 || seasonLength === 'full' && item?.team?.dtr &lt;= 10">Hard</span>
-                      Schedule</span>
-                  
-            </span>
-            
+                  <span class="tooltip"> 
+                    <span *ngIf="item?.team[seasonLength] > 21">Easy</span> 
+                    <span *ngIf="item?.team[seasonLength] &lt;= 21 && item?.team[seasonLength] > 10">Good</span>
+                    <span *ngIf="item?.team[seasonLength] &lt;= 10">Hard</span>
+                      Schedule
+                  </span>    
+            </span>    
           </span>
-
             <span class="player-infos">
               <span *ngIf="item.player?.rookie === true && !ndk" class="rookie">R</span>
               <span class="names" *ngIf="!mobile">

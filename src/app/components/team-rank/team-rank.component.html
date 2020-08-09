@@ -1,11 +1,16 @@
 <div class="schedule-box col">
     <h2>{{title}}<br> <span *ngIf="title === 'Toughest Defense Schedule 2020' || title === 'Toughest Offense Schedule 2020'"><span *ngIf="seasonLength === 'full'">Full </span> <span *ngIf="seasonLength === 'fh'">1st Half of </span> <span *ngIf="seasonLength === 'sh'">2nd Half of </span> Season</span> </h2> 
 
-    <span *ngIf="title === 'Toughest Defense Schedule 2020' || title === 'Toughest Offense Schedule 2020'">
-        <button [ngClass]="{'dn' : seasonLength === 'full'}" (click)="seasonLength = 'full'">Full</button> 
-        <button [ngClass]="{'dn' : seasonLength === 'fh'}" (click)="seasonLength = 'fh'">First Half</button> 
-        <button [ngClass]="{'dn' : seasonLength === 'sh'}" (click)="seasonLength = 'sh'">Second Half</button>
+    <span *ngIf="title === 'Toughest Defense Schedule 2020'">
+        <button [ngClass]="{'dn' : seasonLength === 'dtr'}" (click)="seasonLength = 'dtr'">Full</button> 
+        <button [ngClass]="{'dn' : seasonLength === 'dfh'}" (click)="seasonLength = 'dfh'">First Half</button> 
+        <button [ngClass]="{'dn' : seasonLength === 'dsh'}" (click)="seasonLength = 'dsh'">Second Half</button>
     </span>
+    <span *ngIf="title === 'Toughest Offense Schedule 2020'">
+            <button [ngClass]="{'dn' : seasonLength === 'otr'}" (click)="seasonLength = 'otr'">Full</button> 
+            <button [ngClass]="{'dn' : seasonLength === 'ofh'}" (click)="seasonLength = 'ofh'">First Half</button> 
+            <button [ngClass]="{'dn' : seasonLength === 'osh'}" (click)="seasonLength = 'osh'">Second Half</button>
+        </span>
 
     <div class="left" *ngFor="let item of getRank(data, teams, title, seasonLength); let i=index">
         <span *ngIf="item?.abbreviation" class="sched-item">

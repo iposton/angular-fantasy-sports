@@ -17,7 +17,7 @@ export class TeamRankComponent implements OnInit {
 
   public oRank            :Array<any> = [];
   public tRank            :Array<any> = [];
-  public seasonLength: string = 'full';
+  public seasonLength: string = 'dtr';
   public loading: boolean = true;
   public hoveredItem: string = '';
 
@@ -31,9 +31,9 @@ export class TeamRankComponent implements OnInit {
     let tRank = [];
     data = d;
     let statTypeO = '';
-    statTypeO = sl === 'fh' ? 'ofh' : sl === 'sh' ? 'osh' : 'otr';
+    statTypeO = sl;
     let statTypeD = '';
-    statTypeD = sl === 'fh' ? 'dfh' : sl === 'sh' ? 'dsh' : 'dtr';
+    statTypeD = sl;
     // console.log(d, 'data', teams, 'teams', title, 'title');
     if (title === 'Defense Team Rank') {
       rank = data.slice().sort((a: any, b: any) => {

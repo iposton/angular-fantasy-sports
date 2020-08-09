@@ -94,10 +94,12 @@ export class StartingGoaliesComponent implements OnInit {
   public image: any;
   public name: any;
   public area: any;
-  public starterStatData: Array < any > = [];
-  public showLwData: Array < any > ;
-  public sentHotData: Array < any > ;
-  public sentAllData: Array < any > ;
+  public starterStatData: Array <any> = [];
+  public gameSkaters: Array <any> = [];
+  public skaterIdData: Array <any> = [];
+  public showLwData: Array <any> ;
+  public sentHotData: Array <any> ;
+  public sentAllData: Array <any> ;
   public sentYesterday: any;
   public sentLastweek: any;
   public modalType: any;
@@ -113,10 +115,11 @@ export class StartingGoaliesComponent implements OnInit {
     }
   };
   public testBrowser: boolean;
+  public gameStarter: any;
 
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,
-    private dataService: NHLDataService, 
+    public dataService: NHLDataService, 
     public fbService: FirebaseService,  
     public router: Router, 
     public util: UtilService,
@@ -342,35 +345,80 @@ export class StartingGoaliesComponent implements OnInit {
 
               forkJoin(
                   res['games'].map(
-                    g =>  this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Goalie-starter`, {headers})
+                    g =>  this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=position=Goalie-starter,ForwardLine1-LW,ForwardLine1-RW,ForwardLine1-C,DefensePair1-R,DefensePair1-L`, {headers})
                   )
                 )
                 .subscribe(res => {
                   let i;
                   let i2;
                   let res2;
+                  let game2 = null;
+                  let score2 = null;
+                  
                   res.forEach((item, index) => {
                     i = index;
+                    try {
+                      game2 = res[i]['game'];
+                      res2 = res[i]['teamLineups'];
+                      score2 = this.dailySchedule[i].score;
+                    } catch {
+                      console.log('bad endpoint');
+                    }
                     //console.log(res[i]['teamLineups'], 'got starting lineups data!');
-                    res2 = res[i]['teamLineups'];
                     
                     res2.forEach((item, index) => {
 
                       i2 = index;
-                      if (res2[i2].actual != null && res2[i2].expected != null) {
-                        
-                        //console.log(res2[i2].actual.starter[0].player, 'got player ID for goalie actualy starting!');
-                        this.starterIdData.push(res2[i2].actual.lineupPositions[0].player.id);
-
+                      if (res2[i2].actual != null && res2[i2].expected != null) { 
+                          for (let position of res2[i2].actual.lineupPositions) {
+                          //console.log(res2[i2].actual.starter[0].player, 'got player ID for goalie actualy starting!');
+                            if (position.player != null) {
+                              this.gameStarter = {
+                                playerID: position.player.id,
+                                name: position.player.lastName,
+                                team: res2[i2].team.id,
+                                gameID: game2.id,
+                                score: score2,
+                                status: game2.playedStatus,
+                                scheduleStatus: game2.scheduleStatus,
+                                position: position.player['position'],
+                                startType: 'actual'
+                              }
+                              if (position.player['position'] === 'G') {
+                                this.starterIdData.push(position.player.id);
+                              } else {
+                                this.gameSkaters.push(this.gameStarter);
+                                this.skaterIdData.push(position.player.id);
+                              }
+                          }
+                        }
                       } else if (res2[i2].actual == null && res2[i2].expected != null) {
-                        //console.log(res2[i2].expected.starter[0].player.ID, 'got player ID for goalie expected to start!');
-                        this.starterIdData.push(res2[i2].expected.lineupPositions[0].player.id);
+                        for (let position of res2[i2].expected.lineupPositions) {
+                          //console.log(res2[i2].actual.starter[0].player, 'got player ID for goalie actualy starting!');
+                            if (position.player != null) {
+                              this.gameStarter = {
+                                playerID: position.player.id,
+                                name: position.player.lastName,
+                                team: res2[i2].team.id,
+                                gameID: game2.id,
+                                score: score2,
+                                status: game2.playedStatus,
+                                scheduleStatus: game2.scheduleStatus,
+                                position: position.player['position'],
+                                startType: 'actual'
+                              }
+                              if (position.player['position'] === 'G') {
+                                this.starterIdData.push(position.player.id);
+                              } else {
+                                this.gameSkaters.push(this.gameStarter);
+                                this.skaterIdData.push(position.player.id);
+                              }
+                          }
+                        }
+                       
                       } else {
                         //console.log(res2[i2].team.City + " " + res2[i2].team.Name, 'no starters yet!');
                         this.starterIdData.push(res2[i2].team.id);
-                      
-                        //console.log(this.starterIdData, 'this array has ALL the team IDs of todays starters');
-
                       }
 
                     });
@@ -705,8 +753,8 @@ export class StartingGoaliesComponent implements OnInit {
 
 
         for (let data of this.myData) {
-          console.log(this.dataService.isToday, 'isToday?');
-          console.log(this.dataService.isTomorrow, 'isTomorrow?');
+          //console.log(this.dataService.isToday, 'isToday?');
+          //console.log(this.dataService.isTomorrow, 'isTomorrow?');
           //stats.goaltending.savePercentage
           data.player.savePercent = data.stats.goaltending.savePercentage;
 
@@ -897,6 +945,7 @@ export class StartingGoaliesComponent implements OnInit {
           //MAKE MATCHUPS BY GAME ID OF STARTERS AND NON STARTERS
 
           if (this.startersData.length > 0) {
+            //console.log(this.myData, 'my data')
             this.statData = this.startersData.reduce(function(r, a) {
               if(a.team != null){
                 r[a.team.gameId] = r[a.team.gameId] || [];
@@ -920,6 +969,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 public showMatchups() {
     console.log(this.gameGroups, 'game Groups');
+    //console.log(this.gameSkaters, 'skaters');
     this.gameGroups.forEach((data) => {
         data['goalies'][0].side = 'left';
         data['goalies'][1].side = 'right';
@@ -994,7 +1044,11 @@ public showMatchups() {
 
     //  this.dataService
     //   .sendStats(this.showData, this.myData);
-     }
+  }
+
+  public sortSkaters() {
+    
+  }
 
   ngOnInit() {
     if (this.testBrowser) {
