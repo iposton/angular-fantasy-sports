@@ -78,12 +78,16 @@
               ')'
           }"
         >
-          <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-            <span class="lg"
+          
+        <div class="vertical">
+          <span *ngIf="item?.score?.homeScoreTotal != null">
+              <span class="lg"
               >{{ item?.schedule?.homeTeam?.abbreviation }}
             </span>
             <br />
             <span class="lg">{{ item?.score?.homeScoreTotal }}</span>
+          </span>
+            
           </div>
         </span>
 
@@ -99,12 +103,15 @@
               ')'
           }"
         >
-          <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-            <span class="lg">
-              {{ item?.schedule?.awayTeam?.abbreviation }}
-            </span>
-            <br />
-            <span class="lg"> {{ item?.score?.awayScoreTotal }} </span>
+          
+        <div class="vertical">
+          <span *ngIf="item?.score?.homeScoreTotal != null">
+              <span class="lg">
+                  {{ item?.schedule?.awayTeam?.abbreviation }}
+                </span>
+                <br />
+                <span class="lg"> {{ item?.score?.awayScoreTotal }} </span>
+          </span>   
           </div>
         </span>
       </div>
@@ -197,13 +204,20 @@
               ')'
           }"
         >
-          <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-            <span class="lg"
-              >{{ item?.schedule?.homeTeam?.abbreviation }}
+          
+          
+          <div class="vertical">
+            <span *ngIf="item?.score?.homeScoreTotal != null">
+                <span class="lg">
+                    {{ item?.schedule?.homeTeam?.abbreviation }}
+                  </span>
+                  <br />
+                  <span class="lg">
+                    {{ item?.score?.homeScoreTotal }}
+                  </span>
             </span>
-            <br />
-            <span class="lg">{{ item?.score?.homeScoreTotal }}</span>
           </div>
+
         </span>
 
         <span
@@ -218,12 +232,16 @@
               ')'
           }"
         >
-          <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-            <span class="lg">
-              {{ item?.schedule?.awayTeam?.abbreviation }}
-            </span>
-            <br />
-            <span class="lg"> {{ item?.score?.awayScoreTotal }} </span>
+          
+        <div class="vertical">
+          <span *ngIf="item?.score?.homeScoreTotal != null">
+              <span class="lg">
+                  {{ item?.schedule?.awayTeam?.abbreviation }}
+                </span>
+                <br />
+                <span class="lg"> {{ item?.score?.awayScoreTotal }} </span>
+          </span>
+            
           </div>
         </span>
       </div>
@@ -314,12 +332,16 @@
               ')'
           }"
         >
-          <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-            <span class="lg"
+          
+        <div class="vertical">
+          <span *ngIf="item?.score?.homeScoreTotal != null">
+              <span class="lg"
               >{{ item?.schedule?.homeTeam?.abbreviation }}
             </span>
             <br />
             <span class="lg">{{ item?.score?.homeScoreTotal }}</span>
+          </span>
+            
           </div>
         </span>
 
@@ -333,12 +355,16 @@
               ')'
           }"
         >
-          <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-            <span class="lg">
-              {{ item?.schedule?.awayTeam?.abbreviation }}
-            </span>
-            <br />
-            <span class="lg"> {{ item?.score?.awayScoreTotal }} </span>
+          
+        <div class="vertical">
+          <span *ngIf="item?.score?.homeScoreTotal != null">
+              <span class="lg">
+                  {{ item?.schedule?.awayTeam?.abbreviation }}
+                </span>
+                <br />
+                <span class="lg"> {{ item?.score?.awayScoreTotal }} </span>
+          </span>
+            
           </div>
         </span>
       </div>
@@ -415,13 +441,14 @@
             <!-- *ngIf="item?.schedule?.awayTeam?.abbreviation && compareDate(item?.schedule?.startTime)" -->
         <span class="score-container mlb"
         [ngStyle]="{background:'linear-gradient(-225deg, rgba(0,0,0,0.6) 50%, rgba(0,0, 0,0.7) 80%), url(' + item?.schedule?.homeTeam?.logo + ')'}">
-          <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-            <span class="lg"
-              >{{ item?.schedule?.homeTeam?.abbreviation }}
-            </span>
-            <br />
-            <span class="lg">{{ item?.score?.homeScoreTotal }}</span>
-          </div>
+          
+        <div class="vertical">
+          <span *ngIf="item?.score?.homeScoreTotal != null">
+              <span class="lg"> {{ item?.schedule?.homeTeam?.abbreviation }} </span>
+              <br />
+              <span class="lg"> {{ item?.score?.homeScoreTotal }} </span>
+          </span>
+        </div>
         </span>
 
         <span
@@ -433,12 +460,13 @@
               ')'
           }"
         >
-          <div class="vertical" *ngIf="item?.score?.homeScoreTotal != null">
-            <span class="lg">
-              {{ item?.schedule?.awayTeam?.abbreviation }}
-            </span>
-            <br />
-            <span class="lg"> {{ item?.score?.awayScoreTotal }} </span>
+          
+        <div class="vertical">
+          <span *ngIf="item?.score?.homeScoreTotal != null">
+              <span class="lg"> {{ item?.schedule?.awayTeam?.abbreviation }} </span>
+              <br />
+              <span class="lg"> {{ item?.score?.awayScoreTotal }} </span>
+          </span>
           </div>
         </span>
       </div>
