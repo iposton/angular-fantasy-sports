@@ -257,7 +257,16 @@ export class UtilService {
         lastName: "Dort",
         image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629652.png"
       },
-      
+      "17295": {
+        firstName: "Tyler", 
+        lastName: "Herro",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629639.png"
+      },
+      "17240": {
+        firstName: "Darius",
+        lastName: "Bazley",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629647.png"
+      },
     }
 
 
@@ -1022,7 +1031,7 @@ export class UtilService {
       defenseRankLs: 25,
       offenseRankLs: 30,
       city: "Washington",
-      name: "Redskins",
+      name: "Washington",
       abbreviation: "WAS",
       homeVenue: {
       id: 73,
@@ -1038,7 +1047,7 @@ export class UtilService {
       value: "Redskins"
       }
       ],
-      officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/haxrowry8puwbrixjdmc"
+      officialLogoImageSrc: "https://static.www.nfl.com/image/private/f_auto/league/ywoi3t4jja8fokqpyegk"
       },
       {
       id: 56,

@@ -644,9 +644,9 @@ ul {
         font-family: roboto; 
         border-radius: 50%;
         color: #fff;
-        padding: 2px 4px;
+        padding: 3px 5px;
         font-weight: bold;
-        font-size: 16px;
+        font-size: 14px;
       }
       .questionable {
         background: orange;
@@ -1365,6 +1365,7 @@ ul {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   background: #555 !important;
+  height: 128px;
 }
 
 .score-container.mlb {
