@@ -199,7 +199,7 @@ export class StatLeadersComponent implements OnInit {
          .getAllStats('goalies').subscribe(res => {
           const nhlTeamsArray = Object.values(this.nhlTeams);
           this.nhlGoaltenders = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0);
   
             for (let team of nhlTeamsArray) {
               for (let data of this.nhlGoaltenders) { 
@@ -225,7 +225,7 @@ export class StatLeadersComponent implements OnInit {
         const nhlTeamsArray = Object.values(this.nhlTeams);
 
         this.nhlSkaters = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5);
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0);
 
           for (let team of nhlTeamsArray) {
             for (let data of this.nhlSkaters) { 
