@@ -24,6 +24,7 @@ let teamRef = [];
 let teamString = '';
 let teams = null;
 let startingGoalieArray = null;
+let skaterString = null;
 
 @Component({
   selector: 'app-starting-goalies',
@@ -42,9 +43,12 @@ export class StartingGoaliesComponent implements OnInit {
   public startersData: Array <any> = [];
   public gameGroups: Array <any>;
   public dailyStats: Array <any> = [];
+  public dailySkaterStats: Array <any> = [];
   public teamRef: Array <any> = [];
   public myData: Array <any>;
+  public mySkaterData: Array <any>;
   public showData: Array <any>;
+  public showSkaterData: Array <any>;
   public showTomorrow: Array <any>;
   public score: Array <any>;
   public sentData: Array <any>;
@@ -115,7 +119,15 @@ export class StartingGoaliesComponent implements OnInit {
     }
   };
   public testBrowser: boolean;
+  public twitter: boolean;
   public gameStarter: any;
+  public goalieSection: boolean = true;
+  public lineSection: boolean = false;
+  public scheduleSection: boolean = false;
+  public spinTitle: any;
+  public errMessage: any;
+  public gameSkaterGroups: Array <any>;
+  public statSkaterData: Array <any> = [];
 
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,
@@ -394,6 +406,7 @@ export class StartingGoaliesComponent implements OnInit {
                               }
                           }
                         }
+                        skaterString = this.skaterIdData.join();
                       } else if (res2[i2].actual == null && res2[i2].expected != null) {
                         for (let position of res2[i2].expected.lineupPositions) {
                           //console.log(position, 'got player ID for goalie actualy starting!');
@@ -417,6 +430,7 @@ export class StartingGoaliesComponent implements OnInit {
                               }
                           }
                         }
+                        skaterString = this.skaterIdData.join();
                        
                       } else {
                         //console.log(res2[i2].team.City + " " + res2[i2].team.Name, 'no starters yet!');
@@ -438,19 +452,6 @@ export class StartingGoaliesComponent implements OnInit {
         this.dataService
           .getGameId().subscribe(res => {
            // console.log(res['games'], "scheduled games for yesterday today and tomorrow...");
-
-            //this removed a postponed game from api to avoid errors
-            // if (res['games'] > 0) {
-            //   let postponed;
-            //   res['games'].forEach((item, index) => {
-            //     postponed = index;
-            //     if (res['games'][postponed].id === '41392') {
-            //       console.log(res['games'][postponed], "hi, iam postponed and causing trouble...");
-            //       res['games'].splice(postponed, 1);
-            //     }
-            //   });
-            // }
-
             this.fullSchedule = res['games'];
           })
 
@@ -1049,8 +1050,246 @@ public showMatchups() {
   }
 
   public sortSkaters() {
+    this.goalieSection = false; 
+    this.lineSection = true; 
+    this.scheduleSection = false;
+
+    if (this.gamesToday === true) {
+      this.spinTitle = 'Line Data';
+      this.loading = true;
+      this.dataService
+        .getDailySkaters().subscribe(res => {
+                //console.log(res, "Daily batter stats...");
+                this.dailySkaterStats = res != null ? res['gamelogs'] : [];
+                
+                this.dataService
+                  .getSkateStats(skaterString).subscribe(res => {
+                    
+                    function removeDuplicatesBy(keyFn, array) {
+                      var mySet = new Set();
+                      return array.filter(function(x) {  
+                          var key = keyFn(x), isNew = !mySet.has(key);
+                          if (isNew) mySet.add(key);  
+                          return isNew;
+                      });
+                    }
+                  
+                  let values = [];
+                  if (res != null) values = res['playerStatsTotals'];
+                  this.mySkaterData = removeDuplicatesBy(x => x.player.id, values);
+                  //console.log(this.mySkaterData, 'my batter data');
+
+                      if (this.skaterIdData.length > 0 || this.noGamesToday === true) {
+                        if (this.mySkaterData && this.gameSkaters) {
+                          for (let gb of this.gameSkaters) {
+                            for (let data of this.mySkaterData) {
+                              data.player.gameLocation = "none";
+                              if (gb.playerID === data.player.id) {
+                                data.gameId = gb.gameID;
+                                data.score = gb.score;
+                                data.gameStatus = gb.status;
+                                data.starterTeam = gb.team;
+                                data.sStatus = gb.scheduleStatus;
+                                data.order = gb.position;
+
+                                if (gb.status !== "UNPLAYED") {
+                                  data.team.currentInning = gb.score['currentInning'];
+                                  data.team.currentInningHalf = gb.score['currentInningHalf'];
+                                }
+                                //console.log(game, 'is game over?');
+                                if (gb.status === "COMPLETED" 
+                                  || gb.status === "COMPLETED_PENDING_REVIEW") {
+                                  data.team.isGameOver = true;
+                                  data.team.isGameInProgress = false;
+                                  data.team.isGameUnplayed = false;
+                                  
+                                } else {
+                                  data.team.isGameInProgress = true;
+                                  data.team.isGameUnplayed = true;
+                                  data.team.isGameOver = false;
+                                }
+
+                                if (gb.scheduleStatus === "POSTPONED") {
+                                  data.postponed = true;
+                                }
+                              }
+                            }
+                          }
+                          //console.log('start sorting data for real gameID by PitcherID...');
+                        
+                          if (this.mySkaterData && this.dailySchedule) {
+                            let gameDay = null;
+                            let originalStart = null;
+                          // console.log('start sorting data for daily schedule...');
+                            for (let schedule of this.dailySchedule) {
+                              for (let sdata of this.mySkaterData) {
+                                gameDay = new Date(this.gameDate);
+                                originalStart = new Date(schedule.schedule.startTime);
+                                
+                                if (schedule.schedule.awayTeam != null && 
+                                  schedule.schedule.homeTeam != null) {
+                                  if (schedule.schedule.scheduleStatus != "POSTPONED" && gameDay.getDay() === originalStart.getDay()) {
+
+                                    if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
+                                      sdata.sStatus = schedule.schedule.scheduleStatus;
+                                      sdata.player.gameTime = schedule.schedule.startTime;
+                                      sdata.team.gameField = schedule.schedule.venue.name;
+                                      //sdata.gameId = schedule.id;
+                                      sdata.player.gameLocation = "away";
+                                      sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;   
+                                      sdata.team.opponentId = schedule.schedule.homeTeam.id;
+
+                                    }
+                                    if (schedule.schedule.homeTeam.id === sdata.starterTeam) {
+                                      sdata.sStatus = schedule.schedule.scheduleStatus;
+                                      sdata.player.gameTime = schedule.schedule.startTime;
+                                      sdata.team.gameField = schedule.schedule.venue.name;
+                                      //sdata.gameId = schedule.schedule.id;
+                                      sdata.player.gameLocation = "home";
+                                      sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+                                      sdata.team.opponentId = schedule.schedule.awayTeam.id;
+                                    }
+
+                                  }
+                                    
+                                } 
+                              
+                              } 
+                            }
+                          }
+
+                          for (let team of this.teamRef) {
+                            for (let data of this.mySkaterData) { 
+                                if (team.id === data.starterTeam) {
+                                  data.team.color = team.teamColoursHex[0];
+                                  data.team.accent = team.teamColoursHex[1];
+                                  data.team.logo = team.officialLogoImageSrc;
+                                  data.team.city = team.city;
+                                  data.team.name = team.name;
+                                  data.team.twitter = team.twitter;
+                                }
+                              }  
+                          }
+                        }
+
+                        if (this.mySkaterData && this.dailySchedule) {
+                          //console.log('start sorting data for pitching opponent...');
+                          for (let schedule of this.mySkaterData) {
+                            for (let sdata of this.mySkaterData) {
+                              if (sdata.team.opponentId === schedule.team.id && 
+                                sdata.gameId === schedule.gameId) {
+                                sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
+                                sdata.team.opponentLogo = schedule.team.logo;
+                              }
+                            }
+                          }
+                        }
+
+                        for (let gb of this.gameSkaters) {
+                          for (let data of this.mySkaterData) {
+                            if (gb.playerID === data.player.id) {
+                              if (gb.status !== "UNPLAYED") {
+                                if (data.player.gameLocation === 'home') {
+                                  data.team.teamScore = gb.score['homeScoreTotal'];
+                                  data.team.opponentScore = gb.score['awayScoreTotal'];
+                                } else if (data.player.gameLocation === 'away') {
+                                  data.team.teamScore = gb.score['awayScoreTotal'];
+                                  data.team.opponentScore = gb.score['homeScoreTotal'];
+                                }
+                              }
+                            }
+                            
+                            if (data.team.opponentId === gb.team && 
+                              data.gameId === gb.gameID) {
+                                data.player.po = gb.name;
+                            }
+                          }
+                        }
+
+                        if (this.mySkaterData && this.dailySkaterStats) {
+                        // console.log('start sorting data for daily stats...');
+                          for (let daily of this.dailySkaterStats) {
+                            for (let mdata of this.mySkaterData) {
+
+                              if (daily.player.id === mdata.player.id) {
+                                //console.log(daily.game, 'get game info by player id')
+                                mdata.gameId = daily.game.id;
+                                // mdata.stats.hitsToday = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
+                                // mdata.stats.runsToday = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
+                                // mdata.stats.rbiToday = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
+                                // mdata.stats.hrToday = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
+                              }
+
+                            }
+                          }
+
+                          this.groupSkaters();
+                        } else {
+                          this.groupSkaters();
+                        }
+                      }
+                      this.loading = false;
+                    },
+                    (err: HttpErrorResponse) => {
+                      if (err instanceof Error) {
+                        console.log('api error', err.error.message);
+                        // client-side error
+                        this.loading = false;
+                        this.errMessage = `An error occured ${err.error.message}`;
+                      } else {
+                        this.loading = false;
+                        console.log('api error', err.message);
+                        this.errMessage = `${err.status}. Sorry :( Please Try again.`;
+                      }
+                    }
+                  );
+              },
+              (err: HttpErrorResponse) => {
+                if (err instanceof Error) {
+                  console.log('api error', err.error.message);
+                  // client-side error
+                  this.loading = false;
+                  this.errMessage = `An error occured ${err.error.message}`;
+                } else {
+                  this.loading = false;
+                  console.log('api error', err.message);
+                  this.errMessage = `${err.status}. Sorry :( Please Try again.`;
+                }
+              }
+            );
+
+        } else {
+          console.log('No games then no daily stats either. :(');
+        } 
+  }
+
+  public groupSkaters() {
+    this.statSkaterData = this.mySkaterData.reduce(function(r, a) {
+      if(a.team != null){
+        r[a.starterTeam] = r[a.starterTeam] || [];
+        r[a.starterTeam].push({'order': a.order, 'gid': a.gameId, 'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
+      }
+      return r
+    }, Object.create(null));
+
+    this.gameSkaterGroups = Object.keys(this.statSkaterData).map((key, index) => {
+        return {id: this.statSkaterData[key][0].gid != null ?  this.statSkaterData[key][0].gid : 
+           this.statSkaterData[key][1].gid != null ?  this.statSkaterData[key][1].gid : 
+           this.statSkaterData[key][2].gid, game: key, skaters: this.statSkaterData[key].sort((a, b) => a.order.localeCompare(b.order))};
+    });
+
+    this.showSkaterMatchups();
+  }
+
+  public showSkaterMatchups() {
+
+    this.loading = false;
+    this.showSkaterData = this.gameSkaterGroups;
+    console.log(this.showSkaterData, 'skater groups');
     
   }
+
+
 
   ngOnInit() {
     if (this.testBrowser) {
