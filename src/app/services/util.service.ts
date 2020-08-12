@@ -1944,7 +1944,7 @@ export class UtilService {
         city: "Philadelphia",
         name: "Flyers",
         abbreviation: "PHI",
-        twitter: "#NowOrNever",
+        twitter: "#AnytimeAnywhere",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/4.svg"
       },
       "NJD": {
