@@ -146,7 +146,7 @@ export class StartingGoaliesComponent implements OnInit {
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
     // this.sentTomorrowData = this.tomorrowService.getSentStats();
     this.playerImages = this.util.getNHLImages();
-    teams = this.util.getNHLTeams();
+    this.teams = this.util.getNHLTeams();
     this.startingG = this.util.getStartingGoalies();
     startingGoalieArray = Object.values(this.startingG);
     this.sentHotData = this.dataService.getSentHotStats();
@@ -317,7 +317,7 @@ export class StartingGoaliesComponent implements OnInit {
               if (this.teamSchedules.length === 0) {
                 let team;
                 let teamSchedule;
-                const nhlTeamsArray = Object.values(teams);
+                const nhlTeamsArray = Object.values(this.teams);
                 forkJoin(
                   nhlTeamsArray.map(
                     g => 
@@ -1093,8 +1093,8 @@ public showMatchups() {
                                 data.order = gb.position;
 
                                 if (gb.status !== "UNPLAYED") {
-                                  data.team.currentInning = gb.score['currentInning'];
-                                  data.team.currentInningHalf = gb.score['currentInningHalf'];
+                                  data.team.currentPeriod = gb.score['currentPeriod'];
+                                  data.team.currentIntermission = gb.score['currentIntermission'];
                                 }
                                 //console.log(game, 'is game over?');
                                 if (gb.status === "COMPLETED" 
@@ -1158,7 +1158,7 @@ public showMatchups() {
                             }
                           }
 
-                          for (let team of this.teamRef) {
+                          for (let team of teamRef) {
                             for (let data of this.mySkaterData) { 
                                 if (team.id === data.starterTeam) {
                                   data.team.color = team.teamColoursHex[0];
@@ -1214,10 +1214,10 @@ public showMatchups() {
                               if (daily.player.id === mdata.player.id) {
                                 //console.log(daily.game, 'get game info by player id')
                                 mdata.gameId = daily.game.id;
-                                // mdata.stats.hitsToday = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
-                                // mdata.stats.runsToday = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
-                                // mdata.stats.rbiToday = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
-                                // mdata.stats.hrToday = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
+                                mdata.stats.assistsToday = daily.stats.scoring.assists ? daily.stats.scoring.assists : 0;
+                                mdata.stats.goalsToday = daily.stats.scoring.goals ? daily.stats.scoring.goals : 0;
+                                mdata.stats.iceTimeToday = this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) ? this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) : 0;
+                                mdata.stats.hrToday = daily.stats.scoring.homeruns ? daily.stats.scoring.homeruns : 0;
                               }
 
                             }
@@ -1282,11 +1282,17 @@ public showMatchups() {
   }
 
   public showSkaterMatchups() {
-
     this.loading = false;
-    this.showSkaterData = this.gameSkaterGroups;
-    console.log(this.showSkaterData, 'skater groups');
-    
+    this.showSkaterData = this.gameSkaterGroups.sort((a, b) => {
+      if (a.id <= b.id) return -1
+      else if (a.id >= b.id) return 1
+      else return 0
+    });
+    console.log(this.showSkaterData, 'skater groups');   
+  }
+
+  public makeMinutes(time) {
+    return Math.floor(time / 60);
   }
 
 
@@ -1469,7 +1475,7 @@ public showMatchups() {
     this.selectedPlayer = item;
     //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
     let searchterm = null;
-    searchterm = 'query=' + item.player.lastName + ' ' + item.player.twitterHandle;
+    searchterm = 'query=' + item.player.lastName + ' ' + (item.player.twitterHandle ?  item.player.twitterHandle : this.teams[item.team.abbreviation].twitter);
     this.image = item.player.officialImageSrc;
     this.name = item.player.firstName + ' ' + item.player.lastName +' - '+ item.player.primaryPosition +' | #'+ item.player.jerseyNumber;
 
