@@ -200,7 +200,28 @@
 <!-- matchup-layout div -->
 <app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Goalie Stats'"></app-spinner>
 <br>
-<div class="matchup-layout goalie-layout">
+
+<div class="nba-button-wrapper" *ngIf="!loading && dailySchedule != null && starterIdData.length > 0">
+    <div class="schedule-box row">
+      <div [ngClass]="{'active': goalieSection}" class="col" (click)="goalieSection = true; lineSection = false; scheduleSection = false">
+          <span class="sched-item">
+            Goalies
+          </span> 
+      </div>
+      <div [ngClass]="{'active': lineSection}" class="col" (click)="sortSkaters()">
+          <span class="sched-item">
+           Starting Line
+          </span> 
+      </div>
+      <div [ngClass]="{'active': scheduleSection}" class="col" (click)="goalieSection = false; lineSection = false; scheduleSection = true">
+          <span class="sched-item">
+            Weekly Schedule
+          </span> 
+      </div>
+    </div>
+</div>
+
+<div *ngIf="goalieSection" class="matchup-layout goalie-layout">
   <div *ngFor="let data of showData">
       <div class="card-wrap tp-wrapper">
               <div class="goalies row">
@@ -326,7 +347,81 @@
       </div>
     </div>
   </div>
-<section *ngIf="fbService.userDetails != null">
+</div>
+<section *ngIf="showSkaterData != null && lineSection">
+    <div class="mlb-page">
+        <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showSkaterData">
+            <div class="mat-card-sp">
+                  <div class="content-wrapper">
+                    <div class="batter-content"
+                    [ngStyle]="{background: 'url(' + data['skaters'][0]?.playerObj?.team?.logo +')'}">
+                      <div  *ngFor="let item of data['skaters']; let i = index">
+                          <span class="pointer" (click)="authorize(item?.playerObj)">
+                            {{i+1}} <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+                          </span>
+                          {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | 
+                          <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
+                          data['skaters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
+                          <!-- &nbsp;{{item?.playerObj?.stats?.batting?.hits}} H {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI&nbsp; -->
+                          </span>
+                          <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
+                          <!-- &nbsp;{{item?.playerObj?.stats?.hitsToday}} H {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI&nbsp; -->
+                          </span>
+                      </div> 
+                      
+                    </div>
+                   
+                  </div>
+                  <div class="bottom-content batter">
+                      <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'LIVE'">
+                        <span class="live"> LIVE </span> 
+                          <span class="inning">
+                              {{data['skaters'][0]?.playerObj?.team?.currentInningHalf}} 
+                              {{data['skaters'][0]?.playerObj?.team?.currentInning}} &nbsp; &nbsp;
+                              
+                          </span>
+                          <span class="score-box">
+                              {{data['skaters'][0]?.playerObj?.team?.teamScore}} - 
+                              {{data['skaters'][0]?.playerObj?.team?.opponentScore}}
+                          </span>
+                      </span>  
+                      <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
+                      data['skaters'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['skaters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['skaters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['skaters'][0]?.playerObj?.team?.opponent}}</span> </span> 
+                      <span class="postponed" *ngIf="data['skaters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
+                      data['skaters'][0]?.playerObj?.gameStatus != 'LIVE' && 
+                      data['skaters'][0]?.playerObj?.gameStatus != 'COMPLETED'">PPD</span> 
+                      <span class="final" *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'COMPLETED'">
+                          {{data['skaters'][0]?.playerObj?.team?.teamScore}} - 
+                          {{data['skaters'][0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data['skaters'][0]?.playerObj?.team?.teamScore > data['skaters'][0]?.playerObj?.team?.opponentScore ? data['skaters'][0]?.playerObj?.team?.city +' Wins!' : data['skaters'][0]?.playerObj?.team?.city +' Lost!'}}</span>
+                      </span>
+    
+                      <span *ngIf="twitter">  
+                        #NHL 
+                        <!-- {{data['skaters'][0]?.playerObj?.team?.twitter}} top line  -->
+                        <div  *ngFor="let item of data['skaters']">
+                          {{item?.playerObj?.player.lastName}} 
+                          <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
+                            data['skaters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
+                            <!-- &nbsp;{{item?.playerObj?.stats?.batting?.hits}} H {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI&nbsp; -->
+                            </span>
+                            <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
+                            <!-- &nbsp;{{item?.playerObj?.stats?.hitsToday}} H {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI&nbsp; -->
+                            </span>  
+                        </div> 
+                        #Stats #FantasyHockey #Hockey 
+                      </span> 
+    
+                  </div>
+              </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="!loading && dailySchedule != null">
+      <div class="center twitter-btn">
+          <button (click)="twitter = !twitter">Twitter</button>
+      </div>
+    </div> 
+</section>
+<section *ngIf="scheduleSection">
     <div class="card-wrap-sp mat-elevation-z6 position-box full-box" *ngIf="!loading && dailySchedule != null">
         <h2>Weekly Team Schedule</h2>
           <div>

@@ -529,23 +529,7 @@
                   </div> 
                   
                 </div>
-                <!-- <div class="center-content">
-                    <span class="matup-text">{{data['batters'][0] != null ? data['batters'][0]?.playerObj?.player?.lastName : data['batters'][1]?.playerObj?.player?.po}} <br> vs <br>
-                       {{data['batters'][1] != null ? data['batters'][1]?.playerObj?.player?.lastName : data['batters'][0]?.playerObj?.player?.po}} <br>
-                    </span>
-                    <span class="game-text">
-                      <span class="live" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'LIVE'">LIVE</span>  
-                      <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
-                      data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['batters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST</span> 
-                      <span class="postponed" *ngIf="data['batters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
-                      data['batters'][0]?.playerObj?.gameStatus != 'LIVE' && 
-                      data['batters'][0]?.playerObj?.gameStatus != 'COMPLETED'">PPD</span> 
-                      <span class="final" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'COMPLETED'">FINAL</span> 
-                    </span>
-                </div> -->
-                <!-- <div class="right-content" [ngStyle]="{background: 'url(' + data['batters'][0]?.playerObj?.team?.opponentLogo +')'}">
-                  <img src="{{data['batters'][1]?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
-                </div> -->
+                
               </div>
               <div class="bottom-content batter">
                   <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'LIVE'">
@@ -571,9 +555,9 @@
                   </span>
 
                   <span *ngIf="twitter">  
-                    #MLB top of #Batting order 
+                    #MLB {{data['batters'][0]?.playerObj?.team?.twitter}} top of #Batting order 
                     <div  *ngFor="let item of data['batters']">
-                        {{item?.playerObj?.team.twitter}} {{item?.playerObj?.player.lastName}} 
+                      {{item?.playerObj?.player.lastName}} 
                       <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                         data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
                         &nbsp;{{item?.playerObj?.stats?.batting?.hits}} H {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI&nbsp;

@@ -267,6 +267,11 @@ export class UtilService {
         lastName: "Bazley",
         image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629647.png"
       },
+      "17305": {
+        firstName: "Keldon",
+        lastName: "Johnson",
+        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629640.png"
+      },   
     }
 
 

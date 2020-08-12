@@ -56,8 +56,8 @@ export class StatToggleComponent implements OnInit {
       }
     } else if (s === '5') {
       if (pos != 'ALL') {
-        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;         
-        this.statArr[2] = status != 'UNPLAYED' ? `${item.player.stl} Stl` : `${item.stats.defense.stlPerGame} Stl`;
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;;         
+        this.statArr[2] = status != 'UNPLAYED' ? `${item.player.tpm} TPM` : `${item.stats.fieldGoals.fg3PtMadePerGame} TPM`;
       } else if (pos === 'ALL') {
         this.statArr[1] = status != 'UNPLAYED' ? `${item.playerObj.player.blk} Blk` :
         `${item.playerObj.stats.defense.blkPerGame} Blk`;
@@ -65,7 +65,7 @@ export class StatToggleComponent implements OnInit {
       
     } else if (s === '6') {
       if (pos != 'ALL') {
-        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.ast} Ast` : `${item.stats.offense.astPerGame} Ast`;         
+        this.statArr[1] = status != 'UNPLAYED' ? `${item.player.reb} Reb` : `${item.stats.rebounds.rebPerGame} Reb`;         
         this.statArr[2] = status != 'UNPLAYED' ? `${item.player.tpm} TPM` : `${item.stats.fieldGoals.fg3PtMadePerGame} TPM`;
       } else if (pos === 'ALL') {
         this.statArr[1] = status != 'UNPLAYED' ? `${item.playerObj.player.tpm} TPM` : 

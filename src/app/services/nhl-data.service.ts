@@ -56,6 +56,7 @@ export class NHLDataService {
 
   info: Observable < any > = null;
   stats: Observable < any > = null;
+  skateStats: Observable < any > = null;
   allstats: Observable < any > = null;
   uStats: Observable < any > = null;
   env: Observable < any > = null;
@@ -67,6 +68,7 @@ export class NHLDataService {
   play: Observable <any> = null;
   injured: Observable <any> = null;
   teamstats: Observable <any> = null;
+  dailySkaters: Observable <any> = null;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
   headers: any;
   public dailyDate: string = '';
@@ -179,6 +181,12 @@ export class NHLDataService {
     return this.stats;
   }
 
+  getSkateStats(players) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff/player_stats_totals.json?player=`+players;
+    this.skateStats = this.http.get(url, {headers})
+    return this.skateStats;
+  }
+
   getAllStats(type) {
       let url = null;
       if (type === 'skaters') {
@@ -219,6 +227,12 @@ export class NHLDataService {
     let url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=G`;
     this.daily = this.http.get(url, {headers})  
     return this.daily;
+  }
+
+  getDailySkaters() {
+    let url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=RW,LW,D,C`;
+    this.dailySkaters = this.http.get(url, {headers})  
+    return this.dailySkaters;
   }
 
    getInjured() {
