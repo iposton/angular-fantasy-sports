@@ -22,15 +22,15 @@ const routes: Routes = [
         component: HomeComponent 
   },
   { 
-         path: 'starting-pitchers', 
+         path: 'mlb', 
          component: StartingPitcherComponent 
   },
    {
-         path: 'starting-goalies',
+         path: 'nhl',
          component: StartingGoaliesComponent
    },
    {
-         path: 'starting-five',
+         path: 'nba',
          component: StartingFiveComponent
    },
    {

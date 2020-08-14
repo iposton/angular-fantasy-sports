@@ -2219,8 +2219,8 @@ export class UtilService {
         lastName: "Markstrom",
         teamId: 21,
         abbreviation: "VAN",
-        active: false,
-        numberOne: false
+        active: true,
+        numberOne: true
       },
       '4950': {
         id: 4950,
@@ -2265,7 +2265,7 @@ export class UtilService {
         teamId: 142,
         abbreviation: "VGK",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '5528': {
         id: 5528,
@@ -2283,7 +2283,7 @@ export class UtilService {
         teamId: 21,
         abbreviation: "VAN",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '5366': {
         id: 5366,
@@ -2535,7 +2535,7 @@ export class UtilService {
         teamId:  23,
         abbreviation: "CGY",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '5277': {
         id: 5277,
@@ -2544,7 +2544,7 @@ export class UtilService {
         teamId:  23,
         abbreviation: "CGY",
         active: true,
-        numberOne: false
+        numberOne: true
       },
       '5176': {
         id: 5176,
@@ -2552,8 +2552,8 @@ export class UtilService {
         lastName: "Grubauer",
         teamId: 22,
         abbreviation: "COL",
-        active: false,
-        numberOne: false
+        active: true,
+        numberOne: true
       },
       '15442': {
         id: 15442,
@@ -2562,7 +2562,7 @@ export class UtilService {
         teamId: 22,
         abbreviation: "COL",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '5168': {
         id: 5168,
@@ -2634,7 +2634,7 @@ export class UtilService {
         teamId: 142,
         abbreviation: "VGK",
         active: true,
-        numberOne: false
+        numberOne: true
       },  
       '5481': {
         id: 5481,
