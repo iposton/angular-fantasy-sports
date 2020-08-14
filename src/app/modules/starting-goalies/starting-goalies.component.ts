@@ -172,21 +172,29 @@ export class StartingGoaliesComponent implements OnInit {
     this.dailySchedule = [];
     dailyTeams = [];
     this.starterIdData = [];
+    this.skaterIdData = [];
     this.startersData = [];
     this.startingGoaliesToday = [];
     teamRef = [];
     this.dailyStats = [];
+    this.dailySkaterStats = [];
     teamString = '';
+    skaterString = '';
     this.myData = [];
     this.showData = [];
+    this.mySkaterData = [];
+    this.showSkaterData = [];
     this.score = [];
     this.teamSchedules = [];
     this.fullSchedule = [];
-    this.myData = [];
     this.statData = [];
+    this.statSkaterData = [];
     this.gameGroups = [];
+    this.gameSkaterGroups = [];
     this.gamesToday = false;
     this.noGamesMsg = '';
+    this.goalieSection = true;
+    this.lineSection = false;
     this.loadData();
   }
 
