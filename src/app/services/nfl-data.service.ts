@@ -278,11 +278,11 @@ export class NFLDataService {
   getAllDefense(position, season) {
 
     if (position === 'all' && season === '20') {
-      let url = `${this.apiRoot2020}/players.json?position=CB,S,LB,DT,DE`;
+      let url = `${this.apiRoot2020}/players.json?position=CB,S,LB,DT,DE,SS,FS,OLB,ILB,MLB`;
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     } else if (position === 'all' && season === '19') {
-      let url = `${apiRoot}/player_stats_totals.json?position=CB,S,LB,DT,DE`;
+      let url = `${apiRoot}/player_stats_totals.json?position=CB,S,LB,DT,DE,FS,SS,OLB,ILB,MLB`;
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     }
