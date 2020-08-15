@@ -152,7 +152,7 @@ export class NBADataService {
   }
 
   getDaily(data) {
-    let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?player=${data}`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-playoff/date/${dailyDate}/player_gamelogs.json?player=${data}`;
     this.daily = this.http.get(url, {headers})
     return this.daily;
   }
