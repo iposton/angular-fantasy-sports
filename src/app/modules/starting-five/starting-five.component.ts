@@ -287,7 +287,7 @@ export class StartingFiveComponent implements OnInit {
               res['games'].map(
                 g => 
                 
-                 this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json`, { headers })
+                 this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nba/2020-playoff/games/`+g['schedule'].id+`/lineup.json`, { headers })
                 
               )
             )
