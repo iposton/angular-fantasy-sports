@@ -244,6 +244,7 @@
                     ({{ g.playerObj.player?.currentTeam?.abbreviation + ' - ' + g.playerObj?.player.primaryPosition }})
                   </span>
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
+                  <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                   <br>
@@ -294,6 +295,7 @@
                     ({{ g.playerObj.player?.currentTeam?.abbreviation + ' - ' + g.playerObj?.player.primaryPosition }})
                   </span>
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
+                  <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                   <br>
@@ -362,10 +364,25 @@
                           {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | 
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                           data['skaters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
-                          &nbsp;{{makeMinutes(item?.playerObj?.stats?.shifts?.timeOnIceSeconds / item?.playerObj?.stats?.gamesPlayed)}} Min {{item?.playerObj?.stats?.scoring?.assists}} A {{item?.playerObj?.stats?.scoring?.goals}} G&nbsp;
+                          &nbsp; 
+                          <span (click)="statToggle()" class="stat-toggle pointer">
+                            <span [ngClass]="{'dn' : stat != 1}">{{makeMinutes(item?.playerObj?.stats?.shifts?.timeOnIceSeconds / item?.playerObj?.stats?.gamesPlayed)}} Min</span>
+                            <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.sog}} SOG</span>
+                            <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fp}} FP</span>
+                            <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hits}} H</span>
+                            <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocks}} B</span>
+                          </span>    {{item?.playerObj?.stats?.scoring?.assists}} A {{item?.playerObj?.stats?.scoring?.goals}} G&nbsp;
                           </span>
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
-                          &nbsp;{{item?.playerObj?.stats?.iceTimeToday}} Min {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G&nbsp;
+                          &nbsp;
+                          <span (click)="statToggle()" class="stat-toggle pointer">
+                              <span [ngClass]="{'dn' : stat != 1}">{{item?.playerObj?.stats?.iceTimeToday}} Min</span>
+                              <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.sogToday}} SOG</span>
+                              <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fpToday}} FP</span>
+                              <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hitsToday}} H</span>
+                              <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocksToday}} B</span>
+                          </span> 
+                             {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G&nbsp;
                           </span>
                       </div> 
                       
@@ -412,10 +429,24 @@
                           {{item?.playerObj?.player.lastName}} 
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                           data['skaters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
-                          &nbsp;{{makeMinutes(item?.playerObj?.stats?.shifts?.timeOnIceSeconds / item?.playerObj?.stats?.gamesPlayed)}} Min {{item?.playerObj?.stats?.scoring?.assists}} A {{item?.playerObj?.stats?.scoring?.goals}} G&nbsp;
+                          &nbsp;
+                          <span (click)="statToggle()" class="stat-toggle pointer">
+                              <span [ngClass]="{'dn' : stat != 1}">{{makeMinutes(item?.playerObj?.stats?.shifts?.timeOnIceSeconds / item?.playerObj?.stats?.gamesPlayed)}} Min</span>
+                              <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.sog}} SOG</span>
+                              <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fp}} FP</span>
+                              <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hits}} H</span>
+                              <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocks}} B</span>
+                            </span>  {{item?.playerObj?.stats?.scoring?.assists}} A {{item?.playerObj?.stats?.scoring?.goals}} G&nbsp;
                           </span>
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
-                          &nbsp;{{item?.playerObj?.stats?.iceTimeToday}} Min {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G&nbsp;
+                          &nbsp; 
+                          <span (click)="statToggle()" class="stat-toggle pointer">
+                              <span [ngClass]="{'dn' : stat != 1}">{{item?.playerObj?.stats?.iceTimeToday}} Min</span>
+                              <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.sogToday}} SOG</span>
+                              <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fpToday}} FP</span>
+                              <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hitsToday}} H</span>
+                              <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocksToday}} B</span>
+                          </span>  {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G&nbsp;
                           </span> 
                         </div> 
                         #Stats #FantasyHockey #Hockey 
