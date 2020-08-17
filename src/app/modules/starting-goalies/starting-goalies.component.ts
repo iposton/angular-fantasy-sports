@@ -222,29 +222,36 @@ export class StartingGoaliesComponent implements OnInit {
             for (let show of this.showData) {
               for (let rep of this.myData) {
                 //console.log(show, 'showData items...');
-                if (this.startersDate === today && show.goalies != null && this.fullFirebaseResponse[1][show.goalies[0].playerObj.player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team != null && rep.team.id === show.goalies[0].playerObj.team.id && this.fullFirebaseResponse[1][show.goalies[0].playerObj.player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === true) {
-                  // Find goalies with the same team ID
-                  // if the view has a goalie that is probable false swap with goalie from firebase that is confirmed
-                  console.log(rep, 'update me into the view right now! I am confirmed to start.');
-                  console.log(show.goalies[0], 'I have been changed, replace me with confirmed goalie.');
-                  show.goalies[0] = rep;
-                } else if (this.startersDate === today && show.goalies != null && this.fullFirebaseResponse[1][show.goalies[0].playerObj.player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team != null && rep.team.id === show.goalies[0].playerObj.team.id && this.fullFirebaseResponse[1][show.goalies[0].playerObj.player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === false && this.fullFirebaseResponse[1][rep.player.id].probable === true && rep.player.probable === false) {
-                  rep.player.probable = true;
-                  console.log(rep, 'update me into the view right now! I am probable to start.');
-                  console.log(show.goalies[0], 'I have been changed, replace me with probable goalie.');
-                  show.goalies[0] = rep;
+                if (this.dataService.isToday && this.startersDate === today && show.goalies != null) {
+                  for (let away of show.goalies['away']) {
+                    if (away.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[1][rep.player.id]) {
+                      show.goalies['away'] = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? [away] : this.fullFirebaseResponse[1][rep.player.id].probable === true ? [away] : [away];
+                      show.goalies['away'].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : away.size;
+                    }
+                  }
+
+                  for (let home of show.goalies['home']) {
+                    if (home.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[1][rep.player.id]) {
+                      show.goalies['home'] = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? [home] : this.fullFirebaseResponse[1][rep.player.id].probable === true ? [home] : [home];
+                      show.goalies['home'].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : home.size;
+                    }
+                  }
                 }
-                if (this.startersDate === today && show.goalies != null && this.fullFirebaseResponse[1][show.goalies[1].playerObj.player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team != null && rep.team.id === show.goalies[1].playerObj.team.id && this.fullFirebaseResponse[1][show.goalies[1].playerObj.player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === true) {
-                  // same thing
-                  // now check against the 2nd item in the view matchup array
-                  console.log(rep, 'update me into the view right now! I am confirmed to start.');
-                  console.log(show.goalies[1], 'I have been changed, replace me with new goalie...');
-                  show.goalies[1] = rep;
-                } else if (this.startersDate === today && show.goalies != null && this.fullFirebaseResponse[1][show.goalies[1].playerObj.player.id] != null && this.fullFirebaseResponse[1][rep.player.id] != null && rep.team != null && rep.team.id === show.goalies[1].playerObj.team.id && this.fullFirebaseResponse[1][show.goalies[1].playerObj.player.id].probable === false && this.fullFirebaseResponse[1][rep.player.id].confirmed === false && this.fullFirebaseResponse[1][rep.player.id].probable === true && rep.player.probable === false) {
-                  rep.player.probable = true;
-                  console.log(rep, 'update me into the view right now! I am probable to start.');
-                  console.log(show.goalies[1], 'I have been changed, replace me with probable goalie.');
-                  show.goalies[1] = rep;
+                if (this.dataService.isTomorrow && this.startersDate === today && show.goalies != null) {
+                  for (let away of show.goalies['away']) {
+                    if (away.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[3][rep.player.id]) {
+                      show.goalies['away'] = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? [away] : this.fullFirebaseResponse[3][rep.player.id].probable === true ? [away] : [away];
+                      show.goalies['away'].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : away.size;
+                    }
+                  }
+
+                  for (let home of show.goalies['home']) {
+                    if (home.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[3][rep.player.id]) {
+                      show.goalies['home'] = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? [home] : this.fullFirebaseResponse[3][rep.player.id].probable === true ? [home] : [home];
+                      show.goalies['home'].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : home.size;
+                    }
+                  }
+
                 }
 
               }
@@ -583,8 +590,6 @@ export class StartingGoaliesComponent implements OnInit {
               if (sdata.team != null && schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule['schedule'].startTime;
                 sdata.team.gameIce = schedule['schedule'].venue.name;
-
-
                 sdata.team.gameId = schedule['schedule'].id;
                 sdata.player.gameLocation = "home";
                 sdata.team.day = this.tweetDay;
@@ -639,6 +644,7 @@ export class StartingGoaliesComponent implements OnInit {
 
         for (let schedule of this.myData) {
           for (let sdata of this.myData) {
+            this.goalieFp(sdata);
             if (sdata.team != null && sdata.team.opponentId != null && schedule.player.currentTeam != null &&
               sdata.team.opponentId === schedule.player.currentTeam.id && 
               sdata.gameId === schedule.gameId) {
@@ -663,6 +669,7 @@ export class StartingGoaliesComponent implements OnInit {
                 mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses;
                 mdata.player.Shutouts = daily.stats.goaltending.shutouts;
                 mdata.player.ga = daily.stats.goaltending.goalsAgainst;
+                mdata.stats.fpToday = ((daily.stats.goaltending.saves * 0.2) - daily.stats.goaltending.goalsAgainst).toFixed(2);
 
                 if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins === 1) {
                   // this.starterIdData.push(daily.player.ID);
@@ -706,7 +713,6 @@ export class StartingGoaliesComponent implements OnInit {
                 }
               }
           for (let full of this.fullSchedule) {
-
             for (let btb of this.myData) {
 
              if (btb.player.currentTeam != null) {
@@ -1099,6 +1105,7 @@ public showMatchups() {
                                 data.starterTeam = gb.team;
                                 data.sStatus = gb.scheduleStatus;
                                 data.order = gb.position;
+                                this.skaterFp(data);
 
                                 if (gb.status !== "UNPLAYED") {
                                   data.team.currentPeriod = gb.score['currentPeriod'];
@@ -1225,7 +1232,10 @@ public showMatchups() {
                                 mdata.stats.assistsToday = daily.stats.scoring.assists ? daily.stats.scoring.assists : 0;
                                 mdata.stats.goalsToday = daily.stats.scoring.goals ? daily.stats.scoring.goals : 0;
                                 mdata.stats.iceTimeToday = this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) ? this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) : 0;
-                                mdata.stats.hrToday = daily.stats.scoring.homeruns ? daily.stats.scoring.homeruns : 0;
+                                mdata.stats.sogToday = daily.stats.skating.shots ? (daily.stats.skating.shots - daily.stats.skating.missedShots) : 0;
+                                mdata.stats.blocksToday = daily.stats.skating.blockedShots ? daily.stats.skating.blockedShots : 0;
+                                mdata.stats.fpToday = mdata.stats.goalsToday * 3 + mdata.stats.assistsToday * 2 + mdata.stats.sogToday + mdata.stats.blocksToday;
+                                //how to get shootout goals
                               }
 
                             }
@@ -1303,7 +1313,15 @@ public showMatchups() {
     return Math.floor(time / 60);
   }
 
+  public skaterFp (player) {
+    player.stats.sog = player.stats.skating.shots ? (player.stats.skating.shots - player.stats.skating.missedShots) : 0;
+    player.stats.blocks = player.stats.skating.blockedShots ? player.stats.skating.blockedShots : 0;
+    player.stats.fp = (player.stats.scoring.goals * 3 + player.stats.scoring.assists * 2) + (player.stats.sog + player.stats.blocks);
+  }
 
+  public goalieFp (player) {
+    player.stats.fp = ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2);
+  }
 
   ngOnInit() {
     if (this.testBrowser) {
