@@ -2499,7 +2499,7 @@ export class UtilService {
         teamId: 11,
         abbreviation: "BOS",
         active: true,
-        numberOne: false
+        numberOne: true
       },
       '4326': {
         id: 4326,
@@ -2507,8 +2507,8 @@ export class UtilService {
         lastName: "Rask",
         teamId: 11,
         abbreviation: "BOS",
-        active: true,
-        numberOne: true
+        active: false,
+        numberOne: false
       },
       '4561': {
         id: 4561,
