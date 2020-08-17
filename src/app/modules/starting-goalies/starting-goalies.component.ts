@@ -128,6 +128,7 @@ export class StartingGoaliesComponent implements OnInit {
   public errMessage: any;
   public gameSkaterGroups: Array <any>;
   public statSkaterData: Array <any> = [];
+  public stat: number = 1;
 
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,
@@ -156,6 +157,20 @@ export class StartingGoaliesComponent implements OnInit {
 
     this.dataService.checkDay();
     this.testBrowser = isPlatformBrowser(platformId);
+  }
+
+  public statToggle() {
+    if (this.stat === 1) {
+      this.stat = 2;
+    } else if (this.stat === 2) {
+      this.stat = 3;
+    } else if (this.stat === 3) {
+      this.stat = 4;
+    } else if (this.stat === 4) {
+      this.stat = 5;
+    } else if (this.stat === 5) {
+      this.stat = 1;
+    }
   }
 
   public getByDate(event) {
@@ -337,7 +352,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200811-to-20200818`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200811-to-20200824`, { headers })
                     
                   )
                 )
@@ -1234,6 +1249,7 @@ public showMatchups() {
                                 mdata.stats.iceTimeToday = this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) ? this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) : 0;
                                 mdata.stats.sogToday = daily.stats.skating.shots ? (daily.stats.skating.shots - daily.stats.skating.missedShots) : 0;
                                 mdata.stats.blocksToday = daily.stats.skating.blockedShots ? daily.stats.skating.blockedShots : 0;
+                                mdata.stats.hitsToday = daily.stats.skating.hits ? daily.stats.skating.hits : 0;
                                 mdata.stats.fpToday = mdata.stats.goalsToday * 3 + mdata.stats.assistsToday * 2 + mdata.stats.sogToday + mdata.stats.blocksToday;
                                 //how to get shootout goals
                               }
@@ -1314,6 +1330,7 @@ public showMatchups() {
   }
 
   public skaterFp (player) {
+    player.stats.hits = player.stats.skating.hits; 
     player.stats.sog = player.stats.skating.shots ? (player.stats.skating.shots - player.stats.skating.missedShots) : 0;
     player.stats.blocks = player.stats.skating.blockedShots ? player.stats.skating.blockedShots : 0;
     player.stats.fp = (player.stats.scoring.goals * 3 + player.stats.scoring.assists * 2) + (player.stats.sog + player.stats.blocks);
