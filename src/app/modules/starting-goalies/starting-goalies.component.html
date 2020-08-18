@@ -245,6 +245,7 @@
                   </span>
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
                   <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
+                  <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                   <br>
@@ -296,6 +297,7 @@
                   </span>
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
                   <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
+                  <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                   <br>
@@ -371,6 +373,7 @@
                             <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fp}} FP</span>
                             <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hits}} H</span>
                             <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocks}} B</span>
+                            <span [ngClass]="{'dn' : stat != 6}">{{item?.playerObj?.stats?.fpa}} FPA</span>
                           </span>    {{item?.playerObj?.stats?.scoring?.assists}} A {{item?.playerObj?.stats?.scoring?.goals}} G&nbsp;
                           </span>
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
@@ -381,6 +384,7 @@
                               <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fpToday}} FP</span>
                               <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hitsToday}} H</span>
                               <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocksToday}} B</span>
+                              <span [ngClass]="{'dn' : stat != 6}">{{item?.playerObj?.stats?.fpa}} FPA</span>
                           </span> 
                              {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G&nbsp;
                           </span>
@@ -436,6 +440,7 @@
                               <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fp}} FP</span>
                               <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hits}} H</span>
                               <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocks}} B</span>
+                              <span [ngClass]="{'dn' : stat != 6}">{{item?.playerObj?.stats?.fpa}} FPA</span>
                             </span>  {{item?.playerObj?.stats?.scoring?.assists}} A {{item?.playerObj?.stats?.scoring?.goals}} G&nbsp;
                           </span>
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
@@ -446,6 +451,7 @@
                               <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fpToday}} FP</span>
                               <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hitsToday}} H</span>
                               <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocksToday}} B</span>
+                              <span [ngClass]="{'dn' : stat != 6}">{{item?.playerObj?.stats?.fpa}} FPA</span>
                           </span>  {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G&nbsp;
                           </span> 
                         </div> 

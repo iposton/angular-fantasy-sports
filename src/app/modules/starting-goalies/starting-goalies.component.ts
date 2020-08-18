@@ -169,6 +169,8 @@ export class StartingGoaliesComponent implements OnInit {
     } else if (this.stat === 4) {
       this.stat = 5;
     } else if (this.stat === 5) {
+      this.stat = 6;
+    } else if (this.stat === 6) {
       this.stat = 1;
     }
   }
@@ -210,6 +212,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.noGamesMsg = '';
     this.goalieSection = true;
     this.lineSection = false;
+    this.scheduleSection = false;
     this.loadData();
   }
 
@@ -241,14 +244,14 @@ export class StartingGoaliesComponent implements OnInit {
                   for (let away of show.goalies['away']) {
                     if (away.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[1][rep.player.id]) {
                       show.goalies['away'] = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? [away] : this.fullFirebaseResponse[1][rep.player.id].probable === true ? [away] : [away];
-                      show.goalies['away'].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : away.size;
+                      show.goalies['away'][0].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : away.size;
                     }
                   }
 
                   for (let home of show.goalies['home']) {
                     if (home.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[1][rep.player.id]) {
                       show.goalies['home'] = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? [home] : this.fullFirebaseResponse[1][rep.player.id].probable === true ? [home] : [home];
-                      show.goalies['home'].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : home.size;
+                      show.goalies['home'][0].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : home.size;
                     }
                   }
                 }
@@ -256,14 +259,14 @@ export class StartingGoaliesComponent implements OnInit {
                   for (let away of show.goalies['away']) {
                     if (away.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[3][rep.player.id]) {
                       show.goalies['away'] = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? [away] : this.fullFirebaseResponse[3][rep.player.id].probable === true ? [away] : [away];
-                      show.goalies['away'].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : away.size;
+                      show.goalies['away'][0].size = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? 'reg' : away.size;
                     }
                   }
 
                   for (let home of show.goalies['home']) {
                     if (home.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[3][rep.player.id]) {
                       show.goalies['home'] = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? [home] : this.fullFirebaseResponse[3][rep.player.id].probable === true ? [home] : [home];
-                      show.goalies['home'].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : home.size;
+                      show.goalies['home'][0].size = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? 'reg' : home.size;
                     }
                   }
 
@@ -1247,7 +1250,7 @@ public showMatchups() {
                                 mdata.stats.assistsToday = daily.stats.scoring.assists ? daily.stats.scoring.assists : 0;
                                 mdata.stats.goalsToday = daily.stats.scoring.goals ? daily.stats.scoring.goals : 0;
                                 mdata.stats.iceTimeToday = this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) ? this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) : 0;
-                                mdata.stats.sogToday = daily.stats.skating.shots ? (daily.stats.skating.shots - daily.stats.skating.missedShots) : 0;
+                                mdata.stats.sogToday = daily.stats.skating.shots ? daily.stats.skating.shots : 0;
                                 mdata.stats.blocksToday = daily.stats.skating.blockedShots ? daily.stats.skating.blockedShots : 0;
                                 mdata.stats.hitsToday = daily.stats.skating.hits ? daily.stats.skating.hits : 0;
                                 mdata.stats.fpToday = mdata.stats.goalsToday * 3 + mdata.stats.assistsToday * 2 + mdata.stats.sogToday + mdata.stats.blocksToday;
@@ -1331,13 +1334,15 @@ public showMatchups() {
 
   public skaterFp (player) {
     player.stats.hits = player.stats.skating.hits; 
-    player.stats.sog = player.stats.skating.shots ? (player.stats.skating.shots - player.stats.skating.missedShots) : 0;
+    player.stats.sog = player.stats.skating.shots ? player.stats.skating.shots : 0;
     player.stats.blocks = player.stats.skating.blockedShots ? player.stats.skating.blockedShots : 0;
     player.stats.fp = (player.stats.scoring.goals * 3 + player.stats.scoring.assists * 2) + (player.stats.sog + player.stats.blocks);
+    player.stats.fpa = Math.floor(player.stats.fp / player.stats.gamesPlayed);
   }
 
   public goalieFp (player) {
     player.stats.fp = ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2);
+    player.stats.fpa = Math.floor(player.stats.fp / player.stats.gamesPlayed);
   }
 
   ngOnInit() {

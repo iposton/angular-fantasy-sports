@@ -105,9 +105,10 @@
                         </span>
                 
                       <span *ngIf="(item?.playerObj?.player?.currentInjury == null || item?.playerObj?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                      <span *ngIf="(item?.playerObj?.player?.currentInjury?.playingProbability === 'QUESTIONABLE' || item?.playerObj?.player?.currentInjury?.playingProbability === 'DOUBTFUL' || item?.playerObj?.player?.currentInjury?.playingProbability === 'OUT') && item?.playerObj?.starterInfo?.playerStatus === 'expected'" style="color: gray;"><i (click)="item.playerObj.player.currentInjury.playingProbability = 'PROBABLE'" class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                      
                       <span *ngIf="item?.playerObj?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-                      <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE' && item?.playerObj?.player?.currentInjury?.playingProbability === 'QUESTIONABLE'"><span (click)="item.playerObj.player.currentInjury.playingProbability = 'PROBABLE'" class="material-icons md-18 injury-circle questionable">Q</span></span>
-                      <span *ngIf="item?.playerObj?.starterInfo?.playerStatus != 'actual' && item?.playerObj?.player?.currentInjury != null && item?.playerObj?.player?.currentInjury?.playingProbability != 'PROBABLE' && item?.playerObj?.player?.currentInjury?.playingProbability === 'OUT'"><span (click)="item.playerObj.player.currentInjury.playingProbability = 'PROBABLE'" class="material-icons md-18 injury-circle out">O</span></span>
+
                       <span (click)="changeStats()" class="point">
                         <app-stat-toggle
                         [status]="item?.playerObj?.starterInfo?.status" 

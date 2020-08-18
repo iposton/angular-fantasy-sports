@@ -24,9 +24,8 @@
               </span>
               <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
               <span *ngIf="(item?.player?.currentInjury == null || item?.player?.currentInjury?.playingProbability === 'PROBABLE') && item?.starterInfo?.playerStatus === 'expected'" style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+              <span *ngIf="(item?.player?.currentInjury?.playingProbability === 'QUESTIONABLE' || item?.player?.currentInjury?.playingProbability === 'DOUBTFUL' || item?.player?.currentInjury?.playingProbability === 'OUT') && item?.starterInfo?.playerStatus === 'expected'" style="color: gray;"><i (click)="item.playerObj.player.currentInjury.playingProbability = 'PROBABLE'" class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
               <span *ngIf="item?.starterInfo?.playerStatus === 'actual'" style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
-              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE' && item?.player?.currentInjury?.playingProbability === 'QUESTIONABLE'"><span class="material-icons md-18 injury-circle questionable">Q</span></span>
-              <span *ngIf="item?.starterInfo?.playerStatus != 'actual' && item?.player?.currentInjury != null && item?.player?.currentInjury?.playingProbability != 'PROBABLE' && item?.player?.currentInjury?.playingProbability === 'OUT'"><span class="material-icons md-18 injury-circle out">O</span></span>
               <span (click)="changeStats()" class="point"> 
                 <app-stat-toggle
                   [status]="item?.starterInfo?.status" 
