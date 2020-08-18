@@ -207,6 +207,8 @@ export class StatLeadersComponent implements OnInit {
                   data.team.logo = team['officialLogoImageSrc'];
                   data.team.city = team['city'];
                   data.team.name = team['name'];
+                  this.goalieFp(data);
+                 
                 }
   
                 if (data.player.officialImageSrc == null) {
@@ -233,6 +235,8 @@ export class StatLeadersComponent implements OnInit {
                 data.team.logo = team['officialLogoImageSrc'];
                 data.team.city = team['city'];
                 data.team.name = team['name'];
+                this.skaterFp(data);
+                data.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data.stats.shifts.timeOnIceSeconds, data.stats.gamesPlayed);
               }
 
               if (data.player.officialImageSrc == null) {
@@ -246,6 +250,19 @@ export class StatLeadersComponent implements OnInit {
     })
 
   }
+  }
+
+
+  public skaterFp (player) {
+    player.stats.sog = player.stats.skating.shots ? player.stats.skating.shots : 0;
+    player.stats.blocks = player.stats.skating.blockedShots ? player.stats.skating.blockedShots : 0;
+    player.stats.scoring.fp = (player.stats.scoring.goals * 3 + player.stats.scoring.assists * 2) + (player.stats.sog + player.stats.blocks);
+    player.stats.scoring.fpa = Math.floor(player.stats.scoring.fp / player.stats.gamesPlayed);
+  }
+
+  public goalieFp (player) {
+    player.stats.goaltending.fp = ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2);
+    player.stats.goaltending.fpa = Math.floor(player.stats.goaltending.fp / player.stats.gamesPlayed);
   }
 
   public async sortNBA() {

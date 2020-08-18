@@ -258,4 +258,8 @@ export class NHLDataService {
     //this.info = null;
   }
 
+  public iceTimeAvg(time, gp) {
+    return Math.floor((time / gp) / 60);
+  }
+
 }
