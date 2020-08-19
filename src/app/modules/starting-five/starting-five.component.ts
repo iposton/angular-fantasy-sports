@@ -42,7 +42,7 @@ export class StartingFiveComponent implements OnInit {
   public benchIdData: Array <any> = [];
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-playoff";
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
   public groups: Array <any>;
