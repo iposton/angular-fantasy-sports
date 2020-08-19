@@ -839,10 +839,10 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public defensePlayers() {
-
+    this.nflSection = false; 
+    this.nflDefenseSection = true;
     function teamInfo(array, teams, type) {
-      this.nflSection = false; 
-      this.nflDefenseSection = true;
+      
       for (let team of teams) {
         for (let data of array) { 
           if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
