@@ -43,7 +43,7 @@
    <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button> 
    <button [ngClass]="{'dn' : !nhlSection}" (click)="nhlSection = false; nhlGoalies = true;">NHL Goalies</button>  <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false;">NHL Skaters</button>
    <button [ngClass]="{'dn' : !mlbSection}" (click)="mlbSection = false; mlbHittingSection = true;">MLB Hitters</button>  <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false;">MLB Pitchers</button>
-   <button [ngClass]="{'dn' : !nflSection}" (click)="nflSection = false; nflDefenseSection = true;">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
+   <button [ngClass]="{'dn' : !nflSection}" (click)="defensePlayers()">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
    <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit">Draft Kit</button>
 </div>
 <!-- <div class="center">
@@ -483,12 +483,27 @@
             ></app-stat-card>
 
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
-            [data]="nhlSkaters" 
+            [data]="dSkaters" 
             [statType]="'scoring'" 
             [statField]="'iceTimeAvg'"
             [page]="page"
             [amount]="amount"
-            [title]="'Ice Time Avg'"
+            [title]="'Defense Ice Time Avg'"
+            [statTag]="'ITA'"
+            [sport]="'nhl'"
+            [order]="'DESC'"
+            [teams]="nhlTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
+            <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
+            [data]="fSkaters" 
+            [statType]="'scoring'" 
+            [statField]="'iceTimeAvg'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Forward Ice Time Avg'"
             [statTag]="'ITA'"
             [sport]="'nhl'"
             [order]="'DESC'"
@@ -783,6 +798,42 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
               [eliteStat]="70"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="!nflOffenseLoading && nflKickerData != null" 
+              [data]="nflKickerData" 
+              [statType]="'fieldGoals'"
+              [statField]="'fgMade'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'FieldGoals'"
+              [statTag]="'FG'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="40"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="!nflOffenseLoading && nflKickerData != null" 
+              [data]="nflKickerData" 
+              [statType]="'fieldGoals'"
+              [statField]="'longFgMade'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'FieldGoals +30Yards'"
+              [statTag]="'FG'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="40"
               ></app-stat-card>
 
               <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && this.teamSchedules.length > 0" 
