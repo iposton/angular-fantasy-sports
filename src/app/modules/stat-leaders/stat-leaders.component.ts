@@ -349,7 +349,7 @@ export class StatLeadersComponent implements OnInit {
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
           this.mlbPitchingData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0 && player.stats.pitching.pitcherStrikeouts > 0);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 2 && player.stats.pitching.pitcherStrikeouts > 6);
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -358,6 +358,7 @@ export class StatLeadersComponent implements OnInit {
                 data.team.city = team['city'];
                 data.team.name = team['name'];
                 data.team.twitter = team['socialMediaAccounts'][0].value;
+                this.pitcherFp(data);
                 //this.loading = false;
                 
               }
@@ -377,7 +378,7 @@ export class StatLeadersComponent implements OnInit {
          //const mlbTeamsArray = Object.values(this.nbaTeams);
 
          this.mlbHittingData = res['playerStatsTotals'].filter(
-           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0 && player.stats.batting.atBats > 2);
+           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 1 && player.stats.batting.atBats > 5);
 
          for (let team of this.mlbTeams) {
            for (let data of this.mlbHittingData) { 
@@ -386,6 +387,7 @@ export class StatLeadersComponent implements OnInit {
                data.team.city = team['city'];
                data.team.name = team['name'];
                data.team.twitter = team['socialMediaAccounts'][0].value;
+               this.batterFp(data);
               // this.loading = false;
              }
 
@@ -398,6 +400,17 @@ export class StatLeadersComponent implements OnInit {
          this.mlbHittingLoading = false;
      })
     }
+  }
+
+  public pitcherFp(player) {
+    player.stats.pitching.fp = (player.stats.pitching.earnedRunsAllowed * -3) + player.stats.pitching.pitcherStrikeouts + player.stats.pitching.pickoffs + player.stats.pitching.pitcherFlyOuts + player.stats.pitching.pitcherGroundOuts;
+    player.stats.pitching.fpa = Math.floor(player.stats.pitching.fp / player.stats.gamesPlayed);
+    player.stats.pitching.pca = Math.floor(player.stats.pitching.pitchesThrown / player.stats.gamesPlayed); 
+  }
+
+  public batterFp(player) {
+    player.stats.batting.fp = (player.stats.batting.hits - player.stats.batting.extraBaseHits) + (player.stats.batting.secondBaseHits * 2) + (player.stats.batting.thirdBaseHits * 3) + (player.stats.batting.homeruns * 4) + player.stats.batting.runs + player.stats.batting.runsBattedIn + player.stats.batting.batterWalks + player.stats.batting.stolenBases + player.stats.batting.hitByPitch;
+    player.stats.batting.fpa = Math.floor(player.stats.batting.fp / player.stats.gamesPlayed);
   }
 
   public loadNFL() {
@@ -523,7 +536,7 @@ export class StatLeadersComponent implements OnInit {
                 if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
                   old.player['currentTeam'].id = n['teamAsOfDate'].id;
                   old.team.id = n['teamAsOfDate'].id;
-                  old.stats.fieldGoals.longFgMade = old.stats.fieldGoals.fgMade30_39 + old.stats.fieldGoals.fgMade40_49 + old.stats.fieldGoals.fgMade50Plus;
+                  old.stats.fieldGoals.longFgMade = old.stats.fieldGoals.fgMade40_49 + old.stats.fieldGoals.fgMade50Plus;
                 }
               }
             }

@@ -416,6 +416,7 @@ export class StartingPitcherComponent implements OnInit {
                             data.gameStatus = gs.status;
                             data.starterTeam = gs.team;
                             data.sStatus = gs.scheduleStatus;
+                            this.pitcherFp(data);
 
                             if (gs.status !== "UNPLAYED") {
                               data.team.currentInning = gs.score['currentInning'];
@@ -567,6 +568,7 @@ export class StartingPitcherComponent implements OnInit {
                               mdata.player.favPitchPercentToday = Math.floor(mdata.player.favPitchToday / daily.stats.pitching.pitchesThrown * 100);
                             }
                             //console.log(daily.game, 'get game info by player id')
+                            mdata.player.fpToday = 0;
                             mdata.gameId = daily.game.id;
                             mdata.player.winToday = daily.stats.pitching.wins;
                             mdata.player.loseToday = daily.stats.pitching.losses;
@@ -697,7 +699,7 @@ export class StartingPitcherComponent implements OnInit {
     }
   }
 
-  public pticherFp(player) {
+  public pitcherFp(player) {
     player.stats.pitching.fp = (player.stats.pitching.earnedRunsAllowed * -3) + player.stats.pitching.pitcherStrikeouts + player.stats.pitching.pickoffs + player.stats.pitching.pitcherFlyOuts + player.stats.pitching.pitcherGroundOuts;
     player.stats.pitching.fpa = Math.floor(player.stats.pitching.fp / player.stats.gamesPlayed);
   }
@@ -756,6 +758,7 @@ export class StartingPitcherComponent implements OnInit {
                                 data.starterTeam = gb.team;
                                 data.sStatus = gb.scheduleStatus;
                                 data.order = gb.position;
+                                this.batterFp(data);
 
                                 if (gb.status !== "UNPLAYED") {
                                   data.team.currentInning = gb.score['currentInning'];
@@ -883,6 +886,7 @@ export class StartingPitcherComponent implements OnInit {
                               if (daily.player.id === mdata.player.id) {
                                 //console.log(daily.game, 'get game info by player id')
                                 mdata.gameId = daily.game.id;
+                                mdata.player.fpToday = 0;
                                 mdata.stats.hitsToday = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
                                 mdata.stats.runsToday = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
                                 mdata.stats.rbiToday = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
@@ -945,7 +949,7 @@ export class StartingPitcherComponent implements OnInit {
   }
 
   public batterFp(player) {
-    player.stats.batting.fp = (player.stats.batting.hits - player.stats.batting.batting.extraBaseHits) + (player.stats.batting.secondBaseHits * 2) + (player.stats.batting.thirdBaseHits * 3) + (player.stats.batting.homeruns * 4) + player.stats.batting.runs + player.stats.batting.runsBattedIn + player.stats.batting.batterWalks + player.stats.batting.stolenBases + player.stats.batting.hitByPitch;
+    player.stats.batting.fp = (player.stats.batting.hits - player.stats.batting.extraBaseHits) + (player.stats.batting.secondBaseHits * 2) + (player.stats.batting.thirdBaseHits * 3) + (player.stats.batting.homeruns * 4) + player.stats.batting.runs + player.stats.batting.runsBattedIn + player.stats.batting.batterWalks + player.stats.batting.stolenBases + player.stats.batting.hitByPitch;
     player.stats.batting.fpa = Math.floor(player.stats.batting.fp / player.stats.gamesPlayed);
   }
 

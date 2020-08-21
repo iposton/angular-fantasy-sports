@@ -592,6 +592,36 @@
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
             [data]="mlbPitchingData" 
             [statType]="'pitching'" 
+            [statField]="'fpa'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Fantasy Points Avg'"
+            [statTag]="'FPA'"
+            [sport]="'mlb'"
+            [order]="'DESC'"
+            [teams]="mlbTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
+            <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
+            [data]="mlbPitchingData" 
+            [statType]="'pitching'" 
+            [statField]="'pca'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Pitch Count Avg'"
+            [statTag]="'PCA'"
+            [sport]="'mlb'"
+            [order]="'DESC'"
+            [teams]="mlbTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
+            <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
+            [data]="mlbPitchingData" 
+            [statType]="'pitching'" 
             [statField]="'hitsAllowed'"
             [page]="page"
             [amount]="amount"
@@ -740,6 +770,21 @@
             (open)="authorize($event)"
             [twitter]="twitter"
             ></app-stat-card>
+
+            <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null" 
+            [data]="mlbHittingData" 
+            [statType]="'batting'" 
+            [statField]="'fpa'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Fantasy Points Avg'"
+            [statTag]="'FPA'"
+            [sport]="'mlb'"
+            [order]="'DESC'"
+            [teams]="mlbTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
           </section>
 
           <section [ngClass]="{'dn' : !nflSection}">
@@ -839,7 +884,7 @@
               [statField]="'longFgMade'"
               [page]="page"
               [amount]="amount"
-              [title]="'FieldGoals +30Yards'"
+              [title]="'FieldGoals +40Yards'"
               [statTag]="'FG'"
               [sport]="'nfl'"
               [order]="'DESC'"
