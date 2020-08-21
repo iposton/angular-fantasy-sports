@@ -92,6 +92,14 @@ export class StatToggleComponent implements OnInit {
       } else if (pos === 'ALL') {
          this.statArr = [`${item.playerObj.team.gamesThisWeek} Games This Week`];
       }
+    } else if (s === '10') {
+      if (pos != 'ALL') {
+        this.statArr = status != 'UNPLAYED' ? [`${item.player.pts} Pts`, `${item.player.fpToday} FP`, `${item.stats.offense.fpa} FPA`] :
+        [`${item.stats.offense.ptsPerGame} Pts`, `${item.stats.offense.fp} FP`, `${item.stats.offense.fpa} FPA`];    
+      } else if (pos === 'ALL') {
+        this.statArr = status != 'UNPLAYED' ? [`${item.playerObj.player.pts} Pts`, `${item.playerObj.player.fpToday} FP`] :
+        [`${item.playerObj.stats.offense.ptsPerGame} Pts`, `${item.playerObj.stats.offense.fpa} FPA`];
+      } 
     }
     return this.statArr;
   }

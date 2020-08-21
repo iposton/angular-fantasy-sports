@@ -248,8 +248,8 @@ export class StatLeadersComponent implements OnInit {
             }  
           }
 
-          this.dSkaters = this.nhlSkaters.filter(player => player.primaryPosition === 'D');
-          this.fSkaters = this.nhlSkaters.filter(player => player.primaryPosition != 'D');
+          this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D');
+          this.fSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition != 'D');
 
 
        this.nhlSkaterloading = false;
@@ -277,7 +277,7 @@ export class StatLeadersComponent implements OnInit {
           const nbaTeamsArray = Object.values(this.nbaTeams);
 
           this.myData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 5 && player.stats.offense.pts > 200);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0);
 
           for (let team of nbaTeamsArray) {
             for (let data of this.myData) { 
@@ -285,6 +285,7 @@ export class StatLeadersComponent implements OnInit {
                 data.team.logo = team['officialLogoImageSrc'];
                 data.team.city = team['city'];
                 data.team.name = team['name'];
+                this.playerFp(data);
                 this.loading = false;
               }
 
@@ -295,6 +296,11 @@ export class StatLeadersComponent implements OnInit {
             }  
           }
       }) 
+  }
+
+  public playerFp(player) {
+    player.stats.offense.fp = Math.floor(player.stats.offense.pts + (player.stats.offense.ast * 1.5) + (player.stats.rebounds.reb * 1.2) + (player.stats.defense.stl * 3) + (player.stats.defense.blk * 3) - player.stats.defense.tov);
+    player.stats.offense.fpa = Math.floor(player.stats.offense.fp / player.stats.gamesPlayed);
   }
 
   public goAnchor(data) {

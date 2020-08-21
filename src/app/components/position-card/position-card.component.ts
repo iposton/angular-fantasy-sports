@@ -43,6 +43,8 @@ export class PositionCardComponent implements OnInit {
     } else if (this.stats === '8') {
       this.stats = '9';
     } else if (this.stats === '9') {
+      this.stats = '10';
+    } else if (this.stats === '10') {
       this.stats = '1';
     }
   }

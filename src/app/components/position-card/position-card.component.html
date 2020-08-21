@@ -10,16 +10,13 @@
             <span class="player-infos">
               <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
               <span class="names" *ngIf="!mobile">
-                <span *ngIf="item.player.firstName != 'Shai'"> 
-                  {{ item.player.firstName + ' ' + item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
-                </span>
-                <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                    S. {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item?.player?.jerseyNumber}}   
+                <span> 
+                  {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
                 </span>
               </span>
               <span class="names" *ngIf="mobile">
                 <span> 
-                    {{item.player.lastName}} - {{item?.player?.primaryPosition}} | #{{item.player.jerseyNumber}} 
+                    {{item.player.lastName}} - {{item?.player?.primaryPosition}} 
                 </span>
               </span>
               <span class="team-image"> <img src="{{item?.team?.logo}}" alt="{{item?.team?.name}} logo"></span>
@@ -55,25 +52,14 @@
             <div *ngFor="let item of myData | orderBy: 'nba'" class="w100">
                 <span [ngClass]="{'left-content' : (item?.player?.primaryPosition == position && !item?.starterInfo?.bench || position === 'bench' && item?.starterInfo?.bench), 'dn' : item?.player?.primaryPosition != position && position != 'bench', 'dn2' : item?.player?.primaryPosition == position && item?.starterInfo?.bench, 'dn3' : position === 'bench' && !item?.starterInfo?.bench }"> 
                 <span class="player-infos">
-                  <span class="names" *ngIf="!mobile">
-                      <span *ngIf="item.player.firstName != 'Shai'"> 
-                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}}
-                      </span>
-                      <span *ngIf="item?.player?.firstName === 'Shai'"> 
-                        {{ teams[item.player['currentTeam'].abbreviation].twitter }} S. {{item.player.lastName}}  
-                      </span>
-                    </span>
-                    <span class="names" *ngIf="mobile">
-                      <span> 
-                        {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
-                      </span>
-                    </span>
+                  <span class="names">
+                   {{ teams[item.player['currentTeam'].abbreviation].twitter + ' ' + item.player.lastName}} 
+                  </span>
                       <app-stat-toggle
                       [status]="item?.starterInfo?.status" 
                       [item]="item" 
                       [position]="position"
-                      [stats]="stats"></app-stat-toggle>
-                        
+                      [stats]="stats"></app-stat-toggle>    
                   </span>
                 </span>
             </div>

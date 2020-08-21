@@ -144,6 +144,8 @@ export class StartingFiveComponent implements OnInit {
     } else if (this.stats === '8') {
       this.stats = '9';
     } else if (this.stats === '9') {
+      this.stats = '10';
+    } else if (this.stats === '10') {
       this.stats = '1';
     }
   }
@@ -248,7 +250,7 @@ export class StartingFiveComponent implements OnInit {
                   nbaTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200817-to-20200824`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200817-to-20200830`, { headers })
                     
                   )
                 )
@@ -438,6 +440,7 @@ export class StartingFiveComponent implements OnInit {
                   data.gameId = starter.gameID;
                   data.player['currentTeam'].abbreviation = starter.currentTeam;
                   data.player.lineupTeam = starter.currentTeam;
+                  this.playerFp(data);
                   if (starter.status === "LIVE") {
                     //run interval
                     this.liveGames = true;
@@ -519,6 +522,8 @@ export class StartingFiveComponent implements OnInit {
                   data.player.ptsAvg = daily.stats.offense.ptsPerGame;
                   data.player.fga = daily.stats.fieldGoals.fgAtt;
                   data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
+                  data.player.tov = daily.stats.defense.tov;
+                  data.player.fpToday = Math.floor(data.player.pts + (data.player.ast * 1.5) + (data.player.reb * 1.2) + (data.player.stl * 3) + (data.player.blk * 3) - data.player.tov);
                   //data.player.startsdaily.stats.miscellaneous.gamesStarted
                   // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
                 }
@@ -561,6 +566,11 @@ export class StartingFiveComponent implements OnInit {
       console.log('No games then no daily stats either. :(');
     }
 
+  }
+
+  public playerFp(player) {
+    player.stats.offense.fp = Math.floor(player.stats.offense.pts + (player.stats.offense.ast * 1.5) + (player.stats.rebounds.reb * 1.2) + (player.stats.defense.stl * 3) + (player.stats.defense.blk * 3) - player.stats.defense.tov);
+    player.stats.offense.fpa = Math.floor(player.stats.offense.fp / player.stats.gamesPlayed);
   }
 
   public showTeams() {
