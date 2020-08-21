@@ -195,6 +195,21 @@
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
+          [statType]="'offense'" 
+          [statField]="'fpa'"
+          [page]="page"
+          [amount]="amount"
+          [title]="'Fantasy Points Avg'"
+          [statTag]="'FPA'"
+          [sport]="'nba'"
+          [order]="'DESC'"
+          [teams]="nbaTeams"
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
+
+          <app-stat-card *ngIf="!loading && myData != null" 
+          [data]="myData" 
           [statType]="'defense'" 
           [statField]="'tov'"
           [page]="page"

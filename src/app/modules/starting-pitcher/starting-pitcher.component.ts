@@ -83,6 +83,8 @@ export class StartingPitcherComponent implements OnInit {
   public name: any;
   public image: any;
   public spinTitle: string = 'Pitcher Data';
+  public showFp: boolean = false;
+  public stat: any = 1;
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService, 
@@ -98,6 +100,20 @@ export class StartingPitcherComponent implements OnInit {
     this.players = this.dataService.getSentStats();
     this.teams = this.util.getMLBTeams();
     this.testBrowser = isPlatformBrowser(platformId);
+  }
+
+  public statToggle() {
+    if (this.stat === 1) {
+      this.stat = 2;
+    } else if (this.stat === 2) {
+      this.stat = 3;
+    } else if (this.stat === 3) {
+      this.stat = 4;
+    } else if (this.stat === 4) {
+      this.stat = 5;
+    } else if (this.stat === 5) {
+      this.stat = 1;
+    }
   }
 
   public authorize(item) {
@@ -561,6 +577,10 @@ export class StartingPitcherComponent implements OnInit {
                             mdata.player.hitsallowedToday = daily.stats.pitching.hitsAllowed;
                             mdata.player.pitchesthrownToday = daily.stats.pitching.pitchesThrown;
                             mdata.player.eraToday = parseFloat(daily.stats.pitching.earnedRunAvg).toFixed(2);
+                            mdata.player.pickoffsToday = daily.stats.pitching.pickoffs;
+                            mdata.player.flyoutsToday = daily.stats.pitching.pitcherFlyOuts;
+                            mdata.player.groundoutsToday = daily.stats.pitching.pitcherGroundOuts;
+                            mdata.player.fpToday = (mdata.player.earnedrunsToday * -3) + mdata.player.strikeoutsToday + mdata.player.pickoffsToday + mdata.player.flyoutsToday + mdata.player.groundoutsToday;
                             mdata.stats.pitching.pitcher2SeamFastballsToday = daily.stats.pitching.pitcher2SeamFastballs;
                             mdata.stats.pitching.pitcher4SeamFastballsToday = daily.stats.pitching.pitcher4SeamFastballs;
                             mdata.stats.pitching.pitcherChangeupsToday = daily.stats.pitching.pitcherChangeups;
@@ -675,6 +695,11 @@ export class StartingPitcherComponent implements OnInit {
       });
       console.log(this.showBatterData, 'show Batter data');
     }
+  }
+
+  public pticherFp(player) {
+    player.stats.pitching.fp = (player.stats.pitching.earnedRunsAllowed * -3) + player.stats.pitching.pitcherStrikeouts + player.stats.pitching.pickoffs + player.stats.pitching.pitcherFlyOuts + player.stats.pitching.pitcherGroundOuts;
+    player.stats.pitching.fpa = Math.floor(player.stats.pitching.fp / player.stats.gamesPlayed);
   }
 
   public groupPitchers() {
@@ -862,6 +887,12 @@ export class StartingPitcherComponent implements OnInit {
                                 mdata.stats.runsToday = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
                                 mdata.stats.rbiToday = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
                                 mdata.stats.hrToday = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
+                                mdata.stats.dblToday = daily.stats.batting.secondBaseHits ? daily.stats.batting.secondBaseHits : 0;
+                                mdata.stats.tplToday = daily.stats.batting.thirdBaseHits ? daily.stats.batting.thirdBaseHits : 0;
+                                mdata.stats.walksToday = daily.stats.batting.batterWalks ? daily.stats.batting.batterWalks : 0;
+                                mdata.stats.sbToday = daily.stats.batting.stolenBases ? daily.stats.batting.stolenBases : 0;
+                                mdata.stats.hbpToday = daily.stats.batting.hitByPitch ? daily.stats.batting.hitByPitch : 0;
+                                mdata.stats.fpToday = (mdata.stats.hitsToday - daily.stats.batting.extraBaseHits) + (mdata.stats.dblToday * 2) + (mdata.stats.tplToday * 3) + (mdata.stats.hrToday * 4) + mdata.stats.runsToday + mdata.stats.rbiToday + mdata.stats.walksToday + mdata.stats.sbToday + mdata.stats.hbpToday;
                               }
 
                             }
@@ -911,6 +942,11 @@ export class StartingPitcherComponent implements OnInit {
         } else {
           console.log('No games then no daily stats either. :(');
         }
+  }
+
+  public batterFp(player) {
+    player.stats.batting.fp = (player.stats.batting.hits - player.stats.batting.batting.extraBaseHits) + (player.stats.batting.secondBaseHits * 2) + (player.stats.batting.thirdBaseHits * 3) + (player.stats.batting.homeruns * 4) + player.stats.batting.runs + player.stats.batting.runsBattedIn + player.stats.batting.batterWalks + player.stats.batting.stolenBases + player.stats.batting.hitByPitch;
+    player.stats.batting.fpa = Math.floor(player.stats.batting.fp / player.stats.gamesPlayed);
   }
 
   public groupBatters() {

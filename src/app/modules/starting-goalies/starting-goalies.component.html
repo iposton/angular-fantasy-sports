@@ -147,7 +147,7 @@
               {{g.playerObj?.player.twitterHandle}} {{g.playerObj?.player.lastName}} <br>
             </span>
       </li>
-      <li>#HockeyTwitter #FantasyHockey</li>
+      <li>#HockeyTwitter #StanleyCup #NHLPlayoffs</li>
     </ul>
     
     <ul>
@@ -160,7 +160,7 @@
               {{g.playerObj?.player.twitterHandle}}
             </span>
       </li>
-       <li>#HockeyTwitter #FantasyHockey</li>
+       <li>#HockeyTwitter #StanleyCup #NHLPlayoffs</li>
     </ul>
 
     Add Goalie
@@ -244,10 +244,11 @@
                     ({{ g.playerObj.player?.currentTeam?.abbreviation + ' - ' + g.playerObj?.player.primaryPosition }})
                   </span>
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
-                  <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
-                  <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
+                 
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
+                    <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
+                    <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
                   <br>
                   <br>
                   <span *ngIf="startersDate === g.playerObj?.team?.today && dataService.isToday">
@@ -296,10 +297,11 @@
                     ({{ g.playerObj.player?.currentTeam?.abbreviation + ' - ' + g.playerObj?.player.primaryPosition }})
                   </span>
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
-                  <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
-                  <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
+              
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
+                    <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
+                    <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
                   <br>
                   <br>
                   <span *ngIf="startersDate === g.playerObj?.team?.today && dataService.isToday">
@@ -455,7 +457,7 @@
                           </span>  {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G&nbsp;
                           </span> 
                         </div> 
-                        #Stats #FantasyHockey #Hockey 
+                        #Stats #StanleyCup #Hockey #NHLPlayoffs
                       </span> 
     
                   </div>
