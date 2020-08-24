@@ -442,9 +442,16 @@ export class StatLeadersComponent implements OnInit {
               data.team.abbreviation = team['abbreviation'];
               data.team.scheduleTicker = team['scheduleTicker'];
             }
+            if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].lastYearTeamId) {
+              data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.receptions;
+              data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.plays * 100);
+              data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100);
+              data.stats.receiving.touchCatchPct = Math.floor(data.stats.receiving.receptions / team.passPlays * 100);
+            }
           }  
         }
       }
+
 
       this.nflService
         .getAllOffense('qb', '19').subscribe(res => {
@@ -486,6 +493,7 @@ export class StatLeadersComponent implements OnInit {
             this.newRushData = res['players'];
             for (let n of this.newRushData) {
               for (let old of this.nflRushData) {
+                old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'].id;
                 if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
                   old.player['currentTeam'].id = n['teamAsOfDate'].id;
                   old.team.id = n['teamAsOfDate'].id;
@@ -513,6 +521,7 @@ export class StatLeadersComponent implements OnInit {
             this.newRecData = res['players'];
             for (let n of this.newRecData ) {
               for (let old of this.nflRecData) {
+                old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'].id;
                 if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
                   old.player['currentTeam'].id = n['teamAsOfDate'].id;
                   old.team.id = n['teamAsOfDate'].id;
@@ -550,6 +559,15 @@ export class StatLeadersComponent implements OnInit {
       .getTeamStats('').subscribe(res => {
         this.nflTeamStats = res['teamStatsTotals'];
         this.nflTeamLoading = false;
+        for (let teamStats of this.nflTeamStats) {
+          for (let team of this.nflTeams) {
+            if (team.id === teamStats.team.id) {
+              team.plays = teamStats.stats.rushing.rushAttempts + teamStats.stats.passing.passAttempts;
+              team.passPlays = teamStats.stats.passing.passAttempts;
+              team.runPlays = teamStats.stats.passing.passAttempts;
+            }
+          }
+        }
     })
 
     if (this.teamSchedules.length === 0) {
