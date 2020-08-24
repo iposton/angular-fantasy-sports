@@ -53,7 +53,8 @@
                   <span *ngIf="sport === 'nfl'">
                     <span *ngIf="statType === 'passing'">{{ item?.stats[statType]?.passTD }} TD</span>
                     <span *ngIf="statType === 'rushing'">{{ item?.stats[statType]?.rushTD }} TD</span>
-                    <span *ngIf="statType === 'receiving'">{{ item?.stats[statType]?.recTD }} TD</span>
+                    <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct'">{{ item?.stats[statType]?.recTD }} TD</span>
+                    <span *ngIf="statField === 'totalTouchPct'">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
                   </span>
                 </span>
                 <span class="lg" *ngIf="ndk && sport === 'nfl'">
