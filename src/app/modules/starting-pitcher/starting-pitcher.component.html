@@ -69,7 +69,9 @@
                       data['pitchers'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['pitchers'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST</span> 
                       <span class="postponed" *ngIf="data['pitchers'][0]?.playerObj?.sStatus === 'POSTPONED' && 
                       data['pitchers'][0]?.playerObj?.gameStatus != 'LIVE' && 
-                      data['pitchers'][0]?.playerObj?.gameStatus != 'COMPLETED'">PPD</span> 
+                      data['pitchers'][0]?.playerObj?.gameStatus != 'COMPLETED' && 
+                      data['pitchers'][0]?.playerObj?.gameStatus != 'COMPLETED_PENDING_REVIEW'">PPD</span>
+                      <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">GAME OVER</span> 
                       <span class="final" *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED'">
                         FINAL <br>
                         <span class="score-box">
@@ -583,8 +585,10 @@
                   data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['batters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['batters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['batters'][0]?.playerObj?.team?.opponent}}</span> </span> 
                   <span class="postponed" *ngIf="data['batters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
                   data['batters'][0]?.playerObj?.gameStatus != 'LIVE' && 
-                  data['batters'][0]?.playerObj?.gameStatus != 'COMPLETED'">PPD</span> 
-                  <span class="final" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'COMPLETED'">
+                  data['batters'][0]?.playerObj?.gameStatus != 'COMPLETED' &&
+                  data['batters'][0]?.playerObj?.gameStatus != 'COMPLETED_PENDING_REVIEW'">PPD</span> 
+                  <span class="final" *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'COMPLETED' ||
+                  data['batters'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
                       {{data['batters'][0]?.playerObj?.team?.teamScore}} - 
                       {{data['batters'][0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data['batters'][0]?.playerObj?.team?.teamScore > data['batters'][0]?.playerObj?.team?.opponentScore ? data['batters'][0]?.playerObj?.team?.city +' Wins!' : data['batters'][0]?.playerObj?.team?.city +' Lost!'}}</span>
                   </span>

@@ -18,7 +18,6 @@ This app can help explain how to fetch data using [Angular's HttpClient Module](
 * Angular (version 9.0.0) 
 * Angular CLI (version 9.0.1)
 * Node.js (version 10.16.2)     
-* [@angular/material](https://github.com/angular/material2) (version 9.0.0)
 * Heroku [Set up a free account ](https://www.heroku.com/)
 * [Firebase](https://firebase.google.com/) (version 4.10.1) 
 * @angular/fire (version 5.2.1)
