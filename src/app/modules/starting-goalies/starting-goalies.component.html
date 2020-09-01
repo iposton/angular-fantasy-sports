@@ -246,7 +246,7 @@
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
                  
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
-                    Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
+                    GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                     <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
                     <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
                   <br>
@@ -299,7 +299,7 @@
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
               
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
-                    Season GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
+                    GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                     <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
                     <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
                   <br>
@@ -341,10 +341,12 @@
               <br> {{data['goalies']['home'][0]?.playerObj?.team.opponent}} @ {{data['goalies']['home'][0]?.playerObj?.team.city +' '+ data['goalies']['home'][0]?.playerObj?.team.name}}
               <br>
               <span class="green-dot" *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'LIVE'"></span> 
-              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED' && data['goalies']['home'][0]?.playerObj?.schedStatus != 'POSTPONED'">Puck drops: {{data['goalies']['home'][0]?.playerObj?.player?.gameTime | date: 'shortTime'}} PST @ {{ data['goalies']['home'][0]?.playerObj?.team.gameIce }}</span> 
-              <span *ngIf="data['goalies']['home'][0]?.playerObj?.schedStatus === 'POSTPONED'">PPD</span> 
+              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'">Puck drops: {{data['goalies']['home'][0]?.playerObj?.player?.gameTime | date: 'shortTime'}} PST @ {{ data['goalies']['home'][0]?.playerObj?.team.gameIce }}</span> 
+              <!-- <span *ngIf="data['goalies']['home'][0]?.playerObj?.schedStatus === 'POSTPONED' && data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED' 
+              && data['goalies']['home'][0]?.playerObj?.status != 'COMPLETED' && 
+               data['goalies']['home'][0]?.playerObj?.status != 'COMPLETED_PENDING_REVIEW'">PPD</span>  -->
               <span *ngIf="data['goalies']['home'][0]?.playerObj?.status != 'UNPLAYED'">{{ data['goalies']['home'][0]?.playerObj?.opponentScore + ' - ' +  data['goalies']['home'][0]?.playerObj?.teamScore}}</span> 
-              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> 
+              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED' || data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED_PENDING_REVIEW'"> 
                 <span *ngIf="data['goalies']['home'][0]?.playerObj?.opponentScore &gt; data['goalies']['home'][0]?.playerObj?.teamScore"> {{data['goalies']['home'][0]?.playerObj?.team.opponent}} Win!</span>
                 <span *ngIf="data['goalies']['home'][0]?.playerObj?.opponentScore &lt; data['goalies']['home'][0]?.playerObj?.teamScore"> {{data['goalies']['home'][0]?.playerObj?.team.name}} Win!</span>
               </span> 
@@ -366,8 +368,7 @@
                             {{i+1}} <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="hockey player" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/skater.jpg'">
                           </span>
                           {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | 
-                          <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
-                          data['skaters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
+                          <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED'" class="stats">
                           &nbsp; 
                           <span (click)="statToggle()" class="stat-toggle pointer">
                             <span [ngClass]="{'dn' : stat != 1}">{{makeMinutes(item?.playerObj?.stats?.shifts?.timeOnIceSeconds / item?.playerObj?.stats?.gamesPlayed)}} Min</span>
@@ -418,12 +419,14 @@
                               {{data['skaters'][0]?.playerObj?.team?.opponentScore}}
                           </span>
                       </span>  
-                      <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
-                      data['skaters'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['skaters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['skaters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['skaters'][0]?.playerObj?.team?.opponent}}</span> </span> 
-                      <span class="postponed" *ngIf="data['skaters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
+                      <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED'">{{data['skaters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['skaters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['skaters'][0]?.playerObj?.team?.opponent}}</span> </span> 
+                      <!-- <span class="postponed" *ngIf="data['skaters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
                       data['skaters'][0]?.playerObj?.gameStatus != 'LIVE' && 
-                      data['skaters'][0]?.playerObj?.gameStatus != 'COMPLETED'">PPD</span> 
-                      <span class="final" *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'COMPLETED'">
+                      data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' && 
+                      data['skaters'][0]?.playerObj?.gameStatus != 'COMPLETED' && 
+                      data['skaters'][0]?.playerObj?.gameStatus != 'COMPLETED_PENDING_REVIEW'">PPD</span>  -->
+                      <span class="final" *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'COMPLETED' || 
+                      data['skaters'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
                           {{data['skaters'][0]?.playerObj?.team?.teamScore}} - 
                           {{data['skaters'][0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data['skaters'][0]?.playerObj?.team?.teamScore > data['skaters'][0]?.playerObj?.team?.opponentScore ? data['skaters'][0]?.playerObj?.team?.city +' Wins!' : data['skaters'][0]?.playerObj?.team?.city +' Lost!'}}</span>
                       </span>
@@ -433,8 +436,7 @@
                          {{teams[data['skaters'][0]?.playerObj?.team?.abbreviation].twitter}} top line 
                         <div  *ngFor="let item of data['skaters']">
                           {{item?.playerObj?.player.lastName}} 
-                          <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
-                          data['skaters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
+                          <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED'" class="stats">
                           &nbsp;
                           <span (click)="statToggle()" class="stat-toggle pointer">
                               <span [ngClass]="{'dn' : stat != 1}">{{makeMinutes(item?.playerObj?.stats?.shifts?.timeOnIceSeconds / item?.playerObj?.stats?.gamesPlayed)}} Min</span>

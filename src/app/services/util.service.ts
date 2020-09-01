@@ -2552,8 +2552,8 @@ export class UtilService {
         lastName: "Grubauer",
         teamId: 22,
         abbreviation: "COL",
-        active: true,
-        numberOne: true
+        active: false,
+        numberOne: false
       },
       '15442': {
         id: 15442,
@@ -2562,7 +2562,7 @@ export class UtilService {
         teamId: 22,
         abbreviation: "COL",
         active: true,
-        numberOne: false
+        numberOne: true
       },
       '5168': {
         id: 5168,

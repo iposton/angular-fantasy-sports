@@ -22,7 +22,7 @@
                 src="{{ item?.player?.officialImageSrc }}"
                 alt="{{sport}} player"
                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"
-                
+                loading="lazy"
             />
             <span class="sched-rank {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem = ''; $event.stopPropagation()">
                   <span *ngIf="sport === 'nfl' && item?.team[seasonLength] != null && ndk" [ngClass]="{'red' : item?.team[seasonLength] &lt;= 10, 'orange' : item?.team[seasonLength] > 10 && item?.team[seasonLength] &lt;= 21, 'green' : item?.team[seasonLength] > 21}">
@@ -44,7 +44,7 @@
               </span>
 
               <span class="team-image {{sport}}">
-                <img src="{{ item?.team?.logo }}" alt="{{ item?.team?.name }} logo"/>
+                <img src="{{ item?.team?.logo }}" alt="{{ item?.team?.name }} logo" loading="lazy" />
               </span>
 
               <span class="point">
