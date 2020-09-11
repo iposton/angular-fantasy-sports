@@ -365,7 +365,7 @@
                     [ngStyle]="{background: 'url(' + data['skaters'][0]?.playerObj?.team?.logo +')'}">
                       <div  *ngFor="let item of data['skaters']; let i = index">
                           <span class="pointer" (click)="authorize({player: item?.playerObj, area: 'top'})">
-                            {{i+1}} <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="hockey player" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/skater.jpg'">
+                             <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="hockey player" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/skater.jpg'">
                           </span>
                           {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | 
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED'" class="stats">

@@ -93,6 +93,12 @@ export class StatLeadersComponent implements OnInit {
   public seasonLength   : string = 'full';
   public seasonLengthD  : string = 'full';
   public testBrowser: boolean;
+  public timeSpan: string = 'full';
+  public nbaSpanGames: Array <any> = [];
+  public reduced: Array <any> = [];
+  public crunched: Array <any> = [];
+  public combined: Array <any> = [];
+  public sport: string = 'nba';
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -150,13 +156,53 @@ export class StatLeadersComponent implements OnInit {
     });
   }
 
-  public getByDate(event) {
-    this.loading = true;
-    this.getAll = event;
-    this.myData = [];
-    this.nhlSkaters = [];
-    this.nhlGoaltenders = [];
-    this.loadData();
+  public getByDate(event, type) {
+    console.log('trying to get stats for', event, type);
+    this.sport = type;
+    if (this.sport === 'nba')
+      this.loading = true;
+    if (this.sport === 'nhl' && this.nhlSection)
+      this.nhlSkaterloading = true;
+    if (this.sport === 'nhl' && this.nhlGoalies)
+      this.nhlGoalieloading = true;
+    this.timeSpan = event;
+    this.combined = [];
+    this.crunched = [];
+    this.reduced = [];
+    if (type === 'nba') {
+      this.sortNBA();
+    }
+    if (type === 'nhl' && this.nhlSection) {
+      this.sortNHL();
+    }
+    if (type === 'nhl' && this.nhlGoalies) {
+      this.goalies();
+    } 
+  }
+
+  public spanGames() {
+    let type = null;
+    if (this.sport === 'nba')
+      this.loading = true;
+
+    if (this.sport === 'nhl') {
+      this.nhlSkaterloading = true;
+      type = 'skaters';
+    }
+      
+    if (this.sport === 'nhl' && this.nhlGoalies) {
+      this.nhlGoalieloading = true;
+      type = 'goalies';
+    }
+      
+    let root;
+    this.nhlService
+      .getGames(this.timeSpan, this.sport).subscribe(res => {
+      console.log(res['games'], "scheduled games per selected time span...");
+      this.nbaSpanGames = res['games'];
+      root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-playoff`;
+      this.sortStats(root, res['games'], this.sport, type)
+    })
   }
 
   loadData() {
@@ -183,6 +229,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public sortNHL() {
+    this.timeSpan = 'full';
     this.nbaSection = false; 
     this.nhlSection = true; 
     this.mlbSection = false;
@@ -191,45 +238,15 @@ export class StatLeadersComponent implements OnInit {
     this.nflSection = false;
     this.nflDefenseSection = false;
     this.nflDraftKit = false;
-
-    if (this.nhlGoaltenders == null) {
-      this.nhlGoalieloading = true;
-      this.nhlSkaterloading = true;
-  
-  
-      this.nhlService
-         .getAllStats('goalies').subscribe(res => {
-          const nhlTeamsArray = Object.values(this.nhlTeams);
-          this.nhlGoaltenders = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0);
-  
-            for (let team of nhlTeamsArray) {
-              for (let data of this.nhlGoaltenders) { 
-                if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-                  data.team.logo = team['officialLogoImageSrc'];
-                  data.team.city = team['city'];
-                  data.team.name = team['name'];
-                  this.goalieFp(data);
-                 
-                }
-  
-                if (data.player.officialImageSrc == null) {
-                  data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
-                }
-                
-              }  
-            }
-            this.nhlGoalieloading = false;
-      })
-    
-    
+    this.sport = 'nhl';
+    this.nhlSkaterloading = true;
 
     this.nhlService
        .getAllStats('skaters').subscribe(res => {
         const nhlTeamsArray = Object.values(this.nhlTeams);
 
         this.nhlSkaters = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0);
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 3);
 
           for (let team of nhlTeamsArray) {
             for (let data of this.nhlSkaters) { 
@@ -248,14 +265,51 @@ export class StatLeadersComponent implements OnInit {
             }  
           }
 
+        if (this.timeSpan === 'full') {
           this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D');
           this.fSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition != 'D');
-
-
-       this.nhlSkaterloading = false;
+        }
+          
+        if (this.timeSpan != 'full') {
+          this.spanGames();
+        } else {
+          this.nhlSkaterloading = false;
+        } 
     })
-
   }
+
+  public goalies() {
+    this.nhlGoalieloading = true;
+    this.nhlService
+      .getAllStats('goalies').subscribe(res => {
+      const nhlTeamsArray = Object.values(this.nhlTeams);
+      this.nhlGoaltenders = res['playerStatsTotals'].filter(
+        player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 3);
+
+        for (let team of nhlTeamsArray) {
+          for (let data of this.nhlGoaltenders) { 
+            if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+              data.team.logo = team['officialLogoImageSrc'];
+              data.team.city = team['city'];
+              data.team.name = team['name'];
+              this.goalieFp(data);
+              
+            }
+
+            if (data.player.officialImageSrc == null) {
+              data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+            }
+            
+          }  
+        }
+
+        if (this.timeSpan != 'full') {
+          this.spanGames();
+        } else {
+          this.nhlGoalieloading = false;
+        }
+        
+    })
   }
 
 
@@ -272,12 +326,13 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public async sortNBA() {
+      this.sport = 'nba';
       this.nbaService
-       .getAllStats(this.getAll).subscribe(res => {
+       .getAllStats(this.timeSpan).subscribe(res => {
           const nbaTeamsArray = Object.values(this.nbaTeams);
 
           this.myData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 2);
 
           for (let team of nbaTeamsArray) {
             for (let data of this.myData) { 
@@ -295,6 +350,9 @@ export class StatLeadersComponent implements OnInit {
               
             }  
           }
+          if (this.timeSpan != 'full')
+            this.spanGames();
+          
       }) 
   }
 
@@ -337,6 +395,7 @@ export class StatLeadersComponent implements OnInit {
     this.nflSection = false;
     this.nflDefenseSection = false;
     this.nflDraftKit = false;
+    this.sport = 'mlb';
 
     if (this.mlbPitchingData == null) {
 
@@ -421,6 +480,7 @@ export class StatLeadersComponent implements OnInit {
     this.nhlGoalies = false;
     this.mlbHittingSection = false;
     this.nflSection = true;
+    this.sport = 'nfl';
 
     if (this.nflQBData == null) {
 
@@ -486,14 +546,16 @@ export class StatLeadersComponent implements OnInit {
       this.nflService
         .getAllOffense('run', '19').subscribe(res => {
           this.nflRushData = res['playerStatsTotals'].filter(
-            player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.rushing.rushYards > 500);
+            player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.rushing.rushYards > 500 && player.player['currentTeam'] != null);
 
         this.nflService
           .getAllOffense('run', '20').subscribe(res => {
+            console.log(this.nflRushData, 'rush data')
             this.newRushData = res['players'];
             for (let n of this.newRushData) {
               for (let old of this.nflRushData) {
-                old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'].id;
+                if (old.player['currentTeam'] != null)
+                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
                 if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
                   old.player['currentTeam'].id = n['teamAsOfDate'].id;
                   old.team.id = n['teamAsOfDate'].id;
@@ -924,5 +986,176 @@ export class StatLeadersComponent implements OnInit {
     console.log(sl, 'season length changed');
     this.seasonLength = sl;
   }
+
+  public sortStats(root, games, sport, type) {
+    let s = sport;
+    let skateSec;
+    let gSec;
+
+    if (s === 'nhl' && this.nhlSection && type === 'skaters') {
+      skateSec = true;
+      gSec = false;
+    }
+
+    if (s === 'nhl' && this.nhlGoalies && type === 'goalies') {
+      gSec = true;
+      skateSec = false;
+    }
+  
+        forkJoin(
+            games.map(
+              g =>
+              this.http.get(`${root}/games/`+ g.schedule.id +`/boxscore.json`, {headers})
+              //.map(response => response.json())
+            )
+          )
+          .subscribe(res => {
+            let i: number;
+            let home;
+            let away;
+
+            res.forEach((item, index) => {
+              i = index;
+              if (res[i] != null) {
+                home = res[i]['stats'].away.players;
+                away = res[i]['stats'].home.players;
+
+                away.forEach((item, index) => {
+                  this.combined.push(away[index]);
+                })
+
+                home.forEach((item, index) => {
+                  this.combined.push(home[index]);
+                })
+            
+                //console.log(this.combined, 'combined');
+                this.reduced = this.combined.reduce(function(hash) {
+                  //console.log(hash, 'hash');
+                  return function(r, a) {
+                    //console.log(a, 'this is a');
+                    let key = a.player.id;
+                    if (!hash[key]) {
+                      hash[key] = { id: key, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0, '10': 0, '11': 0, '12': 0, '13': 0};
+                      r.push(hash[key]);
+                    }
+
+
+                    hash[key]['1'] += s === 'nba' ? a.playerStats[0].offense.pts : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].scoring.goals :
+                    s === 'nhl' && gSec ? a.playerStats[0].goaltending.saves : 0;
+                    
+                    hash[key]['2'] += s === 'nba' ?  a.playerStats[0].offense.ast  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].scoring.assists 
+                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.wins : 0;
+
+                    hash[key]['3'] += s === 'nba' ?  a.playerStats[0].rebounds.reb  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].scoring.powerplayGoals 
+                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.shutouts : 0;
+
+                    hash[key]['4'] += s === 'nba' ?  a.playerStats[0].defense.stl  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].scoring.powerplayAssists 
+                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.losses : 0;
+
+                    hash[key]['5'] += s === 'nba' ?  a.playerStats[0].defense.blk  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].scoring.points 
+                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.overtimeWins : 0;
+
+                    hash[key]['6'] += s === 'nba' ?  a.playerStats[0].defense.tov  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].scoring.gameWinningGoals 
+                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.overtimeLosses : 0;
+                    hash[key]['7'] += 1;
+                    hash[key]['8'] += s === 'nba' ?  a.playerStats[0].fieldGoals.fg3PtMade  : 
+                    s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.shots 
+                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.saves : 0;
+                    hash[key]['9'] += s === 'nba'  ? a.playerStats[0].fieldGoals.fgAtt  : 
+                    s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.blockedShots 
+                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.saves : 0;
+                    hash[key]['10'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
+                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.saves : 0;
+                    //hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
+                    return r;
+                  };
+
+                }(Object.create(null)), []);
+
+               
+
+                for (let info of s === 'nba' ? this.myData : s === 'nhl' && this.nhlSection ? this.nhlSkaters : s === 'nhl' && this.nhlGoalies ? this.nhlGoaltenders : []) {
+                  for (let data of this.reduced) {
+                    //info.player.span = false;
+                    if (info.player.id === data.id) { 
+                      if (this.sport === 'nba') {
+                        info.stats.offense.pts = data['1'];
+                        info.stats.offense.ast = data['2'];
+                        info.stats.rebounds.reb = data['3'];
+                        info.stats.defense.stl = data['4'];               
+                        info.stats.defense.blk = data['5'];
+                        info.stats.defense.tov = data['6'];
+                        info.stats.offense.ptsPerGame = Math.floor(data['1'] / data['7']);
+                        info.stats.fieldGoals.fg3PtMade = data['8'];
+                        info.stats.fieldGoals.fgAtt = data['9'];
+                        info.stats.fieldGoals.fgPct = Math.floor(data['10'] / data['9'] * 100);
+                        this.playerFp(info);
+                      }
+                      
+                      if (s === 'nhl' && this.nhlSection) {
+                        info.stats.scoring.goals = data['1'];
+                        info.stats.scoring.assists = data['2'];
+                        info.stats.scoring.powerplayGoals = data['3'];
+                        info.stats.scoring.powerplayAssists = data['4'];               
+                        info.stats.scoring.points = data['5'];
+                        info.stats.scoring.gameWinningGoals = data['6'];
+                        info.stats.skating.shots = data['8'];
+                        info.stats.skating.blockedShots = data['9'];  
+                        info.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data['10'], data['7']);   
+                        this.skaterFp(info);
+                        
+                      }
+
+                      if (s === 'nhl' && this.nhlGoalies) {
+                        info.stats.goaltending.saves = data['1'];
+                        info.stats.goaltending.wins = data['2'];
+                        info.stats.goaltending.shutouts = data['3'];
+                        info.stats.goaltending.losses = data['4'];               
+                        info.stats.goaltending.overtimeWins = data['5'];
+                        info.stats.goaltending.overtimeLosses = data['6'];
+                             
+                        this.goalieFp(info);
+                      }
+                      
+                      
+                      info.player.span = this.timeSpan;
+                    }
+                  }
+                }
+              }
+            });
+
+            if (s === 'nhl' && this.nhlGoalies) {
+              this.crunched = this.nhlGoaltenders.filter(player => player.player.span === this.timeSpan);
+              this.nhlGoaltenders = this.crunched;
+              // console.log(this.nhlGoaltenders, 'crunched nhl');     
+              this.nhlGoalieloading = false;
+            }
+
+            if (s === 'nhl' && this.nhlSection) {
+              this.crunched = this.nhlSkaters.filter(player => player.player.span === this.timeSpan);
+              this.nhlSkaters = this.crunched;
+              // console.log(this.nhlSkaters, 'crunched nhl');
+              this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D');
+              this.fSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition != 'D');
+              this.nhlSkaterloading = false;
+            }
+
+            if (s === 'nba') {
+              this.crunched = this.myData.filter(player => player.player.span === this.timeSpan);
+              this.myData = this.crunched;
+              // console.log(this.myData, 'crunched nba');
+              this.loading = false; 
+            }
+                 
+          });
+  }  
 }
 
