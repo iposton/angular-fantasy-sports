@@ -35,6 +35,7 @@ import { PositionCardComponent } from './components/position-card/position-card.
 import { TeamScheduleComponent } from './components/team-schedule/team-schedule.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { NflStartersComponent } from './modules/nfl-starters/nfl-starters.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
     PositionCardComponent,
     TeamScheduleComponent,
     DialogComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    NflStartersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

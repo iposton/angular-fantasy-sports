@@ -6,7 +6,7 @@ let thisDate = new Date();
 let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
 let daTomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
 let yesterdayDate = new Date(thisDate.getTime() - (24 * 60 * 60 * 1000));
-let lastweekDate = new Date(thisDate.getTime() - (192 * 60 * 60 * 1000));
+let lastweekDate = new Date(thisDate.getTime() - (168 * 60 * 60 * 1000));
 
 let utcDate = new Date(thisDate.toUTCString());
 let tomorrowUtcDate = new Date(tomorrowDate.toUTCString());
@@ -54,23 +54,24 @@ let sentAll;
 @Injectable({ providedIn: 'root' }) 
 export class NHLDataService {
 
-  info: Observable < any > = null;
-  stats: Observable < any > = null;
-  skateStats: Observable < any > = null;
-  allstats: Observable < any > = null;
-  uStats: Observable < any > = null;
-  env: Observable < any > = null;
-  gameid: Observable < any > = null;
-  lastweekgameid: Observable < any > = null;
-  daily: Observable < any > = null;
-  schedule: Observable < any > = null;
-  score: Observable < any > = null;
-  play: Observable <any> = null;
-  injured: Observable <any> = null;
-  teamstats: Observable <any> = null;
-  dailySkaters: Observable <any> = null;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
-  headers: any;
+  public info: Observable < any > = null;
+  public stats: Observable < any > = null;
+  public skateStats: Observable < any > = null;
+  public allstats: Observable < any > = null;
+  public uStats: Observable < any > = null;
+  public env: Observable < any > = null;
+  public gameid: Observable < any > = null;
+  public lastweekgameid: Observable < any > = null;
+  public daily: Observable < any > = null;
+  public schedule: Observable < any > = null;
+  public score: Observable < any > = null;
+  public play: Observable <any> = null;
+  public injured: Observable <any> = null;
+  public teamstats: Observable <any> = null;
+  public dailySkaters: Observable <any> = null;
+  public games: Observable <any> = null;
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
+  public headers: any;
   public dailyDate: string = '';
   public isToday: boolean = false;
   public isTomorrow: boolean = false;
@@ -221,6 +222,20 @@ export class NHLDataService {
     let url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
     this.lastweekgameid = this.http.get(url, {headers})
     return this.lastweekgameid;
+  }
+
+  getGames(span, sport) {
+    let url = null;
+    if (span === 'last-week') {
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/2020-playoff/games.json?date=from-${lastweekDailyDate}-to-${dailyDate}`;
+    } else if (span === 'yesterday') {
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/2020-playoff/games.json?date=${yesterdayDailyDate}`;
+    } else if (span === 'today') {
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/2020-playoff/games.json?date=${dailyDate}`;
+    }
+    
+    this.games = this.http.get(url, {headers})
+    return this.games;
   }
 
   getDaily() {

@@ -161,7 +161,6 @@ export class NFLDataService {
     return lastweek;
   }
 
-
   getPrevGameId() {
 
     //if (!this.gameid) {

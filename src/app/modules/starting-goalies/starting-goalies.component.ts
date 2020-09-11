@@ -355,7 +355,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200824-to-20200902`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200906-to-20200915`, { headers })
                     
                   )
                 )
@@ -1161,7 +1161,8 @@ public showMatchups() {
                                 
                                 if (schedule.schedule.awayTeam != null && 
                                   schedule.schedule.homeTeam != null) {
-                                  if (schedule.schedule.scheduleStatus != "POSTPONED" && gameDay.getDay() === originalStart.getDay()) {
+                                    // schedule.schedule.scheduleStatus != "POSTPONED" && 
+                                  if (gameDay.getDay() === originalStart.getDay()) {
 
                                     if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
                                       sdata.sStatus = schedule.schedule.scheduleStatus;
@@ -1221,7 +1222,7 @@ public showMatchups() {
                         for (let gb of this.gameSkaters) {
                           for (let data of this.mySkaterData) {
                             if (gb.playerID === data.player.id) {
-                              if (gb.status !== "UNPLAYED") {
+                              if (gb.status != "UNPLAYED") {
                                 if (data.player.gameLocation === 'home') {
                                   data.team.teamScore = gb.score['homeScoreTotal'];
                                   data.team.opponentScore = gb.score['awayScoreTotal'];

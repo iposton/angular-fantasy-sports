@@ -2,7 +2,7 @@
 This is a single page app which uses the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#) to get starting NHL goalie data. 
 
 ### Description
-This [application](https://nhl-starting-goalies-angular.herokuapp.com/) is made with Angular (version 9.0.0) and the most current version of angular material2. This SPA app is hosted for free on Heroku (cloud application platform). The data is sourced through the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#).
+This [application](https://nhl-starting-goalies-angular.herokuapp.com/) is made with Angular (version 10.0.4) and the most current version of angular material2. This SPA app is hosted for free on Heroku (cloud application platform). The data is sourced through the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#).
 
 This app can help explain how to fetch data using [Angular's HttpClient Module](https://angular.io/guide/http) from a robust api.  
 
