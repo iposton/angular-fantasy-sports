@@ -12,6 +12,7 @@ export class UtilService {
   public mlbTeams: any;
   public NBAImages: any;
   public NHLImages: any;
+  public NFLImages: any;
   public startingGoalies: any;
 
   constructor() {
@@ -121,7 +122,45 @@ export class UtilService {
         dateEnd: 'Tue Feb 04 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '22' //super bowl
       }
-    ]
+    ];
+
+    this.NFLImages = {
+      "18623": {
+        firstName: "Clyde",
+        lastName: "Edwards-Helaire",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ldgjalogqzti76pmqbw1"
+      },
+      "18688": {
+        firstName: "Antonio",
+        lastName: "Gibson",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/cvmwtpfzdt0ibauqifup"
+      },
+      "18577": {
+        firstName: "Joe",
+        lastName: "Burrow",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/alhbhd5ega2doxogh0dg"
+      },
+      "18640": {
+        firstName: "Cam",
+        lastName: "Akers",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/zeh3myk7tc0yzp6qbudr"
+      },
+      "18603": {
+        firstName: "D'Andre",
+        lastName: "Swift",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/amhsf13r1hnpo9lrn2uj"
+      },
+      "18849": {
+        firstName: "James",
+        lastName: "Robinson",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/lxzbao36eeratekmnxeb"
+      }, 
+      "7575": {
+        firstName: "Rob",
+        lastName: "Gronkowski",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ldajm3cj1rs1sfwykyyk"
+      }, 
+    }
 
     this.NHLImages = {
       "17374": {
@@ -2831,6 +2870,10 @@ export class UtilService {
 
   public getNHLImages() {
     return this.NHLImages;
+  }
+
+  public getNFLImages() {
+    return this.NFLImages;
   }
 
   public getNFLTeams() {

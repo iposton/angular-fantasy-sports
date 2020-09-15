@@ -2,14 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from '../modules/home/home.component';
 import { StartingFiveComponent } from '../modules/starting-five/starting-five.component';
-// import { StartingLineComponent } from '../modules/starting-line/starting-line.component';
 import { StatLeadersComponent } from '../modules/stat-leaders/stat-leaders.component';
-// import { TouchesComponent } from '../modules/touches/touches.component';
 import { StartingPitcherComponent } from '../modules/starting-pitcher/starting-pitcher.component';
-// import { PitchingStatsComponent, MyDialog } from '../modules/pitching-stats/pitching-stats.component';
 import { StartingGoaliesComponent } from '../modules/starting-goalies/starting-goalies.component';
-//import { YesterdayResultsComponent, InfoYesterday } from '../modules/yesterday-results/yesterday-results.component';
-//import { TomorrowResultsComponent, InfoTomorrow, TomorrowDialog } from '../modules/tomorrow-results/tomorrow-results.component';
+import { NflStartersComponent } from '../modules/nfl-starters/nfl-starters.component';
+
 
 const routes: Routes = [
 //   {
@@ -32,6 +29,10 @@ const routes: Routes = [
    {
          path: 'nba',
          component: StartingFiveComponent
+   },
+   {
+         path: 'nfl',
+         component: NflStartersComponent
    },
    {
        path: 'stat-leaders',

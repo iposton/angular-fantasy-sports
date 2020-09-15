@@ -1727,6 +1727,82 @@ form.date-form {
   font-weight: bold;
 }
 
+//nfl
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content, 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content {
+  background-size: 269px!important;
+  flex: 1 0 43%;
+  background-position: 50%!important;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp {
+  background: #000;
+  color: #fff;
+}
+
+.nfl-page .card-wrap-sp {
+  width: 600px;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content img, 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content img {
+  width: 17%;
+  margin: 0;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content {
+  text-align: left;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content {
+  flex: 0 0 12%;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats,
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats {
+  font-size: 20px;
+  font-weight: 900;
+  width: 95px;
+  display: inline-block;
+  line-height: 14px;
+
+  .sml-stat {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname,
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname {
+  font-size: 14px;
+  font-weight: 200;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .game-text {
+  font-size: 14px;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .run-pct {
+  font-size: 12px;
+  font-weight: 200;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .bottom-content .left-stats,
+.nfl-page .card-wrap-sp .mat-card-sp .bottom-content .right-stats {
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .bottom-content {
+  font-size: 18px;
+  padding: 0;
+}
+
+
 //starting-goalies
 .matchup-layout.goalie-layout {
   display: -webkit-box;
@@ -2149,6 +2225,11 @@ form input[type="text"] {
 }
 
 @media only screen and (max-width: 600px) {
+
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname,
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname {
+    display: none;
+  }
 
   #overlay.active .modal .modal-footer img {
     width: 5%;
