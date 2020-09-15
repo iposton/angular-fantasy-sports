@@ -45,6 +45,7 @@ export class NFLDataService {
   public schedule: Observable <any> = null;
   public stats: Observable <any> = null;
   public daily: Observable <any> = null;
+  public dailyT: Observable <any> = null;
   public weekly: Observable <any> = null;
   public score: Observable <any> = null;
   public allstats: Observable <any> = null;
@@ -205,7 +206,7 @@ export class NFLDataService {
       // } else {
       //   url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
       // }
-      let url = `${apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`; //&player=${players}`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/player_stats_totals.json?player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     //}
@@ -329,7 +330,7 @@ export class NFLDataService {
     return this.starterInfo;
   }
 
-   getDaily(selected) {
+   getDaily(selected, players) {
    // pass in week
    // if (!this.daily) {
       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
@@ -339,13 +340,21 @@ export class NFLDataService {
       // } else {
       //   url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
       // }
-      let url = `${apiRoot}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/player_gamelogs.json?player=${players}`;
       console.log(url, 'url')
       console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})
         
   //  }
     return this.daily;
+  }
+
+  public dailyTeams(selected) {  
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/team_gamelogs.json?`;
+    console.log(url, 'url')
+    console.log('getting daily stats for pitchers from API...');
+    this.dailyT = this.http.get(url, {headers})
+    return this.dailyT;
   }
 
   getDailyTouches(selected) {
