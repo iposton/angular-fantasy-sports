@@ -115,10 +115,10 @@
                       
                       {{data['oPlayers'][0]?.playerObj?.team?.teamScore > data['oPlayers'][0]?.playerObj?.team?.opponentScore ? data['oPlayers'][0]?.playerObj?.team?.abbreviation +' Wins!' : data['oPlayers'][6]?.playerObj?.team?.abbreviation +' Wins!'}} <br>
                       <span class="run-pct">
-                          Run Pct <br> {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSRPct : data['oPlayers'][0]?.playerObj?.stats.teamDRPct}}% / 
-                          {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][5]?.playerObj?.stats.teamSRPct : data['oPlayers'][5]?.playerObj?.stats.teamDRPct}}% <br>
-                          Pass Pct <br> {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSPPct : data['oPlayers'][0]?.playerObj?.stats.teamDPPct}}% / 
-                          {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][5]?.playerObj?.stats.teamSPPct : data['oPlayers'][5]?.playerObj?.stats.teamDPPct}}% <br>
+                          Run Pct <br> {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][5]?.playerObj?.stats.teamSRPct : data['oPlayers'][5]?.playerObj?.stats.teamDRPct}}% / 
+                          {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSRPct : data['oPlayers'][0]?.playerObj?.stats.teamDRPct}}% <br>
+                          Pass Pct <br> {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][5]?.playerObj?.stats.teamSPPct : data['oPlayers'][5]?.playerObj?.stats.teamDPPct}}% / 
+                          {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSPPct : data['oPlayers'][0]?.playerObj?.stats.teamDPPct}}% <br>
                         </span>
                     </span> 
                   </span>
