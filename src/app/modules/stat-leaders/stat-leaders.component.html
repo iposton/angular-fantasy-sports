@@ -805,7 +805,25 @@
               [twitter]="twitter"
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
-              [eliteStat]="1800"
+              [eliteStat]="100"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null" 
+              [data]="nflQBData" 
+              [statType]="'rushing'"
+              [statField]="'rushYards'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'QB Rushing Yards'"
+              [statTag]="'RY'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="50"
               ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null" 
@@ -824,6 +842,24 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
               [eliteStat]="850"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null" 
+              [data]="nflRushData" 
+              [statType]="'receiving'"
+              [statField]="'receptions'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'RB Receptions'"
+              [statTag]="'Rec'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="5"
               ></app-stat-card>
 
               <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 

@@ -57,6 +57,7 @@ export class NFLDataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
+  public apiRoot2021: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
   public apiRoot2020: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl";
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular"; 
   public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-regular"
@@ -239,27 +240,27 @@ export class NFLDataService {
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       } else if (position === 'qb' && season === '19') {
-        let url = `${apiRoot}/player_stats_totals.json?position=QB`;
+        let url = `${this.apiRoot2021}/player_stats_totals.json?position=QB`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       }
 
       if (position === 'run' && season === '20') {
-        let url = `${this.apiRoot2020}/players.json?position=QB,RB`;
+        let url = `${this.apiRoot2020}/players.json?position=RB`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       } else if (position === 'run' && season === '19') {
-        let url = `${apiRoot}/player_stats_totals.json?position=QB,RB`;
+        let url = `${this.apiRoot2021}/player_stats_totals.json?position=RB`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       }
 
       if (position === 'rec' && season === '20') {
-        let url = `${this.apiRoot2020}/players.json?position=WR,RB,TE`;
+        let url = `${this.apiRoot2020}/players.json?position=WR,TE`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       } else if (position === 'rec' && season === '19') {
-        let url = `${apiRoot}/player_stats_totals.json?position=WR,RB,TE`;
+        let url = `${this.apiRoot2021}/player_stats_totals.json?position=WR,TE`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       }
@@ -269,7 +270,7 @@ export class NFLDataService {
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       } else if (position === 'k' && season === '19') {
-        let url = `${apiRoot}/player_stats_totals.json?position=K`;
+        let url = `${this.apiRoot2021}/player_stats_totals.json?position=K`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       }
@@ -282,7 +283,7 @@ export class NFLDataService {
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     } else if (position === 'all' && season === '19') {
-      let url = `${apiRoot}/player_stats_totals.json?position=CB,S,LB,DT,DE,FS,SS,OLB,ILB,MLB`;
+      let url = `${this.apiRoot2021}/player_stats_totals.json?position=CB,S,LB,DT,DE,FS,SS,OLB,ILB,MLB`;
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     }
@@ -299,9 +300,9 @@ export class NFLDataService {
       // }
       let url = null;
       if (date != null) {
-        url = `${apiRoot}/team_stats_totals.json?date=${date}`;
+        url = `${this.apiRoot2021}/team_stats_totals.json?date=${date}`;
       } else {
-        url = `${apiRoot}/team_stats_totals.json`;
+        url = `${this.apiRoot2021}/team_stats_totals.json`;
       }
       this.teamstats = this.http.get(url, {headers})
 

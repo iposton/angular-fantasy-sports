@@ -64,6 +64,7 @@ export class StatLeadersComponent implements OnInit {
   public twitter: boolean = false;
   public selected: any;
   public playerImages: any;
+  public nflplayerImages: any;
   public tomorrowDate: any;
   public mlbSection: boolean = false;
   public mlbHittingSection: boolean = false;
@@ -119,6 +120,7 @@ export class StatLeadersComponent implements OnInit {
     this.mlbTeams = this.util.getMLBTeams();
     this.nflTeams = this.util.getNFLTeams();
     this.playerImages = this.util.getNBAImages();
+    this.nflplayerImages = this.util.getNFLImages();
     
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
@@ -502,7 +504,8 @@ export class StatLeadersComponent implements OnInit {
               data.team.abbreviation = team['abbreviation'];
               data.team.scheduleTicker = team['scheduleTicker'];
             }
-            if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].lastYearTeamId) {
+            //data.player['currentTeam'].lastYearTeamId
+            if (data.player['currentTeam'] != null && team['id'] && data.stats.rushing) {
               data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.receptions;
               data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.plays * 100);
               data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100);
@@ -516,103 +519,127 @@ export class StatLeadersComponent implements OnInit {
       this.nflService
         .getAllOffense('qb', '19').subscribe(res => {
           this.nflQBData = res['playerStatsTotals'].filter(
-            player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.passing.passYards > 700);
+            player => player.stats != null && player.stats.gamesPlayed > 0 && player.stats.passing.passYards > 80);
 
-        this.nflService
-          .getAllOffense('qb', '20').subscribe(res => {
-            this.newQBData = res['players'].filter(
-              player => player['teamAsOfDate'] != null);;
-            for (let n of this.newQBData) {
-              for (let old of this.nflQBData) {
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
-                }
+        // this.nflService
+        //   .getAllOffense('qb', '20').subscribe(res => {
+        //     this.newQBData = res['players'].filter(
+        //       player => player['teamAsOfDate'] != null);;
+        //     for (let n of this.newQBData) {
+        //     for (let old of this.nflQBData) {
+        // //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+        // //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
+        // //           old.team.id = n['teamAsOfDate'].id;
+        // //         }
                 
-                if (old.player.id === 8550) {
-                  old.player['currentTeam'].id = 70;
-                  old.team.id = 70;
-                  old.team.abbreviation = 'NO';
-                }
+        // //         if (old.player.id === 8550) {
+        // //           old.player['currentTeam'].id = 70;
+        // //           old.team.id = 70;
+        // //           old.team.abbreviation = 'NO';
+        // //         }
 
             
-              }
-            }
-            teamInfo(this.nflQBData, this.nflTeams, 'o');
+        // //       }
+        //         if (old.player.officialImageSrc == null) {
+        //           old.player.officialImageSrc = this.playerImages[old.player.id] != null ? this.playerImages[old.player.id].image : null;
+        //         }
+        //     }
+        //     teamInfo(this.nflQBData, this.nflTeams, 'o');
+        
             
-        });
+        // });
+        for (let data of this.nflQBData) {
+          if (data.player.officialImageSrc == null) {
+            data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+          }
+        }
+        teamInfo(this.nflQBData, this.nflTeams, 'o');
       });
 
       this.nflService
         .getAllOffense('run', '19').subscribe(res => {
           this.nflRushData = res['playerStatsTotals'].filter(
-            player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.rushing.rushYards > 500 && player.player['currentTeam'] != null);
+            player => player.stats != null && player.stats.gamesPlayed > 0 && player.stats.rushing.rushYards > 10 && player.player['currentTeam'] != null);
 
-        this.nflService
-          .getAllOffense('run', '20').subscribe(res => {
-            console.log(this.nflRushData, 'rush data')
-            this.newRushData = res['players'];
-            for (let n of this.newRushData) {
-              for (let old of this.nflRushData) {
-                if (old.player['currentTeam'] != null)
-                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
-                } 
+        // this.nflService
+        //   .getAllOffense('run', '20').subscribe(res => {
+        //     console.log(this.nflRushData, 'rush data')
+        //     this.newRushData = res['players'];
+        //     for (let n of this.newRushData) {
+        //       for (let data of this.nflRushData) {
+        //         if (old.player['currentTeam'] != null)
+        //           old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+        //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+        //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
+        //           old.team.id = n['teamAsOfDate'].id;
+        //         } 
                 
-                if (old.player.id === 8550) {
-                  old.player['currentTeam'].id = 70;
-                  old.team.id = 70;
-                  old.team.abbreviation = 'NO';
-                }
-              }
-            }
-            teamInfo(this.nflRushData, this.nflTeams, 'o');
-            this.nflOffenseLoading = false;
-        });
+        //         if (old.player.id === 8550) {
+        //           old.player['currentTeam'].id = 70;
+        //           old.team.id = 70;
+        //           old.team.abbreviation = 'NO';
+        //         }
+        //       }
+        //     }
+        //     teamInfo(this.nflRushData, this.nflTeams, 'o');
+        //     this.nflOffenseLoading = false;
+        // });
+        for (let data of this.nflRushData) {
+          if (data.player.officialImageSrc == null) {
+            data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+          }
+        }
+        teamInfo(this.nflRushData, this.nflTeams, 'o');
+        this.nflOffenseLoading = false;
       });
 
       this.nflService
         .getAllOffense('rec', '19').subscribe(res => {
           this.nflRecData = res['playerStatsTotals'].filter(
-            player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.receiving.receptions > 40);
+            player => player.stats != null && player.stats.gamesPlayed > 0 && player.stats.receiving.receptions > 0);
 
-        this.nflService
-          .getAllOffense('rec', '20').subscribe(res => {
-            this.newRecData = res['players'];
-            for (let n of this.newRecData ) {
-              for (let old of this.nflRecData) {
-                old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'].id;
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
-                }
-              }
-            }
-            teamInfo(this.nflRecData, this.nflTeams, 'o');
-        });
+        // this.nflService
+        //   .getAllOffense('rec', '20').subscribe(res => {
+        //     this.newRecData = res['players'];
+        //     for (let n of this.newRecData ) {
+        //       for (let old of this.nflRecData) {
+        //         old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'].id;
+        //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+        //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
+        //           old.team.id = n['teamAsOfDate'].id;
+        //         }
+        //       }
+        //     }
+            
+        // });
+        for (let data of this.nflRecData) {
+          if (data.player.officialImageSrc == null) {
+            data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+          }
+        }
+        teamInfo(this.nflRecData, this.nflTeams, 'o');
       });
 
       this.nflService
         .getAllOffense('k', '19').subscribe(res => {
           this.nflKickerData = res['playerStatsTotals'].filter(
-            player => player.stats != null && player.stats.gamesPlayed > 6 && player.stats.fieldGoals.fgMade > 10);
+            player => player.stats != null && player.stats.gamesPlayed > 0 && player.stats.fieldGoals.fgMade > 0);
 
         this.nflService
           .getAllOffense('k', '20').subscribe(res => {
             this.newKickerData = res['players'];
-            for (let n of this.newKickerData ) {
+            //for (let n of this.newKickerData ) {
               for (let old of this.nflKickerData) {
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
+                // if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                //   old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                //   old.team.id = n['teamAsOfDate'].id;
                   old.stats.fieldGoals.longFgMade = old.stats.fieldGoals.fgMade40_49 + old.stats.fieldGoals.fgMade50Plus;
-                }
+                //}
               }
-            }
+            //}
             teamInfo(this.nflKickerData, this.nflTeams, 'o');
         });
+        //teamInfo(this.nflKickerData, this.nflTeams, 'o');
       });
 
     }
@@ -963,21 +990,23 @@ export class StatLeadersComponent implements OnInit {
       this.nflService
       .getAllDefense('all', '19').subscribe(res => {
         this.nflDefenseData = res['playerStatsTotals'].filter(
-          player => player.stats != null && player.stats.gamesPlayed > 6);
-      this.nflService
-        .getAllDefense('all', '20').subscribe(res => {
-          this.newDefenseData = res['players'];
-          for (let n of this.newDefenseData) {
-            for (let old of this.nflDefenseData) {
-              if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                old.team.id = n['teamAsOfDate'].id;
-              }
-            }
-          }
-          teamInfo(this.nflDefenseData, this.nflTeams, 'd');
-          this.nflDefenseLoading = false;
-      });
+          player => player.stats != null && player.stats.gamesPlayed > 0);
+      // this.nflService
+      //   .getAllDefense('all', '20').subscribe(res => {
+      //     this.newDefenseData = res['players'];
+      //     for (let n of this.newDefenseData) {
+      //       for (let old of this.nflDefenseData) {
+      //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+      //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
+      //           old.team.id = n['teamAsOfDate'].id;
+      //         }
+      //       }
+      //     }
+      //     teamInfo(this.nflDefenseData, this.nflTeams, 'd');
+      //     this.nflDefenseLoading = false;
+      // });
+      teamInfo(this.nflDefenseData, this.nflTeams, 'd');
+      this.nflDefenseLoading = false;
      });
     }
   }
