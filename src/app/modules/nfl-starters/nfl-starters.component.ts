@@ -7,6 +7,28 @@ import * as CryptoJS from 'crypto-js';
 let headers = null;
 let playerString = null;
 let batterString = null;
+let weekTimes = null;
+let pos = {
+  'QB':'o',
+  'WR':'o',
+  'RB':'o',
+  'TE':'o',
+  'LB':'d',
+  'S':'d',
+  'CB':'d',
+  'DE':'d',
+  'SS':'d',
+  'FS':'d',
+  'DB':'d',
+  'MLB':'d',
+  'ILB':'d',
+  'OLB':'d',
+  'NT':'d',
+  'DT':'d',
+  'FB':'d',
+  'T':'d',
+  'OT':'d',
+}
 
 @Component({
   selector: 'app-nfl-starters',
@@ -41,6 +63,10 @@ export class NflStartersComponent implements OnInit {
   public nflTeamStats: Array <any> = [];
   public nflTeamStatsLoading: boolean;
   public playerImages: any;
+  public selectedWeek: string;
+  public tsDate: any;
+  public typeToHideAway: string = 'd';
+  public typeToHideHome: string = 'd';
   public gameStarter: { 
     gameID: string, 
     name: any, 
@@ -50,7 +76,8 @@ export class NflStartersComponent implements OnInit {
     status: any, 
     scheduleStatus: any,
     position: any,
-    startType: any 
+    startType: any,
+    playerType: any;
   };
   
   constructor(
@@ -61,9 +88,40 @@ export class NflStartersComponent implements OnInit {
       this.teams = this.util.getNFLTeams();
       this.testBrowser = isPlatformBrowser(platformId);
       this.playerImages = this.util.getNFLImages();
+      this.selectedWeek = '1';
+      weekTimes = this.util.getWeekTimes();
+
+      for (let week of weekTimes) {
+        let date = new Date();
+        if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
+          this.selectedWeek = week.week;
+          if (date < new Date('Tue Dec 31 2020 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+            let utcDate = new Date(week.dateBeg);
+            utcDate.setHours(utcDate.getHours() - 8);
+            let myDate = new Date(utcDate);
+            let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+            this.tsDate = dailyDate; 
+          }
+        }
+      }
   }
 
-  loadData() {
+  public onChange(week) {
+    this.loading = true;
+    this.selectedWeek = week;
+    this.dailySchedule = [];
+    this.starterIdData = [];
+    playerString = null;
+    this.dailyStats = [];
+    this.myData = [];
+    this.showData = [];
+    this.liveGames = false;
+    this.gamesToday = false;
+    this.noGamesMsg = '';
+    this.loadData();
+  }
+
+  public loadData() {
     this.dataService
       .getEnv().subscribe(res => {
         let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
@@ -71,10 +129,10 @@ export class NflStartersComponent implements OnInit {
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
 
         this.dataService
-          .sendHeaderOptions(headers, 1, this.apiRoot);
+          .sendHeaderOptions(headers, this.selectedWeek, this.apiRoot);
 
         this.dataService
-          .getSchedule(1).subscribe(res => {
+          .getSchedule(this.selectedWeek).subscribe(res => {
             //console.log(res, "schedule...");
 
             if (res['games'].length === 0) {
@@ -93,7 +151,7 @@ export class NflStartersComponent implements OnInit {
                   res['games'].map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1`, { headers })
+                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Defense-DE-1,Defense-CB-1,Defense-S-1,Defense-LB-1`, { headers })
                     
                   )
                 )
@@ -126,7 +184,8 @@ export class NflStartersComponent implements OnInit {
                         i2 = index;
                         if (res2[i2].actual != null && res2[i2].expected != null) {
 
-                          for (let position of res2[i2].expected.lineupPositions) {
+                          for (let position of res2[i2].actual.lineupPositions) {
+                            //console.log(pos[position.player.position], pos, position.player.position);
                              //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                            if (position.player != null) {
                               this.gameStarter = {
@@ -138,7 +197,8 @@ export class NflStartersComponent implements OnInit {
                                 status: game2.playedStatus,
                                 scheduleStatus: game2.scheduleStatus,
                                 position: position['position'],
-                                startType: 'actual'
+                                startType: 'actual',
+                                playerType: pos[position.player.position]
                               }
 
                               this.gameStarters.push(this.gameStarter);
@@ -156,11 +216,11 @@ export class NflStartersComponent implements OnInit {
                          
                           playerString = this.starterIdData.join();
                           //batterString = this.batterIdData.join(); 
-  
+                          
                         } else if (res2[i2].actual == null && res2[i2].expected != null) {
                           //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
                           for (let position of res2[i2].expected.lineupPositions) {
-                            //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
+                            //console.log(pos[position.player.position], pos, position.player.position);
                            if (position.player != null) {
                             this.gameStarter = {
                               playerID: position.player.id,
@@ -170,10 +230,11 @@ export class NflStartersComponent implements OnInit {
                               score: score2,
                               status: game2.playedStatus,
                               scheduleStatus: game2.scheduleStatus,
-                              position: position['position'],
-                              startType: 'expected'
+                              position: position.player ? position.player.position : position['position'],
+                              startType: 'expected',
+                              playerType: pos[position.player.position]
                             }
-
+                            
                             this.gameStarters.push(this.gameStarter);
                             this.starterIdData.push(position.player.id);
 
@@ -213,7 +274,7 @@ export class NflStartersComponent implements OnInit {
   public sortData() {
     if (this.gamesToday === true) {
       this.dataService
-        .dailyTeams(1).subscribe(res => {
+        .dailyTeams(this.selectedWeek).subscribe(res => {
             //console.log(res, "Daily team stats...");
             this.dailyTeamStats = res != null ? res['gamelogs'] : [];
             if (this.dailyTeamStats) {
@@ -238,7 +299,7 @@ export class NflStartersComponent implements OnInit {
       });
 
       this.dataService
-        .getDaily(1, playerString).subscribe(res => {
+        .getDaily(this.selectedWeek, playerString).subscribe(res => {
             //console.log(res, "Daily stats...");
             this.dailyStats = res != null ? res['gamelogs'] : [];
 
@@ -268,20 +329,9 @@ export class NflStartersComponent implements OnInit {
             this.dataService
               .getStats(playerString).subscribe(res => {
 
-                function removeDuplicatesBy(keyFn, array) {
-                  var mySet = new Set();
-                  return array.filter(function(x) {  
-                      var key = keyFn(x), isNew = !mySet.has(key);
-                      if (isNew) mySet.add(key);  
-                      return isNew;
-                  });
-                }
-              
               let values = [];
               if (res != null) values = res['playerStatsTotals'];
               this.myData = values;
-              //removeDuplicatesBy(x => x.player.id, values)
-
                   if (this.starterIdData.length > 0 || this.noGamesToday === true) {
                     if (this.myData && this.gameStarters) {
                       for (let gs of this.gameStarters) {
@@ -293,6 +343,7 @@ export class NflStartersComponent implements OnInit {
                             data.gameStatus = gs.status;
                             data.starterTeam = gs.team;
                             data.sStatus = gs.scheduleStatus;
+                            data.playerType = gs.playerType;
                             //this.pitcherFp(data);
 
                             if (gs.status !== "UNPLAYED") {
@@ -301,8 +352,6 @@ export class NflStartersComponent implements OnInit {
                                 data.team.currentQ = 'HALFTIME';
                               //data.team.currentInningHalf = gs.score['currentInningHalf'];
                             }
-                  
-
                           }
                         }
                       }
@@ -359,18 +408,20 @@ export class NflStartersComponent implements OnInit {
                               data.team.name = team.name;
                               data.team.twitter = team.twitter;
                  
-                              data.stats.receiving.seasonTotalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets;
-                              data.stats.receiving.seasonTotalTouchPct = Math.floor(data.stats.receiving.seasonTotalTouches / team.seasonPlays * 100);
-                              data.stats.rushing.seasonTRPct = Math.floor(data.stats.rushing.rushAttempts / team.seasonRunPlays * 100);
-                              data.stats.receiving.seasonTCPct = Math.floor(data.stats.receiving.targets / team.seasonPassPlays * 100);
-                              
-                              data.stats.teamSRYards = team.seasonRY;
-                              data.stats.teamSPYards = team.seasonPY;
-                              data.stats.teamSRPlays = team.seasonRunPlays;
-                              data.stats.teamSPPlays = team.seasonPassPlays;
-                              data.stats.teamSRPct = Math.floor(team.seasonRunPlays / team.seasonPlays * 100);
-                              data.stats.teamSPPct = Math.floor(team.seasonPassPlays / team.seasonPlays * 100);
-                              data.stats.seasonRun = team.seasonRun;
+                              if (data.stats.rushing) {
+                                data.stats.receiving.seasonTotalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets;
+                                data.stats.receiving.seasonTotalTouchPct = Math.floor(data.stats.receiving.seasonTotalTouches / team.seasonPlays * 100);
+                                data.stats.rushing.seasonTRPct = Math.floor(data.stats.rushing.rushAttempts / team.seasonRunPlays * 100);
+                                data.stats.receiving.seasonTCPct = Math.floor(data.stats.receiving.targets / team.seasonPassPlays * 100);
+                              }
+                                data.stats.teamSRYards = team.seasonRY;
+                                data.stats.teamSPYards = team.seasonPY;
+                                data.stats.teamSRPlays = team.seasonRunPlays;
+                                data.stats.teamSPPlays = team.seasonPassPlays;
+                                data.stats.teamSRPct = Math.floor(team.seasonRunPlays / team.seasonPlays * 100);
+                                data.stats.teamSPPct = Math.floor(team.seasonPassPlays / team.seasonPlays * 100);
+                                data.stats.seasonRun = team.seasonRun;
+                                data.teamStats = team.sTeamStats; 
                             }
                           }  
                        }
@@ -404,10 +455,10 @@ export class NflStartersComponent implements OnInit {
 
                           }
                           
-                          if (data.team.opponentId === gs.team && 
-                            data.gameId === gs.gameID) {
-                              data.player.po = gs.name;
-                          }
+                          // if (data.team.opponentId === gs.team && 
+                          //   data.gameId === gs.gameID) {
+                          //     data.player.po = gs.name;
+                          // }
                         }
                       }
 
@@ -420,7 +471,7 @@ export class NflStartersComponent implements OnInit {
                       }
                     }
 
-                    if (this.myData && this.dailyStats) {
+                    if (this.myData && this.dailyStats.length > 0) {
                      // console.log('start sorting data for daily stats...');
                       for (let daily of this.dailyStats) {
                         for (let mdata of this.myData) {
@@ -433,9 +484,19 @@ export class NflStartersComponent implements OnInit {
                             mdata.stats.tyToday = daily.stats.receiving ?  daily.stats.receiving.recYards + daily.stats.rushing.rushYards : 0;
                             mdata.stats.tqbyToday = daily.stats.passing ?  daily.stats.passing.passYards + daily.stats.rushing.rushYards : 0;
                             mdata.stats.ttdToday = daily.stats.receiving ? daily.stats.passing.passTD + daily.stats.rushing.rushTD : 0;
-                            mdata.stats.receiving.dailyTotalTouches = daily.stats.rushing.rushAttempts + daily.stats.receiving.targets;
-                            mdata.stats.receiving.dailyRTouches = daily.stats.rushing.rushAttempts;
-                            mdata.stats.receiving.dailyPTouches = daily.stats.receiving.targets;
+                            if (mdata.stats.receiving) {
+                              mdata.stats.receiving.dailyTotalTouches = daily.stats.rushing ? daily.stats.rushing.rushAttempts + daily.stats.receiving.targets : 0;
+                              mdata.stats.receiving.dailyRTouches = daily.stats.rushing ? daily.stats.rushing.rushAttempts : 0;
+                              mdata.stats.receiving.dailyPTouches = daily.stats.rushing ? daily.stats.receiving.targets : 0;
+                            }
+                            mdata.stats.tacklesToday = daily.stats.tackles ? daily.stats.tackles.tackleTotal : 0;
+                            mdata.stats.pdToday = daily.stats.interceptions ? daily.stats.interceptions.passesDefended : 0;
+                            mdata.stats.sacksToday = daily.stats.tackles ? daily.stats.tackles.sacks : 0;
+                            mdata.stats.intToday = daily.stats.interceptions ? daily.stats.interceptions.interceptions : 0;
+                            mdata.stats.intTdToday = daily.stats.interceptions ? daily.stats.interceptions.intTD : 0;
+                            mdata.stats.ffToday = daily.stats.fumbles ? daily.stats.fumbles.fumForced : 0;
+                            mdata.stats.frToday = daily.stats.fumbles ? daily.stats.fumbles.fumOppRec : 0;
+                            mdata.stats.fumTdToday = daily.stats.fumbles ? daily.stats.fumbles.fumTD : 0;
                             
                           }
                         }
@@ -444,9 +505,12 @@ export class NflStartersComponent implements OnInit {
                       for (let team of this.teamRef) {
                         for (let data of this.myData) { 
                            if (team.id === data.team.opponentId) {
+                             if (data.stats.receiving) {
                               data.stats.receiving.dailyTotalTouchPct = Math.floor(data.stats.receiving.dailyTotalTouches / team.dailyPlays * 100);
                               data.stats.rushing.dailyTRPct = Math.floor(data.stats.rushing.rushAttempts / team.dailyRunPlays * 100);
                               data.stats.receiving.dailyTCPct = Math.floor(data.stats.receiving.targets / team.dailyPassPlays * 100);
+                             }
+                              
                               data.stats.teamDRYards = team.dailyRY;
                               data.stats.teamDPYards = team.dailyPY;
                               data.stats.teamDRPlays = team.dailyRunPlays;
@@ -454,10 +518,10 @@ export class NflStartersComponent implements OnInit {
                               data.stats.teamDRPct = Math.floor(team.dailyRunPlays / team.dailyPlays * 100);
                               data.stats.teamDPPct = Math.floor(team.dailyPassPlays / team.dailyPlays * 100);
                               data.stats.dailyRun = team.dailyRun;
+                              data.dTeamStats = team.dTeamStats; 
                            }
                          }  
                       }
-
                       this.groupPlayers();
                     } else {
                       this.groupPlayers();

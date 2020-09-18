@@ -18,108 +18,108 @@ export class UtilService {
   constructor() {
     this.weekTimes = [
       {
-        dateBeg: 'Tue Sep 6 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Sep 11 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Sep 8 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Sep 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '1'
       },
       {
-        dateBeg: 'Tue Sep 11 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Sep 18 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Sep 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Sep 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '2'
       },
       {
-        dateBeg: 'Tue Sep 18 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Sep 25 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Sep 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Sep 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '3'
       },
       {
-        dateBeg: 'Tue Sep 25 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 01 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Sep 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 06 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '4'
       },
       {
-        dateBeg: 'Tue Oct 01 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 08 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Oct 06 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 13 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '5'
       },
       {
-        dateBeg: 'Tue Oct 8 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 15 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Oct 13 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 20 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '6'
       },
       {
-        dateBeg: 'Tue Oct 15 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 22 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Oct 20 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Oct 27 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '7'
       },
       {
-        dateBeg: 'Tue Oct 22 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 29 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Oct 27 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Nov 03 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '8'
       },
       {
-        dateBeg: 'Tue Oct 29 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 05 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Nov 03 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Nov 10 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '9'
       },
       {
-        dateBeg: 'Tue Nov 05 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 12 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Nov 10 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Nov 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '10'
       },
       {
-        dateBeg: 'Tue Nov 12 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 19 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Nov 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Nov 24 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '11'
       },
       {
-        dateBeg: 'Tue Nov 19 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 26 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Nov 24 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 01 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '12'
       },
       {
-        dateBeg: 'Tue Nov 26 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 03 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Dec 01 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 08 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '13'
       },
       {
-        dateBeg: 'Tue Dec 03 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 10 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Dec 08 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '14'
       },
       {
-        dateBeg: 'Tue Dec 10 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 17 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Dec 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '15'
       },
       {
-        dateBeg: 'Tue Dec 17 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 24 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Dec 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Dec 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '16'
       },
       {
-        dateBeg: 'Tue Dec 24 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Dec 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Jan 05 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '17'
       },
       {
-        dateBeg: 'Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Jan 07 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Jan 05 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Jan 12 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '18'
       },
       {
-        dateBeg: 'Tue Jan 07 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Jan 14 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Jan 12 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Jan 19 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '19'
       },
       {
-        dateBeg: 'Tue Jan 14 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Jan 21 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Jan 19 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Jan 26 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '20' //afc nfc final 4
       },
       {
-        dateBeg: 'Tue Jan 21 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Feb 04 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Tue Jan 26 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Tue Feb 09 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '22' //super bowl
       }
     ];
@@ -160,6 +160,17 @@ export class UtilService {
         lastName: "Gronkowski",
         image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ldajm3cj1rs1sfwykyyk"
       }, 
+      "18568": {
+        firstName: "Zack",
+        lastName: "Moss",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ung5uvdvstg3wgl9zdye"
+      }, 
+      // "18568": {
+      //   firstName: "Jonathan",
+      //   lastName: "Taylor",
+      //   image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ung5uvdvstg3wgl9zdye"
+      // },
+      
     }
 
     this.NHLImages = {

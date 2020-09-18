@@ -164,34 +164,21 @@ export class NFLDataService {
   }
 
   getPrevGameId() {
-
-    //if (!this.gameid) {
-      console.log('getting pitch speed data from API...');
-
-      let url = `${this.apiRoot}/games.json?date=from-7-days-ago-to-5-days-ago`;
-      this.gameid = this.http.get(url, {headers})
-        
-    //}
+    let url = `${this.apiRoot}/games.json?date=from-7-days-ago-to-5-days-ago`;
+    this.gameid = this.http.get(url, {headers})
     return this.gameid;
   }
 
   getSchedule(selected) {
-      // pass in week
-    //get all games for today get game ID and find a pitchers opponent
-   // if (!this.schedule) {
-      console.log('getting nfl schedule for today from api...', dailyDate);
-
-      let url = null
-      if (parseInt(selected) > 17) {
-        url = `${this.apiRootPO}/week/${selected}/games.json`;
-      } else {
-        //url = `${this.apiRoot}/week/${selected}/games.json`;
-        url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/games.json`;
-      }
-      
-      this.schedule = this.http.get(url, {headers})
-       
-   // }
+    //console.log('getting nfl schedule for today from api...', dailyDate);
+    let url = null
+    if (parseInt(selected) > 17) {
+      url = `${this.apiRootPO}/week/${selected}/games.json`;
+    } else {
+      //url = `${this.apiRoot}/week/${selected}/games.json`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/games.json`;
+    }
+    this.schedule = this.http.get(url, {headers})
     return this.schedule;
 
   }
@@ -218,7 +205,7 @@ export class NFLDataService {
 
     //if (!this.allstats) {
 
-      console.log('getting total player stats from API...');
+      //console.log('getting total player stats from API...');
       // let url = null;
       // if (parseInt(sWeek) > 17) {
       //   url = `${this.apiRootPO}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
@@ -291,7 +278,7 @@ export class NFLDataService {
   }
 
   getTeamStats(date) {
-      console.log('getting total team stats from API...');
+      //console.log('getting total team stats from API...');
       // let url = null;
       // if (parseInt(sWeek) > 17) {
       //   url = `${this.apiRootPO}/team_stats_totals.json?date=${date}`;
@@ -305,29 +292,20 @@ export class NFLDataService {
         url = `${this.apiRoot2021}/team_stats_totals.json`;
       }
       this.teamstats = this.http.get(url, {headers})
-
-    return this.teamstats;
+      return this.teamstats;
   }
 
   getInfo() {
-
-   // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE`;
-      console.log('getting active player data from API...');
-      this.info = this.http.get(url, {headers})
-        
-   // }
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE`;
+    //console.log('getting active player data from API...');
+    this.info = this.http.get(url, {headers})
     return this.info;
   }
 
   getStarterInfo(players) {
-
-   // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE&player=${players}`;
-      console.log('getting active player data from API...');
-      this.starterInfo = this.http.get(url, {headers})
-        
-   // }
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE&player=${players}`;
+    //console.log('getting active player data from API...');
+    this.starterInfo = this.http.get(url, {headers})
     return this.starterInfo;
   }
 
@@ -342,18 +320,12 @@ export class NFLDataService {
       //   url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
       // }
       let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/player_gamelogs.json?player=${players}`;
-      console.log(url, 'url')
-      console.log('getting daily stats for pitchers from API...');
       this.daily = this.http.get(url, {headers})
-        
-  //  }
-    return this.daily;
+      return this.daily;
   }
 
   public dailyTeams(selected) {  
     let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/team_gamelogs.json?`;
-    console.log(url, 'url')
-    console.log('getting daily stats for pitchers from API...');
     this.dailyT = this.http.get(url, {headers})
     return this.dailyT;
   }
@@ -369,25 +341,9 @@ export class NFLDataService {
       //   url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
       // }
        let url = `${apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
-       console.log(url, 'url')
-       console.log('getting daily stats for pitchers from API...');
        this.daily = this.http.get(url, {headers})
-         
-   //  }
-     return this.daily;
+       return this.daily;
    }
-
-  getTouches(players) {
-      // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/player_stats_totals.json?position=WR,TE,RB,QB`;
-      // } else {
-      //   url = `${this.apiRoot}/player_stats_totals.json?position=WR,TE,RB,QB`;
-      // }
-      let url = `${apiRoot}/player_stats_totals.json?position=WR,TE,RB,QB`; //&player=${players}`;
-      this.stats = this.http.get(url, {headers})
-    return this.stats;
-  }
 
   getWeek(selected) {
       // let url = null;
@@ -397,11 +353,8 @@ export class NFLDataService {
       //   url = `${this.apiRoot}/week/${selected}/team_gamelogs.json`;
       // }
        let url = `${apiRoot}/week/${selected}/team_gamelogs.json`;
-       //console.log(url, 'url')
-       console.log('getting daily stats for pitchers from API...');
        this.weekly = this.http.get(url, {headers})
-
-     return this.weekly;
+       return this.weekly;
    }
 
   getScore(data) {
@@ -417,8 +370,6 @@ export class NFLDataService {
       //console.log(`${this.apiRoot}/games/`+id+`/boxscore.json`, 'getting daily scores of todays games from API...');
       let url = `${apiRoot}/games/`+id+`/boxscore.json`;
       this.score = this.http.get(url, {headers})
-        
-    //}
       return this.score;
   }
 
