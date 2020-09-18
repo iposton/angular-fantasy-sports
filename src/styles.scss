@@ -1782,6 +1782,11 @@ form.date-form {
   font-weight: 200;
 }
 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .dn2,
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .dn2 {
+  display: none;
+}
+
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .game-text {
   font-size: 14px;
 }
