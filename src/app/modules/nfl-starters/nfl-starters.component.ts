@@ -398,6 +398,11 @@ export class NflStartersComponent implements OnInit {
                               sdata.stats.rushing.rushYards < 20 && sdata.stats.rushing.rushTD < 1) {
                                   sdata.playerType = 'n';
                               }
+                              
+                              if (sdata.stats.receiving && sdata.player.primaryPosition === 'TE' && 
+                              sdata.stats.receiving.receptions < 1) {
+                                  sdata.playerType = 'n';
+                              }
                             } 
                           } 
                         }
