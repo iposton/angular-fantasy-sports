@@ -164,12 +164,22 @@ export class UtilService {
         firstName: "Zack",
         lastName: "Moss",
         image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ung5uvdvstg3wgl9zdye"
+      },
+      "18895": {
+        firstName: "Jordan",
+        lastName: "Fuller",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/krqfhhry1lbtx2acscmj"
       }, 
-      // "18568": {
-      //   firstName: "Jonathan",
-      //   lastName: "Taylor",
-      //   image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ung5uvdvstg3wgl9zdye"
-      // },
+      "13411": {
+        firstName: "John",
+        lastName: "Johnson",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xwzn5lh2mhktocqcougu"
+      },
+      "18615": {
+        firstName: "Jonathan",
+        lastName: "Taylor",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/mx6ptr3jbhx0wxo3848u"
+      },
       
     }
 

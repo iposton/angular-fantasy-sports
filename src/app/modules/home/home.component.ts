@@ -78,8 +78,8 @@ export class HomeComponent implements OnInit {
   public liveGames: boolean = false;
   public nbaSched: boolean = false;
   public nhlSched: boolean = false;
-  public nflSched: boolean = false;
-  public mlbSched: boolean = true;
+  public nflSched: boolean = true;
+  public mlbSched: boolean = false;
   public selectedWeek: any;
   public tomorrowDate: any;
   public testBrowser: boolean;
