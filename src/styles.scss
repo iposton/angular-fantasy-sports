@@ -1756,6 +1756,13 @@ form.date-form {
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content {
   flex: 0 0 12%;
+  .matchup-text {
+    .sml {
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 12px;
+    }
+  }
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats,
@@ -1788,7 +1795,7 @@ form.date-form {
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .game-text {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .run-pct {
@@ -2231,9 +2238,17 @@ form input[type="text"] {
 
 @media only screen and (max-width: 600px) {
 
-  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname,
-  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname {
+  // .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname,
+  // .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname {
+  //   // display: none;
+  // }
+
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content {
     display: none;
+  }
+
+  .nfl-page .card-wrap-sp .mat-card-sp .bottom-content {
+    font-size: 14px;
   }
 
   #overlay.active .modal .modal-footer img {

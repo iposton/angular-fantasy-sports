@@ -47,7 +47,7 @@
               [ngStyle]="{background:'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' + data['oPlayers'][0]?.playerObj?.team?.logo +')'}">
               
                 
-                <div [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'home', 'dn2' : item?.playerObj?.playerType === typeToHideAway}"  *ngFor="let item of data['oPlayers']; let i = index">
+                <div [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'home' || item?.playerObj?.playerType === 'n', 'dn2' : item?.playerObj?.playerType === typeToHideAway}"  *ngFor="let item of data['oPlayers']; let i = index">
                   
                   
                     <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
@@ -143,9 +143,9 @@
                 
               </div>
               <div class="center-content">
-                  <span class="matup-text">
-                    {{data['oPlayers'][0]?.playerObj?.team.abbreviation}} <br> vs <br>
-                     {{data['oPlayers'][10]?.playerObj?.team.abbreviation}} <br>
+                  <span class="matchup-text">
+                    {{data['oPlayers'][10]?.playerObj?.team.abbreviation}} <span class="sml">vs</span>  
+                     {{data['oPlayers'][0]?.playerObj?.team.abbreviation}} <br>
                   </span>
                   <span class="game-text">
                     <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'LIVE'">
@@ -178,7 +178,7 @@
                       
                     </span> 
                     <span class="run-pct">
-                      <br>
+                      <br> <br>
                         Run Pct <br> {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][10]?.playerObj?.stats.teamSRPct : data['oPlayers'][10]?.playerObj?.stats.teamDRPct}}% / 
                         {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSRPct : data['oPlayers'][0]?.playerObj?.stats.teamDRPct}}% <br>
                         Pass Pct <br> {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][10]?.playerObj?.stats.teamSPPct : data['oPlayers'][10]?.playerObj?.stats.teamDPPct}}% / 
@@ -187,7 +187,7 @@
                   </span>
               </div>
               <div class="right-content" [ngStyle]="{background:'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' + data['oPlayers'][0]?.playerObj?.team?.opponentLogo +')'}">
-                <div [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'away', 'dn2' : item?.playerObj?.playerType === typeToHideHome}"  *ngFor="let item of data['oPlayers']; let i = index">
+                <div [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'away' || item?.playerObj?.playerType === 'n', 'dn2' : item?.playerObj?.playerType === typeToHideHome}"  *ngFor="let item of data['oPlayers']; let i = index">
                   
                     <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                     data['oPlayers'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">

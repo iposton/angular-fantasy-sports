@@ -25,9 +25,9 @@ let pos = {
   'OLB':'d',
   'NT':'d',
   'DT':'d',
-  'FB':'d',
+  'FB':'n',
   'T':'d',
-  'OT':'d',
+  'OT':'n',
 }
 
 @Component({
@@ -392,6 +392,11 @@ export class NflStartersComponent implements OnInit {
                               } 
                               if (sdata.player.officialImageSrc == null) {
                                 sdata.player.officialImageSrc = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
+                              }
+
+                              if (sdata.stats.rushing && sdata.player.primaryPosition === 'RB' && 
+                              sdata.stats.rushing.rushYards < 20 && sdata.stats.rushing.rushTD < 1) {
+                                  sdata.playerType = 'n';
                               }
                             } 
                           } 
