@@ -398,7 +398,7 @@ export class NflStartersComponent implements OnInit {
                               sdata.stats.rushing.rushYards < 20 && sdata.stats.rushing.rushTD < 1) {
                                   sdata.playerType = 'n';
                               }
-                              
+
                               if (sdata.stats.receiving && sdata.player.primaryPosition === 'TE' && 
                               sdata.stats.receiving.receptions < 1) {
                                   sdata.playerType = 'n';
@@ -514,7 +514,7 @@ export class NflStartersComponent implements OnInit {
 
                       for (let team of this.teamRef) {
                         for (let data of this.myData) { 
-                           if (team.id === data.team.opponentId) {
+                           if (team.id === data.team.id) {
                              if (data.stats.receiving) {
                               data.stats.receiving.dailyTotalTouchPct = Math.floor(data.stats.receiving.dailyTotalTouches / team.dailyPlays * 100);
                               data.stats.rushing.dailyTRPct = Math.floor(data.stats.rushing.rushAttempts / team.dailyRunPlays * 100);
