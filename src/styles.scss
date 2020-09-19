@@ -2248,19 +2248,31 @@ form input[type="text"] {
   }
 
   .nfl-page .card-wrap-sp .mat-card-sp .bottom-content {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats, 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats {
-    font-size: 16px;
-    width: 70px;
+    font-size: 15px;
+    width: 73px;
   }
 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname, 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname {
-    font-size: 10px;
+    font-size: 9px;
   }
+
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content img, 
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content img {
+    width: 15%;
+    margin: 0;
+  }
+
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats .sml-stat, 
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats .sml-stat {
+    font-size: 9px;
+    letter-spacing: 1px;
+}
 
   #overlay.active .modal .modal-footer img {
     width: 5%;
