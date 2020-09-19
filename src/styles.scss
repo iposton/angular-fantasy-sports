@@ -2251,6 +2251,17 @@ form input[type="text"] {
     font-size: 14px;
   }
 
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats, 
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats {
+    font-size: 18px;
+    width: 75px;
+  }
+
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname, 
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname {
+    font-size: 11px;
+  }
+
   #overlay.active .modal .modal-footer img {
     width: 5%;
   }
