@@ -28,6 +28,7 @@ let pos = {
   'FB':'n',
   'T':'d',
   'OT':'n',
+  'G':'n',
 }
 
 @Component({
@@ -67,6 +68,15 @@ export class NflStartersComponent implements OnInit {
   public tsDate: any;
   public typeToHideAway: string = 'd';
   public typeToHideHome: string = 'd';
+  public isOpen: boolean = false;
+  public tweetsData: Array <any> = [];
+  public noPosts: any;
+  public submitting: boolean = false;
+  public selectedPlayer: any;
+  public type: any;
+  public name: any;
+  public image: any;
+  public mobile: boolean;
   public gameStarter: { 
     gameID: string, 
     name: any, 
@@ -104,6 +114,40 @@ export class NflStartersComponent implements OnInit {
           }
         }
       }
+  }
+
+  public authorize(item) {
+    //console.log(item)
+    if (item != null) {
+      this.isOpen = true;
+      this.submitting = true;
+      let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
+  
+      this.http.post('/authorize', {headers}).subscribe((res) => {
+        this.openModal(item, headers, 'nfl');
+      });
+    }
+  }
+
+  public openModal(player, headers, type) {
+    this.type = type;
+    this.selectedPlayer = null;
+    this.noPosts = '';
+    this.selectedPlayer = player;
+    //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
+    let twitter = null;
+    //twitter = player.team.twitter;
+    let searchterm = null;
+    searchterm = 'query=' + player.player.lastName + ' ' + '#nfl' //twitter;
+    this.image = player.player.officialImageSrc;
+    this.name = player.player.firstName + ' ' + player.player.lastName +' - '+ player.player.primaryPosition +' | #'+ player.player.jerseyNumber;
+    this.http.post('/search', searchterm, {headers}).subscribe((res) => {
+      this.submitting = false;
+      this.tweetsData = res['data'].statuses;
+      if (this.tweetsData.length === 0) {
+        this.noPosts = "No Tweets.";
+      }
+    });
   }
 
   public onChange(week) {
@@ -186,7 +230,6 @@ export class NflStartersComponent implements OnInit {
 
                           for (let position of res2[i2].actual.lineupPositions) {
                             //console.log(pos[position.player.position], pos, position.player.position);
-                             //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                            if (position.player != null) {
                               this.gameStarter = {
                                 playerID: position.player.id,
@@ -509,6 +552,7 @@ export class NflStartersComponent implements OnInit {
                             mdata.stats.fumTdToday = daily.stats.fumbles ? daily.stats.fumbles.fumTD : 0;
                             
                           }
+
                         }
                       }
 
@@ -613,6 +657,9 @@ export class NflStartersComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.testBrowser) {
+      if (window.innerWidth < 700) { // 768px portrait
+        this.mobile = true;
+      }
       this.loadData();
     }
   }
