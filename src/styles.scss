@@ -153,6 +153,10 @@ input {
   text-align: center;
 }
 
+.block {
+  display: block;
+}
+
 h1.date-header {
   color: #fff;
 }
@@ -2243,9 +2247,9 @@ form input[type="text"] {
   //   // display: none;
   // }
 
-  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content {
-    display: none;
-  }
+  // .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content {
+  //   display: none;
+  // }
 
   .nfl-page .card-wrap-sp .mat-card-sp .bottom-content {
     font-size: 13px;

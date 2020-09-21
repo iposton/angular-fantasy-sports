@@ -180,6 +180,16 @@ export class UtilService {
         lastName: "Taylor",
         image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/mx6ptr3jbhx0wxo3848u"
       },
+      "18631": {
+        firstName: "Justin",
+        lastName: "Herbert",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/lrn52vly8xrfapbhw1ft"
+      },
+      "18594": {
+        firstName: "Jerry",
+        lastName: "Jeudy",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/fvdnrep98wisgfokxqar"
+      },
       
     }
 
