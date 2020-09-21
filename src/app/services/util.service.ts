@@ -929,7 +929,9 @@ export class UtilService {
         offenseRankLs: 25,
         city: "Buffalo",
         name: "Bills",
+        twitter: "#GoBills",
         abbreviation: "BUF",
+
         homeVenue: {
           id: 46,
           name: "New Era Field"
@@ -937,12 +939,6 @@ export class UtilService {
         teamColoursHex: [
           "#00338d",
           "#c60c30"
-        ],
-        socialMediaAccounts: [
-          {
-            mediaType: "TWITTER",
-            value: "BuffaloBills"
-          }
         ],
         officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/giphcy6ie9mxbnldntsf"
       },
@@ -953,7 +949,9 @@ export class UtilService {
       offenseRankLs: 26,
       city: "Miami",
       name: "Dolphins",
+      twitter: "#FinsUp",
       abbreviation: "MIA",
+
       homeVenue: {
       id: 59,
       name: "Hard Rock Stadium"
@@ -962,12 +960,6 @@ export class UtilService {
       "#008e97",
       "#fc4c02",
       "#005778"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "MiamiDolphins"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/lits6p8ycthy9to70bnt"
       },
@@ -979,6 +971,7 @@ export class UtilService {
       city: "New England",
       name: "Patriots",
       abbreviation: "NE",
+      twitter: "#GoPats",
       homeVenue: {
       id: 61,
       name: "Gillette Stadium"
@@ -987,12 +980,6 @@ export class UtilService {
       "#002244",
       "#c60c30",
       "#b0b7bc"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Patriots"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/moyfxx3dq5pio4aiftnc"
       },
@@ -1003,6 +990,7 @@ export class UtilService {
       offenseRankLs: 32,
       city: "New York",
       name: "Jets",
+      twitter: "#TakeFlight",
       abbreviation: "NYJ",
       homeVenue: {
       id: 63,
@@ -1013,12 +1001,6 @@ export class UtilService {
       "#000000",
       "#ffffff"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "nyjets"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/ekijosiae96gektbo4iw"
       },
       {
@@ -1028,6 +1010,7 @@ export class UtilService {
       offenseRankLs: 4,
       city: "Dallas",
       name: "Cowboys",
+      twitter: "#DallasCowboys",
       abbreviation: "DAL",
       homeVenue: {
       id: 51,
@@ -1040,12 +1023,6 @@ export class UtilService {
       "#7f9695",
       "#ffffff"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "dallascowboys"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/ieid8hoygzdlmzo0tnf6"
       },
       {
@@ -1055,6 +1032,7 @@ export class UtilService {
       offenseRankLs: 18,
       city: "New York",
       name: "Giants",
+      twitter: "#TogetherBlue",
       abbreviation: "NYG",
       homeVenue: {
       id: 63,
@@ -1065,12 +1043,6 @@ export class UtilService {
       "#a71930",
       "#a5acaf"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Ginats"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/t6mhdmgizi6qhndh8b9p"
       },
       {
@@ -1080,6 +1052,7 @@ export class UtilService {
       offenseRankLs: 13,
       city: "Philadelphia",
       name: "Eagles",
+      twitter: "#FlyEaglesFly",
       abbreviation: "PHI",
       homeVenue: {
       id: 65,
@@ -1092,12 +1065,6 @@ export class UtilService {
       "#000000",
       "#565a5c"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Eagles"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/puhrqgj71gobgdkdo6uq"
       },
       {
@@ -1107,6 +1074,7 @@ export class UtilService {
       offenseRankLs: 30,
       city: "Washington",
       name: "Washington",
+      twitter: "#WashingtonNFL",
       abbreviation: "WAS",
       homeVenue: {
       id: 73,
@@ -1115,12 +1083,6 @@ export class UtilService {
       teamColoursHex: [
       "#773141",
       "#ffb612"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Redskins"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/f_auto/league/ywoi3t4jja8fokqpyegk"
       },
@@ -1131,6 +1093,7 @@ export class UtilService {
       offenseRankLs: 1,
       city: "Baltimore",
       name: "Ravens",
+      twitter: "#RavensFlock",
       abbreviation: "BAL",
       homeVenue: {
       id: 45,
@@ -1142,12 +1105,6 @@ export class UtilService {
       "#9e7c0c",
       "#c60c30"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Ravens"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/ucsdijmddsqcj1i9tddd"
       },
       {
@@ -1157,6 +1114,7 @@ export class UtilService {
       offenseRankLs: 28,
       city: "Cincinnati",
       name: "Bengals",
+      twitter: "#SEIZETHEDEY",
       abbreviation: "CIN",
       homeVenue: {
       id: 49,
@@ -1165,12 +1123,6 @@ export class UtilService {
       teamColoursHex: [
       "#fb4f14",
       "#000000"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Bengals"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/okxpteoliyayufypqalq"
       },
@@ -1181,6 +1133,7 @@ export class UtilService {
       offenseRankLs: 23,
       city: "Cleveland",
       name: "Browns",
+      twitter: "#Browns",
       abbreviation: "CLE",
       homeVenue: {
       id: 50,
@@ -1191,12 +1144,6 @@ export class UtilService {
       "#ff3c00",
       "#ffffff"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Browns"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/grxy59mqoflnksp2kocc"
       },
       {
@@ -1206,6 +1153,7 @@ export class UtilService {
       offenseRankLs: 31,
       city: "Pittsburgh",
       name: "Steelers",
+      twitter: "#HereWeGo",
       abbreviation: "PIT",
       homeVenue: {
       id: 66,
@@ -1218,12 +1166,6 @@ export class UtilService {
       "#c60c30",
       "#a5acaf"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "steelers"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/xujg9t3t4u5nmjgr54wx"
       },
       {
@@ -1233,6 +1175,7 @@ export class UtilService {
       offenseRankLs: 27,
       city: "Chicago",
       name: "Bears",
+      twitter: "#DaBears",
       abbreviation: "CHI",
       homeVenue: {
       id: 48,
@@ -1241,12 +1184,6 @@ export class UtilService {
       teamColoursHex: [
       "#0b162a",
       "#c83803"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "ChicagoBears"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/ra0poq2ivwyahbaq86d2"
       },
@@ -1257,6 +1194,7 @@ export class UtilService {
       offenseRankLs: 21,
       city: "Detroit",
       name: "Lions",
+      twitter: "#OnePride",
       abbreviation: "DET",
       homeVenue: {
       id: 53,
@@ -1268,12 +1206,6 @@ export class UtilService {
       "#000000",
       "#ffffff"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Lions"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/ocvxwnapdvwevupe4tpr"
       },
       {
@@ -1284,6 +1216,7 @@ export class UtilService {
       city: "Green Bay",
       name: "Packers",
       abbreviation: "GB",
+      twitter: "#GoPackGo",
       homeVenue: {
       id: 54,
       name: "Lambeau Field"
@@ -1291,12 +1224,6 @@ export class UtilService {
       teamColoursHex: [
       "#203731",
       "#ffb612"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "packers"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/gppfvr7n8gljgjaqux2x"
       },
@@ -1307,6 +1234,7 @@ export class UtilService {
       offenseRankLs: 12,
       city: "Minnesota",
       name: "Vikings",
+      twitter: "#Skol",
       abbreviation: "MIN",
       homeVenue: {
       id: 141,
@@ -1315,12 +1243,6 @@ export class UtilService {
       teamColoursHex: [
       "#4f2683",
       "#ffc62f"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Vikings"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/teguylrnqqmfcwxvcmmz"
       },
@@ -1331,6 +1253,7 @@ export class UtilService {
       offenseRankLs: 11,
       city: "Houston",
       name: "Texans",
+      twitter: "#WeAreTexans",
       abbreviation: "HOU",
       homeVenue: {
       id: 55,
@@ -1339,12 +1262,6 @@ export class UtilService {
       teamColoursHex: [
       "#03202f",
       "#a71930"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "HoustonTexans"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/bpx88i8nw4nnabuq0oob"
       },
@@ -1355,6 +1272,7 @@ export class UtilService {
       offenseRankLs: 22,
       city: "Indianapolis",
       name: "Colts",
+      twitter: "#ForTheShoe",
       abbreviation: "IND",
       homeVenue: {
       id: 56,
@@ -1363,12 +1281,6 @@ export class UtilService {
       teamColoursHex: [
       "#002c5f",
       "#a2aaad"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Colts"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/ketwqeuschqzjsllbid5"
       },
@@ -1379,6 +1291,7 @@ export class UtilService {
       offenseRankLs: 24,
       city: "Jacksonville",
       name: "Jaguars",
+      twitter: "#DUUUVAL",
       abbreviation: "JAX",
       homeVenue: {
       id: 57,
@@ -1390,12 +1303,6 @@ export class UtilService {
       "#9f792c",
       "#006778"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Jaguars"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/qycbib6ivrm9dqaexryk"
       },
       {
@@ -1405,6 +1312,7 @@ export class UtilService {
       offenseRankLs: 8,
       city: "Tennessee",
       name: "Titans",
+      twitter: "#Titans",
       abbreviation: "TEN",
       homeVenue: {
       id: 72,
@@ -1418,12 +1326,6 @@ export class UtilService {
       "#a2aaad",
       "#54585a"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Titans"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/pln44vuzugjgipyidsre"
       },
       {
@@ -1433,6 +1335,7 @@ export class UtilService {
       offenseRankLs: 10,
       city: "Atlanta",
       name: "Falcons",
+      twitter: "#RiseUpATL",
       abbreviation: "ATL",
       homeVenue: {
       id: 62,
@@ -1443,12 +1346,6 @@ export class UtilService {
       "#000000",
       "#a5acaf"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "AtlantaFalcons"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/d8m7hzpsbrl6pnqht8op"
       },
       {
@@ -1458,6 +1355,7 @@ export class UtilService {
       offenseRankLs: 20,
       city: "Carolina",
       name: "Panthers",
+      twitter: "#KeepPounding",
       abbreviation: "CAR",
       homeVenue: {
       id: 47,
@@ -1467,12 +1365,6 @@ export class UtilService {
       "#0085ca",
       "#101820",
       "#bfc0bf"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Panthers"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/ervfzgrqdpnc7lh5gqwq"
       },
@@ -1484,6 +1376,7 @@ export class UtilService {
       city: "New Orleans",
       name: "Saints",
       abbreviation: "NO",
+      twitter: "#Saints",
       homeVenue: {
       id: 142,
       name: "Mercedes-Benz Superdome"
@@ -1491,12 +1384,6 @@ export class UtilService {
       teamColoursHex: [
       "#d3bc8d",
       "#101820"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Saints"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/grhjkahghjkk17v43hdx"
       },
@@ -1508,6 +1395,7 @@ export class UtilService {
       city: "Tampa Bay",
       name: "Buccaneers",
       abbreviation: "TB",
+      twitter: "#GoBucs",
       homeVenue: {
       id: 71,
       name: "Raymond James Stadium"
@@ -1519,12 +1407,6 @@ export class UtilService {
       "#b1babf",
       "#34302b"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Buccaneers"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/szwmxcasfizlkkfn5zwq"
       },
       {
@@ -1534,6 +1416,7 @@ export class UtilService {
       offenseRankLs: 29,
       city: "Denver",
       name: "Broncos",
+      twitter: "#BroncosCountry",
       abbreviation: "DEN",
       homeVenue: {
       id: 52,
@@ -1542,12 +1425,6 @@ export class UtilService {
       teamColoursHex: [
       "#fb4f14",
       "#002244"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Broncos"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/t0p7m5cjdjy18rnzzqbx"
       },
@@ -1559,6 +1436,7 @@ export class UtilService {
       city: "Kansas City",
       name: "Chiefs",
       abbreviation: "KC",
+      twitter: "#ChiefsKingdom",
       homeVenue: {
       id: 58,
       name: "Arrowhead Stadium"
@@ -1566,12 +1444,6 @@ export class UtilService {
       teamColoursHex: [
       "#e31837",
       "#ffb81c"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Chiefs"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/ujshjqvmnxce8m4obmvs"
       },
@@ -1583,6 +1455,7 @@ export class UtilService {
       city: "Las Vegas",
       name: "Raiders",
       abbreviation: "LV",
+      twitter: "#RaiderNation",
       homeVenue: {
       id: 64,
       name: "RingCentral Coliseum"
@@ -1606,6 +1479,7 @@ export class UtilService {
       offenseRankLs: 16,
       city: "Los Angeles",
       name: "Chargers",
+      twitter: "#BoltUp",
       abbreviation: "LAC",
       homeVenue: {
       id: 140,
@@ -1616,12 +1490,6 @@ export class UtilService {
       "#ffc20e",
       "#0080c6"
       ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "Chargers"
-      }
-      ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/lu22ddatqbdknq4wuazd"
       },
       {
@@ -1631,6 +1499,7 @@ export class UtilService {
       offenseRankLs: 19,
       city: "Arizona",
       name: "Cardinals",
+      twitter: "#RedSea",
       abbreviation: "ARI",
       homeVenue: {
       id: 43,
@@ -1640,12 +1509,6 @@ export class UtilService {
       "#97233f",
       "#000000",
       "#ffb612"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "AZCardinals"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/u9fltoslqdsyao8cpm0k"
       },
@@ -1657,6 +1520,7 @@ export class UtilService {
       city: "Los Angeles",
       name: "Rams",
       abbreviation: "LA",
+      twitter: "#RamsHouse",
       homeVenue: {
       id: 74,
       name: "Los Angeles Memorial Coliseum"
@@ -1665,12 +1529,6 @@ export class UtilService {
       "#002244",
       "#866d4b",
       "#ffffff"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "RamsNFL"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/rvmujtvvqlhlviuwafzg"
       },
@@ -1682,6 +1540,7 @@ export class UtilService {
       city: "San Francisco",
       name: "49ers",
       abbreviation: "SF",
+      twitter: "#FTTB",
       homeVenue: {
       id: 68,
       name: "Levi's Stadium"
@@ -1689,12 +1548,6 @@ export class UtilService {
       teamColoursHex: [
       "#aa0000",
       "#b3995d"
-      ],
-      socialMediaAccounts: [
-      {
-      mediaType: "TWITTER",
-      value: "49ers"
-      }
       ],
       officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/dxibuyxbk0b9ua5ih9hn"
       },
@@ -1705,6 +1558,7 @@ export class UtilService {
           offenseRankLs: 7,
           city: "Seattle",
           name: "Seahawks",
+          twitter: "#Seahawks",
           abbreviation: "SEA",
           homeVenue: {
           id: 69,
@@ -1714,12 +1568,6 @@ export class UtilService {
           "#002244",
           "#69be28",
           "#a5acaf"
-          ],
-          socialMediaAccounts: [
-          {
-          mediaType: "TWITTER",
-          value: "Seahawks"
-          }
           ],
           officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/gcytzwpjdzbpwnwxincg"
         }
