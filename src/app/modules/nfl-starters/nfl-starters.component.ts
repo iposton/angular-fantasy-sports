@@ -134,11 +134,10 @@ export class NflStartersComponent implements OnInit {
     this.selectedPlayer = null;
     this.noPosts = '';
     this.selectedPlayer = player;
-    //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
     let twitter = null;
-    //twitter = player.team.twitter;
+    twitter = player.team.twitter;
     let searchterm = null;
-    searchterm = 'query=' + player.player.lastName + ' ' + '#nfl' //twitter;
+    searchterm = 'query=' + player.player.lastName + ' ' + twitter;
     this.image = player.player.officialImageSrc;
     this.name = player.player.firstName + ' ' + player.player.lastName +' - '+ player.player.primaryPosition +' | #'+ player.player.jerseyNumber;
     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
@@ -536,7 +535,7 @@ export class NflStartersComponent implements OnInit {
                             mdata.stats.recToday = daily.stats.receiving ? daily.stats.receiving.receptions : 0;
                             mdata.stats.tyToday = daily.stats.receiving ?  daily.stats.receiving.recYards + daily.stats.rushing.rushYards : 0;
                             mdata.stats.tqbyToday = daily.stats.passing ?  daily.stats.passing.passYards + daily.stats.rushing.rushYards : 0;
-                            mdata.stats.ttdToday = daily.stats.receiving ? daily.stats.passing.passTD + daily.stats.rushing.rushTD : 0;
+                            mdata.stats.ttdToday = daily.stats.receiving ? daily.stats.passing.passTD + daily.stats.rushing.rushTD + daily.stats.receiving.recTD  : 0;
                             if (mdata.stats.receiving) {
                               mdata.stats.receiving.dailyTotalTouches = daily.stats.rushing ? daily.stats.rushing.rushAttempts + daily.stats.receiving.targets : 0;
                               mdata.stats.receiving.dailyRTouches = daily.stats.rushing ? daily.stats.rushing.rushAttempts : 0;
