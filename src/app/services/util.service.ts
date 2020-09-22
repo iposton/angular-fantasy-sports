@@ -18,108 +18,108 @@ export class UtilService {
   constructor() {
     this.weekTimes = [
       {
-        dateBeg: 'Tue Sep 8 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Sep 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Sep 10 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Sep 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '1'
       },
       {
-        dateBeg: 'Tue Sep 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Sep 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Sep 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Sep 24 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '2'
       },
       {
-        dateBeg: 'Tue Sep 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Sep 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Sep 24 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Oct 01 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '3'
       },
       {
-        dateBeg: 'Tue Sep 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 06 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Oct 01 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Oct 08 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '4'
       },
       {
-        dateBeg: 'Tue Oct 06 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 13 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Oct 08 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Oct 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '5'
       },
       {
-        dateBeg: 'Tue Oct 13 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 20 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Oct 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Oct 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '6'
       },
       {
-        dateBeg: 'Tue Oct 20 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Oct 27 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Oct 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Oct 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '7'
       },
       {
-        dateBeg: 'Tue Oct 27 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 03 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Oct 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Nov 05 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '8'
       },
       {
-        dateBeg: 'Tue Nov 03 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 10 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Nov 05 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Nov 12 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '9'
       },
       {
-        dateBeg: 'Tue Nov 10 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Nov 12 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Nov 19 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '10'
       },
       {
-        dateBeg: 'Tue Nov 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Nov 24 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Nov 19 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Nov 26 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '11'
       },
       {
-        dateBeg: 'Tue Nov 24 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 01 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Nov 26 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Dec 03 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '12'
       },
       {
-        dateBeg: 'Tue Dec 01 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 08 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Dec 03 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Dec 10 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '13'
       },
       {
-        dateBeg: 'Tue Dec 08 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Dec 10 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Dec 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '14'
       },
       {
-        dateBeg: 'Tue Dec 15 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Dec 17 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Dec 24 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '15'
       },
       {
-        dateBeg: 'Tue Dec 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Dec 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Dec 24 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Dec 31 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '16'
       },
       {
-        dateBeg: 'Tue Dec 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Jan 05 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Dec 31 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Jan 07 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '17'
       },
       {
-        dateBeg: 'Tue Jan 05 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Jan 12 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Jan 07 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Jan 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '18'
       },
       {
-        dateBeg: 'Tue Jan 12 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Jan 19 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Jan 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Jan 21 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '19'
       },
       {
-        dateBeg: 'Tue Jan 19 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Jan 26 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Jan 21 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Jan 28 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '20' //afc nfc final 4
       },
       {
-        dateBeg: 'Tue Jan 26 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Tue Feb 09 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: 'Thu Jan 28 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateEnd: 'Thu Feb 11 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
         week: '22' //super bowl
       }
     ];
@@ -190,6 +190,12 @@ export class UtilService {
         lastName: "Jeudy",
         image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/fvdnrep98wisgfokxqar"
       },
+      "17023": {
+        firstName: "Joey",
+        lastName: "Slye",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xzlrapymjhwbanjcivlk"
+      },
+      
       
     }
 
@@ -929,7 +935,7 @@ export class UtilService {
         offenseRankLs: 25,
         city: "Buffalo",
         name: "Bills",
-        twitter: "#GoBills",
+        twitter: "#BillsMafia",
         abbreviation: "BUF",
 
         homeVenue: {

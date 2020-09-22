@@ -418,7 +418,7 @@ export class StatLeadersComponent implements OnInit {
                 data.team.logo = team['officialLogoImageSrc'];
                 data.team.city = team['city'];
                 data.team.name = team['name'];
-                data.team.twitter = team['socialMediaAccounts'][0].value;
+                data.team.twitter = team['twitter'];
                 this.pitcherFp(data);
                 //this.loading = false;
                 
@@ -447,7 +447,7 @@ export class StatLeadersComponent implements OnInit {
                data.team.logo = team['officialLogoImageSrc'];
                data.team.city = team['city'];
                data.team.name = team['name'];
-               data.team.twitter = team['socialMediaAccounts'][0].value;
+               data.team.twitter = team['twitter'];
                this.batterFp(data);
               // this.loading = false;
              }
@@ -497,7 +497,7 @@ export class StatLeadersComponent implements OnInit {
               data.team.logo = team['officialLogoImageSrc'];
               data.team.city = team['city'];
               data.team.name = team['name'];
-              data.team.twitter = team['socialMediaAccounts'][0].value;
+              data.team.twitter = team['twitter'];
               data.team.dtr = team['dtr'];
               data.team.dfh = team['dfh'];
               data.team.dsh = team['dsh'];
@@ -975,7 +975,7 @@ export class StatLeadersComponent implements OnInit {
             data.team.logo = team['officialLogoImageSrc'];
             data.team.city = team['city'];
             data.team.name = team['name'];
-            data.team.twitter = team['socialMediaAccounts'][0].value;
+            data.team.twitter = team['twitter'];
             data.team.otr = team['otr'];
             data.team.ofh = team['ofh'];
             data.team.osh = team['osh'];
