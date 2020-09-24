@@ -243,11 +243,17 @@ export class NFLDataService {
       }
 
       if (position === 'rec' && season === '20') {
-        let url = `${this.apiRoot2020}/players.json?position=WR,TE`;
+        let url = `${this.apiRoot2020}/players.json?position=WR`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       } else if (position === 'rec' && season === '19') {
-        let url = `${this.apiRoot2021}/player_stats_totals.json?position=WR,TE`;
+        let url = `${this.apiRoot2021}/player_stats_totals.json?position=WR`;
+        this.offenseStats = this.http.get(url, {headers})
+        return this.offenseStats;
+      }
+
+      if (position === 'te' && season === '19') {
+        let url = `${this.apiRoot2021}/player_stats_totals.json?position=TE`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       }
