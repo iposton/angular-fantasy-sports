@@ -29,7 +29,7 @@ export class StatLeadersComponent implements OnInit {
   public mlbPitchingData: Array <any>;
   public mlbHittingData: Array <any>;
   public nflOffenseData: Array <any>;
-
+  public nflTEData: Array <any>;
   public nflQBData: Array <any>;
   public nflRushData: Array <any>;
   public nflRecData: Array <any>;
@@ -187,7 +187,7 @@ export class StatLeadersComponent implements OnInit {
     if (this.sport === 'nba')
       this.loading = true;
 
-    if (this.sport === 'nhl') {
+    if (this.sport === 'nhl' && this.nhlSection) {
       this.nhlSkaterloading = true;
       type = 'skaters';
     }
@@ -231,7 +231,6 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public sortNHL() {
-    this.timeSpan = 'full';
     this.nbaSection = false; 
     this.nhlSection = true; 
     this.mlbSection = false;
@@ -505,8 +504,8 @@ export class StatLeadersComponent implements OnInit {
               data.team.scheduleTicker = team['scheduleTicker'];
             }
             //data.player['currentTeam'].lastYearTeamId
-            if (data.player['currentTeam'] != null && team['id'] && data.stats.rushing) {
-              data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.receptions;
+            if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.stats.rushing) {
+              data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets;
               data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.plays * 100);
               data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100);
               data.stats.receiving.touchCatchPct = Math.floor(data.stats.receiving.receptions / team.passPlays * 100);
@@ -621,6 +620,19 @@ export class StatLeadersComponent implements OnInit {
       });
 
       this.nflService
+        .getAllOffense('te', '19').subscribe(res => {
+          this.nflTEData = res['playerStatsTotals'].filter(
+            player => player.stats != null && player.stats.gamesPlayed > 0 && player.stats.receiving.receptions > 0);
+
+        // for (let data of this.nflTEData) {
+        //   if (data.player.officialImageSrc == null) {
+        //     data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+        //   }
+        // }
+        teamInfo(this.nflTEData, this.nflTeams, 'o');
+      });
+
+      this.nflService
         .getAllOffense('k', '19').subscribe(res => {
           this.nflKickerData = res['playerStatsTotals'].filter(
             player => player.stats != null && player.stats.gamesPlayed > 0 && player.stats.fieldGoals.fgMade > 0);
@@ -637,6 +649,11 @@ export class StatLeadersComponent implements OnInit {
                 //}
               }
             //}
+            for (let data of this.nflKickerData) {
+              if (data.player.officialImageSrc == null) {
+                data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+              }
+            }
             teamInfo(this.nflKickerData, this.nflTeams, 'o');
         });
         //teamInfo(this.nflKickerData, this.nflTeams, 'o');
@@ -653,7 +670,7 @@ export class StatLeadersComponent implements OnInit {
             if (team.id === teamStats.team.id) {
               team.plays = teamStats.stats.rushing.rushAttempts + teamStats.stats.passing.passAttempts;
               team.passPlays = teamStats.stats.passing.passAttempts;
-              team.runPlays = teamStats.stats.passing.passAttempts;
+              team.runPlays = teamStats.stats.rushing.rushAttempts;
             }
           }
         }
@@ -1071,37 +1088,37 @@ export class StatLeadersComponent implements OnInit {
 
                     hash[key]['1'] += s === 'nba' ? a.playerStats[0].offense.pts : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.goals :
-                    s === 'nhl' && gSec ? a.playerStats[0].goaltending.saves : 0;
+                    s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 0;
                     
                     hash[key]['2'] += s === 'nba' ?  a.playerStats[0].offense.ast  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.assists 
-                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.wins : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.wins : 0;
 
                     hash[key]['3'] += s === 'nba' ?  a.playerStats[0].rebounds.reb  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.powerplayGoals 
-                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.shutouts : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.shutouts : 0;
 
                     hash[key]['4'] += s === 'nba' ?  a.playerStats[0].defense.stl  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.powerplayAssists 
-                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.losses : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.losses : 0;
 
                     hash[key]['5'] += s === 'nba' ?  a.playerStats[0].defense.blk  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.points 
-                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.overtimeWins : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.overtimeWins : 0;
 
                     hash[key]['6'] += s === 'nba' ?  a.playerStats[0].defense.tov  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.gameWinningGoals 
-                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.overtimeLosses : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.overtimeLosses : 0;
                     hash[key]['7'] += 1;
                     hash[key]['8'] += s === 'nba' ?  a.playerStats[0].fieldGoals.fg3PtMade  : 
                     s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.shots 
-                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.saves : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 0;
                     hash[key]['9'] += s === 'nba'  ? a.playerStats[0].fieldGoals.fgAtt  : 
                     s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.blockedShots 
-                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.saves : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 0;
                     hash[key]['10'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
-                    : s === 'nhl' && gSec ? a.playerStats[0].goaltending.saves : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 0;
                     //hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
                     return r;
                   };

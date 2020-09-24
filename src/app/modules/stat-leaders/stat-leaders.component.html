@@ -17,12 +17,12 @@
        
 <div class="button-wrapper sl-btns" *ngIf="!loading">
     <div class="schedule-box row">
-      <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbHittingSection = false; mlbSection = false; nhlGoalies = false; nflSection = false; nflDefenseSection = false; nflDraftKit = false;">
+      <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbHittingSection = false; mlbSection = false; nhlGoalies = false; nflSection = false; nflDefenseSection = false; nflDraftKit = false; timeSpan = 'full'">
           <span class="sched-item">
             NBA
           </span> 
       </div>
-      <div [ngClass]="{'active': nhlSection || nhlGoalies}" class="col" (click)="sortNHL()">
+      <div [ngClass]="{'active': nhlSection || nhlGoalies}" class="col" (click)="sortNHL(); timeSpan = 'full'">
           <span class="sched-item">
             NHL
           </span> 
@@ -41,7 +41,7 @@
 </div>
 <div class="center buttons">
    <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button> 
-   <button [ngClass]="{'dn' : !nhlSection}" (click)="goalies(); nhlSection = false; nhlGoalies = true;">NHL Goalies</button>  <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false;">NHL Skaters</button>
+   <button [ngClass]="{'dn' : !nhlSection}" (click)="goalies(); nhlSection = false; nhlGoalies = true; timeSpan = 'full'">NHL Goalies</button>  <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false; timeSpan = 'full'">NHL Skaters</button>
    <button [ngClass]="{'dn' : !mlbSection}" (click)="mlbSection = false; mlbHittingSection = true;">MLB Hitters</button>  <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false;">MLB Pitchers</button>
    <button [ngClass]="{'dn' : !nflSection}" (click)="defensePlayers()">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
    <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit">Draft Kit</button>
@@ -868,7 +868,7 @@
               [statField]="'recYards'"
               [page]="page"
               [amount]="amount"
-              [title]="'Reception Yards'"
+              [title]="'WR Reception Yards'"
               [statTag]="'Rec Yds'"
               [sport]="'nfl'"
               [order]="'DESC'"
@@ -886,7 +886,43 @@
               [statField]="'receptions'"
               [page]="page"
               [amount]="amount"
-              [title]="'Receptions'"
+              [title]="'WR Receptions'"
+              [statTag]="'Rec'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="70"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="!nflOffenseLoading && nflTEData != null" 
+              [data]="nflTEData" 
+              [statType]="'receiving'"
+              [statField]="'recYards'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'TE Reception Yards'"
+              [statTag]="'Rec Yds'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="1000"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="!nflOffenseLoading && nflTEData != null" 
+              [data]="nflTEData" 
+              [statType]="'receiving'"
+              [statField]="'receptions'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'TE Receptions'"
               [statTag]="'Rec'"
               [sport]="'nfl'"
               [order]="'DESC'"
@@ -960,24 +996,6 @@
               [page]="page"
               [amount]="amount"
               [title]="'Touch Percent of All Pass Plays'"
-              [statTag]="'%'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="40"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
-              [data]="nflRecData" 
-              [statType]="'receiving'"
-              [statField]="'totalTouchPct'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'Touch Percent of All Plays'"
               [statTag]="'%'"
               [sport]="'nfl'"
               [order]="'DESC'"

@@ -195,8 +195,22 @@ export class UtilService {
         lastName: "Slye",
         image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xzlrapymjhwbanjcivlk"
       },
-      
-      
+      "18588": {
+        firstName: "CeeDee",
+        lastName: "Lamb",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/e8ftgnyivmkwtffd6tcr"
+      },
+      "18819": {
+        firstName: "Rodrigo",
+        lastName: "Blankenship",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/j2z6mdwlye2gc4zhmc3g"
+      },
+      "18882": {
+        firstName: "Joshua",
+        lastName: "Kelley",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/pkqsegmcbmbjlvwfzzl2"
+      },
+       
     }
 
     this.NHLImages = {
