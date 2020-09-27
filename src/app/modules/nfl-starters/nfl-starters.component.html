@@ -67,7 +67,7 @@
                     &nbsp;
 
                     <span *ngIf="item?.playerObj?.playerType === 'd'">
-                        <span [ngStyle]="{color: item?.playerObj?.stats?.tackles.tackleTotal &gt; 6 ? 'gold' : 'white'}">
+                        <span [ngStyle]="{color: item?.playerObj?.stats?.tackles.tackleTotal &gt; 10 ? 'gold' : 'white'}">
                           {{item?.playerObj?.stats?.tackles.tackleTotal}} Tkl
                           <br>
                           <span class="sml-stat"> &nbsp;&nbsp; 
@@ -82,21 +82,21 @@
                     </span>
 
                     <span *ngIf="item?.playerObj.player?.primaryPosition === 'WR' || item?.playerObj.player?.primaryPosition === 'TE'">
-                      <span [ngStyle]="{color: item?.playerObj?.stats?.receiving?.receptions &gt; 5 ? 'gold' : 'white'}">
+                      <span [ngStyle]="{color: item?.playerObj?.stats?.receiving?.receptions &gt; 8 ? 'gold' : 'white'}">
                         {{item?.playerObj?.stats?.receiving?.receptions}} Rec
                         <br>
-                        <span class="sml-stat"> &nbsp;&nbsp; {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
+                        <span class="sml-stat"> &nbsp;&nbsp; {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
                       </span>  &nbsp;
                     </span>
                     <span *ngIf="item?.playerObj.player?.primaryPosition === 'RB'">
-                        <span [ngStyle]="{color: item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards &gt; 100 ? 'gold' : 'white'}">
+                        <span [ngStyle]="{color: item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards &gt; 200 ? 'gold' : 'white'}">
                             {{item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards}} Yds
                             <br>
-                            <span class="sml-stat"> &nbsp;&nbsp; {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}</span>
+                            <span class="sml-stat"> &nbsp;&nbsp; {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}</span>
                         </span>  &nbsp;
                     </span>
                     <span *ngIf="item?.playerObj.player?.primaryPosition === 'QB'">
-                        <span [ngStyle]="{color: item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 2 ? 'gold' : 'white'}">
+                        <span [ngStyle]="{color: item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 3 ? 'gold' : 'white'}">
                             {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD}} TD
                             <br>
                             <span class="sml-stat"> &nbsp;&nbsp; {{(item?.playerObj?.stats?.passing?.passYards + item?.playerObj?.stats?.rushing?.rushYards) + ' Yds'}}</span>
@@ -207,7 +207,7 @@
                     &nbsp;
 
                     <span *ngIf="item?.playerObj?.playerType === 'd'">
-                        <span [ngStyle]="{color: item?.playerObj?.stats?.tackles.tackleTotal &gt; 6 ? 'gold' : 'white'}">
+                        <span [ngStyle]="{color: item?.playerObj?.stats?.tackles.tackleTotal &gt; 10 ? 'gold' : 'white'}">
                           {{item?.playerObj?.stats?.tackles.tackleTotal}} Tkl
                           <br>
                           <span class="sml-stat"> &nbsp;&nbsp; 
@@ -222,21 +222,21 @@
                     </span>
   
                     <span *ngIf="item?.playerObj.player?.primaryPosition === 'WR' || item?.playerObj.player?.primaryPosition === 'TE'">
-                        <span [ngStyle]="{color: item?.playerObj?.stats?.receiving?.receptions &gt; 5 ? 'gold' : 'white'}">
+                        <span [ngStyle]="{color: item?.playerObj?.stats?.receiving?.receptions &gt; 8 ? 'gold' : 'white'}">
                           {{item?.playerObj?.stats?.receiving?.receptions}} Rec
                           <br>
-                          <span class="sml-stat"> &nbsp;&nbsp; {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
+                          <span class="sml-stat"> &nbsp;&nbsp; {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
                         </span>  &nbsp;
                       </span>
                       <span *ngIf="item?.playerObj.player?.primaryPosition === 'RB'">
-                          <span [ngStyle]="{color: item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards &gt; 100 ? 'gold' : 'white'}">
+                          <span [ngStyle]="{color: item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards &gt; 200 ? 'gold' : 'white'}">
                               {{item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards}} Yds
                               <br>
-                              <span class="sml-stat"> &nbsp;&nbsp; {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}</span>
+                              <span class="sml-stat"> &nbsp;&nbsp; {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}</span>
                           </span>  &nbsp;
                       </span>
                       <span *ngIf="item?.playerObj.player?.primaryPosition === 'QB'">
-                          <span [ngStyle]="{color: item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 2 ? 'gold' : 'white'}">
+                          <span [ngStyle]="{color: item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 3 ? 'gold' : 'white'}">
                               {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD}} TD
                               <br>
                               <span class="sml-stat"> &nbsp;&nbsp; {{(item?.playerObj?.stats?.passing?.passYards + item?.playerObj?.stats?.rushing?.rushYards) + ' Yds'}}</span>

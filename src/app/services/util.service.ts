@@ -2050,7 +2050,7 @@ export class UtilService {
         city: "Dallas",
         name: "Stars",
         abbreviation: "DAL", 
-        twitter: "#GoStarsGo",
+        twitter: "#GoStars",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/25.svg"
       },
       "LAK": {
