@@ -10,6 +10,7 @@ import { NBADataService,
 import { DomSanitizer } from '@angular/platform-browser';
 import * as CryptoJS from 'crypto-js';
 import { forkJoin } from 'rxjs';
+import { getTestBed } from '@angular/core/testing';
 
 let headers = null;
 let today = new Date();
@@ -167,18 +168,33 @@ export class StatLeadersComponent implements OnInit {
       this.nhlSkaterloading = true;
     if (this.sport === 'nhl' && this.nhlGoalies)
       this.nhlGoalieloading = true;
+    if (this.sport === 'mlb' && this.mlbSection)
+      this.mlbPitchingLoading = true;
+    if (this.sport === 'mlb' && this.mlbHittingSection)
+      this.mlbHittingLoading = true;
     this.timeSpan = event;
     this.combined = [];
     this.crunched = [];
     this.reduced = [];
+
     if (type === 'nba') {
       this.sortNBA();
     }
+
     if (type === 'nhl' && this.nhlSection) {
       this.sortNHL();
     }
+
     if (type === 'nhl' && this.nhlGoalies) {
       this.goalies();
+    }
+
+    if (type === 'mlb' && this.mlbSection) {
+      this.loadMLB();
+    }
+
+    if (type === 'mlb' && this.mlbHittingSection) {
+      this.loadHitters();
     } 
   }
 
@@ -196,13 +212,27 @@ export class StatLeadersComponent implements OnInit {
       this.nhlGoalieloading = true;
       type = 'goalies';
     }
+
+    if (this.sport === 'mlb' && this.mlbSection) {
+      this.mlbPitchingLoading = true;
+      type = 'pitchers';
+    }
+      
+    if (this.sport === 'mlb' && this.mlbHittingSection) {
+      this.mlbHittingLoading = true;
+      type = 'batters';
+    }
       
     let root;
     this.nhlService
       .getGames(this.timeSpan, this.sport).subscribe(res => {
-      console.log(res['games'], "scheduled games per selected time span...");
+      //console.log(res['games'], "scheduled games per selected time span...");
       this.nbaSpanGames = res['games'];
-      root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-playoff`;
+      if (this.sport != 'mlb')
+        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-playoff`;
+      else
+        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-regular`; 
+
       this.sortStats(root, res['games'], this.sport, type)
     })
   }
@@ -398,10 +428,8 @@ export class StatLeadersComponent implements OnInit {
     this.nflDraftKit = false;
     this.sport = 'mlb';
 
-    if (this.mlbPitchingData == null) {
-
     this.mlbPitchingLoading = true;
-    this.mlbHittingLoading = true;
+    
 
     this.mlbService
        .getAllStats().subscribe(res => {
@@ -409,7 +437,7 @@ export class StatLeadersComponent implements OnInit {
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
           this.mlbPitchingData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 2 && player.stats.pitching.pitcherStrikeouts > 6);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 3 && player.stats.pitching.pitcherStrikeouts > 6);
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -429,16 +457,28 @@ export class StatLeadersComponent implements OnInit {
               
             }  
           }
-          this.mlbPitchingLoading = false;
+          
+          if (this.timeSpan != 'full') {
+            this.spanGames();
+          } else {
+            this.mlbPitchingLoading = false;
+          }
       })
+  }
 
-      this.mlbService
+  public loadHitters() {
+    this.sport = 'mlb';
+    this.mlbSection = false;
+    this.mlbHittingSection = true;
+    this.mlbHittingLoading = true;
+
+    this.mlbService
         .getAllHitters().subscribe(res => {
          //this.loading = false;
          //const mlbTeamsArray = Object.values(this.nbaTeams);
 
          this.mlbHittingData = res['playerStatsTotals'].filter(
-           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 1 && player.stats.batting.atBats > 5);
+           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15);
 
          for (let team of this.mlbTeams) {
            for (let data of this.mlbHittingData) { 
@@ -457,9 +497,13 @@ export class StatLeadersComponent implements OnInit {
              
            }  
          }
-         this.mlbHittingLoading = false;
+         
+        if (this.timeSpan != 'full') {
+          this.spanGames();
+        } else {
+          this.mlbHittingLoading = false;
+        }
      })
-    }
   }
 
   public pitcherFp(player) {
@@ -1037,6 +1081,9 @@ export class StatLeadersComponent implements OnInit {
     let s = sport;
     let skateSec;
     let gSec;
+    let pSec;
+    let bSec;
+    
 
     if (s === 'nhl' && this.nhlSection && type === 'skaters') {
       skateSec = true;
@@ -1045,6 +1092,16 @@ export class StatLeadersComponent implements OnInit {
 
     if (s === 'nhl' && this.nhlGoalies && type === 'goalies') {
       gSec = true;
+      skateSec = false;
+    }
+
+    if (s === 'mlb' && this.mlbSection && type === 'pitchers') {
+      bSec = false;
+      pSec = true;
+    }
+
+    if (s === 'mlb' && this.mlbHittingSection && type === 'batters') {
+      bSec = true;
       skateSec = false;
     }
   
@@ -1088,37 +1145,59 @@ export class StatLeadersComponent implements OnInit {
 
                     hash[key]['1'] += s === 'nba' ? a.playerStats[0].offense.pts : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.goals :
-                    s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 0;
+                    s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.pitcherStrikeouts : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.runsBattedIn : 0;
                     
                     hash[key]['2'] += s === 'nba' ?  a.playerStats[0].offense.ast  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.assists 
-                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.wins : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.wins : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.wins : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.homeruns : 0;
 
                     hash[key]['3'] += s === 'nba' ?  a.playerStats[0].rebounds.reb  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.powerplayGoals 
-                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.shutouts : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.shutouts : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.earnedRunsAllowed : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.hits : 0;
 
                     hash[key]['4'] += s === 'nba' ?  a.playerStats[0].defense.stl  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.powerplayAssists 
-                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.losses : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.losses : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.saves : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.runs : 0;
 
                     hash[key]['5'] += s === 'nba' ?  a.playerStats[0].defense.blk  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.points 
-                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.overtimeWins : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.overtimeWins : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.pitchesThrown : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.secondBaseHits : 0;
 
                     hash[key]['6'] += s === 'nba' ?  a.playerStats[0].defense.tov  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].scoring.gameWinningGoals 
-                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.overtimeLosses : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.overtimeLosses : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.stolenBases : 0;
+
                     hash[key]['7'] += 1;
+
                     hash[key]['8'] += s === 'nba' ?  a.playerStats[0].fieldGoals.fg3PtMade  : 
                     s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.shots 
-                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.pitcherWalks : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+
                     hash[key]['9'] += s === 'nba'  ? a.playerStats[0].fieldGoals.fgAtt  : 
                     s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.blockedShots 
-                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.inningsPitched : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+
                     hash[key]['10'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
-                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 0;
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
                     //hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
                     return r;
                   };
@@ -1127,7 +1206,7 @@ export class StatLeadersComponent implements OnInit {
 
                
 
-                for (let info of s === 'nba' ? this.myData : s === 'nhl' && this.nhlSection ? this.nhlSkaters : s === 'nhl' && this.nhlGoalies ? this.nhlGoaltenders : []) {
+                for (let info of s === 'nba' ? this.myData : s === 'nhl' && this.nhlSection ? this.nhlSkaters : s === 'nhl' && this.nhlGoalies ? this.nhlGoaltenders : s === 'mlb' && this.mlbSection ? this.mlbPitchingData : s === 'mlb' && this.mlbHittingSection ? this.mlbHittingData : []) {
                   for (let data of this.reduced) {
                     //info.player.span = false;
                     if (info.player.id === data.id) { 
@@ -1152,6 +1231,7 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.scoring.powerplayAssists = data['4'];               
                         info.stats.scoring.points = data['5'];
                         info.stats.scoring.gameWinningGoals = data['6'];
+                        info.stats.gamesPlayed = data['7'];
                         info.stats.skating.shots = data['8'];
                         info.stats.skating.blockedShots = data['9'];  
                         info.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data['10'], data['7']);   
@@ -1166,10 +1246,37 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.goaltending.losses = data['4'];               
                         info.stats.goaltending.overtimeWins = data['5'];
                         info.stats.goaltending.overtimeLosses = data['6'];
+                        info.stats.gamesPlayed = data['7'];
                              
                         this.goalieFp(info);
                       }
-                      
+
+                      if (s === 'mlb' && this.mlbSection) {
+                        info.stats.pitching.pitcherStrikeouts = data['1'];
+                        info.stats.pitching.wins = data['2'];
+                        info.stats.pitching.earnedRunAvg = (data['3'] / data['9'] * 9).toFixed(2);
+                        info.stats.pitching.saves = data['4'];               
+                        info.stats.pitching.pitchesThrown = data['5'];
+                        info.stats.pitching.hitsAllowed = data['6'];
+                        info.stats.gamesPlayed = data['7'];
+                        info.stats.pitching.walksAllowedPer9Innings = (data['8'] / data['9'] * 9).toFixed(2);
+                             
+                        this.pitcherFp(info);
+                      }
+
+                      if (s === 'mlb' && this.mlbHittingSection) {
+                        info.stats.batting.battingAvg = (data['3'] / data['8']).toFixed(3);
+                        info.stats.batting.runsBattedIn = data['1'];
+                        info.stats.batting.homeruns = data['2'];
+                        info.stats.batting.hits = data['3'];               
+                        info.stats.batting.runs = data['4'];
+                        info.stats.batting.secondBaseHits = data['5'];
+                        info.stats.batting.stolenBases = data['6'];
+                        info.stats.gamesPlayed = data['7'];
+                        info.stats.batting.plateAppearances = data['8'];
+                         
+                        this.batterFp(info);
+                      }
                       
                       info.player.span = this.timeSpan;
                     }
@@ -1177,6 +1284,20 @@ export class StatLeadersComponent implements OnInit {
                 }
               }
             });
+
+            if (s === 'mlb' && this.mlbSection) {
+              this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.pitchesThrown > 8);
+              this.mlbPitchingData = this.crunched;
+              // console.log(this.nhlGoaltenders, 'crunched nhl');     
+              this.mlbPitchingLoading = false;
+            }
+
+            if (s === 'mlb' && this.mlbHittingSection) {
+              this.crunched = this.mlbHittingData.filter(player => player.player.span === this.timeSpan && player.stats.batting.plateAppearances > 2);
+              this.mlbHittingData = this.crunched;
+              // console.log(this.nhlGoaltenders, 'crunched nhl');     
+              this.mlbHittingLoading = false;
+            }
 
             if (s === 'nhl' && this.nhlGoalies) {
               this.crunched = this.nhlGoaltenders.filter(player => player.player.span === this.timeSpan);

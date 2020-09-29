@@ -30,7 +30,7 @@ export class StartingPitcherComponent implements OnInit {
   public specificFastballDataById: Array <any> = [];
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff";
   public showData: Array <any>;
   public showBatterData: Array <any>;
   public playerInfo: Array <any>;

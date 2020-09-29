@@ -42,7 +42,7 @@
 <div class="center buttons">
    <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button> 
    <button [ngClass]="{'dn' : !nhlSection}" (click)="goalies(); nhlSection = false; nhlGoalies = true; timeSpan = 'full'">NHL Goalies</button>  <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false; timeSpan = 'full'">NHL Skaters</button>
-   <button [ngClass]="{'dn' : !mlbSection}" (click)="mlbSection = false; mlbHittingSection = true;">MLB Hitters</button>  <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false;">MLB Pitchers</button>
+   <button [ngClass]="{'dn' : !mlbSection}" (click)="loadHitters(); timeSpan = 'full'">MLB Hitters</button>  <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false; timeSpan = 'full'">MLB Pitchers</button>
    <button [ngClass]="{'dn' : !nflSection}" (click)="defensePlayers()">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
    <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit">Draft Kit</button>
 </div>
