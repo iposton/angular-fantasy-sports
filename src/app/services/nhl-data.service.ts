@@ -7,24 +7,28 @@ let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
 let daTomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
 let yesterdayDate = new Date(thisDate.getTime() - (24 * 60 * 60 * 1000));
 let lastweekDate = new Date(thisDate.getTime() - (168 * 60 * 60 * 1000));
+let twoWeekDate = new Date(thisDate.getTime() - (336 * 60 * 60 * 1000));
 
 let utcDate = new Date(thisDate.toUTCString());
 let tomorrowUtcDate = new Date(tomorrowDate.toUTCString());
 let daTomorrowUtcDate = new Date(daTomorrowDate.toUTCString());
 let yesterdayUtcDate = new Date(yesterdayDate.toUTCString());
 let lastweekUtcDate = new Date(lastweekDate.toUTCString());
+let twoWeekUtcDate = new Date(twoWeekDate.toUTCString());
 
 utcDate.setHours(utcDate.getHours() - 8);
 tomorrowUtcDate.setHours(tomorrowUtcDate.getHours() - 8);
 daTomorrowUtcDate.setHours(daTomorrowUtcDate.getHours() - 8);
 yesterdayUtcDate.setHours(yesterdayUtcDate.getHours() - 8);
 lastweekUtcDate.setHours(lastweekUtcDate.getHours() - 8);
+twoWeekUtcDate.setHours(twoWeekUtcDate.getHours() - 8);
 
 let myDate = new Date(utcDate);
 let tomorrowMyDate = new Date(tomorrowUtcDate);
 let daTomorrowMyDate = new Date(daTomorrowUtcDate);
 let yesterdayMyDate = new Date(yesterdayUtcDate);
 let lastweekMyDate = new Date(lastweekUtcDate);
+let twoWeekMyDate = new Date(twoWeekUtcDate);
 
 //DATE FORMAT FOR DAILY SCHEDULE API
 let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
@@ -32,6 +36,7 @@ let tomorrowDailyDate = tomorrowMyDate.toISOString().slice(0, 10).replace(/-/g, 
 let dayAfterTomorrow = daTomorrowMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 let yesterdayDailyDate = yesterdayMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 let lastweekDailyDate = lastweekMyDate.toISOString().slice(0, 10).replace(/-/g, "");
+let twoWeekDailyDate = twoWeekMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = myDate.toISOString().slice(0, 10);
@@ -226,12 +231,17 @@ export class NHLDataService {
 
   getGames(span, sport) {
     let url = null;
+    let season = null;
+    if (sport != 'mlb')
+      season = '2020-playoff';
+    else
+      season = '2020-regular';
     if (span === 'last-week') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/2020-playoff/games.json?date=from-${lastweekDailyDate}-to-${dailyDate}`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${sport === 'mlb' ? twoWeekDailyDate : lastweekDailyDate}-to-${dailyDate}`;
     } else if (span === 'yesterday') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/2020-playoff/games.json?date=${yesterdayDailyDate}`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=${yesterdayDailyDate}`;
     } else if (span === 'today') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/2020-playoff/games.json?date=${dailyDate}`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=${dailyDate}`;
     }
     
     this.games = this.http.get(url, {headers})

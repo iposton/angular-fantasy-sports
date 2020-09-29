@@ -85,7 +85,7 @@ export class DataService {
   getDailySchedule() {
 
       //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/date/${dailyDate}/games.json`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/date/${dailyDate}/games.json`;
       this.schedule = this.http.get(url, {headers})
        
    // }
@@ -139,7 +139,7 @@ export class DataService {
   }
 
    getDaily() {
-    let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=P`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/date/${dailyDate}/player_gamelogs.json?position=P`;
     this.daily = this.http.get(url, {headers})
     return this.daily;
   }
