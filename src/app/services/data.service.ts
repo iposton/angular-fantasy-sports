@@ -145,7 +145,7 @@ export class DataService {
   }
 
   getDailyBatters() {
-    let url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
     this.dailyBatters = this.http.get(url, {headers})
     return this.dailyBatters;
   }
