@@ -1254,12 +1254,13 @@ export class StatLeadersComponent implements OnInit {
                       if (s === 'mlb' && this.mlbSection) {
                         info.stats.pitching.pitcherStrikeouts = data['1'];
                         info.stats.pitching.wins = data['2'];
-                        info.stats.pitching.earnedRunAvg = (data['3'] / data['9'] * 9).toFixed(2);
+                        info.stats.pitching.earnedRunAvg = ((data['3'] / data['9']) * 9).toFixed(2);
                         info.stats.pitching.saves = data['4'];               
                         info.stats.pitching.pitchesThrown = data['5'];
                         info.stats.pitching.hitsAllowed = data['6'];
                         info.stats.gamesPlayed = data['7'];
-                        info.stats.pitching.walksAllowedPer9Innings = (data['8'] / data['9'] * 9).toFixed(2);
+                        info.stats.pitching.walksAllowedPer9Innings = ((data['8'] / data['9']) * 9).toFixed(2);
+                        info.stats.pitching.inningsPitched = data['9'];
                              
                         this.pitcherFp(info);
                       }
@@ -1286,7 +1287,7 @@ export class StatLeadersComponent implements OnInit {
             });
 
             if (s === 'mlb' && this.mlbSection) {
-              this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.pitchesThrown > 8);
+              this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched >= 3);
               this.mlbPitchingData = this.crunched;
               // console.log(this.nhlGoaltenders, 'crunched nhl');     
               this.mlbPitchingLoading = false;
