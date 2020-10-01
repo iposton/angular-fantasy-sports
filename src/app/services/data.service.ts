@@ -106,13 +106,13 @@ export class DataService {
   }
 
    getAllStats() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=P`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/player_stats_totals.json?position=P`;
     this.allstats = this.http.get(url, {headers})
     return this.allstats;
   }
 
   getAllHitters() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/player_stats_totals.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
     this.hitstats = this.http.get(url, {headers})
     return this.hitstats;
   }
