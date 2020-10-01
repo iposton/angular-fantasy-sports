@@ -235,7 +235,7 @@ export class NHLDataService {
     if (sport != 'mlb')
       season = '2020-playoff';
     else
-      season = '2020-regular';
+      season = '2020-playoff';
     if (span === 'last-week') {
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${sport === 'mlb' ? twoWeekDailyDate : lastweekDailyDate}-to-${dailyDate}`;
     } else if (span === 'yesterday') {

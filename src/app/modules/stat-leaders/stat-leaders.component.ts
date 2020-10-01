@@ -231,7 +231,7 @@ export class StatLeadersComponent implements OnInit {
       if (this.sport != 'mlb')
         root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-playoff`;
       else
-        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-regular`; 
+        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-playoff`; 
 
       this.sortStats(root, res['games'], this.sport, type)
     })
@@ -244,7 +244,7 @@ export class StatLeadersComponent implements OnInit {
         let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
         let originalText = bytes.toString(CryptoJS.enc.Utf8);
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
-        let nflRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular";
+        let nflRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular";
         this.nbaService
           .sendHeaderOptions(headers);
         this.nhlService
@@ -437,7 +437,7 @@ export class StatLeadersComponent implements OnInit {
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
           this.mlbPitchingData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 3 && player.stats.pitching.pitcherStrikeouts > 6);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0); // && player.stats.pitching.pitcherStrikeouts > 6
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -478,7 +478,7 @@ export class StatLeadersComponent implements OnInit {
          //const mlbTeamsArray = Object.values(this.nbaTeams);
 
          this.mlbHittingData = res['playerStatsTotals'].filter(
-           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15);
+           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0); //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
 
          for (let team of this.mlbTeams) {
            for (let data of this.mlbHittingData) { 

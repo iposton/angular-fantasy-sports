@@ -906,7 +906,7 @@ export class UtilService {
         city: "San Diego",
         name: "Padres",
         abbreviation: "SD",
-        twitter: "#FriarFaithful",
+        twitter: "#TakeTheCake", //"#FriarFaithful"
         homeVenue: {
         id: 124,
         name: "Petco Park"
