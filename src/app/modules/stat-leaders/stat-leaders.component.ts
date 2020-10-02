@@ -440,7 +440,7 @@ export class StatLeadersComponent implements OnInit {
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
           this.mlbPitchingData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0); // && player.stats.pitching.pitcherStrikeouts > 6
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.pitching.inningsPitched > 0); // && player.stats.pitching.pitcherStrikeouts > 6
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -491,7 +491,7 @@ export class StatLeadersComponent implements OnInit {
          let specialImgNum = null;
 
          this.mlbHittingData = res['playerStatsTotals'].filter(
-           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0); //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
+           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.batting.atBats > 0); //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
 
          for (let team of this.mlbTeams) {
            for (let data of this.mlbHittingData) { 
@@ -1316,14 +1316,14 @@ export class StatLeadersComponent implements OnInit {
             });
 
             if (s === 'mlb' && this.mlbSection) {
-              this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched >= 3);
+              this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched > 0);
               this.mlbPitchingData = this.crunched;
               // console.log(this.nhlGoaltenders, 'crunched nhl');     
               this.mlbPitchingLoading = false;
             }
 
             if (s === 'mlb' && this.mlbHittingSection) {
-              this.crunched = this.mlbHittingData.filter(player => player.player.span === this.timeSpan && player.stats.batting.plateAppearances > 2);
+              this.crunched = this.mlbHittingData.filter(player => player.player.span === this.timeSpan && player.stats.batting.plateAppearances > 0);
               this.mlbHittingData = this.crunched;
               // console.log(this.nhlGoaltenders, 'crunched nhl');     
               this.mlbHittingLoading = false;
