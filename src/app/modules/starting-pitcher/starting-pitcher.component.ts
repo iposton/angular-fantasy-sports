@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import {FirebaseService, DataService, UtilService} from '../../services/index';
+import {FirebaseService, DataService, UtilService, DepthService} from '../../services/index';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
 // import { map } from 'rxjs/operators';
@@ -86,9 +86,11 @@ export class StartingPitcherComponent implements OnInit {
   public showFp: boolean = false;
   public stat: any = 1;
   public playerImages: any;
+  public actualStarters: any;
   
   constructor(private fbService: FirebaseService, 
-              private dataService: DataService, 
+              private dataService: DataService,
+              private depth: DepthService, 
               private http: HttpClient,
               private util: UtilService,
               @Inject(PLATFORM_ID) platformId: string) {
@@ -102,6 +104,7 @@ export class StartingPitcherComponent implements OnInit {
     this.teams = this.util.getMLBTeams();
     this.testBrowser = isPlatformBrowser(platformId);
     this.playerImages = this.util.getMLBImages();
+    this.actualStarters = this.depth.getActualStarters();
   }
 
   public statToggle() {
@@ -252,8 +255,8 @@ export class StartingPitcherComponent implements OnInit {
                              //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                            if (position.player != null) {
                               this.gameStarter = {
-                                playerID: position.player.id,
-                                name: position.player.lastName,
+                                playerID: this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].id : position.player.id,
+                                name: this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].lastName : position.player.lastName,
                                 team: res2[i2].team.id,
                                 gameID: game2.id,
                                 score: score2,
@@ -264,10 +267,10 @@ export class StartingPitcherComponent implements OnInit {
                               }
                               if (position['position'] === 'P') {
                                 this.gameStarters.push(this.gameStarter);
-                                this.starterIdData.push(position.player.id);
+                                this.starterIdData.push(this.gameStarter.playerID);
                               } else {
                                 this.gameBatters.push(this.gameStarter);
-                                this.batterIdData.push(position.player.id);
+                                this.batterIdData.push(this.gameStarter.playerID);
                               }
                            } 
                           }
@@ -281,8 +284,8 @@ export class StartingPitcherComponent implements OnInit {
                             //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                            if (position.player != null) {
                             this.gameStarter = {
-                              playerID: position.player.id,
-                              name: position.player.lastName,
+                              playerID: this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].id : position.player.id,
+                              name: this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].lastName : position.player.lastName,
                               team: res2[i2].team.id,
                               gameID: game2.id,
                               score: score2,
@@ -293,10 +296,10 @@ export class StartingPitcherComponent implements OnInit {
                             }
                             if (position['position'] === 'P') {
                               this.gameStarters.push(this.gameStarter);
-                              this.starterIdData.push(position.player.id);
+                              this.starterIdData.push(this.gameStarter.playerID);
                             } else {
                               this.gameBatters.push(this.gameStarter);
-                              this.batterIdData.push(position.player.id);
+                              this.batterIdData.push(this.gameStarter.playerID);
                             }
                           }   
                          }
