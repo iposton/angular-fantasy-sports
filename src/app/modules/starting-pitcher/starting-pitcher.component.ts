@@ -85,6 +85,7 @@ export class StartingPitcherComponent implements OnInit {
   public spinTitle: string = 'Pitcher Data';
   public showFp: boolean = false;
   public stat: any = 1;
+  public playerImages: any;
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService, 
@@ -100,6 +101,7 @@ export class StartingPitcherComponent implements OnInit {
     this.players = this.dataService.getSentStats();
     this.teams = this.util.getMLBTeams();
     this.testBrowser = isPlatformBrowser(platformId);
+    this.playerImages = this.util.getMLBImages();
   }
 
   public statToggle() {
@@ -450,6 +452,7 @@ export class StartingPitcherComponent implements OnInit {
                       if (this.myData && this.dailySchedule) {
                         let gameDay = null;
                         let originalStart = null;
+                        let specialImgNum = null;
                        // console.log('start sorting data for daily schedule...');
                         for (let schedule of this.dailySchedule) {
                           for (let sdata of this.myData) {
@@ -469,8 +472,16 @@ export class StartingPitcherComponent implements OnInit {
                                   sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
                                   //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
                                   sdata.team.opponentId = schedule.schedule.homeTeam.id;
+                                  if (sdata.player.officialImageSrc != null)
+                                    specialImgNum = sdata.player.officialImageSrc.substring(
+                                    sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
+                                    sdata.player.officialImageSrc.lastIndexOf(".")
+                                  );
+                                  
+                                  sdata.player.image = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
 
                                 }
+
                                 if (schedule.schedule.homeTeam.id === sdata.starterTeam) {
                                   sdata.sStatus = schedule.schedule.scheduleStatus;
                                   sdata.player.gameTime = schedule.schedule.startTime;
@@ -480,6 +491,18 @@ export class StartingPitcherComponent implements OnInit {
                                   sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                                   //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
                                   sdata.team.opponentId = schedule.schedule.awayTeam.id;
+                                  if (sdata.player.officialImageSrc != null)
+                                    specialImgNum = sdata.player.officialImageSrc.substring(
+                                    sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
+                                    sdata.player.officialImageSrc.lastIndexOf(".")
+                                  );
+                                  
+                                  sdata.player.image = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+                                  
+                                }
+
+                                if (sdata.player.officialImageSrc == null) {
+                                  sdata.player.image = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
                                 }
 
                               }
@@ -792,6 +815,7 @@ export class StartingPitcherComponent implements OnInit {
                           if (this.myBatterData && this.dailySchedule) {
                             let gameDay = null;
                             let originalStart = null;
+                            let specialImgNum = null;
                           // console.log('start sorting data for daily schedule...');
                             for (let schedule of this.dailySchedule) {
                               for (let sdata of this.myBatterData) {
@@ -810,6 +834,13 @@ export class StartingPitcherComponent implements OnInit {
                                       sdata.player.gameLocation = "away";
                                       sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;   
                                       sdata.team.opponentId = schedule.schedule.homeTeam.id;
+                                      if (sdata.player.officialImageSrc != null)
+                                        specialImgNum = sdata.player.officialImageSrc.substring(
+                                        sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
+                                        sdata.player.officialImageSrc.lastIndexOf(".")
+                                      );
+                                      
+                                      sdata.player.image = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
 
                                     }
                                     if (schedule.schedule.homeTeam.id === sdata.starterTeam) {
@@ -820,6 +851,18 @@ export class StartingPitcherComponent implements OnInit {
                                       sdata.player.gameLocation = "home";
                                       sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                                       sdata.team.opponentId = schedule.schedule.awayTeam.id;
+
+                                      if (sdata.player.officialImageSrc != null)
+                                        specialImgNum = sdata.player.officialImageSrc.substring(
+                                        sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
+                                        sdata.player.officialImageSrc.lastIndexOf(".")
+                                      );
+                                      
+                                      sdata.player.image = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+                                    }
+
+                                    if (sdata.player.officialImageSrc == null) {
+                                      sdata.player.image = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
                                     }
 
                                   }

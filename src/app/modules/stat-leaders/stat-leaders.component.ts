@@ -66,6 +66,7 @@ export class StatLeadersComponent implements OnInit {
   public selected: any;
   public playerImages: any;
   public nflplayerImages: any;
+  public mlbplayerImages: any;
   public tomorrowDate: any;
   public mlbSection: boolean = false;
   public mlbHittingSection: boolean = false;
@@ -122,6 +123,7 @@ export class StatLeadersComponent implements OnInit {
     this.nflTeams = this.util.getNFLTeams();
     this.playerImages = this.util.getNBAImages();
     this.nflplayerImages = this.util.getNFLImages();
+    this.mlbplayerImages = this.util.getMLBImages();
     
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
@@ -433,6 +435,7 @@ export class StatLeadersComponent implements OnInit {
 
     this.mlbService
        .getAllStats().subscribe(res => {
+          let specialImgNum = null;
           //this.loading = false;
           //const mlbTeamsArray = Object.values(this.nbaTeams);
 
@@ -448,12 +451,21 @@ export class StatLeadersComponent implements OnInit {
                 data.team.twitter = team['twitter'];
                 this.pitcherFp(data);
                 //this.loading = false;
-                
-              }
 
-              // if (data.player.officialImageSrc == null) {
-              //   data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
-              // }
+                if (data.player.officialImageSrc != null) {
+                  specialImgNum = data.player.officialImageSrc.substring(
+                    data.player.officialImageSrc.lastIndexOf("/") + 1, 
+                    data.player.officialImageSrc.lastIndexOf(".")
+                    );
+                  
+                  data.player.officialImageSrc = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+                }
+
+                if (data.player.officialImageSrc == null) {
+                  data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
+                }
+                
+              } 
               
             }  
           }
@@ -476,6 +488,7 @@ export class StatLeadersComponent implements OnInit {
         .getAllHitters().subscribe(res => {
          //this.loading = false;
          //const mlbTeamsArray = Object.values(this.nbaTeams);
+         let specialImgNum = null;
 
          this.mlbHittingData = res['playerStatsTotals'].filter(
            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 0); //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
@@ -489,11 +502,22 @@ export class StatLeadersComponent implements OnInit {
                data.team.twitter = team['twitter'];
                this.batterFp(data);
               // this.loading = false;
+              if (data.player.officialImageSrc != null) {
+                specialImgNum = data.player.officialImageSrc.substring(
+                  data.player.officialImageSrc.lastIndexOf("/") + 1, 
+                  data.player.officialImageSrc.lastIndexOf(".")
+                  );
+                
+                data.player.officialImageSrc = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+              }
+
+              if (data.player.officialImageSrc == null) {
+                data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
+              }
+                
              }
 
-             // if (data.player.officialImageSrc == null) {
-             //   data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
-             // }
+             
              
            }  
          }
@@ -673,6 +697,11 @@ export class StatLeadersComponent implements OnInit {
         //     data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
         //   }
         // }
+        for (let data of this.nflTEData) {
+          if (data.player.officialImageSrc == null) {
+            data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+          }
+        }
         teamInfo(this.nflTEData, this.nflTeams, 'o');
       });
 

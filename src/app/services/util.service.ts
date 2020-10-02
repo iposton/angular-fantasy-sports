@@ -13,6 +13,7 @@ export class UtilService {
   public NBAImages: any;
   public NHLImages: any;
   public NFLImages: any;
+  public MLBImages: any;
   public startingGoalies: any;
 
   constructor() {
@@ -124,6 +125,40 @@ export class UtilService {
       }
     ];
 
+    this.MLBImages = {
+      "14207": {
+        firstName: "Ian",
+        lastName: "Anderson",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/666120/headshot/67/current"
+      }, 
+      "14236": {
+        firstName: "Dane",
+        lastName: "Dunning",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/641540/headshot/silo/current"
+      }, 
+      "14200": {
+        firstName: "Sixto",
+        lastName: "Sanchez",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/664350/headshot/silo/current"
+      },
+      "14245": {
+        firstName: "Jesus",
+        lastName: "Luzardo",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/666200/headshot/silo/current"
+      },
+      "15641": {
+        firstName: "Christian",
+        lastName: "Javier",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/664299/headshot/silo/current"
+      },
+      "17844": {
+        firstName: "Kwang Hyun",
+        lastName: "Kim",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/547942/headshot/67/current"
+      },
+      
+    }
+
     this.NFLImages = {
       "18623": {
         firstName: "Clyde",
@@ -209,6 +244,21 @@ export class UtilService {
         firstName: "Joshua",
         lastName: "Kelley",
         image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/pkqsegmcbmbjlvwfzzl2"
+      },
+      "16038": {
+        firstName: "Darrell",
+        lastName: "Henderson",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/nyjvyjkx6cb2a7lfxevg"
+      },
+      "18648": {
+        firstName: "Justin",
+        lastName: "Jefferson",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rbpfxph4wwkxnhphoat6"
+      },
+      "16254": {
+        firstName: "Scott",
+        lastName: "Miller",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/knmpvvmftnvmqtx5g8me"
       },
        
     }
@@ -2765,6 +2815,10 @@ export class UtilService {
 
   public getNBAImages() {
     return this.NBAImages;
+  }
+
+  public getMLBImages() {
+    return this.MLBImages;
   }
 
   public getNHLImages() {

@@ -42,7 +42,7 @@
                 <div class="left-content"
                 [ngStyle]="{background: 'url(' + data['pitchers'][0]?.playerObj?.team?.logo +')'}">
                   <span class="pointer" (click)="authorize(data['pitchers'][0]?.playerObj)">
-                      <img src="{{data['pitchers'][0]?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+                      <img src="{{data['pitchers'][0]?.playerObj?.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                   </span> 
                   
                 </div>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="right-content" [ngStyle]="{background: 'url(' + data['pitchers'][0]?.playerObj?.team?.opponentLogo +')'}">
                   <span class="pointer" (click)="authorize(data['pitchers'][1]?.playerObj)">
-                      <img src="{{data['pitchers'][1]?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+                      <img src="{{data['pitchers'][1]?.playerObj?.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                   </span> 
                 </div>
               </div>
@@ -204,7 +204,7 @@
         <a class="go-back-btn" (click)="flipBack(data)">GO BACK</a>
           <div class="content-wrapper">
           <div class="left-content">
-            <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+            <img src="{{data.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
           </div>
           
         <div class="bottom-content" (click)="$event.stopPropagation()">
@@ -271,7 +271,7 @@
       <div class="tp-box__side tp-box__back" (click)="$event.stopPropagation()">
           <div class="content-wrapper">
           <div class="left-content">
-            <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+            <img src="{{data.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
           </div>
           <div class="right-content">
             <p>
@@ -399,7 +399,7 @@
         <div class="tp-box__side tp-box__front">
           <div class="content-wrapper">
             <div class="left-content">
-              <img src="{{data.player.image}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+              <img src="{{data.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
             </div>
             <div class="right-content">
               <p>
@@ -539,7 +539,7 @@
                 [ngStyle]="{background: 'url(' + data['batters'][0]?.playerObj?.team?.logo +')'}">
                   <div  *ngFor="let item of data['batters']; let i = index">
                       <span class="pointer" (click)="authorize(item?.playerObj)">
-                        {{i+1}} <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="baseball player" onError="this.src='http://mlb.mlb.com/images/players/silhouettes/generic_mug@2x.png'">
+                        {{i+1}} <img src="{{item?.playerObj?.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                       </span>
                       {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | 
                       <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
