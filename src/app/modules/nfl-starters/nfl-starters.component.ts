@@ -421,6 +421,9 @@ export class NflStartersComponent implements OnInit {
                                 //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
                                 sdata.team.opponentId = schedule.schedule.homeTeam.id;
 
+                                // 'http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/DIG218895.png'
+                                // 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/vcjoh0xhf8ip8digkkai'
+
                               }
                               if (schedule.schedule.homeTeam.id === sdata.starterTeam) {
                                 sdata.sStatus = schedule.schedule.scheduleStatus;
