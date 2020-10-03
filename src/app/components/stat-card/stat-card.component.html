@@ -25,15 +25,27 @@
                 loading="lazy"
             />
             <span class="sched-rank {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem = ''; $event.stopPropagation()">
+                  <span class="weekopp-top" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.dRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.dRank > 10 && item?.team?.weekOpponent[0]?.dRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.dRank > 21}">
+                    {{item?.team?.weekOpponent[0]?.printName}} <br>
+                  </span>
+                  <span class="weekopp-bot" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.dRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.dRank > 10 && item?.team?.weekOpponent[0]?.dRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.dRank > 21}">
+                    {{item?.team?.weekOpponent[0]?.dRank}}
+                  </span>
                   <span *ngIf="sport === 'nfl' && item?.team[seasonLength] != null && ndk" [ngClass]="{'red' : item?.team[seasonLength] &lt;= 10, 'orange' : item?.team[seasonLength] > 10 && item?.team[seasonLength] &lt;= 21, 'green' : item?.team[seasonLength] > 21}">
                     {{item?.team[seasonLength]}}
                   </span>
-                  <span class="tooltip"> 
+                  <span *ngIf="sport === 'nfl' && item?.team[seasonLength] != null && ndk" class="tooltip"> 
                     <span *ngIf="item?.team[seasonLength] > 21">Easy</span> 
                     <span *ngIf="item?.team[seasonLength] &lt;= 21 && item?.team[seasonLength] > 10">Good</span>
                     <span *ngIf="item?.team[seasonLength] &lt;= 10">Hard</span>
                       Schedule
-                  </span>    
+                  </span> 
+                  <span *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk" class="tooltip"> 
+                      <span *ngIf="item?.team?.weekOpponent[0]?.dRank > 21">Great</span> 
+                      <span *ngIf="item?.team?.weekOpponent[0]?.dRank &lt;= 21 && item?.team?.weekOpponent[0]?.dRank > 10">Good</span>
+                      <span *ngIf="item?.team?.weekOpponent[0]?.dRank &lt;= 10">Bad</span>
+                        Matchup
+                    </span>   
             </span>    
           </span>
             <span class="player-infos">

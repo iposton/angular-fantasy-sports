@@ -1,5 +1,6 @@
 export * from './data.service';
 export * from './depth.service';
+export * from './rank.service';
 export * from './nba-data.service';
 export * from './nhl-data.service';
 export * from './nfl-data.service';

@@ -331,6 +331,13 @@ footer {
         }
         
       }
+
+      .game.hovered:hover {
+        .tooltip  {
+          display: block;
+        }
+      }
+
     }
 
     p {
@@ -482,6 +489,7 @@ ul {
         font-size: 12px;
         display: inline-block;
         position: relative;
+        text-align: center;
 
         .red {
           padding: 3px;
@@ -499,6 +507,14 @@ ul {
           padding: 3px;
           border-radius: 2px;
           background-color:#2ecc71;
+        }
+
+        .weekopp-top {
+          font-size: 10px;
+        }
+
+        .weekopp-bot {
+          font-size: 10px;
         }
 
         .tooltip {
