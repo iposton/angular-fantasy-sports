@@ -1,6 +1,6 @@
 <div class="card-wrap-sp mat-elevation-z6 position-box">
   <span class="title">{{ title }}</span> 
-  <span *ngIf="sport === 'nfl' && ndk">
+  <span *ngIf="sport === 'nfl'">
       <button [ngClass]="{'dn': end === 21}" (click)="begin = 0; end = 21; page = 39; amount = -1;">Easy</button> <button [ngClass]="{'dn': end === 32}" (click)="begin = 21; end = 32; page = 39; amount = -1;">Good</button> <button [ngClass]="{'dn': end === 32}" (click)="begin = 10; end = 32; page = 39; amount = -1;">Hard</button> <button (click)="begin = 0; end = 0; page = 19; amount = -1;">All</button>
   </span>
   <div>
@@ -12,8 +12,8 @@
             [ngClass]="{
               'left-content': i <= page,
               'dn': i > page || i <= amount,
-              'dn2': item?.team[seasonLength] > begin && item?.team[seasonLength] <= end,
-              'dn3': begin === 21 && item?.team[seasonLength] <= 10
+              'dn2': (!ndk && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank > begin : item?.team[seasonLength] > begin) && !ndk && (item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= end : item?.team[seasonLength] <= end),
+              'dn3': begin === 21 && !ndk && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= 10 : item?.team[seasonLength] <= 10
             }"
             >
             <span class="index-rank" [ngClass]="{'dn' : sport === 'nfl' && ndk}">{{ i + 1 }}</span>
