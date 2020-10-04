@@ -1218,7 +1218,7 @@ export class UtilService {
       },
       {
       id: 59,
-      bye: 8,
+      bye: 3, //8
       defenseRankLs: 2,
       offenseRankLs: 31,
       city: "Pittsburgh",
@@ -1377,7 +1377,7 @@ export class UtilService {
       },
       {
       id: 67,
-      bye: 7,
+      bye: 3, //7
       defenseRankLs: 12,
       offenseRankLs: 8,
       city: "Tennessee",

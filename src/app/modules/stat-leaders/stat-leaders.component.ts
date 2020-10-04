@@ -608,7 +608,7 @@ export class StatLeadersComponent implements OnInit {
       )
     )
     .subscribe(res => {
-     // console.log(res, 'get team schedules...');
+      console.log(res, 'get team schedules...');
       res.forEach((item, index) => { 
         team = this.nflTeams[index].id;
         bye = this.nflTeams[index].bye;
@@ -882,6 +882,8 @@ export class StatLeadersComponent implements OnInit {
             s.schedule.awayTeam.id === t.id && s.schedule.week == this.nflWeek) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
             sum.push({printName: 'vs '+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
+          } else if (index+1 === bye){ 
+            sum.push({printName: 'BYE ', oRank: 1, dRank: 1, name: bye});
           }
         }
       })
