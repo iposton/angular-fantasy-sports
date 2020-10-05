@@ -14,6 +14,8 @@ import { forkJoin } from 'rxjs';
 
 let headers = null;
 let today = new Date();
+let repImg = null;
+let nflplayerImages = null;
 
 @Component({
   selector: 'app-stat-leaders',
@@ -65,7 +67,6 @@ export class StatLeadersComponent implements OnInit {
   public twitter: boolean = false;
   public selected: any;
   public playerImages: any;
-  public nflplayerImages: any;
   public mlbplayerImages: any;
   public tomorrowDate: any;
   public mlbSection: boolean = false;
@@ -124,8 +125,9 @@ export class StatLeadersComponent implements OnInit {
     this.mlbTeams = this.util.getMLBTeams();
     this.nflTeams = this.util.getNFLTeams();
     this.playerImages = this.util.getNBAImages();
-    this.nflplayerImages = this.util.getNFLImages();
+    nflplayerImages = this.util.getNFLImages();
     this.mlbplayerImages = this.util.getMLBImages();
+    repImg = this.util.getRepImages();
     
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
@@ -664,6 +666,14 @@ export class StatLeadersComponent implements OnInit {
               data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.plays * 100);
               data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100);
               data.stats.receiving.touchCatchPct = Math.floor(data.stats.receiving.receptions / team.passPlays * 100);
+
+              if (repImg[data.player.id] != null) {
+                data.player.officialImageSrc = repImg[data.player.id] ? repImg[data.player.id].new : data.player.officialImageSrc;
+              }
+              
+              if (data.player.officialImageSrc == null) {
+                data.player.officialImageSrc = nflplayerImages[data.player.id] != null ? nflplayerImages[data.player.id].image : null;
+              }
             }
           }  
         }
@@ -702,11 +712,12 @@ export class StatLeadersComponent implements OnInit {
         
             
         // });
-        for (let data of this.nflQBData) {
-          if (data.player.officialImageSrc == null) {
-            data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
-          }
-        }
+        // for (let data of this.nflQBData) {
+        //   if (data.player.officialImageSrc == null) {
+        //     data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+        //   }
+
+        // }
         teamInfo(this.nflQBData, this.nflTeams, 'o');
         //console.log(this.nflQBData, 'qb data')
       });
@@ -739,11 +750,11 @@ export class StatLeadersComponent implements OnInit {
         //     teamInfo(this.nflRushData, this.nflTeams, 'o');
         //     this.nflOffenseLoading = false;
         // });
-        for (let data of this.nflRushData) {
-          if (data.player.officialImageSrc == null) {
-            data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
-          }
-        }
+        // for (let data of this.nflRushData) {
+        //   if (data.player.officialImageSrc == null) {
+        //     data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+        //   }
+        // }
         teamInfo(this.nflRushData, this.nflTeams, 'o');
         this.nflOffenseLoading = false;
       });
@@ -767,11 +778,11 @@ export class StatLeadersComponent implements OnInit {
         //     }
             
         // });
-        for (let data of this.nflRecData) {
-          if (data.player.officialImageSrc == null) {
-            data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
-          }
-        }
+        // for (let data of this.nflRecData) {
+        //   if (data.player.officialImageSrc == null) {
+        //     data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+        //   }
+        // }
         teamInfo(this.nflRecData, this.nflTeams, 'o');
       });
 
@@ -785,11 +796,11 @@ export class StatLeadersComponent implements OnInit {
         //     data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
         //   }
         // }
-        for (let data of this.nflTEData) {
-          if (data.player.officialImageSrc == null) {
-            data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
-          }
-        }
+        // for (let data of this.nflTEData) {
+        //   if (data.player.officialImageSrc == null) {
+        //     data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+        //   }
+        // }
         teamInfo(this.nflTEData, this.nflTeams, 'o');
       });
 
@@ -798,26 +809,28 @@ export class StatLeadersComponent implements OnInit {
           this.nflKickerData = res['playerStatsTotals'].filter(
             player => player.stats != null && player.stats.gamesPlayed > 0 && player.stats.fieldGoals.fgMade > 0);
 
-        this.nflService
-          .getAllOffense('k', '20').subscribe(res => {
-            this.newKickerData = res['players'];
-            //for (let n of this.newKickerData ) {
-              for (let old of this.nflKickerData) {
-                // if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                //   old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                //   old.team.id = n['teamAsOfDate'].id;
-                  old.stats.fieldGoals.longFgMade = old.stats.fieldGoals.fgMade40_49 + old.stats.fieldGoals.fgMade50Plus;
-                //}
-              }
-            //}
-            for (let data of this.nflKickerData) {
-              if (data.player.officialImageSrc == null) {
-                data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
-              }
+            for (let old of this.nflKickerData) {
+              // if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+              //   old.player['currentTeam'].id = n['teamAsOfDate'].id;
+              //   old.team.id = n['teamAsOfDate'].id;
+                old.stats.fieldGoals.longFgMade = old.stats.fieldGoals.fgMade40_49 + old.stats.fieldGoals.fgMade50Plus;
+              //}
             }
-            teamInfo(this.nflKickerData, this.nflTeams, 'o');
-        });
-        //teamInfo(this.nflKickerData, this.nflTeams, 'o');
+
+        // this.nflService
+        //   .getAllOffense('k', '20').subscribe(res => {
+        //     this.newKickerData = res['players'];
+        //     //for (let n of this.newKickerData ) {
+              
+        //     //}
+        //     // for (let data of this.nflKickerData) {
+        //     //   if (data.player.officialImageSrc == null) {
+        //     //     data.player.officialImageSrc = this.nflplayerImages[data.player.id] != null ? this.nflplayerImages[data.player.id].image : null;
+        //     //   }
+        //     // }
+        //     teamInfo(this.nflKickerData, this.nflTeams, 'o');
+        // });
+        teamInfo(this.nflKickerData, this.nflTeams, 'o');
       });
 
     }

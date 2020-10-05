@@ -15,6 +15,7 @@ export class UtilService {
   public NFLImages: any;
   public MLBImages: any;
   public startingGoalies: any;
+  public replaceImg: any;
 
   constructor() {
     this.weekTimes = [
@@ -159,6 +160,32 @@ export class UtilService {
       
     }
 
+    this.replaceImg = {
+      "8195" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/en0ul7l1m9aqf7wffufg"
+      },
+      "7471" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/vcjoh0xhf8ip8digkkai"
+      },
+      "7549" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/sfehmfwtg9i5gdcpqzgf"
+      },
+      "14516" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/cw9mplvltikyayjsjmc3"
+      },
+      "8190" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/voakyrtj34sghkwxaxxf"
+      },
+      "8469" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ym7oprwel3dxbab0k7x9"
+      },
+      "5940" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xhkqvvkq3awveyhv0x4e"
+      },
+      
+      
+    }
+
     this.NFLImages = {
       "18623": {
         firstName: "Clyde",
@@ -260,6 +287,12 @@ export class UtilService {
         lastName: "Miller",
         image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/knmpvvmftnvmqtx5g8me"
       },
+      "18675": {
+        firstName: "Brandon",
+        lastName: "Aiyuk",
+        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/crkz9pxkba4o1zsmiazt"
+      },
+      
        
     }
 
@@ -2827,6 +2860,10 @@ export class UtilService {
 
   public getNFLImages() {
     return this.NFLImages;
+  }
+
+  public getRepImages() {
+    return this.replaceImg;
   }
 
   public getNFLTeams() {
