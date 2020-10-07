@@ -220,50 +220,70 @@ export class NFLDataService {
     return this.allstats;
   }
 
-  getAllOffense(position, season) {
+  getAllOffense(position, season, week) {
 
-      if (position === 'qb' && season === '20') {
+      if (position === 'qb' && season === '20' && week === 'all') {
         let url = `${this.apiRoot2020}/players.json?position=QB`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
-      } else if (position === 'qb' && season === '19') {
+      } else if (position === 'qb' && season === '19' && week === 'all') {
         let url = `${this.apiRoot2021}/player_stats_totals.json?position=QB`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
+      } else if (week != 'all' && position === 'qb') {
+        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${week}/player_gamelogs.json?position=QB`;
+        this.offenseStats = this.http.get(url, {headers})
+        return this.offenseStats;
       }
 
-      if (position === 'run' && season === '20') {
+      if (position === 'run' && season === '20' && week === 'all') {
         let url = `${this.apiRoot2020}/players.json?position=RB`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
-      } else if (position === 'run' && season === '19') {
+      } else if (position === 'run' && season === '19' && week === 'all') {
         let url = `${this.apiRoot2021}/player_stats_totals.json?position=RB`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
+      } else if (week != 'all' && position === 'run') {
+        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${week}/player_gamelogs.json?position=RB`;
+        this.offenseStats = this.http.get(url, {headers})
+        return this.offenseStats;
       }
 
-      if (position === 'rec' && season === '20') {
+      if (position === 'rec' && season === '20' && week === 'all') {
         let url = `${this.apiRoot2020}/players.json?position=WR`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
-      } else if (position === 'rec' && season === '19') {
+      } else if (position === 'rec' && season === '19' && week === 'all') {
         let url = `${this.apiRoot2021}/player_stats_totals.json?position=WR`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
+      } else if (week != 'all' && position === 'rec') {
+        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${week}/player_gamelogs.json?position=WR`;
+        this.offenseStats = this.http.get(url, {headers})
+        return this.offenseStats;
       }
 
-      if (position === 'te' && season === '19') {
+      if (position === 'te' && season === '19' && week === 'all') {
         let url = `${this.apiRoot2021}/player_stats_totals.json?position=TE`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
+      } else if (week != 'all' && position === 'te') {
+        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${week}/player_gamelogs.json?position=TE`;
+        this.offenseStats = this.http.get(url, {headers})
+        return this.offenseStats;
       }
 
-      if (position === 'k' && season === '20') {
+      if (position === 'k' && season === '20' && week === 'all') {
         let url = `${this.apiRoot2020}/players.json?position=K`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
-      } else if (position === 'k' && season === '19') {
+      } else if (position === 'k' && season === '19' && week === 'all') {
         let url = `${this.apiRoot2021}/player_stats_totals.json?position=K`;
+        this.offenseStats = this.http.get(url, {headers})
+        return this.offenseStats;
+      } else if (week != 'all' && position === 'k') {
+        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${week}/player_gamelogs.json?position=K`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       }

@@ -1774,6 +1774,17 @@ form.date-form {
   text-align: left;
 }
 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper  {
+  .team-record {
+    font-size: 14px;
+    text-align: center;
+    display: inherit;
+    text-transform: uppercase;
+    font-weight: 200;
+    letter-spacing: 2px;
+  }
+}
+
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content {
   flex: 0 0 12%;
   .matchup-text {

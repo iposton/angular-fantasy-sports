@@ -25,11 +25,17 @@
                 loading="lazy"
             />
             <span class="sched-rank {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem = ''; $event.stopPropagation()">
-                  <span class="weekopp-top" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.dRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.dRank > 10 && item?.team?.weekOpponent[0]?.dRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.dRank > 21}">
+                  <span class="weekopp-top" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk && statType != 'tackles' && statType != 'interceptions'" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.dRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.dRank > 10 && item?.team?.weekOpponent[0]?.dRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.dRank > 21}">
                     {{item?.team?.weekOpponent[0]?.printName}} <br>
                   </span>
-                  <span class="weekopp-bot" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.dRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.dRank > 10 && item?.team?.weekOpponent[0]?.dRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.dRank > 21}">
+                  <span class="weekopp-bot" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk && statType != 'tackles' && statType != 'interceptions'" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.dRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.dRank > 10 && item?.team?.weekOpponent[0]?.dRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.dRank > 21}">
                     {{item?.team?.weekOpponent[0]?.dRank}}
+                  </span>
+                  <span class="weekopp-top" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk && (statType === 'tackles' || statType === 'interceptions')" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.oRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.oRank > 10 && item?.team?.weekOpponent[0]?.oRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.oRank > 21}">
+                      {{item?.team?.weekOpponent[0]?.printName}} <br>
+                  </span>
+                  <span class="weekopp-bot" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk && (statType === 'tackles' || statType === 'interceptions')" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.oRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.oRank > 10 && item?.team?.weekOpponent[0]?.oRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.oRank > 21}">
+                    {{item?.team?.weekOpponent[0]?.oRank}}
                   </span>
                   <span *ngIf="sport === 'nfl' && item?.team[seasonLength] != null && ndk" [ngClass]="{'red' : item?.team[seasonLength] &lt;= 10, 'orange' : item?.team[seasonLength] > 10 && item?.team[seasonLength] &lt;= 21, 'green' : item?.team[seasonLength] > 21}">
                     {{item?.team[seasonLength]}}
@@ -82,7 +88,7 @@
                       <span *ngFor="let game of item?.team?.scheduleTicker; let i = index;">
                           <span class="game {{hoveredItem2}}" (mouseover)="hoveredItem2 = 'hovered'" (mouseout)="hoveredItem2 = ''">
                             <span [ngClass]="{'white' : game?.oRank === 'BYE', 'red' : game?.oRank &lt;= 10, 'orange' : game?.oRank > 10 && game?.oRank &lt;= 21, 'green' : game?.oRank > 21, 'dn' : seasonLength === 'ofh' && i > 8 || seasonLength === 'osh' && i &lt;= 8 }">{{game?.printName}}</span>
-                            <span class="tooltip">{{ game?.oRank === 'BYE' ? 'Week '+game?.name : 'D Rank '+ game?.oRank}}</span>
+                            <span class="tooltip">{{ game?.oRank === 'BYE' ? 'Week '+game?.name : 'O Rank '+ game?.oRank}}</span>
                           </span> 
                       </span>
                   </span>

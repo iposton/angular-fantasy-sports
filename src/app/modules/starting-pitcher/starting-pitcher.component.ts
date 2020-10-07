@@ -255,8 +255,8 @@ export class StartingPitcherComponent implements OnInit {
                              //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                            if (position.player != null) {
                               this.gameStarter = {
-                                playerID: this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].id : position.player.id,
-                                name: this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].lastName : position.player.lastName,
+                                playerID: position['position'] === 'P' && this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].id : position.player.id,
+                                name: position['position'] === 'P' && this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].lastName : position.player.lastName,
                                 team: res2[i2].team.id,
                                 gameID: game2.id,
                                 score: score2,
@@ -284,8 +284,8 @@ export class StartingPitcherComponent implements OnInit {
                             //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
                            if (position.player != null) {
                             this.gameStarter = {
-                              playerID: this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].id : position.player.id,
-                              name: this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].lastName : position.player.lastName,
+                              playerID: position['position'] === 'P' && this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].id : position.player.id,
+                              name: position['position'] === 'P' && this.actualStarters[res2[i2].team.id] != null && new Date(this.actualStarters[res2[i2].team.id].gdate).getDay() === new Date(game2.startTime).getDay() ? this.actualStarters[res2[i2].team.id].lastName : position.player.lastName,
                               team: res2[i2].team.id,
                               gameID: game2.id,
                               score: score2,
