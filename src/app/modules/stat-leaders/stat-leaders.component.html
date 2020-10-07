@@ -46,11 +46,38 @@
    <button [ngClass]="{'dn' : !nflSection}" (click)="defensePlayers()">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
    <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit">Draft Kit</button>
 </div>
-<div class="center">
+<div class="center" *ngIf="sport != 'nfl'">
     <button (click)="getByDate('last-week', sport)">Last Week</button> &nbsp;&nbsp; <button (click)="getByDate('full', sport)">All</button>
     &nbsp;&nbsp; <button (click)="getByDate('today', sport)">Today</button>
     &nbsp;&nbsp; <button (click)="getByDate('yesterday', sport)">Yesterday</button>
 </div>
+<div class="center" *ngIf="sport === 'nfl'">
+    <select name="week" id="week" (change)="onChange($event.target.value)">
+      <option value="1"> - </option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <!-- <option value="18">wildcard</option>
+      <option value="19">division round</option>
+      <option value="20">conf championship</option>
+      <option value="22">super bowl</option> -->
+    </select>
+    &nbsp;&nbsp; <button (click)="onChange('all')">ALL</button>
+  </div>
 <app-spinner *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading" [size]="'lg'" [color]="'white'" [title]="'Stat Leader Data'"></app-spinner>
 <div *ngIf="errMessage" class="err center">
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
@@ -970,8 +997,26 @@
               [eliteStat]="40"
               ></app-stat-card>
 
+              <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null && week === 'all'" 
+              [data]="nflQBData" 
+              [statType]="'passing'"
+              [statField]="'totalPassPct'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Pass Percent of All Plays'"
+              [statTag]="'%'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="40"
+              ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null" 
+
+              <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null && week === 'all'" 
               [data]="nflRushData" 
               [statType]="'rushing'"
               [statField]="'touchRunPct'"
@@ -989,8 +1034,26 @@
               [eliteStat]="40"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
+              <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null && week === 'all'" 
               [data]="nflRecData" 
+              [statType]="'receiving'"
+              [statField]="'touchCatchPct'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Touch Percent of All Pass Plays'"
+              [statTag]="'%'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="40"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="!nflOffenseLoading && nflTEData != null && week === 'all'" 
+              [data]="nflTEData" 
               [statType]="'receiving'"
               [statField]="'touchCatchPct'"
               [page]="page"

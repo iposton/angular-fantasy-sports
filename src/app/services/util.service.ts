@@ -157,6 +157,11 @@ export class UtilService {
         lastName: "Kim",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/547942/headshot/67/current"
       },
+      "15851": {
+        firstName: "Devie",
+        lastName: "Garcia",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/665620/headshot/silo/current"
+      },
       
     }
 
@@ -182,8 +187,28 @@ export class UtilService {
       "5940" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xhkqvvkq3awveyhv0x4e"
       },
-      
-      
+      "8272" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ttuzsfycx9n3wie83dsw"
+      },
+      // "6845" : {
+      //   new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/gxxogysbupsery4gckld"
+      // },
+      "9741" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/yeobojameg9dram1qiqo"
+      },
+      "8463" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qnt1kn2mouanpxvdvzvh"
+      },
+      "8305" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/iwwyf70p2gckryfv7cyn"
+      },
+      "7888" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dindmtqwwvrzgkfsqfdb"
+      },
+      "16858" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/htlt0h1p8gmpgrrbjyyj"
+      },
+       
     }
 
     this.NFLImages = {
