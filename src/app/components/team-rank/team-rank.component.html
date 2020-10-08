@@ -12,7 +12,7 @@
             <button [ngClass]="{'dn' : seasonLength === 'osh'}" (click)="seasonLength = 'osh'">Second Half</button>
         </span>
 
-    <div class="left" *ngFor="let item of getRank(data, teams, title, seasonLength); let i=index">
+    <div class="left" *ngFor="let item of getRank(data, teams, title, seasonLength, week); let i=index">
         <span *ngIf="item?.abbreviation" class="sched-item">
             <span class="abb-single">
                 <span class="rank-num">{{(i+1)}}</span>  <img src="{{item?.officialLogoImageSrc}}" alt="{{item?.name}} logo"> 
