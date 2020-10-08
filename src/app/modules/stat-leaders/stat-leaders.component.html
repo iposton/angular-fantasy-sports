@@ -1073,14 +1073,16 @@
               <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && this.teamSchedules.length > 0" 
                 [data]="nflTeamStats" 
                 [teams]="nflTeams"
-                [title]="'Offense Team Rank'">
+                [title]="'Offense Team Rank'"
+                [week]="nflWeek">
               </app-team-rank>
 
               <app-team-rank *ngIf="!nflTeamLoading && nflDraftKit && this.teamSchedules.length > 0" 
                 [data]="nflTeamStats" 
                 [teams]="nflTeams"
                 [title]="'Toughest Defense Schedule 2020'"
-                (seasonChange)="seasonLength = $event">
+                (seasonChange)="seasonLength = $event"
+                [week]="nflWeek">
               </app-team-rank>
 
             </section>

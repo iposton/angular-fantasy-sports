@@ -583,10 +583,17 @@ export class StatLeadersComponent implements OnInit {
 
     this.nflService
     .getTeamStats('').subscribe(res => {
-      this.rankService.rankOffense(res['teamStatsTotals'], this.nflTeams);
-      this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams);
+      for (let stats of res['teamStatsTotals']) {
+        for (let teams of this.nflTeams) {
+          if (stats.team.id === teams.id) {
+            stats.bye = teams.bye;
+          }
+        }
+      }
+      this.rankService.rankOffense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
+      this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.week);
 
-      this.nflTeams = this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams);
+      this.nflTeams = this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
       this.nflTeamStats = res['teamStatsTotals'];
       this.nflTeamLoading = false;
       for (let teamStats of this.nflTeamStats) {
@@ -595,6 +602,8 @@ export class StatLeadersComponent implements OnInit {
             team.plays = teamStats.stats.rushing.rushAttempts + teamStats.stats.passing.passAttempts;
             team.passPlays = teamStats.stats.passing.passAttempts;
             team.runPlays = teamStats.stats.rushing.rushAttempts;
+            teamStats.upDefRank = team.defenseRankLs;
+            teamStats.upOffRank = team.offenseRankLs;
           }
         }
       }
@@ -684,15 +693,16 @@ export class StatLeadersComponent implements OnInit {
               data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100);
               data.stats.receiving.touchCatchPct = Math.floor(data.stats.receiving.targets / team.passPlays * 100);
               data.stats.passing.totalPassPct = Math.floor(data.stats.passing.passAttempts / team.plays * 100);
-
-              if (repImg[data.player.id] != null) {
-                data.player.officialImageSrc = repImg[data.player.id] ? repImg[data.player.id].new : data.player.officialImageSrc;
-              }
-              
-              if (data.player.officialImageSrc == null) {
-                data.player.officialImageSrc = nflplayerImages[data.player.id] != null ? nflplayerImages[data.player.id].image : null;
-              }
             }
+
+            if (repImg[data.player.id] != null) {
+              data.player.officialImageSrc = repImg[data.player.id] ? repImg[data.player.id].new : data.player.officialImageSrc;
+            }
+            
+            if (data.player.officialImageSrc == null) {
+              data.player.officialImageSrc = nflplayerImages[data.player.id] != null ? nflplayerImages[data.player.id].image : null;
+            }
+            
           }  
         }
       }
@@ -873,6 +883,7 @@ export class StatLeadersComponent implements OnInit {
               for (let wstats of res['gamelogs']) {
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
                   wstats.player.officialImageSrc = data.player.officialImageSrc;
+                  wstats.player.primaryPosition = data.player.primaryPosition;
                 }
               }
             }

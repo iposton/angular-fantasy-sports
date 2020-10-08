@@ -19,7 +19,7 @@ export class RankService {
 
    }
 
-   public rankOffense(teams, nflTeams) {
+   public rankOffense(teams, nflTeams, week) {
     let dataO = [];
     let rankO = [];
     let rank2O = [];
@@ -27,11 +27,13 @@ export class RankService {
     dataO = teams;
 
     rankO = dataO.slice().sort((a: any, b: any) => {
-      if ((a['stats'].rushing.rushYards + a['stats'].passing.passNetYards)
-      >= (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards)) {
+      if ((a['stats'].rushing.rushYards + a['stats'].passing.passNetYards
+      + (parseInt(week) < 13 && a.bye < parseInt(week) ? 350 : 0))
+      >= (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards + (parseInt(week) < 13 && b.bye < parseInt(week) ? 350 : 0))) {
         return -1;
-      } else if ((a['stats'].rushing.rushYards + a['stats'].passing.passNetYards)
-      <= (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards)) {
+      } else if ((a['stats'].rushing.rushYards + a['stats'].passing.passNetYards
+      + (parseInt(week) < 13 && a.bye < parseInt(week) ? 350 : 0))
+      <= (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards + (parseInt(week) < 13 && b.bye < parseInt(week) ? 350 : 0))) {
         return 1;
       } else {
         return 0;
@@ -40,11 +42,13 @@ export class RankService {
 
   rank2O = dataO.slice().sort((a: any, b: any) => {
     // console.log('rank Sacks and Picks');
-    if (a['stats'].passing.passTD + a['stats'].rushing.rushTD 
-     >= b['stats'].passing.passTD + b['stats'].rushing.rushTD) {
+    if ((a['stats'].passing.passTD + a['stats'].rushing.rushTD
+    + (parseInt(week) < 13 && a.bye < parseInt(week) ? 3 : 0)) 
+     >= (b['stats'].passing.passTD + b['stats'].rushing.rushTD + (parseInt(week) < 13 && b.bye < parseInt(week) ? 3 : 0))) {
       return -1;
-    } else if (a['stats'].passing.passTD + a['stats'].rushing.rushTD
-     <= b['stats'].passing.passTD + b['stats'].rushing.rushTD) {
+    } else if ((a['stats'].passing.passTD + a['stats'].rushing.rushTD
+    + (parseInt(week) < 13 && a.bye < parseInt(week) ? 3 : 0)) 
+     <= (b['stats'].passing.passTD + b['stats'].rushing.rushTD + (parseInt(week) < 13 && b.bye < parseInt(week) ? 3 : 0))) {
       return 1;
     } else {
       return 0;
@@ -93,21 +97,23 @@ export class RankService {
   return nflTeams;
 }
 
-   public rankDefense(teams, nflTeams) {
-    let dataD = [];
-    let rankD = [];
-    let rank2D = [];
-    let tRankD = [];
-    dataD = teams;
+   public rankDefense(teams, nflTeams, week) {
+      let dataD = [];
+      let rankD = [];
+      let rank2D = [];
+      let tRankD = [];
+      dataD = teams;
     
-
       rankD = dataD.slice().sort((a: any, b: any) => {
-        // console.log('rank PA');
-        if (a['stats'].standings.pointsAgainst
-         <= b['stats'].standings.pointsAgainst) {
+        if ((a['stats'].standings.pointsAgainst + 
+        (parseInt(week) < 13 && a.bye < parseInt(week) ? 21 : 0)) 
+         <= (b['stats'].standings.pointsAgainst + 
+         (parseInt(week) < 13 && b.bye < parseInt(week) ? 21 : 0))) {
           return -1;
-        } else if (a['stats'].standings.pointsAgainst
-         >= b['stats'].standings.pointsAgainst) {
+        } else if ((a['stats'].standings.pointsAgainst + 
+        (parseInt(week) < 13 && a.bye < parseInt(week) ? 21 : 0)) 
+         >= (b['stats'].standings.pointsAgainst + 
+         (parseInt(week) < 13 && b.bye < parseInt(week) ? 21 : 0))) {
           return 1;
         } else {
           return 0;
@@ -116,11 +122,15 @@ export class RankService {
 
       rank2D = dataD.slice().sort((a: any, b: any) => {
         // console.log('rank Sacks and Picks');
-        if (a['stats'].tackles.sacks + a['stats'].interceptions.interceptions + a['stats'].interceptions.passesDefended 
-         >= b['stats'].tackles.sacks + b['stats'].interceptions.interceptions + b['stats'].interceptions.passesDefended) {
+        if ((a['stats'].tackles.sacks + a['stats'].interceptions.interceptions + a['stats'].interceptions.passesDefended 
+        + (parseInt(week) < 13 && a.bye < parseInt(week) ? 7 : 0))
+         >= (b['stats'].tackles.sacks + b['stats'].interceptions.interceptions + b['stats'].interceptions.passesDefended 
+         + (parseInt(week) < 13 && b.bye < parseInt(week) ? 7 : 0))) {
           return -1;
-        } else if (a['stats'].tackles.sacks + a['stats'].interceptions.interceptions + a['stats'].interceptions.passesDefended
-         <= b['stats'].tackles.sacks + b['stats'].interceptions.interceptions + b['stats'].interceptions.passesDefended) {
+        } else if ((a['stats'].tackles.sacks + a['stats'].interceptions.interceptions + a['stats'].interceptions.passesDefended 
+        + (parseInt(week) < 13 && a.bye < parseInt(week) ? 7 : 0))
+         <= (b['stats'].tackles.sacks + b['stats'].interceptions.interceptions + b['stats'].interceptions.passesDefended 
+         + (parseInt(week) < 13 && b.bye < parseInt(week) ? 7 : 0))) {
           return 1;
         } else {
           return 0;
