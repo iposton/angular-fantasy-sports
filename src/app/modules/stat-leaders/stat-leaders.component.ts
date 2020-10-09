@@ -139,6 +139,15 @@ export class StatLeadersComponent implements OnInit {
       let date = new Date();
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.nflWeek = week.week; 
+
+        if (date < new Date('Tue Dec 31 2020 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+          let utcDate = new Date(week.dateBeg);
+          utcDate.setHours(utcDate.getHours() - 48);
+          let myDate = new Date(utcDate);
+          let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+          this.tsDate = dailyDate; 
+        }
+
       }
       
     } 
@@ -582,7 +591,7 @@ export class StatLeadersComponent implements OnInit {
     this.sport = 'nfl';
 
     this.nflService
-    .getTeamStats('').subscribe(res => {
+    .getTeamStats(this.tsDate).subscribe(res => {
       for (let stats of res['teamStatsTotals']) {
         for (let teams of this.nflTeams) {
           if (stats.team.id === teams.id) {
@@ -970,13 +979,13 @@ export class StatLeadersComponent implements OnInit {
         for (let t of this.nflTeams){
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id && s.schedule.week == this.nflWeek) {
-            if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
+            //if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
             sum.push({printName: '@ '+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
           } else if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id && s.schedule.week == this.nflWeek) {
-            if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
+            //if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
             sum.push({printName: 'vs '+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
-          } else if (index+1 === bye){ 
+          } else if (index+1 === bye && bye === parseInt(this.nflWeek)){ 
             sum.push({printName: 'BYE ', oRank: 1, dRank: 1, name: bye});
           }
         }
