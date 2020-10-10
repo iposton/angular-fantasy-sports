@@ -600,7 +600,7 @@ export class StatLeadersComponent implements OnInit {
         }
       }
       this.rankService.rankOffense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
-      this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.week);
+      this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
 
       this.nflTeams = this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
       this.nflTeamStats = res['teamStatsTotals'];

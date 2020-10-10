@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { NFLDataService, UtilService } from '../../services/index';
+import { NFLDataService, UtilService, RankService } from '../../services/index';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
@@ -95,6 +95,7 @@ export class NflStartersComponent implements OnInit {
     private dataService: NFLDataService,
     private util: UtilService,
     private http: HttpClient,
+    private rankService: RankService,
     @Inject(PLATFORM_ID) platformId: string) {
       this.teams = this.util.getNFLTeams();
       this.testBrowser = isPlatformBrowser(platformId);
@@ -349,6 +350,10 @@ export class NflStartersComponent implements OnInit {
 
             this.dataService
               .getTeamStats('').subscribe(res => {
+                this.rankService.rankOffense(res['teamStatsTotals'], this.teams, this.selectedWeek);
+                this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek);
+          
+                this.teams = this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek);
                 this.nflTeamStats = res['teamStatsTotals'];
                 this.nflTeamStatsLoading = false;
                 for (let teamStats of this.nflTeamStats) {
@@ -481,6 +486,8 @@ export class NflStartersComponent implements OnInit {
                                 data.stats.teamSPPct = Math.floor(team.seasonPassPlays / team.seasonPlays * 100);
                                 data.stats.seasonRun = team.seasonRun;
                                 data.teamStats = team.sTeamStats; 
+                                data.teamORank = team.offenseRankLs;
+                                data.teamDRank = team.defenseRankLs;
                             }
                           }  
                        }
