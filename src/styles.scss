@@ -1782,6 +1782,32 @@ form.date-form {
     text-transform: uppercase;
     font-weight: 200;
     letter-spacing: 2px;
+
+    .rank-circle {
+      background: #e74c3c;
+      border-radius: 50%;
+      display: inline-block;
+      height: 17px;
+      width: 17px;
+      line-height: 17px;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 11px;
+      color: #fff;
+    }
+
+    .red {
+      background:#e74c3c;
+      border: 2px solid #ff7979;
+    }
+    .orange {
+      background:#e67e22;
+      border: 2px solid #ffbe76;
+    }
+    .green {
+      background:#2ecc71;
+      border: 2px solid #badc58;
+    }
   }
 }
 
