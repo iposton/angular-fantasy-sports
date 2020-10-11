@@ -110,7 +110,7 @@ export class NflStartersComponent implements OnInit {
           this.selectedWeek = week.week;
           if (date < new Date('Tue Dec 31 2020 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
             let utcDate = new Date(week.dateBeg);
-            utcDate.setHours(utcDate.getHours() - 8);
+            utcDate.setHours(utcDate.getHours() - 48);
             let myDate = new Date(utcDate);
             let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
             this.tsDate = dailyDate; 
@@ -349,7 +349,7 @@ export class NflStartersComponent implements OnInit {
             this.dailyStats = res != null ? res['gamelogs'] : [];
 
             this.dataService
-              .getTeamStats('').subscribe(res => {
+              .getTeamStats(this.tsDate).subscribe(res => {
                 this.rankService.rankOffense(res['teamStatsTotals'], this.teams, this.selectedWeek);
                 this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek);
           
