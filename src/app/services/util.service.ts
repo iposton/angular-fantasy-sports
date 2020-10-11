@@ -1093,7 +1093,7 @@ export class UtilService {
       },
       {
       id: 50,
-      bye: 6,
+      bye: 5,
       defenseRankLs: 1,
       offenseRankLs: 14,
       city: "New England",
@@ -1539,7 +1539,7 @@ export class UtilService {
       },
       {
       id: 72,
-      bye: 8,
+      bye: 5,
       defenseRankLs: 11,
       offenseRankLs: 29,
       city: "Denver",
