@@ -166,7 +166,7 @@
                     <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'LIVE'">
                       <span class="live">LIVE</span> <br>
                       <span class="inning">
-                          {{data['oPlayers'][0]?.playerObj?.team?.currentQ}} 
+                          {{data['oPlayers'][0]?.playerObj?.team?.currentQ}} QTR
                           
                           <br>
                       </span>
@@ -352,9 +352,7 @@
                       <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'LIVE'">
                         <span class="live"> LIVE </span> 
                         <span class="inning">
-                            {{data['oPlayers'][0]?.playerObj?.team?.currentQ}} 
-                            
-                           
+                            {{data['oPlayers'][0]?.playerObj?.team?.currentQ}} QTR &nbsp;
                         </span>
                         <span class="score-box"> 
                             {{data['oPlayers'][0]?.playerObj?.team?.teamScore}} - 
