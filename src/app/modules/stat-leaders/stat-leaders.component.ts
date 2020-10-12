@@ -593,9 +593,9 @@ export class StatLeadersComponent implements OnInit {
     this.nflService
     .getTeamStats(this.tsDate).subscribe(res => {
       for (let stats of res['teamStatsTotals']) {
-        for (let teams of this.nflTeams) {
-          if (stats.team.id === teams.id) {
-            stats.bye = teams.bye;
+        for (let team of this.nflTeams) {
+          if (stats.team.id === team.id) {
+            stats.bye = team.bye;
           }
         }
       }
