@@ -29,20 +29,28 @@ export class DepthService {
         status: 'SET',
         gdate: 'Mon Oct 05 2020 00:00:00 GMT-0700 (Pacific Daylight Time)'
       },
-      '115': {
-        firstName: 'Blake',
-        lastName: 'Snell',
-        id: 10956,
-        status: 'SET',
-        gdate: 'Mon Oct 05 2020 00:00:00 GMT-0700 (Pacific Daylight Time)'
-      },
+      // '115': {
+      //   firstName: 'Blake',
+      //   lastName: 'Snell',
+      //   id: 10956,
+      //   status: 'SET',
+      //   gdate: 'Mon Oct 05 2020 00:00:00 GMT-0700 (Pacific Daylight Time)'
+      // },
       '139': {
         firstName: 'Mike',
         lastName: 'Clevinger',
         id: 10365,
         status: 'SET',
         gdate: 'Tue Oct 06 2020 00:00:00 GMT-0700 (Pacific Daylight Time)'
+      },
+      '115': {
+        firstName: 'Charlie',
+        lastName: 'Morton',
+        id: 11459,
+        status: 'SET',
+        gdate: 'Mon Oct 12 2020 00:00:00 GMT-0700 (Pacific Daylight Time)'
       }
+      
     }
   }
   
