@@ -350,6 +350,15 @@ export class NflStartersComponent implements OnInit {
 
             this.dataService
               .getTeamStats(this.tsDate).subscribe(res => {
+
+                for (let stats of res['teamStatsTotals']) {
+                  for (let team of this.teams) {
+                    if (stats.team.id === team.id) {
+                      stats.bye = team.bye;
+                    }
+                  }
+                }
+
                 this.rankService.rankOffense(res['teamStatsTotals'], this.teams, this.selectedWeek);
                 this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek);
           
