@@ -61,7 +61,10 @@
                   <span class="team-record">
                       <span class="rank-circle" *ngIf="typeToHideAway === 'd'" [ngClass]="{'red' : data['oPlayers'][0]?.playerObj?.teamORank &lt;= 10, 'orange' : data['oPlayers'][0]?.playerObj?.teamORank > 10 && data['oPlayers'][0]?.playerObj?.teamORank &lt;= 21, 'green' : data['oPlayers'][0]?.playerObj?.teamORank > 21}">{{data['oPlayers'][0]?.playerObj?.teamORank}} </span> 
                       <span class="rank-circle" *ngIf="typeToHideAway === 'o'" [ngClass]="{'red' : data['oPlayers'][0]?.playerObj?.teamDRank &lt;= 10, 'orange' : data['oPlayers'][0]?.playerObj?.teamDRank > 10 && data['oPlayers'][0]?.playerObj?.teamDRank &lt;= 21, 'green' : data['oPlayers'][0]?.playerObj?.teamDRank > 21}">{{data['oPlayers'][0]?.playerObj?.teamDRank}}</span>    
-                  {{data['oPlayers'][0]?.playerObj?.team.name}} {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.wins + ' - ' + data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.losses + ' - ' + data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.ties }}
+                  {{data['oPlayers'][0]?.playerObj?.team.name}} 
+                  {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.wins + (data['oPlayers'][0]?.playerObj?.dTeamStats != null ? data['oPlayers'][0]?.playerObj?.dTeamStats?.stats?.standings?.wins : 0)}} - 
+                  {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.losses + (data['oPlayers'][0]?.playerObj?.dTeamStats != null ? data['oPlayers'][0]?.playerObj?.dTeamStats?.stats?.standings?.losses : 0)}} - 
+                  {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.ties + (data['oPlayers'][0]?.playerObj?.dTeamStats != null ? data['oPlayers'][0]?.playerObj?.dTeamStats?.stats?.standings?.ties : 0) }}
                   </span>
                 <div [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'home' || item?.playerObj?.playerType === 'n', 'dn2' : item?.playerObj?.playerType === typeToHideAway}"  *ngFor="let item of data['oPlayers']; let i = index">
                   
@@ -204,7 +207,10 @@
                   <span class="team-record">
                       <span class="rank-circle" *ngIf="typeToHideHome === 'd'" [ngClass]="{'red' : data['oPlayers'][10]?.playerObj?.teamORank &lt;= 10, 'orange' : data['oPlayers'][10]?.playerObj?.teamORank > 10 && data['oPlayers'][10]?.playerObj?.teamORank &lt;= 21, 'green' : data['oPlayers'][10]?.playerObj?.teamORank > 21}">{{data['oPlayers'][10]?.playerObj?.teamORank}} </span> 
                       <span class="rank-circle" *ngIf="typeToHideHome === 'o'" [ngClass]="{'red' : data['oPlayers'][10]?.playerObj?.teamDRank &lt;= 10, 'orange' : data['oPlayers'][10]?.playerObj?.teamDRank > 10 && data['oPlayers'][10]?.playerObj?.teamDRank &lt;= 21, 'green' : data['oPlayers'][10]?.playerObj?.teamDRank > 21}">{{data['oPlayers'][10]?.playerObj?.teamDRank}}</span> 
-                      {{data['oPlayers'][10]?.playerObj?.team.name}} {{data['oPlayers'][10]?.playerObj?.teamStats?.stats?.standings?.wins + ' - ' + data['oPlayers'][10]?.playerObj?.teamStats?.stats?.standings?.losses + ' - ' + data['oPlayers'][10]?.playerObj?.teamStats?.stats?.standings?.ties }}
+                      {{data['oPlayers'][10]?.playerObj?.team.name}} 
+                      {{data['oPlayers'][10]?.playerObj?.teamStats?.stats?.standings?.wins + (data['oPlayers'][10]?.playerObj?.dTeamStats != null ? data['oPlayers'][10]?.playerObj?.dTeamStats?.stats?.standings?.wins : 0)}} - 
+                      {{data['oPlayers'][10]?.playerObj?.teamStats?.stats?.standings?.losses + (data['oPlayers'][10]?.playerObj?.dTeamStats != null ? data['oPlayers'][10]?.playerObj?.dTeamStats?.stats?.standings?.losses : 0)}} - 
+                      {{data['oPlayers'][10]?.playerObj?.teamStats?.stats?.standings?.ties + (data['oPlayers'][10]?.playerObj?.dTeamStats != null ? data['oPlayers'][10]?.playerObj?.dTeamStats?.stats?.standings?.ties : 0) }}
                   </span>
                 <div [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'away' || item?.playerObj?.playerType === 'n', 'dn2' : item?.playerObj?.playerType === typeToHideHome}"  *ngFor="let item of data['oPlayers']; let i = index">
                     

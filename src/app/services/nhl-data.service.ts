@@ -237,11 +237,14 @@ export class NHLDataService {
     else
       season = '2020-playoff';
     if (span === 'last-week') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${sport === 'mlb' ? twoWeekDailyDate : lastweekDailyDate}-to-${dailyDate}`;
+      //sport === 'mlb' ? twoWeekDailyDate : 
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${lastweekDailyDate}-to-${dailyDate}`;
     } else if (span === 'yesterday') {
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=${yesterdayDailyDate}`;
     } else if (span === 'today') {
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=${dailyDate}`;
+    } else if (span === 'two-weeks') {
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${twoWeekDailyDate}-to-${dailyDate}`;
     }
     
     this.games = this.http.get(url, {headers})
