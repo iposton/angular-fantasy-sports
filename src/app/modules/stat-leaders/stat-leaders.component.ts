@@ -224,17 +224,6 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public onChange(week) {
-    // this.loading = true;
-    // this.selectedWeek = week;
-    // this.dailySchedule = [];
-    // this.starterIdData = [];
-    // playerString = null;
-    // this.dailyStats = [];
-    // this.myData = [];
-    // this.showData = [];
-    // this.liveGames = false;
-    // this.gamesToday = false;
-    // this.noGamesMsg = '';
     this.week = week;
     this.loadNFL();
   }
@@ -581,6 +570,9 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public loadNFL() {
+    if (this.week === 'three-weeks') {
+      // load 3 weeks of nfl games
+    } else {
     //this.loading = true;
     this.nbaSection = false; 
     this.nhlSection = false; 
@@ -924,6 +916,7 @@ export class StatLeadersComponent implements OnInit {
         // });
         teamInfo(this.nflKickerData, this.nflTeams, 'o', this.week);
       });
+    }
   }
 
   public getSchedToughness(sched, type, mainTeam, bye) {
