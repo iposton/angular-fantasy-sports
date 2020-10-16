@@ -8,6 +8,7 @@ let daTomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
 let yesterdayDate = new Date(thisDate.getTime() - (24 * 60 * 60 * 1000));
 let lastweekDate = new Date(thisDate.getTime() - (168 * 60 * 60 * 1000));
 let twoWeekDate = new Date(thisDate.getTime() - (336 * 60 * 60 * 1000));
+let threeWeekDate = new Date(thisDate.getTime() - (552 * 60 * 60 * 1000));
 
 let utcDate = new Date(thisDate.toUTCString());
 let tomorrowUtcDate = new Date(tomorrowDate.toUTCString());
@@ -15,6 +16,7 @@ let daTomorrowUtcDate = new Date(daTomorrowDate.toUTCString());
 let yesterdayUtcDate = new Date(yesterdayDate.toUTCString());
 let lastweekUtcDate = new Date(lastweekDate.toUTCString());
 let twoWeekUtcDate = new Date(twoWeekDate.toUTCString());
+let threeWeekUtcDate = new Date(threeWeekDate.toUTCString());
 
 utcDate.setHours(utcDate.getHours() - 8);
 tomorrowUtcDate.setHours(tomorrowUtcDate.getHours() - 8);
@@ -22,6 +24,7 @@ daTomorrowUtcDate.setHours(daTomorrowUtcDate.getHours() - 8);
 yesterdayUtcDate.setHours(yesterdayUtcDate.getHours() - 8);
 lastweekUtcDate.setHours(lastweekUtcDate.getHours() - 8);
 twoWeekUtcDate.setHours(twoWeekUtcDate.getHours() - 8);
+threeWeekUtcDate.setHours(threeWeekUtcDate.getHours() - 8);
 
 let myDate = new Date(utcDate);
 let tomorrowMyDate = new Date(tomorrowUtcDate);
@@ -29,6 +32,7 @@ let daTomorrowMyDate = new Date(daTomorrowUtcDate);
 let yesterdayMyDate = new Date(yesterdayUtcDate);
 let lastweekMyDate = new Date(lastweekUtcDate);
 let twoWeekMyDate = new Date(twoWeekUtcDate);
+let threeWeekMyDate = new Date(threeWeekUtcDate);
 
 //DATE FORMAT FOR DAILY SCHEDULE API
 let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
@@ -37,6 +41,7 @@ let dayAfterTomorrow = daTomorrowMyDate.toISOString().slice(0, 10).replace(/-/g,
 let yesterdayDailyDate = yesterdayMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 let lastweekDailyDate = lastweekMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 let twoWeekDailyDate = twoWeekMyDate.toISOString().slice(0, 10).replace(/-/g, "");
+let threeWeekDailyDate = threeWeekMyDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
 let today = myDate.toISOString().slice(0, 10);
@@ -232,10 +237,10 @@ export class NHLDataService {
   getGames(span, sport) {
     let url = null;
     let season = null;
-    if (sport != 'mlb')
+    if (sport != 'nfl')
       season = '2020-playoff';
     else
-      season = '2020-playoff';
+      season = '2020-2021-regular';
     if (span === 'last-week') {
       //sport === 'mlb' ? twoWeekDailyDate : 
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${lastweekDailyDate}-to-${dailyDate}`;
@@ -245,6 +250,8 @@ export class NHLDataService {
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=${dailyDate}`;
     } else if (span === 'two-weeks') {
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${twoWeekDailyDate}-to-${dailyDate}`;
+    } else if (span === 'three-weeks') {
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${threeWeekDailyDate}-to-${dailyDate}`;
     }
     
     this.games = this.http.get(url, {headers})
