@@ -340,6 +340,24 @@ footer {
 
     }
 
+    .sm {
+      font-size: 10px;
+      border-radius: 3px;
+      display: inline-block;
+      margin: 0 1px;
+      font-weight: 400;
+      text-align: center;
+    }
+    .sm.red {
+      background:#e74c3c;
+    }
+    .sm.orange {
+      background:#e67e22;
+    }
+    .sm.green {
+      background:#2ecc71;
+    }
+
     p {
       font-size: 13px;
     }

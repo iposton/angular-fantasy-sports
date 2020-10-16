@@ -162,6 +162,12 @@ export class UtilService {
         lastName: "Garcia",
         image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/665620/headshot/silo/current"
       },
+      "22220": {
+        firstName: "Luis",
+        lastName: "Garcia",
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/677651/headshot/67/current"
+      },
+      
       
     }
 
@@ -190,9 +196,6 @@ export class UtilService {
       "8272" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ttuzsfycx9n3wie83dsw"
       },
-      // "6845" : {
-      //   new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/gxxogysbupsery4gckld"
-      // },
       "9741" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/yeobojameg9dram1qiqo"
       },
@@ -213,6 +216,27 @@ export class UtilService {
       },
       "6114" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ublljy2omv3mulxf7kkp"
+      },
+      "18619" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/mmx64blok0j1a5e9zhww"
+      },
+      "18624" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qgyu27brqcvyquh7btov"
+      },
+      "18578" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xcymtg1vdkbntbzlmbrw"
+      },
+      "6464" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/bpeotcvx7x9lhrzccjgz"
+      },
+      "6756" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/a7y4lor47rsusu08bise"
+      },
+      "19375" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/m6btiz85brkj9bwim4yv"
+      },
+      "18732" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/kfdhebiaodlh02eikayl"
       },
     
     }
@@ -1078,7 +1102,7 @@ export class UtilService {
       },
       {
       id: 49,
-      bye: 11,
+      bye: 7,
       defenseRankLs: 32,
       offenseRankLs: 26,
       city: "Miami",
@@ -1420,7 +1444,7 @@ export class UtilService {
       },
       {
       id: 66,
-      bye: 7,
+      bye: 8,
       defenseRankLs: 22,
       offenseRankLs: 24,
       city: "Jacksonville",
@@ -1608,7 +1632,7 @@ export class UtilService {
       },
       {
       id: 75,
-      bye: 10,
+      bye: 6,
       defenseRankLs: 24,
       offenseRankLs: 16,
       city: "Los Angeles",

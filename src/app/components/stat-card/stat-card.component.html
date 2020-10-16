@@ -57,7 +57,7 @@
             <span class="player-infos">
               <span *ngIf="item.player?.rookie === true && !ndk" class="rookie">R</span>
               <span class="names">
-                  {{ !mobile && !ndk ? item.player.firstName + " " + item.player.lastName : item.player.lastName}} -
+                  {{ !mobile && !ndk ? item.player.firstName.charAt(0) + ". " + item.player.lastName : item.player.lastName}} -
                   {{ item?.player?.primaryPosition }} 
               </span>
 
@@ -73,6 +73,14 @@
                     <span *ngIf="statType === 'rushing'">{{ item?.stats[statType]?.rushTD }} TD</span>
                     <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct'">{{ item?.stats[statType]?.recTD }} TD</span>
                     <span *ngIf="statField === 'totalTouchPct'">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
+                  </span>
+                </span>
+                <span *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk">
+                    <span *ngIf="item?.spanOpponents.length &gt; 0">
+                      <span class="sm" *ngFor="let team of item?.spanOpponents; let i = index;" 
+                      [ngClass]="{'red' : team?.dRank &lt;= 10, 'orange' : team?.dRank > 10 && team?.dRank &lt;= 21, 'green' : team?.dRank > 21}">
+                          {{team.printName}} <br> {{team.dRank}}
+                      </span>
                   </span>
                 </span>
                 <span class="lg" *ngIf="ndk && sport === 'nfl'">
