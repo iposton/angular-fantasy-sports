@@ -191,7 +191,7 @@
   <div *ngIf="nflSched" class="row schedule">
     <!-- <span class="week-rank">NFL<br> </span>  -->
     <span *ngIf="noNflGamesMsg">{{ noNflGamesMsg }}</span>
-    <div *ngFor="let item of nflSchedule; let i = index" class="col">
+    <div *ngFor="let item of nflSchedule; let i = index" class="col" [ngClass]="{'dn': item?.schedule?.week != this.selectedWeek}">
       <div class="teams-container" [ngStyle]="{ background: '#303030' }">
         <span
           class="score-container"
