@@ -209,6 +209,10 @@ export class NflStartersComponent implements OnInit {
                   let score2 = null;
                   let originalStart = null;
                   let gameDay = null;
+                  let startTime;
+                  const today = new Date()
+                  const afterTomorrow = new Date(today);
+                  afterTomorrow.setDate(afterTomorrow.getDate() + 3)
                 
                   
                 res.forEach((item, index) => {
@@ -225,10 +229,13 @@ export class NflStartersComponent implements OnInit {
 
                     res2.forEach((item, index) => {
                       gameDay = new Date(this.gameDate);
+                      startTime = new Date(game2.startTime);
+                      //console.log(game2, 'game')
                       originalStart = game2.originalStartTime != null ? new Date(game2.originalStartTime) : new Date(game2.startTime);
                       //console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
                         i2 = index;
-                        if (res2[i2].actual != null && res2[i2].expected != null) {
+                       
+                        if (res2[i2].actual != null && res2[i2].expected != null && startTime < afterTomorrow) {
 
                           for (let position of res2[i2].actual.lineupPositions) {
                             //console.log(pos[position.player.position], pos, position.player.position);
@@ -249,20 +256,13 @@ export class NflStartersComponent implements OnInit {
                               this.gameStarters.push(this.gameStarter);
                               this.starterIdData.push(position.player.id);
 
-                              // if (position['position'] === 'P') {
-                              //   this.gameStarters.push(this.gameStarter);
-                              //   this.starterIdData.push(position.player.id);
-                              // } else {
-                              //   this.gameBatters.push(this.gameStarter);
-                              //   this.batterIdData.push(position.player.id);
-                              // }
                            } 
                           }
                          
                           playerString = this.starterIdData.join();
                           //batterString = this.batterIdData.join(); 
                           
-                        } else if (res2[i2].actual == null && res2[i2].expected != null) {
+                        } else if (res2[i2].actual == null && res2[i2].expected != null && startTime < afterTomorrow) {
                           //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
                           for (let position of res2[i2].expected.lineupPositions) {
                             //console.log(pos[position.player.position], pos, position.player.position);
@@ -283,17 +283,11 @@ export class NflStartersComponent implements OnInit {
                             this.gameStarters.push(this.gameStarter);
                             this.starterIdData.push(position.player.id);
 
-                            // if (position['position'] === 'P') {
-                            //   this.gameStarters.push(this.gameStarter);
-                            //   this.starterIdData.push(position.player.id);
-                            // } else {
-                            //   this.gameBatters.push(this.gameStarter);
-                            //   this.batterIdData.push(position.player.id);
-                            // }
+                            
                           }   
                          }
                           playerString = this.starterIdData.join(); 
-                          //batterString = this.batterIdData.join();       
+                                
                         } 
                       
                     });
@@ -418,14 +412,20 @@ export class NflStartersComponent implements OnInit {
                       if (this.myData && this.dailySchedule) {
                         let gameDay = null;
                         let originalStart = null;
+                        const today = new Date()
+                        const afterTomorrow = new Date(today);
+                        afterTomorrow.setDate(afterTomorrow.getDate() + 3);
                        // console.log('start sorting data for daily schedule...');
                         for (let schedule of this.dailySchedule) {
                           for (let sdata of this.myData) {
                             gameDay = new Date(this.gameDate);
                             originalStart = new Date(schedule.schedule.startTime);
+
+                            //console.log(schedule.schedule, 'teams starting this week below', originalStart, afterTomorrow)
+                       
                             
                             if (schedule.schedule.awayTeam != null && 
-                              schedule.schedule.homeTeam != null) {
+                              schedule.schedule.homeTeam != null && originalStart < afterTomorrow) {
 
                               if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
                                 sdata.sStatus = schedule.schedule.scheduleStatus;
