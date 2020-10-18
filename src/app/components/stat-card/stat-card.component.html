@@ -12,8 +12,11 @@
             [ngClass]="{
               'left-content': i <= page,
               'dn': i > page || i <= amount,
-              'dn2': (!ndk && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank > begin : item?.team[seasonLength] > begin) && !ndk && (item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= end : item?.team[seasonLength] <= end),
-              'dn3': begin === 21 && !ndk && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= 10 : item?.team[seasonLength] <= 10
+              'dn2': (!ndk && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank > begin : item?.team[seasonLength] > begin) && !ndk && (item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= end : item?.team[seasonLength] <= end) || 
+              (ndk && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank > begin : item?.team[seasonLength] > begin) && ndk && (item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= end : item?.team[seasonLength] <= end),
+              'dn3': begin === 21 && !ndk && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= 10 : item?.team[seasonLength] <= 10 ||
+              begin === 21 && ndk && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= 10 : item?.team[seasonLength] <= 10,
+              'sm' : item?.spanOpponents != null
             }"
             >
             <span class="index-rank" [ngClass]="{'dn' : sport === 'nfl' && ndk}">{{ i + 1 }}</span>
@@ -54,11 +57,12 @@
                     </span>   
             </span>    
           </span>
-            <span class="player-infos">
+            <span class="player-infos" [ngClass]="{'sm' : item?.spanOpponents != null}">
               <span *ngIf="item.player?.rookie === true && !ndk" class="rookie">R</span>
               <span class="names">
-                  {{ !mobile && !ndk ? item.player.firstName.charAt(0) + ". " + item.player.lastName : item.player.lastName}} -
-                  {{ item?.player?.primaryPosition }} 
+                  {{ !mobile && !ndk && item?.spanOpponents == null ? item.player.firstName + " " + item.player.lastName : item.player.lastName}} 
+                   <span> - {{ item?.player?.primaryPosition }}</span> 
+                  
               </span>
 
               <span class="team-image {{sport}}">
@@ -66,7 +70,7 @@
               </span>
 
               <span class="point">
-                <span class="lg" *ngIf="!ndk">
+                <span class="lg" *ngIf="!ndk" [ngClass]="{'sm' : item?.spanOpponents != null}">
                   {{ (item?.stats)[statType][statField] }} {{ statTag }}
                   <span *ngIf="sport === 'nfl'">
                     <span *ngIf="statType === 'passing'">{{ item?.stats[statType]?.passTD }} TD</span>
@@ -75,11 +79,23 @@
                     <span *ngIf="statField === 'totalTouchPct'">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
                   </span>
                 </span>
-                <span *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk">
+                <span *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && statType != 'tackles' && statType != 'interceptions'">
                     <span *ngIf="item?.spanOpponents.length &gt; 0">
                       <span class="sm" *ngFor="let team of item?.spanOpponents; let i = index;" 
                       [ngClass]="{'red' : team?.dRank &lt;= 10, 'orange' : team?.dRank > 10 && team?.dRank &lt;= 21, 'green' : team?.dRank > 21}">
-                          {{team.printName}} <br> {{team.dRank}}
+                          {{team?.printName}} <br> {{team?.dRank}}
+                      </span>
+                  </span>
+                </span>
+                <span *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && (statType === 'tackles' || statType === 'interceptions')">
+                    <span *ngIf="item?.spanOpponents.length &gt; 0">
+                      <span class="sm" *ngFor="let team of item?.spanOpponents; let i = index;" 
+                      [ngClass]="{'red' : team?.oRank &lt;= 10, 'orange' : team?.oRank > 10 && team?.oRank &lt;= 21, 'green' : team?.oRank > 21}">
+                          {{team?.printName}} <br> {{team?.oRank}} <br> OY: {{team?.opponentYds}} <br>
+                          <span *ngIf="team?.gameTD === 0 && team?.gameSacks === 0 && team?.gameInt &gt; 0">Int: {{team?.gameInt}}</span> 
+                          <span *ngIf="team?.gameTD === 0 && team?.gameSacks === 0 && team?.gameInt === 0">Tkl: {{team?.gameTackles}}</span> 
+                          <span *ngIf="team?.gameSacks &gt; 0 && team?.gameTD === 0">Sack: {{team?.gameSacks}}</span> 
+                          <span *ngIf="team?.gameTD &gt; 0">TD: {{team?.gameTD}}</span>
                       </span>
                   </span>
                 </span>

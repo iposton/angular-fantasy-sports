@@ -289,7 +289,7 @@ export class NFLDataService {
       }
   }
 
-  getAllDefense(position, season) {
+  getAllDefense(position, season, week) {
 
     if (position === 'all' && season === '20') {
       let url = `${this.apiRoot2020}/players.json?position=CB,S,LB,DT,DE,SS,FS,OLB,ILB,MLB`;
@@ -298,6 +298,10 @@ export class NFLDataService {
     } else if (position === 'all' && season === '19') {
       let url = `${this.apiRoot2021}/player_stats_totals.json?position=CB,S,LB,DT,DE,FS,SS,OLB,ILB,MLB`;
       this.defenseStats = this.http.get(url, {headers})
+      return this.defenseStats;
+    } else if (week != 'all') {
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${week}/player_gamelogs.json?position=CB,S,LB,DT,DE,FS,SS,OLB,ILB,MLB`;
+      this.offenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     }
       

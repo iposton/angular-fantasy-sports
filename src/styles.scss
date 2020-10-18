@@ -294,6 +294,20 @@ footer {
       font-weight: 200;
       color: #fff;
     }
+
+    .player-infos.sm {
+
+      font-size: 14px;
+      .team-image img {
+        width: 38px;
+      }
+
+      img {
+        height: 38px;
+        width: 38px;
+      }
+
+    }
   
     .lg {
       font-size: 16px;
@@ -340,6 +354,10 @@ footer {
 
     }
 
+    .lg.sm {
+      font-size: 14px;
+    }
+
     .sm {
       font-size: 10px;
       border-radius: 3px;
@@ -362,6 +380,14 @@ footer {
       font-size: 13px;
     }
   }
+
+  .left-content.sm {
+    img {
+      height: 40px;
+      width: 40px;
+    }
+  }
+
   .dn, .dn2, .dn3 {
     display: none;
   }
@@ -2453,6 +2479,49 @@ form input[type="text"] {
     margin: 0 0 20px 0;
     vertical-align: top;
     width: 100%;
+
+    .player-infos.sm {
+
+      font-size: 12px;
+      .team-image img {
+        width: 30px;
+      }
+
+      img {
+        height: 35px;
+        width: 35px;
+      }
+      
+    }
+
+    .lg.sm {
+      font-size: 12px;
+    }
+
+    .left-content.sm {
+      img {
+        height: 35px;
+        width: 35px;
+      }
+    }
+
+  }
+
+  .main-row.stat-leaders .left-content.sm img {
+    height: 30px;
+    width: 30px;
+  }
+
+  .main-row.stat-leaders .left-content .player-infos.sm .team-image img {
+    width: 30px;
+  }
+
+  .main-row.stat-leaders .left-content .lg.sm {
+    font-size: 13px;
+  }
+
+  .main-row.stat-leaders .left-content .player-infos.sm {
+    font-size: 13px;
   }
 
   .baseball-header {

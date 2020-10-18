@@ -110,6 +110,7 @@ export class StatLeadersComponent implements OnInit {
   public crunchedWR: Array <any> = [];
   public crunchedTE: Array <any> = [];
   public crunchedKicker: Array <any> = [];
+  public crunchedDef: Array <any> = [];
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -233,7 +234,11 @@ export class StatLeadersComponent implements OnInit {
     this.timeSpan = week;
     this.combined = [];
     this.reduced = [];
-    this.loadNFL();
+    if (this.nflDefenseSection) {
+      this.defensePlayers();
+    } else if (this.nflSection) {
+      this.loadNFL();
+    } 
   }
 
   public spanGames() {
@@ -270,9 +275,12 @@ export class StatLeadersComponent implements OnInit {
       if (this.sport != 'nfl') {
         root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-playoff`;
         this.sortStats(root, res['games'], this.sport, type)
-      } else {
+      } else if (this.sport === 'nfl' && this.nflSection) {
         root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-2021-regular`;
         this.sortNFLStats(root, res['games'], this.sport, type, this.nflTeams);
+      } else if (this.sport === 'nfl' && this.nflDefenseSection) {
+        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-2021-regular`;
+        this.sortNFLDStats(root, res['games'], this.sport, type, this.nflTeams);
       }
       
     })
@@ -1202,50 +1210,75 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public defensePlayers() {
-    this.nflSection = false; 
-    this.nflDefenseSection = true;
-    function teamInfo(array, teams, type) {
-      
-      for (let team of teams) {
-        for (let data of array) { 
-          if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-            data.team.logo = team['officialLogoImageSrc'];
-            data.team.city = team['city'];
-            data.team.name = team['name'];
-            data.team.twitter = team['twitter'];
-            data.team.otr = team['otr'];
-            data.team.ofh = team['ofh'];
-            data.team.osh = team['osh'];
-            data.team.abbreviation = team['abbreviation'];
-            data.team.scheduleTicker = team['scheduleTicker'];
-            data.team.weekOpponent = team['weekOpponent'];
-          }
-        }  
-      }
-    }
-    if (this.nflDefenseData == null) {
+    if (this.week === 'three-weeks') {
+      // load 3 weeks of nfl games
       this.nflDefenseLoading = true;
-      this.nflService
-      .getAllDefense('all', '19').subscribe(res => {
-        this.nflDefenseData = res['playerStatsTotals'].filter(
-          player => player.stats != null && player.stats.gamesPlayed > 0);
-      // this.nflService
-      //   .getAllDefense('all', '20').subscribe(res => {
-      //     this.newDefenseData = res['players'];
-      //     for (let n of this.newDefenseData) {
-      //       for (let old of this.nflDefenseData) {
-      //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-      //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
-      //           old.team.id = n['teamAsOfDate'].id;
-      //         }
-      //       }
-      //     }
-      //     teamInfo(this.nflDefenseData, this.nflTeams, 'd');
-      //     this.nflDefenseLoading = false;
-      // });
-      teamInfo(this.nflDefenseData, this.nflTeams, 'd');
-      this.nflDefenseLoading = false;
-     });
+      this.spanGames();
+    } else {
+      this.nflSection = false; 
+      this.nflDefenseSection = true;
+      function teamInfo(array, teams, type) {
+        
+        for (let team of teams) {
+          for (let data of array) { 
+            if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+              data.team.logo = team['officialLogoImageSrc'];
+              data.team.city = team['city'];
+              data.team.name = team['name'];
+              data.team.twitter = team['twitter'];
+              data.team.otr = team['otr'];
+              data.team.ofh = team['ofh'];
+              data.team.osh = team['osh'];
+              data.team.abbreviation = team['abbreviation'];
+              data.team.scheduleTicker = team['scheduleTicker'];
+              data.team.weekOpponent = team['weekOpponent'];
+            }
+            if (repImg[data.player.id] != null) {
+              data.player.officialImageSrc = repImg[data.player.id] ? repImg[data.player.id].new : data.player.officialImageSrc;
+            }
+            
+            if (data.player.officialImageSrc == null) {
+              data.player.officialImageSrc = nflplayerImages[data.player.id] != null ? nflplayerImages[data.player.id].image : null;
+            }
+          }  
+        }
+      }
+      if (this.nflDefenseData == null) {
+        this.nflDefenseLoading = true;
+
+        this.nflService.getAllDefense('all', '19', this.week).subscribe(res => {
+
+          if (res['gamelogs'] != null) {
+            for (let data of this.nflDefenseData) {
+              for (let wstats of res['gamelogs']) {
+                if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
+                  wstats.player.officialImageSrc = data.player.officialImageSrc;
+                  wstats.player.primaryPosition = data.player.primaryPosition;
+                }
+              }
+            }
+          }
+          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
+          this.nflDefenseData = stats.filter(
+            player => player.stats != null && player.stats.gamesPlayed > 0);
+        // this.nflService
+        //   .getAllDefense('all', '20').subscribe(res => {
+        //     this.newDefenseData = res['players'];
+        //     for (let n of this.newDefenseData) {
+        //       for (let old of this.nflDefenseData) {
+        //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+        //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
+        //           old.team.id = n['teamAsOfDate'].id;
+        //         }
+        //       }
+        //     }
+        //     teamInfo(this.nflDefenseData, this.nflTeams, 'd');
+        //     this.nflDefenseLoading = false;
+        // });
+        teamInfo(this.nflDefenseData, this.nflTeams, 'd');
+        this.nflDefenseLoading = false;
+      });
+      }
     }
   }
 
@@ -1466,21 +1499,21 @@ export class StatLeadersComponent implements OnInit {
             if (s === 'mlb' && this.mlbSection) {
               this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched > 0);
               this.mlbPitchingData = this.crunched;
-              // console.log(this.nhlGoaltenders, 'crunched nhl');     
+                  
               this.mlbPitchingLoading = false;
             }
 
             if (s === 'mlb' && this.mlbHittingSection) {
               this.crunched = this.mlbHittingData.filter(player => player.player.span === this.timeSpan && player.stats.batting.plateAppearances > 0);
               this.mlbHittingData = this.crunched;
-              // console.log(this.nhlGoaltenders, 'crunched nhl');     
+                  
               this.mlbHittingLoading = false;
             }
 
             if (s === 'nhl' && this.nhlGoalies) {
               this.crunched = this.nhlGoaltenders.filter(player => player.player.span === this.timeSpan);
               this.nhlGoaltenders = this.crunched;
-              // console.log(this.nhlGoaltenders, 'crunched nhl');     
+                  
               this.nhlGoalieloading = false;
             }
 
@@ -1738,22 +1771,170 @@ export class StatLeadersComponent implements OnInit {
 
               this.crunchedQB = this.nflQBData.filter(player => player.player.span === this.timeSpan);
               this.nflQBData = this.crunchedQB;
-              // console.log(this.nhlGoaltenders, 'crunched nhl');  
+               
               this.crunchedRB = this.nflRushData.filter(player => player.player.span === this.timeSpan);
               this.nflRushData = this.crunchedRB;
-              // console.log(this.nhlGoaltenders, 'crunched nhl');  
+               
               this.crunchedWR = this.nflRecData.filter(player => player.player.span === this.timeSpan);
               this.nflRecData = this.crunchedWR;
-              // console.log(this.nhlGoaltenders, 'crunched nhl'); 
+              
               this.crunchedTE = this.nflTEData.filter(player => player.player.span === this.timeSpan);
               this.nflTEData = this.crunchedTE;
-              // console.log(this.nhlGoaltenders, 'crunched nhl'); 
+              
               this.crunchedKicker = this.nflKickerData.filter(player => player.player.span === this.timeSpan);
               this.nflKickerData = this.crunchedKicker;
               // console.log(this.nhlGoaltenders, 'crunched nhl');
               this.nflOffenseLoading = false;
                  
           });
-  }  
+  } 
+  
+  public sortNFLDStats(root, games, sport, type, nflTeams) {
+    let oPos = {
+      'QB':'QB',
+      'WR':'WR',
+      'RB':'RB',
+      'TE':'TE'
+    }
+
+    let dPos = {
+      'LB':'d',
+      'S':'d',
+      'CB':'d',
+      'DE':'d',
+      'SS':'d',
+      'FS':'d',
+      'DB':'d',
+      'MLB':'d',
+      'ILB':'d',
+      'OLB':'d',
+      'NT':'d',
+      'DT':'d',
+      // 'FB':'n',
+      'T':'d',
+      // 'OT':'n',
+      // 'G':'n',
+    }
+  
+        forkJoin(
+            games.map(
+              g =>
+              this.http.get(`${root}/games/`+ g.schedule.id +`/boxscore.json`, {headers})
+            )
+          )
+          .subscribe(res => {
+            let i: number;
+            let home;
+            let away;
+            let awayOpponent;
+            let homeOpponent;
+            let awayOpponentYds;
+            let homeOpponentYds;
+            let awayTeam;
+            let homeTeam;
+
+            function findRank(team, print, player, oy) {
+              let info;
+              for (let t of nflTeams) {
+                
+                  if (team === t.abbreviation && dPos[player['player'].position]) {
+                    info = {
+                       printName: print,
+                       oRank: t.offenseRankLs, 
+                       dRank: t.defenseRankLs, 
+                       name: t.abbreviation, 
+                       opponentYds: oy, 
+                       gameTackles: player['playerStats'][0].tackles.tackleTotal, 
+                       gameSacks: player['playerStats'][0].tackles.sacks, 
+                       gameInt: player['playerStats'][0].interceptions.interceptions, 
+                       gameTD: player['playerStats'][0].interceptions.intTD + player['playerStats'][0].fumbles.fumTD,
+                       playerName: player.player['firstName'],
+                       playerId: player.player.id
+                      };
+                    return info; 
+                  }
+               
+              }
+            }
+
+            res.forEach((item, index) => {
+              i = index;
+              if (res[i] != null) {
+                //console.log(res[i], 'boxscore')
+                home = res[i]['stats'].home.players;
+                away = res[i]['stats'].away.players;
+                homeTeam = res[i]['game'].homeTeam.abbreviation;
+                awayTeam = res[i]['game'].awayTeam.abbreviation;
+                //console.log(away, 'away players')
+                awayOpponentYds = res[i]['stats'].home.teamStats[0].miscellaneous ? res[i]['stats'].home.teamStats[0].miscellaneous.offenseYds : 0;
+                homeOpponentYds = res[i]['stats'].away.teamStats[0].miscellaneous ? res[i]['stats'].away.teamStats[0].miscellaneous.offenseYds : 0;
+
+                //homeOpponent = findRank(awayTeam, `vs ${awayTeam}`, home, homeOpponentYds);
+                //awayOpponent = findRank(homeTeam, `@ ${homeTeam}`, away, awayOpponentYds);
+
+                away.forEach((item, index) => {
+                  away[index].opponent = findRank(homeTeam, `@ ${homeTeam}`, away[index], awayOpponentYds);
+                  this.combined.push(away[index]);
+                })
+
+                home.forEach((item, index) => {  
+                  home[index].opponent = findRank(awayTeam, `vs ${awayTeam}`, home[index], homeOpponentYds); 
+                  this.combined.push(home[index]);
+                })
+            
+                //console.log(this.combined, 'combined');
+                this.reduced = this.combined.reduce(function(hash) {
+                  //console.log(hash, 'hash');
+                  return function(r, a) {
+                    //console.log(a, 'this is a');
+                    let key = a.player.id;
+                    if (!hash[key]) {
+                      hash[key] = { id: key, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': []};
+                      r.push(hash[key]);
+                    }
+
+
+                    hash[key]['1'] += dPos[a.player['position']] != null ? a.playerStats[0].tackles.tackleTotal : 0;
+                    hash[key]['2'] += dPos[a.player['position']] != null ? a.playerStats[0].interceptions.interceptions : 0;
+                    hash[key]['3'] += dPos[a.player['position']] != null ? a.playerStats[0].tackles.sacks : 0;
+                    hash[key]['4'] += dPos[a.player['position']] != null ? a.playerStats[0].interceptions.passesDefended : 0;
+                    hash[key]['5'] += 1;
+                    hash[key]['6'].push(a.opponent);
+                    return r;
+                  };
+
+                }(Object.create(null)), []);
+
+               
+
+                for (let info of this.nflDefenseData) {
+                  for (let data of this.reduced) {
+     
+                    if (info.player.id === data.id) { 
+                        info.stats.tackles.tackleTotal = data['1'];
+                        info.stats.interceptions.interceptions = data['2'];
+                        info.stats.tackles.sacks = data['3'];
+                        info.stats.interceptions.passesDefended = data['4'];               
+                        info.stats.tackles.tacklesPerGame = Math.floor(data['1'] / data['5']);
+                        info.spanOpponents = data['6'];
+                        if (info.player.id === 8512) {
+                          console.log(info.player.lastName, info.spanOpponents, 'where are the sacks??')
+                        }
+                        //TODO: Get toughness rank per 3 week span
+                        info.player.span = this.timeSpan;
+                    }
+                  }
+                }
+
+              }
+            });
+
+              this.crunchedDef = this.nflDefenseData.filter(player => player.player.span === this.timeSpan);
+              this.nflDefenseData = this.crunchedDef;
+              
+              this.nflDefenseLoading = false;
+                 
+          });
+  } 
 }
 
