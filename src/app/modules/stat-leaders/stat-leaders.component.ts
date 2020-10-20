@@ -1217,11 +1217,12 @@ export class StatLeadersComponent implements OnInit {
     } else {
       this.nflSection = false; 
       this.nflDefenseSection = true;
-      function teamInfo(array, teams, type) {
+      function teamInfo(array, teams, type, week) {
         
         for (let team of teams) {
           for (let data of array) { 
-            if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+            if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id && week === 'all' ||
+            week != 'all' && team['id'] === data.team.id) {
               data.team.logo = team['officialLogoImageSrc'];
               data.team.city = team['city'];
               data.team.name = team['name'];
@@ -1243,7 +1244,7 @@ export class StatLeadersComponent implements OnInit {
           }  
         }
       }
-      if (this.nflDefenseData == null) {
+      // if (this.nflDefenseData == null || this.week != 'all') {
         this.nflDefenseLoading = true;
 
         this.nflService.getAllDefense('all', '19', this.week).subscribe(res => {
@@ -1251,6 +1252,7 @@ export class StatLeadersComponent implements OnInit {
           if (res['gamelogs'] != null) {
             for (let data of this.nflDefenseData) {
               for (let wstats of res['gamelogs']) {
+                wstats.player.primaryPosition = wstats.player.position;
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
                   wstats.player.officialImageSrc = data.player.officialImageSrc;
                   wstats.player.primaryPosition = data.player.primaryPosition;
@@ -1260,7 +1262,7 @@ export class StatLeadersComponent implements OnInit {
           }
           let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
           this.nflDefenseData = stats.filter(
-            player => player.stats != null && player.stats.gamesPlayed > 0);
+            player => player.stats != null && player.stats.tackles.tackleTotal > 0);
         // this.nflService
         //   .getAllDefense('all', '20').subscribe(res => {
         //     this.newDefenseData = res['players'];
@@ -1275,10 +1277,10 @@ export class StatLeadersComponent implements OnInit {
         //     teamInfo(this.nflDefenseData, this.nflTeams, 'd');
         //     this.nflDefenseLoading = false;
         // });
-        teamInfo(this.nflDefenseData, this.nflTeams, 'd');
+        teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week);
         this.nflDefenseLoading = false;
       });
-      }
+      
     }
   }
 
