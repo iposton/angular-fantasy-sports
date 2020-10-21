@@ -1072,7 +1072,7 @@
               [eliteStat]="40"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null && week === 'all'" 
+              <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null && (week === 'all' || week === 'three-weeks')" 
               [data]="nflQBData" 
               [statType]="'passing'"
               [statField]="'totalPassPct'"
