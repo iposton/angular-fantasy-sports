@@ -658,7 +658,7 @@ export class StatLeadersComponent implements OnInit {
       )
     )
     .subscribe(res => {
-      console.log(res, 'get team schedules...');
+      //console.log(res, 'get team schedules...');
       res.forEach((item, index) => { 
         team = this.nflTeams[index].id;
         bye = this.nflTeams[index].bye;
@@ -1583,14 +1583,44 @@ export class StatLeadersComponent implements OnInit {
             let awayRushPlays;
             let awayOpponent;
             let homeOpponent;
+            let awayTeam;
+            let homeTeam;
 
-            function findRank(team, print) {
+            // function findRank(team, print) {
+            //   let info;
+            //   for (let t of nflTeams) {
+            //      if (team === t.abbreviation) {
+            //        info = {printName: print, oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation};
+            //        return info; 
+            //      }
+            //   }
+            // }
+
+            function findRank(team, print, player) {
               let info;
               for (let t of nflTeams) {
-                 if (team === t.abbreviation) {
-                   info = {printName: print, oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation};
-                   return info; 
-                 }
+                
+                  if (team === t.abbreviation) {
+                    info = {
+                       printName: print,
+                       oRank: t.offenseRankLs, 
+                       dRank: t.defenseRankLs, 
+                       name: t.abbreviation, 
+                       gamePY: oPos[player['player'].position] ? player['playerStats'][0].passing.passYards : 0,
+                       gamePA: oPos[player['player'].position] ? player['playerStats'][0].passing.passAttempts : 0, 
+                       gamePI: oPos[player['player'].position] ? player['playerStats'][0].passing.passInt : 0,
+                       gameRY: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushYards : 0, 
+                       gameRA: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushAttempts : 0, 
+                       gameRecY: oPos[player['player'].position] ? player['playerStats'][0].receiving.recYards : 0,
+                       gameRecR: oPos[player['player'].position] ? player['playerStats'][0].receiving.receptions : 0,
+                       gameFGM: player['player'].position === 'K' ? player['playerStats'][0].fieldGoals.fgMade : 0,
+                       gameLFGM: player['player'].position === 'K' ? player['playerStats'][0].fieldGoals.fgMade40_49 + player['playerStats'][0].fieldGoals.fgMade50Plus : 0,
+                       playerName: player.player['firstName'],
+                       playerId: player.player.id
+                      };
+                    return info; 
+                  }
+               
               }
             }
 
@@ -1606,15 +1636,17 @@ export class StatLeadersComponent implements OnInit {
                 homePassPlays = res[i]['stats'].home.teamStats[0].passing.passAttempts;
                 awayRushPlays = res[i]['stats'].away.teamStats[0].rushing.rushAttempts;
                 homeRushPlays = res[i]['stats'].home.teamStats[0].rushing.rushAttempts;
+                homeTeam = res[i]['game'].homeTeam.abbreviation;
+                awayTeam = res[i]['game'].awayTeam.abbreviation;
 
-                homeOpponent = findRank(res[i]['game'].awayTeam.abbreviation, `vs ${res[i]['game'].awayTeam.abbreviation}`);
-                awayOpponent = findRank(res[i]['game'].homeTeam.abbreviation, `@ ${res[i]['game'].homeTeam.abbreviation}`);
+                //homeOpponent = findRank(res[i]['game'].awayTeam.abbreviation, `vs ${res[i]['game'].awayTeam.abbreviation}`);
+                //awayOpponent = findRank(res[i]['game'].homeTeam.abbreviation, `@ ${res[i]['game'].homeTeam.abbreviation}`);
 
                 away.forEach((item, index) => {
                   away[index].tp = awayTotalPlays;
                   away[index].pp = awayPassPlays;
                   away[index].rp = awayRushPlays;
-                  away[index].opponent = awayOpponent;
+                  away[index].opponent = findRank(homeTeam, `@ ${homeTeam}`, away[index]);
                   this.combined.push(away[index]);
                 })
 
@@ -1622,7 +1654,7 @@ export class StatLeadersComponent implements OnInit {
                   home[index].tp = homeTotalPlays;
                   home[index].pp = homePassPlays;
                   home[index].rp = homeRushPlays;
-                  home[index].opponent = homeOpponent;
+                  home[index].opponent = findRank(awayTeam, `vs ${awayTeam}`, home[index]);
                   this.combined.push(home[index]);
                 })
             
@@ -1697,9 +1729,9 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.receiving.recYards = data['8'];
                         
                         info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
-                        if (info.stats.rushing.touchRunPct > 100) {
-                          console.log(info, 'player', data['12'], 'player rush attemps', data['16'], 'team rush att', data['17'], 'opponent');
-                        }
+                        // if (info.stats.rushing.touchRunPct > 100) {
+                        //   console.log(info, 'player', data['12'], 'player rush attemps', data['16'], 'team rush att', data['17'], 'opponent');
+                        // }
                         info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
                         info.spanOpponents = data['17'];
                        

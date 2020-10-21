@@ -47,12 +47,18 @@
                     <span *ngIf="item?.team[seasonLength] &lt;= 10">Hard</span>
                       Schedule
                   </span> 
-                  <span *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk" class="tooltip"> 
+                  <span *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk && statType != 'tackles' && statType != 'interceptions'" class="tooltip"> 
                       <span *ngIf="item?.team?.weekOpponent[0]?.dRank > 21">Great</span> 
                       <span *ngIf="item?.team?.weekOpponent[0]?.dRank &lt;= 21 && item?.team?.weekOpponent[0]?.dRank > 10">Good</span>
                       <span *ngIf="item?.team?.weekOpponent[0]?.dRank &lt;= 10">Bad</span>
                         Matchup
-                    </span>   
+                  </span> 
+                  <span *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk && (statType === 'tackles' || statType === 'interceptions')" class="tooltip"> 
+                      <span *ngIf="item?.team?.weekOpponent[0]?.oRank > 21">Great</span> 
+                      <span *ngIf="item?.team?.weekOpponent[0]?.oRank &lt;= 21 && item?.team?.weekOpponent[0]?.oRank > 10">Good</span>
+                      <span *ngIf="item?.team?.weekOpponent[0]?.oRank &lt;= 10">Bad</span>
+                        Matchup
+                  </span>    
             </span>    
           </span>
             <span class="player-infos" [ngClass]="{'sm' : item?.spanOpponents != null}">
@@ -82,7 +88,21 @@
                     <span *ngIf="item?.spanOpponents.length &gt; 0">
                       <span class="sm" *ngFor="let team of item?.spanOpponents; let i = index;" 
                       [ngClass]="{'red' : team?.dRank &lt;= 10, 'orange' : team?.dRank > 10 && team?.dRank &lt;= 21, 'green' : team?.dRank > 21}">
-                          {{team?.printName}} <br> {{team?.dRank}}
+                          {{team?.printName}} <br> {{team?.dRank}} <br> 
+                          <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField != 'totalPassPct'">PY: {{team?.gamePY}} <br>
+                          Int: {{team?.gamePI}}</span>
+                          <span *ngIf="statField == 'totalPassPct'">PY: {{team?.gamePY}} <br>
+                            PA: {{team?.gamePA}}</span>
+                          <span *ngIf="statType === 'passing' && statField === 'ydsPerGame'">TY: {{team?.gamePY + team?.gameRY}}</span>
+                          <span *ngIf="statType === 'rushing' && statField === 'ydsPerGame'">TY: {{team?.gameRecY + team?.gameRY}}</span>
+                          <span *ngIf="statType === 'receiving' && statField === 'ydsPerGame'">TY: {{team?.gameRecY + team?.gameRY}}</span>
+                          <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'">RY: {{team?.gameRY}}</span>
+                          <span *ngIf="statField === 'touchRunPct'"><br>RA: {{team?.gameRA}}</span>
+                          <span *ngIf="statField === 'recYards'">RecY: {{team?.gameRecY}}</span>
+                          <span *ngIf="statField === 'touchCatchPct'">Rec: {{team?.gameRecR}}</span>
+                          <span *ngIf="statField === 'receptions'">Rec: {{team?.gameRecR}}</span>
+                          <span *ngIf="statField === 'fgMade'">FG: {{team?.gameFGM}}</span>
+                          <span *ngIf="statField === 'longFgMade'">FG+: {{team?.gameLFGM}}</span>
                       </span>
                   </span>
                 </span>
