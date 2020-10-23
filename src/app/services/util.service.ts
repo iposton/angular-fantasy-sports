@@ -274,6 +274,9 @@ export class UtilService {
       "18683" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ocmacwswn8i1il9j6afp"
       },
+      "18595" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/tw68tp2j7yceuwip6trq"
+      },
       
       
       
@@ -1284,7 +1287,7 @@ export class UtilService {
       },
       {
       id: 56,
-      bye: 8,
+      bye: 7,
       defenseRankLs: 8,
       offenseRankLs: 1,
       city: "Baltimore",
