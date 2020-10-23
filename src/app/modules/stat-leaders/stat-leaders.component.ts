@@ -1262,7 +1262,7 @@ export class StatLeadersComponent implements OnInit {
           }
           let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
           this.nflDefenseData = stats.filter(
-            player => player.stats != null && player.stats.tackles.tackleTotal > 0);
+            player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0));
         // this.nflService
         //   .getAllDefense('all', '20').subscribe(res => {
         //     this.newDefenseData = res['players'];

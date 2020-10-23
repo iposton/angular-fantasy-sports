@@ -13,7 +13,7 @@
               'left-content': i <= page,
               'dn': i > page || i <= amount,
               'dn2': (!ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank > begin : !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank > begin : item?.team[seasonLength] > begin) && (!ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= end : !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= end : item?.team[seasonLength] <= end),
-              'dn3': begin === 21 && !ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= 10 : begin === 21 && !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= 10 : item?.team[seasonLength] <= 10,
+              'dn3': begin === 21 && !ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= 10 : begin === 21 && !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= 10 : begin === 21 && item?.team[seasonLength] <= 10,
               'sm' : item?.spanOpponents != null
             }"
             >
