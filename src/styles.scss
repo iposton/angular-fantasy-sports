@@ -1810,8 +1810,12 @@ form.date-form {
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content img, 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content img {
-  width: 17%;
+  // width: 17%;
   margin: 0;
+  height: 43px;
+  width: 43px;
+  object-fit: cover;
+  margin: 1px 0 0;
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content {

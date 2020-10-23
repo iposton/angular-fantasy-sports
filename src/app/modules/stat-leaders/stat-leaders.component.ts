@@ -268,9 +268,9 @@ export class StatLeadersComponent implements OnInit {
       
     let root;
     this.nhlService
-      .getGames(this.timeSpan, this.sport).subscribe(res => {
+      .getGames(this.timeSpan, this.sport, this.tsDate).subscribe(res => {
       //console.log(res['games'], "scheduled games per selected time span...");
-      this.nbaSpanGames = res['games'];
+      //this.nbaSpanGames = res['games'];
 
       if (this.sport != 'nfl') {
         root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-playoff`;

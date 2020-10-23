@@ -277,7 +277,18 @@ export class UtilService {
       "18595" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/tw68tp2j7yceuwip6trq"
       },
-      
+      "14513" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/o2e4hfh4ttdcuzm62qrg"
+      },
+      "7075" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/caovj6onwsoepaen8tjc"
+      },
+      "9923" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/iecbkdfdgjbj0kegxftw"
+      },
+      "9911" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/zcumaps42lo5sskklxcb"
+      },
       
       
     }
