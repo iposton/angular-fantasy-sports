@@ -234,7 +234,7 @@ export class NHLDataService {
     return this.lastweekgameid;
   }
 
-  getGames(span, sport) {
+  getGames(span, sport, date) {
     let url = null;
     let season = null;
     if (sport != 'nfl')
@@ -251,7 +251,7 @@ export class NHLDataService {
     } else if (span === 'two-weeks') {
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${twoWeekDailyDate}-to-${dailyDate}`;
     } else if (span === 'three-weeks') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${threeWeekDailyDate}-to-${dailyDate}`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${threeWeekDailyDate}-to-${date}`;
     }
     
     this.games = this.http.get(url, {headers})
