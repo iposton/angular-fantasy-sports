@@ -16,6 +16,7 @@ let headers = null;
 let today = new Date();
 let repImg = null;
 let nflplayerImages = null;
+let promiseTwo;
 
 @Component({
   selector: 'app-stat-leaders',
@@ -588,7 +589,7 @@ export class StatLeadersComponent implements OnInit {
     player.stats.batting.fpa = Math.floor(player.stats.batting.fp / player.stats.gamesPlayed);
   }
 
-  public loadNFL() {
+  public async loadNFL() {
     if (this.week === 'three-weeks') {
       // load 3 weeks of nfl games
       this.nflOffenseLoading = true;
@@ -603,8 +604,7 @@ export class StatLeadersComponent implements OnInit {
     this.nflSection = true;
     this.sport = 'nfl';
 
-    this.nflService
-    .getTeamStats(this.tsDate).subscribe(res => {
+    this.nflService.getTeamStats(this.tsDate).subscribe(async res => {
       for (let stats of res['teamStatsTotals']) {
         for (let team of this.nflTeams) {
           if (stats.team.id === team.id) {
@@ -612,10 +612,16 @@ export class StatLeadersComponent implements OnInit {
           }
         }
       }
-      this.rankService.rankOffense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
-      this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
 
-      this.nflTeams = this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
+      let promiseOne;
+      promiseOne = new Promise((resolve, reject) => {
+        this.nflTeams = this.rankService.rankOffense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
+        this.nflTeams = this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.nflWeek); 
+        resolve();
+      })
+    
+      let resultOne = await promiseOne;
+
       this.nflTeamStats = res['teamStatsTotals'];
       this.nflTeamLoading = false;
       for (let teamStats of this.nflTeamStats) {
@@ -657,7 +663,7 @@ export class StatLeadersComponent implements OnInit {
         
       )
     )
-    .subscribe(res => {
+    .subscribe( async res => {
       //console.log(res, 'get team schedules...');
       res.forEach((item, index) => { 
         team = this.nflTeams[index].id;
@@ -677,7 +683,11 @@ export class StatLeadersComponent implements OnInit {
           weekOpponent: this.getSchedToughness(res[index]['games'], 'wop', team, bye)
         }
         this.teamSchedules.push(teamSchedule);
-        this.getRank(this.teamSchedules);
+        
+        promiseTwo = new Promise((resolve, reject) => {
+          this.getRank(this.teamSchedules);
+          resolve();
+        })
       })
 
     }, (err: HttpErrorResponse) => {       
@@ -688,6 +698,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
       this.nflOffenseLoading = true;
+      let resultTwo = await promiseTwo;
       //this.nflDefenseLoading = true;
       //console.log(this.nflTeams, 'nfl teams');
 
