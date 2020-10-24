@@ -283,6 +283,236 @@ export class DepthService {
         },
       }
     ],
+    '48': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-DE-1' : {
+          firstName: 'Mario',
+          lastName: 'Addison',
+          id: 6335,
+          status: 'Starter',
+          abbreviation: 'BUF',
+          position: 'DE'
+        }, 
+        'Defense-CB-1' : {
+          firstName: 'Taron',
+          lastName: 'Johnson',
+          id: 16057,
+          status: 'Starter',
+          abbreviation: 'BUF',
+          position: 'CB'
+        },
+      }
+    ],
+    '62': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-DE-1' : {
+          firstName: 'Za Darius',
+          lastName: 'Smith',
+          id: 6160,
+          status: 'Starter',
+          abbreviation: 'GB',
+          position: 'OLB'
+        }, 
+        
+      }
+    ],
+    '64': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-DE-1' : {
+          firstName: 'Zach',
+          lastName: 'Cunningham',
+          id: 13006,
+          status: 'Starter',
+          abbreviation: 'HOU',
+          position: 'ILB'
+        }, 
+        'Defense-LB-1' : {
+          firstName: 'J.J.',
+          lastName: 'Watt',
+          id: 7051,
+          status: 'Starter',
+          abbreviation: 'HOU',
+          position: 'DE'
+        },
+      }
+    ],
+    '58': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-CB-1' : {
+          firstName: 'Myles',
+          lastName: 'Garrett',
+          id: 12864,
+          status: 'Starter',
+          abbreviation: 'CLE',
+          position: 'DE'
+        }, 
+        'Defense-LB-1' : {
+          firstName: 'Denzel',
+          lastName: 'Ward',
+          id: 14495,
+          status: 'Starter',
+          abbreviation: 'CLE',
+          position: 'CB'
+        },
+      }
+    ],
+    '57': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-DE-1' : {
+          firstName: 'Carl',
+          lastName: 'Lawson',
+          id: 12847,
+          status: 'Starter',
+          abbreviation: 'CIN',
+          position: 'DE'
+        }, 
+        'Defense-LB-1' : {
+          firstName: 'Josh',
+          lastName: 'Bynes',
+          id: 6879,
+          status: 'Starter',
+          abbreviation: 'CIN',
+          position: 'MLB'
+        },
+        'Defense-CB-1' : {
+          firstName: 'Jessie',
+          lastName: 'Bates III',
+          id: 14988,
+          status: 'Starter',
+          abbreviation: 'CIN',
+          position: 'MLB'
+        },
+      }
+    ],
+    '61': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-CB-1' : {
+          firstName: 'Amani',
+          lastName: 'Oruwariye',
+          id: 16401,
+          status: 'Starter',
+          abbreviation: 'DET',
+          position: 'CB'
+        }, 
+        'Defense-DE-1' : {
+          firstName: 'Duron',
+          lastName: 'Harmon',
+          id: 7630,
+          status: 'Starter',
+          abbreviation: 'DET',
+          position: 'SS'
+        },
+        
+      }
+    ],
+    '68': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-S-1' : {
+          firstName: 'Isaiah',
+          lastName: 'Oliver',
+          id: 15064,
+          status: 'Starter',
+          abbreviation: 'ATL',
+          position: 'FS'
+        }, 
+        'Defense-DE-1' : {
+          firstName: 'Foye',
+          lastName: 'Oluokun',
+          id: 14975,
+          status: 'Starter',
+          abbreviation: 'ATL',
+          position: 'LB'
+        },
+        
+      }
+    ],
+    '60': [
+      {
+        'gdate': 'Mon Oct 26 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-CB-1' : {
+          firstName: 'Khalil',
+          lastName: 'Mack',
+          id: 7981,
+          status: 'Starter',
+          abbreviation: 'CHI',
+          position: 'OLB'
+        }, 
+        
+      }
+    ],
+    '66': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-DE-1' : {
+          firstName: 'Joe',
+          lastName: 'Schobert',
+          id: 9834,
+          status: 'Starter',
+          abbreviation: 'JAX',
+          position: 'MLB'
+        }, 
+        'Defense-CB-1' : {
+          firstName: 'Sidney',
+          lastName: 'Jones IV',
+          id: 13283,
+          status: 'Starter',
+          abbreviation: 'JAX',
+          position: 'CB'
+        },
+        
+      }
+    ],
+    '75': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-DE-1' : {
+          firstName: 'Joey',
+          lastName: 'Bosa',
+          id: 9996,
+          status: 'Starter',
+          abbreviation: 'LAC',
+          position: 'DE'
+        }, 
+        'Defense-CB-1' : {
+          firstName: 'Melvin',
+          lastName: 'Ingram III',
+          id: 8253,
+          status: 'Starter',
+          abbreviation: 'LAC',
+          position: 'DE'
+        },
+        
+      }
+    ],
+    '59': [
+      {
+        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-DE-1' : {
+          firstName: 'Bud',
+          lastName: 'Dupree',
+          id: 8153,
+          status: 'Starter',
+          abbreviation: 'PIT',
+          position: 'OLB'
+        }, 
+        'Offense-TE-1' : {
+          firstName: 'Chase',
+          lastName: 'Claypool',
+          id: 18672,
+          status: 'Starter',
+          abbreviation: 'PIT',
+          position: 'WR'
+        },
+        
+      }
+    ],
     
          
     }
