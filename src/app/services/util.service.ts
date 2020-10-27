@@ -1259,7 +1259,7 @@ export class UtilService {
       },
       {
       id: 51,
-      bye: 11,
+      bye: 10,
       defenseRankLs: 17,
       offenseRankLs: 32,
       city: "New York",

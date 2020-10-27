@@ -1877,12 +1877,25 @@ export class StatLeadersComponent implements OnInit {
             let homeOpponentYds;
             let awayTeam;
             let homeTeam;
+            let opponentYdsArr = [];
+
+            function applyOY(team, print, oy) {  
+              
+              for (let t of nflTeams) {
+               if (team === t.abbreviation) { 
+                  opponentYdsArr.push({owner: team, game: print, oy: oy});
+                  t.opponentYdsArr = opponentYdsArr;
+                }
+              }
+            }
 
             function findRank(team, print, player, oy) {
               let info;
+              
               for (let t of nflTeams) {
-                
+                  
                   if (team === t.abbreviation && dPos[player['player'].position]) {
+                    
                     info = {
                        printName: print,
                        oRank: t.offenseRankLs, 
@@ -1913,7 +1926,8 @@ export class StatLeadersComponent implements OnInit {
                 //console.log(away, 'away players')
                 awayOpponentYds = res[i]['stats'].home.teamStats[0].miscellaneous ? res[i]['stats'].home.teamStats[0].miscellaneous.offenseYds : 0;
                 homeOpponentYds = res[i]['stats'].away.teamStats[0].miscellaneous ? res[i]['stats'].away.teamStats[0].miscellaneous.offenseYds : 0;
-
+                applyOY(awayTeam, `@ ${homeTeam}`, awayOpponentYds);
+                applyOY(homeTeam, `vs ${awayTeam}`, homeOpponentYds);
                 //homeOpponent = findRank(awayTeam, `vs ${awayTeam}`, home, homeOpponentYds);
                 //awayOpponent = findRank(homeTeam, `@ ${homeTeam}`, away, awayOpponentYds);
 
@@ -1962,9 +1976,7 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.interceptions.passesDefended = data['4'];               
                         info.stats.tackles.tacklesPerGame = Math.floor(data['1'] / data['5']);
                         info.spanOpponents = data['6'];
-                        if (info.player.id === 8512) {
-                          console.log(info.player.lastName, info.spanOpponents, 'where are the sacks??')
-                        }
+                        
                         //TODO: Get toughness rank per 3 week span
                         info.player.span = this.timeSpan;
                     }
