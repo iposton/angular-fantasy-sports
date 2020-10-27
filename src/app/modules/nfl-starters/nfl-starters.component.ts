@@ -341,12 +341,12 @@ export class NflStartersComponent implements OnInit {
       });
 
       this.dataService
-        .getDaily(this.selectedWeek, playerString).subscribe(res => {
+        .getDaily(this.selectedWeek, playerString).subscribe(async res => {
             //console.log(res, "Daily stats...");
             this.dailyStats = res != null ? res['gamelogs'] : [];
 
             this.dataService
-              .getTeamStats(this.tsDate).subscribe(res => {
+              .getTeamStats(this.tsDate).subscribe(async res => {
 
                 for (let stats of res['teamStatsTotals']) {
                   for (let team of this.teams) {
@@ -356,10 +356,15 @@ export class NflStartersComponent implements OnInit {
                   }
                 }
 
-                this.rankService.rankOffense(res['teamStatsTotals'], this.teams, this.selectedWeek);
-                this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek);
-          
-                this.teams = this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek);
+                let promiseOne;
+                promiseOne = new Promise((resolve, reject) => {
+                  this.teams = this.rankService.rankOffense(res['teamStatsTotals'], this.teams, this.selectedWeek);
+                  this.teams = this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek); 
+                  resolve();
+                })
+              
+                let resultOne = await promiseOne;
+
                 this.nflTeamStats = res['teamStatsTotals'];
                 this.nflTeamStatsLoading = false;
                 for (let teamStats of this.nflTeamStats) {

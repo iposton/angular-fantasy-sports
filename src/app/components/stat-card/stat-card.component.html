@@ -93,12 +93,15 @@
                           Int: {{team?.gamePI}}</span>
                           <span *ngIf="statField == 'totalPassPct'">PY: {{team?.gamePY}} <br>
                             PA: {{team?.gamePA}}</span>
-                          <span *ngIf="statType === 'passing' && statField === 'ydsPerGame'">TY: {{team?.gamePY + team?.gameRY}}</span>
-                          <span *ngIf="statType === 'rushing' && statField === 'ydsPerGame'">TY: {{team?.gameRecY + team?.gameRY}}</span>
+                          <span *ngIf="statType === 'passing' && statField === 'ydsPerGame'">TY: {{team?.gamePY + team?.gameRY}}<br>
+                            PA: {{team?.gamePA}}</span>
+                          <span *ngIf="statType === 'rushing' && statField === 'ydsPerGame'">TY: {{team?.gameRecY + team?.gameRY}}<br>
+                            RA: {{team?.gameRA}}</span>
                           <span *ngIf="statType === 'receiving' && statField === 'ydsPerGame'">TY: {{team?.gameRecY + team?.gameRY}}</span>
-                          <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'">RY: {{team?.gameRY}}</span>
-                          <span *ngIf="statField === 'touchRunPct'"><br>RA: {{team?.gameRA}}</span>
-                          <span *ngIf="statField === 'recYards'">RecY: {{team?.gameRecY}}</span>
+                          <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'">RY: {{team?.gameRY}}<br>
+                            RA: {{team?.gameRA}}</span>
+                          
+                          <span *ngIf="statField === 'recYards'">RY: {{team?.gameRecY}}</span>
                           <span *ngIf="statField === 'touchCatchPct'">Rec: {{team?.gameRecR}}</span>
                           <span *ngIf="statField === 'receptions'">Rec: {{team?.gameRecR}}</span>
                           <span *ngIf="statField === 'fgMade'">FG: {{team?.gameFGM}}</span>
