@@ -746,6 +746,7 @@ export class StatLeadersComponent implements OnInit {
           if (res['gamelogs'] != null) {
             for (let data of this.nflQBData) {
               for (let wstats of res['gamelogs']) {
+                wstats.player.primaryPosition = wstats.player.position;
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
                   wstats.player.officialImageSrc = data.player.officialImageSrc;
                   wstats.player.primaryPosition = data.player.primaryPosition;
@@ -799,6 +800,7 @@ export class StatLeadersComponent implements OnInit {
           if (res['gamelogs'] != null) {
             for (let data of this.nflRushData) {
               for (let wstats of res['gamelogs']) {
+                wstats.player.primaryPosition = wstats.player.position;
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
                   wstats.player.officialImageSrc = data.player.officialImageSrc;
                   wstats.player.primaryPosition = data.player.primaryPosition;
@@ -847,6 +849,7 @@ export class StatLeadersComponent implements OnInit {
           if (res['gamelogs'] != null) {
             for (let data of this.nflRecData) {
               for (let wstats of res['gamelogs']) {
+                wstats.player.primaryPosition = wstats.player.position;
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
                   wstats.player.officialImageSrc = data.player.officialImageSrc;
                   wstats.player.primaryPosition = data.player.primaryPosition;
@@ -885,6 +888,7 @@ export class StatLeadersComponent implements OnInit {
           if (res['gamelogs'] != null) {
             for (let data of this.nflTEData) {
               for (let wstats of res['gamelogs']) {
+                wstats.player.primaryPosition = wstats.player.position;
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
                   wstats.player.officialImageSrc = data.player.officialImageSrc;
                   wstats.player.primaryPosition = data.player.primaryPosition;
@@ -914,6 +918,7 @@ export class StatLeadersComponent implements OnInit {
           if (res['gamelogs'] != null) {
             for (let data of this.nflKickerData) {
               for (let wstats of res['gamelogs']) {
+                wstats.player.primaryPosition = wstats.player.position;
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
                   wstats.player.officialImageSrc = data.player.officialImageSrc;
                   wstats.player.primaryPosition = data.player.primaryPosition;

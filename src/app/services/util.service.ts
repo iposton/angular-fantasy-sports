@@ -352,6 +352,34 @@ export class UtilService {
       "18561" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/tr3yxhybdwehibl6maqy"
       },
+      "19009" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qtjp84utne7uhgbtx0o5"
+      },
+      "19043" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ydu8lvszgayayddtnt44"
+      },
+      "18785" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/bgflcfmqggmnfp35wvoi"
+      },
+      "18769" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dxtherbqeeqm21shpweo"
+      },
+      "18576" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dpo09k2ilcdrqbybirpa"
+      },
+      "18979" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rwyeph1ojfmkryt2egzk"
+      },
+      "18985" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/jpy9l8osfm3yhvjwunur"
+      },
+      "18771" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/z2clh7yjqbdklh5wsde6"
+      },
+      
+     
+      
+      
       
       
 
