@@ -376,13 +376,10 @@ export class UtilService {
       "18771" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/z2clh7yjqbdklh5wsde6"
       },
+      "6939" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hylws51towgdgtb3xuue"
+      },
       
-     
-      
-      
-      
-      
-
     }
 
     this.NFLImages = {
