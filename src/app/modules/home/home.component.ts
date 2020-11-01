@@ -54,19 +54,19 @@ export class HomeComponent implements OnInit {
   public noMlbGamesToday: boolean;
   public mlbGamesToday: boolean;
   public noMlbGamesMsg: any;
-  public mlbLoading: boolean = true;
+  public mlbLoading: boolean = false;
 
   public nhlGameDate: string = '';
   public noNhlGamesToday: boolean;
   public nhlGamesToday: boolean;
   public noNhlGamesMsg: any;
-  public nhlLoading: boolean = true;
+  public nhlLoading: boolean = false;
 
   public nbaGameDate: string = '';
   public noNbaGamesToday: boolean;
   public nbaGamesToday: boolean;
   public noNbaGamesMsg: any;
-  public nbaLoading: boolean = true;
+  public nbaLoading: boolean = false;
 
   public nflGameDate: string = '';
   public noNflGamesToday: boolean;
@@ -155,64 +155,6 @@ loadData() {
         this.nhlDataService
           .sendHeaderOptions(headers);
 
-        this.dataService
-          .getDailySchedule().subscribe(res => {
-            if (res['games'].length === 0) {
-              this.mlbLoading = false;
-              this.noMlbGamesToday = true;
-              this.noMlbGamesMsg = "No Games Scheduled";
-              console.log('There are no MLB games being played today.');
-            } else {
-              // this.noMlbGamesToday = true;
-              // this.noMlbGamesMsg = "No Games Scheduled";
-              this.mlbLoading = false;
-              this.mlbGamesToday = true;
-              this.mlbSchedule = res['games'];
-              this.mlbTeamRef = this.mlbTeams;  //res['references'].teamReferences ? res['references'].teamReferences : null;
-              this.mlbGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
-              if (this.mlbTeamRef != null)
-                this.getTeamInfo(this.mlbSchedule, this.mlbTeamRef);
-            }
-        });
-
-        this.nbaDataService
-          .getSchedule().subscribe(res => {
-            
-            if (res['games'].length === 0) {
-              this.nbaLoading = false;
-              this.noNbaGamesToday = true;
-              this.noNbaGamesMsg = "No Games Scheduled"
-              console.log('There are no NBA games being played today.');
-            } else {
-              this.nbaLoading = false;
-              this.nbaGamesToday = true;
-              this.nbaSchedule = res['games'];
-              this.nbaTeamRef = Object.values(this.nbaTeams); //res['references'].teamReferences ? res['references'].teamReferences : null;
-              this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
-              if (this.nbaTeamRef != null)
-                this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
-                //console.log(this.nbaSchedule, 'nba sched')
-            }
-        });
-
-        this.nhlDataService
-          .getDailySchedule().subscribe(res => {
-            if (res['games'].length === 0) {
-              this.nhlLoading = false;
-              this.noNhlGamesToday = true;
-              this.noNhlGamesMsg = "No Games Scheduled"
-              console.log('There are no NHL games being played today.');
-            } else {
-              this.nhlLoading = false;
-              this.nhlGamesToday = true;
-              this.nhlSchedule = res['games'];
-              this.nhlTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
-              this.nhlGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
-              if (this.nhlTeamRef != null)
-                this.getTeamInfo(this.nhlSchedule, this.nhlTeamRef);
-            }
-        });
-
         this.nflDataService
           .getSchedule(this.selectedWeek).subscribe(res => {
             if (res['games'].length === 0) {
@@ -231,6 +173,70 @@ loadData() {
             }
         });
       })
+}
+
+public loadMLB() {
+  this.dataService
+    .getDailySchedule().subscribe(res => {
+      if (res['games'].length === 0) {
+        this.mlbLoading = false;
+        this.noMlbGamesToday = true;
+        this.noMlbGamesMsg = "No Games Scheduled";
+        console.log('There are no MLB games being played today.');
+      } else {
+        // this.noMlbGamesToday = true;
+        // this.noMlbGamesMsg = "No Games Scheduled";
+        this.mlbLoading = false;
+        this.mlbGamesToday = true;
+        this.mlbSchedule = res['games'];
+        this.mlbTeamRef = this.mlbTeams;  //res['references'].teamReferences ? res['references'].teamReferences : null;
+        this.mlbGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+        if (this.mlbTeamRef != null)
+          this.getTeamInfo(this.mlbSchedule, this.mlbTeamRef);
+      }
+  });
+}
+
+public loadNHL() {
+  this.nhlDataService
+  .getDailySchedule().subscribe(res => {
+    if (res['games'].length === 0) {
+      this.nhlLoading = false;
+      this.noNhlGamesToday = true;
+      this.noNhlGamesMsg = "No Games Scheduled"
+      console.log('There are no NHL games being played today.');
+    } else {
+      this.nhlLoading = false;
+      this.nhlGamesToday = true;
+      this.nhlSchedule = res['games'];
+      this.nhlTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
+      this.nhlGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+      if (this.nhlTeamRef != null)
+        this.getTeamInfo(this.nhlSchedule, this.nhlTeamRef);
+    }
+   });
+}
+
+public loadNBA() {
+  this.nbaDataService
+  .getSchedule().subscribe(res => {
+    
+    if (res['games'].length === 0) {
+      this.nbaLoading = false;
+      this.noNbaGamesToday = true;
+      this.noNbaGamesMsg = "No Games Scheduled"
+      console.log('There are no NBA games being played today.');
+    } else {
+      this.nbaLoading = false;
+      this.nbaGamesToday = true;
+      this.nbaSchedule = res['games'];
+      this.nbaTeamRef = Object.values(this.nbaTeams); //res['references'].teamReferences ? res['references'].teamReferences : null;
+      this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
+      if (this.nbaTeamRef != null)
+        this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
+        //console.log(this.nbaSchedule, 'nba sched')
+    }
+  });
 }
 
 public getTeamInfo(sched, teamRef) {

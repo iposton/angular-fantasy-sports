@@ -87,7 +87,7 @@
 </div>
 
 
-<div *ngIf="myData != null" class="main-row stat-leaders">
+<div *ngIf="!loading || !nhlGoalieloading || !nhlSkaterloading || !mlbPitchingLoading || !mlbHittingLoading || !nflOffenseLoading || !nflDefenseLoading" class="main-row stat-leaders">
   
         <section [ngClass]="{'dn' : !nbaSection}">
           <app-stat-card *ngIf="!loading && myData != null" 

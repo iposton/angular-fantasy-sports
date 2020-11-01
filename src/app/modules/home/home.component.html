@@ -13,7 +13,7 @@
     <div
       [ngClass]="{ active: nbaSched }"
       class="col"
-      (click)="nbaSched = true; nhlSched = false; mlbSched = false; nflSched = false;"
+      (click)="nbaSched = true; nhlSched = false; mlbSched = false; nflSched = false; loadNBA()"
     >
       <span class="sched-item">
         NBA
@@ -22,7 +22,7 @@
     <div
       [ngClass]="{ active: nhlSched }"
       class="col"
-      (click)="nbaSched = false; nhlSched = true; mlbSched = false; nflSched = false;"
+      (click)="nbaSched = false; nhlSched = true; mlbSched = false; nflSched = false; loadNHL()"
     >
       <span class="sched-item">
         NHL
@@ -31,7 +31,7 @@
     <div
       [ngClass]="{ active: mlbSched }"
       class="col"
-      (click)="nbaSched = false; nhlSched = false; mlbSched = true; nflSched = false;"
+      (click)="nbaSched = false; nhlSched = false; mlbSched = true; nflSched = false; loadMLB()"
     >
       <span class="sched-item">
         MLB
@@ -48,22 +48,12 @@
     </div>
   </div>
 </div>
-<app-spinner *ngIf="nbaLoading" [size]="'lg'" [color]="'white'" [title]="'Games'"></app-spinner>
-<!-- <div class="center loading-msg">
-      Fetching games...
-</div>
-<div class="spinner-msg" *ngIf="nbaLoading">
-   <div class="lds-ring white">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-   </div>
-</div> -->
-<div class="row home-row" *ngIf="!nbaLoading">
-  <!-- <div class="schedule-box col card-wrap-sp mat-elevation-z6 tp-wrap"> -->
+<app-spinner *ngIf="nflLoading" [size]="'lg'" [color]="'white'" [title]="'Games'"></app-spinner>
+
+<div class="row home-row" *ngIf="!nflLoading">
+
   <div *ngIf="nbaSched" class="row schedule">
-    <!-- <span class="week-rank">NBA<br> </span>  -->
+
     <span *ngIf="noNbaGamesMsg">{{ noNbaGamesMsg }}</span>
     <div *ngFor="let item of nbaSchedule; let i = index" class="col">
       <div class="teams-container" [ngStyle]="{ background: '#303030' }">
@@ -435,7 +425,7 @@
     </div>
   </div>
   <div *ngIf="mlbSched" class="row schedule">
-    <!-- <span class="week-rank">MLB<br> </span>  -->
+  
     <span *ngIf="noMlbGamesMsg">{{ noMlbGamesMsg }}</span>
     <div *ngFor="let item of mlbSchedule; let i = index" class="col">
       <div class="teams-container" [ngStyle]="{ background: '#303030' }">

@@ -39,7 +39,7 @@ export class DepthService {
     this.nflDepth = {
       '54': [
         {
-          'gdate': 'Thu Oct 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+          'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
           'Offense-WR-1' : {
             firstName: 'Travis',
             lastName: 'Fulgham',
@@ -76,7 +76,7 @@ export class DepthService {
     ],
     '72': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-CB-1' : {
           firstName: 'Michael',
           lastName: 'Ojemudia',
@@ -89,7 +89,7 @@ export class DepthService {
     ],
     '50': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-CB-1' : {
           firstName: 'Ja Whaun',
           lastName: 'Bentley',
@@ -102,7 +102,7 @@ export class DepthService {
     ],
     '53': [
       {
-        'gdate': 'Thu Oct 22 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Mon Nov 2 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-LB-1' : {
           firstName: 'Blake',
           lastName: 'Martinez',
@@ -115,7 +115,7 @@ export class DepthService {
     ],
     '74': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-CB-1' : {
           firstName: 'Maxx',
           lastName: 'Crosby',
@@ -128,7 +128,7 @@ export class DepthService {
     ],
     '78': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Arik',
           lastName: 'Armstead',
@@ -157,7 +157,7 @@ export class DepthService {
   ],
   '79': [
     {
-      'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+      'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
       'Defense-DE-1' : {
         firstName: 'Bobby',
         lastName: 'Wagner',
@@ -171,7 +171,7 @@ export class DepthService {
     ],
     '76': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Budda',
           lastName: 'Baker',
@@ -193,7 +193,7 @@ export class DepthService {
     ],
     '55': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-LB-1' : {
           firstName: 'Jon',
           lastName: 'Bostic',
@@ -223,7 +223,7 @@ export class DepthService {
     ],
     '52': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-CB-1' : {
           firstName: 'Aldon',
           lastName: 'Smith',
@@ -238,7 +238,7 @@ export class DepthService {
     ],
     '51': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Neville',
           lastName: 'Hewitt',
@@ -251,7 +251,7 @@ export class DepthService {
     ],
     '69': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Thu Oct 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Jeremy',
           lastName: 'Chinn',
@@ -264,7 +264,7 @@ export class DepthService {
     ],
     '70': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Trey',
           lastName: 'Hendrikson',
@@ -285,7 +285,7 @@ export class DepthService {
     ],
     '48': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Mario',
           lastName: 'Addison',
@@ -306,7 +306,7 @@ export class DepthService {
     ],
     '62': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Za Darius',
           lastName: 'Smith',
@@ -320,7 +320,7 @@ export class DepthService {
     ],
     '64': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Zach',
           lastName: 'Cunningham',
@@ -341,7 +341,7 @@ export class DepthService {
     ],
     '58': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-CB-1' : {
           firstName: 'Myles',
           lastName: 'Garrett',
@@ -362,7 +362,7 @@ export class DepthService {
     ],
     '57': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Carl',
           lastName: 'Lawson',
@@ -391,7 +391,7 @@ export class DepthService {
     ],
     '61': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-CB-1' : {
           firstName: 'Amani',
           lastName: 'Oruwariye',
@@ -413,7 +413,7 @@ export class DepthService {
     ],
     '68': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Thu Oct 29 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-S-1' : {
           firstName: 'Isaiah',
           lastName: 'Oliver',
@@ -429,6 +429,14 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'ATL',
           position: 'LB'
+        },
+        'Offense-RB-1' : {
+          firstName: 'Todd',
+          lastName: 'Gurley',
+          id: 8469,
+          status: 'Starter',
+          abbreviation: 'ATL',
+          position: 'RB'
         },
         
       }
@@ -449,7 +457,7 @@ export class DepthService {
     ],
     '66': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Joe',
           lastName: 'Schobert',
@@ -471,7 +479,7 @@ export class DepthService {
     ],
     '75': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Joey',
           lastName: 'Bosa',
@@ -493,7 +501,7 @@ export class DepthService {
     ],
     '59': [
       {
-        'gdate': 'Sun Oct 25 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
         'Defense-DE-1' : {
           firstName: 'Bud',
           lastName: 'Dupree',
@@ -510,6 +518,21 @@ export class DepthService {
           abbreviation: 'PIT',
           position: 'WR'
         },
+        
+      }
+    ],
+    '56': [
+      {
+        'gdate': 'Sun Nov 1 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Defense-LB-1' : {
+          firstName: 'Patrick',
+          lastName: 'Queen',
+          id: 18566,
+          status: 'Starter',
+          abbreviation: 'BAL',
+          position: 'LB'
+        }, 
+        
         
       }
     ],

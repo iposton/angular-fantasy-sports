@@ -212,6 +212,7 @@ export class NflStartersComponent implements OnInit {
                   let score2 = null;
                   let originalStart = null;
                   let gameDay = null;
+                  let week;
                   let startTime;
                   const today = new Date()
                   const afterTomorrow = new Date(today);
@@ -233,12 +234,13 @@ export class NflStartersComponent implements OnInit {
                     res2.forEach((item, index) => {
                       gameDay = new Date(this.gameDate);
                       startTime = new Date(game2.startTime);
+                      week = game2.week;
                       //console.log(game2, 'game')
                       originalStart = game2.originalStartTime != null ? new Date(game2.originalStartTime) : new Date(game2.startTime);
                       //console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
                         i2 = index;
                        
-                        if (res2[i2].actual != null && res2[i2].expected != null && startTime < afterTomorrow) {
+                        if (res2[i2].actual != null && res2[i2].expected != null && startTime < afterTomorrow && week === parseInt(this.selectedWeek)) {
 
                           for (let position of res2[i2].actual.lineupPositions) {
                             //console.log(pos[position.player.position], pos, position.player.position);
@@ -265,7 +267,7 @@ export class NflStartersComponent implements OnInit {
                           playerString = this.starterIdData.join();
                           //batterString = this.batterIdData.join(); 
                           
-                        } else if (res2[i2].actual == null && res2[i2].expected != null && startTime < afterTomorrow) {
+                        } else if (res2[i2].actual == null && res2[i2].expected != null && startTime < afterTomorrow && week === parseInt(this.selectedWeek)) {
                           //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
                           for (let position of res2[i2].expected.lineupPositions) {
                             //console.log(pos[position.player.position], pos, position.player.position);
@@ -420,6 +422,7 @@ export class NflStartersComponent implements OnInit {
                       if (this.myData && this.dailySchedule) {
                         let gameDay = null;
                         let originalStart = null;
+                        let week;
                         const today = new Date()
                         const afterTomorrow = new Date(today);
                         afterTomorrow.setDate(afterTomorrow.getDate() + 3);
@@ -428,12 +431,13 @@ export class NflStartersComponent implements OnInit {
                           for (let sdata of this.myData) {
                             gameDay = new Date(this.gameDate);
                             originalStart = new Date(schedule.schedule.startTime);
+                            week = schedule.schedule.week;
 
                             //console.log(schedule.schedule, 'teams starting this week below', originalStart, afterTomorrow)
                        
                             
                             if (schedule.schedule.awayTeam != null && 
-                              schedule.schedule.homeTeam != null && originalStart < afterTomorrow) {
+                              schedule.schedule.homeTeam != null && originalStart < afterTomorrow && week === parseInt(this.selectedWeek)) {
 
                               if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
                                 sdata.sStatus = schedule.schedule.scheduleStatus;
