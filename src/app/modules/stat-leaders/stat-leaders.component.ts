@@ -49,12 +49,12 @@ export class StatLeadersComponent implements OnInit {
   public dSkaters: Array <any>;
   public fSkaters: Array <any>;
   public nhlGoaltenders: Array <any>;
-  public loading: boolean = true;
+  public loading: boolean = false;
   public nhlSkaterloading: boolean;
   public nhlGoalieloading: boolean;
   public mlbPitchingLoading: boolean;
   public mlbHittingLoading: boolean;
-  public nflOffenseLoading: boolean;
+  public nflOffenseLoading: boolean = true;
   public nflDefenseLoading: boolean;
   public noGamesMsg: string = '';
   public errMessage: string = '';
@@ -72,9 +72,9 @@ export class StatLeadersComponent implements OnInit {
   public tomorrowDate: any;
   public mlbSection: boolean = false;
   public mlbHittingSection: boolean = false;
-  public nbaSection: boolean = true;
+  public nbaSection: boolean = false;
   public nhlSection: boolean = false;
-  public nflSection: boolean = false;
+  public nflSection: boolean = true;
   public nflDefenseSection: boolean = false;
   public nflTeamLoading: boolean = true;
   public nhlGoalies: boolean = false;
@@ -103,7 +103,7 @@ export class StatLeadersComponent implements OnInit {
   public reduced: Array <any> = [];
   public crunched: Array <any> = [];
   public combined: Array <any> = [];
-  public sport: string = 'nba';
+  public sport: string = 'nfl';
   public nflWeek: any;
   public week: any = 'all';
   public crunchedQB: Array <any> = [];
@@ -304,7 +304,7 @@ export class StatLeadersComponent implements OnInit {
         this.nflService
           .sendHeaderOptions(headers, '1', nflRoot);
 
-        this.sortNBA();
+        this.loadNFL();
         
       });
 

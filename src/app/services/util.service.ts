@@ -379,6 +379,10 @@ export class UtilService {
       "6939" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hylws51towgdgtb3xuue"
       },
+      "18641" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/itfqdvyumc77u8clmczy"
+      },
+      
       
     }
 
@@ -1224,8 +1228,8 @@ export class UtilService {
       {
         id: 48,
         bye: 11,
-        defenseRankLs: 3,
-        offenseRankLs: 25,
+        defenseRankLs: 16,
+        offenseRankLs: 17,
         city: "Buffalo",
         name: "Bills",
         twitter: "#BillsMafia",
@@ -1244,8 +1248,8 @@ export class UtilService {
       {
       id: 49,
       bye: 7,
-      defenseRankLs: 32,
-      offenseRankLs: 26,
+      defenseRankLs: 6,
+      offenseRankLs: 21,
       city: "Miami",
       name: "Dolphins",
       twitter: "#FinsUp",
@@ -1265,8 +1269,8 @@ export class UtilService {
       {
       id: 50,
       bye: 5,
-      defenseRankLs: 1,
-      offenseRankLs: 14,
+      defenseRankLs: 17,
+      offenseRankLs: 27,
       city: "New England",
       name: "Patriots",
       abbreviation: "NE",
@@ -1285,7 +1289,7 @@ export class UtilService {
       {
       id: 51,
       bye: 10,
-      defenseRankLs: 17,
+      defenseRankLs: 24,
       offenseRankLs: 32,
       city: "New York",
       name: "Jets",
@@ -1305,8 +1309,8 @@ export class UtilService {
       {
       id: 52,
       bye: 10,
-      defenseRankLs: 16,
-      offenseRankLs: 4,
+      defenseRankLs: 32,
+      offenseRankLs: 7,
       city: "Dallas",
       name: "Cowboys",
       twitter: "#DallasCowboys",
@@ -1327,8 +1331,8 @@ export class UtilService {
       {
       id: 53,
       bye: 11,
-      defenseRankLs: 28,
-      offenseRankLs: 18,
+      defenseRankLs: 11,
+      offenseRankLs: 31,
       city: "New York",
       name: "Giants",
       twitter: "#TogetherBlue",
@@ -1347,8 +1351,8 @@ export class UtilService {
       {
       id: 54,
       bye: 9,
-      defenseRankLs: 13,
-      offenseRankLs: 13,
+      defenseRankLs: 19,
+      offenseRankLs: 25,
       city: "Philadelphia",
       name: "Eagles",
       twitter: "#FlyEaglesFly",
@@ -1369,8 +1373,8 @@ export class UtilService {
       {
       id: 55,
       bye: 8,
-      defenseRankLs: 25,
-      offenseRankLs: 30,
+      defenseRankLs: 15,
+      offenseRankLs: 28,
       city: "Washington",
       name: "Washington",
       twitter: "#WashingtonNFL",
@@ -1388,8 +1392,8 @@ export class UtilService {
       {
       id: 56,
       bye: 7,
-      defenseRankLs: 8,
-      offenseRankLs: 1,
+      defenseRankLs: 1,
+      offenseRankLs: 23,
       city: "Baltimore",
       name: "Ravens",
       twitter: "#RavensFlock",
@@ -1409,8 +1413,8 @@ export class UtilService {
       {
       id: 57,
       bye: 9,
-      defenseRankLs: 30,
-      offenseRankLs: 28,
+      defenseRankLs: 23,
+      offenseRankLs: 22,
       city: "Cincinnati",
       name: "Bengals",
       twitter: "#SEIZETHEDEY",
@@ -1429,7 +1433,7 @@ export class UtilService {
       id: 58,
       bye: 9,
       defenseRankLs: 20,
-      offenseRankLs: 23,
+      offenseRankLs: 14,
       city: "Cleveland",
       name: "Browns",
       twitter: "#Browns",
@@ -1447,9 +1451,9 @@ export class UtilService {
       },
       {
       id: 59,
-      bye: 4, //8
+      bye: 4,
       defenseRankLs: 2,
-      offenseRankLs: 31,
+      offenseRankLs: 16,
       city: "Pittsburgh",
       name: "Steelers",
       twitter: "#HereWeGo",
@@ -1470,8 +1474,8 @@ export class UtilService {
       {
       id: 60,
       bye: 11,
-      defenseRankLs: 14,
-      offenseRankLs: 27,
+      defenseRankLs: 8,
+      offenseRankLs: 30,
       city: "Chicago",
       name: "Bears",
       twitter: "#DaBears",
@@ -1489,8 +1493,8 @@ export class UtilService {
       {
       id: 61,
       bye: 5,
-      defenseRankLs: 27,
-      offenseRankLs: 21,
+      defenseRankLs: 22,
+      offenseRankLs: 19,
       city: "Detroit",
       name: "Lions",
       twitter: "#OnePride",
@@ -1510,8 +1514,8 @@ export class UtilService {
       {
       id: 62,
       bye: 5,
-      defenseRankLs: 9,
-      offenseRankLs: 15,
+      defenseRankLs: 26,
+      offenseRankLs: 4,
       city: "Green Bay",
       name: "Packers",
       abbreviation: "GB",
@@ -1529,8 +1533,8 @@ export class UtilService {
       {
       id: 63,
       bye: 7,
-      defenseRankLs: 4,
-      offenseRankLs: 12,
+      defenseRankLs: 30,
+      offenseRankLs: 15,
       city: "Minnesota",
       name: "Vikings",
       twitter: "#Skol",
@@ -1548,8 +1552,8 @@ export class UtilService {
       {
       id: 64,
       bye: 8,
-      defenseRankLs: 19,
-      offenseRankLs: 11,
+      defenseRankLs: 31,
+      offenseRankLs: 18,
       city: "Houston",
       name: "Texans",
       twitter: "#WeAreTexans",
@@ -1567,8 +1571,8 @@ export class UtilService {
       {
       id: 65,
       bye: 7,
-      defenseRankLs: 23,
-      offenseRankLs: 22,
+      defenseRankLs: 3,
+      offenseRankLs: 24,
       city: "Indianapolis",
       name: "Colts",
       twitter: "#ForTheShoe",
@@ -1586,8 +1590,8 @@ export class UtilService {
       {
       id: 66,
       bye: 8,
-      defenseRankLs: 22,
-      offenseRankLs: 24,
+      defenseRankLs: 29,
+      offenseRankLs: 26,
       city: "Jacksonville",
       name: "Jaguars",
       twitter: "#DUUUVAL",
@@ -1606,9 +1610,9 @@ export class UtilService {
       },
       {
       id: 67,
-      bye: 4, //7
-      defenseRankLs: 12,
-      offenseRankLs: 8,
+      bye: 4,
+      defenseRankLs: 10,
+      offenseRankLs: 3,
       city: "Tennessee",
       name: "Titans",
       twitter: "#Titans",
@@ -1630,8 +1634,8 @@ export class UtilService {
       {
       id: 68,
       bye: 10,
-      defenseRankLs: 29,
-      offenseRankLs: 10,
+      defenseRankLs: 27,
+      offenseRankLs: 13,
       city: "Atlanta",
       name: "Falcons",
       twitter: "#RiseUpATL",
@@ -1670,8 +1674,8 @@ export class UtilService {
       {
       id: 70,
       bye: 6,
-      defenseRankLs: 7,
-      offenseRankLs: 6,
+      defenseRankLs: 25,
+      offenseRankLs: 9,
       city: "New Orleans",
       name: "Saints",
       abbreviation: "NO",
@@ -1689,8 +1693,8 @@ export class UtilService {
       {
       id: 71,
       bye: 13,
-      defenseRankLs: 15,
-      offenseRankLs: 3,
+      defenseRankLs: 4,
+      offenseRankLs: 6,
       city: "Tampa Bay",
       name: "Buccaneers",
       abbreviation: "TB",
@@ -1711,7 +1715,7 @@ export class UtilService {
       {
       id: 72,
       bye: 5,
-      defenseRankLs: 11,
+      defenseRankLs: 14,
       offenseRankLs: 29,
       city: "Denver",
       name: "Broncos",
@@ -1730,7 +1734,7 @@ export class UtilService {
       {
       id: 73,
       bye: 10,
-      defenseRankLs: 6,
+      defenseRankLs: 12,
       offenseRankLs: 5,
       city: "Kansas City",
       name: "Chiefs",
@@ -1749,8 +1753,8 @@ export class UtilService {
       {
       id: 74,
       bye: 6,
-      defenseRankLs: 26,
-      offenseRankLs: 17,
+      defenseRankLs: 28,
+      offenseRankLs: 12,
       city: "Las Vegas",
       name: "Raiders",
       abbreviation: "LV",
@@ -1774,8 +1778,8 @@ export class UtilService {
       {
       id: 75,
       bye: 6,
-      defenseRankLs: 24,
-      offenseRankLs: 16,
+      defenseRankLs: 18,
+      offenseRankLs: 8,
       city: "Los Angeles",
       name: "Chargers",
       twitter: "#BoltUp",
@@ -1794,8 +1798,8 @@ export class UtilService {
       {
       id: 76,
       bye: 8,
-      defenseRankLs: 31,
-      offenseRankLs: 19,
+      defenseRankLs: 7,
+      offenseRankLs: 2,
       city: "Arizona",
       name: "Cardinals",
       twitter: "#RedSea",
@@ -1814,8 +1818,8 @@ export class UtilService {
       {
       id: 77,
       bye: 9,
-      defenseRankLs: 10,
-      offenseRankLs: 9,
+      defenseRankLs: 5,
+      offenseRankLs: 11,
       city: "Los Angeles",
       name: "Rams",
       abbreviation: "LA",
@@ -1834,8 +1838,8 @@ export class UtilService {
       {
       id: 78,
       bye: 11,
-      defenseRankLs: 5,
-      offenseRankLs: 2,
+      defenseRankLs: 9,
+      offenseRankLs: 10,
       city: "San Francisco",
       name: "49ers",
       abbreviation: "SF",
@@ -1853,8 +1857,8 @@ export class UtilService {
         {
           id: 79,
           bye: 6,
-          defenseRankLs: 18,
-          offenseRankLs: 7,
+          defenseRankLs: 13,
+          offenseRankLs: 1,
           city: "Seattle",
           name: "Seahawks",
           twitter: "#Seahawks",
