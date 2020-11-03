@@ -994,11 +994,11 @@ export class StatLeadersComponent implements OnInit {
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
-            sum.push({printName: '@ '+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
+            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
           } else if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
-            sum.push({printName: 'vs '+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
+            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
           }
         }
       })
@@ -1010,11 +1010,11 @@ export class StatLeadersComponent implements OnInit {
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id && s.schedule.week == this.nflWeek) {
             //if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
-            sum.push({printName: '@ '+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
+            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
           } else if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id && s.schedule.week == this.nflWeek) {
             //if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
-            sum.push({printName: 'vs '+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
+            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
           } else if (index+1 === bye && bye === parseInt(this.nflWeek)){ 
             sum.push({printName: 'BYE ', oRank: 1, dRank: 1, name: bye});
           }
@@ -1655,14 +1655,14 @@ export class StatLeadersComponent implements OnInit {
                 homeTeam = res[i]['game'].homeTeam.abbreviation;
                 awayTeam = res[i]['game'].awayTeam.abbreviation;
 
-                //homeOpponent = findRank(res[i]['game'].awayTeam.abbreviation, `vs ${res[i]['game'].awayTeam.abbreviation}`);
-                //awayOpponent = findRank(res[i]['game'].homeTeam.abbreviation, `@ ${res[i]['game'].homeTeam.abbreviation}`);
+                //homeOpponent = findRank(res[i]['game'].awayTeam.abbreviation, `vs${res[i]['game'].awayTeam.abbreviation}`);
+                //awayOpponent = findRank(res[i]['game'].homeTeam.abbreviation, `@${res[i]['game'].homeTeam.abbreviation}`);
 
                 away.forEach((item, index) => {
                   away[index].tp = awayTotalPlays;
                   away[index].pp = awayPassPlays;
                   away[index].rp = awayRushPlays;
-                  away[index].opponent = findRank(homeTeam, `@ ${homeTeam}`, away[index]);
+                  away[index].opponent = findRank(homeTeam, `@${homeTeam}`, away[index]);
                   this.combined.push(away[index]);
                 })
 
@@ -1670,7 +1670,7 @@ export class StatLeadersComponent implements OnInit {
                   home[index].tp = homeTotalPlays;
                   home[index].pp = homePassPlays;
                   home[index].rp = homeRushPlays;
-                  home[index].opponent = findRank(awayTeam, `vs ${awayTeam}`, home[index]);
+                  home[index].opponent = findRank(awayTeam, `vs${awayTeam}`, home[index]);
                   this.combined.push(home[index]);
                 })
             
@@ -1931,18 +1931,18 @@ export class StatLeadersComponent implements OnInit {
                 //console.log(away, 'away players')
                 awayOpponentYds = res[i]['stats'].home.teamStats[0].miscellaneous ? res[i]['stats'].home.teamStats[0].miscellaneous.offenseYds : 0;
                 homeOpponentYds = res[i]['stats'].away.teamStats[0].miscellaneous ? res[i]['stats'].away.teamStats[0].miscellaneous.offenseYds : 0;
-                applyOY(awayTeam, `@ ${homeTeam}`, awayOpponentYds);
-                applyOY(homeTeam, `vs ${awayTeam}`, homeOpponentYds);
-                //homeOpponent = findRank(awayTeam, `vs ${awayTeam}`, home, homeOpponentYds);
-                //awayOpponent = findRank(homeTeam, `@ ${homeTeam}`, away, awayOpponentYds);
+                applyOY(awayTeam, `@${homeTeam}`, awayOpponentYds);
+                applyOY(homeTeam, `vs${awayTeam}`, homeOpponentYds);
+                //homeOpponent = findRank(awayTeam, `vs${awayTeam}`, home, homeOpponentYds);
+                //awayOpponent = findRank(homeTeam, `@${homeTeam}`, away, awayOpponentYds);
 
                 away.forEach((item, index) => {
-                  away[index].opponent = findRank(homeTeam, `@ ${homeTeam}`, away[index], awayOpponentYds);
+                  away[index].opponent = findRank(homeTeam, `@${homeTeam}`, away[index], awayOpponentYds);
                   this.combined.push(away[index]);
                 })
 
                 home.forEach((item, index) => {  
-                  home[index].opponent = findRank(awayTeam, `vs ${awayTeam}`, home[index], homeOpponentYds); 
+                  home[index].opponent = findRank(awayTeam, `vs${awayTeam}`, home[index], homeOpponentYds); 
                   this.combined.push(home[index]);
                 })
             
