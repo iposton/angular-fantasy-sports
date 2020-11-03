@@ -246,8 +246,8 @@ export class NflStartersComponent implements OnInit {
                             //console.log(pos[position.player.position], pos, position.player.position);
                            if (position.player != null) {
                               this.gameStarter = {
-                                playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDay() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][position['position']].id : position.player.id, //position.player.id,
-                                name: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDay() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][position['position']].lastName : position.player.lastName, //position.player.lastName,
+                                playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? this.depth[res2[i2].team.id][0][position['position']].id : position.player.id, //position.player.id,
+                                name: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? this.depth[res2[i2].team.id][0][position['position']].lastName : position.player.lastName, //position.player.lastName,
                                 team: res2[i2].team.id,
                                 gameID: game2.id,
                                 score: score2,
@@ -255,7 +255,7 @@ export class NflStartersComponent implements OnInit {
                                 scheduleStatus: game2.scheduleStatus,
                                 position: position['position'],
                                 startType: 'actual',
-                                playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDay() === new Date(game2.startTime).getDay() ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
+                                playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
                               }
 
                               this.gameStarters.push(this.gameStarter);
@@ -273,8 +273,8 @@ export class NflStartersComponent implements OnInit {
                             //console.log(pos[position.player.position], pos, position.player.position);
                            if (position.player != null) {
                             this.gameStarter = {
-                              playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDay() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][position['position']].id : position.player.id, //position.player.id,
-                              name: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDay() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][position['position']].lastName : position.player.lastName, //position.player.lastName,
+                              playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? this.depth[res2[i2].team.id][0][position['position']].id : position.player.id, //position.player.id,
+                              name: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? this.depth[res2[i2].team.id][0][position['position']].lastName : position.player.lastName, //position.player.lastName,
                               team: res2[i2].team.id,
                               gameID: game2.id,
                               score: score2,
@@ -282,7 +282,7 @@ export class NflStartersComponent implements OnInit {
                               scheduleStatus: game2.scheduleStatus,
                               position: position.player ? position.player.position : position['position'],
                               startType: 'expected',
-                              playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDay() === new Date(game2.startTime).getDay() ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
+                              playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
                             }
                             
                             this.gameStarters.push(this.gameStarter);
