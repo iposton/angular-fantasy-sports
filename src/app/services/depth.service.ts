@@ -155,9 +155,9 @@ export class DepthService {
       {
         'gdate': 9,
         'Defense-DE-1' : {
-          firstName: 'Arik',
-          lastName: 'Armstead',
-          id: 8420,
+          firstName: 'Kerry',
+          lastName: 'Hyder',
+          id: 6866,
           status: 'Starter',
           abbreviation: 'SF',
           position: 'DE'
@@ -199,6 +199,22 @@ export class DepthService {
         abbreviation: 'SEA',
         position: 'MLB'
       },
+      'Defense-LB-1' : {
+        firstName: 'Jarran',
+        lastName: 'Reed',
+        id: 10027,
+        status: 'Starter',
+        abbreviation: 'SEA',
+        position: 'DT'
+      },
+      'Defense-CB-1' : {
+        firstName: 'SL',
+        lastName: 'Griffin',
+        id: 13210,
+        status: 'Starter',
+        abbreviation: 'SEA',
+        position: 'CB'
+      },
       
       }
     ],
@@ -220,6 +236,22 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'ARI',
           position: 'MLB'
+        },
+        'Defense-CB-1' : {
+          firstName: 'Patrick',
+          lastName: 'Peterson',
+          id: 6007,
+          status: 'Starter',
+          abbreviation: 'ARI',
+          position: 'CB'
+        },
+        'Defense-LB-1' : {
+          firstName: 'De Vondre',
+          lastName: 'Campbell',
+          id: 9740,
+          status: 'Starter',
+          abbreviation: 'ARI',
+          position: 'OLB'
         },
         
       }
@@ -576,6 +608,14 @@ export class DepthService {
           abbreviation: 'DET',
           position: 'DE'
         },
+        'Defense-S-1' : {
+          firstName: 'Jamie',
+          lastName: 'Collins Sr.',
+          id: 7609,
+          status: 'Starter',
+          abbreviation: 'DET',
+          position: 'OLB'
+        },
         'Offense-RB-1' : {
           firstName: 'D Andre',
           lastName: 'Swift',
@@ -664,14 +704,14 @@ export class DepthService {
     '75': [
       {
         'gdate': 9,
-        'Defense-DE-1' : {
-          firstName: 'Joey',
-          lastName: 'Bosa',
-          id: 9996,
-          status: 'Starter',
-          abbreviation: 'LAC',
-          position: 'DE'
-        }, 
+        // 'Defense-DE-1' : {
+        //   firstName: 'Joey',
+        //   lastName: 'Bosa',
+        //   id: 9996,
+        //   status: 'Starter',
+        //   abbreviation: 'LAC',
+        //   position: 'DE'
+        // }, 
         'Defense-CB-1' : {
           firstName: 'Melvin',
           lastName: 'Ingram III',
@@ -856,8 +896,29 @@ export class DepthService {
           abbreviation: 'TEN',
           position: 'WR'
         },
+        'Defense-CB-1' : {
+          firstName: 'Jayon',
+          lastName: 'Brown',
+          id: 13511,
+          status: 'Starter',
+          abbreviation: 'TEN',
+          position: 'ILB'
+        },
         
         
+      }
+    ],
+    '71': [
+      {
+        'gdate': 9,
+        'Defense-LB-1' : {
+          firstName: 'Devin',
+          lastName: 'White',
+          id: 16242,
+          status: 'Starter',
+          abbreviation: 'TB',
+          position: 'LB'
+        }, 
       }
     ],
     
