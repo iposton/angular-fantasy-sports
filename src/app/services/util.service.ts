@@ -415,7 +415,22 @@ export class UtilService {
       "6294" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/jifhhhjtzefcgnoph6jv"
       },
-
+      "9772" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/thhwhd13yrxfotpmg3mr"
+      },
+      "7609" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rnlbvr1luxvujvilpsja"
+      },
+      "10034" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/fp5olqsgdbv5malqazzu"
+      },
+      "15416" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hj1o1fa6klumb7yozntc"
+      },
+      "13224" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/oipjjzgdjyc5qstoo9zv"
+      },
+      
     }
 
     this.NFLImages = {
@@ -1409,7 +1424,7 @@ export class UtilService {
       offenseRankLs: 28,
       city: "Washington",
       name: "Washington",
-      twitter: "#WashingtonNFL",
+      twitter: "#WashingtonFootball",
       abbreviation: "WAS",
       homeVenue: {
       id: 73,
