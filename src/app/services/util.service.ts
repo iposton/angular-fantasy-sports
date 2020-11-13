@@ -444,7 +444,15 @@ export class UtilService {
       },
       "9961" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ew3fzelndoialgn6a2ra"
+      },
+      "13466" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/o7flzlafkwup1al6ujiw"
+      },
+      "8019" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/fk3xbu2ah4c06vla1bhy"
       }
+      
+      
       
         
     }
