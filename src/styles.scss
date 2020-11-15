@@ -2191,6 +2191,7 @@ form input[type="text"] {
       color: #222;
       border-radius: 5px;
       overflow: hidden;
+      z-index: 200;
       .modal-header {
         background: rgb(31,32,32);
         background: linear-gradient(90deg, rgba(31,32,32,1) 0%, rgba(211,84,0,1) 0%, rgba(133,56,6,1) 100%);
@@ -2238,6 +2239,7 @@ form input[type="text"] {
       }
       .content {
         overflow: scroll;
+        -webkit-overflow-scrolling: touch;
         text-align: left;
         margin-top: 80px;
         padding: 20px 10px;
@@ -2377,6 +2379,10 @@ form input[type="text"] {
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats .sml-stat {
     font-size: 9px;
     letter-spacing: 1px;
+}
+
+.main-row.stat-leaders .left-content {
+  font-size: 13px;
 }
 
   #overlay.active .modal .modal-footer img {
