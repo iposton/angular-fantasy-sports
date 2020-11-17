@@ -261,6 +261,22 @@ export class DepthService {
           abbreviation: 'ARI',
           position: 'OLB'
         },
+        'Offense-TE-1' : {
+          firstName: 'DeAndre',
+          lastName: 'Hopkins',
+          id: 7013,
+          status: 'Starter',
+          abbreviation: 'ARI',
+          position: 'WR'
+        },
+        'Offense-WR-1' : {
+          firstName: 'Christian',
+          lastName: 'Kirk',
+          id: 14654,
+          status: 'Starter',
+          abbreviation: 'ARI',
+          position: 'WR'
+        },
         
       }
     ],
@@ -290,6 +306,14 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'WAS',
           position: 'DE'
+        },
+        'Offense-RB-1' : {
+          firstName: 'Antonio',
+          lastName: 'Gibson',
+          id: 18688,
+          status: 'Starter',
+          abbreviation: 'WAS',
+          position: 'RB'
         },
         
       }
@@ -425,6 +449,14 @@ export class DepthService {
           abbreviation: 'NO',
           position: 'SS'
         },
+        'Defense-LB-1' : {
+          firstName: 'Demario',
+          lastName: 'Davis',
+          id: 7887,
+          status: 'Starter',
+          abbreviation: 'NO',
+          position: 'OLB'
+        },
         'Offense-TE-1' : {
           firstName: 'Jared',
           lastName: 'Cook',
@@ -478,6 +510,14 @@ export class DepthService {
           abbreviation: 'BUF',
           position: 'FS'
         },
+        'Offense-TE-1' : {
+          firstName: 'Cole',
+          lastName: 'Beasley',
+          id: 6657,
+          status: 'Starter',
+          abbreviation: 'BUF',
+          position: 'WR'
+        },
       }
     ],
     '62': [
@@ -528,6 +568,14 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'HOU',
           position: 'WR'
+        },
+        'Offense-RB-1' : {
+          firstName: 'Duke',
+          lastName: 'Johnson',
+          id: 6560,
+          status: 'Starter',
+          abbreviation: 'HOU',
+          position: 'RB'
         },
       }
     ],
@@ -744,14 +792,14 @@ export class DepthService {
         //   abbreviation: 'LAC',
         //   position: 'DE'
         // }, 
-        'Defense-CB-1' : {
-          firstName: 'Melvin',
-          lastName: 'Ingram III',
-          id: 8253,
-          status: 'Starter',
-          abbreviation: 'LAC',
-          position: 'DE'
-        },
+        // 'Defense-CB-1' : {
+        //   firstName: 'Melvin',
+        //   lastName: 'Ingram III',
+        //   id: 8253,
+        //   status: 'Starter',
+        //   abbreviation: 'LAC',
+        //   position: 'DE'
+        // },
         'Offense-RB-1' : {
           firstName: 'Joshua',
           lastName: 'Kelley',
@@ -759,6 +807,14 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'LAC',
           position: 'RB'
+        },
+        'Defense-DE-1' : {
+          firstName: 'Michael',
+          lastName: 'Davis',
+          id: 13377,
+          status: 'Starter',
+          abbreviation: 'LAC',
+          position: 'CB'
         },
         
       }
@@ -820,6 +876,14 @@ export class DepthService {
           abbreviation: 'BAL',
           position: 'TE'
         },
+        'Offense-WR-1' : {
+          firstName: 'Willie',
+          lastName: 'Snead',
+          id: 7665,
+          status: 'Starter',
+          abbreviation: 'BAL',
+          position: 'WR'
+        },
         
         
       }
@@ -835,6 +899,14 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'MIN',
           position: 'RB'
+        },
+        'Offense-TE-1' : {
+          firstName: 'Justin',
+          lastName: 'Jefferson',
+          id: 18648,
+          status: 'Starter',
+          abbreviation: 'MIN',
+          position: 'WR'
         },
         'Defense-DE-1' : {
           firstName: 'Eric',
@@ -874,6 +946,14 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'MIA',
           position: 'OLB'
+        },
+        'Offense-TE-1' : {
+          firstName: 'Jakeem',
+          lastName: 'Grant',
+          id: 9929,
+          status: 'Starter',
+          abbreviation: 'MIA',
+          position: 'WR'
         },
         
         
