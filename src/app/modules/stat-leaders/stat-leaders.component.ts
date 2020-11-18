@@ -595,6 +595,7 @@ export class StatLeadersComponent implements OnInit {
       this.nflOffenseLoading = true;
       this.spanGames();
     } else {
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     //this.loading = true;
     this.nbaSection = false; 
     this.nhlSection = false; 
@@ -636,7 +637,7 @@ export class StatLeadersComponent implements OnInit {
         }
       }
   })
-
+  await sleep(1000)
   if (this.teamSchedules.length === 0) {
     let team: any;
     let bye: any;
