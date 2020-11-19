@@ -637,7 +637,7 @@ export class StatLeadersComponent implements OnInit {
         }
       }
   })
-  await sleep(1000)
+  
   if (this.teamSchedules.length === 0) {
     let team: any;
     let bye: any;
@@ -699,7 +699,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
       this.nflOffenseLoading = true;
-      let resultTwo = await promiseTwo;
+     
       //this.nflDefenseLoading = true;
       //console.log(this.nflTeams, 'nfl teams');
 
@@ -740,8 +740,8 @@ export class StatLeadersComponent implements OnInit {
           }  
         }
       }
-
-
+      //let resultTwo = await promiseTwo;
+      await sleep(2500)
       this.nflService
         .getAllOffense('qb', '19', this.week).subscribe(res => {
           if (res['gamelogs'] != null) {

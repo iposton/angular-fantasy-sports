@@ -908,6 +908,14 @@ export class DepthService {
           abbreviation: 'MIN',
           position: 'WR'
         },
+        'Offense-WR-1' : {
+          firstName: 'Adam',
+          lastName: 'Thielen',
+          id: 7478,
+          status: 'Starter',
+          abbreviation: 'MIN',
+          position: 'WR'
+        },
         'Defense-DE-1' : {
           firstName: 'Eric',
           lastName: 'Kendricks',
