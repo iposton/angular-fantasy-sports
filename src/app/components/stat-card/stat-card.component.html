@@ -78,8 +78,10 @@
                   {{ (item?.stats)[statType][statField] }} {{ statTag }}
                   <span *ngIf="sport === 'nfl'">
                     <span *ngIf="statType === 'interceptions' && item?.stats[statType]?.intTD &gt; 0">{{ item?.stats[statType]?.intTD }} TD</span>
-                    <span *ngIf="statType === 'passing'">{{ item?.stats[statType]?.passTD }} TD</span>
-                    <span *ngIf="statType === 'rushing'">{{ item?.stats[statType]?.rushTD }} TD</span>
+                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame'">{{ item?.stats[statType]?.passTD }} TD</span>
+                    <span *ngIf="statType === 'passing' && statField == 'ydsPerGame'">{{ item?.stats[statType]?.passTD + item?.stats?.rushing?.rushTD }} TD</span>
+                    <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'">{{ item?.stats[statType]?.rushTD }} TD</span>
+                    <span *ngIf="statType === 'rushing' && statField == 'ydsPerGame'">{{ item?.stats[statType]?.rushTD + item?.stats?.receiving?.recTD }} TD</span>
                     <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct'">{{ item?.stats[statType]?.recTD }} TD</span>
                     <span *ngIf="statField === 'totalTouchPct'">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
                   </span>

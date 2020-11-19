@@ -2345,15 +2345,6 @@ form input[type="text"] {
 
 @media only screen and (max-width: 600px) {
 
-  // .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname,
-  // .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname {
-  //   // display: none;
-  // }
-
-  // .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content {
-  //   display: none;
-  // }
-
   .nfl-page .card-wrap-sp .mat-card-sp .bottom-content {
     font-size: 13px;
   }
@@ -2384,6 +2375,11 @@ form input[type="text"] {
 .main-row.stat-leaders .left-content {
   font-size: 13px;
 }
+
+.main-row.stat-leaders .left-content.sm .index-rank {
+  font-size: 11px;
+}
+
 
   #overlay.active .modal .modal-footer img {
     width: 5%;
@@ -2531,7 +2527,7 @@ form input[type="text"] {
   }
 
   .main-row.stat-leaders .left-content .player-infos.sm {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .baseball-header {
