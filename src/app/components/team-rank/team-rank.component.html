@@ -22,9 +22,9 @@
                     Points Allowed: {{item?.stats?.standings?.pointsAgainst}}   &nbsp;
                     Sacks: {{item?.stats?.tackles.sacks}}   &nbsp;
                     Int: {{item?.stats?.interceptions?.interceptions}}   &nbsp;
-                    Passes Defened: {{item?.stats?.interceptions?.passesDefended}} 
+                    Passes Defened: {{item?.stats?.interceptions?.passesDefended}} &nbsp;
                     <span *ngIf="item?.opponentYdsArr && item?.opponentYdsArr.length > 0">
-                            Yds Allowed: 
+                            <b>Yds Allowed:</b> 
                         <span *ngFor="let g of item?.opponentYdsArr"> 
                          <span *ngIf="item?.abbreviation === g?.owner"> <b>&nbsp; {{g.game}} {{g.oy}} </b> </span>
                         </span>
