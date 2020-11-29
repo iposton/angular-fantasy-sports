@@ -39,7 +39,7 @@ export class DepthService {
     this.nflDepth = {
       '54': [
         {
-          'gdate': 11,
+          'gdate': 12,
           'Offense-WR-1' : {
             firstName: 'Travis',
             lastName: 'Fulgham',
@@ -76,7 +76,7 @@ export class DepthService {
     ],
     '72': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-CB-1' : {
           firstName: 'Michael',
           lastName: 'Ojemudia',
@@ -89,7 +89,7 @@ export class DepthService {
     ],
     '50': [
       {
-        'gdate': 11,
+        'gdate': 12,
         // 'Defense-LB-1' : {
         //   firstName: 'Ja Whaun',
         //   lastName: 'Bentley',
@@ -110,7 +110,7 @@ export class DepthService {
     ],
     '53': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-LB-1' : {
           firstName: 'Blake',
           lastName: 'Martinez',
@@ -140,7 +140,7 @@ export class DepthService {
     ],
     '74': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-CB-1' : {
           firstName: 'Maxx',
           lastName: 'Crosby',
@@ -161,7 +161,7 @@ export class DepthService {
     ],
     '78': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Kerry',
           lastName: 'Hyder',
@@ -198,7 +198,7 @@ export class DepthService {
   ],
   '79': [
     {
-      'gdate': 11,
+      'gdate': 12,
       'Defense-DE-1' : {
         firstName: 'Bobby',
         lastName: 'Wagner',
@@ -252,7 +252,7 @@ export class DepthService {
     ],
     '76': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Budda',
           lastName: 'Baker',
@@ -306,7 +306,7 @@ export class DepthService {
     ],
     '55': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-LB-1' : {
           firstName: 'Jon',
           lastName: 'Bostic',
@@ -344,7 +344,7 @@ export class DepthService {
     ],
     '52': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-CB-1' : {
           firstName: 'Aldon',
           lastName: 'Smith',
@@ -390,7 +390,7 @@ export class DepthService {
     ],
     '51': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Neville',
           lastName: 'Hewitt',
@@ -419,7 +419,7 @@ export class DepthService {
     ],
     '69': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Rasul',
           lastName: 'Douglas',
@@ -456,7 +456,7 @@ export class DepthService {
     ],
     '70': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Trey',
           lastName: 'Hendrikson',
@@ -509,7 +509,7 @@ export class DepthService {
     ],
     '48': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Mario',
           lastName: 'Addison',
@@ -546,7 +546,7 @@ export class DepthService {
     ],
     '62': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Za Darius',
           lastName: 'Smith',
@@ -568,7 +568,7 @@ export class DepthService {
     ],
     '64': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Zach',
           lastName: 'Cunningham',
@@ -605,7 +605,7 @@ export class DepthService {
     ],
     '58': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-CB-1' : {
           firstName: 'Myles',
           lastName: 'Garrett',
@@ -626,7 +626,7 @@ export class DepthService {
     ],
     '57': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Carl',
           lastName: 'Lawson',
@@ -679,7 +679,7 @@ export class DepthService {
     ],
     '61': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-CB-1' : {
           firstName: 'Amani',
           lastName: 'Oruwariye',
@@ -741,7 +741,7 @@ export class DepthService {
     ],
     '68': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-S-1' : {
           firstName: 'Isaiah',
           lastName: 'Oliver',
@@ -771,7 +771,7 @@ export class DepthService {
     ],
     '60': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-CB-1' : {
           firstName: 'Khalil',
           lastName: 'Mack',
@@ -785,7 +785,7 @@ export class DepthService {
     ],
     '66': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Joe',
           lastName: 'Schobert',
@@ -815,7 +815,7 @@ export class DepthService {
     ],
     '75': [
       {
-        'gdate': 11,
+        'gdate': 12,
         // 'Defense-DE-1' : {
         //   firstName: 'Joey',
         //   lastName: 'Bosa',
@@ -853,7 +853,7 @@ export class DepthService {
     ],
     '59': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Bud',
           lastName: 'Dupree',
@@ -883,7 +883,7 @@ export class DepthService {
     ],
     '56': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-LB-1' : {
           firstName: 'Patrick',
           lastName: 'Queen',
@@ -930,7 +930,7 @@ export class DepthService {
     ],
     '63': [
       {
-        'gdate': 11,
+        'gdate': 12,
          
         'Offense-RB-1' : {
           firstName: 'Dalvin',
@@ -978,7 +978,7 @@ export class DepthService {
     ],
     '49': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Emmanuel',
           lastName: 'Ogbah',
@@ -1009,7 +1009,7 @@ export class DepthService {
     ],
     '65': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Bobby',
           lastName: 'Okereke',
@@ -1055,7 +1055,7 @@ export class DepthService {
     ],
     '67': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Offense-WR-1' : {
           firstName: 'A.J.',
           lastName: 'Brown',
@@ -1086,7 +1086,7 @@ export class DepthService {
     ],
     '71': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Devin',
           lastName: 'White',
@@ -1099,7 +1099,7 @@ export class DepthService {
     ],
     '73': [
       {
-        'gdate': 11,
+        'gdate': 12,
         'Defense-DE-1' : {
           firstName: 'Frank',
           lastName: 'Clark',
