@@ -113,7 +113,7 @@ export class NflStartersComponent implements OnInit {
           this.selectedWeek = week.week;
           if (date < new Date('Tue Dec 31 2020 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
             let utcDate = new Date(week.dateBeg);
-            utcDate.setHours(utcDate.getHours() - 48);
+            utcDate.setHours(utcDate.getHours() - 24);
             let myDate = new Date(utcDate);
             let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
             this.tsDate = dailyDate; 
