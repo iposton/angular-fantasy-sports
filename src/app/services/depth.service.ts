@@ -135,6 +135,14 @@ export class DepthService {
           abbreviation: 'NYG',
           position: 'RB'
         },
+        'Offense-QB-1' : {
+          firstName: 'Colt',
+          lastName: 'McCoy',
+          id: 8733,
+          status: 'Starter',
+          abbreviation: 'NYG',
+          position: 'QB'
+        },
         //18972 austin mack wr
       }
     ],
@@ -758,7 +766,7 @@ export class DepthService {
     '68': [
       {
         'gdate': 13,
-        'Defense-S-1' : {
+        'Defense-CB-1' : {
           firstName: 'Isaiah',
           lastName: 'Oliver',
           id: 15064,
@@ -766,14 +774,14 @@ export class DepthService {
           abbreviation: 'ATL',
           position: 'FS'
         }, 
-        'Defense-DB-1' : {
-          firstName: 'Foye',
-          lastName: 'Oluokun',
-          id: 14975,
-          status: 'Starter',
-          abbreviation: 'ATL',
-          position: 'LB'
-        },
+        // 'Defense-CB-1' : {
+        //   firstName: 'Foye',
+        //   lastName: 'Oluokun',
+        //   id: 14975,
+        //   status: 'Starter',
+        //   abbreviation: 'ATL',
+        //   position: 'LB'
+        // },
         // 'Offense-RB-1' : {
         //   firstName: 'Todd',
         //   lastName: 'Gurley',
@@ -832,7 +840,7 @@ export class DepthService {
     '75': [
       {
         'gdate': 13,
-        'Defense-DB-1' : {
+        'Defense-CB-1' : {
           firstName: 'Joey',
           lastName: 'Bosa',
           id: 9996,
@@ -939,6 +947,14 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'BAL',
           position: 'WR'
+        },
+        'Offense-QB-1' : {
+          firstName: 'Lamar',
+          lastName: 'Jackson',
+          id: 14523,
+          status: 'Starter',
+          abbreviation: 'BAL',
+          position: 'QB'
         },
         
         
