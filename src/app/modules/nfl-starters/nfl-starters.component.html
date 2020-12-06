@@ -114,7 +114,7 @@
                     <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
                     &nbsp;
 
-                    <span *ngIf="item?.playerObj?.playerType === 'd'">
+                    <span *ngIf="item?.playerObj?.playerType === 'd' && item?.playerObj?.stats?.tacklesToday != null">
                         <span [ngStyle]="{color: item?.playerObj?.stats?.tacklesToday &gt; 6 ? 'gold' : 'white'}">
                           {{item?.playerObj?.stats?.tacklesToday}} Tkl
                           <br>
