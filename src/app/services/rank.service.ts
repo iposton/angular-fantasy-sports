@@ -10,14 +10,8 @@ export class RankService {
   public updatedRanks: any;
 
   constructor() {
-      // this.nflRanks = {
-      //   '123': {
-      //     or: 1,
-      //     dr: 2
-      //   }
-      // }
 
-   }
+  }
 
    public rankOffense(teams, nflTeams, week) {
     let dataO = [];

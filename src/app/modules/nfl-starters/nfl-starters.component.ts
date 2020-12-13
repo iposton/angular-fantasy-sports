@@ -43,7 +43,7 @@ export class NflStartersComponent implements OnInit {
   public gameStarters: Array <any> = [];
   public gameBatters: Array <any> = [];
   public dailyTeamStats: Array <any> = [];
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular";
   public testBrowser: boolean;
   public gamesToday: boolean = false;
   public noGamesToday: boolean = false;
@@ -344,6 +344,7 @@ export class NflStartersComponent implements OnInit {
 
       this.dataService
         .getDaily(this.selectedWeek, playerString).subscribe(async res => {
+            const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
             //console.log(res, "Daily stats...");
             this.dailyStats = res != null ? res['gamelogs'] : [];
 
@@ -369,6 +370,7 @@ export class NflStartersComponent implements OnInit {
 
                 this.nflTeamStats = res['teamStatsTotals'];
                 this.nflTeamStatsLoading = false;
+                await sleep(500);
                 for (let teamStats of this.nflTeamStats) {
                   for (let team of this.teams) {
                     if (team.id === teamStats.team.id) {

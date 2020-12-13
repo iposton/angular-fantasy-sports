@@ -517,6 +517,12 @@ export class UtilService {
       "6130" : {
         new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/crnqcrkqwapmkzlsoora"
       },
+      "18668" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/gpz9zs474snz3jntrpbd"
+      },
+      "18670" : {
+        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/pfzlwlua7rh1kf3wv8iq"
+      },
     
 
     }
