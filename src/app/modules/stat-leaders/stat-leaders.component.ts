@@ -624,6 +624,7 @@ export class StatLeadersComponent implements OnInit {
       let resultOne = await promiseOne;
 
       this.nflTeamStats = res['teamStatsTotals'];
+      await sleep(1000);
       this.nflTeamLoading = false;
       for (let teamStats of this.nflTeamStats) {
         for (let team of this.nflTeams) {
@@ -741,7 +742,7 @@ export class StatLeadersComponent implements OnInit {
         }
       }
       //let resultTwo = await promiseTwo;
-      await sleep(2500)
+      await sleep(500);
       this.nflService
         .getAllOffense('qb', '19', this.week).subscribe(res => {
           if (res['gamelogs'] != null) {

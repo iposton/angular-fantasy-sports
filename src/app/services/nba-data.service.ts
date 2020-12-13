@@ -97,9 +97,9 @@ export class NBADataService {
     return this.gameid;
   }
 
-    getSchedule() {
+  getSchedule() {
     //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-playoff/date/`+dailyDate+`/games.json`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular/date/`+dailyDate+`/games.json`;
     //let url = `${this.apiRoot}/games.json`;
     this.schedule = this.http.get(url, {headers})
     return this.schedule;
