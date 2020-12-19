@@ -771,7 +771,7 @@ export class StatLeadersComponent implements OnInit {
         }
       }
       //let resultTwo = await promiseTwo;
-      await sleep(500);
+      await sleep(2500);
       this.nflService
         .getAllOffense('qb', '19', this.week).subscribe(res => {
           if (res['gamelogs'] != null) {
