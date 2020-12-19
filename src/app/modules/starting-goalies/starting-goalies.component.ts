@@ -518,7 +518,7 @@ export class StartingGoaliesComponent implements OnInit {
 
     this.dataService
       .getStats(teamString).subscribe(res => {
-
+        let specialImgNum = null;
         function removeDuplicatesBy(keyFn, array) {
           var mySet = new Set();
           return array.filter(function(x) {  
@@ -637,6 +637,15 @@ export class StartingGoaliesComponent implements OnInit {
                   sdata.team.opponentName = team.name;
                 }
 
+              }
+
+              if (sdata.player.officialImageSrc != null) {
+                specialImgNum = sdata.player.officialImageSrc.substring(
+                  sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
+                  sdata.player.officialImageSrc.lastIndexOf(".")
+                  );
+                  
+                sdata.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
               }
 
               if (sdata.player.officialImageSrc == null) {
@@ -1091,6 +1100,7 @@ public showMatchups() {
       this.loading = true;
       this.dataService
         .getDailySkaters().subscribe(res => {
+                let specialImgNum = null;
                 //console.log(res, "Daily batter stats...");
                 this.dailySkaterStats = res != null ? res['gamelogs'] : [];
                 
@@ -1144,6 +1154,15 @@ public showMatchups() {
 
                                 if (gb.scheduleStatus === "POSTPONED") {
                                   data.postponed = true;
+                                }
+
+                                if (data.player.officialImageSrc != null) {
+                                  specialImgNum = data.player.officialImageSrc.substring(
+                                    data.player.officialImageSrc.lastIndexOf("/") + 1, 
+                                    data.player.officialImageSrc.lastIndexOf(".")
+                                    );
+                                    
+                                  data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
                                 }
                               }
                             }

@@ -17,7 +17,7 @@
        
 <div class="button-wrapper sl-btns" *ngIf="!loading">
     <div class="schedule-box row">
-      <div [ngClass]="{'active': nbaSection}" class="col" (click)="nbaSection = true; nhlSection = false; mlbHittingSection = false; mlbSection = false; nhlGoalies = false; nflSection = false; nflDefenseSection = false; nflDraftKit = false; timeSpan = 'full'">
+      <div [ngClass]="{'active': nbaSection}" class="col" (click)="timeSpan = 'full'; sortNBA()">
           <span class="sched-item">
             NBA
           </span> 

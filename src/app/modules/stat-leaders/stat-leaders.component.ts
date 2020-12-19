@@ -325,6 +325,7 @@ export class StatLeadersComponent implements OnInit {
     this.nhlService
        .getAllStats('skaters').subscribe(res => {
         const nhlTeamsArray = Object.values(this.nhlTeams);
+        let specialImgNum = null;
 
         this.nhlSkaters = res['playerStatsTotals'].filter(
           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 3);
@@ -337,6 +338,15 @@ export class StatLeadersComponent implements OnInit {
                 data.team.name = team['name'];
                 this.skaterFp(data);
                 data.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data.stats.shifts.timeOnIceSeconds, data.stats.gamesPlayed);
+              }
+
+              if (data.player.officialImageSrc != null) {
+                specialImgNum = data.player.officialImageSrc.substring(
+                  data.player.officialImageSrc.lastIndexOf("/") + 1, 
+                  data.player.officialImageSrc.lastIndexOf(".")
+                  );
+                  
+                data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
               }
 
               if (data.player.officialImageSrc == null) {
@@ -363,6 +373,7 @@ export class StatLeadersComponent implements OnInit {
     this.nhlGoalieloading = true;
     this.nhlService
       .getAllStats('goalies').subscribe(res => {
+      let specialImgNum = null;
       const nhlTeamsArray = Object.values(this.nhlTeams);
       this.nhlGoaltenders = res['playerStatsTotals'].filter(
         player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 3);
@@ -375,6 +386,15 @@ export class StatLeadersComponent implements OnInit {
               data.team.name = team['name'];
               this.goalieFp(data);
               
+            }
+
+            if (data.player.officialImageSrc != null) {
+              specialImgNum = data.player.officialImageSrc.substring(
+                data.player.officialImageSrc.lastIndexOf("/") + 1, 
+                data.player.officialImageSrc.lastIndexOf(".")
+                );
+                
+              data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
             }
 
             if (data.player.officialImageSrc == null) {
@@ -407,6 +427,15 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public async sortNBA() {
+      this.loading = true;
+      this.nbaSection = true; 
+      this.nhlSection = false; 
+      this.mlbHittingSection = false; 
+      this.mlbSection = false; 
+      this.nhlGoalies = false; 
+      this.nflSection = false; 
+      this.nflDefenseSection = false; 
+      this.nflDraftKit = false;
       this.sport = 'nba';
       this.nbaService
        .getAllStats(this.timeSpan).subscribe(res => {
@@ -505,7 +534,7 @@ export class StatLeadersComponent implements OnInit {
                     data.player.officialImageSrc.lastIndexOf("/") + 1, 
                     data.player.officialImageSrc.lastIndexOf(".")
                     );
-                  
+                    
                   data.player.officialImageSrc = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
                 }
 
@@ -624,7 +653,7 @@ export class StatLeadersComponent implements OnInit {
       let resultOne = await promiseOne;
 
       this.nflTeamStats = res['teamStatsTotals'];
-      await sleep(1000);
+      await sleep(2000);
       this.nflTeamLoading = false;
       for (let teamStats of this.nflTeamStats) {
         for (let team of this.nflTeams) {
