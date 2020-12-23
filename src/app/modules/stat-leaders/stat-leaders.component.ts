@@ -27,7 +27,7 @@ export class StatLeadersComponent implements OnInit {
 
   public teamRef: Array <any>;
   public allSentData: Array <any>;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2019-2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
   public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
   public myData: Array <any>;
   public mlbPitchingData: Array <any>;

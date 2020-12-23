@@ -36,7 +36,7 @@ export class NBADataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2019-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
   public dailyDate: any;
 
   constructor(private http: HttpClient) {
@@ -112,7 +112,7 @@ export class NBADataService {
       //console.log('getting cumulative_player_stats by player ID from API...', players);
       //let url = `${this.apiRoot}/cumulative_player_stats.json?position=PG,SG,SF,PF,C&player=`+playerID;
       //let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2018-2019-regular/player_stats_totals.json?position=PG,SG,SF,PF,C`; 
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-playoff/player_stats_totals.json?player=${players}`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular/player_stats_totals.json?player=${players}`;
       this.stats = this.http.get(url, {headers})
       
     //}
@@ -122,7 +122,7 @@ export class NBADataService {
    getAllStats(span) {
       //cumulative_player_stats.json?position=PG,SG,SF,PF,C&sort=STATS.Miscellaneous-GS.D&limit=180
       let url = null;
-      url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-playoff/player_stats_totals.json`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular/player_stats_totals.json`;
       this.allstats = this.http.get(url, {headers})
       
     //}
@@ -148,33 +148,16 @@ export class NBADataService {
   }
 
   getDaily(data) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-playoff/date/${dailyDate}/player_gamelogs.json?player=${data}`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular/date/${dailyDate}/player_gamelogs.json?player=${data}`;
     this.daily = this.http.get(url, {headers})
     return this.daily;
   }
 
-  getDailyTouches(selected) {
-     let url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=PG,SG,SF,PF,C`;
-     this.daily = this.http.get(url, {headers})
-     return this.daily;
-  }
-
-  getTouches(players) {
-    let url = `${this.apiRoot}/player_stats_totals.json?position=PG,SG,SF,PF,C`; //&player=${players}`;
-    this.stats = this.http.get(url, {headers})
-    return this.stats;
-  }
-
-  getWeek(selected) {
-     let url = `${this.apiRoot}/week/${selected}/team_gamelogs.json`;
-     this.weekly = this.http.get(url, {headers})
-     return this.weekly;
-  }
 
   getScore(data) {
     let id = null;
     id = data
-    let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular/games/`+id+`/boxscore.json`;
     this.score = this.http.get(url, {headers})
     return this.score;
   }
