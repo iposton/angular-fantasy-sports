@@ -274,7 +274,7 @@ export class StatLeadersComponent implements OnInit {
       //this.nbaSpanGames = res['games'];
 
       if (this.sport != 'nfl') {
-        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-playoff`;
+        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-regular`;
         this.sortStats(root, res['games'], this.sport, type)
       } else if (this.sport === 'nfl' && this.nflSection) {
         root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-2021-regular`;
@@ -442,7 +442,7 @@ export class StatLeadersComponent implements OnInit {
           const nbaTeamsArray = Object.values(this.nbaTeams);
 
           this.myData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 2);
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null);
 
           for (let team of nbaTeamsArray) {
             for (let data of this.myData) { 
