@@ -78,7 +78,7 @@
                   <div class="col team-name-col">
                     <div class="team-name-box" [style.background-image]="getBackground(data.offensePlayers[0].playerObj.team.color)" >
                         <p class="center">
-                            <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.name">{{data?.offensePlayers[0]?.playerObj?.team?.name}} ({{data?.offensePlayers[0]?.playerObj?.win+'-'+data?.offensePlayers[0]?.playerObj?.loss}})</span> <br>
+                            <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.name">{{data?.offensePlayers[0]?.playerObj?.team?.name}} <span *ngIf="data?.offensePlayers[0]?.playerObj?.win != null">({{data?.offensePlayers[0]?.playerObj?.win+'-'+data?.offensePlayers[0]?.playerObj?.loss}})</span></span> <br>
                         </p>
                     </div>
                   </div>
