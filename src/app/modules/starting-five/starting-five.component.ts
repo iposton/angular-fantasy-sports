@@ -378,12 +378,14 @@ export class StartingFiveComponent implements OnInit {
               this.sortData();
 
             }, (err: HttpErrorResponse) => {
-              
+              this.loading = false;
+              this.errMessage = 'error getting lineup';
               console.log(err, 'error getting lineup');
 
           });
           }, (err: HttpErrorResponse) => {
-
+            this.loading = false;
+            this.errMessage = 'error getting schedule';
             console.log(err, 'error getting schedule');
 
           });
