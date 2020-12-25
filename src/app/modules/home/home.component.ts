@@ -1,6 +1,6 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
@@ -224,7 +224,7 @@ public loadNBA() {
     if (res['games'].length === 0) {
       this.nbaLoading = false;
       this.noNbaGamesToday = true;
-      this.noNbaGamesMsg = "No Games Scheduled"
+      this.noNbaGamesMsg = "No Games Scheduled";
       console.log('There are no NBA games being played today.');
     } else {
       this.nbaLoading = false;
@@ -236,6 +236,12 @@ public loadNBA() {
         this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
         //console.log(this.nbaSchedule, 'nba sched')
     }
+  }, (err: HttpErrorResponse) => {
+    this.nbaLoading = false;
+    this.noNbaGamesToday = true;
+    this.noNbaGamesMsg = 'error fetching schedule';
+    console.log(err, 'error getting lineup');
+
   });
 }
 
