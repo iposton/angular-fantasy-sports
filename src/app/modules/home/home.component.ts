@@ -219,7 +219,7 @@ public loadNHL() {
 
 public loadNBA() {
   this.nbaDataService
-  .getSchedule().subscribe(res => {
+    .getSchedule().subscribe(res => {
     
     if (res['games'].length === 0) {
       this.nbaLoading = false;

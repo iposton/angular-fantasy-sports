@@ -666,11 +666,6 @@ export class UtilService {
     }
 
     this.NBAImages = {
-      "16958": {
-        firstName: "Zion",
-        lastName: "Williamson",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612740/2019/260x190/1629627.png"
-      },
       "17189": {
         firstName: "Ja",
         lastName: "Morant",
@@ -785,7 +780,38 @@ export class UtilService {
         firstName: "Keldon",
         lastName: "Johnson",
         image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629640.png"
-      },   
+      },
+      "27636": {
+        firstName: "James",
+        lastName: "Wiseman",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630164.png"
+      },
+      "27638": {
+        firstName: "Anthony",
+        lastName: "Edwards",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630162.png"
+      },
+      "27718": {
+        firstName: "Payton",
+        lastName: "Pritchard",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630202.png"
+      },
+      "27627": {
+        firstName: "Patrick",
+        lastName: "Williams",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630172.png"
+      },
+      "27469": {
+        firstName: "LaMelo",
+        lastName: "Ball",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630163.png"
+      },
+      "27587": {
+        firstName: "Killian",
+        lastName: "Hayes",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630165.png"
+      },
+        
     }
 
 
