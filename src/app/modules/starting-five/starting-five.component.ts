@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { NBADataService, UtilService, GoogleAnalyticsService } from '../../services/index';
-import { DatePipe, PercentPipe, DecimalPipe, isPlatformBrowser } from '@angular/common';
+import { NBADataService, UtilService, GoogleAnalyticsService, DepthService } from '../../services/index';
+import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import * as CryptoJS from 'crypto-js';
@@ -97,13 +97,16 @@ export class StartingFiveComponent implements OnInit {
   public name: any;
   public area: any;
   public testBrowser: boolean;
+  public depth: any;
 
   constructor(private dataService: NBADataService, 
               private http: HttpClient,
               private sanitizer: DomSanitizer,
               private util: UtilService,
               public gaService: GoogleAnalyticsService,
+              private depthService: DepthService,
               @Inject(PLATFORM_ID) platformId: string) {
+    this.depth = this.depthService.getNBADepth();
     this.allSentData = this.dataService.getSentStats();
     this.players = this.allSentData[0];
     this.myData = this.allSentData[1];

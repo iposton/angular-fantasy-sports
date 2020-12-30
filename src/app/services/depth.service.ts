@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class DepthService {
   public actualStarters: any;
   public nflDepth: any;
+  public nbaDepth: any;
 
   constructor() {
     this.actualStarters = {
@@ -1160,6 +1161,31 @@ export class DepthService {
     ],
          
     }
+
+    this.nbaDepth = {
+        '100': [
+          {
+            'gdate': 'Sun Dec 27 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+            'Starter1' : {
+              firstName: 'Anthony',
+              lastName: 'Edwards',
+              id: 27638,
+              status: 'Starter',
+              abbreviation: 'MIN',
+              position: 'SG'
+            },
+            'Starter2' : {
+              firstName: 'DeAngelo',
+              lastName: 'Russell',
+              id: 9285,
+              status: 'Starter',
+              abbreviation: 'MIN',
+              position: 'SG'
+            },
+        }
+      ],
+
+    }
   }
   
   public getActualStarters() {
@@ -1167,5 +1193,8 @@ export class DepthService {
   }
   public getNFLDepth() {
     return this.nflDepth;
+  }
+  public getNBADepth() {
+    return this.nbaDepth;
   }
 }
