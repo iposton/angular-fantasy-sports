@@ -4,7 +4,6 @@
 <h1 class="center no-game-header" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1> -->
 <h1 class="center date-header" *ngIf="!nflSched">{{ (nbaSched ? nbaGameDate : nflSched ? nflGameDate : mlbSched ? mlbGameDate : nhlSched ? nhlGameDate : nbaGameDate) | date: "fullDate" }}</h1>
 <h1 class="center date-header" *ngIf="nflSched">Week {{selectedWeek}}</h1>
-<h1 class="center date-header">Games</h1>
 <!-- <div class="nhl-playoff"> -->
 <!--   <h3 class="center date-header"><img src="../assets/nhl-logos/nhl-playoff.jpg" alt="nhl playoff image"></h3> -->
 <!-- </div> -->
