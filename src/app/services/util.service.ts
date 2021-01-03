@@ -811,6 +811,32 @@ export class UtilService {
         lastName: "Hayes",
         image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630165.png"
       },
+      "17285": {
+        firstName: "Naz",
+        lastName: "Reid",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629675.png"
+      },
+      "17259": {
+        firstName: "Daniel",
+        lastName: "Gafford",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629655.png"
+      },
+      "17194": {
+        firstName: "Jaxson",
+        lastName: "Hayes",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629637.png"
+      },
+      "27454": {
+        firstName: "Deni",
+        lastName: "Avdija",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630166.png"
+      },
+      "27593": {
+        firstName: "Saddiq",
+        lastName: "Bey",
+        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630180.png"
+      },
+         
         
     }
 
@@ -2057,7 +2083,7 @@ export class UtilService {
       city: "Boston",
       name: "Celtics",
       abbreviation: "BOS",
-      twitter: "#Celtics",
+      twitter: "#BleedGreen",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/BOS_logo.svg"
       },
       "NYK": {
@@ -2073,7 +2099,7 @@ export class UtilService {
       city: "Brooklyn",
       name: "Nets",
       abbreviation: "BRO",
-      twitter: "#WeGoHard",
+      twitter: "#BrooklynTogether",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/BKN_logo.svg"
       },
       "PHI": {
@@ -2105,7 +2131,7 @@ export class UtilService {
       city: "Detroit",
       name: "Pistons",
       abbreviation: "DET",
-      twitter: "#DetroitBasketball",
+      twitter: "#DetroitUp",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/DET_logo.svg"
       },
       "CHI": {
@@ -2153,7 +2179,7 @@ export class UtilService {
       city: "Washington",
       name: "Wizards",
       abbreviation: "WAS",
-      twitter: "#RepTheDistrict",
+      twitter: "#DCAboveAll",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/WAS_logo.svg"
       },
       "ORL": {
@@ -2201,7 +2227,7 @@ export class UtilService {
       city: "Minnesota",
       name: "Timberwolves",
       abbreviation: "MIN",
-      twitter: "#Timberwolves",
+      twitter: "#RaisedByWolves",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/MIN_logo.svg"
       },
       "GSW": {
@@ -2273,7 +2299,7 @@ export class UtilService {
       city: "Houston",
       name: "Rockets",
       abbreviation: "HOU",
-      twitter: "#OneMission",
+      twitter: "#Rockets",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/HOU_logo.svg"
       },
       "NOP": {

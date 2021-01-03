@@ -237,7 +237,7 @@ export class NHLDataService {
   getGames(span, sport, date) {
     let url = null;
     let season = null;
-    if (sport != ('nfl' && 'nba'))
+    if (sport != 'nfl' && sport != 'nba')
       season = '2020-playoff';
     else
       season = '2020-2021-regular';

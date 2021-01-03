@@ -147,7 +147,7 @@ export class StatLeadersComponent implements OnInit {
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.nflWeek = week.week; 
 
-        if (date < new Date('Tue Dec 31 2020 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+        if (date < new Date('Tue Jan 05 2021 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
           let utcDate = new Date(week.dateBeg);
           utcDate.setHours(utcDate.getHours() - 24);
           let myDate = new Date(utcDate);
