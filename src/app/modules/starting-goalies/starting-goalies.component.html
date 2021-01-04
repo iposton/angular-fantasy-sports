@@ -420,11 +420,7 @@
                           </span>
                       </span>  
                       <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED'">{{data['skaters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['skaters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['skaters'][0]?.playerObj?.team?.opponent}}</span> </span> 
-                      <!-- <span class="postponed" *ngIf="data['skaters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
-                      data['skaters'][0]?.playerObj?.gameStatus != 'LIVE' && 
-                      data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED' && 
-                      data['skaters'][0]?.playerObj?.gameStatus != 'COMPLETED' && 
-                      data['skaters'][0]?.playerObj?.gameStatus != 'COMPLETED_PENDING_REVIEW'">PPD</span>  -->
+ 
                       <span class="final" *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'COMPLETED' || 
                       data['skaters'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
                           {{data['skaters'][0]?.playerObj?.team?.teamScore}} - 

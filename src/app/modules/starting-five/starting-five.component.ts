@@ -253,7 +253,7 @@ export class StartingFiveComponent implements OnInit {
                   nbaTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200830-to-20200915`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20201228-to-20210103`, { headers })
                     
                   )
                 )
@@ -445,13 +445,18 @@ export class StartingFiveComponent implements OnInit {
                   data.gameId = starter.gameID;
                   data.player['currentTeam'].abbreviation = starter.currentTeam;
                   data.player.lineupTeam = starter.currentTeam;
+                  data.gameStatus = starter.status;
                   this.playerFp(data);
                   if (starter.status === "LIVE") {
                     //run interval
                     this.liveGames = true;
                     
                   }
-                }     
+                  if (starter.status !== "UNPLAYED") {
+                    data.team.currentQuarter = starter.score['currentQuarter'];
+                    data.team.currentIntermission = starter.score['currentIntermission'];
+                  }
+                }   
               }
             }
 
@@ -513,6 +518,22 @@ export class StartingFiveComponent implements OnInit {
             } 
           }  
          }
+
+         for (let starter of this.gameStarters) {
+          for (let data of this.myData) {
+            if (starter.playerID === data.player.id) {
+              if (starter.status != "UNPLAYED") {
+                if (data.player.gameLocation === 'home') {
+                  data.team.teamScore = starter.score['homeScoreTotal'];
+                  data.team.opponentScore = starter.score['awayScoreTotal'];
+                } else if (data.player.gameLocation === 'away') {
+                  data.team.teamScore = starter.score['awayScoreTotal'];
+                  data.team.opponentScore = starter.score['homeScoreTotal'];
+                }
+              }
+            } 
+          }
+        }
 
           if (this.myData && this.dailyStats) {
             for (let daily of this.dailyStats) {
@@ -710,20 +731,3 @@ export class StartingFiveComponent implements OnInit {
     }
   }
 }
-
-// @Component({
-//   selector: 'nba-info',
-//   template: `<i (click)="close()" class="material-icons close">close</i><br />
-//   <span style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Expected Starter <br />
-//   <span style="color: #2ecc71;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> = Confirmed Starter <br />
-// <span>Click on player image for twitter updates!</span> <br />
-// <span>Click on player stats for MORE stats!</span>`,
-//   styles: [`.close { float:right; cursor:pointer; font-size: 20px; } .green-dot { height: 10px; width: 10px; background:#2ecc71; border-radius: 50%; display: inline-block; }`]
-// })
-
-// export class NBAInfo {
-//   constructor(public snackBar: MatSnackBar) {}
-//   close() {
-//     this.snackBar.dismiss();
-//   }
-// }

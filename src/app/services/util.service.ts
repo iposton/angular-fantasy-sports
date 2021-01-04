@@ -2107,7 +2107,7 @@ export class UtilService {
       city: "Philadelphia",
       name: "76ers",
       abbreviation: "PHI",
-      twitter: "#PhilaUnite",
+      twitter: "#HereTheyCome",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/PHI_logo.svg"
       },
       "CLE": {
@@ -2123,7 +2123,7 @@ export class UtilService {
       city: "Indiana",
       name: "Pacers",
       abbreviation: "IND",
-      twitter: "#IndianaStyle",
+      twitter: "#AlwaysGame",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/IND_logo.svg"
       },
       "DET": {
