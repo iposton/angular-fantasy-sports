@@ -113,7 +113,40 @@
                       </span>
                     </span>
                   </span>
-                </div>  
+                </div> 
+                <span *ngIf="data.offensePlayers[0]?.playerObj?.gameStatus === 'LIVE'">
+                    <br>
+                  <span class="live"> LIVE </span> 
+                    <span class="inning">
+
+                          <span *ngIf="data.offensePlayers[0]?.playerObj?.team?.currentIntermission === 1">
+                            Intermission 1st Quarter
+                          </span>
+                          <span *ngIf="data.offensePlayers[0]?.playerObj?.team?.currentIntermission === 2">
+                            Intermission 2nd Quarter
+                          </span>
+                          <span *ngIf="data.offensePlayers[0]?.playerObj?.team?.currentIntermission === 3">
+                            Intermission 3rd Quarter
+                          </span>
+                          <span *ngIf="data.offensePlayers[0]?.playerObj?.team?.currentIntermission === 4">
+                            Game Over
+                          </span>
+                        
+                       <span *ngIf="data.offensePlayers[0]?.playerObj?.team?.currentIntermission == null">Q {{data.offensePlayers[0]?.playerObj?.team?.currentQuarter}} &nbsp; &nbsp;</span>
+                        
+                    </span>
+                    <span class="score-box">
+                        {{data.offensePlayers[0]?.playerObj?.team?.teamScore}} - 
+                        {{data.offensePlayers[0]?.playerObj?.team?.opponentScore}}
+                    </span>
+                </span>  
+                <span *ngIf="data.offensePlayers[0]?.playerObj?.gameStatus === 'UNPLAYED'"><br>{{data.offensePlayers[0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data.offensePlayers[0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data.offensePlayers[0]?.playerObj?.team?.opponent}}</span> </span> 
+
+                    <span class="final" *ngIf="data.offensePlayers[0]?.playerObj?.gameStatus === 'COMPLETED' || 
+                    data.offensePlayers[0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'"><br>
+                        {{data.offensePlayers[0]?.playerObj?.team?.teamScore}} - 
+                        {{data.offensePlayers[0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data.offensePlayers[0]?.playerObj?.team?.teamScore > data.offensePlayers[0]?.playerObj?.team?.opponentScore ? data.offensePlayers[0]?.playerObj?.team?.city +' Wins!' : data.offensePlayers[0]?.playerObj?.team?.city +' Lost!'}}</span>
+                </span> 
               </div>
             </div>
           </div>

@@ -7,7 +7,7 @@
             <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount }">
                     <span class="left-content" [ngClass]="{'results': weekResults}">
                       <span class="player-infos">
-                          <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"></span>
+                          <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"> </span>
                           <span *ngFor="let g of item.schedule">
                             <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
                               <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
@@ -18,11 +18,13 @@
                               <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
                               <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
                               @ {{g.schedule.homeTeam.abbreviation}} 
-                            </span>,
+                            </span>
                           </span>
-                          </span>     
-                    </span>
-                  </div>
+                          </span> 
+                          <span *ngIf="weekResults" [ngClass]="{'minus': crunch(item.schedule, item.team).sum &lt; 0, 'plus': crunch(item.schedule, item.team).sum &gt; 0 }"> {{crunch(item.schedule, item.team).title}} </span>    
+                    </span> 
+                    
+                  </div>       
           </div>
         </div>  
   </div>           
