@@ -1,12 +1,35 @@
-<!-- <div id="top">
-  <h1 class="center date-header baseball-header"> NHL Starting Goalies</h1>
-</div>
-<h1 class="center no-game-header" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1> -->
+<!-- <h1 class="center no-game-header" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1> -->
 <h1 class="center date-header" *ngIf="!nflSched">{{ (nbaSched ? nbaGameDate : nflSched ? nflGameDate : mlbSched ? mlbGameDate : nhlSched ? nhlGameDate : nbaGameDate) | date: "fullDate" }}</h1>
 <h1 class="center date-header" *ngIf="nflSched">Week {{selectedWeek}}</h1>
-<!-- <div class="nhl-playoff"> -->
-<!--   <h3 class="center date-header"><img src="../assets/nhl-logos/nhl-playoff.jpg" alt="nhl playoff image"></h3> -->
-<!-- </div> -->
+<div class="center" *ngIf="nbaSched || mlbSched || nhlSched">
+    <app-date-picker (setDate)="getByDate($event)"></app-date-picker>
+</div>
+<div class="center" *ngIf="nflSched">
+    <select name="week" id="week" (change)="onChange($event.target.value)">
+      <option value="1"> - </option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">wildcard</option>
+      <option value="19">division round</option>
+      <option value="20">conf championship</option>
+      <option value="22">super bowl</option>
+    </select>
+  </div>
 <div class="home-button-wrapper" *ngIf="!nbaLoading">
   <div class="schedule-box row">
     <div
@@ -39,7 +62,7 @@
     <div 
       [ngClass]="{ active: nflSched }"
       class="col"
-      (click)="nbaSched = false; nhlSched = false; mlbSched = false; nflSched = true;"
+      (click)="nbaSched = false; nhlSched = false; mlbSched = false; nflSched = true; loadNFL()"
       >
             <span class="sched-item">
               NFL

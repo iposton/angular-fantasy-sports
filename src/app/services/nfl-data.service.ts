@@ -60,7 +60,7 @@ export class NFLDataService {
   public apiRoot2021: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
   public apiRoot2020: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl";
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular"; 
-  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-regular"
+  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-playoff"; //2019-regular"
   public dailyDate: any;
   public touchTeamRanks: any;
   public lineTeamRanks: any;

@@ -72,13 +72,13 @@ export class HomeComponent implements OnInit {
   public noNflGamesToday: boolean;
   public nflGamesToday: boolean;
   public noNflGamesMsg: any;
-  public nflLoading: boolean = true;
+  public nflLoading: boolean = false;
 
   public showLink: boolean = false;
   public liveGames: boolean = false;
-  public nbaSched: boolean = false;
+  public nbaSched: boolean = true;
   public nhlSched: boolean = false;
-  public nflSched: boolean = true;
+  public nflSched: boolean = false;
   public mlbSched: boolean = false;
   public selectedWeek: any;
   public tomorrowDate: any;
@@ -130,6 +130,33 @@ export class HomeComponent implements OnInit {
 
   }
 
+  public getByDate(event) {
+    if (this.nbaSched) {
+      this.nbaLoading = true;
+      this.nbaDataService.selectedDate(event);
+      this.loadNBA();
+    }
+
+    if (this.nhlSched) {
+      this.nhlLoading = true;
+      this.nhlDataService.selectedDate(event);
+      this.loadNHL();
+    }
+
+    if (this.mlbSched) {
+      this.mlbLoading = true;
+      this.dataService.selectedDate(event);
+      this.loadMLB();
+    }
+    
+  }
+
+  public onChange(week) {
+    this.nflLoading = true;
+    this.selectedWeek = week;
+    this.loadNFL();
+  }
+
 public compareDate (start) {
   if (new Date(start) < this.tomorrowDate) {
     return true;
@@ -155,24 +182,30 @@ loadData() {
         this.nhlDataService
           .sendHeaderOptions(headers);
 
-        this.nflDataService
-          .getSchedule(this.selectedWeek).subscribe(res => {
-            if (res['games'].length === 0) {
-              this.nflLoading = false;
-              this.noNflGamesToday = true;
-              this.noNflGamesMsg = "No Games Scheduled"
-              console.log('There are no NFL games being played today.');
-            } else {
-              this.nflLoading = false;
-              this.nflGamesToday = true;
-              this.nflSchedule = res['games'];
-              this.nflTeamRef = this.nflTeams;
-              this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
-              if (this.nflTeamRef != null)
-                this.getTeamInfo(this.nflSchedule, this.nflTeamRef);
-            }
-        });
+        this.loadNBA();
+
+        
       })
+}
+
+public loadNFL() {
+  this.nflDataService
+      .getSchedule(this.selectedWeek).subscribe(res => {
+        if (res['games'].length === 0) {
+          this.nflLoading = false;
+          this.noNflGamesToday = true;
+          this.noNflGamesMsg = "No Games Scheduled"
+          console.log('There are no NFL games being played today.');
+        } else {
+          this.nflLoading = false;
+          this.nflGamesToday = true;
+          this.nflSchedule = res['games'];
+          this.nflTeamRef = this.nflTeams;
+          this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
+          if (this.nflTeamRef != null)
+            this.getTeamInfo(this.nflSchedule, this.nflTeamRef);
+        }
+    });
 }
 
 public loadMLB() {
