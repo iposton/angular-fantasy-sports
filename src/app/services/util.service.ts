@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+let nbaImageRoot = 'https://cdn.nba.com/headshots/nba/latest/1040x760/';
+let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/';
 
 @Injectable({
   providedIn: 'root'
@@ -173,355 +175,355 @@ export class UtilService {
 
     this.replaceImg = {
       "8195" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/en0ul7l1m9aqf7wffufg"
+        new: nflImageRoot+"en0ul7l1m9aqf7wffufg"
       },
       "7471" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/vcjoh0xhf8ip8digkkai"
+        new: nflImageRoot+"vcjoh0xhf8ip8digkkai"
       },
       "7549" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/sfehmfwtg9i5gdcpqzgf"
+        new: nflImageRoot+"sfehmfwtg9i5gdcpqzgf"
       },
       "14516" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/cw9mplvltikyayjsjmc3"
+        new: nflImageRoot+"cw9mplvltikyayjsjmc3"
       },
       "8190" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/voakyrtj34sghkwxaxxf"
+        new: nflImageRoot+"voakyrtj34sghkwxaxxf"
       },
       "8469" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ym7oprwel3dxbab0k7x9"
+        new: nflImageRoot+"ym7oprwel3dxbab0k7x9"
       },
       "5940" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xhkqvvkq3awveyhv0x4e"
+        new: nflImageRoot+"xhkqvvkq3awveyhv0x4e"
       },
       "8272" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ttuzsfycx9n3wie83dsw"
+        new: nflImageRoot+"ttuzsfycx9n3wie83dsw"
       },
       "9741" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/yeobojameg9dram1qiqo"
+        new: nflImageRoot+"yeobojameg9dram1qiqo"
       },
       "8463" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qnt1kn2mouanpxvdvzvh"
+        new: nflImageRoot+"qnt1kn2mouanpxvdvzvh"
       },
       "8305" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/iwwyf70p2gckryfv7cyn"
+        new: nflImageRoot+"iwwyf70p2gckryfv7cyn"
       },
       "7888" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dindmtqwwvrzgkfsqfdb"
+        new: nflImageRoot+"dindmtqwwvrzgkfsqfdb"
       },
       "16858" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/htlt0h1p8gmpgrrbjyyj"
+        new: nflImageRoot+"htlt0h1p8gmpgrrbjyyj"
       },
       "18672" : {
         new: "https://static.www.nfl.com/image/private/t_headshot_desktop_2x/f_auto/league/to50lyvotmzynmy3ds1a"
       },
       "6114" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ublljy2omv3mulxf7kkp"
+        new: nflImageRoot+"ublljy2omv3mulxf7kkp"
       },
       "18619" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/mmx64blok0j1a5e9zhww"
+        new: nflImageRoot+"mmx64blok0j1a5e9zhww"
       },
       "18624" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qgyu27brqcvyquh7btov"
+        new: nflImageRoot+"qgyu27brqcvyquh7btov"
       },
       "18578" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xcymtg1vdkbntbzlmbrw"
+        new: nflImageRoot+"xcymtg1vdkbntbzlmbrw"
       },
       "6464" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/bpeotcvx7x9lhrzccjgz"
+        new: nflImageRoot+"bpeotcvx7x9lhrzccjgz"
       },
       "6756" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/a7y4lor47rsusu08bise"
+        new: nflImageRoot+"a7y4lor47rsusu08bise"
       },
       "19375" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/m6btiz85brkj9bwim4yv"
+        new: nflImageRoot+"m6btiz85brkj9bwim4yv"
       },
       "18732" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/kfdhebiaodlh02eikayl"
+        new: nflImageRoot+"kfdhebiaodlh02eikayl"
       },
       "13028" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/lplwsbpisofrdfyvtvfh"
+        new: nflImageRoot+"lplwsbpisofrdfyvtvfh"
       },
       "18650" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ijwidkupub1xzub4qiyb"
+        new: nflImageRoot+"ijwidkupub1xzub4qiyb"
       },
       "18570" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/kf5z3ytx4oh53xy8fudq"
+        new: nflImageRoot+"kf5z3ytx4oh53xy8fudq"
       },
       "17040" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hzjeyplhs0f0koeqvgrm"
+        new: nflImageRoot+"hzjeyplhs0f0koeqvgrm"
       },
       "8441" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/gytzk7llt9p0qw22iayb"
+        new: nflImageRoot+"gytzk7llt9p0qw22iayb"
       },
       "13210" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/u3eeqbzyiguwoqdkz4fb"
+        new: nflImageRoot+"u3eeqbzyiguwoqdkz4fb"
       },
       "15006" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ledqnhfinzff3i0j7vni"
+        new: nflImageRoot+"ledqnhfinzff3i0j7vni"
       },
       "18575" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ow7mjmmy8xw7mmwlllzl"
+        new: nflImageRoot+"ow7mjmmy8xw7mmwlllzl"
       },
       "14988" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/pjdiyojbnf8ywt3jg36u"
+        new: nflImageRoot+"pjdiyojbnf8ywt3jg36u"
       },
       "13276" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/vwrzeanheawwjrqabvcj"
+        new: nflImageRoot+"vwrzeanheawwjrqabvcj"
       },
       "18566" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/p0149bnhdc9orxsoiyvl"
+        new: nflImageRoot+"p0149bnhdc9orxsoiyvl"
       },
       "18683" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ocmacwswn8i1il9j6afp"
+        new: nflImageRoot+"ocmacwswn8i1il9j6afp"
       },
       "18595" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/tw68tp2j7yceuwip6trq"
+        new: nflImageRoot+"tw68tp2j7yceuwip6trq"
       },
       "14513" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/o2e4hfh4ttdcuzm62qrg"
+        new: nflImageRoot+"o2e4hfh4ttdcuzm62qrg"
       },
       "7075" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/caovj6onwsoepaen8tjc"
+        new: nflImageRoot+"caovj6onwsoepaen8tjc"
       },
       "9923" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/iecbkdfdgjbj0kegxftw"
+        new: nflImageRoot+"iecbkdfdgjbj0kegxftw"
       },
       "9911" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/zcumaps42lo5sskklxcb"
+        new: nflImageRoot+"zcumaps42lo5sskklxcb"
       },
       "7965" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hl3rjmdutfmecf7bsibt"
+        new: nflImageRoot+"hl3rjmdutfmecf7bsibt"
       },
       "6891" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xqdutjfczs0x2c4bxkq8"
+        new: nflImageRoot+"xqdutjfczs0x2c4bxkq8"
       },
       "18689" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dlqzehvv4dqmq3q8vt7q"
+        new: nflImageRoot+"dlqzehvv4dqmq3q8vt7q"
       },
       "6627" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qf8blphaa8cjoad9l3iq"
+        new: nflImageRoot+"qf8blphaa8cjoad9l3iq"
       },
       "18748" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ojaldunm4wsqio8ecyzl"
+        new: nflImageRoot+"ojaldunm4wsqio8ecyzl"
       },
       "6366" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/npiwam7wg49no1d5bcfu"
+        new: nflImageRoot+"npiwam7wg49no1d5bcfu"
       },
       "8086" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/mjxi12jh15analtvesbl"
+        new: nflImageRoot+"mjxi12jh15analtvesbl"
       },
       "5936" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rdtcovvvxsmag3er42um"
+        new: nflImageRoot+"rdtcovvvxsmag3er42um"
       },
       "7543" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/siupf4yvtt6m2vo8eed9"
+        new: nflImageRoot+"siupf4yvtt6m2vo8eed9"
       },
       "6879" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/z8mv5hn5s8kkxau1ynup"
+        new: nflImageRoot+"z8mv5hn5s8kkxau1ynup"
       },
       "7630" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/wdo99sm5z6hbtsna0scf"
+        new: nflImageRoot+"wdo99sm5z6hbtsna0scf"
       },
       "6629" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/omwvlsalhbvn4mshgfcf"
+        new: nflImageRoot+"omwvlsalhbvn4mshgfcf"
       },
       "17114" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dlej3m2xoj81yretkm3r"
+        new: nflImageRoot+"dlej3m2xoj81yretkm3r"
       },
       "6335" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hsj22mncpaqynxmt3xni"
+        new: nflImageRoot+"hsj22mncpaqynxmt3xni"
       },
       "9945" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xv2vjalzhb6z9bevj0z9"
+        new: nflImageRoot+"xv2vjalzhb6z9bevj0z9"
       },
       "14877" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qba2lspodqxe1uuttgz7"
+        new: nflImageRoot+"qba2lspodqxe1uuttgz7"
       },
       "9834" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/jpdzcfis6a3qmwyn7mbu"
+        new: nflImageRoot+"jpdzcfis6a3qmwyn7mbu"
       },
       "8377" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/sd67wjznwou2pwqs2m3h"
+        new: nflImageRoot+"sd67wjznwou2pwqs2m3h"
       },
       "7013" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rfdif7ec0f3czwyeyfxq"
+        new: nflImageRoot+"rfdif7ec0f3czwyeyfxq"
       },
       "6486" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/sextvbehmeu7ydutxtsu"
+        new: nflImageRoot+"sextvbehmeu7ydutxtsu"
       },
       "18561" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/tr3yxhybdwehibl6maqy"
+        new: nflImageRoot+"tr3yxhybdwehibl6maqy"
       },
       "19009" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qtjp84utne7uhgbtx0o5"
+        new: nflImageRoot+"qtjp84utne7uhgbtx0o5"
       },
       "19043" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ydu8lvszgayayddtnt44"
+        new: nflImageRoot+"ydu8lvszgayayddtnt44"
       },
       "18785" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/bgflcfmqggmnfp35wvoi"
+        new: nflImageRoot+"bgflcfmqggmnfp35wvoi"
       },
       "18769" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dxtherbqeeqm21shpweo"
+        new: nflImageRoot+"dxtherbqeeqm21shpweo"
       },
       "18576" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dpo09k2ilcdrqbybirpa"
+        new: nflImageRoot+"dpo09k2ilcdrqbybirpa"
       },
       "18979" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rwyeph1ojfmkryt2egzk"
+        new: nflImageRoot+"rwyeph1ojfmkryt2egzk"
       },
       "18985" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/jpy9l8osfm3yhvjwunur"
+        new: nflImageRoot+"jpy9l8osfm3yhvjwunur"
       },
       "18771" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/z2clh7yjqbdklh5wsde6"
+        new: nflImageRoot+"z2clh7yjqbdklh5wsde6"
       },
       "6939" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hylws51towgdgtb3xuue"
+        new: nflImageRoot+"hylws51towgdgtb3xuue"
       },
       "18641" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/itfqdvyumc77u8clmczy"
+        new: nflImageRoot+"itfqdvyumc77u8clmczy"
       },
       "18774" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/sz8fxixdgfp0v2urdpgt"
+        new: nflImageRoot+"sz8fxixdgfp0v2urdpgt"
       },
       "16080" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/sy4vnmwmotj4azsybhyt"
+        new: nflImageRoot+"sy4vnmwmotj4azsybhyt"
       },
       "14510" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ichrbyxroayfplnyshr4"
+        new: nflImageRoot+"ichrbyxroayfplnyshr4"
       },
       "18586" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hcuzgs2nio1jkprrxb8d"
+        new: nflImageRoot+"hcuzgs2nio1jkprrxb8d"
       },
       "9832" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/jqwqm12gfrwvnljq3zpz"
+        new: nflImageRoot+"jqwqm12gfrwvnljq3zpz"
       },
       "9791" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ncyji5loojotez33t5uz"
+        new: nflImageRoot+"ncyji5loojotez33t5uz"
       },
       "18757" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/sxldzvwuh31gcmbiuavt"
+        new: nflImageRoot+"sxldzvwuh31gcmbiuavt"
       },
       "7656" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rf0zx5emnigq8zoewpmn"
+        new: nflImageRoot+"rf0zx5emnigq8zoewpmn"
       },
       "18843" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ruisuqsiiuufuwb9kzn4"
+        new: nflImageRoot+"ruisuqsiiuufuwb9kzn4"
       },
       "18734" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/gsci852t9zgfxblq9ukz"
+        new: nflImageRoot+"gsci852t9zgfxblq9ukz"
       },
       "6294" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/jifhhhjtzefcgnoph6jv"
+        new: nflImageRoot+"jifhhhjtzefcgnoph6jv"
       },
       "9772" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/thhwhd13yrxfotpmg3mr"
+        new: nflImageRoot+"thhwhd13yrxfotpmg3mr"
       },
       "7609" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rnlbvr1luxvujvilpsja"
+        new: nflImageRoot+"rnlbvr1luxvujvilpsja"
       },
       "10034" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/fp5olqsgdbv5malqazzu"
+        new: nflImageRoot+"fp5olqsgdbv5malqazzu"
       },
       "15416" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hj1o1fa6klumb7yozntc"
+        new: nflImageRoot+"hj1o1fa6klumb7yozntc"
       },
       "13224" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/oipjjzgdjyc5qstoo9zv"
+        new: nflImageRoot+"oipjjzgdjyc5qstoo9zv"
       },
       "8544" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/lazoen3ty3exj44grxbg"
+        new: nflImageRoot+"lazoen3ty3exj44grxbg"
       },
       "13386" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/abkoyjrdrec9eub1pmzm"
+        new: nflImageRoot+"abkoyjrdrec9eub1pmzm"
       },
       "8728" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/nozboqae26d3qrfbiarn"
+        new: nflImageRoot+"nozboqae26d3qrfbiarn"
       },
       "6908" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dvvx2eftodxk5qlhg4rl"
+        new: nflImageRoot+"dvvx2eftodxk5qlhg4rl"
       },
       "9961" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ew3fzelndoialgn6a2ra"
+        new: nflImageRoot+"ew3fzelndoialgn6a2ra"
       },
       "13466" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/o7flzlafkwup1al6ujiw"
+        new: nflImageRoot+"o7flzlafkwup1al6ujiw"
       },
       "8019" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/fk3xbu2ah4c06vla1bhy"
+        new: nflImageRoot+"fk3xbu2ah4c06vla1bhy"
       },
       "9743" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/zi77vkqwrmklt5ic6lc6"
+        new: nflImageRoot+"zi77vkqwrmklt5ic6lc6"
       },
       "9849" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/n4tprmtnsgpc8cmvppvm"
+        new: nflImageRoot+"n4tprmtnsgpc8cmvppvm"
       },
       "18593" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/w2zhcr5cconyonvyhhbo"
+        new: nflImageRoot+"w2zhcr5cconyonvyhhbo"
       },
       "6926" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/lgdqefi7aa9lqoxgf5ru"
+        new: nflImageRoot+"lgdqefi7aa9lqoxgf5ru"
       },
       "14713" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/iduydmfnwwumvdkafogu"
+        new: nflImageRoot+"iduydmfnwwumvdkafogu"
       },
       "6560" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/yorwzg4zr1putvxgtuzc"
+        new: nflImageRoot+"yorwzg4zr1putvxgtuzc"
       },
       "19016" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ztytuclbblkq43gzijpz"
+        new: nflImageRoot+"ztytuclbblkq43gzijpz"
       },
       "18613" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/znpc5vhgni4lqh2sgrpg"
+        new: nflImageRoot+"znpc5vhgni4lqh2sgrpg"
       },
       "16650" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/zish1d1wbrhziswhsssd"
+        new: nflImageRoot+"zish1d1wbrhziswhsssd"
       },
       "18655" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ydp2awxxygyc17ugtmj3"
+        new: nflImageRoot+"ydp2awxxygyc17ugtmj3"
       },
       "6351" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/u8glt8o1ugdzymmbkafr"
+        new: nflImageRoot+"u8glt8o1ugdzymmbkafr"
       },
       "9788" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/i8be288cf78xhlwbawsm"
+        new: nflImageRoot+"i8be288cf78xhlwbawsm"
       },
       "18677" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/bre8ysydjkevbfjzrs61"
+        new: nflImageRoot+"bre8ysydjkevbfjzrs61"
       },
       "19004" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/oebtmmy9ad0jdsct6hkr"
+        new: nflImageRoot+"oebtmmy9ad0jdsct6hkr"
       },
       "8240" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/dhettmtaamsu9qlepzzf"
+        new: nflImageRoot+"dhettmtaamsu9qlepzzf"
       },
       "18652" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/spnfy71tflcjc2vq3bnm"
+        new: nflImageRoot+"spnfy71tflcjc2vq3bnm"
       },
       "8550" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/jwljhx516yyxd8lz0hdd"
+        new: nflImageRoot+"jwljhx516yyxd8lz0hdd"
       },
       "17113" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rhtskdfdsdkbhm8zn6pa"
+        new: nflImageRoot+"rhtskdfdsdkbhm8zn6pa"
       },
       "9572" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/hkb5vin1uzghnf60njhm"
+        new: nflImageRoot+"hkb5vin1uzghnf60njhm"
       },
       "12847" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/uilaivgdhm6fgyz4ruwj"
+        new: nflImageRoot+"uilaivgdhm6fgyz4ruwj"
       },
       "18643" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/qatisluh7jkk6gbhz7hj"
+        new: nflImageRoot+"qatisluh7jkk6gbhz7hj"
       },
       "6130" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/crnqcrkqwapmkzlsoora"
+        new: nflImageRoot+"crnqcrkqwapmkzlsoora"
       },
       "18668" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/gpz9zs474snz3jntrpbd"
+        new: nflImageRoot+"gpz9zs474snz3jntrpbd"
       },
       "18670" : {
-        new: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/pfzlwlua7rh1kf3wv8iq"
+        new: nflImageRoot+"pfzlwlua7rh1kf3wv8iq"
       },
     
 
@@ -531,107 +533,107 @@ export class UtilService {
       "18623": {
         firstName: "Clyde",
         lastName: "Edwards-Helaire",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ldgjalogqzti76pmqbw1"
+        image: nflImageRoot+"ldgjalogqzti76pmqbw1"
       },
       "18688": {
         firstName: "Antonio",
         lastName: "Gibson",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/cvmwtpfzdt0ibauqifup"
+        image: nflImageRoot+"cvmwtpfzdt0ibauqifup"
       },
       "18577": {
         firstName: "Joe",
         lastName: "Burrow",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/alhbhd5ega2doxogh0dg"
+        image: nflImageRoot+"alhbhd5ega2doxogh0dg"
       },
       "18640": {
         firstName: "Cam",
         lastName: "Akers",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/zeh3myk7tc0yzp6qbudr"
+        image: nflImageRoot+"zeh3myk7tc0yzp6qbudr"
       },
       "18603": {
         firstName: "D'Andre",
         lastName: "Swift",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/amhsf13r1hnpo9lrn2uj"
+        image: nflImageRoot+"amhsf13r1hnpo9lrn2uj"
       },
       "18849": {
         firstName: "James",
         lastName: "Robinson",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/lxzbao36eeratekmnxeb"
+        image: nflImageRoot+"lxzbao36eeratekmnxeb"
       }, 
       "7575": {
         firstName: "Rob",
         lastName: "Gronkowski",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ldajm3cj1rs1sfwykyyk"
+        image: nflImageRoot+"ldajm3cj1rs1sfwykyyk"
       }, 
       "18568": {
         firstName: "Zack",
         lastName: "Moss",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/ung5uvdvstg3wgl9zdye"
+        image: nflImageRoot+"ung5uvdvstg3wgl9zdye"
       },
       "18895": {
         firstName: "Jordan",
         lastName: "Fuller",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/krqfhhry1lbtx2acscmj"
+        image: nflImageRoot+"krqfhhry1lbtx2acscmj"
       }, 
       "13411": {
         firstName: "John",
         lastName: "Johnson",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xwzn5lh2mhktocqcougu"
+        image: nflImageRoot+"xwzn5lh2mhktocqcougu"
       },
       "18615": {
         firstName: "Jonathan",
         lastName: "Taylor",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/mx6ptr3jbhx0wxo3848u"
+        image: nflImageRoot+"mx6ptr3jbhx0wxo3848u"
       },
       "18631": {
         firstName: "Justin",
         lastName: "Herbert",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/lrn52vly8xrfapbhw1ft"
+        image: nflImageRoot+"lrn52vly8xrfapbhw1ft"
       },
       "18594": {
         firstName: "Jerry",
         lastName: "Jeudy",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/fvdnrep98wisgfokxqar"
+        image: nflImageRoot+"fvdnrep98wisgfokxqar"
       },
       "17023": {
         firstName: "Joey",
         lastName: "Slye",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/xzlrapymjhwbanjcivlk"
+        image: nflImageRoot+"xzlrapymjhwbanjcivlk"
       },
       "18588": {
         firstName: "CeeDee",
         lastName: "Lamb",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/e8ftgnyivmkwtffd6tcr"
+        image: nflImageRoot+"e8ftgnyivmkwtffd6tcr"
       },
       "18819": {
         firstName: "Rodrigo",
         lastName: "Blankenship",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/j2z6mdwlye2gc4zhmc3g"
+        image: nflImageRoot+"j2z6mdwlye2gc4zhmc3g"
       },
       "18882": {
         firstName: "Joshua",
         lastName: "Kelley",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/pkqsegmcbmbjlvwfzzl2"
+        image: nflImageRoot+"pkqsegmcbmbjlvwfzzl2"
       },
       "16038": {
         firstName: "Darrell",
         lastName: "Henderson",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/nyjvyjkx6cb2a7lfxevg"
+        image: nflImageRoot+"nyjvyjkx6cb2a7lfxevg"
       },
       "18648": {
         firstName: "Justin",
         lastName: "Jefferson",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/rbpfxph4wwkxnhphoat6"
+        image: nflImageRoot+"rbpfxph4wwkxnhphoat6"
       },
       "16254": {
         firstName: "Scott",
         lastName: "Miller",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/knmpvvmftnvmqtx5g8me"
+        image: nflImageRoot+"knmpvvmftnvmqtx5g8me"
       },
       "18675": {
         firstName: "Brandon",
         lastName: "Aiyuk",
-        image: "https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/crkz9pxkba4o1zsmiazt"
+        image: nflImageRoot+"crkz9pxkba4o1zsmiazt"
       },
       
        
@@ -658,184 +660,190 @@ export class UtilService {
         lastName: "Kivlenieks",
         image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8480162@2x.jpg"
       },
-      // "17374": {
-      //   firstName: "Igor",
-      //   lastName: "Shesterkin",
-      //   image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8478048@2x.jpg"
-      // }
     }
 
     this.NBAImages = {
       "17189": {
         firstName: "Ja",
         lastName: "Morant",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612763/2019/260x190/1629630.png"
+        image: nbaImageRoot+"1629630.png"
       },
       "17191": {
         firstName: "Darius",
         lastName: "Garland",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612739/2019/260x190/1629636.png"
+        image: nbaImageRoot+"1629636.png"
       },
       "17273": {
         firstName: "P.J.",
         lastName: "Washington",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612766/2019/260x190/1629023.png"
+        image: nbaImageRoot+"1629023.png"
       },
       "15252": {
         firstName: "Kendrick",
         lastName: "Nunn",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612748/2019/260x190/1629134.png"
+        image: nbaImageRoot+"1629134.png"
       },
       "17181": {
         firstName: "RJ",
         lastName: "Barrett",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612752/2019/260x190/1629628.png"
+        image: nbaImageRoot+"1629628.png"
       },
       "17196": {
         firstName: "Cam",
         lastName: "Reddish",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612737/2019/260x190/1629629.png"
+        image: nbaImageRoot+"1629629.png"
       },
       "17192": {
         firstName: "Jarett",
         lastName: "Culver",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612750/2019/260x190/1629633.png"
+        image: nbaImageRoot+"1629633.png"
       },
       "17190": {
         firstName: "De'Andre",
         lastName: "Hunter",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612737/2019/260x190/1629631.png"
+        image: nbaImageRoot+"1629631.png"
       },
       "17195": {
         firstName: "Rui",
         lastName: "Hachimura",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612764/2019/260x190/1629060.png"
+        image: nbaImageRoot+"1629060.png"
       },
       "17286": {
         firstName: "Kevin",
         lastName: "Porter Jr.",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612739/2019/260x190/1629645.png"
+        image: nbaImageRoot+"1629645.png"
       },
       "17331": {
         firstName: "Ky",
         lastName: "Bowman",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612744/2019/260x190/1629065.png"
+        image: nbaImageRoot+"1629065.png"
       },
       "17197": {
         firstName: "Cameron",
         lastName: "Johnson",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612756/2019/260x190/1629661.png"
+        image: nbaImageRoot+"1629661.png"
       },
       "17251": {
         firstName: "Brandon",
         lastName: "Clarke",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612763/2019/260x190/1629634.png"
+        image: nbaImageRoot+"1629634.png"
       },
       "17256": {
         firstName: "Sekou",
         lastName: "Doumbouya",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612765/2019/260x190/1629635.png"
+        image: nbaImageRoot+"1629635.png"
       },
       "17216": {
         firstName: "Terence",
         lastName: "Davis",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612761/2019/260x190/1629056.png"
+        image: nbaImageRoot+"1629056.png"
       },
       "17193": {
         firstName: "Coby",
         lastName: "White",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629632.png"
+        image: nbaImageRoot+"1629632.png"
       },
       "17330": {
         firstName: "Eric",
         lastName: "Paschall",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629672.png"
+        image: nbaImageRoot+"1629672.png"
       },
       "17329": {
         firstName: "Jordan",
         lastName: "Poole",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629673.png"
+        image: nbaImageRoot+"1629673.png"
       },
       "17312": {
         firstName: "Caleb",
         lastName: "Martin",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1628997.png"
+        image: nbaImageRoot+"1628997.png"
       },
       "17255": {
         firstName: "Luguentz",
         lastName: "Dort",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629652.png"
+        image: nbaImageRoot+"1629652.png"
       },
       "17295": {
         firstName: "Tyler", 
         lastName: "Herro",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629639.png"
+        image: nbaImageRoot+"1629639.png"
       },
       "17240": {
         firstName: "Darius",
         lastName: "Bazley",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629647.png"
+        image: nbaImageRoot+"1629647.png"
       },
       "17305": {
         firstName: "Keldon",
         lastName: "Johnson",
-        image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/1629640.png"
+        image: nbaImageRoot+"1629640.png"
       },
       "27636": {
         firstName: "James",
         lastName: "Wiseman",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630164.png"
+        image: nbaImageRoot+"1630164.png"
       },
       "27638": {
         firstName: "Anthony",
         lastName: "Edwards",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630162.png"
+        image: nbaImageRoot+"1630162.png"
       },
       "27718": {
         firstName: "Payton",
         lastName: "Pritchard",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630202.png"
+        image: nbaImageRoot+"1630202.png"
       },
       "27627": {
         firstName: "Patrick",
         lastName: "Williams",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630172.png"
+        image: nbaImageRoot+"1630172.png"
       },
       "27469": {
         firstName: "LaMelo",
         lastName: "Ball",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630163.png"
+        image: nbaImageRoot+"1630163.png"
       },
       "27587": {
         firstName: "Killian",
         lastName: "Hayes",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630165.png"
+        image: nbaImageRoot+"1630165.png"
       },
       "17285": {
         firstName: "Naz",
         lastName: "Reid",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629675.png"
+        image: nbaImageRoot+"1629675.png"
       },
       "17259": {
         firstName: "Daniel",
         lastName: "Gafford",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629655.png"
+        image: nbaImageRoot+"1629655.png"
       },
       "17194": {
         firstName: "Jaxson",
         lastName: "Hayes",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629637.png"
+        image: nbaImageRoot+"1629637.png"
       },
       "27454": {
         firstName: "Deni",
         lastName: "Avdija",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630166.png"
+        image: nbaImageRoot+"1630166.png"
       },
       "27593": {
         firstName: "Saddiq",
         lastName: "Bey",
-        image: "https://cdn.nba.com/headshots/nba/latest/1040x760/1630180.png"
+        image: nbaImageRoot+"1630180.png"
       },
+      "27649": {
+        firstName: "Desmond",
+        lastName: "Bane",
+        image: nbaImageRoot+"1630217.png"
+      },
+      "27637": {
+        firstName: "Isaac",
+        lastName: "Okoro",
+        image: nbaImageRoot+"1630171.png"
+      },
+      
          
         
     }
@@ -2259,7 +2267,7 @@ export class UtilService {
       city: "Phoenix",
       name: "Suns",
       abbreviation: "PHX",
-      twitter: "#RisePHX",
+      twitter: "#WeAreTheValley",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/PHX_logo.svg"
       },
       "LAL": {
