@@ -44,6 +44,7 @@ export class NflStartersComponent implements OnInit {
   public gameBatters: Array <any> = [];
   public dailyTeamStats: Array <any> = [];
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular";
+  public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-playoff";
   public testBrowser: boolean;
   public gamesToday: boolean = false;
   public noGamesToday: boolean = false;
@@ -200,7 +201,7 @@ export class NflStartersComponent implements OnInit {
                   res['games'].map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Defense-DE-1,Defense-CB-1,Defense-S-1,Defense-LB-1`, { headers })
+                     this.http.get(`${parseInt(this.selectedWeek) > 17 ? this.poRoot : this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Defense-DE-1,Defense-CB-1,Defense-S-1,Defense-LB-1`, { headers })
                     
                   )
                 )

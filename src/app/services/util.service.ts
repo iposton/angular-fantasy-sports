@@ -2195,7 +2195,7 @@ export class UtilService {
       city: "Orlando",
       name: "Magic",
       abbreviation: "ORL",
-      twitter: "#MagicAboveAll",
+      twitter: "#MagicTogether",
       officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/ORL_logo.svg"
       },
       "OKL": {
