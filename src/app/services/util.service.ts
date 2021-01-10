@@ -525,8 +525,10 @@ export class UtilService {
       "18670" : {
         new: nflImageRoot+"pfzlwlua7rh1kf3wv8iq"
       },
-    
-
+      "12606" : {
+        new: nflImageRoot+"quvoqaapbnebbllg3jwl"
+      },
+      
     }
 
     this.NFLImages = {
@@ -847,7 +849,17 @@ export class UtilService {
         firstName: "Tyrese",
         lastName: "Maxey",
         image: nbaImageRoot+"1630178.png"
-      }     
+      },
+      "27619": {
+        firstName: "Tyrese",
+        lastName: "Haliburton",
+        image: nbaImageRoot+"1630169.png"
+      },
+      "27590": {
+        firstName: "Cole",
+        lastName: "Anthony",
+        image: nbaImageRoot+"1630175.png"
+      }
         
     }
 
