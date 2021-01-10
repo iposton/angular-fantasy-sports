@@ -256,14 +256,14 @@ export class DepthService {
       //   abbreviation: 'SEA',
       //   position: 'WR'
       // },
-      // 'Offense-TE-1' : {
-      //   firstName: 'Tyler',
-      //   lastName: 'Lockett',
-      //   id: 8296,
-      //   status: 'Starter',
-      //   abbreviation: 'SEA',
-      //   position: 'WR'
-      // },
+      'Offense-TE-1' : {
+        firstName: 'Tyler',
+        lastName: 'Lockett',
+        id: 8296,
+        status: 'Starter',
+        abbreviation: 'SEA',
+        position: 'WR'
+      },
       
       }
     ],
@@ -567,14 +567,22 @@ export class DepthService {
           abbreviation: 'BUF',
           position: 'FS'
         },
-        // 'Offense-TE-1' : {
-        //   firstName: 'Cole',
-        //   lastName: 'Beasley',
-        //   id: 6657,
-        //   status: 'Starter',
-        //   abbreviation: 'BUF',
-        //   position: 'WR'
-        // },
+        'Offense-WR-1' : {
+          firstName: 'Stefon',
+          lastName: 'Diggs',
+          id: 7471,
+          status: 'Starter',
+          abbreviation: 'BUF',
+          position: 'WR'
+        },
+        'Offense-RB-1' : {
+          firstName: 'Devin',
+          lastName: 'Singletary',
+          id: 16040,
+          status: 'Starter',
+          abbreviation: 'BUF',
+          position: 'RB'
+        },
       }
     ],
     '62': [
@@ -949,14 +957,14 @@ export class DepthService {
         //   abbreviation: 'BAL',
         //   position: 'TE'
         // },
-        'Offense-WR-1' : {
-          firstName: 'Willie',
-          lastName: 'Snead',
-          id: 7665,
-          status: 'Starter',
-          abbreviation: 'BAL',
-          position: 'WR'
-        },
+        // 'Offense-WR-1' : {
+        //   firstName: 'Willie',
+        //   lastName: 'Snead',
+        //   id: 7665,
+        //   status: 'Starter',
+        //   abbreviation: 'BAL',
+        //   position: 'WR'
+        // },
         // 'Offense-QB-1' : {
         //   firstName: 'Lamar',
         //   lastName: 'Jackson',

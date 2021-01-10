@@ -843,8 +843,11 @@ export class UtilService {
         lastName: "Okoro",
         image: nbaImageRoot+"1630171.png"
       },
-      
-         
+      "27450": {
+        firstName: "Tyrese",
+        lastName: "Maxey",
+        image: nbaImageRoot+"1630178.png"
+      }     
         
     }
 
