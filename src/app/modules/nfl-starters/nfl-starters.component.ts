@@ -371,10 +371,13 @@ export class NflStartersComponent implements OnInit {
 
                 this.nflTeamStats = res['teamStatsTotals'];
                 this.nflTeamStatsLoading = false;
-                await sleep(500);
+                // await sleep(500);
+                console.log(this.nflTeamStats, 'nfl team season stats');
                 for (let teamStats of this.nflTeamStats) {
                   for (let team of this.teams) {
+                    
                     if (team.id === teamStats.team.id) {
+                      //console.log(team, 'from teams', teamStats, 'team from api');
                       team.sTeamStats = teamStats;
                       team.seasonPY = teamStats.stats.passing.passGrossYards;
                       team.seasonRY = teamStats.stats.rushing.rushYards;

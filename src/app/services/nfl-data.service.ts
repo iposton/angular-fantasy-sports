@@ -340,22 +340,24 @@ export class NFLDataService {
   }
 
    getDaily(selected, players) {
-   // pass in week
-   // if (!this.daily) {
-      //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-      // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
-      // } else {
-      //   url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=G,C,OT,NT,DT,DE`;
-      // }
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/player_gamelogs.json?player=${players}`;
-      this.daily = this.http.get(url, {headers})
-      return this.daily;
+    let url = null
+    if (parseInt(selected) > 17) {
+      url = `${this.apiRootPO}/week/${selected}/player_gamelogs.json?player=${players}`;
+    } else {
+      //url = `${this.apiRoot}/week/${selected}/games.json`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/player_gamelogs.json?player=${players}`;
+    }
+    this.daily = this.http.get(url, {headers})
+    return this.daily;
   }
 
   public dailyTeams(selected) {  
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/team_gamelogs.json?`;
+    let url = null
+    if (parseInt(selected) > 17) {
+      url = `${this.apiRootPO}/week/${selected}/team_gamelogs.json?`;
+    } else {
+      url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/team_gamelogs.json?`;
+    }
     this.dailyT = this.http.get(url, {headers})
     return this.dailyT;
   }
