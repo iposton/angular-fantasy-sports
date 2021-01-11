@@ -28,7 +28,9 @@ export class StatLeadersComponent implements OnInit {
   public teamRef: Array <any>;
   public allSentData: Array <any>;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
+  public mlbApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff";
   public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
+  public nhlApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
   public myData: Array <any>;
   public mlbPitchingData: Array <any>;
   public mlbHittingData: Array <any>;
@@ -112,6 +114,8 @@ export class StatLeadersComponent implements OnInit {
   public crunchedTE: Array <any> = [];
   public crunchedKicker: Array <any> = [];
   public crunchedDef: Array <any> = [];
+  public nhlSeason: boolean = false;
+  public mlbSeason: boolean = false;
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -158,6 +162,30 @@ export class StatLeadersComponent implements OnInit {
       }
       
     } 
+  }
+
+  public updateEndpoint() {
+    if (this.sport === 'nhl') {
+        this.nhlApiRoot = this.nhlSeason ? "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular" : 
+        "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
+        //get nhl playoffs
+        if (this.nhlSection) { 
+          this.sortNHL();
+        } else {
+          this.goalies();
+        }
+    }
+
+    if (this.sport === 'mlb') {
+      this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular" : 
+      "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff";
+      
+      if (this.mlbSection) { 
+        this.loadMLB();
+      } else {
+        this.loadHitters();
+      }
+    }
   }
 
   public authorize(event: object) {
@@ -323,7 +351,7 @@ export class StatLeadersComponent implements OnInit {
     this.nhlSkaterloading = true;
 
     this.nhlService
-       .getAllStats('skaters').subscribe(res => {
+       .getAllStats('skaters', this.nhlApiRoot).subscribe(res => {
         const nhlTeamsArray = Object.values(this.nhlTeams);
         let specialImgNum = null;
 
@@ -372,7 +400,7 @@ export class StatLeadersComponent implements OnInit {
   public goalies() {
     this.nhlGoalieloading = true;
     this.nhlService
-      .getAllStats('goalies').subscribe(res => {
+      .getAllStats('goalies', this.nhlApiRoot).subscribe(res => {
       let specialImgNum = null;
       const nhlTeamsArray = Object.values(this.nhlTeams);
       this.nhlGoaltenders = res['playerStatsTotals'].filter(
@@ -511,7 +539,7 @@ export class StatLeadersComponent implements OnInit {
     
 
     this.mlbService
-       .getAllStats().subscribe(res => {
+       .getAllStats(this.mlbApiRoot).subscribe(res => {
           let specialImgNum = null;
           //this.loading = false;
           //const mlbTeamsArray = Object.values(this.nbaTeams);
@@ -562,9 +590,8 @@ export class StatLeadersComponent implements OnInit {
     this.mlbHittingLoading = true;
 
     this.mlbService
-        .getAllHitters().subscribe(res => {
-         //this.loading = false;
-         //const mlbTeamsArray = Object.values(this.nbaTeams);
+        .getAllHitters(this.mlbApiRoot).subscribe(res => {
+        
          let specialImgNum = null;
 
          this.mlbHittingData = res['playerStatsTotals'].filter(

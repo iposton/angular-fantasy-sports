@@ -201,6 +201,7 @@ public loadNFL() {
           this.nflGamesToday = true;
           this.nflSchedule = res['games'];
           this.nflTeamRef = this.nflTeams;
+          this.noNflGamesMsg = '';
           this.nflGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
           if (this.nflTeamRef != null)
             this.getTeamInfo(this.nflSchedule, this.nflTeamRef);
@@ -222,6 +223,7 @@ public loadMLB() {
         this.mlbLoading = false;
         this.mlbGamesToday = true;
         this.mlbSchedule = res['games'];
+        this.noMlbGamesMsg = '';
         this.mlbTeamRef = this.mlbTeams;  //res['references'].teamReferences ? res['references'].teamReferences : null;
         this.mlbGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
         if (this.mlbTeamRef != null)
@@ -242,6 +244,7 @@ public loadNHL() {
       this.nhlLoading = false;
       this.nhlGamesToday = true;
       this.nhlSchedule = res['games'];
+      this.noNhlGamesMsg = '';
       this.nhlTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
       this.nhlGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
       if (this.nhlTeamRef != null)
@@ -263,6 +266,7 @@ public loadNBA() {
       this.nbaLoading = false;
       this.nbaGamesToday = true;
       this.nbaSchedule = res['games'];
+      this.noNbaGamesMsg = '';
       this.nbaTeamRef = Object.values(this.nbaTeams); //res['references'].teamReferences ? res['references'].teamReferences : null;
       this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
       if (this.nbaTeamRef != null)

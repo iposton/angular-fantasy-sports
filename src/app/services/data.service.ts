@@ -105,26 +105,22 @@ export class DataService {
     return this.stats;
   }
 
-   getAllStats() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/player_stats_totals.json?position=P`;
+  public getAllStats(root) {
+    let url = `${root}/player_stats_totals.json?position=P`;
     this.allstats = this.http.get(url, {headers})
     return this.allstats;
   }
 
-  getAllHitters() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/player_stats_totals.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
+  public getAllHitters(root) {
+    let url = `${root}/player_stats_totals.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
     this.hitstats = this.http.get(url, {headers})
     return this.hitstats;
   }
 
   getInfo() {
-
-   // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P`;
-      console.log('getting active player data from API...');
-      this.info = this.http.get(url, {headers})
-        
-   // }
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P`;
+    console.log('getting active player data from API...');
+    this.info = this.http.get(url, {headers})
     return this.info;
   }
 
