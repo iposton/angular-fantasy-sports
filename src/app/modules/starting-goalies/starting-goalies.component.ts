@@ -77,7 +77,7 @@ export class StartingGoaliesComponent implements OnInit {
   public tomorrowDate: any;
   public fullFirebaseResponse: any;
   public loading: boolean = true;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular";
   public teamSchedules: Array <any> = [];
   public stats: boolean = false;
   public weekResults: boolean = false;
@@ -355,7 +355,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20200906-to-20200926`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210113-to-20210124`, { headers })
                     
                   )
                 )
@@ -795,15 +795,25 @@ export class StartingGoaliesComponent implements OnInit {
 
 
         for (let data of this.myData) {
+          let imgNum
           //console.log(this.dataService.isToday, 'isToday?');
           //console.log(this.dataService.isTomorrow, 'isTomorrow?');
           //stats.goaltending.savePercentage
+
           data.player.savePercent = data.stats.goaltending.savePercentage;
 
           if (this.todayStarters != null) {
 
             if (this.todayStarters[data.player.id] != null) {
-              data.player.image = this.todayStarters[data.player.id].image;
+              if (this.todayStarters[data.player.id].image != null) {
+                imgNum = this.todayStarters[data.player.id].image.substring(
+                  this.todayStarters[data.player.id].image.lastIndexOf("/") + 1, 
+                  this.todayStarters[data.player.id].image.lastIndexOf(".")
+                  );
+                  
+                  data.player.image = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+imgNum+".jpg";
+              }
+              //data.player.image = this.todayStarters[data.player.id].image;
               data.player.atHandle = this.todayStarters[data.player.id].atHandle;
               data.player.twitterHandle = this.todayStarters[data.player.id].twitterHandle;
             }

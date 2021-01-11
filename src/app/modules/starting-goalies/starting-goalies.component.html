@@ -23,7 +23,7 @@
         <ul>
           <li *ngFor="let goalie of allGoalies" class="goalie">
             <span *ngIf="goalie[group.player.id] != null && allGoalies[0][group.player.id].filterOutStarters == null" (click)="goalie[group.player.id].probable = !goalie[group.player.id].probable" [(ngModel)]="allGoalies[0][group.player.id].probable" ngDefaultControl>
-      <img src="{{group.player.image}}" alt="" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> {{group.player.lastName}}
+      <img src="{{group.player.image}}" alt="" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> {{group.player.lastName}}
     </span>
             <span *ngIf="goalie[group.player.id] != null && allGoalies[0][group.player.id].filterOutStarters == null && goalie[group.player.id].probable === false" style="color: red">X</span>
 
@@ -60,7 +60,7 @@
         <ul>
           <li *ngFor="let goalie of allGoaliesTomorrow" class="goalie">
             <span *ngIf="goalie[group.player.id] != null && allGoaliesTomorrow[0][group.player.id].filterOutStarters == null" (click)="goalie[group.player.id].probable = !goalie[group.player.id].probable" [(ngModel)]="allGoalies[0][group.player.id].probable" ngDefaultControl>
-      <img src="{{group.player.image}}" alt="" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> {{group.player.lastName}} 
+      <img src="{{group.player.image}}" alt="" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> {{group.player.lastName}} 
     </span>
             <span *ngIf="goalie[group.player.id] != null && allGoaliesTomorrow[0][group.player.id].filterOutStarters == null && goalie[group.player.id].probable === false" style="color: red">X</span>
             <span *ngIf="goalie[group.player.id] != null && allGoaliesTomorrow[0][group.player.id].filterOutStarters == null && goalie[group.player.id].probable === true && goalie[group.player.id].confirmed === false" (click)="goalie[group.player.id].confirmed = !goalie[group.player.id].confirmed" [(ngModel)]="allGoalies[0][group.player.id].confirmed" ngDefaultControl style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
@@ -85,7 +85,7 @@
    <div class="edit-list-container">
    <ul>
       <li *ngFor="let data of showData" class="goalie">
-        <span *ngFor="let g of data.goalies['away']"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngFor="let g of data.goalies['away']"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> 
           
                   <span *ngIf="g.playerObj?.player.saves == null">({{ g.playerObj?.stats.goaltending.wins + '-' + g.playerObj?.stats.goaltending.losses + '-' + g.playerObj?.stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="g.playerObj?.player.saves != null && g.playerObj?.player.wins == '0' && g.playerObj?.player.Shutouts == '0' && g.playerObj?.player.losses == '0' && g.playerObj?.player.OvertimeLosses == '0'">
@@ -104,7 +104,7 @@
               L
             </span>
         </span>
-        <span *ngFor="let g of data.goalies['home']"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"> 
+        <span *ngFor="let g of data.goalies['home']"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> 
           
                               <span *ngIf="g.playerObj?.player.saves == null">({{ g.playerObj?.stats.goaltending.wins + '-' + g.playerObj?.stats.goaltending.losses + '-' + g.playerObj?.stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="g.playerObj?.player.saves != null && g.playerObj?.player.wins == '0' && g.playerObj?.player.Shutouts == '0' && g.playerObj?.player.losses == '0' && g.playerObj?.player.OvertimeLosses == '0'">
@@ -239,7 +239,7 @@
           </span>
               <br>
               <span>
-                  <span (click)="authorize({player: g.playerObj, area: 'top'})" class="player-img"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+                  <span (click)="authorize({player: g.playerObj, area: 'top'})" class="player-img"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"></span>
                   <br> <span style="font-weight: bold;">{{ g.playerObj?.player.firstName + ' ' + g.playerObj?.player.lastName }}</span> <span >
                     ({{ g.playerObj.player?.currentTeam?.abbreviation + ' - ' + g.playerObj?.player.primaryPosition }})
                   </span>
@@ -292,7 +292,7 @@
           </span>
               <br>
               <span>
-                  <span (click)="authorize({player: g.playerObj, area: 'top'})" class="player-img"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://nhl.bamcontent.com/images/headshots/current/168x168/goalie@2x.jpg'"></span>
+                  <span (click)="authorize({player: g.playerObj, area: 'top'})" class="player-img"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"></span>
                   <br> <span style="font-weight: bold;">{{ g.playerObj?.player.firstName + ' ' + g.playerObj?.player.lastName }}</span> <span >
                     ({{ g.playerObj.player?.currentTeam?.abbreviation + ' - ' + g.playerObj?.player.primaryPosition }})
                   </span>
