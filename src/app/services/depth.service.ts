@@ -965,14 +965,14 @@ export class DepthService {
         //   abbreviation: 'BAL',
         //   position: 'TE'
         // },
-        // 'Offense-WR-1' : {
-        //   firstName: 'Willie',
-        //   lastName: 'Snead',
-        //   id: 7665,
-        //   status: 'Starter',
-        //   abbreviation: 'BAL',
-        //   position: 'WR'
-        // },
+        'Offense-WR-1' : {
+          firstName: 'Hollywood',
+          lastName: 'Brown',
+          id: 16931,
+          status: 'Starter',
+          abbreviation: 'BAL',
+          position: 'WR'
+        },
         // 'Offense-QB-1' : {
         //   firstName: 'Lamar',
         //   lastName: 'Jackson',

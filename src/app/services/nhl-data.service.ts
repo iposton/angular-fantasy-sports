@@ -114,7 +114,7 @@ export class NHLDataService {
 
 
   getDailySchedule() {
-    let url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular/date/`+dailyDate+`/games.json`;
     this.schedule = this.http.get(url, {headers})
     return this.schedule;
   }
@@ -198,8 +198,9 @@ export class NHLDataService {
     return this.skateStats;
   }
 
-  getAllStats(type) {
+  getAllStats(type, root) {
       let url = null;
+      this.apiRoot = root;
       if (type === 'skaters') {
         url = `${this.apiRoot}/player_stats_totals.json?position=RW,LW,D,C`;
       } else {
