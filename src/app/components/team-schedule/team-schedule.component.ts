@@ -24,20 +24,19 @@ export class TeamScheduleComponent implements OnInit {
       if (team === item.schedule.homeTeam.abbreviation) {
         if (item.score.homeScoreTotal - item.score.awayScoreTotal > 0) {
           w += 1;
-        } else {
+        } else if (item.score.homeScoreTotal - item.score.awayScoreTotal < 0) {
           l += 1;
         }
         sum += (item.score.homeScoreTotal - item.score.awayScoreTotal);
       } else if (team === item.schedule.awayTeam.abbreviation) {
         if (item.score.awayScoreTotal - item.score.homeScoreTotal > 0) {
           w += 1;
-        } else {
+        } else if (item.score.awayScoreTotal - item.score.homeScoreTotal < 0)  {
           l += 1;
         }
         sum += (item.score.awayScoreTotal - item.score.homeScoreTotal);
       }
 
-      //result = sum+' ('+w+'-'+l+')';
       result = {sum: sum, title: sum+' ('+w+'-'+l+')'};
     });
     return result;
