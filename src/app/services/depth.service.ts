@@ -671,6 +671,14 @@ export class DepthService {
           abbreviation: 'CLE',
           position: 'CB'
         },
+        'Offense-WR-1' : {
+          firstName: 'Jarvis',
+          lastName: 'Landry',
+          id: 7380,
+          status: 'Starter',
+          abbreviation: 'CLE',
+          position: 'WR'
+        },
       }
     ],
     '57': [
