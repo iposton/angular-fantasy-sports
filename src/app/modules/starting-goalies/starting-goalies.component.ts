@@ -329,11 +329,11 @@ export class StartingGoaliesComponent implements OnInit {
               let postponed;
               res['games'].forEach((item, index) => {
 
-                if(this.fbService.userDetails === null) {
+                //if(this.fbService.userDetails === null) {
                  
                   dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
                   teamString = dailyTeams.join();
-                }
+                //}
                 
                 // postponed = index;
                 // if (res['games'][postponed].id === '41392') {
@@ -543,8 +543,7 @@ export class StartingGoaliesComponent implements OnInit {
                 data.team.city = team['city'];
                 data.team.name = team['name'];
                 data.team.abbreviation = team['abbreviation'];
-                
-                //data.team.twitter = team['twitter'];
+                data.player.twitterHandle = team['twitter'];
               }
             }
           }
@@ -572,11 +571,18 @@ export class StartingGoaliesComponent implements OnInit {
                   old.team.id = n['teamAsOfDate'].id;
                 } 
                 
-                // if (old.player.id === 8550) {
-                //   old.player['currentTeam'].id = 70;
-                //   old.team.id = 70;
-                //   old.team.abbreviation = 'NO';
-                // }
+                if (old.player.officialImageSrc != null) {
+                  specialImgNum = old.player.officialImageSrc.substring(
+                    old.player.officialImageSrc.lastIndexOf("/") + 1, 
+                    old.player.officialImageSrc.lastIndexOf(".")
+                    );
+                    
+                  old.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
+                }
+  
+                if (old.player.officialImageSrc == null) {
+                  old.player.officialImageSrc = this.playerImages[old.player.id] != null ? this.playerImages[old.player.id].image : null;
+                }
               }
             }
             teamInfo(this.myData, nhlTeamsArray);
@@ -696,18 +702,7 @@ export class StartingGoaliesComponent implements OnInit {
 
               }
 
-              if (sdata.player.officialImageSrc != null) {
-                specialImgNum = sdata.player.officialImageSrc.substring(
-                  sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
-                  sdata.player.officialImageSrc.lastIndexOf(".")
-                  );
-                  
-                sdata.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
-              }
-
-              if (sdata.player.officialImageSrc == null) {
-                sdata.player.officialImageSrc = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
-              }
+              
 
             }
            }
@@ -852,7 +847,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
         for (let data of this.myData) {
-          let imgNum
+          //let imgNum
           //console.log(this.dataService.isToday, 'isToday?');
           //console.log(this.dataService.isTomorrow, 'isTomorrow?');
           //stats.goaltending.savePercentage
@@ -861,19 +856,20 @@ export class StartingGoaliesComponent implements OnInit {
 
           if (this.todayStarters != null) {
 
-            if (this.todayStarters[data.player.id] != null) {
-              if (this.todayStarters[data.player.id].image != null) {
-                imgNum = this.todayStarters[data.player.id].image.substring(
-                  this.todayStarters[data.player.id].image.lastIndexOf("/") + 1, 
-                  this.todayStarters[data.player.id].image.lastIndexOf(".")
-                  );
+            // if (this.todayStarters[data.player.id] != null) {
+            //   //data.player.image = data.player.officialImageSrc;
+            //   // if (this.todayStarters[data.player.id].image != null) {
+            //   //   imgNum = this.todayStarters[data.player.id].image.substring(
+            //   //     this.todayStarters[data.player.id].image.lastIndexOf("/") + 1, 
+            //   //     this.todayStarters[data.player.id].image.lastIndexOf(".")
+            //   //     );
                   
-                  data.player.image = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+imgNum+".jpg";
-              }
-              //data.player.image = this.todayStarters[data.player.id].image;
-              data.player.atHandle = this.todayStarters[data.player.id].atHandle;
-              data.player.twitterHandle = this.todayStarters[data.player.id].twitterHandle;
-            }
+            //   //     data.player.image = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+imgNum+".jpg";
+            //   // }
+            //   //data.player.image = this.todayStarters[data.player.id].image;
+            //   data.player.atHandle = this.todayStarters[data.player.id].atHandle;
+            //   data.player.twitterHandle = this.todayStarters[data.player.id].twitterHandle;
+            // }
 
             if (this.dataService.isToday && data.team != null && this.startersDate === data.team.today && 
               this.todayStarters[data.player.id] != null && data.player.saves == null && 
@@ -1185,7 +1181,7 @@ public showMatchups() {
                             data.team.city = team['city'];
                             data.team.name = team['name'];
                             data.team.abbreviation = team['abbreviation'];
-                            //data.team.twitter = team['twitter'];
+                            data.player.twitterHandle = team['twitter'];
                           }
                         }
                       }

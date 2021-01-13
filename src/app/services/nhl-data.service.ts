@@ -196,7 +196,7 @@ export class NHLDataService {
   }
 
   public getGoaliesToday(teams) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G&team=`+teams;
     this.gToday = this.http.get(url, {headers})
     return this.gToday;
   }

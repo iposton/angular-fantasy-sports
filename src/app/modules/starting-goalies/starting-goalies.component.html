@@ -23,7 +23,7 @@
         <ul>
           <li *ngFor="let goalie of allGoalies" class="goalie">
             <span *ngIf="goalie[group.player.id] != null && allGoalies[0][group.player.id].filterOutStarters == null" (click)="goalie[group.player.id].probable = !goalie[group.player.id].probable" [(ngModel)]="allGoalies[0][group.player.id].probable" ngDefaultControl>
-      <img src="{{group.player.image}}" alt="" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> {{group.player.lastName}}
+      <img src="{{group.player.officialImageSrc}}" alt="" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> {{group.player.lastName}}
     </span>
             <span *ngIf="goalie[group.player.id] != null && allGoalies[0][group.player.id].filterOutStarters == null && goalie[group.player.id].probable === false" style="color: red">X</span>
 
@@ -60,7 +60,7 @@
         <ul>
           <li *ngFor="let goalie of allGoaliesTomorrow" class="goalie">
             <span *ngIf="goalie[group.player.id] != null && allGoaliesTomorrow[0][group.player.id].filterOutStarters == null" (click)="goalie[group.player.id].probable = !goalie[group.player.id].probable" [(ngModel)]="allGoalies[0][group.player.id].probable" ngDefaultControl>
-      <img src="{{group.player.image}}" alt="" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> {{group.player.lastName}} 
+      <img src="{{group.player.officialImageSrc}}" alt="" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> {{group.player.lastName}} 
     </span>
             <span *ngIf="goalie[group.player.id] != null && allGoaliesTomorrow[0][group.player.id].filterOutStarters == null && goalie[group.player.id].probable === false" style="color: red">X</span>
             <span *ngIf="goalie[group.player.id] != null && allGoaliesTomorrow[0][group.player.id].filterOutStarters == null && goalie[group.player.id].probable === true && goalie[group.player.id].confirmed === false" (click)="goalie[group.player.id].confirmed = !goalie[group.player.id].confirmed" [(ngModel)]="allGoalies[0][group.player.id].confirmed" ngDefaultControl style="color: orange;"><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
