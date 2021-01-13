@@ -2798,8 +2798,8 @@ export class UtilService {
         id: 3647,
         firstName: "Henrik",
         lastName: "Lundqvist",
-        teamId: 9,
-        abbreviation: "NYR",
+        teamId: 5,
+        abbreviation: "WSH",
         active: true,
         numberOne: false
       }, 
@@ -2809,7 +2809,7 @@ export class UtilService {
         lastName: "Georgiev",
         teamId: 9,
         abbreviation: "NYR",
-        active: false,
+        active: true,
         numberOne: false
       },
       '17374': {
@@ -2989,7 +2989,7 @@ export class UtilService {
         lastName: "Grubauer",
         teamId: 22,
         abbreviation: "COL",
-        active: false,
+        active: true,
         numberOne: false
       },
       '15442': {
