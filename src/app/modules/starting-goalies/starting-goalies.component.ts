@@ -46,6 +46,8 @@ export class StartingGoaliesComponent implements OnInit {
   public dailySkaterStats: Array <any> = [];
   public teamRef: Array <any> = [];
   public myData: Array <any>;
+  public newGoalieData: Array <any>;
+  public newSkaterData: Array <any>;
   public mySkaterData: Array <any>;
   public showData: Array <any>;
   public showSkaterData: Array <any>;
@@ -494,7 +496,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
  async sortData() {
-  
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     let promiseOne;
     promiseOne = new Promise((resolve, reject) => {
     if (this.gamesToday === true) {
@@ -517,7 +519,8 @@ export class StartingGoaliesComponent implements OnInit {
   //     })
 
     this.dataService
-      .getStats(teamString).subscribe(res => {
+      .getStats(teamString).subscribe(async res => {
+
         let specialImgNum = null;
         function removeDuplicatesBy(keyFn, array) {
           var mySet = new Set();
@@ -527,15 +530,65 @@ export class StartingGoaliesComponent implements OnInit {
               return isNew;
           });
         }
-      
+
+        function teamInfo(array, teams) {
+          for (let team of teams) {
+            for (let data of array) { 
+              
+              if (data.player['currentTeam'] != null 
+              && team['id'] === data.player['currentTeam'].id 
+              && data.player['currentTeam'].id === data.team.id 
+              || team['id'] === data.team.id) {
+                data.team.logo = team['officialLogoImageSrc'];
+                data.team.city = team['city'];
+                data.team.name = team['name'];
+                data.team.abbreviation = team['abbreviation'];
+                
+                //data.team.twitter = team['twitter'];
+              }
+            }
+          }
+        }
+
+      const nhlTeamsArray = Object.values(this.teams);
       let values = [];
+      console.log('got player stats')
       if (res != null) values = res['playerStatsTotals'];
       this.myData = removeDuplicatesBy(x => x.player.id, values)
+
+      this.dataService
+          .getGoaliesToday(teamString).subscribe(res => {
+            console.log('got players');
+            this.newGoalieData = res['players'];
+            for (let n of this.newGoalieData) {
+              for (let old of this.myData) {
+                old.player.gameLocation = "none";
+                if (old.player['currentTeam'] != null)
+                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                  old.player['currentTeam'].abbreviation = n['teamAsOfDate'].abbreviation;
+                  old.team.abbreviation = n['teamAsOfDate'].abbreviation;
+                  old.team.id = n['teamAsOfDate'].id;
+                } 
+                
+                // if (old.player.id === 8550) {
+                //   old.player['currentTeam'].id = 70;
+                //   old.team.id = 70;
+                //   old.team.abbreviation = 'NO';
+                // }
+              }
+            }
+            teamInfo(this.myData, nhlTeamsArray);
+            // this.nflOffenseLoading = false;
+        });
     
         // this.myData = res['playerStatsTotals'].filter(
         //   player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null); 
-
+        console.log('waiting 5 seconds');
+        await sleep(5000);
         if (this.myData && this.dailySchedule) {
+          console.log('ok 5 seconds up lets go!!')
           if (this.dataService.isToday) {
             if (this.startersDate != today && this.startersDateTomorrow != tomorrow) {
               //reset firebase probable and confirms
@@ -563,13 +616,16 @@ export class StartingGoaliesComponent implements OnInit {
           for (let schedule of this.dailySchedule) {
 
             for (let sdata of this.myData) {
-
+              
               for (let team of teamRef) {
                  
               
               sdata.player.lastweekWins = 0;
               sdata.player.lastweekLosses = 0;
               sdata.player.lastweekOtl = 0;
+              
+              
+              //sdata.team = {};
 
               if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameTime = schedule['schedule'].startTime;
@@ -593,11 +649,12 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.teamScore = schedule['score'].awayScoreTotal;
                 sdata.opponentScore = schedule['score'].homeScoreTotal;
 
-                if(sdata.player.currentTeam.id === team.id) {
+                if(sdata.player.currentTeam != null && sdata.player.currentTeam.id === team.id) {
                   sdata.team.teamFull = team.city +' '+ team.name;   
                   sdata.team.teamCity = team.city;
                   sdata.team.teamName = team.name;
-                } 
+                }
+
                 if (sdata.team.opponentId === team.id) {
                   sdata.team.opponent = team.city +' '+ team.name;   
                   sdata.team.opponentCity = team.city;
@@ -626,7 +683,7 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.teamScore = schedule['score'].homeScoreTotal;
                 sdata.opponentScore = schedule['score'].awayScoreTotal;
 
-                if(sdata.player.currentTeam.id === team.id) {
+                if(sdata.player.currentTeam != null && sdata.player.currentTeam.id === team.id) {
                   sdata.team.teamFull = team.city +' '+ team.name;   
                   sdata.team.teamCity = team.city;
                   sdata.team.teamName = team.name;
@@ -660,11 +717,11 @@ export class StartingGoaliesComponent implements OnInit {
         for (let team of teamRef) {
           for (let data of this.myData) { 
              if (data.player.currentTeam != null && team.id === data.player.currentTeam.id) {
-               data.team.color = team.teamColoursHex[0];
-               data.team.accent = team.teamColoursHex[1];
-               data.team.logo = team.officialLogoImageSrc;
-               data.team.city = team.city;
-               data.team.name = team.name;
+               data.team['color'] = team.teamColoursHex[0];
+               data.team['accent'] = team.teamColoursHex[1];
+               data.team['logo'] = team.officialLogoImageSrc;
+               data.team['city'] = team.city;
+               data.team['name'] = team.name;
              } 
            }  
         }
@@ -1116,6 +1173,23 @@ public showMatchups() {
                 
                 this.dataService
                   .getSkateStats(skaterString).subscribe(res => {
+
+                    function teamInfo(array, teams) {
+                      for (let team of teams) {
+                        for (let data of array) { 
+                          if (data.player['currentTeam'] != null 
+                          && team['id'] === data.player['currentTeam'].id 
+                          && data.player['currentTeam'].id === data.team.id 
+                          || team['id'] === data.team.id) {
+                            data.team.logo = team['officialLogoImageSrc'];
+                            data.team.city = team['city'];
+                            data.team.name = team['name'];
+                            data.team.abbreviation = team['abbreviation'];
+                            //data.team.twitter = team['twitter'];
+                          }
+                        }
+                      }
+                    }
                     
                     function removeDuplicatesBy(keyFn, array) {
                       var mySet = new Set();
@@ -1127,9 +1201,34 @@ public showMatchups() {
                     }
                   
                   let values = [];
+                  const nhlTeamsArray = Object.values(this.teams);
                   if (res != null) values = res['playerStatsTotals'];
                   this.mySkaterData = removeDuplicatesBy(x => x.player.id, values);
                   //console.log(this.mySkaterData, 'my batter data');
+
+            this.dataService
+              .getSkatersToday(skaterString).subscribe(res => {
+            
+            this.newSkaterData = res['players'];
+            for (let n of this.newSkaterData) {
+              for (let old of this.myData) {
+                if (old.player['currentTeam'] != null)
+                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                  old.team.id = n['teamAsOfDate'].id;
+                } 
+                
+                // if (old.player.id === 8550) {
+                //   old.player['currentTeam'].id = 70;
+                //   old.team.id = 70;
+                //   old.team.abbreviation = 'NO';
+                // }
+              }
+            }
+            teamInfo(this.mySkaterData, nhlTeamsArray);
+            // this.nflOffenseLoading = false;
+        });
 
                       if (this.skaterIdData.length > 0 || this.noGamesToday === true) {
                         if (this.mySkaterData && this.gameSkaters) {

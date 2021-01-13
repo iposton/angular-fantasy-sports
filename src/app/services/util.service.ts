@@ -2592,25 +2592,25 @@ export class UtilService {
         firstName: "Ilya",
         lastName: "Samsonov",
         teamId: 5,
-        active: true,
         abbreviation: "WSH",
-        numberOne: false
+        active: true,
+        numberOne: true
       }, 
       '4863':{
         id: 4863,
         firstName: "Braden",
         lastName: "Holtby",
-        teamId: 5,
+        teamId: 21,
+        abbreviation: "VAN",
         active: true,
-        abbreviation: "WSH",
         numberOne: true
       },
       '5107':{
         id: 5107,
         firstName: "Jake",
         lastName: "Allen",
-        teamId: 17,
-        abbreviation: "STL",
+        teamId: 14,
+        abbreviation: "MTL",
         active: true,
         numberOne: false
       },
@@ -2629,16 +2629,16 @@ export class UtilService {
         lastName: "Anderson",
         teamId: 13,
         abbreviation: "OTT",
-        active: true,
+        active: false,
         numberOne: false
       },
       '5033': {
         id: 5033,
         firstName: "Anders",
         lastName: "Nilsson",
-        teamId: 13,
-        abbreviation: "OTT",
-        active: false,
+        teamId: 1,
+        abbreviation: "TBL",
+        active: true,
         numberOne: false
       },
       '5109': {
@@ -2654,10 +2654,10 @@ export class UtilService {
         id: 4874,
         firstName: "Jacob",
         lastName: "Markstrom",
-        teamId: 21,
-        abbreviation: "VAN",
+        teamId: 23,
+        abbreviation: "CGY",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '4950': {
         id: 4950,
@@ -2681,10 +2681,10 @@ export class UtilService {
         id: 10074,
         firstName: "Aaron",
         lastName: "Dell",
-        teamId: 26,
-        abbreviation: "SJS",
+        teamId: 12,
+        abbreviation: "TOR",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '5122': {
         id: 5122,
@@ -2853,7 +2853,7 @@ export class UtilService {
         firstName: "Matt",
         lastName: "Murray",
         teamId: 10,
-        abbreviation: "PIT",
+        abbreviation: "OTT",
         active: true,
         numberOne: false
       },
@@ -2899,7 +2899,7 @@ export class UtilService {
         lastName: "Dubnyk",
         teamId: 25,
         abbreviation: "MIN",
-        active: true,
+        active: false,
         numberOne: false
       },
       '4947': {
@@ -2909,7 +2909,7 @@ export class UtilService {
         teamId: 25,
         abbreviation: "MIN",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '3810': {
         id: 3810,
@@ -2979,7 +2979,7 @@ export class UtilService {
         firstName: "Cam",
         lastName: "Talbot",
         teamId:  23,
-        abbreviation: "CGY",
+        abbreviation: "MIN",
         active: true,
         numberOne: true
       },
@@ -3043,7 +3043,7 @@ export class UtilService {
         lastName: "McElhinney",
         teamId: 1,
         abbreviation: "TBL",
-        active: true,
+        active: false,
         numberOne: false
       },
       '3855': {
@@ -3051,9 +3051,9 @@ export class UtilService {
         firstName: "Corey",
         lastName: "Crawford",
         teamId: 20,
-        abbreviation: "CHI",
+        abbreviation: "NJD",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '4305': {
         id: 4305,
@@ -3131,9 +3131,9 @@ export class UtilService {
         id: 5518,
         firstName: "Louis",
         lastName: "Domingue",
-        teamId: 21,
-        abbreviation: "VAN",
-        active: true,
+        teamId: 23,
+        abbreviation: "CGY",
+        active: false,
         numberOne: false
       }, 
       '4575': {
@@ -3142,7 +3142,7 @@ export class UtilService {
         lastName: "Schneider",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
+        active: false,
         numberOne: false
       },
       '3793': {
@@ -3187,7 +3187,7 @@ export class UtilService {
         lastName: "Campbell",
         teamId: 12,
         abbreviation: "TOR",
-        active: true,
+        active: false,
         numberOne: false
       },
       '15690': {

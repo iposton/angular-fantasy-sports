@@ -85,7 +85,7 @@
    <div class="edit-list-container">
    <ul>
       <li *ngFor="let data of showData" class="goalie">
-        <span *ngFor="let g of data.goalies['away']"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> 
+        <span *ngFor="let g of data?.goalies?.away"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> 
           
                   <span *ngIf="g.playerObj?.player.saves == null">({{ g.playerObj?.stats.goaltending.wins + '-' + g.playerObj?.stats.goaltending.losses + '-' + g.playerObj?.stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="g.playerObj?.player.saves != null && g.playerObj?.player.wins == '0' && g.playerObj?.player.Shutouts == '0' && g.playerObj?.player.losses == '0' && g.playerObj?.player.OvertimeLosses == '0'">
@@ -104,7 +104,7 @@
               L
             </span>
         </span>
-        <span *ngFor="let g of data.goalies['home']"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> 
+        <span *ngFor="let g of data?.goalies?.home"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"> 
           
                               <span *ngIf="g.playerObj?.player.saves == null">({{ g.playerObj?.stats.goaltending.wins + '-' + g.playerObj?.stats.goaltending.losses + '-' + g.playerObj?.stats.goaltending.overtimeLosses }})</span>
         <span *ngIf="g.playerObj?.player.saves != null && g.playerObj?.player.wins == '0' && g.playerObj?.player.Shutouts == '0' && g.playerObj?.player.losses == '0' && g.playerObj?.player.OvertimeLosses == '0'">
@@ -128,10 +128,10 @@
     <ul>
       <li>#NHL Expected #Goalies {{ gameDate | date:'fullDate' }}</li>
       <li *ngFor="let data of showData" class="goalie">
-        <span *ngFor="let g of data.goalies['away']">
+        <span *ngFor="let g of data?.goalies?.away">
           {{g.playerObj?.player.twitterHandle}}
         </span>
-        <span *ngFor="let g of data.goalies['home']">
+        <span *ngFor="let g of data?.goalies?.home">
           {{g.playerObj?.player.twitterHandle}}
         </span>
       </li>
@@ -140,10 +140,10 @@
      <ul>
       <li>#NHL #Goalies <br> {{ gameDate | date:'fullDate' }}</li>
       <li *ngFor="let data of showData" class="goalie">
-          <span *ngFor="let g of data.goalies['away']">
+          <span *ngFor="let g of data?.goalies?.away">
               {{g.playerObj?.player.twitterHandle}} {{g.playerObj?.player.lastName}} <br>
             </span>
-            <span *ngFor="let g of data.goalies['home']">
+            <span *ngFor="let g of data?.goalies?.home">
               {{g.playerObj?.player.twitterHandle}} {{g.playerObj?.player.lastName}} <br>
             </span>
       </li>
@@ -153,10 +153,10 @@
     <ul>
       <li>#NHL Expected #Goalies {{ tomorrowDate | date:'fullDate' }}</li>
       <li *ngFor="let data of showTomorrow" class="goalie">
-          <span *ngFor="let g of data.goalies['away']">
+          <span *ngFor="let g of data?.goalies?.away">
               {{g.playerObj?.player.twitterHandle}}
             </span>
-            <span *ngFor="let g of data.goalies['home']">
+            <span *ngFor="let g of data?.goalies?.home">
               {{g.playerObj?.player.twitterHandle}}
             </span>
       </li>
@@ -229,7 +229,7 @@
       
 
       <div class="column">
-          <div class="{{g.side}} {{g.size}}" *ngFor="let g of data.goalies['away']">
+          <div class="{{g.side}} {{g.size}}" *ngFor="let g of data?.goalies?.away">
           <span *ngIf="g.showBtb">
               <span *ngIf="g.playerObj?.team.haveGameToday === true && g.playerObj?.team.haveGameTomorrow === true;then y else n"></span>
               <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
@@ -247,8 +247,8 @@
                  
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
-                    <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
-                    <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
+                    <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
+                    <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
                   <br>
                   <br>
                   <span *ngIf="startersDate === g.playerObj?.team?.today && dataService.isToday">
@@ -282,7 +282,7 @@
                 </div>
 
       <div class="column">
-        <div class="{{g.side}} {{g.size}}" *ngFor="let g of data.goalies['home']">
+        <div class="{{g.side}} {{g.size}}" *ngFor="let g of data?.goalies?.home">
           <span *ngIf="g.showBtb">
               <span *ngIf="g.playerObj?.team.haveGameToday === true && g.playerObj?.team.haveGameTomorrow === true;then y else n"></span>
               <ng-template #y><span style="color: #e74c3c;">back</span><span style="color: #ccc;"> to </span></ng-template>
@@ -300,8 +300,8 @@
               
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
-                    <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
-                    <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
+                    <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
+                    <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
                   <br>
                   <br>
                   <span *ngIf="startersDate === g.playerObj?.team?.today && dataService.isToday">
@@ -336,19 +336,19 @@
                 </div>
       </div>
             <div class="center">
-            <p class="game-info">
-              <img src="{{ data['goalies']['home'][0]?.playerObj?.team.opponentLogo }}" alt=""> VS <img src="{{ data['goalies']['home'][0]?.playerObj?.team.logo }}" alt="">
-              <br> {{data['goalies']['home'][0]?.playerObj?.team.opponent}} @ {{data['goalies']['home'][0]?.playerObj?.team.city +' '+ data['goalies']['home'][0]?.playerObj?.team.name}}
+            <p class="game-info" *ngIf="data?.goalies?.home != null">
+              <img src="{{ data?.goalies?.home[0]?.playerObj?.team.opponentLogo }}" alt=""> VS <img src="{{ data?.goalies?.home[0]?.playerObj?.team.logo }}" alt="">
+              <br> {{data?.goalies?.home[0]?.playerObj?.team.opponent}} @ {{data?.goalies?.home[0]?.playerObj?.team.city +' '+ data?.goalies?.home[0]?.playerObj?.team.name}}
               <br>
-              <span class="green-dot" *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'LIVE'"></span> 
-              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED'">Puck drops: {{data['goalies']['home'][0]?.playerObj?.player?.gameTime | date: 'shortTime'}} PST @ {{ data['goalies']['home'][0]?.playerObj?.team.gameIce }}</span> 
-              <!-- <span *ngIf="data['goalies']['home'][0]?.playerObj?.schedStatus === 'POSTPONED' && data['goalies']['home'][0]?.playerObj?.status === 'UNPLAYED' 
-              && data['goalies']['home'][0]?.playerObj?.status != 'COMPLETED' && 
-               data['goalies']['home'][0]?.playerObj?.status != 'COMPLETED_PENDING_REVIEW'">PPD</span>  -->
-              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status != 'UNPLAYED'">{{ data['goalies']['home'][0]?.playerObj?.opponentScore + ' - ' +  data['goalies']['home'][0]?.playerObj?.teamScore}}</span> 
-              <span *ngIf="data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED' || data['goalies']['home'][0]?.playerObj?.status === 'COMPLETED_PENDING_REVIEW'"> 
-                <span *ngIf="data['goalies']['home'][0]?.playerObj?.opponentScore &gt; data['goalies']['home'][0]?.playerObj?.teamScore"> {{data['goalies']['home'][0]?.playerObj?.team.opponent}} Win!</span>
-                <span *ngIf="data['goalies']['home'][0]?.playerObj?.opponentScore &lt; data['goalies']['home'][0]?.playerObj?.teamScore"> {{data['goalies']['home'][0]?.playerObj?.team.name}} Win!</span>
+              <span class="green-dot" *ngIf="data?.goalies?.home[0]?.playerObj?.status === 'LIVE'"></span> 
+              <span *ngIf="data?.goalies?.home[0]?.playerObj?.status === 'UNPLAYED'">Puck drops: {{data?.goalies?.home[0]?.playerObj?.player?.gameTime | date: 'shortTime'}} PST @ {{ data?.goalies?.home[0]?.playerObj?.team.gameIce }}</span> 
+              <!-- <span *ngIf="data?.goalies?.home[0]?.playerObj?.schedStatus === 'POSTPONED' && data?.goalies?.home[0]?.playerObj?.status === 'UNPLAYED' 
+              && data?.goalies?.home[0]?.playerObj?.status != 'COMPLETED' && 
+               data?.goalies?.home[0]?.playerObj?.status != 'COMPLETED_PENDING_REVIEW'">PPD</span>  -->
+              <span *ngIf="data?.goalies?.home[0]?.playerObj?.status != 'UNPLAYED'">{{ data?.goalies?.home[0]?.playerObj?.opponentScore + ' - ' +  data?.goalies?.home[0]?.playerObj?.teamScore}}</span> 
+              <span *ngIf="data?.goalies?.home[0]?.playerObj?.status === 'COMPLETED' || data?.goalies?.home[0]?.playerObj?.status === 'COMPLETED_PENDING_REVIEW'"> 
+                <span *ngIf="data?.goalies?.home[0]?.playerObj?.opponentScore &gt; data?.goalies?.home[0]?.playerObj?.teamScore"> {{data?.goalies?.home[0]?.playerObj?.team.opponent}} Win!</span>
+                <span *ngIf="data?.goalies?.home[0]?.playerObj?.opponentScore &lt; data?.goalies?.home[0]?.playerObj?.teamScore"> {{data?.goalies?.home[0]?.playerObj?.team.name}} Win!</span>
               </span> 
              </p>
        
