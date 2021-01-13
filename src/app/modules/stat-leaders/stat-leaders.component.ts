@@ -46,7 +46,7 @@ export class StatLeadersComponent implements OnInit {
   public newRushData: Array <any>;
   public newRecData: Array <any>;
   public newDefenseData: Array <any>;
-
+  public newGoalieData: Array <any>;
   public nhlSkaters: Array <any>;
   public dSkaters: Array <any>;
   public fSkaters: Array <any>;
@@ -352,6 +352,23 @@ export class StatLeadersComponent implements OnInit {
 
     this.nhlService
        .getAllStats('skaters', this.nhlApiRoot).subscribe(res => {
+        
+        function teamInfo(array, teams) {
+          for (let team of teams) {
+            for (let data of array) { 
+              if (data.player['currentTeam'] != null 
+              && team['id'] === data.player['currentTeam'].id 
+              && data.player['currentTeam'].id === data.team.id 
+              || team['id'] === data.team.id) {
+                data.team.logo = team['officialLogoImageSrc'];
+                data.team.city = team['city'];
+                data.team.name = team['name'];
+                //data.team.twitter = team['twitter'];
+              }
+            }
+          }
+        }
+
         const nhlTeamsArray = Object.values(this.nhlTeams);
         let specialImgNum = null;
 
@@ -384,6 +401,30 @@ export class StatLeadersComponent implements OnInit {
             }  
           }
 
+          this.nhlService
+          .getInfoSkaters().subscribe(res => {
+            
+            this.newGoalieData = res['players'];
+            for (let n of this.newGoalieData) {
+              for (let old of this.nhlSkaters) {
+                if (old.player['currentTeam'] != null)
+                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                  old.team.id = n['teamAsOfDate'].id;
+                } 
+                
+                // if (old.player.id === 8550) {
+                //   old.player['currentTeam'].id = 70;
+                //   old.team.id = 70;
+                //   old.team.abbreviation = 'NO';
+                // }
+              }
+            }
+            teamInfo(this.nhlSkaters, nhlTeamsArray);
+            
+        });
+
         if (this.timeSpan === 'full') {
           this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D');
           this.fSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition != 'D');
@@ -398,13 +439,30 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public goalies() {
+
+    function teamInfo(array, teams) {
+      for (let team of teams) {
+        for (let data of array) { 
+          if (data.player['currentTeam'] != null 
+          && team['id'] === data.player['currentTeam'].id 
+          && data.player['currentTeam'].id === data.team.id 
+          || team['id'] === data.team.id) {
+            data.team.logo = team['officialLogoImageSrc'];
+            data.team.city = team['city'];
+            data.team.name = team['name'];
+            //data.team.twitter = team['twitter'];
+          }
+        }
+      }
+    }
+
     this.nhlGoalieloading = true;
     this.nhlService
       .getAllStats('goalies', this.nhlApiRoot).subscribe(res => {
       let specialImgNum = null;
       const nhlTeamsArray = Object.values(this.nhlTeams);
       this.nhlGoaltenders = res['playerStatsTotals'].filter(
-        player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 3);
+        player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null); //player.stats.gamesPlayed > 3
 
         for (let team of nhlTeamsArray) {
           for (let data of this.nhlGoaltenders) { 
@@ -431,6 +489,32 @@ export class StatLeadersComponent implements OnInit {
             
           }  
         }
+
+        this.nhlService
+          .getInfo().subscribe(res => {
+            
+            this.newGoalieData = res['players'];
+            for (let n of this.newGoalieData) {
+              for (let old of this.nhlGoaltenders) {
+                if (old.player['currentTeam'] != null)
+                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                  old.team.id = n['teamAsOfDate'].id;
+                } 
+                
+                // if (old.player.id === 8550) {
+                //   old.player['currentTeam'].id = 70;
+                //   old.team.id = 70;
+                //   old.team.abbreviation = 'NO';
+                // }
+              }
+            }
+            teamInfo(this.nhlGoaltenders, nhlTeamsArray);
+            // this.nflOffenseLoading = false;
+        });
+
+        
 
         if (this.timeSpan != 'full') {
           this.spanGames();

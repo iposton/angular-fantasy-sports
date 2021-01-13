@@ -64,17 +64,20 @@ let sentAll;
 @Injectable({ providedIn: 'root' }) 
 export class NHLDataService {
 
-  public info: Observable < any > = null;
-  public stats: Observable < any > = null;
-  public skateStats: Observable < any > = null;
-  public allstats: Observable < any > = null;
-  public uStats: Observable < any > = null;
-  public env: Observable < any > = null;
-  public gameid: Observable < any > = null;
-  public lastweekgameid: Observable < any > = null;
-  public daily: Observable < any > = null;
-  public schedule: Observable < any > = null;
-  public score: Observable < any > = null;
+  public info: Observable <any> = null;
+  public infoSkaters: Observable <any> = null;
+  public gToday: Observable <any> = null;
+  public sToday: Observable <any> = null;
+  public stats: Observable <any> = null;
+  public skateStats: Observable <any> = null;
+  public allstats: Observable <any> = null;
+  public uStats: Observable <any> = null;
+  public env: Observable <any> = null;
+  public gameid: Observable <any> = null;
+  public lastweekgameid: Observable <any> = null;
+  public daily: Observable <any> = null;
+  public schedule: Observable <any> = null;
+  public score: Observable <any> = null;
   public play: Observable <any> = null;
   public injured: Observable <any> = null;
   public teamstats: Observable <any> = null;
@@ -180,20 +183,38 @@ export class NHLDataService {
     return sentHot;
   }
 
-  getInfo() {
+  public getInfo() {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
     this.info = this.http.get(url, {headers})
     return this.info;
   }
 
-  getStats(teams) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff/player_stats_totals.json?position=G&team=`+teams;
+  public getInfoSkaters() {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=RW,LW,D,C`;
+    this.infoSkaters = this.http.get(url, {headers})
+    return this.infoSkaters;
+  }
+
+  public getGoaliesToday(teams) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
+    this.gToday = this.http.get(url, {headers})
+    return this.gToday;
+  }
+
+  public getSkatersToday(players) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?player=`+players;
+    this.sToday = this.http.get(url, {headers})
+    return this.sToday;
+  }
+
+  public getStats(teams) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json?position=G`;
     this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
-  getSkateStats(players) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff/player_stats_totals.json?player=`+players;
+  public getSkateStats(players) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json?player=`+players;
     this.skateStats = this.http.get(url, {headers})
     return this.skateStats;
   }
