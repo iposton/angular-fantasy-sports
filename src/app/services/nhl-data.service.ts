@@ -281,13 +281,13 @@ export class NHLDataService {
   }
 
   getDaily() {
-    let url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=G`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular/date/`+dailyDate+`/player_gamelogs.json?position=G`;
     this.daily = this.http.get(url, {headers})  
     return this.daily;
   }
 
   getDailySkaters() {
-    let url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=RW,LW,D,C`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular/date/`+dailyDate+`/player_gamelogs.json?position=RW,LW,D,C`;
     this.dailySkaters = this.http.get(url, {headers})  
     return this.dailySkaters;
   }
