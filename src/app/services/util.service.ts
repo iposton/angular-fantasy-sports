@@ -2445,7 +2445,7 @@ export class UtilService {
         city: "Montreal",
         name: "Canadiens",
         abbreviation: "MTL",
-        twitter: "#Canadiens",
+        twitter: "#GoHabsGo",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/8.svg"
       },
       "BUF": {

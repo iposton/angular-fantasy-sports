@@ -1374,7 +1374,7 @@ public showMatchups() {
                                 mdata.gameId = daily.game.id;
                                 mdata.stats.assistsToday = daily.stats.scoring.assists ? daily.stats.scoring.assists : 0;
                                 mdata.stats.goalsToday = daily.stats.scoring.goals ? daily.stats.scoring.goals : 0;
-                                mdata.stats.iceTimeToday = this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) ? this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) : 0;
+                                mdata.stats.iceTimeToday = daily.stats.shifts != null ? this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) : 0;
                                 mdata.stats.sogToday = daily.stats.skating.shots ? daily.stats.skating.shots : 0;
                                 mdata.stats.blocksToday = daily.stats.skating.blockedShots ? daily.stats.skating.blockedShots : 0;
                                 mdata.stats.hitsToday = daily.stats.skating.hits ? daily.stats.skating.hits : 0;
