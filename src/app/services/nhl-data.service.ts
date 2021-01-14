@@ -84,6 +84,8 @@ export class NHLDataService {
   public dailySkaters: Observable <any> = null;
   public games: Observable <any> = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
+  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular";
+  public root: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl";
   public headers: any;
   public dailyDate: string = '';
   public isToday: boolean = false;
@@ -117,7 +119,7 @@ export class NHLDataService {
 
 
   getDailySchedule() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular/date/`+dailyDate+`/games.json`;
+    let url = `${this.apiRoot21}/date/`+dailyDate+`/games.json`;
     this.schedule = this.http.get(url, {headers})
     return this.schedule;
   }
@@ -184,37 +186,37 @@ export class NHLDataService {
   }
 
   public getInfo() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G`;
+    let url = `${this.root}/players.json?position=G`;
     this.info = this.http.get(url, {headers})
     return this.info;
   }
 
   public getInfoSkaters() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=RW,LW,D,C`;
+    let url = `${this.root}/players.json?position=RW,LW,D,C`;
     this.infoSkaters = this.http.get(url, {headers})
     return this.infoSkaters;
   }
 
   public getGoaliesToday(teams) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?position=G&team=`+teams;
+    let url = `${this.root}/players.json?position=G&team=`+teams;
     this.gToday = this.http.get(url, {headers})
     return this.gToday;
   }
 
   public getSkatersToday(players) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/players.json?player=`+players;
+    let url = `${this.root}/players.json?player=`+players;
     this.sToday = this.http.get(url, {headers})
     return this.sToday;
   }
 
   public getStats(teams) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json?position=G`;
+    let url = `${this.root}/2019-2020-regular/player_stats_totals.json?position=G`;
     this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
   public getSkateStats(players) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular/player_stats_totals.json?player=`+players;
+    let url = `${this.root}/2019-2020-regular/player_stats_totals.json?player=`+players;
     this.skateStats = this.http.get(url, {headers})
     return this.skateStats;
   }
@@ -241,9 +243,9 @@ export class NHLDataService {
   getGameId() {
     let url = null;
     if (tomorrowDailyDate === dailyDate) {
-      url = `${this.apiRoot}/games.json?date=from-`+this.dailyDate+`-to-`+dayAfterTomorrow;
+      url = `${this.apiRoot21}/games.json?date=from-`+this.dailyDate+`-to-`+dayAfterTomorrow;
     } else {
-      url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
+      url = `${this.apiRoot21}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
     }
     this.gameid = this.http.get(url, {headers})
     return this.gameid;
@@ -251,7 +253,7 @@ export class NHLDataService {
 
 
   getLastweekGameId() {
-    let url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
+    let url = `${this.apiRoot21}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
     this.lastweekgameid = this.http.get(url, {headers})
     return this.lastweekgameid;
   }
@@ -260,7 +262,7 @@ export class NHLDataService {
     let url = null;
     let season = null;
     if (sport != 'nfl' && sport != 'nba')
-      season = '2020-playoff';
+      season = '2021-regular';
     else
       season = '2020-2021-regular';
     if (span === 'last-week') {
@@ -281,13 +283,13 @@ export class NHLDataService {
   }
 
   getDaily() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular/date/`+dailyDate+`/player_gamelogs.json?position=G`;
+    let url = `${this.apiRoot21}/date/`+dailyDate+`/player_gamelogs.json?position=G`;
     this.daily = this.http.get(url, {headers})  
     return this.daily;
   }
 
   getDailySkaters() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular/date/`+dailyDate+`/player_gamelogs.json?position=RW,LW,D,C`;
+    let url = `${this.apiRoot21}/date/`+dailyDate+`/player_gamelogs.json?position=RW,LW,D,C`;
     this.dailySkaters = this.http.get(url, {headers})  
     return this.dailySkaters;
   }
