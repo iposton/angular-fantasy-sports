@@ -79,7 +79,7 @@ export class StartingGoaliesComponent implements OnInit {
   public tomorrowDate: any;
   public fullFirebaseResponse: any;
   public loading: boolean = true;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
   public teamSchedules: Array <any> = [];
   public stats: boolean = false;
   public weekResults: boolean = false;
@@ -591,10 +591,10 @@ export class StartingGoaliesComponent implements OnInit {
     
         // this.myData = res['playerStatsTotals'].filter(
         //   player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null); 
-        console.log('waiting 5 seconds');
-        await sleep(5000);
+        console.log('waiting 6 seconds');
+        await sleep(6000);
         if (this.myData && this.dailySchedule) {
-          console.log('ok 5 seconds up lets go!!')
+          console.log('ok 6 seconds up lets go!!')
           if (this.dataService.isToday) {
             if (this.startersDate != today && this.startersDateTomorrow != tomorrow) {
               //reset firebase probable and confirms
