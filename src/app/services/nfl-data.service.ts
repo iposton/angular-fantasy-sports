@@ -183,7 +183,7 @@ export class NFLDataService {
 
   }
 
-  getStats(players) {
+  public getStats(players) {
 
     //if (!this.stats) {
       //console.log('getting cumulative_player_stats by player ID from API...', players);

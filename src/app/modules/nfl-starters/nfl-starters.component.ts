@@ -217,7 +217,7 @@ export class NflStartersComponent implements OnInit {
                   let startTime;
                   const today = new Date()
                   const afterTomorrow = new Date(today);
-                  afterTomorrow.setDate(afterTomorrow.getDate() + 3)
+                  afterTomorrow.setDate(afterTomorrow.getDate() + 5)
                 
                   
                 res.forEach((item, index) => {
@@ -431,7 +431,7 @@ export class NflStartersComponent implements OnInit {
                         let week;
                         const today = new Date()
                         const afterTomorrow = new Date(today);
-                        afterTomorrow.setDate(afterTomorrow.getDate() + 3);
+                        afterTomorrow.setDate(afterTomorrow.getDate() + 5);
                        // console.log('start sorting data for daily schedule...');
                         for (let schedule of this.dailySchedule) {
                           for (let sdata of this.myData) {

@@ -83,8 +83,8 @@ export class NHLDataService {
   public teamstats: Observable <any> = null;
   public dailySkaters: Observable <any> = null;
   public games: Observable <any> = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
-  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
+  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
   public root: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl";
   public headers: any;
   public dailyDate: string = '';
@@ -198,7 +198,7 @@ export class NHLDataService {
   }
 
   public getGoaliesToday(teams) {
-    let url = `${this.root}/players.json?position=G&team=`+teams;
+    let url = `${this.root}/players.json?position=G`;
     this.gToday = this.http.get(url, {headers})
     return this.gToday;
   }
@@ -221,7 +221,7 @@ export class NHLDataService {
     return this.skateStats;
   }
 
-  getAllStats(type, root) {
+  public getAllStats(type, root) {
       let url = null;
       this.apiRoot = root;
       if (type === 'skaters') {
@@ -298,7 +298,6 @@ export class NHLDataService {
 
     if (!this.injured) {
       console.log('getting goalie injuries from api...');
-
       let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/injuries.json?position=G`;
       this.injured = this.http.get(url, {headers})
         

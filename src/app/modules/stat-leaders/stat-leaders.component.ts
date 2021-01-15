@@ -30,7 +30,7 @@ export class StatLeadersComponent implements OnInit {
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
   public mlbApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff";
   public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
-  public nhlApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
+  public nhlApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
   public myData: Array <any>;
   public mlbPitchingData: Array <any>;
   public mlbHittingData: Array <any>;
@@ -166,8 +166,8 @@ export class StatLeadersComponent implements OnInit {
 
   public updateEndpoint() {
     if (this.sport === 'nhl') {
-        this.nhlApiRoot = this.nhlSeason ? "https://api.mysportsfeeds.com/v2.1/pull/nhl/2019-2020-regular" : 
-        "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff";
+        this.nhlApiRoot = this.nhlSeason ? "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular" : 
+        "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-playoff";
         //get nhl playoffs
         if (this.nhlSection) { 
           this.sortNHL();
@@ -373,7 +373,7 @@ export class StatLeadersComponent implements OnInit {
         let specialImgNum = null;
 
         this.nhlSkaters = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 3);
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null); //player.stats.gamesPlayed > 3
 
           for (let team of nhlTeamsArray) {
             for (let data of this.nhlSkaters) { 

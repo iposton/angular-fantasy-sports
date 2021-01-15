@@ -859,8 +859,28 @@ export class UtilService {
         firstName: "Cole",
         lastName: "Anthony",
         image: nbaImageRoot+"1630175.png"
+      },
+      "17208": {
+        firstName: "Nickeil",
+        lastName: "Alexander-Walker",
+        image: nbaImageRoot+"1629638.png"
+      },
+      "15324": {
+        firstName: "Gabe",
+        lastName: "Vincent",
+        image: nbaImageRoot+"1629216.png"
+      },
+      "27843": {
+        firstName: "Precious",
+        lastName: "Achiuwa",
+        image: nbaImageRoot+"1630173.png"
+      },
+      "17229": {
+        firstName: "Bol",
+        lastName: "Bol",
+        image: nbaImageRoot+"1629626.png"
       }
-        
+            
     }
 
 
@@ -2405,7 +2425,7 @@ export class UtilService {
         city: "New York",
         name: "Rangers",
         abbreviation: "NYR",
-        twitter: "#PlayLikeANewYorker",
+        twitter: "#NYR",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/3.svg"
       },
       "PIT": {
@@ -2453,7 +2473,7 @@ export class UtilService {
         city: "Buffalo",
         name: "Sabres",
         abbreviation: "BUF",
-        twitter: "#Sabres50",
+        twitter: "#LetsGoBuffalo",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/7.svg"
       },
       "DET": {
@@ -2565,7 +2585,7 @@ export class UtilService {
         city: "Anaheim",
         name: "Ducks",
         abbreviation: "ANA",
-        twitter: "#LetsGoDucks",
+        twitter: "#FlyTogether",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/24.svg"
       },
       "ARI": {
@@ -2657,7 +2677,7 @@ export class UtilService {
         teamId: 23,
         abbreviation: "CGY",
         active: true,
-        numberOne: false
+        numberOne: true
       },
       '4950': {
         id: 4950,
@@ -2855,7 +2875,7 @@ export class UtilService {
         teamId: 10,
         abbreviation: "OTT",
         active: true,
-        numberOne: false
+        numberOne: true
       },
       '10083': {
         id: 10083,
@@ -3052,7 +3072,7 @@ export class UtilService {
         lastName: "Crawford",
         teamId: 20,
         abbreviation: "NJD",
-        active: true,
+        active: false,
         numberOne: false
       },
       '4305': {
@@ -3104,8 +3124,8 @@ export class UtilService {
         id: 4351,
         firstName: "Thomas",
         lastName: "Greiss",
-        teamId: 8,
-        abbreviation: "NYI",
+        teamId: 16,
+        abbreviation: "DET",
         active: true,
         numberOne: false
       },
@@ -3151,7 +3171,7 @@ export class UtilService {
         lastName: "Howard",
         teamId: 16,
         abbreviation: "DET",
-        active: true,
+        active: false,
         numberOne: false
       }, 
       '4271': {
@@ -3206,7 +3226,7 @@ export class UtilService {
         teamId: 13,
         abbreviation: "OTT",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '15384': {
         id: 15384,
