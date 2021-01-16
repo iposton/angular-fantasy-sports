@@ -133,26 +133,26 @@ export class StartingGoaliesComponent implements OnInit {
   public statSkaterData: Array <any> = [];
   public stat: number = 1;
   public newGoalieArray = [
-  //   {
-  //   id: 14365,
-  //   firstName: 'Vitek',
-  //   lastName: 'Vanecek',
-  //   teamId: 5,
-  //   teamAbb: 'WSH',
-  //   teamName: 'Capitals',
-  //   teamCity: 'Washington D.C.',
-  //   image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477970.jpg'
-  // },
-  // {
-  //   id: 14350,
-  //   firstName: 'Collin',
-  //   lastName: 'Delia',
-  //   teamId: 20,
-  //   teamAbb: 'CHI',
-  //   teamName: 'Blackhawks',
-  //   teamCity: 'Chicago',
-  //   image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8480420.jpg'
-  // },
+    {
+    id: 15690,
+    firstName: 'Elvis',
+    lastName: 'Merzlikins',
+    teamId: 19,
+    teamAbb: 'CBJ',
+    teamName: 'Blue Jackets',
+    teamCity: 'Columbus',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8478007.jpg'
+  },
+  {
+    id: 5271,
+    firstName: 'Jack',
+    lastName: 'Campbell',
+    teamId: 36,
+    teamAbb: 'TOR',
+    teamName: 'Maple Leafs',
+    teamCity: 'Toronto',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8475789.jpg'
+  },
   {
     id: 4235,
     firstName: 'Jaroslav',
@@ -162,7 +162,108 @@ export class StartingGoaliesComponent implements OnInit {
     teamName: 'Bruins',
     teamCity: 'Boston',
     image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8470860.jpg'
+  },
+  {
+    id: 5296,
+    firstName: 'Anti',
+    lastName: 'Raanta',
+    teamId: 30,
+    teamAbb: 'ARI',
+    teamName: 'Cyotes',
+    teamCity: 'Arizona',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477293.jpg'
+  },
+  {
+    id: 483,
+    firstName: 'Marc-Andre',
+    lastName: 'Fleury',
+    teamId: 142,
+    teamAbb: 'VGK',
+    teamName: 'Golden Knights',
+    teamCity: 'Las Vegas',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8470594.jpg'
+  },
+  {
+    id: 4271,
+    firstName: 'Jonathan',
+    lastName: 'Bernier',
+    teamId: 16,
+    teamAbb: 'DET',
+    teamName: 'Red Wings',
+    teamCity: 'Detroit',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8473541.jpg'
+  },
+  {
+    id: 3810,
+    firstName: 'Pekka',
+    lastName: 'Rinne',
+    teamId: 18,
+    teamAbb: 'NSH',
+    teamName: 'Preds',
+    teamCity: 'Nashville',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8471469.jpg'
+  },
+  {
+    id: 15384,
+    firstName: 'Calvin',
+    lastName: 'Petersen',
+    teamId: 28,
+    teamAbb: 'LAK',
+    teamName: 'Kings',
+    teamCity: 'Los Angeles',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477361@2x.jpg'
+  },
+  {
+    id: 15452,
+    firstName: 'Marcus',
+    lastName: 'Hogberg',
+    teamId: 13,
+    teamAbb: 'OTT',
+    teamName: 'Sens',
+    teamCity: 'Ottawa',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477405.jpg'
+  },
+  {
+    id: 4890,
+    firstName: 'Sergei',
+    lastName: 'Bobrovsky',
+    teamId: 4,
+    teamAbb: 'FLO',
+    teamName: 'Panthers',
+    teamCity: 'Florida',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8475683.jpg'
+  },
+  {
+    id: 5540,
+    firstName: 'Chris',
+    lastName: 'Drieger',
+    teamId: 4,
+    teamAbb: 'FLO',
+    teamName: 'Panthers',
+    teamCity: 'Florida',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8476904.jpg'
+  },
+  {
+    id: 4561,
+    firstName: 'Ben',
+    lastName: 'Bishop',
+    teamId: 27,
+    teamAbb: 'DAL',
+    teamName: 'Stars',
+    teamCity: 'Dallas',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8471750.jpg'
+  },
+  {
+    id: 4763,
+    firstName: 'Anton',
+    lastName: 'Khudobin',
+    teamId: 27,
+    teamAbb: 'DAL',
+    teamName: 'Stars',
+    teamCity: 'Dallas',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8471418.jpg'
   }
+  
 ]
 
   constructor(private cdr: ChangeDetectorRef, 
@@ -590,35 +691,35 @@ export class StartingGoaliesComponent implements OnInit {
       if (res != null) values = res['playerStatsTotals'];
       this.myData = removeDuplicatesBy(x => x.player.id, values)
 
-      this.dataService
-          .getGoaliesToday(teamString).subscribe(res => {
-            console.log('got players');
-            this.newGoalieData = res['players'];
-            for (let n of this.newGoalieData) {
+      // this.dataService
+      //     .getGoaliesToday(teamString).subscribe(res => {
+      //       console.log('got players');
+      //       this.newGoalieData = res['players'];
+      //       for (let n of this.newGoalieData) {
               for (let old of this.myData) {
                 old.player.gameLocation = "none";
-                if (old.player['currentTeam'] != null)
-                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.player['currentTeam'].abbreviation = n['teamAsOfDate'].abbreviation;
-                  old.team.abbreviation = n['teamAsOfDate'].abbreviation;
-                  old.team.id = n['teamAsOfDate'].id;
-                } 
+                // if (old.player['currentTeam'] != null)
+                //   old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+                // if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                //   old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                //   old.player['currentTeam'].abbreviation = n['teamAsOfDate'].abbreviation;
+                //   old.team.abbreviation = n['teamAsOfDate'].abbreviation;
+                //   old.team.id = n['teamAsOfDate'].id;
+                // } 
                 
-                if (old.player.officialImageSrc != null) {
-                  specialImgNum = old.player.officialImageSrc.substring(
-                    old.player.officialImageSrc.lastIndexOf("/") + 1, 
-                    old.player.officialImageSrc.lastIndexOf(".")
-                    );
+                // if (old.player.officialImageSrc != null) {
+                //   specialImgNum = old.player.officialImageSrc.substring(
+                //     old.player.officialImageSrc.lastIndexOf("/") + 1, 
+                //     old.player.officialImageSrc.lastIndexOf(".")
+                //     );
                     
-                  old.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
-                }
+                //   old.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
+                // }
   
                 if (old.player.officialImageSrc == null) {
                   old.player.officialImageSrc = this.playerImages[old.player.id] != null ? this.playerImages[old.player.id].image : null;
                 }
-              }
+              
             }
            
             for (let item of this.newGoalieArray) {
@@ -639,16 +740,16 @@ export class StartingGoaliesComponent implements OnInit {
             
             teamInfo(this.myData, nhlTeamsArray);
             // this.nflOffenseLoading = false;
-        });
+        //});
 
         
     
         // this.myData = res['playerStatsTotals'].filter(
         //   player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null); 
-        console.log('waiting 6 seconds');
-        await sleep(6000);
+        //console.log('waiting 6 seconds');
+        //await sleep(6000);
         if (this.myData && this.dailySchedule) {
-          console.log('ok 6 seconds up lets go!!')
+          //console.log('ok 6 seconds up lets go!!')
           if (this.dataService.isToday) {
             if (this.startersDate != today && this.startersDateTomorrow != tomorrow) {
               //reset firebase probable and confirms

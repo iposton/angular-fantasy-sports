@@ -645,22 +645,22 @@ export class UtilService {
       "17374": {
         firstName: "Igor",
         lastName: "Shesterkin",
-        image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8478048@2x.jpg"
+        image: "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8478048@2x.jpg"
       },
       "17380": {
         firstName: "Jonas",
         lastName: "Johansson",
-        image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8477992@2x.jpg"
+        image: "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477992@2x.jpg"
       },
       "15384": {
         firstName: "Calvin",
         lastName: "Petersen",
-        image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8477361@2x.jpg"
+        image: "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477361@2x.jpg"
       },
       "17341": {
         firstName: "Matiss",
         lastName: "Kivlenieks",
-        image: "https://nhl.bamcontent.com/images/headshots/current/168x168/8480162@2x.jpg"
+        image: "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8480162@2x.jpg"
       },
     }
 
