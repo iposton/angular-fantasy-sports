@@ -2553,7 +2553,7 @@ export class UtilService {
         city: "Minnesota",
         name: "Wild",
         abbreviation: "MIN",
-        twitter: "#Wild",
+        twitter: "#MNWild",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/30.svg"
       },
       "SJS": {
@@ -2615,6 +2615,15 @@ export class UtilService {
         abbreviation: "WSH",
         active: true,
         numberOne: true
+      }, 
+      '14365':{
+        id: 14365,
+        firstName: "Vitek",
+        lastName: "Vanecek",
+        teamId: 5,
+        abbreviation: "WSH",
+        active: true,
+        numberOne: false
       }, 
       '4863':{
         id: 4863,
@@ -2820,7 +2829,7 @@ export class UtilService {
         lastName: "Lundqvist",
         teamId: 5,
         abbreviation: "WSH",
-        active: true,
+        active: false,
         numberOne: false
       }, 
       '13934': {
