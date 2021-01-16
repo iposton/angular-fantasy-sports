@@ -1202,14 +1202,14 @@ export class DepthService {
         //   abbreviation: 'LA',
         //   position: 'QB'
         // },
-        'Offense-WR-1' : {
-          firstName: 'Cooper',
-          lastName: 'Kupp',
-          id: 13412,
-          status: 'Starter',
-          abbreviation: 'LA',
-          position: 'WR'
-        },
+        // 'Offense-WR-1' : {
+        //   firstName: 'Cooper',
+        //   lastName: 'Kupp',
+        //   id: 13412,
+        //   status: 'Starter',
+        //   abbreviation: 'LA',
+        //   position: 'WR'
+        // },
           
       }
     ],
