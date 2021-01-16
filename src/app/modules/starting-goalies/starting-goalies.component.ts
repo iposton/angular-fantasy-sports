@@ -10,7 +10,8 @@ import {
   NHLDataService,
   FirebaseService,
   UtilService,
-  GoogleAnalyticsService
+  GoogleAnalyticsService,
+  NhlUtilService,
  } from '../../services/index';
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
@@ -131,6 +132,26 @@ export class StartingGoaliesComponent implements OnInit {
   public gameSkaterGroups: Array <any>;
   public statSkaterData: Array <any> = [];
   public stat: number = 1;
+  public newGoalieArray = [{
+    id: 14365,
+    firstName: 'Vitek',
+    lastName: 'Vanecek',
+    teamId: 5,
+    teamAbb: 'WSH',
+    teamName: 'Capitals',
+    teamCity: 'Washington D.C.',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477970.jpg'
+  },
+  {
+    id: 14350,
+    firstName: 'Collin',
+    lastName: 'Delia',
+    teamId: 20,
+    teamAbb: 'CHI',
+    teamName: 'Blackhawks',
+    teamCity: 'Chicago',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8480420.jpg'
+  }]
 
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,
@@ -138,6 +159,7 @@ export class StartingGoaliesComponent implements OnInit {
     public fbService: FirebaseService,  
     public router: Router, 
     public util: UtilService,
+    public nhlUtil: NhlUtilService,
     public gaService: GoogleAnalyticsService,
     @Inject(PLATFORM_ID) platformId: string) {
     yesterday = this.dataService.getYesterday();
@@ -498,6 +520,7 @@ export class StartingGoaliesComponent implements OnInit {
  async sortData() {
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     let promiseOne;
+    
     promiseOne = new Promise((resolve, reject) => {
     if (this.gamesToday === true) {
       this.dataService
@@ -585,9 +608,28 @@ export class StartingGoaliesComponent implements OnInit {
                 }
               }
             }
+           
+            for (let item of this.newGoalieArray) {
+              let newGoalie = this.nhlUtil.getNewGoalie();
+              console.log(newGoalie, 'new goalie');
+              newGoalie.player.id = item.id;
+              newGoalie.player.firstName = item.firstName;
+              newGoalie.player.lastName = item.lastName;
+              newGoalie.player.currentTeam.id = item.teamId;
+              newGoalie.player.currentTeam.abbreviation = item.teamAbb;
+              newGoalie.player.officialImageSrc = item.image;
+              newGoalie.team.id = item.teamId;
+              newGoalie.team.abbreviation = item.teamAbb;
+              this.myData.push(newGoalie)
+            };
+
+            
+            
             teamInfo(this.myData, nhlTeamsArray);
             // this.nflOffenseLoading = false;
         });
+
+        
     
         // this.myData = res['playerStatsTotals'].filter(
         //   player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null); 
