@@ -262,6 +262,26 @@ export class StartingGoaliesComponent implements OnInit {
     teamName: 'Stars',
     teamCity: 'Dallas',
     image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8471418.jpg'
+  },
+  {
+    id: 4862,
+    firstName: 'James',
+    lastName: 'Reimer',
+    teamId: 3,
+    teamAbb: 'CAR',
+    teamName: 'Hurricanes',
+    teamCity: 'Carolina',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8473503.jpg'
+  },
+  {
+    id: 13934,
+    firstName: 'Alexander',
+    lastName: 'Georgiev',
+    teamId: 9,
+    teamAbb: 'NYR',
+    teamName: 'Rangers',
+    teamCity: 'New York',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8480382.jpg'
   }
   
 ]
