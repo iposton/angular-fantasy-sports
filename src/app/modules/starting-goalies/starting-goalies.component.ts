@@ -132,26 +132,38 @@ export class StartingGoaliesComponent implements OnInit {
   public gameSkaterGroups: Array <any>;
   public statSkaterData: Array <any> = [];
   public stat: number = 1;
-  public newGoalieArray = [{
-    id: 14365,
-    firstName: 'Vitek',
-    lastName: 'Vanecek',
-    teamId: 5,
-    teamAbb: 'WSH',
-    teamName: 'Capitals',
-    teamCity: 'Washington D.C.',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477970.jpg'
-  },
+  public newGoalieArray = [
+  //   {
+  //   id: 14365,
+  //   firstName: 'Vitek',
+  //   lastName: 'Vanecek',
+  //   teamId: 5,
+  //   teamAbb: 'WSH',
+  //   teamName: 'Capitals',
+  //   teamCity: 'Washington D.C.',
+  //   image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477970.jpg'
+  // },
+  // {
+  //   id: 14350,
+  //   firstName: 'Collin',
+  //   lastName: 'Delia',
+  //   teamId: 20,
+  //   teamAbb: 'CHI',
+  //   teamName: 'Blackhawks',
+  //   teamCity: 'Chicago',
+  //   image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8480420.jpg'
+  // },
   {
-    id: 14350,
-    firstName: 'Collin',
-    lastName: 'Delia',
-    teamId: 20,
-    teamAbb: 'CHI',
-    teamName: 'Blackhawks',
-    teamCity: 'Chicago',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8480420.jpg'
-  }]
+    id: 4235,
+    firstName: 'Jaroslav',
+    lastName: 'Halak',
+    teamId: 11,
+    teamAbb: 'BOS',
+    teamName: 'Bruins',
+    teamCity: 'Boston',
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8470860.jpg'
+  }
+]
 
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,

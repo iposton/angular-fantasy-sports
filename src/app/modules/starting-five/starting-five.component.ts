@@ -495,7 +495,9 @@ export class StartingFiveComponent implements OnInit {
                 data.team.logo = team.officialLogoImageSrc;
                 data.team.city = team.city;
                 data.team.name = team.name;
-                data.flip = 'inactive';
+                data.winToday = false;
+                data.lostToday = false;
+                //data.flip = 'inactive';
                 // data.dRank = team.dRank;
                 // data.oRank = team.oRank;
                 // data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
@@ -506,6 +508,8 @@ export class StartingFiveComponent implements OnInit {
                 data.team.city = team.city;
                 data.team.name = team.name;
                 data.flip = 'inactive';
+                data.winToday = false;
+                data.lostToday = false;
               } 
             }  
          }
@@ -531,6 +535,13 @@ export class StartingFiveComponent implements OnInit {
                   data.team.opponentScore = starter.score['homeScoreTotal'];
                 }
               }
+              if (starter.status != "COMPLETED") {
+                if (data.team.teamScore > data.team.opponentScore) {
+                  data.winToday = true;
+                } else {
+                  data.lostToday = true;
+                }
+              }
             } 
           }
         }
@@ -552,23 +563,28 @@ export class StartingFiveComponent implements OnInit {
                   data.player.fpToday = Math.floor(data.player.pts + (data.player.ast * 1.5) + (data.player.reb * 1.2) + (data.player.stl * 3) + (data.player.blk * 3) - data.player.tov);
                   //data.player.startsdaily.stats.miscellaneous.gamesStarted
                   // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
+                 
                 }
               }
             }
-          }
+          } 
 
           for (let team of this.teamStats) {
             for (let data of this.myData) { 
-               if (data.team.opponentId != null && 
-                 data.team.id === team.team.id) {
-                 data.win = team.stats.standings.wins;
-                 data.loss = team.stats.standings.losses;
-               } else if (data.player.lineupTeam === team.team.abbreviation) { 
-                 data.win = team.stats.standings.wins;
-                 data.loss = team.stats.standings.losses;
-               }
-             }  
+                if (data.team.opponentId != null && 
+                  data.team.id === team.team.id) {
+                  data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
+                  data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
+                } else if (data.player.lineupTeam === team.team.abbreviation) { 
+                  data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
+                  data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
+                }
+              }  
           }
+
+          
+
+          
        
 
           this.groups = this.myData.reduce(function (r, a) {
