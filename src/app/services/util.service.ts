@@ -2695,7 +2695,7 @@ export class UtilService {
         teamId: 24,
         abbreviation: "EDM",
         active: true,
-        numberOne: false
+        numberOne: true
       },
       '3486': {
         id: 3486,
@@ -2704,7 +2704,7 @@ export class UtilService {
         teamId: 24,
         abbreviation: "EDM",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '10074': {
         id: 10074,
@@ -2722,7 +2722,7 @@ export class UtilService {
         teamId: 26,
         abbreviation: "SJS",
         active: true,
-        numberOne: false
+        numberOne: true
       },
       '483': {
         id: 483,
@@ -3136,7 +3136,7 @@ export class UtilService {
         teamId: 16,
         abbreviation: "DET",
         active: true,
-        numberOne: false
+        numberOne: true
       },
       '4592': {
         id: 4592,
@@ -3190,7 +3190,7 @@ export class UtilService {
         teamId: 16,
         abbreviation: "DET",
         active: true,
-        numberOne: true
+        numberOne: false
       },
       '5671': {
         id: 5671,
