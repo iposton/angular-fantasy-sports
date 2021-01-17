@@ -211,7 +211,7 @@ export class StartingGoaliesComponent implements OnInit {
     teamAbb: 'LAK',
     teamName: 'Kings',
     teamCity: 'Los Angeles',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477361@2x.jpg'
+    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477361.jpg'
   },
   {
     id: 15452,
@@ -703,9 +703,12 @@ export class StartingGoaliesComponent implements OnInit {
               }
             }
           }
+          
+          // this.myData = removeDuplicatesBy(x => x.player.id, array)
         }
 
       const nhlTeamsArray = Object.values(this.teams);
+      //const startingGoalies = Object.values(this.startingG);
       let values = [];
       console.log('got player stats')
       if (res != null) values = res['playerStatsTotals'];
@@ -739,22 +742,40 @@ export class StartingGoaliesComponent implements OnInit {
                 if (old.player.officialImageSrc == null) {
                   old.player.officialImageSrc = this.playerImages[old.player.id] != null ? this.playerImages[old.player.id].image : null;
                 }
+
+                if (this.startingG[old.player.id] != null) {
+                  this.startingG[old.player.id].new = false;
+                  // let newGoalie = this.nhlUtil.getNewGoalie();
+                  // console.log(newGoalie, 'new goalie');
+                  // newGoalie.player.id = this.startingG[old.player.id].id;
+                  // newGoalie.player.firstName = this.startingG[old.player.id].firstName;
+                  // newGoalie.player.lastName = this.startingG[old.player.id].lastName;
+                  // newGoalie.player.currentTeam.id = this.startingG[old.player.id].teamId;
+                  // newGoalie.player.currentTeam.abbreviation = this.startingG[old.player.id].abbreviation;
+                  // newGoalie.player.officialImageSrc = this.startingG[old.player.id].img;
+                  // newGoalie.team.id = this.startingG[old.player.id].teamId;
+                  // newGoalie.team.abbreviation = this.startingG[old.player.id].abbreviation;
+                  // this.myData.push(newGoalie)
+                }
               
             }
+            const startingGoalies = Object.values(this.startingG);
            
-            for (let item of this.newGoalieArray) {
-              let newGoalie = this.nhlUtil.getNewGoalie();
-              console.log(newGoalie, 'new goalie');
-              newGoalie.player.id = item.id;
-              newGoalie.player.firstName = item.firstName;
-              newGoalie.player.lastName = item.lastName;
-              newGoalie.player.currentTeam.id = item.teamId;
-              newGoalie.player.currentTeam.abbreviation = item.teamAbb;
-              newGoalie.player.officialImageSrc = item.image;
-              newGoalie.team.id = item.teamId;
-              newGoalie.team.abbreviation = item.teamAbb;
-              this.myData.push(newGoalie)
-            };
+            startingGoalies.forEach((item, index) =>  {
+              if (startingGoalies[index]['new'] === true) {
+                let newGoalie = this.nhlUtil.getNewGoalie();
+                console.log(newGoalie, 'new goalie');
+                newGoalie.player.id = startingGoalies[index]['id'];
+                newGoalie.player.firstName = startingGoalies[index]['firstName'];
+                newGoalie.player.lastName = startingGoalies[index]['lastName'];
+                newGoalie.player.currentTeam.id = startingGoalies[index]['teamId'];
+                newGoalie.player.currentTeam.abbreviation = startingGoalies[index]['abbreviation'];
+                newGoalie.player.officialImageSrc = startingGoalies[index]['img'];
+                newGoalie.team.id =  startingGoalies[index]['teamId'];
+                newGoalie.team.abbreviation =  startingGoalies[index]['abbreviation'];
+                this.myData.push(newGoalie)
+              }  
+            });
 
             
             
