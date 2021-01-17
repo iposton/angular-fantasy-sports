@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 let nbaImageRoot = 'https://cdn.nba.com/headshots/nba/latest/1040x760/';
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/';
+let nhlImageRoot = 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/';
 
 @Injectable({
   providedIn: 'root'
@@ -645,23 +646,28 @@ export class UtilService {
       "17374": {
         firstName: "Igor",
         lastName: "Shesterkin",
-        image: "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8478048@2x.jpg"
+        image: nhlImageRoot+"8478048.jpg"
       },
       "17380": {
         firstName: "Jonas",
         lastName: "Johansson",
-        image: "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477992@2x.jpg"
+        image: nhlImageRoot+"8477992.jpg"
       },
       "15384": {
         firstName: "Calvin",
         lastName: "Petersen",
-        image: "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477361@2x.jpg"
+        image: nhlImageRoot+"8477361.jpg"
       },
       "17341": {
         firstName: "Matiss",
         lastName: "Kivlenieks",
-        image: "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8480162@2x.jpg"
+        image: nhlImageRoot+"8480162.jpg"
       },
+      "28379": {
+        firstName: "Ilya",
+        lastName: "Sorokin",
+        image: nhlImageRoot+'8478009.jpg',
+      }
     }
 
     this.NBAImages = {
@@ -2614,7 +2620,9 @@ export class UtilService {
         teamId: 5,
         abbreviation: "WSH",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       }, 
       '14365':{
         id: 14365,
@@ -2623,7 +2631,9 @@ export class UtilService {
         teamId: 5,
         abbreviation: "WSH",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       }, 
       '4863':{
         id: 4863,
@@ -2632,7 +2642,9 @@ export class UtilService {
         teamId: 21,
         abbreviation: "VAN",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5107':{
         id: 5107,
@@ -2641,7 +2653,9 @@ export class UtilService {
         teamId: 14,
         abbreviation: "MTL",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5908': {
         id: 5908,
@@ -2650,7 +2664,9 @@ export class UtilService {
         teamId: 17,
         abbreviation: "STL",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '757': {
         id: 757,
@@ -2659,7 +2675,9 @@ export class UtilService {
         teamId: 13,
         abbreviation: "OTT",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5033': {
         id: 5033,
@@ -2668,7 +2686,9 @@ export class UtilService {
         teamId: 1,
         abbreviation: "TBL",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5109': {
         id: 5109,
@@ -2677,7 +2697,9 @@ export class UtilService {
         teamId: 12,
         abbreviation: "TOR",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4874': {
         id: 4874,
@@ -2686,7 +2708,9 @@ export class UtilService {
         teamId: 23,
         abbreviation: "CGY",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4950': {
         id: 4950,
@@ -2695,7 +2719,9 @@ export class UtilService {
         teamId: 24,
         abbreviation: "EDM",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '3486': {
         id: 3486,
@@ -2704,7 +2730,9 @@ export class UtilService {
         teamId: 24,
         abbreviation: "EDM",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '10074': {
         id: 10074,
@@ -2713,7 +2741,9 @@ export class UtilService {
         teamId: 12,
         abbreviation: "TOR",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5122': {
         id: 5122,
@@ -2722,7 +2752,9 @@ export class UtilService {
         teamId: 26,
         abbreviation: "SJS",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '483': {
         id: 483,
@@ -2731,7 +2763,9 @@ export class UtilService {
         teamId: 142,
         abbreviation: "VGK",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8470594.jpg',
+        new: true
       },
       '5528': {
         id: 5528,
@@ -2740,7 +2774,20 @@ export class UtilService {
         teamId: 20,
         abbreviation: "CHI",
         active: true,
-        numberOne: false
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
+      },
+      '14350': {
+        id: 14350,
+        firstName: "Collin",
+        lastName: "Delia",
+        teamId: 20,
+        abbreviation: "CHI",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '13876': {
         id: 13876,
@@ -2749,7 +2796,9 @@ export class UtilService {
         teamId: 21,
         abbreviation: "VAN",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5366': {
         id: 5366,
@@ -2758,7 +2807,9 @@ export class UtilService {
         teamId: 22,
         abbreviation: "COL",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       }, 
       '13660': {
         id: 13660,
@@ -2767,7 +2818,9 @@ export class UtilService {
         teamId: 12,
         abbreviation: "TOR",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '15525': {
         id: 15525,
@@ -2776,7 +2829,9 @@ export class UtilService {
         teamId: 4,
         abbreviation: "FLO",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5540': {
         id: 5540,
@@ -2785,7 +2840,9 @@ export class UtilService {
         teamId: 4,
         abbreviation: "FLO",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8476904.jpg',
+        new: true
       },
       '4890': {
         id: 4890,
@@ -2794,7 +2851,9 @@ export class UtilService {
         teamId: 4,
         abbreviation: "FLO",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'8475683.jpg',
+        new: true
       },
       '5420': {
         id: 5420,
@@ -2803,7 +2862,9 @@ export class UtilService {
         teamId: 1,
         abbreviation: "TBL",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5873': {
         id: 5873,
@@ -2812,7 +2873,9 @@ export class UtilService {
         teamId: 2,
         abbreviation: "WPJ",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5552': {
         id: 5552,
@@ -2821,7 +2884,9 @@ export class UtilService {
         teamId: 2,
         abbreviation: "WPJ",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '3647': {
         id: 3647,
@@ -2830,7 +2895,9 @@ export class UtilService {
         teamId: 5,
         abbreviation: "WSH",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       }, 
       '13934': {
         id: 13934,
@@ -2839,7 +2906,9 @@ export class UtilService {
         teamId: 9,
         abbreviation: "NYR",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8480382.jpg',
+        new: true
       },
       '17374': {
         id: 17374,
@@ -2848,7 +2917,9 @@ export class UtilService {
         teamId: 9,
         abbreviation: "NYR",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5224': {
         id: 5224,
@@ -2857,7 +2928,9 @@ export class UtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5842': {
         id: 5842,
@@ -2866,7 +2939,9 @@ export class UtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       }, 
       '17380': {
         id: 17380,
@@ -2875,7 +2950,9 @@ export class UtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5894': {
         id: 5894,
@@ -2884,7 +2961,9 @@ export class UtilService {
         teamId: 10,
         abbreviation: "OTT",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '10083': {
         id: 10083,
@@ -2893,7 +2972,9 @@ export class UtilService {
         teamId: 10,
         abbreviation: "PIT",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4294': {
         id: 4294,
@@ -2902,7 +2983,9 @@ export class UtilService {
         teamId: 14,
         abbreviation: "MTL",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4862': {
         id: 4862,
@@ -2911,7 +2994,9 @@ export class UtilService {
         teamId: 3,
         abbreviation: "CAR",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8473503.jpg',
+        new: true
       },
       '5163': {
         id: 5163,
@@ -2920,7 +3005,9 @@ export class UtilService {
         teamId: 3,
         abbreviation: "CAR",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4666': {
         id: 4666,
@@ -2929,7 +3016,9 @@ export class UtilService {
         teamId: 25,
         abbreviation: "MIN",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4947': {
         id: 4947,
@@ -2938,7 +3027,9 @@ export class UtilService {
         teamId: 25,
         abbreviation: "MIN",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '3810': {
         id: 3810,
@@ -2947,7 +3038,9 @@ export class UtilService {
         teamId: 18,
         abbreviation: "NSH",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8471469.jpg',
+        new: true
       },
       '5877': {
         id: 5877,
@@ -2956,7 +3049,9 @@ export class UtilService {
         teamId: 18,
         abbreviation: "NSH",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4235': {
         id: 4235,
@@ -2965,7 +3060,9 @@ export class UtilService {
         teamId: 11,
         abbreviation: "BOS",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'8470860.jpg',
+        new: false
       },
       '4326': {
         id: 4326,
@@ -2974,7 +3071,9 @@ export class UtilService {
         teamId: 11,
         abbreviation: "BOS",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4561': {
         id: 4561,
@@ -2983,7 +3082,9 @@ export class UtilService {
         teamId: 27,
         abbreviation: "DAL",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'8471750.jpg',
+        new: true
       },
       '4763': {
         id: 4763,
@@ -2992,7 +3093,9 @@ export class UtilService {
         teamId: 27,
         abbreviation: "DAL",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8471418.jpg',
+        new: true
       },
       '11724': {
         id: 11724,
@@ -3001,7 +3104,9 @@ export class UtilService {
         teamId:  23,
         abbreviation: "CGY",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5277': {
         id: 5277,
@@ -3010,7 +3115,9 @@ export class UtilService {
         teamId:  23,
         abbreviation: "MIN",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5176': {
         id: 5176,
@@ -3019,7 +3126,9 @@ export class UtilService {
         teamId: 22,
         abbreviation: "COL",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '15442': {
         id: 15442,
@@ -3028,7 +3137,9 @@ export class UtilService {
         teamId: 22,
         abbreviation: "COL",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5168': {
         id: 5168,
@@ -3037,7 +3148,9 @@ export class UtilService {
         teamId: 30,
         abbreviation: "ARI",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5296': {
         id: 5296,
@@ -3046,7 +3159,9 @@ export class UtilService {
         teamId: 30,
         abbreviation: "ARI",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8477293.jpg',
+        new: false
       },
       '5227': {
         id: 5227,
@@ -3055,7 +3170,9 @@ export class UtilService {
         teamId: 29,
         abbreviation: "ANA",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '178': {
         d: 178,
@@ -3064,7 +3181,9 @@ export class UtilService {
         teamId: 29,
         abbreviation: "ANA",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4310': {
         id: 4310,
@@ -3073,7 +3192,9 @@ export class UtilService {
         teamId: 1,
         abbreviation: "TBL",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '3855': {
         id: 3855,
@@ -3082,7 +3203,9 @@ export class UtilService {
         teamId: 20,
         abbreviation: "NJD",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4305': {
         id: 4305,
@@ -3091,7 +3214,9 @@ export class UtilService {
         teamId: 6,
         abbreviation: "PHI",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4867': {
         id: 4867,
@@ -3100,7 +3225,9 @@ export class UtilService {
         teamId: 142,
         abbreviation: "VGK",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },  
       '5481': {
         id: 5481,
@@ -3109,7 +3236,9 @@ export class UtilService {
         teamId: 3,
         abbreviation: "CAR",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '15154': {
         id: 15154,
@@ -3118,7 +3247,9 @@ export class UtilService {
         teamId: 6,
         abbreviation: "PHI",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5887': {
         id: 5887,
@@ -3127,7 +3258,9 @@ export class UtilService {
         teamId: 19,
         abbreviation: "CBJ",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4351': {
         id: 4351,
@@ -3136,7 +3269,9 @@ export class UtilService {
         teamId: 16,
         abbreviation: "DET",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4592': {
         id: 4592,
@@ -3145,7 +3280,20 @@ export class UtilService {
         teamId: 8,
         abbreviation: "NYI",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
+      },
+      '28379': {
+        id: 28379,
+        firstName: "Ilya",
+        lastName: "Sorokin",
+        teamId: 8,
+        abbreviation: "NYI",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478009.jpg',
+        new: true
       },
       '15438': {
         id: 15438,
@@ -3154,7 +3302,9 @@ export class UtilService {
         teamId: 7,
         abbreviation: "NJD",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5518': {
         id: 5518,
@@ -3163,7 +3313,9 @@ export class UtilService {
         teamId: 23,
         abbreviation: "CGY",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       }, 
       '4575': {
         id: 4575,
@@ -3172,7 +3324,9 @@ export class UtilService {
         teamId: 7,
         abbreviation: "NJD",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '3793': {
         id: 3793,
@@ -3181,7 +3335,9 @@ export class UtilService {
         teamId: 16,
         abbreviation: "DET",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       }, 
       '4271': {
         id: 4271,
@@ -3190,7 +3346,9 @@ export class UtilService {
         teamId: 16,
         abbreviation: "DET",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8473541.jpg',
+        new: true
       },
       '5671': {
         id: 5671,
@@ -3199,7 +3357,9 @@ export class UtilService {
         teamId: 30,
         abbreviation: "ARI",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '4333': {
         id: 4333,
@@ -3208,7 +3368,9 @@ export class UtilService {
         teamId: 28,
         abbreviation: "LAK",
         active: true,
-        numberOne: true
+        numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '5271': {
         id: 5271,
@@ -3217,7 +3379,9 @@ export class UtilService {
         teamId: 12,
         abbreviation: "TOR",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8475789.jpg',
+        new: true
       },
       '15690': {
         id: 15690,
@@ -3226,7 +3390,9 @@ export class UtilService {
         teamId: 19,
         abbreviation: "CBJ",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8478007.jpg',
+        new: true
       },
       '15452': {
         id: 15452,
@@ -3235,7 +3401,9 @@ export class UtilService {
         teamId: 13,
         abbreviation: "OTT",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8477405.jpg',
+        new: true
       },
       '15384': {
         id: 15384,
@@ -3244,7 +3412,9 @@ export class UtilService {
         teamId: 28,
         abbreviation: "LAK",
         active: true,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'8477361.jpg',
+        new: true
       },
       '18296': {
         id: 18296,
@@ -3253,7 +3423,9 @@ export class UtilService {
         teamId: 3,
         abbreviation: "CAR",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       },
       '11703': {
         id: 11703,
@@ -3262,7 +3434,9 @@ export class UtilService {
         teamId: 3,
         abbreviation: "CAR",
         active: false,
-        numberOne: false
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
       }
     }
   }
