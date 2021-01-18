@@ -132,159 +132,7 @@ export class StartingGoaliesComponent implements OnInit {
   public gameSkaterGroups: Array <any>;
   public statSkaterData: Array <any> = [];
   public stat: number = 1;
-  public newGoalieArray = [
-    {
-    id: 15690,
-    firstName: 'Elvis',
-    lastName: 'Merzlikins',
-    teamId: 19,
-    teamAbb: 'CBJ',
-    teamName: 'Blue Jackets',
-    teamCity: 'Columbus',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8478007.jpg'
-  },
-  {
-    id: 5271,
-    firstName: 'Jack',
-    lastName: 'Campbell',
-    teamId: 36,
-    teamAbb: 'TOR',
-    teamName: 'Maple Leafs',
-    teamCity: 'Toronto',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8475789.jpg'
-  },
-  {
-    id: 4235,
-    firstName: 'Jaroslav',
-    lastName: 'Halak',
-    teamId: 11,
-    teamAbb: 'BOS',
-    teamName: 'Bruins',
-    teamCity: 'Boston',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8470860.jpg'
-  },
-  {
-    id: 5296,
-    firstName: 'Anti',
-    lastName: 'Raanta',
-    teamId: 30,
-    teamAbb: 'ARI',
-    teamName: 'Cyotes',
-    teamCity: 'Arizona',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477293.jpg'
-  },
-  {
-    id: 483,
-    firstName: 'Marc-Andre',
-    lastName: 'Fleury',
-    teamId: 142,
-    teamAbb: 'VGK',
-    teamName: 'Golden Knights',
-    teamCity: 'Las Vegas',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8470594.jpg'
-  },
-  {
-    id: 4271,
-    firstName: 'Jonathan',
-    lastName: 'Bernier',
-    teamId: 16,
-    teamAbb: 'DET',
-    teamName: 'Red Wings',
-    teamCity: 'Detroit',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8473541.jpg'
-  },
-  {
-    id: 3810,
-    firstName: 'Pekka',
-    lastName: 'Rinne',
-    teamId: 18,
-    teamAbb: 'NSH',
-    teamName: 'Preds',
-    teamCity: 'Nashville',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8471469.jpg'
-  },
-  {
-    id: 15384,
-    firstName: 'Calvin',
-    lastName: 'Petersen',
-    teamId: 28,
-    teamAbb: 'LAK',
-    teamName: 'Kings',
-    teamCity: 'Los Angeles',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477361.jpg'
-  },
-  {
-    id: 15452,
-    firstName: 'Marcus',
-    lastName: 'Hogberg',
-    teamId: 13,
-    teamAbb: 'OTT',
-    teamName: 'Sens',
-    teamCity: 'Ottawa',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8477405.jpg'
-  },
-  {
-    id: 4890,
-    firstName: 'Sergei',
-    lastName: 'Bobrovsky',
-    teamId: 4,
-    teamAbb: 'FLO',
-    teamName: 'Panthers',
-    teamCity: 'Florida',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8475683.jpg'
-  },
-  {
-    id: 5540,
-    firstName: 'Chris',
-    lastName: 'Drieger',
-    teamId: 4,
-    teamAbb: 'FLO',
-    teamName: 'Panthers',
-    teamCity: 'Florida',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8476904.jpg'
-  },
-  {
-    id: 4561,
-    firstName: 'Ben',
-    lastName: 'Bishop',
-    teamId: 27,
-    teamAbb: 'DAL',
-    teamName: 'Stars',
-    teamCity: 'Dallas',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8471750.jpg'
-  },
-  {
-    id: 4763,
-    firstName: 'Anton',
-    lastName: 'Khudobin',
-    teamId: 27,
-    teamAbb: 'DAL',
-    teamName: 'Stars',
-    teamCity: 'Dallas',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8471418.jpg'
-  },
-  {
-    id: 4862,
-    firstName: 'James',
-    lastName: 'Reimer',
-    teamId: 3,
-    teamAbb: 'CAR',
-    teamName: 'Hurricanes',
-    teamCity: 'Carolina',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8473503.jpg'
-  },
-  {
-    id: 13934,
-    firstName: 'Alexander',
-    lastName: 'Georgiev',
-    teamId: 9,
-    teamAbb: 'NYR',
-    teamName: 'Rangers',
-    teamCity: 'New York',
-    image: 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/8480382.jpg'
-  }
   
-]
 
   constructor(private cdr: ChangeDetectorRef, 
     private http: HttpClient,
@@ -300,12 +148,10 @@ export class StartingGoaliesComponent implements OnInit {
     today = this.dataService.getToday();
     this.tomorrowDate = tomorrow;
     console.log(yesterday + ' yesterday, ' + today + ' today, ' + tomorrow + ' tomorrow, ');
-    // this.sentData = this.dataService.getSentStats();
-    // this.sentYesterdayData = this.yesterdayService.getSentStats();
-    // this.sentTomorrowData = this.tomorrowService.getSentStats();
-    this.playerImages = this.util.getNHLImages();
+  
+    this.playerImages = this.nhlUtil.getNHLImages();
     this.teams = this.util.getNHLTeams();
-    this.startingG = this.util.getStartingGoalies();
+    this.startingG = this.nhlUtil.getStartingGoalies();
     startingGoalieArray = Object.values(this.startingG);
     this.sentHotData = this.dataService.getSentHotStats();
     this.sentAllData = this.dataService.getSentAllStats();
@@ -1662,8 +1508,8 @@ public showMatchups() {
   }
 
   public goalieFp (player) {
-    player.stats.fp = ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2);
-    player.stats.fpa = Math.floor(player.stats.fp / player.stats.gamesPlayed);
+    player.stats.fp = player.stats.goaltending.saves > 0 ? ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2) : 0;
+    player.stats.fpa = player.stats.goaltending.saves > 0 ? Math.floor(player.stats.fp / player.stats.gamesPlayed) : 0;
   }
 
   ngOnInit() {
