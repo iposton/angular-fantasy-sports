@@ -242,17 +242,28 @@ export class StartingGoaliesComponent implements OnInit {
           if (this.showData != null && this.myData != null) {
             for (let show of this.showData) {
               for (let rep of this.myData) {
-                //console.log(show, 'showData items...');
+          //console.log(rep, 'my data items...');
                 if (this.dataService.isToday && this.startersDate === today && show.goalies != null) {
                   for (let away of show.goalies['away']) {
-                    if (away.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[1][rep.player.id]) {
+                    if (away.playerObj.team.id === rep.team.id && this.fullFirebaseResponse[1][rep.player.id]) {
+                      //console.log(this.fullFirebaseResponse[1][rep.player.id], this.fullFirebaseResponse[1][rep.player.id].confirmed, 'confirmed away goalies?...');
+                     // console.log(show.goalies['away'], 'this what currently here');
+                      if (this.fullFirebaseResponse[1][rep.player.id].confirmed) {
+                        console.log(rep, 'replace with this');
+                      }
+                      away.playerObj = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? rep : this.fullFirebaseResponse[1][rep.player.id].probable === true ? rep : away.playerObj; 
                       show.goalies['away'] = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? [away] : this.fullFirebaseResponse[1][rep.player.id].probable === true ? [away] : [away];
                       show.goalies['away'][0].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : away.size;
                     }
                   }
 
                   for (let home of show.goalies['home']) {
-                    if (home.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[1][rep.player.id]) {
+                    if (home.playerObj.team.id === rep.team.id && this.fullFirebaseResponse[1][rep.player.id]) {
+                      //console.log(this.fullFirebaseResponse[1][rep.player.id], this.fullFirebaseResponse[1][rep.player.id].confirmed, 'confirmed home goalies?...');
+                      if (this.fullFirebaseResponse[1][rep.player.id].confirmed) {
+                        //console.log(rep, 'replace with this');
+                      }
+                      home.playerObj = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? rep : this.fullFirebaseResponse[1][rep.player.id].probable === true ? rep : home.playerObj; 
                       show.goalies['home'] = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? [home] : this.fullFirebaseResponse[1][rep.player.id].probable === true ? [home] : [home];
                       show.goalies['home'][0].size = this.fullFirebaseResponse[1][rep.player.id].confirmed === true ? 'reg' : home.size;
                     }
@@ -260,14 +271,19 @@ export class StartingGoaliesComponent implements OnInit {
                 }
                 if (this.dataService.isTomorrow && this.startersDate === today && show.goalies != null) {
                   for (let away of show.goalies['away']) {
-                    if (away.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[3][rep.player.id]) {
+                    if (away.playerObj.team.id === rep.team.id && this.fullFirebaseResponse[3][rep.player.id]) {
+                      if (this.fullFirebaseResponse[3][rep.player.id].confirmed) {
+                        //console.log(rep, 'replace with this');
+                      }
+                      away.playerObj = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? rep : this.fullFirebaseResponse[3][rep.player.id].probable === true ? rep : away.playerObj; 
                       show.goalies['away'] = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? [away] : this.fullFirebaseResponse[3][rep.player.id].probable === true ? [away] : [away];
                       show.goalies['away'][0].size = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? 'reg' : away.size;
                     }
                   }
 
                   for (let home of show.goalies['home']) {
-                    if (home.playerObj.player.id && rep.player.id && this.fullFirebaseResponse[3][rep.player.id]) {
+                    if (home.playerObj.team.id === rep.team.id && this.fullFirebaseResponse[3][rep.player.id]) {
+                      home.playerObj = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? rep : this.fullFirebaseResponse[3][rep.player.id].probable === true ? rep : home.playerObj; 
                       show.goalies['home'] = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? [home] : this.fullFirebaseResponse[3][rep.player.id].probable === true ? [home] : [home];
                       show.goalies['home'][0].size = this.fullFirebaseResponse[3][rep.player.id].confirmed === true ? 'reg' : home.size;
                     }
@@ -591,17 +607,7 @@ export class StartingGoaliesComponent implements OnInit {
 
                 if (this.startingG[old.player.id] != null) {
                   this.startingG[old.player.id].new = false;
-                  // let newGoalie = this.nhlUtil.getNewGoalie();
-                  // console.log(newGoalie, 'new goalie');
-                  // newGoalie.player.id = this.startingG[old.player.id].id;
-                  // newGoalie.player.firstName = this.startingG[old.player.id].firstName;
-                  // newGoalie.player.lastName = this.startingG[old.player.id].lastName;
-                  // newGoalie.player.currentTeam.id = this.startingG[old.player.id].teamId;
-                  // newGoalie.player.currentTeam.abbreviation = this.startingG[old.player.id].abbreviation;
-                  // newGoalie.player.officialImageSrc = this.startingG[old.player.id].img;
-                  // newGoalie.team.id = this.startingG[old.player.id].teamId;
-                  // newGoalie.team.abbreviation = this.startingG[old.player.id].abbreviation;
-                  // this.myData.push(newGoalie)
+                  
                 }
               
             }
@@ -610,7 +616,7 @@ export class StartingGoaliesComponent implements OnInit {
             startingGoalies.forEach((item, index) =>  {
               if (startingGoalies[index]['new'] === true) {
                 let newGoalie = this.nhlUtil.getNewGoalie();
-                console.log(newGoalie, 'new goalie');
+                //console.log(newGoalie, 'new goalie');
                 newGoalie.player.id = startingGoalies[index]['id'];
                 newGoalie.player.firstName = startingGoalies[index]['firstName'];
                 newGoalie.player.lastName = startingGoalies[index]['lastName'];

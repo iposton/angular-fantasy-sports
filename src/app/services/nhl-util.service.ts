@@ -83,10 +83,10 @@ export class NhlUtilService {
         lastName: "Nilsson",
         teamId: 1,
         abbreviation: "TBL",
-        active: true,
+        active: false,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: true
+        img: nhlImageRoot+'8475195.jpg',
+        new: false
       },
       '5109': {
         id: 5109,
@@ -283,8 +283,8 @@ export class NhlUtilService {
         abbreviation: "WPJ",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8476316.jpg',
+        new: true
       },
       '3647': {
         id: 3647,
@@ -547,7 +547,7 @@ export class NhlUtilService {
         abbreviation: "COL",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
+        img: nhlImageRoot+'8480925.jpg',
         new: true
       },
       '5168': {
@@ -591,7 +591,7 @@ export class NhlUtilService {
         abbreviation: "ANA",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
+        img: nhlImageRoot+'8468011.jpg',
         new: true
       },
       '4310': {
@@ -600,10 +600,10 @@ export class NhlUtilService {
         lastName: "McElhinney",
         teamId: 1,
         abbreviation: "TBL",
-        active: false,
+        active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8470147.jpg',
+        new: true
       },
       '3855': {
         id: 3855,
@@ -714,6 +714,17 @@ export class NhlUtilService {
         numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
+      },
+      '8952': {
+        id: 8952,
+        firstName: "Scott",
+        lastName: "Wedgewood",
+        teamId: 7,
+        abbreviation: "NJD",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8475809.jpg',
+        new: true
       },
       '5518': {
         id: 5518,
@@ -885,7 +896,11 @@ export class NhlUtilService {
         lastName: "Fox",
         image: nhlImageRoot+'8479323.jpg',
       },
-      
+      "14537": {
+        firstName: "Joel",
+        lastName: "Farabee",
+        image: nhlImageRoot+'8480797.jpg',
+      },  
       
     }
     
