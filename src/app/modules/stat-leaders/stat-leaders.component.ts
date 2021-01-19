@@ -136,7 +136,7 @@ export class StatLeadersComponent implements OnInit {
     //this.dailySchedule = this.allSentData[2];
     this.stats = '1';
     this.nbaTeams = this.util.getNBATeams();
-    this.nhlTeams = this.util.getNHLTeams();
+    this.nhlTeams = this.nhlUtil.getNHLTeams();
     this.mlbTeams = this.util.getMLBTeams();
     this.nflTeams = this.util.getNFLTeams();
     this.playerImages = this.util.getNBAImages();

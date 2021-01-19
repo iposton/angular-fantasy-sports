@@ -150,7 +150,7 @@ export class StartingGoaliesComponent implements OnInit {
     console.log(yesterday + ' yesterday, ' + today + ' today, ' + tomorrow + ' tomorrow, ');
   
     this.playerImages = this.nhlUtil.getNHLImages();
-    this.teams = this.util.getNHLTeams();
+    this.teams = this.nhlUtil.getNHLTeams();
     this.startingG = this.nhlUtil.getStartingGoalies();
     startingGoalieArray = Object.values(this.startingG);
     this.sentHotData = this.dataService.getSentHotStats();

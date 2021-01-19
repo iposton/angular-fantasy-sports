@@ -7,6 +7,7 @@ let nhlImageRoot = 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168
 export class NhlUtilService {
   public startingGoalies: any;
   public NHLImages: any;
+  public nhlTeams: any;
   
   constructor() {
 
@@ -171,10 +172,21 @@ export class NhlUtilService {
         lastName: "Subban",
         teamId: 20,
         abbreviation: "CHI",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
+      },
+      '17354': {
+        id: 17354,
+        firstName: "Kevin",
+        lastName: "Lankinen",
+        teamId: 20,
+        abbreviation: "CHI",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8480947.jpg',
+        new: true
       },
       '14350': {
         id: 14350,
@@ -183,7 +195,7 @@ export class NhlUtilService {
         teamId: 20,
         abbreviation: "CHI",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -903,6 +915,257 @@ export class NhlUtilService {
       },  
       
     }
+
+    this.nhlTeams = {
+      "TBL": {
+        id: 1,
+        city: "Tampa Bay",
+        name: "Lightning",
+        abbreviation: "TBL",
+        twitter: "#GoBolts",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/14.svg"
+      },
+      "WPJ": {
+        id: 2,
+        city: "Winnipeg",
+        name: "Jets",
+        abbreviation: "WPJ",
+        twitter: "#GoJetsGo",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/52.svg"
+      },
+     "CAR": {
+        id: 3,
+        city: "Carolina",
+        name: "Hurricanes",
+        abbreviation: "CAR",
+        twitter: "#LetsGoCanes",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/12.svg"
+      },
+      "FLO": {
+        id: 4,
+        city: "Florida",
+        name: "Panthers",
+        abbreviation: "FLO",
+        twitter: "#FlaPanthers",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/13.svg"
+      },
+      "WSH": {
+        id: 5,
+        city: "Washington",
+        name: "Capitals",
+        abbreviation: "WSH",
+        twitter: "#ALLCAPS",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/15.svg"
+      },
+      "PHI": {
+        id: 6,
+        city: "Philadelphia",
+        name: "Flyers",
+        abbreviation: "PHI",
+        twitter: "#AnytimeAnywhere",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/4.svg"
+      },
+      "NJD": {
+        id: 7,
+        city: "New Jersey",
+        name: "Devils",
+        abbreviation: "NJD",
+        twitter: "#NJDevils",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/1.svg"
+      },
+      "NYI" : {
+        id: 8,
+        city: "New York",
+        name: "Islanders",
+        abbreviation: "NYI",
+        twitter: "#Isles",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/2.svg"
+      },
+      "NYR": {
+        id: 9,
+        city: "New York",
+        name: "Rangers",
+        abbreviation: "NYR",
+        twitter: "#NYR",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/3.svg"
+      },
+      "PIT": {
+        id: 10,
+        city: "Pittsburgh",
+        name: "Penguins",
+        abbreviation: "PIT",
+        twitter: "#LetsGoPens",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/5.svg"
+      },
+      "BOS": {
+        id: 11,
+        city: "Boston",
+        name: "Bruins",
+        abbreviation: "BOS",
+        twitter: "#NHLBruins",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/6.svg"
+      },
+      "TOR": {
+        id: 12,
+        city: "Toronto",
+        name: "Maple Leafs",
+        abbreviation: "TOR",
+        twitter: "#LeafsForever",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/10.svg"
+      },
+      "OTT": {
+        id: 13,
+        city: "Ottawa",
+        name: "Senators",
+        abbreviation: "OTT",
+        twitter: "#GoSensGo",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/9.svg"
+      },
+      "MTL": {
+        id: 14,
+        city: "Montreal",
+        name: "Canadiens",
+        abbreviation: "MTL",
+        twitter: "#GoHabsGo",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/8.svg"
+      },
+      "BUF": {
+        id: 15,
+        city: "Buffalo",
+        name: "Sabres",
+        abbreviation: "BUF",
+        twitter: "#LetsGoBuffalo",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/7.svg"
+      },
+      "DET": {
+        id: 16,
+        city: "Detroit",
+        name: "Red Wings",
+        abbreviation: "DET",
+        twitter: "#LGRW",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/17.svg"
+      },
+     "STL": {
+        id: 17,
+        city: "St. Louis",
+        name: "Blues",
+        abbreviation: "STL",
+        twitter: "#STLBlues",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/19.svg"
+      },
+      "NSH": {
+        id: 18,
+        city: "Nashville",
+        name: "Predators",
+        abbreviation: "NSH",
+        twitter: "#Preds",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/18.svg"
+      },
+      "CBJ": {
+        id: 19,
+        city: "Columbus",
+        name: "Blue Jackets",
+        abbreviation: "CBJ",
+        twitter: "#CBJ",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/29.svg"
+      },
+      "CHI": {
+        id: 20,
+        city: "Chicago",
+        name: "Blackhawks",
+        abbreviation: "CHI",
+        twitter: "#Blackhawks",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/16.svg"
+      },
+      "VAN": {
+        id: 21,
+        city: "Vancouver",
+        name: "Canucks",
+        abbreviation: "VAN",
+        twitter: "#Canucks",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/23.svg"
+      },
+      "COL": {
+        id: 22,
+        city: "Colorado",
+        name: "Avalanche",
+        abbreviation: "COL",
+        twitter: "#GoAvsGo",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/21.svg"
+      },
+      "CGY": {
+        id: 23,
+        city: "Calgary",
+        name: "Flames",
+        abbreviation: "CGY",
+        twitter: "#CofRed",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/20.svg"
+      },
+     "EDM": {
+        id: 24,
+        city: "Edmonton",
+        name: "Oilers",
+        abbreviation: "EDM",
+        twitter: "#LetsGoOilers",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/22.svg"
+      },
+      "MIN": {
+        id: 25,
+        city: "Minnesota",
+        name: "Wild",
+        abbreviation: "MIN",
+        twitter: "#MNWild",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/30.svg"
+      },
+      "SJS": {
+        id: 26,
+        city: "San Jose",
+        name: "Sharks",
+        abbreviation: "SJS",
+        twitter: "#SJSharks",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/28.svg"
+      },
+      "DAL": {
+        id: 27,
+        city: "Dallas",
+        name: "Stars",
+        abbreviation: "DAL", 
+        twitter: "#GoStars",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/25.svg"
+      },
+      "LAK": {
+        id: 28,
+        city: "Los Angeles",
+        name: "Kings",
+        abbreviation: "LAK",
+        twitter: "#GoKingsGo",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/26.svg"
+      },
+      "ANA": {
+        id: 29,
+        city: "Anaheim",
+        name: "Ducks",
+        abbreviation: "ANA",
+        twitter: "#FlyTogether",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/24.svg"
+      },
+      "ARI": {
+        id: 30,
+        city: "Arizona",
+        name: "Coyotes",
+        abbreviation: "ARI",
+        twitter: "#Yotes",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/53.svg"
+      },
+      "VGK": {
+        id: 142,
+        city: "Vegas",
+        name: "Golden Knights",
+        abbreviation: "VGK",
+        twitter: "#VegasBorn",
+        officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/54.svg"
+      }
+    }
     
    }
 
@@ -1040,6 +1303,10 @@ export class NhlUtilService {
 
   public getNHLImages() {
     return this.NHLImages;
+  }
+
+  public getNHLTeams() {
+    return this.nhlTeams;
   }
 
   
