@@ -2518,7 +2518,7 @@ export class UtilService {
         city: "Calgary",
         name: "Flames",
         abbreviation: "CGY",
-        twitter: "#Flames",
+        twitter: "#CofRed",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/20.svg"
       },
      "EDM": {

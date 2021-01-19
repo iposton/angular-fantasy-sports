@@ -7,7 +7,8 @@ import { NBADataService,
   UtilService, 
   GoogleAnalyticsService,
   NFLDataService,
-  RankService } from '../../services/index';
+  RankService,
+  NhlUtilService } from '../../services/index';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as CryptoJS from 'crypto-js';
 import { forkJoin } from 'rxjs';
@@ -71,6 +72,7 @@ export class StatLeadersComponent implements OnInit {
   public selected: any;
   public playerImages: any;
   public mlbplayerImages: any;
+  public nhlplayerImages: any;
   public tomorrowDate: any;
   public mlbSection: boolean = false;
   public mlbHittingSection: boolean = false;
@@ -126,6 +128,7 @@ export class StatLeadersComponent implements OnInit {
               public gaService: GoogleAnalyticsService,
               public nflService: NFLDataService,
               public rankService: RankService,
+              public nhlUtil: NhlUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
     //this.allSentData = this.nbaService.getSentStats();
     //this.players = this.allSentData[0];
@@ -139,6 +142,7 @@ export class StatLeadersComponent implements OnInit {
     this.playerImages = this.util.getNBAImages();
     nflplayerImages = this.util.getNFLImages();
     this.mlbplayerImages = this.util.getMLBImages();
+    this.nhlplayerImages = this.nhlUtil.getNHLImages();
     repImg = this.util.getRepImages();
     
     let thisDate = new Date();
@@ -385,45 +389,40 @@ export class StatLeadersComponent implements OnInit {
                 data.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data.stats.shifts.timeOnIceSeconds, data.stats.gamesPlayed);
               }
 
-              if (data.player.officialImageSrc != null) {
-                specialImgNum = data.player.officialImageSrc.substring(
-                  data.player.officialImageSrc.lastIndexOf("/") + 1, 
-                  data.player.officialImageSrc.lastIndexOf(".")
-                  );
+              // if (data.player.officialImageSrc != null) {
+              //   specialImgNum = data.player.officialImageSrc.substring(
+              //     data.player.officialImageSrc.lastIndexOf("/") + 1, 
+              //     data.player.officialImageSrc.lastIndexOf(".")
+              //     );
                   
-                data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
-              }
+              //   data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
+              // }
 
               if (data.player.officialImageSrc == null) {
-                data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+                data.player.officialImageSrc = this.nhlplayerImages[data.player.id] != null ? this.nhlplayerImages[data.player.id].image : null;
               }
               
             }  
           }
 
-          this.nhlService
-          .getInfoSkaters().subscribe(res => {
+        //   this.nhlService
+        //   .getInfoSkaters().subscribe(res => {
             
-            this.newGoalieData = res['players'];
-            for (let n of this.newGoalieData) {
-              for (let old of this.nhlSkaters) {
-                if (old.player['currentTeam'] != null)
-                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
-                } 
+        //     this.newGoalieData = res['players'];
+        //     for (let n of this.newGoalieData) {
+        //       for (let old of this.nhlSkaters) {
+        //         if (old.player['currentTeam'] != null)
+        //           old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+        //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+        //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
+        //           old.team.id = n['teamAsOfDate'].id;
+        //         } 
                 
-                // if (old.player.id === 8550) {
-                //   old.player['currentTeam'].id = 70;
-                //   old.team.id = 70;
-                //   old.team.abbreviation = 'NO';
-                // }
-              }
-            }
-            teamInfo(this.nhlSkaters, nhlTeamsArray);
+        //       }
+        //     }
+        //     teamInfo(this.nhlSkaters, nhlTeamsArray);
             
-        });
+        // });
 
         if (this.timeSpan === 'full') {
           this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D');
@@ -474,48 +473,42 @@ export class StatLeadersComponent implements OnInit {
               
             }
 
-            if (data.player.officialImageSrc != null) {
-              specialImgNum = data.player.officialImageSrc.substring(
-                data.player.officialImageSrc.lastIndexOf("/") + 1, 
-                data.player.officialImageSrc.lastIndexOf(".")
-                );
+            // if (data.player.officialImageSrc != null) {
+            //   specialImgNum = data.player.officialImageSrc.substring(
+            //     data.player.officialImageSrc.lastIndexOf("/") + 1, 
+            //     data.player.officialImageSrc.lastIndexOf(".")
+            //     );
                 
-              data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
-            }
+            //   data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
+            // }
 
             if (data.player.officialImageSrc == null) {
-              data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+              data.player.officialImageSrc = this.nhlplayerImages[data.player.id] != null ? this.nhlplayerImages[data.player.id].image : null;
             }
             
           }  
         }
 
-        this.nhlService
-          .getInfo().subscribe(res => {
+        // this.nhlService
+        //   .getInfo().subscribe(res => {
             
-            this.newGoalieData = res['players'];
-            for (let n of this.newGoalieData) {
-              for (let old of this.nhlGoaltenders) {
-                if (old.player['currentTeam'] != null)
-                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
-                } 
+        //     this.newGoalieData = res['players'];
+        //     for (let n of this.newGoalieData) {
+        //       for (let old of this.nhlGoaltenders) {
+        //         if (old.player['currentTeam'] != null)
+        //           old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+        //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+        //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
+        //           old.team.id = n['teamAsOfDate'].id;
+        //         } 
                 
-                // if (old.player.id === 8550) {
-                //   old.player['currentTeam'].id = 70;
-                //   old.team.id = 70;
-                //   old.team.abbreviation = 'NO';
-                // }
-              }
-            }
-            teamInfo(this.nhlGoaltenders, nhlTeamsArray);
-            // this.nflOffenseLoading = false;
-        });
+        //       }
+        //     }
+        //     teamInfo(this.nhlGoaltenders, nhlTeamsArray);
+        //     // this.nflOffenseLoading = false;
+        // });
 
         
-
         if (this.timeSpan != 'full') {
           this.spanGames();
         } else {
@@ -524,7 +517,6 @@ export class StatLeadersComponent implements OnInit {
         
     })
   }
-
 
   public skaterFp (player) {
     player.stats.sog = player.stats.skating.shots ? player.stats.skating.shots : 0;
