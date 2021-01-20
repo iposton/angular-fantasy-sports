@@ -1,6 +1,10 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { NBADataService, UtilService, GoogleAnalyticsService, DepthService } from '../../services/index';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { NBADataService, 
+  UtilService, 
+  GoogleAnalyticsService, 
+  DepthService,
+  NbaUtilService } from '../../services/index';
 import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
@@ -105,6 +109,7 @@ export class StartingFiveComponent implements OnInit {
               private util: UtilService,
               public gaService: GoogleAnalyticsService,
               private depthService: DepthService,
+              private nbaUtil: NbaUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
     this.depth = this.depthService.getNBADepth();
     this.allSentData = this.dataService.getSentStats();
@@ -112,8 +117,8 @@ export class StartingFiveComponent implements OnInit {
     this.myData = this.allSentData[1];
     this.dailySchedule = this.allSentData[2];
     this.stats = '1';
-    this.teams = this.util.getNBATeams();
-    this.playerImages = this.util.getNBAImages();
+    this.teams = this.nbaUtil.getNBATeams();
+    this.playerImages = this.nbaUtil.getNBAImages();
     teams = this.teams;
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));

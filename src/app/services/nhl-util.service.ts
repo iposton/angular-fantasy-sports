@@ -447,9 +447,20 @@ export class NhlUtilService {
         lastName: "Stalock",
         teamId: 25,
         abbreviation: "MIN",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8471774.jpg',
+        new: true
+      },
+      '17333': {
+        id: 17333,
+        firstName: "Kaapo",
+        lastName: "Kahkonen",
+        teamId: 25,
+        abbreviation: "MIN",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478039.jpg',
         new: true
       },
       '3810': {
@@ -922,6 +933,11 @@ export class NhlUtilService {
         firstName: "Dominik",
         lastName: "Kubalik",
         image: nhlImageRoot+'8477330.jpg',
+      },
+      "17333": {
+        firstName: "Kaapo",
+        lastName: "Kahkonen",
+        image: nhlImageRoot+'8478039.jpg',
       }, 
       
       

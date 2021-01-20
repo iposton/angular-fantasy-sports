@@ -9,7 +9,8 @@ import {
   DataService,
   NHLDataService,
   NFLDataService,
-  UtilService } from '../../services/index';
+  UtilService,
+  NbaUtilService } from '../../services/index';
 import * as CryptoJS from 'crypto-js';
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
@@ -94,6 +95,7 @@ export class HomeComponent implements OnInit {
      public nbaDataService: NBADataService,
      public nflDataService: NFLDataService,
      public util: UtilService,
+     public nbaUtil: NbaUtilService,
      private meta: Meta,
      @Inject(PLATFORM_ID) platformId: string) {
       this.meta.addTag({ name: 'twitter:card', content: 'summary_large_image' });
@@ -106,7 +108,7 @@ export class HomeComponent implements OnInit {
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
     this.mlbTeams = this.util.getMLBTeams();
     this.nflTeams = this.util.getNFLTeams();
-    this.nbaTeams = this.util.getNBATeams();
+    this.nbaTeams = this.nbaUtil.getNBATeams();
     this.nbaDataService.selectedDate(dailyDate);
     this.nhlDataService.selectedDate(dailyDate);
     this.selectedWeek = '1';

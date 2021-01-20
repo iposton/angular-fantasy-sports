@@ -8,7 +8,8 @@ import { NBADataService,
   GoogleAnalyticsService,
   NFLDataService,
   RankService,
-  NhlUtilService } from '../../services/index';
+  NhlUtilService,
+  NbaUtilService } from '../../services/index';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as CryptoJS from 'crypto-js';
 import { forkJoin } from 'rxjs';
@@ -129,17 +130,18 @@ export class StatLeadersComponent implements OnInit {
               public nflService: NFLDataService,
               public rankService: RankService,
               public nhlUtil: NhlUtilService,
+              public nbaUtil: NbaUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
     //this.allSentData = this.nbaService.getSentStats();
     //this.players = this.allSentData[0];
     //this.myData = this.allSentData[1];
     //this.dailySchedule = this.allSentData[2];
     this.stats = '1';
-    this.nbaTeams = this.util.getNBATeams();
+    this.nbaTeams = this.nbaUtil.getNBATeams();
     this.nhlTeams = this.nhlUtil.getNHLTeams();
     this.mlbTeams = this.util.getMLBTeams();
     this.nflTeams = this.util.getNFLTeams();
-    this.playerImages = this.util.getNBAImages();
+    this.playerImages = this.nbaUtil.getNBAImages();
     nflplayerImages = this.util.getNFLImages();
     this.mlbplayerImages = this.util.getMLBImages();
     this.nhlplayerImages = this.nhlUtil.getNHLImages();
