@@ -912,7 +912,18 @@ export class NhlUtilService {
         firstName: "Joel",
         lastName: "Farabee",
         image: nhlImageRoot+'8480797.jpg',
-      },  
+      }, 
+      "17354": {
+        firstName: "Kevin",
+        lastName: "Lankinen",
+        image: nhlImageRoot+'8480947.jpg',
+      },
+      "17183": {
+        firstName: "Dominik",
+        lastName: "Kubalik",
+        image: nhlImageRoot+'8477330.jpg',
+      }, 
+      
       
     }
 
