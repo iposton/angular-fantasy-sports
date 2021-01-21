@@ -607,7 +607,7 @@ export class NhlUtilService {
         new: false
       },
       '178': {
-        d: 178,
+        id: 178,
         firstName: "Ryan",
         lastName: "Miller",
         teamId: 29,
