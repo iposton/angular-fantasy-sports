@@ -30,6 +30,7 @@ export class DataService {
   public hitstats: Observable <any> = null;
   public gameid: Observable <any> = null;
   public info: Observable <any> = null;
+  public hitterinfo: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular";
@@ -117,11 +118,18 @@ export class DataService {
     return this.hitstats;
   }
 
-  getInfo() {
+  public getInfo() {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P`;
     console.log('getting active player data from API...');
     this.info = this.http.get(url, {headers})
     return this.info;
+  }
+
+  public getHitterInfo() {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
+    console.log('getting active player data from API...');
+    this.hitterinfo = this.http.get(url, {headers})
+    return this.hitterinfo;
   }
 
   getStarterInfo(players) {

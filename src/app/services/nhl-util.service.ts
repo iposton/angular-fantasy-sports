@@ -368,7 +368,7 @@ export class NhlUtilService {
         id: 5894,
         firstName: "Matt",
         lastName: "Murray",
-        teamId: 10,
+        teamId: 13,
         abbreviation: "OTT",
         active: true,
         numberOne: true,
@@ -562,13 +562,24 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '13951': {
+        id: 13951,
+        firstName: "Hunter",
+        lastName: "Miska",
+        teamId: 22,
+        abbreviation: "COL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8480112.jpg',
+        new: true
+      },
       '15442': {
         id: 15442,
         firstName: "Pavel",
         lastName: "Francouz",
         teamId: 22,
         abbreviation: "COL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480925.jpg',
         new: true
