@@ -419,13 +419,14 @@
                               {{data['skaters'][0]?.playerObj?.team?.opponentScore}}
                           </span>
                       </span>  
-                      <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED'">{{data['skaters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['skaters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['skaters'][0]?.playerObj?.team?.opponent}}</span> </span> 
+                      <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED'">{{data['skaters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST </span> 
  
                       <span class="final" *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'COMPLETED' || 
                       data['skaters'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
                           {{data['skaters'][0]?.playerObj?.team?.teamScore}} - 
                           {{data['skaters'][0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data['skaters'][0]?.playerObj?.team?.teamScore > data['skaters'][0]?.playerObj?.team?.opponentScore ? data['skaters'][0]?.playerObj?.team?.city +' Wins!' : data['skaters'][0]?.playerObj?.team?.city +' Lost!'}}</span>
                       </span>
+                      <span> {{data['skaters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['skaters'][0]?.playerObj?.team?.opponent}}</span>
     
                       <span *ngIf="twitter">  
                         #NHL  

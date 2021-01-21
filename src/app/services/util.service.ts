@@ -1918,5 +1918,21 @@ export class UtilService {
     return rgb;
   }
 
+  public teamInfo(array, teams) {
+    for (let team of teams) {
+      for (let data of array) { 
+        if (data.player['currentTeam'] != null 
+        && team['id'] === data.player['currentTeam'].id 
+        && data.player['currentTeam'].id === data.team.id 
+        || team['id'] === data.team.id) {
+          data.team.logo = team['officialLogoImageSrc'];
+          data.team.city = team['city'];
+          data.team.name = team['name'];
+          data.team.twitter = team['twitter'] ? team['twitter'] : '';
+        }
+      }
+    }
+  }
+
   
 }

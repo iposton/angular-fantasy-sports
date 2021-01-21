@@ -487,7 +487,22 @@ export class NbaUtilService {
         firstName: "Isaiah",
         lastName: "Roby",
         image: nbaImageRoot+"1629676.png"
-      }, 
+      },
+      "27596": {
+        firstName: "Jae Sean",
+        lastName: "Tate",
+        image: nbaImageRoot+"1630256.png"
+      },
+      "17270": {
+        firstName: "Grant",
+        lastName: "Williams",
+        image: nbaImageRoot+"1629684.png"
+      },
+      "27652": {
+        firstName: "Josh",
+        lastName: "Green",
+        image: nbaImageRoot+"1630182.png"
+      },
              
     }
    }

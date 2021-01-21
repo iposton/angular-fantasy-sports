@@ -140,13 +140,15 @@
                         {{data.offensePlayers[0]?.playerObj?.team?.opponentScore}}
                     </span>
                 </span>  
-                <span *ngIf="data.offensePlayers[0]?.playerObj?.gameStatus === 'UNPLAYED'"><br>{{data.offensePlayers[0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data.offensePlayers[0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data.offensePlayers[0]?.playerObj?.team?.opponent}}</span> </span> 
+                <span *ngIf="data.offensePlayers[0]?.playerObj?.gameStatus === 'UNPLAYED'"><br>{{data.offensePlayers[0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST </span> 
 
                     <span class="final" *ngIf="data.offensePlayers[0]?.playerObj?.gameStatus === 'COMPLETED' || 
                     data.offensePlayers[0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'"><br>
                         {{data.offensePlayers[0]?.playerObj?.team?.teamScore}} - 
-                        {{data.offensePlayers[0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data.offensePlayers[0]?.playerObj?.team?.teamScore > data.offensePlayers[0]?.playerObj?.team?.opponentScore ? data.offensePlayers[0]?.playerObj?.team?.city +' Wins!' : data.offensePlayers[0]?.playerObj?.team?.city +' Lost!'}}</span>
+                        {{data.offensePlayers[0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data.offensePlayers[0]?.playerObj?.team?.teamScore > data.offensePlayers[0]?.playerObj?.team?.opponentScore ? data.offensePlayers[0]?.playerObj?.team?.city +' Wins!' : data.offensePlayers[0]?.playerObj?.team?.city +' Lost!'}} </span>
+
                 </span> 
+                <span> {{data.offensePlayers[0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data.offensePlayers[0]?.playerObj?.team?.opponent}}</span>
               </div>
             </div>
           </div>

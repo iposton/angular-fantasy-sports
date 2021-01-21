@@ -79,9 +79,9 @@ export class StatLeadersComponent implements OnInit {
   public mlbHittingSection: boolean = false;
   public nbaSection: boolean = false;
   public nhlSection: boolean = false;
-  public nflSection: boolean = true;
+  public nflSection: boolean = false;
   public nflDefenseSection: boolean = false;
-  public nflTeamLoading: boolean = true;
+  public nflTeamLoading: boolean = false;
   public nhlGoalies: boolean = false;
   public weekResults: boolean = false;
   public page: number = 19;
@@ -108,7 +108,7 @@ export class StatLeadersComponent implements OnInit {
   public reduced: Array <any> = [];
   public crunched: Array <any> = [];
   public combined: Array <any> = [];
-  public sport: string = 'nfl';
+  public sport: string = 'nba';
   public nflWeek: any;
   public week: any = 'all';
   public crunchedQB: Array <any> = [];
@@ -132,10 +132,8 @@ export class StatLeadersComponent implements OnInit {
               public nhlUtil: NhlUtilService,
               public nbaUtil: NbaUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
-    //this.allSentData = this.nbaService.getSentStats();
-    //this.players = this.allSentData[0];
-    //this.myData = this.allSentData[1];
-    //this.dailySchedule = this.allSentData[2];
+    this.nbaSection = true;
+    this.loading = true;
     this.stats = '1';
     this.nbaTeams = this.nbaUtil.getNBATeams();
     this.nhlTeams = this.nhlUtil.getNHLTeams();
@@ -652,6 +650,23 @@ export class StatLeadersComponent implements OnInit {
               
             }  
           }
+
+        this.mlbService
+          .getInfo().subscribe(res => {
+            
+            for (let n of res['players']) {
+              for (let old of this.mlbPitchingData) {
+                if (old.player['currentTeam'] != null)
+                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                  old.team.id = n['teamAsOfDate'].id;
+                } 
+                
+              }
+            }
+            this.util.teamInfo(this.mlbPitchingData, this.mlbTeams);
+        });
           
           if (this.timeSpan != 'full') {
             this.spanGames();
@@ -698,11 +713,25 @@ export class StatLeadersComponent implements OnInit {
               }
                 
              }
-
-             
-             
            }  
          }
+
+         this.mlbService
+          .getHitterInfo().subscribe(res => {
+            
+            for (let n of res['players']) {
+              for (let old of this.mlbHittingData) {
+                if (old.player['currentTeam'] != null)
+                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                  old.team.id = n['teamAsOfDate'].id;
+                } 
+                
+              }
+            }
+            this.util.teamInfo(this.mlbHittingData, this.mlbTeams);
+        });
          
         if (this.timeSpan != 'full') {
           this.spanGames();
