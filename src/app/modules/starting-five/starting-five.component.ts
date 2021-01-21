@@ -46,7 +46,7 @@ export class StartingFiveComponent implements OnInit {
   public benchIdData: Array <any> = [];
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
   public groups: Array <any>;
@@ -297,7 +297,7 @@ export class StartingFiveComponent implements OnInit {
               res['games'].map(
                 g => 
                 
-                 this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular/games/`+g['schedule'].id+`/lineup.json`, { headers })
+                 this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/games/`+g['schedule'].id+`/lineup.json`, { headers })
                 
               )
             )
