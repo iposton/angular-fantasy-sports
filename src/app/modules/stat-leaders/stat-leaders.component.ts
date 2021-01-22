@@ -58,7 +58,7 @@ export class StatLeadersComponent implements OnInit {
   public nhlGoalieloading: boolean;
   public mlbPitchingLoading: boolean;
   public mlbHittingLoading: boolean;
-  public nflOffenseLoading: boolean = true;
+  public nflOffenseLoading: boolean;
   public nflDefenseLoading: boolean;
   public noGamesMsg: string = '';
   public errMessage: string = '';
@@ -336,7 +336,7 @@ export class StatLeadersComponent implements OnInit {
         this.nflService
           .sendHeaderOptions(headers, '1', nflRoot);
 
-        this.loadNFL();
+        this.sortNBA();
         
       });
 
@@ -600,7 +600,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public loadMLB() {
-    //this.loading = true;
+    
     this.nbaSection = false; 
     this.nhlSection = false; 
     this.mlbSection = true;
