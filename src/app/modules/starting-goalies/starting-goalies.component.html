@@ -469,80 +469,17 @@
       </div>
     </div> 
 </section>
-<section *ngIf="scheduleSection">
-    <div class="card-wrap-sp mat-elevation-z6 position-box full-box" *ngIf="!loading && dailySchedule != null">
-        <h2>Weekly Team Schedule</h2>
-          <div>
-              Games This Week <button (click)="weekResults = !weekResults"> Team Results</button>
-              <div class="content-wrapper">
-                  <div class="row">
-                    <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length &lt; 4 }">
-                            <span class="left-content" [ngClass]="{'results': weekResults}">
-                                  <span class="player-infos">
+<section *ngIf="scheduleSection nhl-page">
+  <app-team-schedule *ngIf="!loading && dailySchedule != null"
+  [teamSchedules]="teamSchedules"
+  [amount]="4">
+  </app-team-schedule>
 
-                                 <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"></span>
-                           
-                                 <!-- <span class="lg"> {{item.schedule.length}} </span> -->
-                                 <span *ngFor="let g of item.schedule">
-                                   <span *ngIf="item.team === g.schedule.homeTeam.abbreviation">
-                                      <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
-                                      <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &lt; g.score?.awayScoreTotal">(L <span class="minus">-{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span> 
-                                      vs {{g.schedule.awayTeam.abbreviation}}  
-                                   </span>
-                                   <span *ngIf="item.team === g.schedule.awayTeam.abbreviation">
-                                      <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
-                                      <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
-                                      @ {{g.schedule.homeTeam.abbreviation}} 
-                                   </span>,
-                                 </span>
-                                  </span>
-                              
-                            </span>
-                          </div>
-                          
-                
-                  </div>
-                </div>
-      
-          </div>
-         
-      </div>
-      <div class="card-wrap-sp mat-elevation-z6 position-box full-box" *ngIf="!loading && dailySchedule != null">
-          <h2>Weekly Team Schedule</h2>
-            <div>
-                Games This Week <button (click)="weekResults = !weekResults"> Team Results</button>
-                <div class="content-wrapper">
-                    <div class="row">
-                      <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : item.schedule.length > 3, 'dn2' : item.schedule.length === 0 }">
-                              <span class="left-content" [ngClass]="{'results': weekResults}">
-
-                                   <span class="player-infos">
-                                   <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"></span>
-                             
-                                   <!-- <span class="lg"> {{item.schedule.length}} </span> -->
-                                   <span *ngFor="let g of item.schedule">
-                                     <span *ngIf="item.team === g.schedule.homeTeam.abbreviation">
-                                        <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
-                                        <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &lt; g.score?.awayScoreTotal">(L <span class="minus">-{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span> 
-                                        vs {{g.schedule.awayTeam.abbreviation}}  
-                                     </span>
-                                     <span *ngIf="item.team === g.schedule.awayTeam.abbreviation">
-                                        <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
-                                        <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
-                                         @ {{g.schedule.homeTeam.abbreviation}} 
-                                     </span>,
-                                   </span>
-                                    </span>
-                                
-                              </span>
-                            </div>
-                    </div>
-                  </div>
-        
-            </div>
-           
-        </div>
-   </section>
+  <app-team-schedule *ngIf="!loading && dailySchedule != null"
+  [teamSchedules]="teamSchedules"
+  [amount]="3">
+  </app-team-schedule> 
+</section>
 <app-dialog
 [isOpen]="isOpen"
 [submitting]="submitting"

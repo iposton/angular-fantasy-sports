@@ -1392,7 +1392,7 @@ ul {
   z-index: 8;
 }
 
-.lg {
+.home-row .lg {
   font-size: 30px;
 }
 
@@ -1551,6 +1551,10 @@ ul {
     }
 
   }
+}
+
+.nhl-page .lg {
+  font-size: 12px;
 }
 
 
@@ -2095,22 +2099,6 @@ form input[type="text"] {
   margin: 0;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.23);
   border-radius: 50%;
-}
-
-.material-icons.md-18 {
-  font-size: 18px;
-}
-
-.material-icons.md-24 {
-  font-size: 24px;
-}
-
-.material-icons.md-36 {
-  font-size: 36px;
-}
-
-.material-icons.md-48 {
-  font-size: 48px;
 }
 
 

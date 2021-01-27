@@ -351,12 +351,7 @@ export class StartingGoaliesComponent implements OnInit {
                   dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
                   teamString = dailyTeams.join();
                 //}
-                
-                // postponed = index;
-                // if (res['games'][postponed].id === '41392') {
-                //   console.log(res['games'][postponed], "hi, iam postponed and causing trouble...");
-                //   res['games'].splice(postponed, 1);
-                // }
+
               });
               this.dailySchedule = res['games'];
               teamRef = res['references'] ? res['references'].teamReferences : [];
@@ -374,7 +369,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210113-to-20210124`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210125-to-20210131`, { headers })
                     
                   )
                 )
@@ -530,51 +525,17 @@ export class StartingGoaliesComponent implements OnInit {
   })
 
   let resultOne = await promiseOne;
-
-  // this.dataService
-  //     .getUnusualStats().subscribe(res => {
-  //       console.log(res, 'u stats...')
-  //     })
+  await sleep(1000);
 
     this.dataService
       .getStats(teamString).subscribe(async res => {
-
-        let specialImgNum = null;
-        function removeDuplicatesBy(keyFn, array) {
-          var mySet = new Set();
-          return array.filter(function(x) {  
-              var key = keyFn(x), isNew = !mySet.has(key);
-              if (isNew) mySet.add(key);  
-              return isNew;
-          });
-        }
-
-        function teamInfo(array, teams) {
-          for (let team of teams) {
-            for (let data of array) { 
-              
-              if (data.player['currentTeam'] != null 
-              && team['id'] === data.player['currentTeam'].id 
-              && data.player['currentTeam'].id === data.team.id 
-              || team['id'] === data.team.id) {
-                data.team.logo = team['officialLogoImageSrc'];
-                data.team.city = team['city'];
-                data.team.name = team['name'];
-                data.team.abbreviation = team['abbreviation'];
-                data.player.twitterHandle = team['twitter'];
-              }
-            }
-          }
-          
-          // this.myData = removeDuplicatesBy(x => x.player.id, array)
-        }
-
+      ///let specialImgNum = null;
       const nhlTeamsArray = Object.values(this.teams);
       //const startingGoalies = Object.values(this.startingG);
       let values = [];
       console.log('got player stats')
       if (res != null) values = res['playerStatsTotals'];
-      this.myData = removeDuplicatesBy(x => x.player.id, values)
+      this.myData = this.util.removeDuplicatesBy(x => x.player.id, values)
 
       // this.dataService
       //     .getGoaliesToday(teamString).subscribe(res => {
@@ -629,16 +590,10 @@ export class StartingGoaliesComponent implements OnInit {
               }  
             });
 
-            
-            
-            teamInfo(this.myData, nhlTeamsArray);
+            this.util.teamInfo(this.myData, nhlTeamsArray);
             // this.nflOffenseLoading = false;
         //});
 
-        
-    
-        // this.myData = res['playerStatsTotals'].filter(
-        //   player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].id === player.team.id || player.player.lastName === 'Miska' && player.team != null); 
         //console.log('waiting 6 seconds');
         //await sleep(6000);
         if (this.myData && this.dailySchedule) {
@@ -903,21 +858,6 @@ export class StartingGoaliesComponent implements OnInit {
           data.player.savePercent = data.stats.goaltending.savePercentage;
 
           if (this.todayStarters != null) {
-
-            // if (this.todayStarters[data.player.id] != null) {
-            //   //data.player.image = data.player.officialImageSrc;
-            //   // if (this.todayStarters[data.player.id].image != null) {
-            //   //   imgNum = this.todayStarters[data.player.id].image.substring(
-            //   //     this.todayStarters[data.player.id].image.lastIndexOf("/") + 1, 
-            //   //     this.todayStarters[data.player.id].image.lastIndexOf(".")
-            //   //     );
-                  
-            //   //     data.player.image = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+imgNum+".jpg";
-            //   // }
-            //   //data.player.image = this.todayStarters[data.player.id].image;
-            //   data.player.atHandle = this.todayStarters[data.player.id].atHandle;
-            //   data.player.twitterHandle = this.todayStarters[data.player.id].twitterHandle;
-            // }
 
             if (this.dataService.isToday && data.team != null && this.startersDate === data.team.today && 
               this.todayStarters[data.player.id] != null && data.player.saves == null && 
@@ -1211,68 +1151,40 @@ public showMatchups() {
       this.loading = true;
       this.dataService
         .getDailySkaters().subscribe(res => {
-                let specialImgNum = null;
-                //console.log(res, "Daily batter stats...");
-                this.dailySkaterStats = res != null ? res['gamelogs'] : [];
+          let specialImgNum = null;
+          //console.log(res, "Daily batter stats...");
+          this.dailySkaterStats = res != null ? res['gamelogs'] : [];
                 
-                this.dataService
-                  .getSkateStats(skaterString).subscribe(res => {
-
-                    function teamInfo(array, teams) {
-                      for (let team of teams) {
-                        for (let data of array) { 
-                          if (data.player['currentTeam'] != null 
-                          && team['id'] === data.player['currentTeam'].id 
-                          && data.player['currentTeam'].id === data.team.id 
-                          || team['id'] === data.team.id) {
-                            data.team.logo = team['officialLogoImageSrc'];
-                            data.team.city = team['city'];
-                            data.team.name = team['name'];
-                            data.team.abbreviation = team['abbreviation'];
-                            data.player.twitterHandle = team['twitter'];
-                          }
-                        }
-                      }
-                    }
+          this.dataService
+            .getSkateStats(skaterString).subscribe(res => {
                     
-                    function removeDuplicatesBy(keyFn, array) {
-                      var mySet = new Set();
-                      return array.filter(function(x) {  
-                          var key = keyFn(x), isNew = !mySet.has(key);
-                          if (isNew) mySet.add(key);  
-                          return isNew;
-                      });
-                    }
-                  
-                  let values = [];
-                  const nhlTeamsArray = Object.values(this.teams);
-                  if (res != null) values = res['playerStatsTotals'];
-                  this.mySkaterData = removeDuplicatesBy(x => x.player.id, values);
+            let values = [];
+            const nhlTeamsArray = Object.values(this.teams);
+            if (res != null) values = res['playerStatsTotals'];
+            this.mySkaterData = this.util.removeDuplicatesBy(x => x.player.id, values);
                   //console.log(this.mySkaterData, 'my batter data');
 
-            this.dataService
-              .getSkatersToday(skaterString).subscribe(res => {
+            // this.dataService
+            //   .getSkatersToday(skaterString).subscribe(res => {
             
-            this.newSkaterData = res['players'];
-            for (let n of this.newSkaterData) {
-              for (let old of this.myData) {
-                if (old.player['currentTeam'] != null)
-                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
-                } 
-                
-                // if (old.player.id === 8550) {
-                //   old.player['currentTeam'].id = 70;
-                //   old.team.id = 70;
-                //   old.team.abbreviation = 'NO';
-                // }
+            // this.newSkaterData = res['players'];
+            // for (let n of this.newSkaterData) {
+              for (let old of this.mySkaterData) {
+                // if (old.player['currentTeam'] != null)
+                //   old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+                // if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+                //   old.player['currentTeam'].id = n['teamAsOfDate'].id;
+                //   old.team.id = n['teamAsOfDate'].id;
+                // } 
+
+                if (old.player.officialImageSrc == null) {
+                  old.player.officialImageSrc = this.playerImages[old.player.id] != null ? this.playerImages[old.player.id].image : null;
+                }
               }
-            }
-            teamInfo(this.mySkaterData, nhlTeamsArray);
+           // }
+            this.util.teamInfo(this.mySkaterData, nhlTeamsArray);
             // this.nflOffenseLoading = false;
-        });
+       // });
 
                       if (this.skaterIdData.length > 0 || this.noGamesToday === true) {
                         if (this.mySkaterData && this.gameSkaters) {
@@ -1309,14 +1221,15 @@ public showMatchups() {
                                   data.postponed = true;
                                 }
 
-                                if (data.player.officialImageSrc != null) {
-                                  specialImgNum = data.player.officialImageSrc.substring(
-                                    data.player.officialImageSrc.lastIndexOf("/") + 1, 
-                                    data.player.officialImageSrc.lastIndexOf(".")
-                                    );
+                                // if (data.player.officialImageSrc != null) {
+                                //   specialImgNum = data.player.officialImageSrc.substring(
+                                //     data.player.officialImageSrc.lastIndexOf("/") + 1, 
+                                //     data.player.officialImageSrc.lastIndexOf(".")
+                                //     );
                                     
-                                  data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
-                                }
+                                //   data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
+                                // }
+                                
                               }
                             }
                           }
