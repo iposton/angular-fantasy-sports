@@ -67,6 +67,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '13661': {
+        id: 13661,
+        firstName: "Ville",
+        lastName: "Husso",
+        teamId: 17,
+        abbreviation: "STL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478024.jpg',
+        new: false
+      },
       '757': {
         id: 757,
         firstName: "Craig",
@@ -252,7 +263,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8476904.jpg',
-        new: true
+        new: false
       },
       '4890': {
         id: 4890,
@@ -263,7 +274,7 @@ export class NhlUtilService {
         active: true,
         numberOne: true,
         img: nhlImageRoot+'8475683.jpg',
-        new: true
+        new: false
       },
       '5420': {
         id: 5420,
@@ -338,7 +349,7 @@ export class NhlUtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -349,7 +360,7 @@ export class NhlUtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       }, 
@@ -514,7 +525,7 @@ export class NhlUtilService {
         teamId: 27,
         abbreviation: "DAL",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8471750.jpg',
         new: true
       },
@@ -525,7 +536,7 @@ export class NhlUtilService {
         teamId: 27,
         abbreviation: "DAL",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8471418.jpg',
         new: true
       },

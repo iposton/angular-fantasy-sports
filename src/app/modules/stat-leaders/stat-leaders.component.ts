@@ -356,25 +356,9 @@ export class StatLeadersComponent implements OnInit {
 
     this.nhlService
        .getAllStats('skaters', this.nhlApiRoot).subscribe(res => {
-        
-        function teamInfo(array, teams) {
-          for (let team of teams) {
-            for (let data of array) { 
-              if (data.player['currentTeam'] != null 
-              && team['id'] === data.player['currentTeam'].id 
-              && data.player['currentTeam'].id === data.team.id 
-              || team['id'] === data.team.id) {
-                data.team.logo = team['officialLogoImageSrc'];
-                data.team.city = team['city'];
-                data.team.name = team['name'];
-                //data.team.twitter = team['twitter'];
-              }
-            }
-          }
-        }
 
         const nhlTeamsArray = Object.values(this.nhlTeams);
-        let specialImgNum = null;
+        //let specialImgNum = null;
 
         this.nhlSkaters = res['playerStatsTotals'].filter(
           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null); //player.stats.gamesPlayed > 3
@@ -420,7 +404,7 @@ export class StatLeadersComponent implements OnInit {
                 
         //       }
         //     }
-        //     teamInfo(this.nhlSkaters, nhlTeamsArray);
+        //     this.util.teamInfo(this.nhlSkaters, nhlTeamsArray);
             
         // });
 
@@ -439,26 +423,10 @@ export class StatLeadersComponent implements OnInit {
 
   public goalies() {
 
-    function teamInfo(array, teams) {
-      for (let team of teams) {
-        for (let data of array) { 
-          if (data.player['currentTeam'] != null 
-          && team['id'] === data.player['currentTeam'].id 
-          && data.player['currentTeam'].id === data.team.id 
-          || team['id'] === data.team.id) {
-            data.team.logo = team['officialLogoImageSrc'];
-            data.team.city = team['city'];
-            data.team.name = team['name'];
-            //data.team.twitter = team['twitter'];
-          }
-        }
-      }
-    }
-
     this.nhlGoalieloading = true;
     this.nhlService
       .getAllStats('goalies', this.nhlApiRoot).subscribe(res => {
-      let specialImgNum = null;
+      //let specialImgNum = null;
       const nhlTeamsArray = Object.values(this.nhlTeams);
       this.nhlGoaltenders = res['playerStatsTotals'].filter(
         player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null); //player.stats.gamesPlayed > 3
@@ -504,7 +472,7 @@ export class StatLeadersComponent implements OnInit {
                 
         //       }
         //     }
-        //     teamInfo(this.nhlGoaltenders, nhlTeamsArray);
+        //     this.util.teamInfo(this.nhlGoaltenders, nhlTeamsArray);
         //     // this.nflOffenseLoading = false;
         // });
 
