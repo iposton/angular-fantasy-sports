@@ -359,10 +359,14 @@
 <section *ngIf="showSkaterData != null && lineSection">
     <div class="mlb-page">
         <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showSkaterData">
+            
             <div class="mat-card-sp">
-                  <div class="content-wrapper">
+                  <div class="content-wrapper">      
                     <div class="batter-content"
                     [ngStyle]="{background: 'url(' + data['skaters'][0]?.playerObj?.team?.logo +')'}">
+                    <!-- <div class="center" style="color:#000; text-transform: uppercase; letter-spacing: 2px;">
+                        <span *ngIf="data['skaters'][0]?.playerObj?.team?.name">{{data['skaters'][0]?.playerObj?.team?.name}} <span *ngIf="data['skaters'][0]?.playerObj?.win != null">({{data['skaters'][0]?.playerObj?.win+'-'+data['skaters'][0]?.playerObj?.loss}})</span></span> <br>
+                    </div> -->
                       <div  *ngFor="let item of data['skaters']; let i = index">
                           <span class="pointer" (click)="authorize({player: item?.playerObj, area: 'top'})">
                              <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="hockey player" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/skater.jpg'">
@@ -434,7 +438,7 @@
                         <div  *ngFor="let item of data['skaters']">
                           {{item?.playerObj?.player.lastName}} 
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus === 'UNPLAYED'" class="stats">
-                          &nbsp;
+                         
                           <span (click)="statToggle()" class="stat-toggle pointer">
                               <span [ngClass]="{'dn' : stat != 1}">{{makeMinutes(item?.playerObj?.stats?.shifts?.timeOnIceSeconds / item?.playerObj?.stats?.gamesPlayed)}} Min</span>
                               <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.sog}} SOG</span>
@@ -442,10 +446,10 @@
                               <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hits}} H</span>
                               <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocks}} B</span>
                               <span [ngClass]="{'dn' : stat != 6}">{{item?.playerObj?.stats?.fpa}} FPA</span>
-                            </span>  {{item?.playerObj?.stats?.scoring?.assists}} A {{item?.playerObj?.stats?.scoring?.goals}} G&nbsp;
+                            </span>  {{item?.playerObj?.stats?.scoring?.assists}} A {{item?.playerObj?.stats?.scoring?.goals}} G
                           </span>
                           <span *ngIf="data['skaters'][0]?.playerObj?.gameStatus != 'UNPLAYED'" class="stats">
-                          &nbsp; 
+                          
                           <span (click)="statToggle()" class="stat-toggle pointer">
                               <span [ngClass]="{'dn' : stat != 1}">{{item?.playerObj?.stats?.iceTimeToday}} Min</span>
                               <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.sogToday}} SOG</span>
@@ -453,10 +457,10 @@
                               <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.hitsToday}} H</span>
                               <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.blocksToday}} B</span>
                               <span [ngClass]="{'dn' : stat != 6}">{{item?.playerObj?.stats?.fpa}} FPA</span>
-                          </span>  {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G&nbsp;
+                          </span>  {{item?.playerObj?.stats?.assistsToday}} A {{item?.playerObj?.stats?.goalsToday}} G
                           </span> 
                         </div> 
-                        #Stats #StanleyCup #Hockey #NHLPlayoffs
+                        #Stats #HockeyTwitter
                       </span> 
     
                   </div>
