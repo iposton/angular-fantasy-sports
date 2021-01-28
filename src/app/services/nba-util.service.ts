@@ -503,6 +503,26 @@ export class NbaUtilService {
         lastName: "Green",
         image: nbaImageRoot+"1630182.png"
       },
+      "27720": {
+        firstName: "Anthony",
+        lastName: "Gill",
+        image: nbaImageRoot+"1630264.png"
+      },
+      "17224": {
+        firstName: "Terrance",
+        lastName: "Mann",
+        image: nbaImageRoot+"1629611.png"
+      },
+      "17215": {
+        firstName: "Amir",
+        lastName: "Coffey",
+        image: nbaImageRoot+"1629599.png"
+      },
+      "27642": {
+        firstName: "Theo",
+        lastName: "Maledon",
+        image: nbaImageRoot+"1630177.png"
+      },
              
     }
    }

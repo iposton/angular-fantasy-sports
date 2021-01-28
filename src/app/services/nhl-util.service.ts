@@ -524,9 +524,20 @@ export class NhlUtilService {
         lastName: "Bishop",
         teamId: 27,
         abbreviation: "DAL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8471750.jpg',
+        new: true
+      },
+      '18035': {
+        id: 18035,
+        firstName: "Jake",
+        lastName: "Oettinger",
+        teamId: 27,
+        abbreviation: "DAL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8479979.jpg',
         new: true
       },
       '4763': {
@@ -961,8 +972,31 @@ export class NhlUtilService {
         lastName: "Kahkonen",
         image: nhlImageRoot+'8478039.jpg',
       }, 
-      
-      
+      "9644": {
+        firstName: "Logan",
+        lastName: "Stanley",
+        image: nhlImageRoot+'8479378.jpg',
+      }, 
+      "17186": {
+        firstName: "Rhett",
+        lastName: "Gardner",
+        image: nhlImageRoot+'8479587.jpg',
+      }, 
+      "15094": {
+        firstName: "Pierre",
+        lastName: "Engvall",
+        image: nhlImageRoot+'8478115.jpg',
+      },
+      "17364": {
+        firstName: "Jordan",
+        lastName: "Gross",
+        image: nhlImageRoot+'8480913.jpg',
+      },
+      "17177": {
+        firstName: "Carter",
+        lastName: "Verhaeghe",
+        image: nhlImageRoot+'8477409.jpg',
+      },
     }
 
     this.nhlTeams = {

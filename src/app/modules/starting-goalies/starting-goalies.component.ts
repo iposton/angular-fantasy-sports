@@ -45,6 +45,7 @@ export class StartingGoaliesComponent implements OnInit {
   public gameGroups: Array <any>;
   public dailyStats: Array <any> = [];
   public dailySkaterStats: Array <any> = [];
+  public teamStats: Array <any> = [];
   public teamRef: Array <any> = [];
   public myData: Array <any>;
   public newGoalieData: Array <any>;
@@ -507,7 +508,7 @@ export class StartingGoaliesComponent implements OnInit {
   }
 
 
- async sortData() {
+ public async sortData() {
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     let promiseOne;
     
@@ -523,6 +524,11 @@ export class StartingGoaliesComponent implements OnInit {
       resolve();
     }
   })
+
+  this.dataService
+    .getTeamStats().subscribe(res => {
+      this.teamStats = res['teamStatsTotals'];         
+  });
 
   let resultOne = await promiseOne;
   await sleep(1000);
@@ -1307,6 +1313,8 @@ public showMatchups() {
                         for (let gb of this.gameSkaters) {
                           for (let data of this.mySkaterData) {
                             if (gb.playerID === data.player.id) {
+                              data.winToday = false;
+                              data.lostToday = false;
                               if (gb.status != "UNPLAYED") {
                                 if (data.player.gameLocation === 'home') {
                                   data.team.teamScore = gb.score['homeScoreTotal'];
@@ -1314,6 +1322,13 @@ public showMatchups() {
                                 } else if (data.player.gameLocation === 'away') {
                                   data.team.teamScore = gb.score['awayScoreTotal'];
                                   data.team.opponentScore = gb.score['homeScoreTotal'];
+                                }
+                              }
+                              if (gb.status != "COMPLETED") {
+                                if (data.team.teamScore > data.team.opponentScore) {
+                                  data.winToday = true;
+                                } else {
+                                  data.lostToday = true;
                                 }
                               }
                             }
@@ -1345,9 +1360,10 @@ public showMatchups() {
 
                             }
                           }
-
+                          this.util.teamRecord(this.teamStats, this.mySkaterData);
                           this.groupSkaters();
                         } else {
+                          this.util.teamRecord(this.teamStats, this.mySkaterData);
                           this.groupSkaters();
                         }
                       }

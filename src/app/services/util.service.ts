@@ -1597,6 +1597,7 @@ export class UtilService {
           data.team.name = team['name'];
           data.team.abbreviation = team['abbreviation'];
           data.team.twitter = team['twitter'] ? team['twitter'] : '';
+          data.player.twitterHandle = team['twitter'] ? team['twitter'] : '';
         }
       }
     }
@@ -1609,6 +1610,21 @@ export class UtilService {
         if (isNew) mySet.add(key);  
         return isNew;
     });
+  }
+
+  public teamRecord(teams, players) {
+    for (let team of teams) {
+      for (let data of players) { 
+          if (data.team.opponentId != null && 
+            data.team.id === team.team.id) {
+            data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
+            data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
+          } else if (data.player.lineupTeam === team.team.abbreviation) { 
+            data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
+            data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
+          }
+        }  
+    }
   }
 
   
