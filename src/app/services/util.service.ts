@@ -1612,17 +1612,25 @@ export class UtilService {
     });
   }
 
-  public teamRecord(teams, players) {
+  public teamRecord(teams, players, update, date) {
+    let isToday = false;
+    let u = new Date(update);
+    let selectedD = new Date(date);
+    // console.log(u, 'update', selectedD, 'selected date', date, 'date with hyphens');
+    // console.log(u.getUTCDay(), 'day of update', selectedD.getUTCDay(), 'date of selected date');
+    // console.log(u.getUTCDay() === selectedD.getUTCDay(), 'are they the same?')
+    if (u.getDay() === selectedD.getDay())
+    isToday = true;
     for (let team of teams) {
       for (let data of players) { 
           if (data.team.opponentId != null && 
             data.team.id === team.team.id) {
-            data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
-            data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
+            data.win = data.winToday && isToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
+            data.loss = data.lostToday && isToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
             data.otl = team.stats.standings.overtimeLosses;
           } else if (data.player.lineupTeam === team.team.abbreviation) { 
-            data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
-            data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
+            data.win = data.winToday && isToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
+            data.loss = data.lostToday && isToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
             data.otl = team.stats.standings.overtimeLosses;
           }
         }  
