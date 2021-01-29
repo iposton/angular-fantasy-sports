@@ -540,7 +540,7 @@ export class StartingFiveComponent implements OnInit {
                   data.team.opponentScore = starter.score['homeScoreTotal'];
                 }
               }
-              if (starter.status != "COMPLETED") {
+              if (starter.status === "COMPLETED" || starter.status === "COMPLETED_PENDING_REVIEW") {
                 if (data.team.teamScore > data.team.opponentScore) {
                   data.winToday = true;
                 } else {

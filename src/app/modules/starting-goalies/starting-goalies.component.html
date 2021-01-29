@@ -364,9 +364,9 @@
                   <div class="content-wrapper">      
                     <div class="batter-content"
                     [ngStyle]="{background: 'url(' + data['skaters'][0]?.playerObj?.team?.logo +')'}">
-                    <!-- <div class="center" style="color:#000; text-transform: uppercase; letter-spacing: 2px;">
-                        <span *ngIf="data['skaters'][0]?.playerObj?.team?.name">{{data['skaters'][0]?.playerObj?.team?.name}} <span *ngIf="data['skaters'][0]?.playerObj?.win != null">({{data['skaters'][0]?.playerObj?.win+'-'+data['skaters'][0]?.playerObj?.loss}})</span></span> <br>
-                    </div> -->
+                    <div class="center" style="color:#000; text-transform: uppercase; letter-spacing: 2px;">
+                        <span *ngIf="data['skaters'][0]?.playerObj?.team?.name">{{data['skaters'][0]?.playerObj?.team?.name}} <span *ngIf="data['skaters'][0]?.playerObj?.win != null">({{data['skaters'][0]?.playerObj?.win+'-'+data['skaters'][0]?.playerObj?.loss+'-'+data['skaters'][0]?.playerObj?.otl}})</span></span> <br>
+                    </div>
                       <div  *ngFor="let item of data['skaters']; let i = index">
                           <span class="pointer" (click)="authorize({player: item?.playerObj, area: 'top'})">
                              <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="hockey player" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/skater.jpg'">
