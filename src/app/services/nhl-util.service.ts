@@ -997,6 +997,31 @@ export class NhlUtilService {
         lastName: "Verhaeghe",
         image: nhlImageRoot+'8477409.jpg',
       },
+      "18035": {
+        firstName: "Jake",
+        lastName: "Oettinger",
+        image: nhlImageRoot+'8479979.jpg',
+      },
+      "28409": {
+        firstName: "Drew",
+        lastName: "O'Connor",
+        image: nhlImageRoot+'8482055.jpg',
+      },
+      "18107": {
+        firstName: "Yegor",
+        lastName: "Sharangovich",
+        image: nhlImageRoot+'8481068.jpg',
+      },
+      "17185": {
+        firstName: "Connor",
+        lastName: "Bunnaman",
+        image: nhlImageRoot+'8479382.jpg',
+      },
+      "13634": {
+        firstName: "Josh",
+        lastName: "Norris",
+        image: nhlImageRoot+'8480064.jpg',
+      },
     }
 
     this.nhlTeams = {
