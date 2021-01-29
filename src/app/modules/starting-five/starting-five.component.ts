@@ -42,6 +42,8 @@ export class StartingFiveComponent implements OnInit {
   public players: Array <any>;
   public allSentData: Array <any>;
   public teamStats: Array <any>;
+  public teamStatsUpdate: any;
+  public selectedDate: any;
   public starterIdData: Array <any> = [];
   public benchIdData: Array <any> = [];
   public speedResults: Array <any> = [];
@@ -123,6 +125,7 @@ export class StartingFiveComponent implements OnInit {
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
     this.testBrowser = isPlatformBrowser(platformId);
+    this.selectedDate = new Date();
   }
 
   public compareDate (start) {
@@ -158,26 +161,6 @@ export class StartingFiveComponent implements OnInit {
     }
   }
 
-  // public colorLuminance(hex, lum) {
-
-  //   // validate hex string
-  //   hex = String(hex).replace(/[^0-9a-f]/gi, '');
-  //   if (hex.length < 6) {
-  //     hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-  //   }
-  //   lum = lum || 0;
-  
-  //   // convert to decimal and change luminosity
-  //   var rgb = "#", c, i;
-  //   for (i = 0; i < 3; i++) {
-  //     c = parseInt(hex.substr(i*2,2), 16);
-  //     c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-  //     rgb += ("00"+c).substr(c.length);
-  //   }
-  
-  //   return rgb;
-  // }
-
   public getBackground(color) {
     let lighter = this.util.colorLuminance(color, 0.6);
     if (color === "#c4ced4") {
@@ -194,7 +177,7 @@ export class StartingFiveComponent implements OnInit {
   public getByDate(event) {
     this.loading = true;
     this.dataService.selectedDate(event);
-
+    this.selectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
     //empty old data on data change 
     this.dailySchedule = [];
     this.gameStarters = [];
@@ -417,6 +400,7 @@ export class StartingFiveComponent implements OnInit {
       promiseOne = new Promise((resolve, reject) => {
         this.dataService
           .getTeamStats(this.tsDate).subscribe(res => {
+            this.teamStatsUpdate = res['lastUpdatedOn'];
             this.teamStats = res['teamStatsTotals'];
             resolve();
         });
@@ -427,20 +411,8 @@ export class StartingFiveComponent implements OnInit {
       this.dataService
        .getStats(playerString).subscribe(res => {
 
-          // this.myData = res['playerStatsTotals'].filter(
-          //   player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation);
-
-          function removeDuplicatesBy(keyFn, array) {
-              var mySet = new Set();
-              return array.filter(function(x) {
-                  var key = keyFn(x), isNew = !mySet.has(key);
-                  if (isNew) mySet.add(key);
-                  return isNew;
-              });
-          }
-          
           let values = res['playerStatsTotals'];
-          this.myData = removeDuplicatesBy(x => x.player.id, values)
+          this.myData = this.util.removeDuplicatesBy(x => x.player.id, values)
           //this.myData =  Array.from(new Set(this.myData));
             for (let starter of this.gameStarters) {
               for (let data of this.myData) {
@@ -572,25 +544,10 @@ export class StartingFiveComponent implements OnInit {
                 }
               }
             }
-          } 
-
-          for (let team of this.teamStats) {
-            for (let data of this.myData) { 
-                if (data.team.opponentId != null && 
-                  data.team.id === team.team.id) {
-                  data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
-                  data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
-                } else if (data.player.lineupTeam === team.team.abbreviation) { 
-                  data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
-                  data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
-                }
-              }  
           }
-
           
+          this.util.teamRecord(this.teamStats, this.myData, this.teamStatsUpdate, this.selectedDate);
 
-          
-       
 
           this.groups = this.myData.reduce(function (r, a) {
             r[a.player['currentTeam'].abbreviation] = r[a.player['currentTeam'].abbreviation] || [];

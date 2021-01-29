@@ -46,6 +46,8 @@ export class StartingGoaliesComponent implements OnInit {
   public dailyStats: Array <any> = [];
   public dailySkaterStats: Array <any> = [];
   public teamStats: Array <any> = [];
+  public teamStatsUpdate: any;
+  public selectedDate: any;
   public teamRef: Array <any> = [];
   public myData: Array <any>;
   public newGoalieData: Array <any>;
@@ -158,6 +160,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.sentAllData = this.dataService.getSentAllStats();
     this.sentYesterday = this.dataService.getYesterday();
     this.sentLastweek = this.dataService.getLastweek();
+    this.selectedDate = new Date();
 
     this.dataService.checkDay();
     this.testBrowser = isPlatformBrowser(platformId);
@@ -182,6 +185,7 @@ export class StartingGoaliesComponent implements OnInit {
   public getByDate(event) {
     this.loading = true;
     this.dataService.selectedDate(event);
+    this.selectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
     this.dataService.checkDay();
     yesterday = this.dataService.getYesterday();
     tomorrow = this.dataService.getTomorrow();
@@ -527,6 +531,7 @@ export class StartingGoaliesComponent implements OnInit {
 
   this.dataService
     .getTeamStats().subscribe(res => {
+      this.teamStatsUpdate = res['lastUpdatedOn'];
       this.teamStats = res['teamStatsTotals'];         
   });
 
@@ -1362,10 +1367,10 @@ public showMatchups() {
 
                             }
                           }
-                          this.util.teamRecord(this.teamStats, this.mySkaterData);
+                          this.util.teamRecord(this.teamStats, this.mySkaterData, this.teamStatsUpdate, this.selectedDate);
                           this.groupSkaters();
                         } else {
-                          this.util.teamRecord(this.teamStats, this.mySkaterData);
+                          this.util.teamRecord(this.teamStats, this.mySkaterData, this.teamStatsUpdate, this.selectedDate);
                           this.groupSkaters();
                         }
                       }

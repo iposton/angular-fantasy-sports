@@ -8,6 +8,10 @@
             <span (click)="authorize(item, 'bottom')" class="point"><img src="{{item?.player?.officialImageSrc}}" alt="basketball player"
                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"></span>
             <span class="player-infos">
+              <span class="rookie opp"> 
+                 {{item.player?.gameLocation === 'home' ? 'vs' : '@'}} 
+                 {{item?.team?.opponent}} 
+              </span>
               <span *ngIf="item.player?.rookie === true" class="rookie">R</span>
               <span class="names" *ngIf="!mobile">
                 <span> 
