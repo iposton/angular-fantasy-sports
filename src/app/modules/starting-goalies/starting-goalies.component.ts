@@ -1196,8 +1196,11 @@ public showMatchups() {
                         if (this.mySkaterData && this.gameSkaters) {
                           for (let gb of this.gameSkaters) {
                             for (let data of this.mySkaterData) {
+                              data.winToday = false;
+                              data.lostToday = false;
                               data.player.gameLocation = "none";
                               if (gb.playerID === data.player.id) {
+                                
                                 data.gameId = gb.gameID;
                                 data.score = gb.score;
                                 data.gameStatus = gb.status;
@@ -1313,8 +1316,7 @@ public showMatchups() {
                         for (let gb of this.gameSkaters) {
                           for (let data of this.mySkaterData) {
                             if (gb.playerID === data.player.id) {
-                              data.winToday = false;
-                              data.lostToday = false;
+                              
                               if (gb.status != "UNPLAYED") {
                                 if (data.player.gameLocation === 'home') {
                                   data.team.teamScore = gb.score['homeScoreTotal'];
@@ -1324,7 +1326,7 @@ public showMatchups() {
                                   data.team.opponentScore = gb.score['homeScoreTotal'];
                                 }
                               }
-                              if (gb.status != "COMPLETED") {
+                              if (gb.status === "COMPLETED" || gb.status === "COMPLETED_PENDING_REVIEW") {
                                 if (data.team.teamScore > data.team.opponentScore) {
                                   data.winToday = true;
                                 } else {

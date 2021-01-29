@@ -1619,13 +1619,13 @@ export class UtilService {
             data.team.id === team.team.id) {
             data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
             data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
+            data.otl = team.stats.standings.overtimeLosses;
           } else if (data.player.lineupTeam === team.team.abbreviation) { 
             data.win = data.winToday ? team.stats.standings.wins + 1 : team.stats.standings.wins;
             data.loss = data.lostToday ? team.stats.standings.losses + 1 : team.stats.standings.losses;
+            data.otl = team.stats.standings.overtimeLosses;
           }
         }  
     }
-  }
-
-  
+  } 
 }

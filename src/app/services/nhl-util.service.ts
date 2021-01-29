@@ -18,8 +18,8 @@ export class NhlUtilService {
         lastName: "Samsonov",
         teamId: 5,
         abbreviation: "WSH",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       }, 
@@ -30,10 +30,21 @@ export class NhlUtilService {
         teamId: 5,
         abbreviation: "WSH",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       }, 
+      '757': {
+        id: 757,
+        firstName: "Craig",
+        lastName: "Anderson",
+        teamId: 5,
+        abbreviation: "WSH",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8467950.jpg',
+        new: true
+      },
       '4863':{
         id: 4863,
         firstName: "Braden",
@@ -76,17 +87,6 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8478024.jpg',
-        new: false
-      },
-      '757': {
-        id: 757,
-        firstName: "Craig",
-        lastName: "Anderson",
-        teamId: 13,
-        abbreviation: "OTT",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'0.jpg',
         new: false
       },
       '5033': {
