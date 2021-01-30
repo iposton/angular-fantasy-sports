@@ -595,7 +595,7 @@ export class StartingFiveComponent implements OnInit {
     if (data === 'top') {
       document.querySelector("div[id="+anchor+"]").scrollIntoView();
     } else {
-      document.querySelector("mat-card[id="+anchor+"]").scrollIntoView({behavior: "smooth"});
+      document.querySelector("div[id="+anchor+"]").scrollIntoView({behavior: "smooth"});
     } 
   }
 
