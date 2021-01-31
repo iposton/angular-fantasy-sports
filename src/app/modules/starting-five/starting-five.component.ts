@@ -440,7 +440,7 @@ export class StartingFiveComponent implements OnInit {
           for (let schedule of this.dailySchedule) {
             for (let sdata of this.myData) {
 
-              if (schedule.schedule.awayTeam.abbreviation === sdata.team.abbreviation) {
+              if (schedule.schedule.awayTeam.abbreviation === sdata.player['currentTeam'].abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameField = schedule.schedule.venue.name;
                 sdata.gameId = sdata.gameId == null ? schedule.schedule.id : sdata.gameId;
@@ -449,7 +449,7 @@ export class StartingFiveComponent implements OnInit {
                 sdata.team.abbreviation = schedule.schedule.awayTeam.abbreviation;
                 sdata.team.opponentId = schedule.schedule.homeTeam.id;
               }
-              if (schedule.schedule.homeTeam.abbreviation === sdata.team.abbreviation) {
+              if (schedule.schedule.homeTeam.abbreviation === sdata.player['currentTeam'].abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameField = schedule.schedule.venue.name;
                 sdata.gameId = sdata.gameId == null ? schedule.schedule.id : sdata.gameId;
@@ -638,7 +638,7 @@ export class StartingFiveComponent implements OnInit {
 
   ngOnInit() {
     if (this.testBrowser) {
-      if (window.innerWidth < 700) { // 768px portrait
+      if (window.innerWidth < 700) {
         this.mobile = true;
       }
       if (this.players === undefined) {

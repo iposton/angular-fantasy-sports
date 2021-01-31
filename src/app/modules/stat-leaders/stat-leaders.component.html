@@ -213,14 +213,29 @@
           [twitter]="twitter"
           ></app-stat-card>
 
-          <app-stat-card *ngIf="!loading && myData != null" 
-          [data]="myData" 
+          <app-stat-card *ngIf="!loading && fgPlayers != null" 
+          [data]="fgPlayers" 
           [statType]="'fieldGoals'" 
           [statField]="'fgPct'"
           [page]="page"
           [amount]="amount"
           [title]="'FieldGoal %'"
           [statTag]="'FG%'"
+          [sport]="'nba'"
+          [order]="'DESC'"
+          [teams]="nbaTeams"
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
+
+          <app-stat-card *ngIf="!loading && myData != null" 
+          [data]="myData" 
+          [statType]="'defense'" 
+          [statField]="'tov'"
+          [page]="page"
+          [amount]="amount"
+          [title]="'Turn Overs'"
+          [statTag]="'TO'"
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
@@ -245,18 +260,20 @@
 
           <app-stat-card *ngIf="!loading && myData != null" 
           [data]="myData" 
-          [statType]="'defense'" 
-          [statField]="'tov'"
+          [statType]="'offense'" 
+          [statField]="'fp'"
           [page]="page"
           [amount]="amount"
-          [title]="'Turn Overs'"
-          [statTag]="'TO'"
+          [title]="'Fantasy Points'"
+          [statTag]="'FP'"
           [sport]="'nba'"
           [order]="'DESC'"
           [teams]="nbaTeams"
           (open)="authorize($event)"
           [twitter]="twitter"
           ></app-stat-card>
+
+          
         </section>
 
         <section [ngClass]="{'dn' : !nhlGoalies}">
@@ -285,6 +302,36 @@
           [statTag]="'SO'"
           [sport]="'nhl'"
           [order]="'DESC'"
+          [teams]="nhlTeams"
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
+
+          <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
+          [data]="nhlGoaltenders" 
+          [statType]="'goaltending'" 
+          [statField]="'goalsAgainst'"
+          [page]="page"
+          [amount]="amount"
+          [title]="'Goals Against'"
+          [statTag]="'GA'"
+          [sport]="'nhl'"
+          [order]="'DESC'"
+          [teams]="nhlTeams"
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
+
+          <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
+          [data]="nhlGoaltenders" 
+          [statType]="'goaltending'" 
+          [statField]="'goalsAgainstAverage'"
+          [page]="page"
+          [amount]="amount"
+          [title]="'Goals Against Avg'"
+          [statTag]="'GAA'"
+          [sport]="'nhl'"
+          [order]="'ASC'"
           [teams]="nhlTeams"
           (open)="authorize($event)"
           [twitter]="twitter"

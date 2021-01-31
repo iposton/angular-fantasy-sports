@@ -34,6 +34,7 @@ export class StatLeadersComponent implements OnInit {
   public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
   public nhlApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
   public myData: Array <any>;
+  public fgPlayers: Array <any>;
   public mlbPitchingData: Array <any>;
   public mlbHittingData: Array <any>;
   public nflOffenseData: Array <any>;
@@ -361,7 +362,7 @@ export class StatLeadersComponent implements OnInit {
         //let specialImgNum = null;
 
         this.nhlSkaters = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null); //player.stats.gamesPlayed > 3
+          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 1);
 
           for (let team of nhlTeamsArray) {
             for (let data of this.nhlSkaters) { 
@@ -429,7 +430,7 @@ export class StatLeadersComponent implements OnInit {
       //let specialImgNum = null;
       const nhlTeamsArray = Object.values(this.nhlTeams);
       this.nhlGoaltenders = res['playerStatsTotals'].filter(
-        player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null); //player.stats.gamesPlayed > 3
+        player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 2); 
 
         for (let team of nhlTeamsArray) {
           for (let data of this.nhlGoaltenders) { 
@@ -494,7 +495,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public goalieFp (player) {
-    player.stats.goaltending.fp = ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2);
+    player.stats.goaltending.fp = this.util.round((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst, 1);
     player.stats.goaltending.fpa = Math.floor(player.stats.goaltending.fp / player.stats.gamesPlayed);
   }
 
@@ -515,6 +516,10 @@ export class StatLeadersComponent implements OnInit {
 
           this.myData = res['playerStatsTotals'].filter(
             player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null);
+
+          this.fgPlayers = res['playerStatsTotals'].filter(
+            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.fieldGoals.fgAtt > 150);
+            
 
           for (let team of nbaTeamsArray) {
             for (let data of this.myData) { 
@@ -539,7 +544,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public playerFp(player) {
-    player.stats.offense.fp = Math.floor(player.stats.offense.pts + (player.stats.offense.ast * 1.5) + (player.stats.rebounds.reb * 1.2) + (player.stats.defense.stl * 3) + (player.stats.defense.blk * 3) - player.stats.defense.tov);
+    player.stats.offense.fp = this.util.round(player.stats.offense.pts + (player.stats.offense.ast * 1.5) + (player.stats.rebounds.reb * 1.2) + (player.stats.defense.stl * 3) + (player.stats.defense.blk * 3) - player.stats.defense.tov, 1);
     player.stats.offense.fpa = Math.floor(player.stats.offense.fp / player.stats.gamesPlayed);
   }
 
