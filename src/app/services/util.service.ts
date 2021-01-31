@@ -1613,14 +1613,6 @@ export class UtilService {
   }
 
   public teamRecord(teams, players, update, date) {
-    // let isToday = false;
-    // let u = new Date(update);
-    // let selectedD = new Date(date);
-    // // console.log(u, 'update', selectedD, 'selected date', date, 'date with hyphens');
-    // // console.log(u.getUTCDay(), 'day of update', selectedD.getUTCDay(), 'date of selected date');
-    // // console.log(u.getUTCDay() === selectedD.getUTCDay(), 'are they the same?')
-    // if (u.getDay() === selectedD.getDay())
-    // isToday = true;
     for (let team of teams) {
       for (let data of players) { 
         if (data.team.opponentId != null && 
@@ -1635,5 +1627,10 @@ export class UtilService {
         }
       }  
     }
-  } 
+  }
+  
+  public round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+  }
 }
