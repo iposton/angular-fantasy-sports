@@ -139,9 +139,31 @@ export class NhlUtilService {
         lastName: "Smith",
         teamId: 24,
         abbreviation: "EDM",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8469608.jpg',
+        new: true
+      },
+      '5486': {
+        id: 5486,
+        firstName: "Troy",
+        lastName: "Grosenick",
+        teamId: 24,
+        abbreviation: "EDM",
+        active: false,
+        numberOne: false,
+        img: nhlImageRoot+'8477234.jpg',
+        new: true
+      },
+      '17353': {
+        id: 17353,
+        firstName: "Stuart",
+        lastName: "Skinner",
+        teamId: 24,
+        abbreviation: "EDM",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8479973.jpg',
         new: true
       },
       '10074': {
@@ -1033,7 +1055,21 @@ export class NhlUtilService {
         lastName: "Norris",
         image: nhlImageRoot+'8480064.jpg',
       },
-
+      "17353": {
+        firstName: "Stuart",
+        lastName: "Skinner",
+        image: nhlImageRoot+'8479973.jpg',
+      },
+      "15383": {
+        firstName: "Jalen",
+        lastName: "Chatfield",
+        image: nhlImageRoot+'8478970.jpg',
+      },
+      "15181": {
+        firstName: "Connor",
+        lastName: "Timmins",
+        image: nhlImageRoot+'8479982.jpg',
+      }
     }
 
     this.nhlTeams = {
