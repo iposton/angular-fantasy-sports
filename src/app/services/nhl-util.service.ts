@@ -782,6 +782,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8475809.jpg',
         new: true
       },
+      '12468': {
+        id: 12468,
+        firstName: "Eric",
+        lastName: "Comrie",
+        teamId: 7,
+        abbreviation: "NJD",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8477480.jpg',
+        new: true
+      },     
       '5518': {
         id: 5518,
         firstName: "Louis",
@@ -1022,6 +1033,7 @@ export class NhlUtilService {
         lastName: "Norris",
         image: nhlImageRoot+'8480064.jpg',
       },
+
     }
 
     this.nhlTeams = {
