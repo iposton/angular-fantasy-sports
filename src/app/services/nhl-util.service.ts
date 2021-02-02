@@ -217,9 +217,9 @@ export class NhlUtilService {
         teamId: 20,
         abbreviation: "CHI",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8480947.jpg',
-        new: true
+        new: false
       },
       '14350': {
         id: 14350,
@@ -228,7 +228,7 @@ export class NhlUtilService {
         teamId: 20,
         abbreviation: "CHI",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -788,8 +788,8 @@ export class NhlUtilService {
         lastName: "Blackwood",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -800,9 +800,9 @@ export class NhlUtilService {
         teamId: 7,
         abbreviation: "NJD",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8475809.jpg',
-        new: true
+        new: false
       },
       '12468': {
         id: 12468,
@@ -813,7 +813,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8477480.jpg',
-        new: true
+        new: false
       },     
       '5518': {
         id: 5518,
