@@ -1564,6 +1564,26 @@ export class StatLeadersComponent implements OnInit {
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+
+                    hash[key]['11'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.goalsAgainst : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+
+                    hash[key]['12'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.shotsAgainst : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+
+                    hash[key]['13'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
+                    s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
+                    : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].shifts.timeOnIceSeconds : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+
+                    
                     //hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
                     return r;
                   };
@@ -1613,6 +1633,10 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.goaltending.overtimeWins = data['5'];
                         info.stats.goaltending.overtimeLosses = data['6'];
                         info.stats.gamesPlayed = data['7'];
+                        info.stats.goaltending.goalsAgainst = data['11'];
+                        info.stats.goaltending.shotsAgainst = data['12'];
+                        info.stats.goaltending.goalsAgainstAverage = this.util.round(Math.floor(data['11'] * 60) / Math.floor(data['13'] / 60), 3);  
+                        
                              
                         this.goalieFp(info);
                       }
