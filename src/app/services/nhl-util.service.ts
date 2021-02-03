@@ -923,7 +923,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8477361.jpg',
-        new: true
+        new: false
       },
       '18296': {
         id: 18296,
