@@ -420,7 +420,10 @@ export class StartingFiveComponent implements OnInit {
                 if (starter.playerID === data.player.id) {
                   data.starterInfo = starter;
                   data.gameId = starter.gameID;
-                  data.player['currentTeam'].abbreviation = starter.currentTeam;
+                  if (data.player['currentTeam'] != null)
+                    data.player['currentTeam'].abbreviation = starter.currentTeam;
+                  else
+                    data.player.currentTeam = {'abbreviation': starter.currentTeam};
                   data.player.lineupTeam = starter.currentTeam;
                   data.gameStatus = starter.status;
                   this.playerFp(data);
@@ -440,7 +443,7 @@ export class StartingFiveComponent implements OnInit {
           for (let schedule of this.dailySchedule) {
             for (let sdata of this.myData) {
 
-              if (schedule.schedule.awayTeam.abbreviation === sdata.player['currentTeam'].abbreviation) {
+              if (sdata.player['currentTeam'] != null && schedule.schedule.awayTeam.abbreviation === sdata.player['currentTeam'].abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameField = schedule.schedule.venue.name;
                 sdata.gameId = sdata.gameId == null ? schedule.schedule.id : sdata.gameId;
@@ -449,7 +452,7 @@ export class StartingFiveComponent implements OnInit {
                 sdata.team.abbreviation = schedule.schedule.awayTeam.abbreviation;
                 sdata.team.opponentId = schedule.schedule.homeTeam.id;
               }
-              if (schedule.schedule.homeTeam.abbreviation === sdata.player['currentTeam'].abbreviation) {
+              if (sdata.player['currentTeam'] != null && schedule.schedule.homeTeam.abbreviation === sdata.player['currentTeam'].abbreviation) {
                 sdata.player.gameTime = schedule.schedule.startTime;
                 sdata.team.gameField = schedule.schedule.venue.name;
                 sdata.gameId = sdata.gameId == null ? schedule.schedule.id : sdata.gameId;
