@@ -198,7 +198,7 @@
   <!-- edit-list-container number 3 -->
 </div>
 <!-- matchup-layout div -->
-<app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Goalie Stats'"></app-spinner>
+<app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="spinTitle"></app-spinner>
 <br>
 
 <div class="nba-button-wrapper" *ngIf="!loading && dailySchedule != null && starterIdData.length > 0">

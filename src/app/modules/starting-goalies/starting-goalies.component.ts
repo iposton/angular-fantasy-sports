@@ -161,9 +161,9 @@ export class StartingGoaliesComponent implements OnInit {
     this.sentYesterday = this.dataService.getYesterday();
     this.sentLastweek = this.dataService.getLastweek();
     this.selectedDate = new Date();
-
     this.dataService.checkDay();
     this.testBrowser = isPlatformBrowser(platformId);
+    this.spinTitle = 'Goalie Stats';
   }
 
   public statToggle() {
@@ -1077,15 +1077,17 @@ public showMatchups() {
     console.log(this.gameGroups, 'game Groups');
     //console.log(this.gameSkaters, 'skaters');
     this.gameGroups.forEach((data) => {
+      let home = [];
+      let away = [];
+      if (data['goalies'].length === 2) {
         data['goalies'][0].side = 'left';
         data['goalies'][1].side = 'right';
         data['goalies'][0].size = 'reg';
         data['goalies'][1].size = 'reg';
         data['goalies'][0].showBtb = true;
         data['goalies'][1].showBtb = true;
-        let home = [];
-        let away = [];
-      if (data['goalies'].length === 2) {
+       
+      
         away.push(data['goalies'][0]);
         home.push(data['goalies'][1]);
         data['goalies'].away = away;
