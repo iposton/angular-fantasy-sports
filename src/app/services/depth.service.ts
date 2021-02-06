@@ -1238,6 +1238,19 @@ export class DepthService {
             },
         }
       ],
+      '94': [
+        {
+          'gdate': 'Wed Feb 3 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+          'Starter5' : {
+            firstName: 'Ish',
+            lastName: 'Smith',
+            id: 9425,
+            status: 'Starter',
+            abbreviation: 'WAS',
+            position: 'PG'
+          },
+      }
+    ],
 
     }
   }

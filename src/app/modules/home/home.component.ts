@@ -191,6 +191,7 @@ loadData() {
 }
 
 public loadNFL() {
+  this.nflLoading = true;
   this.nflDataService
       .getSchedule(this.selectedWeek).subscribe(res => {
         if (res['games'].length === 0) {
@@ -212,6 +213,7 @@ public loadNFL() {
 }
 
 public loadMLB() {
+  this.mlbLoading = true;
   this.dataService
     .getDailySchedule().subscribe(res => {
       if (res['games'].length === 0) {
@@ -235,6 +237,7 @@ public loadMLB() {
 }
 
 public loadNHL() {
+  this.nhlLoading = true;
   this.nhlDataService
   .getDailySchedule().subscribe(res => {
     if (res['games'].length === 0) {
@@ -256,6 +259,7 @@ public loadNHL() {
 }
 
 public loadNBA() {
+  this.nbaLoading = true;
   this.nbaDataService
     .getSchedule().subscribe(res => {
     

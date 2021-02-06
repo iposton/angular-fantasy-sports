@@ -79,7 +79,7 @@ export class StartingFiveComponent implements OnInit {
   public dRank: Array <any> = [];
   public oRank: Array <any> = [];
   public tRank: Array <any> = [];
-  public gameStarter: { currentTeam: string, gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any, bench: boolean };
+  public gameStarter: { currentTeam: string, gameID: string, playerID: string, score: any, status: any, scheduleStatus: any, playerStatus: any, position: any, bench: boolean };
   public gameStarters: Array <any> = [];
   public benchStarters: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
@@ -319,17 +319,19 @@ export class StartingFiveComponent implements OnInit {
                       //console.log(item, 'whats up');
                       if (starterNames[item.position] && item.player != null) {
                         this.gameStarter = {
+                          playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
                           currentTeam: res2[i2]['team'].abbreviation,
-                          playerID: item.player.id,
+                          //playerID: item.player.id,
                           gameID: game2.id,
                           score: score2,
                           status: game2.playedStatus,
                           scheduleStatus: game2.scheduleStatus,
+                          position: item.position,
                           playerStatus: 'actual',
                           bench: true ? benchNames[item.position] : false
                         }
                         this.gameStarters.push(this.gameStarter);
-                        this.starterIdData.push(item.player.id);
+                        this.starterIdData.push(this.gameStarter['playerID']);
                         
                       }
                     })
@@ -341,17 +343,19 @@ export class StartingFiveComponent implements OnInit {
                        // console.log(item, 'whats up');
                         if (starterNames[item.position] && item.player != null) {
                           this.gameStarter = {
+                            playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
                             currentTeam: res2[i2]['team'].abbreviation,
-                            playerID: item.player.id,
+                            //playerID: item.player.id,
                             gameID: game2.id,
                             score: score2,
                             status: game2.playedStatus,
                             scheduleStatus: game2.scheduleStatus,
                             playerStatus: 'expected',
+                            position: item.position,
                             bench: true ? benchNames[item.position] : false
                           }
                           this.gameStarters.push(this.gameStarter);
-                          this.starterIdData.push(item.player.id);
+                          this.starterIdData.push(this.gameStarter['playerID']);
                           
                         }
                       })
@@ -420,6 +424,7 @@ export class StartingFiveComponent implements OnInit {
                 if (starter.playerID === data.player.id) {
                   data.starterInfo = starter;
                   data.gameId = starter.gameID;
+                  data.player.position = starter.position;
                   if (data.player['currentTeam'] != null)
                     data.player['currentTeam'].abbreviation = starter.currentTeam;
                   else
