@@ -548,7 +548,31 @@ export class NbaUtilService {
         lastName: "Thybulle",
         image: nbaImageRoot+"1629680.png"
       },
-
+      "27644": {
+        firstName: "Devin",
+        lastName: "Vassell",
+        image: nbaImageRoot+"1630170.png"
+      },
+      "17230": {
+        firstName: "Chuma",
+        lastName: "Okeke",
+        image: nbaImageRoot+"1629643.png"
+      },
+      "27622": {
+        firstName: "Isaiah",
+        lastName: "Stewart",
+        image: nbaImageRoot+"1630191.png"
+      },
+      "17276": {
+        firstName: "Max",
+        lastName: "Strus",
+        image: nbaImageRoot+"1629622.png"
+      },
+      "17321": {
+        firstName: "Mychal",
+        lastName: "Mulder",
+        image: nbaImageRoot+"1628539.png"
+      },
     }
    }
 
