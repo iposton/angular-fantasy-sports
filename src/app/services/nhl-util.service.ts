@@ -967,7 +967,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8477968.jpg',
-        new: true
+        new: false
       }
     }
 
@@ -1091,7 +1091,19 @@ export class NhlUtilService {
         firstName: "Connor",
         lastName: "Timmins",
         image: nhlImageRoot+'8479982.jpg',
+      },
+      "13713": {
+        firstName: "Alexander",
+        lastName: "Volkov",
+        image: nhlImageRoot+'8480186.jpg',
+      },
+      "28325": {
+        firstName: "Pius",
+        lastName: "Suter",
+        image: nhlImageRoot+'8480459.jpg',
       }
+      
+      
     }
 
     this.nhlTeams = {

@@ -374,7 +374,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210201-to-20210207`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210208-to-20210214`, { headers })
                     
                   )
                 )

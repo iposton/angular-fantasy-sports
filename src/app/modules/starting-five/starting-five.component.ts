@@ -241,7 +241,7 @@ export class StartingFiveComponent implements OnInit {
                   nbaTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210201-to-20210207`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210208-to-20210214`, { headers })
                     
                   )
                 )
@@ -658,7 +658,7 @@ export class StartingFiveComponent implements OnInit {
           .subscribe(() => {
             console.log('interval get data again...');
             if (this.gamesToday === true && this.liveGames === true) {
-              this.loadData();
+              //this.loadData();
               this.dataService
                 .getSchedule().subscribe(res => {
                   //console.log(res, "schedule...");
