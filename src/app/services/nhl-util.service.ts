@@ -188,6 +188,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '28469': {
+        id: 28469,
+        firstName: "Alexei",
+        lastName: "Melnichuk",
+        teamId: 26,
+        abbreviation: "SJS",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
+      },
       '483': {
         id: 483,
         firstName: "Marc-Andre",
@@ -195,9 +206,9 @@ export class NhlUtilService {
         teamId: 142,
         abbreviation: "VGK",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8470594.jpg',
-        new: true
+        new: false
       },
       '5528': {
         id: 5528,
@@ -469,7 +480,7 @@ export class NhlUtilService {
         lastName: "Dubnyk",
         teamId: 26,
         abbreviation: "SJS",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -711,11 +722,23 @@ export class NhlUtilService {
         lastName: "Lehner",
         teamId: 142,
         abbreviation: "VGK",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
-      },  
+      },
+      '12477': {
+        id: 12477,
+        firstName: "Oscar",
+        lastName: "Dansk",
+        teamId: 142,
+        abbreviation: "VGK",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8476861.jpg',
+        new: true
+      },
+        
       '5481': {
         id: 5481,
         firstName: "Anton",
@@ -1101,9 +1124,23 @@ export class NhlUtilService {
         firstName: "Pius",
         lastName: "Suter",
         image: nhlImageRoot+'8480459.jpg',
+      },
+      "17175": {
+        firstName: "Tobius",
+        lastName: "Bjornfot",
+        image: nhlImageRoot+'8481600.jpg',
+      },
+      "14528": {
+        firstName: "Barrett",
+        lastName: "Hayton",
+        image: nhlImageRoot+'8480849.jpg',
+      },
+      "17198": {
+        firstName: "Julien",
+        lastName: "Gauthier",
+        image: nhlImageRoot+'8479328.jpg',
       }
-      
-      
+
     }
 
     this.nhlTeams = {
