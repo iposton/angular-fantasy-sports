@@ -668,11 +668,14 @@ export class StartingGoaliesComponent implements OnInit {
 
               if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameLocation = "away";
-                sdata.team.opponentId = schedule['schedule'].homeTeam.id;
-                sdata.team.id = schedule['schedule'].homeTeam.id;
-                sdata.team.opponentAbbreviation = schedule['schedule'].homeTeam.abbreviation;    
-                sdata.teamScore = schedule['score'].awayScoreTotal;
-                sdata.opponentScore = schedule['score'].homeScoreTotal;
+                
+                if (schedule['schedule'].scheduleStatus != 'POSTPONED') {
+                  sdata.team.opponentId = schedule['schedule'].homeTeam.id;
+                  sdata.team.id = schedule['schedule'].homeTeam.id;
+                  sdata.team.opponentAbbreviation = schedule['schedule'].homeTeam.abbreviation;    
+                  sdata.teamScore = schedule['score'].awayScoreTotal;
+                  sdata.opponentScore = schedule['score'].homeScoreTotal;
+                }
 
                 if(sdata.player.currentTeam != null && sdata.player.currentTeam.id === team.id) {
                   sdata.team.teamFull = team.city +' '+ team.name;   
@@ -690,11 +693,13 @@ export class StartingGoaliesComponent implements OnInit {
               if (sdata.team != null && schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
                 
                 sdata.player.gameLocation = "home";
-                sdata.team.opponentId = schedule['schedule'].awayTeam.id;
-                sdata.team.id = schedule['schedule'].awayTeam.id;
-                sdata.team.opponentAbbreviation = schedule['schedule'].awayTeam.abbreviation;
-                sdata.teamScore = schedule['score'].homeScoreTotal;
-                sdata.opponentScore = schedule['score'].awayScoreTotal;
+                if (schedule['schedule'].scheduleStatus != 'POSTPONED') {
+                  sdata.team.opponentId = schedule['schedule'].awayTeam.id;
+                  sdata.team.id = schedule['schedule'].awayTeam.id;
+                  sdata.team.opponentAbbreviation = schedule['schedule'].awayTeam.abbreviation;
+                  sdata.teamScore = schedule['score'].homeScoreTotal;
+                  sdata.opponentScore = schedule['score'].awayScoreTotal;
+                }
 
                 if(sdata.player.currentTeam != null && sdata.player.currentTeam.id === team.id) {
                   sdata.team.teamFull = team.city +' '+ team.name;   
