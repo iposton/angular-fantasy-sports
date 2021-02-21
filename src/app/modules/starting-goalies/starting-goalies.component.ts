@@ -374,7 +374,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210208-to-20210214`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210215-to-20210221`, { headers })
                     
                   )
                 )
@@ -646,26 +646,31 @@ export class StartingGoaliesComponent implements OnInit {
               
               
               //sdata.team = {};
+              if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation ||
+              sdata.team != null && schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
+                if (schedule['schedule'].scheduleStatus != 'POSTPONED') {
+                  sdata.team.gameId = schedule['schedule'].id;
+                  sdata.player.gameTime = schedule['schedule'].startTime;
+                  sdata.team.gameIce = schedule['schedule'].venue.name;
+                  sdata.status = schedule['schedule'].playedStatus;
+                }
 
-              if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
-                sdata.player.gameTime = schedule['schedule'].startTime;
-                sdata.team.gameIce = schedule['schedule'].venue.name;
-
-                sdata.team.gameId = schedule['schedule'].id;
-                sdata.player.gameLocation = "away";
+                sdata.schedStatus = schedule['schedule'].scheduleStatus;
                 sdata.team.day = this.tweetDay;
-                sdata.team.opponentId = schedule['schedule'].homeTeam.id;
-                sdata.team.id = schedule['schedule'].homeTeam.id;
-                sdata.team.opponentAbbreviation = schedule['schedule'].homeTeam.abbreviation;
                 sdata.team.today = today;
                 sdata.team.tomorrow = tomorrow;
                 sdata.team.yesterday = yesterday;
                 sdata.player.confirmed = false;
                 sdata.player.probable = false;
                 sdata.player.startstatus = '';
-                sdata.flip = 'inactive';
-                sdata.status = schedule['schedule'].playedStatus;
-                sdata.schedStatus = schedule['schedule'].scheduleStatus;
+                sdata.postponedStatus = schedule['schedule'].playedStatus;
+              }
+
+              if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
+                sdata.player.gameLocation = "away";
+                sdata.team.opponentId = schedule['schedule'].homeTeam.id;
+                sdata.team.id = schedule['schedule'].homeTeam.id;
+                sdata.team.opponentAbbreviation = schedule['schedule'].homeTeam.abbreviation;    
                 sdata.teamScore = schedule['score'].awayScoreTotal;
                 sdata.opponentScore = schedule['score'].homeScoreTotal;
 
@@ -683,23 +688,11 @@ export class StartingGoaliesComponent implements OnInit {
 
               }
               if (sdata.team != null && schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
-                sdata.player.gameTime = schedule['schedule'].startTime;
-                sdata.team.gameIce = schedule['schedule'].venue.name;
-                sdata.team.gameId = schedule['schedule'].id;
+                
                 sdata.player.gameLocation = "home";
-                sdata.team.day = this.tweetDay;
                 sdata.team.opponentId = schedule['schedule'].awayTeam.id;
                 sdata.team.id = schedule['schedule'].awayTeam.id;
                 sdata.team.opponentAbbreviation = schedule['schedule'].awayTeam.abbreviation;
-                sdata.team.today = today;
-                sdata.team.tomorrow = tomorrow;
-                sdata.team.yesterday = yesterday;
-                sdata.player.confirmed = false;
-                sdata.player.probable = false;
-                sdata.player.startstatus = '';
-                sdata.flip = 'inactive';
-                sdata.status = schedule['schedule'].playedStatus;
-                sdata.schedStatus = schedule['schedule'].scheduleStatus;
                 sdata.teamScore = schedule['score'].homeScoreTotal;
                 sdata.opponentScore = schedule['score'].awayScoreTotal;
 
@@ -708,6 +701,7 @@ export class StartingGoaliesComponent implements OnInit {
                   sdata.team.teamCity = team.city;
                   sdata.team.teamName = team.name;
                 }
+                
                 if (sdata.team.opponentId === team.id) {
                   sdata.team.opponent = team.city +' '+ team.name;   
                   sdata.team.opponentCity = team.city;
@@ -715,8 +709,6 @@ export class StartingGoaliesComponent implements OnInit {
                 }
 
               }
-
-              
 
             }
            }
@@ -737,7 +729,7 @@ export class StartingGoaliesComponent implements OnInit {
 
         for (let schedule of this.myData) {
           for (let sdata of this.myData) {
-            this.goalieFp(sdata);
+            this.nhlUtil.goalieFp(sdata);
             if (sdata.team != null && sdata.team.opponentId != null && schedule.player.currentTeam != null &&
               sdata.team.opponentId === schedule.player.currentTeam.id && 
               sdata.gameId === schedule.gameId) {
@@ -762,7 +754,8 @@ export class StartingGoaliesComponent implements OnInit {
                 mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses;
                 mdata.player.Shutouts = daily.stats.goaltending.shutouts;
                 mdata.player.ga = daily.stats.goaltending.goalsAgainst;
-                mdata.stats.fpToday = ((daily.stats.goaltending.saves * 0.2) - daily.stats.goaltending.goalsAgainst).toFixed(2);
+                mdata.stats.fpToday = this.util.round(this.nhlUtil.goalieDailyFp(daily), 1);
+                //((daily.stats.goaltending.saves * 0.2) - daily.stats.goaltending.goalsAgainst).toFixed(2);
 
                 if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins === 1) {
                   // this.starterIdData.push(daily.player.ID);
@@ -1449,11 +1442,6 @@ public showMatchups() {
     player.stats.blocks = player.stats.skating.blockedShots ? player.stats.skating.blockedShots : 0;
     player.stats.fp = (player.stats.scoring.goals * 3 + player.stats.scoring.assists * 2) + (player.stats.sog + player.stats.blocks);
     player.stats.fpa = Math.floor(player.stats.fp / player.stats.gamesPlayed);
-  }
-
-  public goalieFp (player) {
-    player.stats.fp = player.stats.goaltending.saves > 0 ? ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2) : 0;
-    player.stats.fpa = player.stats.goaltending.saves > 0 ? Math.floor(player.stats.fp / player.stats.gamesPlayed) : 0;
   }
 
   ngOnInit() {
