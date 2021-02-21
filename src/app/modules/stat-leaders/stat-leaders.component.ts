@@ -438,7 +438,9 @@ export class StatLeadersComponent implements OnInit {
               data.team.logo = team['officialLogoImageSrc'];
               data.team.city = team['city'];
               data.team.name = team['name'];
-              this.goalieFp(data);
+              data.stats.goaltending.fanDuelFP = this.util.round(this.nhlUtil.goalieSLFP(data),1);
+              data.stats.goaltending.fanDuelFPA = this.util.round(this.nhlUtil.goalieSLFPA(data),1);
+              
               
             }
 
@@ -1636,9 +1638,10 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.goaltending.goalsAgainst = data['11'];
                         info.stats.goaltending.shotsAgainst = data['12'];
                         info.stats.goaltending.goalsAgainstAverage = this.util.round(Math.floor(data['11'] * 60) / Math.floor(data['13'] / 60), 3);  
-                        
-                             
-                        this.goalieFp(info);
+
+                        //this.util.round(this.nhlUtil.goalieFp(info),1);
+                        info.stats.goaltending.fanDuelFP = this.util.round(this.nhlUtil.goalieSLFP(info),1);
+                        info.stats.goaltending.fanDuelFPA = this.util.round(this.nhlUtil.goalieSLFPA(info),1);
                       }
 
                       if (s === 'mlb' && this.mlbSection) {

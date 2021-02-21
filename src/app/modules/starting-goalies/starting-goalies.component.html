@@ -248,7 +248,7 @@
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                     <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
-                    <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
+                    <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fanDuelFPA}}</span>
                   <br>
                   <br>
                   <span *ngIf="startersDate === g.playerObj?.team?.today && dataService.isToday">
@@ -301,7 +301,7 @@
                   <span *ngIf="g.playerObj?.player.saves == null"><br> {{g.playerObj?.stats.goaltending.goalsAgainst}} Goals given up <br>
                     GAA: {{g.playerObj?.stats.goaltending.goalsAgainstAverage}}</span>
                     <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'COMPLETED'"> <br> FP: {{g.playerObj?.stats?.fpToday}}</span>
-                    <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fpa}}</span>
+                    <span *ngIf="data?.goalies?.home != null && data?.goalies?.home[0]?.playerObj?.status === 'UNPLAYED'"> <br> FPA: {{g.playerObj?.stats?.fanDuelFPA}}</span>
                   <br>
                   <br>
                   <span *ngIf="startersDate === g.playerObj?.team?.today && dataService.isToday">

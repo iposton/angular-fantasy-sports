@@ -139,10 +139,10 @@ export class NhlUtilService {
         lastName: "Smith",
         teamId: 24,
         abbreviation: "EDM",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8469608.jpg',
-        new: true
+        new: false
       },
       '5486': {
         id: 5486,
@@ -161,10 +161,10 @@ export class NhlUtilService {
         lastName: "Skinner",
         teamId: 24,
         abbreviation: "EDM",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8479973.jpg',
-        new: true
+        new: false
       },
       '10074': {
         id: 10074,
@@ -216,7 +216,7 @@ export class NhlUtilService {
         lastName: "Subban",
         teamId: 20,
         abbreviation: "CHI",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -238,7 +238,7 @@ export class NhlUtilService {
         lastName: "Delia",
         teamId: 20,
         abbreviation: "CHI",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -340,7 +340,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8476316.jpg',
-        new: true
+        new: false
       },
       '3647': {
         id: 3647,
@@ -362,7 +362,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8480382.jpg',
-        new: true
+        new: false
       },
       '17374': {
         id: 17374,
@@ -430,16 +430,27 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '11721': {
+        id: 11721,
+        firstName: "Maxime",
+        lastName: "Lagace",
+        teamId: 10,
+        abbreviation: "PIT",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8476509.jpg',
+        new: true
+      },
       '13873': {
         id: 13873,
         firstName: "Casey",
         lastName: "DeSmith",
         teamId: 10,
         abbreviation: "PIT",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8479193.jpg',
-        new: true
+        new: false
       },
       '4294': {
         id: 4294,
@@ -505,6 +516,17 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8478039.jpg',
+        new: true
+      },
+      '5335': {
+        id: 5335,
+        firstName: "Andrew",
+        lastName: "Hammond",
+        teamId: 25,
+        abbreviation: "MIN",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8477202.jpg',
         new: true
       },
       '3810': {
@@ -601,8 +623,8 @@ export class NhlUtilService {
         lastName: "Talbot",
         teamId:  23,
         abbreviation: "MIN",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -778,10 +800,10 @@ export class NhlUtilService {
         lastName: "Kivlenieks",
         teamId: 19,
         abbreviation: "CBJ",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480162.jpg',
-        new: true
+        new: false
       },
       '4351': {
         id: 4351,
@@ -800,7 +822,7 @@ export class NhlUtilService {
         lastName: "Pickard",
         teamId: 16,
         abbreviation: "DET",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8475717.jpg',
         new: true
@@ -833,8 +855,8 @@ export class NhlUtilService {
         lastName: "Blackwood",
         teamId: 7,
         abbreviation: "NJD",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -845,7 +867,7 @@ export class NhlUtilService {
         teamId: 7,
         abbreviation: "NJD",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8475809.jpg',
         new: false
       },
@@ -853,9 +875,9 @@ export class NhlUtilService {
         id: 12468,
         firstName: "Eric",
         lastName: "Comrie",
-        teamId: 7,
-        abbreviation: "NJD",
-        active: true,
+        teamId: 2,
+        abbreviation: "WPJ",
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8477480.jpg',
         new: false
@@ -899,7 +921,7 @@ export class NhlUtilService {
         lastName: "Bernier",
         teamId: 16,
         abbreviation: "DET",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8473541.jpg',
         new: false
@@ -943,7 +965,7 @@ export class NhlUtilService {
         lastName: "Merzlikins",
         teamId: 19,
         abbreviation: "CBJ",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8478007.jpg',
         new: false
@@ -1534,6 +1556,33 @@ export class NhlUtilService {
 
   public getNHLTeams() {
     return this.nhlTeams;
+  }
+
+  public goalieFp (player) {
+    player.stats.fp = player.stats.goaltending.saves > 0 ? ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2) : 0;
+    player.stats.fpa = player.stats.goaltending.saves > 0 ? Math.floor(player.stats.fp / player.stats.gamesPlayed) : 0;
+    player.stats.goaltending.fp = player.stats.fp;
+    player.stats.goaltending.fpa = player.stats.fpa;
+
+    player.stats.fanDuelFP = player.stats.goaltending.saves > 0 ? (player.stats.goaltending.saves * 0.8) + (player.stats.goaltending.shutouts * 8) + (player.stats.goaltending.wins * 12) - (player.stats.goaltending.goalsAgainst * 4) : 0;
+    player.stats.fanDuelFPA = player.stats.goaltending.saves > 0 ? Math.floor(player.stats.fanDuelFP / player.stats.gamesPlayed) : 0;
+    player.stats.goaltending.fanDuelFP = player.stats.fanDuelFP;
+    player.stats.goaltending.fanDuelFPA = player.stats.fanDuelFPA;
+  }
+
+  public goalieDailyFp (player) {
+    //player.stats.fp = player.stats.goaltending.saves > 0 ? ((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst).toFixed(2) : 0; //MKF
+    return player.stats.goaltending.saves > 0 ? ((player.stats.goaltending.saves * 0.8) - (player.stats.goaltending.goalsAgainst * 4)).toFixed(2) + (player.stats.goaltending.shutouts * 8) + (player.stats.goaltending.wins * 12) : 0;  
+  }
+
+  public goalieSLFP (player) {
+    return player.stats.goaltending.saves > 0 ? (player.stats.goaltending.saves * 0.8) + (player.stats.goaltending.shutouts * 8) + (player.stats.goaltending.wins * 12) - (player.stats.goaltending.goalsAgainst * 4) : 0;
+    player.stats.goaltending.fanDuelFPA = player.stats.goaltending.saves > 0 ? Math.floor(player.stats.fanDuelFP / player.stats.gamesPlayed) : 0;
+  }
+
+  public goalieSLFPA (player) {
+    let fp = player.stats.goaltending.saves > 0 ? (player.stats.goaltending.saves * 0.8) + (player.stats.goaltending.shutouts * 8) + (player.stats.goaltending.wins * 12) - (player.stats.goaltending.goalsAgainst * 4) : 0;
+    return player.stats.goaltending.saves > 0 ? Math.floor(fp / player.stats.gamesPlayed) : 0;
   }
 
   
