@@ -170,12 +170,12 @@ export class NhlUtilService {
         id: 10074,
         firstName: "Aaron",
         lastName: "Dell",
-        teamId: 12,
-        abbreviation: "TOR",
-        active: false,
+        teamId: 20,
+        abbreviation: "NJD",
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8477180.jpg',
-        new: false
+        new: true
       },
       '5122': {
         id: 5122,
@@ -866,7 +866,7 @@ export class NhlUtilService {
         lastName: "Wedgewood",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8475809.jpg',
         new: false
