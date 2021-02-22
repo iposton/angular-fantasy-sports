@@ -340,6 +340,11 @@ export class StartingGoaliesComponent implements OnInit {
         this.dataService
           .getDailySchedule().subscribe(res => {
 
+            const today = new Date()
+            const afterTomorrow = new Date(this.selectedDate);
+            afterTomorrow.setDate(afterTomorrow.getDate() + 2);
+
+
             //console.log(res, "schedule...");
 
             if (res['games'].length === 0) {
@@ -348,17 +353,16 @@ export class StartingGoaliesComponent implements OnInit {
               this.noGamesMsg = "There Are No Games Scheduled Today :(";
               console.log('There are no games being played today.');
             } else {
-              let postponed;
-              res['games'].forEach((item, index) => {
+              
+              //console.log(afterTomorrow, 'aftertomorrow');
+              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < new Date(afterTomorrow));
+              //console.log(this.dailySchedule, 'dailyshced after filter')
 
-                //if(this.fbService.userDetails === null) {
-                 
-                  dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
-                  teamString = dailyTeams.join();
-                //}
-
+              this.dailySchedule.forEach((item, index) => {
+                dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
+                teamString = dailyTeams.join();
               });
-              this.dailySchedule = res['games'];
+              
               teamRef = res['references'] ? res['references'].teamReferences : [];
               this.gameDate = res['games'][0] != null ? res['games'][0].schedule.startTime : res['games'][1] != null ? res['games'][1].schedule.startTime : new Date(); //res['games'][0].date;
               let dPipe = new DatePipe("en-US");
@@ -379,8 +383,6 @@ export class StartingGoaliesComponent implements OnInit {
                   )
                 )
                 .subscribe(res => {
-                  //console.log(res, 'get team schedules...');
-
                   res.forEach((item, index) => {
                     team = nhlTeamsArray[index]['abbreviation'];
                     //team = teamRef[index].abbreviation;
@@ -393,9 +395,6 @@ export class StartingGoaliesComponent implements OnInit {
                     //console.log(this.teamSchedules, 'schedules array...');
 
                   })
-                  
-
-                 // this.sortData();
 
                 }, (err: HttpErrorResponse) => {
                   
@@ -403,12 +402,10 @@ export class StartingGoaliesComponent implements OnInit {
 
               });
 
-              } else {
-                //this.sortData();
               }
 
               forkJoin(
-                  res['games'].map(
+                this.dailySchedule.map(
                     g =>  this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Goalie-starter,ForwardLine1-LW,ForwardLine1-RW,ForwardLine1-C,DefensePair1-R,DefensePair1-L`, {headers})
                   )
                 )
@@ -436,8 +433,7 @@ export class StartingGoaliesComponent implements OnInit {
                       if (res2[i2].actual != null && res2[i2].expected != null) { 
                         //console.log(res2[i2], 'got player ID for goalie actualy starting!');
                           for (let position of res2[i2].actual.lineupPositions) {
-                            //console.log(position, 'got player ID for goalie actualy starting!');
-                          //console.log(res2[i2].actual.starter[0].player, 'got player ID for goalie actualy starting!');
+
                             if (position.player != null) {
                               this.gameStarter = {
                                 playerID: position.player.id,
@@ -495,11 +491,9 @@ export class StartingGoaliesComponent implements OnInit {
                   this.sortData();
 
                 });
-                //this.sortData();
             }
 
           })
-
 
         this.dataService
           .getGameId().subscribe(res => {
@@ -648,12 +642,11 @@ export class StartingGoaliesComponent implements OnInit {
               //sdata.team = {};
               if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation ||
               sdata.team != null && schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
-                if (schedule['schedule'].scheduleStatus != 'POSTPONED') {
-                  sdata.team.gameId = schedule['schedule'].id;
-                  sdata.player.gameTime = schedule['schedule'].startTime;
-                  sdata.team.gameIce = schedule['schedule'].venue.name;
-                  sdata.status = schedule['schedule'].playedStatus;
-                }
+
+                sdata.team.gameId = schedule['schedule'].id;
+                sdata.player.gameTime = schedule['schedule'].startTime;
+                sdata.team.gameIce = schedule['schedule'].venue.name;
+                sdata.status = schedule['schedule'].playedStatus;
 
                 sdata.schedStatus = schedule['schedule'].scheduleStatus;
                 sdata.team.day = this.tweetDay;
@@ -668,14 +661,11 @@ export class StartingGoaliesComponent implements OnInit {
 
               if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
                 sdata.player.gameLocation = "away";
-                
-                if (schedule['schedule'].scheduleStatus != 'POSTPONED') {
-                  sdata.team.opponentId = schedule['schedule'].homeTeam.id;
-                  sdata.team.id = schedule['schedule'].homeTeam.id;
-                  sdata.team.opponentAbbreviation = schedule['schedule'].homeTeam.abbreviation;    
-                  sdata.teamScore = schedule['score'].awayScoreTotal;
-                  sdata.opponentScore = schedule['score'].homeScoreTotal;
-                }
+                sdata.team.opponentId = schedule['schedule'].homeTeam.id;
+                sdata.team.id = schedule['schedule'].homeTeam.id;
+                sdata.team.opponentAbbreviation = schedule['schedule'].homeTeam.abbreviation;    
+                sdata.teamScore = schedule['score'].awayScoreTotal;
+                sdata.opponentScore = schedule['score'].homeScoreTotal;
 
                 if(sdata.player.currentTeam != null && sdata.player.currentTeam.id === team.id) {
                   sdata.team.teamFull = team.city +' '+ team.name;   
@@ -693,13 +683,11 @@ export class StartingGoaliesComponent implements OnInit {
               if (sdata.team != null && schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
                 
                 sdata.player.gameLocation = "home";
-                if (schedule['schedule'].scheduleStatus != 'POSTPONED') {
-                  sdata.team.opponentId = schedule['schedule'].awayTeam.id;
-                  sdata.team.id = schedule['schedule'].awayTeam.id;
-                  sdata.team.opponentAbbreviation = schedule['schedule'].awayTeam.abbreviation;
-                  sdata.teamScore = schedule['score'].homeScoreTotal;
-                  sdata.opponentScore = schedule['score'].awayScoreTotal;
-                }
+                sdata.team.opponentId = schedule['schedule'].awayTeam.id;
+                sdata.team.id = schedule['schedule'].awayTeam.id;
+                sdata.team.opponentAbbreviation = schedule['schedule'].awayTeam.abbreviation;
+                sdata.teamScore = schedule['score'].homeScoreTotal;
+                sdata.opponentScore = schedule['score'].awayScoreTotal;
 
                 if(sdata.player.currentTeam != null && sdata.player.currentTeam.id === team.id) {
                   sdata.team.teamFull = team.city +' '+ team.name;   
@@ -1669,7 +1657,7 @@ public showMatchups() {
         forkJoin(
             res['games'].map(
               g =>
-              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-playoff/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
+              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
               //.map(response => response.json())
             )
           )

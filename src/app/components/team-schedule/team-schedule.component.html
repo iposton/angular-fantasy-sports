@@ -12,12 +12,22 @@
                             <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
                               <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
                               <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &lt; g.score?.awayScoreTotal">(L <span class="minus">-{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span> 
-                              vs {{g.schedule.awayTeam.abbreviation}}  
+                              <span *ngIf="!weekResults"> 
+                                vs {{g.schedule.awayTeam.abbreviation}}
+                              </span>
+                              <span *ngIf="weekResults && g.schedule?.playedStatus === 'COMPLETED'"> 
+                                vs {{g.schedule.awayTeam.abbreviation}}
+                              </span>
                             </span>
                             <span class="lg" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
                               <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
                               <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
-                              @ {{g.schedule.homeTeam.abbreviation}} 
+                                <span *ngIf="!weekResults"> 
+                                  @ {{g.schedule.homeTeam.abbreviation}} 
+                                </span>
+                                <span *ngIf="weekResults && g.schedule?.playedStatus === 'COMPLETED'"> 
+                                  @ {{g.schedule.homeTeam.abbreviation}} 
+                                </span>
                             </span>
                           </span>
                           </span> 

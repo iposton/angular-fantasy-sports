@@ -43,7 +43,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8467950.jpg',
-        new: true
+        new: false
       },
       '4863':{
         id: 4863,
