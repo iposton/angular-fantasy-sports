@@ -342,7 +342,7 @@ export class StartingGoaliesComponent implements OnInit {
 
             const today = new Date()
             const afterTomorrow = new Date(this.selectedDate);
-            afterTomorrow.setDate(afterTomorrow.getDate() + 2);
+            afterTomorrow.setDate(afterTomorrow.getDate() + 1);
 
 
             //console.log(res, "schedule...");
@@ -356,7 +356,7 @@ export class StartingGoaliesComponent implements OnInit {
               
               //console.log(afterTomorrow, 'aftertomorrow');
               this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < new Date(afterTomorrow));
-              //console.log(this.dailySchedule, 'dailyshced after filter')
+              console.log(this.dailySchedule, 'dailyshced after filter')
 
               this.dailySchedule.forEach((item, index) => {
                 dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
