@@ -84,6 +84,8 @@ export class HomeComponent implements OnInit {
   public selectedWeek: any;
   public tomorrowDate: any;
   public testBrowser: boolean;
+  public nhlSelectedDate: any;
+  public nbaSelectedDate: any;
 
   tweetDay: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-regular";
@@ -124,6 +126,8 @@ export class HomeComponent implements OnInit {
       
     } 
     let date = new Date();
+    this.nhlSelectedDate = new Date();
+    this.nbaSelectedDate = new Date();
     if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
       this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
     }
@@ -136,12 +140,14 @@ export class HomeComponent implements OnInit {
     if (this.nbaSched) {
       this.nbaLoading = true;
       this.nbaDataService.selectedDate(event);
+      this.nbaSelectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
       this.loadNBA();
     }
 
     if (this.nhlSched) {
       this.nhlLoading = true;
       this.nhlDataService.selectedDate(event);
+      this.nhlSelectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
       this.loadNHL();
     }
 
@@ -248,12 +254,15 @@ public loadNHL() {
     } else {
       this.nhlLoading = false;
       this.nhlGamesToday = true;
-      this.nhlSchedule = res['games'];
+      // this.nhlSchedule = res['games'];
       this.noNhlGamesMsg = '';
       this.nhlTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
       this.nhlGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
-      if (this.nhlTeamRef != null)
+      if (this.nhlTeamRef != null) {
+        this.nhlSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nhlSelectedDate));
         this.getTeamInfo(this.nhlSchedule, this.nhlTeamRef);
+      }
+        
     }
    });
 }
@@ -271,12 +280,15 @@ public loadNBA() {
     } else {
       this.nbaLoading = false;
       this.nbaGamesToday = true;
-      this.nbaSchedule = res['games'];
+      //this.nbaSchedule = res['games'];
       this.noNbaGamesMsg = '';
       this.nbaTeamRef = Object.values(this.nbaTeams); //res['references'].teamReferences ? res['references'].teamReferences : null;
       this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
-      if (this.nbaTeamRef != null)
+      if (this.nbaTeamRef != null) {
+        this.nbaSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nbaSelectedDate));
         this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
+      }
+        
         //console.log(this.nbaSchedule, 'nba sched')
     }
   }, (err: HttpErrorResponse) => {

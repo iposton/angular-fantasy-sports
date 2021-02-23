@@ -1577,12 +1577,46 @@ export class NhlUtilService {
 
   public goalieSLFP (player) {
     return player.stats.goaltending.saves > 0 ? (player.stats.goaltending.saves * 0.8) + (player.stats.goaltending.shutouts * 8) + (player.stats.goaltending.wins * 12) - (player.stats.goaltending.goalsAgainst * 4) : 0;
-    player.stats.goaltending.fanDuelFPA = player.stats.goaltending.saves > 0 ? Math.floor(player.stats.fanDuelFP / player.stats.gamesPlayed) : 0;
   }
 
   public goalieSLFPA (player) {
     let fp = player.stats.goaltending.saves > 0 ? (player.stats.goaltending.saves * 0.8) + (player.stats.goaltending.shutouts * 8) + (player.stats.goaltending.wins * 12) - (player.stats.goaltending.goalsAgainst * 4) : 0;
     return player.stats.goaltending.saves > 0 ? Math.floor(fp / player.stats.gamesPlayed) : 0;
+  }
+
+  public skaterFp (player) {
+    player.stats.hits = player.stats.skating.hits; 
+    player.stats.sog = player.stats.skating.shots ? player.stats.skating.shots : 0;
+    player.stats.blocks = player.stats.skating.blockedShots ? player.stats.skating.blockedShots : 0;
+    player.stats.fp = (player.stats.scoring.goals * 3 + player.stats.scoring.assists * 2) + (player.stats.sog + player.stats.blocks);
+    player.stats.fpa = Math.floor(player.stats.fp / player.stats.gamesPlayed);
+
+    player.stats.fanDuelFP = (player.stats.scoring.goals * 12) + (player.stats.scoring.assists * 8) + ((player.stats.blocks + player.stats.sog) * 1.6) + ((player.stats.scoring.powerplayGoals + player.stats.scoring.powerplayAssists ) * .5) + ((player.stats.scoring.shorthandedGoals + player.stats.scoring.shorthandedAssists ) * 2);
+    player.stats.fanDuelFPA = Math.floor(player.stats.fanDuelFP / player.stats.gamesPlayed);
+  }
+
+  public skaterDailyFp (mdata, daily) {
+    mdata.gameId = daily.game.id;
+    mdata.stats.assistsToday = daily.stats.scoring.assists ? daily.stats.scoring.assists : 0;
+    mdata.stats.goalsToday = daily.stats.scoring.goals ? daily.stats.scoring.goals : 0;
+    
+    mdata.stats.sogToday = daily.stats.skating.shots ? daily.stats.skating.shots : 0;
+    mdata.stats.blocksToday = daily.stats.skating.blockedShots ? daily.stats.skating.blockedShots : 0;
+    mdata.stats.hitsToday = daily.stats.skating.hits ? daily.stats.skating.hits : 0;
+    mdata.stats.ppgToday = daily.stats.scoring.powerplayGoals ? daily.stats.scoring.powerplayGoals : 0;
+    mdata.stats.ppaToday = daily.stats.scoring.powerplayAssists ? daily.stats.scoring.powerplayAssists : 0;
+    mdata.stats.shgToday = daily.stats.scoring.shorthandedGoals ? daily.stats.scoring.shorthandedGoals : 0;
+    mdata.stats.shaToday =  daily.stats.scoring.shorthandedAssists ? daily.stats.scoring.shorthandedAssists : 0; 
+    mdata.stats.fpToday = (mdata.stats.goalsToday * 12) + (mdata.stats.assistsToday * 8) + ((mdata.stats.sogToday + mdata.stats.blocksToday) * 1.6) + ((mdata.stats.ppgToday + mdata.stats.ppaToday ) * .5) + ((mdata.stats.shgToday + mdata.stats.shaToday ) * 2);
+  }
+
+  public skaterSLFP (player) {
+    return (player.stats.scoring.goals * 12) + (player.stats.scoring.assists * 8) + ((player.stats.skating.blockedShots + player.stats.skating.shots) * 1.6) + ((player.stats.scoring.powerplayGoals + player.stats.scoring.powerplayAssists ) * .5) + ((player.stats.scoring.shorthandedGoals + player.stats.scoring.shorthandedAssists ) * 2); 
+  }
+
+  public skaterSLFPA (player) {
+    let fp = (player.stats.scoring.goals * 12) + (player.stats.scoring.assists * 8) + ((player.stats.skating.blockedShots + player.stats.skating.shots) * 1.6) + ((player.stats.scoring.powerplayGoals + player.stats.scoring.powerplayAssists ) * .5) + ((player.stats.scoring.shorthandedGoals + player.stats.scoring.shorthandedAssists ) * 2);
+    return Math.floor(fp / player.stats.gamesPlayed);
   }
 
   

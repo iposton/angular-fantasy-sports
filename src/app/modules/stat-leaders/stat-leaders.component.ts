@@ -370,7 +370,9 @@ export class StatLeadersComponent implements OnInit {
                 data.team.logo = team['officialLogoImageSrc'];
                 data.team.city = team['city'];
                 data.team.name = team['name'];
-                this.skaterFp(data);
+                //this.skaterFp(data);
+                data.stats.scoring.fanDuelFP = this.util.round(this.nhlUtil.skaterSLFP(data),1);
+                data.stats.scoring.fanDuelFPA = this.util.round(this.nhlUtil.skaterSLFPA(data),1);
                 data.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data.stats.shifts.timeOnIceSeconds, data.stats.gamesPlayed);
               }
 
@@ -488,19 +490,6 @@ export class StatLeadersComponent implements OnInit {
         
     })
   }
-
-  public skaterFp (player) {
-    player.stats.sog = player.stats.skating.shots ? player.stats.skating.shots : 0;
-    player.stats.blocks = player.stats.skating.blockedShots ? player.stats.skating.blockedShots : 0;
-    player.stats.scoring.fp = (player.stats.scoring.goals * 3 + player.stats.scoring.assists * 2) + (player.stats.sog + player.stats.blocks);
-    player.stats.scoring.fpa = Math.floor(player.stats.scoring.fp / player.stats.gamesPlayed);
-  }
-
-  public goalieFp (player) {
-    player.stats.goaltending.fp = this.util.round((player.stats.goaltending.saves * 0.2) - player.stats.goaltending.goalsAgainst, 1);
-    player.stats.goaltending.fpa = Math.floor(player.stats.goaltending.fp / player.stats.gamesPlayed);
-  }
-
   public async sortNBA() {
       this.loading = true;
       this.nbaSection = true; 
@@ -1623,7 +1612,9 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.skating.shots = data['8'];
                         info.stats.skating.blockedShots = data['9'];  
                         info.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data['10'], data['7']);   
-                        this.skaterFp(info);
+                        //this.skaterFp(info);
+                        info.stats.scoring.fanDuelFP = this.util.round(this.nhlUtil.skaterSLFP(info),1);
+                        info.stats.scoring.fanDuelFPA = this.util.round(this.nhlUtil.skaterSLFPA(info),1);
                         
                       }
 
