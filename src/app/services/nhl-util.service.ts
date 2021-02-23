@@ -419,6 +419,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '5794': {
+        id: 5794,
+        firstName: "Joey",
+        lastName: "Daccord",
+        teamId: 13,
+        abbreviation: "OTT",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478916.jpg',
+        new: true
+      },
       '10083': {
         id: 10083,
         firstName: "Tristan",
@@ -965,7 +976,7 @@ export class NhlUtilService {
         lastName: "Merzlikins",
         teamId: 19,
         abbreviation: "CBJ",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8478007.jpg',
         new: false
@@ -976,10 +987,10 @@ export class NhlUtilService {
         lastName: "Hogberg",
         teamId: 13,
         abbreviation: "OTT",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8477405.jpg',
-        new: true
+        new: false
       },
       '15384': {
         id: 15384,

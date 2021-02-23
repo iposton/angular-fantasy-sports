@@ -24,6 +24,7 @@ let utcDate = new Date(thisDate.toUTCString());
 utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
 let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
 
 @Component({
   selector: 'app-home',
@@ -259,7 +260,7 @@ public loadNHL() {
       this.nhlTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
       this.nhlGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
       if (this.nhlTeamRef != null) {
-        this.nhlSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nhlSelectedDate));
+        this.nhlSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nhlSelectedDate, this.nhlDataService.isTomorrow) || playedStatuses[item['schedule'].playedStatus] != null);
         this.getTeamInfo(this.nhlSchedule, this.nhlTeamRef);
       }
         
@@ -285,7 +286,7 @@ public loadNBA() {
       this.nbaTeamRef = Object.values(this.nbaTeams); //res['references'].teamReferences ? res['references'].teamReferences : null;
       this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
       if (this.nbaTeamRef != null) {
-        this.nbaSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nbaSelectedDate));
+        this.nbaSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nbaSelectedDate, this.nbaDataService.isTomorrow) || playedStatuses[item['schedule'].playedStatus] != null);
         this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
       }
         

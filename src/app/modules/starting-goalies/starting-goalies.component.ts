@@ -346,8 +346,9 @@ export class StartingGoaliesComponent implements OnInit {
               this.noGamesMsg = "There Are No Games Scheduled Today :(";
               console.log('There are no games being played today.');
             } else {
-              
-              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < (!this.dataService.isTomorrow ? this.util.tomorrow(this.selectedDate) : this.util.tomorrow(this.selectedDate).setHours(this.util.tomorrow(this.selectedDate).getDate() + 1)));
+
+              let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
+              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isTomorrow) || playedStatuses[item['schedule'].playedStatus] != null);
               //console.log(this.dailySchedule, 'dailyshced after filter')
 
               this.dailySchedule.forEach((item, index) => {
@@ -370,7 +371,7 @@ export class StartingGoaliesComponent implements OnInit {
                   nhlTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210215-to-20210221`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210222-to-20210228`, { headers })
                     
                   )
                 )
