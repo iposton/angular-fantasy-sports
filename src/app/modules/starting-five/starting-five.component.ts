@@ -241,7 +241,7 @@ export class StartingFiveComponent implements OnInit {
                   nbaTeamsArray.map(
                     g => 
                     
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210215-to-20210221`, { headers })
+                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210222-to-20210228`, { headers })
                     
                   )
                 )

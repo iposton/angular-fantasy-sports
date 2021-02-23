@@ -1634,9 +1634,15 @@ export class UtilService {
     return Math.round(value * multiplier) / multiplier;
   }
 
-  public tomorrow(date) {
+  public tomorrow(date, day) {
+    let days = 1;
+    if (day) {
+      days = 2;
+    } else {
+      days = 1;
+    }
     const tomorrow = new Date(date);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() + days);
     tomorrow.setHours(tomorrow.getHours() - 8);
     return new Date(tomorrow);
   }

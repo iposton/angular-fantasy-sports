@@ -18,6 +18,10 @@ let utcDate = new Date(thisDate.toUTCString());
 utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
 let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
+let tutcDate = new Date(thisDate.toUTCString());
+let tmyDate = new Date(tutcDate);
+let tomorrowDailyDate = tmyDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +42,8 @@ export class NBADataService {
   public env: Observable < any > = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
   public dailyDate: any;
+  public isTomorrow: boolean = false;
+  public isToday: boolean = false;
 
   constructor(private http: HttpClient) {
     this.dailyDate = dailyDate;
@@ -46,6 +52,20 @@ export class NBADataService {
   public selectedDate(d) {
     dailyDate = d;
     //dailyDate = '20200730';
+  }
+
+  public checkDay() {
+    if (dailyDate === tomorrowDailyDate) {
+      this.isTomorrow = true;
+    } else {
+      this.isTomorrow = false;
+    }
+    
+    if (dailyDate === this.dailyDate) {
+      this.isToday = true;
+    } else {
+      this.isToday = false;
+    }
   }
 
   sendHeaderOptions(h) {
