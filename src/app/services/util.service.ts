@@ -1633,4 +1633,11 @@ export class UtilService {
     var multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
   }
+
+  public tomorrow(date) {
+    const tomorrow = new Date(date);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(tomorrow.getHours() - 8);
+    return new Date(tomorrow);
+  }
 }

@@ -340,13 +340,6 @@ export class StartingGoaliesComponent implements OnInit {
         this.dataService
           .getDailySchedule().subscribe(res => {
 
-            const today = new Date()
-            const afterTomorrow = new Date(this.selectedDate);
-            afterTomorrow.setDate(afterTomorrow.getDate() + 1);
-
-
-            //console.log(res, "schedule...");
-
             if (res['games'].length === 0) {
               this.loading = false;
               this.noGamesToday = true;
@@ -354,9 +347,8 @@ export class StartingGoaliesComponent implements OnInit {
               console.log('There are no games being played today.');
             } else {
               
-              //console.log(afterTomorrow, 'aftertomorrow');
-              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < new Date(afterTomorrow));
-              console.log(this.dailySchedule, 'dailyshced after filter')
+              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < (!this.dataService.isTomorrow ? this.util.tomorrow(this.selectedDate) : this.util.tomorrow(this.selectedDate).setHours(this.util.tomorrow(this.selectedDate).getDate() + 1)));
+              //console.log(this.dailySchedule, 'dailyshced after filter')
 
               this.dailySchedule.forEach((item, index) => {
                 dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
@@ -1200,7 +1192,8 @@ public showMatchups() {
                                 data.starterTeam = gb.team;
                                 data.sStatus = gb.scheduleStatus;
                                 data.order = gb.position;
-                                this.skaterFp(data);
+                                this.nhlUtil.skaterFp(data);
+                                this.util.round(data.stats.fanDuelFP,1);
 
                                 if (gb.status !== "UNPLAYED") {
                                   data.team.currentPeriod = gb.score['currentPeriod'];
@@ -1341,16 +1334,9 @@ public showMatchups() {
                             for (let mdata of this.mySkaterData) {
 
                               if (daily.player.id === mdata.player.id) {
-                                //console.log(daily.game, 'get game info by player id')
-                                mdata.gameId = daily.game.id;
-                                mdata.stats.assistsToday = daily.stats.scoring.assists ? daily.stats.scoring.assists : 0;
-                                mdata.stats.goalsToday = daily.stats.scoring.goals ? daily.stats.scoring.goals : 0;
                                 mdata.stats.iceTimeToday = daily.stats.shifts != null ? this.makeMinutes(daily.stats.shifts.timeOnIceSeconds) : 0;
-                                mdata.stats.sogToday = daily.stats.skating.shots ? daily.stats.skating.shots : 0;
-                                mdata.stats.blocksToday = daily.stats.skating.blockedShots ? daily.stats.skating.blockedShots : 0;
-                                mdata.stats.hitsToday = daily.stats.skating.hits ? daily.stats.skating.hits : 0;
-                                mdata.stats.fpToday = mdata.stats.goalsToday * 3 + mdata.stats.assistsToday * 2 + mdata.stats.sogToday + mdata.stats.blocksToday;
-                                //how to get shootout goals
+                                this.nhlUtil.skaterDailyFp(mdata, daily);
+                                mdata.stats.fpToday = this.util.round(mdata.stats.fpToday,1);  
                               }
 
                             }
@@ -1427,14 +1413,6 @@ public showMatchups() {
 
   public makeMinutes(time) {
     return Math.floor(time / 60);
-  }
-
-  public skaterFp (player) {
-    player.stats.hits = player.stats.skating.hits; 
-    player.stats.sog = player.stats.skating.shots ? player.stats.skating.shots : 0;
-    player.stats.blocks = player.stats.skating.blockedShots ? player.stats.skating.blockedShots : 0;
-    player.stats.fp = (player.stats.scoring.goals * 3 + player.stats.scoring.assists * 2) + (player.stats.sog + player.stats.blocks);
-    player.stats.fpa = Math.floor(player.stats.fp / player.stats.gamesPlayed);
   }
 
   ngOnInit() {
