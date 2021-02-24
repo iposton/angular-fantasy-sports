@@ -226,11 +226,13 @@ export class StartingFiveComponent implements OnInit {
                 this.liveGames = true;
                 
               }
-              this.dailySchedule = res['games'];
+              let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
+              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) || playedStatuses[item['schedule'].playedStatus] != null);
+              //this.dailySchedule = res['games'];
               this.teamRef = res['references'].teamReferences;
               teamRef = res['references'].teamReferences;
               this.gameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
-              let dPipe = new DatePipe("en-US");
+              //let dPipe = new DatePipe("en-US");
 
               this.gamesToday = true;
               if (this.teamSchedules.length === 0) {
@@ -277,7 +279,7 @@ export class StartingFiveComponent implements OnInit {
             }
 
             forkJoin(
-              res['games'].map(
+              this.dailySchedule.map(
                 g => 
                 
                  this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/games/`+g['schedule'].id+`/lineup.json`, { headers })
@@ -674,11 +676,7 @@ export class StartingFiveComponent implements OnInit {
                 this.dataService
                   .getDaily(playerString).subscribe(res => {
                     console.log(res, "Daily stats...");
-                    this.dailyStats = res['gamelogs'];
-
-                    // if (this.myData && this.dailySchedule) {
-                    //   console.log('start sorting sched data...');     
-                    // }
+                    this.dailyStats = res != null ? res['gamelogs'] : [];
 
                   if (this.myData && this.dailyStats) {
                       console.log('getting daily stats again, live update...');

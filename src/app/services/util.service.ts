@@ -1637,9 +1637,9 @@ export class UtilService {
   public tomorrow(date, day) {
     let days = 1;
     if (day) {
-      days = 2;
-    } else {
       days = 1;
+    } else {
+      days = 2;
     }
     const tomorrow = new Date(date);
     tomorrow.setDate(tomorrow.getDate() + days);

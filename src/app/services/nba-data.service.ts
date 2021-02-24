@@ -18,8 +18,10 @@ let utcDate = new Date(thisDate.toUTCString());
 utcDate.setHours(utcDate.getHours() - 8);
 let myDate = new Date(utcDate);
 let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
+
 let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
-let tutcDate = new Date(thisDate.toUTCString());
+let tutcDate = new Date(tomorrowDate.toUTCString());
+tutcDate.setHours(tutcDate.getHours() - 8);
 let tmyDate = new Date(tutcDate);
 let tomorrowDailyDate = tmyDate.toISOString().slice(0, 10).replace(/-/g, "");
 
@@ -66,6 +68,7 @@ export class NBADataService {
     } else {
       this.isToday = false;
     }
+
   }
 
   sendHeaderOptions(h) {
