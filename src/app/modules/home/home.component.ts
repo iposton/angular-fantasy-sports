@@ -142,6 +142,7 @@ export class HomeComponent implements OnInit {
       this.nbaLoading = true;
       this.nbaDataService.selectedDate(event);
       this.nbaSelectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+      this.nbaDataService.checkDay();
       this.loadNBA();
     }
 
@@ -149,6 +150,7 @@ export class HomeComponent implements OnInit {
       this.nhlLoading = true;
       this.nhlDataService.selectedDate(event);
       this.nhlSelectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+      this.nhlDataService.checkDay();
       this.loadNHL();
     }
 
@@ -260,7 +262,7 @@ public loadNHL() {
       this.nhlTeamRef = res['references'].teamReferences ? res['references'].teamReferences : null;
       this.nhlGameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
       if (this.nhlTeamRef != null) {
-        this.nhlSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nhlSelectedDate, this.nhlDataService.isTomorrow) || playedStatuses[item['schedule'].playedStatus] != null);
+        this.nhlSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nhlSelectedDate, this.nhlDataService.isToday) || playedStatuses[item['schedule'].playedStatus] != null);
         this.getTeamInfo(this.nhlSchedule, this.nhlTeamRef);
       }
         
@@ -286,7 +288,7 @@ public loadNBA() {
       this.nbaTeamRef = Object.values(this.nbaTeams); //res['references'].teamReferences ? res['references'].teamReferences : null;
       this.nbaGameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
       if (this.nbaTeamRef != null) {
-        this.nbaSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nbaSelectedDate, this.nbaDataService.isTomorrow) || playedStatuses[item['schedule'].playedStatus] != null);
+        this.nbaSchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.nbaSelectedDate, this.nbaDataService.isToday) || playedStatuses[item['schedule'].playedStatus] != null);
         this.getTeamInfo(this.nbaSchedule, this.nbaTeamRef);
       }
         
