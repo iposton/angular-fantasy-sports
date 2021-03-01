@@ -74,6 +74,7 @@ export class StartingGoaliesComponent implements OnInit {
   public allGoaliesTomorrow: Array <any>;
   public selected: any;
   public startingGoaliesToday: Array <any> = [];
+  public msfGoaliesToday: Array <any> = [];
   public tweetDay: any;
   public noGamesMsg: any;
   public noScoresMsg: any;
@@ -743,9 +744,28 @@ export class StartingGoaliesComponent implements OnInit {
                 mdata.stats.fpToday = this.util.round(this.nhlUtil.goalieDailyFp(daily), 1);
                 //((daily.stats.goaltending.saves * 0.2) - daily.stats.goaltending.goalsAgainst).toFixed(2);
 
-                if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins === 1) {
+                if (daily.stats.goaltending.saves > 0) {
                   // this.starterIdData.push(daily.player.ID);
-                  this.startingGoaliesToday.push(daily.player.id);
+
+                  if (mdata.team != null && this.startersDate === mdata.team.today && 
+                    this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === true && mdata.status === 'LIVE' ||
+                    mdata.team != null && this.startersDate === mdata.team.today && 
+                    this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === false && daily.stats.goaltending.gamesStarted === 0 && mdata.status === 'LIVE') {
+                      this.startingGoaliesToday.push(daily.player.id);
+                  }
+
+                  if (mdata.team != null && this.startersDate === mdata.team.today && 
+                    this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === false && mdata.status === 'LIVE') {
+                      this.msfGoaliesToday.push(daily.player.id);
+                  }
+
+                  let complete = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW'}
+
+                  if (complete[mdata.status] != null && mdata.team != null && this.startersDate === mdata.team.today) {
+                      this.startingGoaliesToday.push(daily.player.id);
+                  }
+                  
+                    
                 }
 
                 if (daily.stats.goaltending.goalsAgainst === 1) {
@@ -1455,10 +1475,30 @@ public showMatchups() {
                           mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses;
                           mdata.player.Shutouts = daily.stats.goaltending.shutouts;
                           mdata.player.ga = daily.stats.goaltending.goalsAgainst;
+                          daily.stats.goaltending.gamesStarted
 
-                          if (daily.stats.goaltending.saves > 0 || daily.stats.goaltending.wins === 1) {
+                          if (daily.stats.goaltending.saves > 0) {
+
+                            if (mdata.team != null && this.startersDate === mdata.team.today && 
+                              this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === true && mdata.status === 'LIVE' ||
+                              mdata.team != null && this.startersDate === mdata.team.today && 
+                              this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === false && daily.stats.goaltending.gamesStarted === 0 && mdata.status === 'LIVE') {
+                                
+                                this.startingGoaliesToday.push(daily.player.id);
+                            }
+
+                            if (mdata.team != null && this.startersDate === mdata.team.today && 
+                              this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === false && mdata.status === 'LIVE') {
+                                this.msfGoaliesToday.push(daily.player.id);
+                            }
+
+                            let complete = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW'}
+
+                            if (complete[mdata.status] != null && mdata.team != null && this.startersDate === mdata.team.today) {
+                                this.startingGoaliesToday.push(daily.player.id);
+                            }
                             // this.starterIdData.push(daily.player.ID);
-                            this.startingGoaliesToday.push(daily.player.id);
+                            
                           }
 
                           if (daily.stats.goaltending.goalsAgainst === 1) {
