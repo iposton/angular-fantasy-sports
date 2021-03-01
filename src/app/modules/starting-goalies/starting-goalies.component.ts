@@ -761,7 +761,7 @@ export class StartingGoaliesComponent implements OnInit {
 
                   let complete = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW'}
 
-                  if (complete[mdata.status] != null && mdata.team != null && this.startersDate === mdata.team.today) {
+                  if (complete[mdata.status] != null && mdata.team != null) {
                       this.startingGoaliesToday.push(daily.player.id);
                   }
                   
@@ -1494,7 +1494,7 @@ public showMatchups() {
 
                             let complete = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW'}
 
-                            if (complete[mdata.status] != null && mdata.team != null && this.startersDate === mdata.team.today) {
+                            if (complete[mdata.status] != null && mdata.team != null) {
                                 this.startingGoaliesToday.push(daily.player.id);
                             }
                             // this.starterIdData.push(daily.player.ID);
