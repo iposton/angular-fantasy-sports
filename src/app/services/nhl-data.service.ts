@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpParams} from '@angular/common/http'
 
 let thisDate = new Date();
@@ -90,6 +90,9 @@ export class NHLDataService {
   public dailyDate: string = '';
   public isToday: boolean = false;
   public isTomorrow: boolean = false;
+  public isPast: boolean = false;
+  public nbaTeamsSched: Array <any> = [];
+  public nhlTeamsSched: Array <any> = [];
 
   constructor(private http: HttpClient) {
      this.dailyDate = dailyDate;
@@ -111,6 +114,16 @@ export class NHLDataService {
     } else {
       this.isToday = false;
     }
+
+    if (dailyDate < this.dailyDate) {
+      this.isPast = true;
+    } else {
+      this.isPast = false;
+    }
+
+    console.log('is Today?', this.isToday, 'day checked');
+    console.log('is Tomorrow?', this.isTomorrow, 'day checked');
+    console.log('is Past?', this.isPast, 'day checked');
   }
 
   sendHeaderOptions(h) {
@@ -312,8 +325,56 @@ export class NHLDataService {
     return this.score;
   }
 
-  clearCache() {
-    //this.info = null;
+  public getSchedules(nextWeek, sport, teams) {
+    if (sport === 'nba')
+      this.nbaTeamsSched = [];
+    if (sport === 'nhl')
+      this.nhlTeamsSched = [];
+    let begin = null;
+    let end = null;
+    let printbegin = null;
+    let printend = null;
+    if (nextWeek) {
+      begin = '20210308';
+      printbegin = '3/8';
+      end = '20210314';
+      printend = '3/14';
+    } else {
+      begin = '20210301';
+      printbegin = '3/1';
+      end = '20210307';
+      printend = '3/7';     
+    }
+      let team;
+      let teamSchedule;
+      const teamsArray = Object.values(teams);
+      forkJoin(
+        teamsArray.map(
+          g => 
+          
+           this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/${sport}/2020-2021-regular/games.json?team=${g['abbreviation']}&date=from-${begin}-to-${end}`, { headers })
+          
+        )
+      )
+      .subscribe(res => {
+        //console.log(res, 'get team schedules...');
+        res.forEach((item, index) => {
+          team = teamsArray[index]['abbreviation'];
+          //team = teamRef[index].abbreviation;
+          teamSchedule = {
+            team: team,
+            schedule: res[index]['games'],
+            teamInfo: teamsArray[index],
+            begin: printbegin,
+            end: printend
+          }
+          if (sport === 'nba')
+            this.nbaTeamsSched.push(teamSchedule);
+          if (sport === 'nhl')
+            this.nhlTeamsSched.push(teamSchedule);
+          //console.log(this.teamSchedules, 'schedules array...');
+        })
+      })
   }
 
   public iceTimeAvg(time, gp) {

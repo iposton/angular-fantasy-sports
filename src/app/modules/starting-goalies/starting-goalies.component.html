@@ -219,6 +219,7 @@
           </span> 
       </div>
     </div>
+    <div class="row" *ngIf="scheduleSection"><button (click)="nextWeek = !nextWeek; getSchedules()">Next Week Schedule</button></div>
 </div>
 
 <div *ngIf="goalieSection" class="matchup-layout goalie-layout">
@@ -475,12 +476,12 @@
 </section>
 <section *ngIf="scheduleSection nhl-page">
   <app-team-schedule *ngIf="!loading && dailySchedule != null"
-  [teamSchedules]="teamSchedules"
+  [teamSchedules]="dataService.nhlTeamsSched"
   [amount]="4">
   </app-team-schedule>
 
   <app-team-schedule *ngIf="!loading && dailySchedule != null"
-  [teamSchedules]="teamSchedules"
+  [teamSchedules]="dataService.nhlTeamsSched"
   [amount]="3">
   </app-team-schedule> 
 </section>
