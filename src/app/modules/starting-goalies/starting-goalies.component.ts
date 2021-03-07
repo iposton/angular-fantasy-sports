@@ -136,6 +136,7 @@ export class StartingGoaliesComponent implements OnInit {
   public gameSkaterGroups: Array <any>;
   public statSkaterData: Array <any> = [];
   public stat: number = 1;
+  public nextWeek: boolean = false;
   
 
   constructor(private cdr: ChangeDetectorRef, 
@@ -165,6 +166,10 @@ export class StartingGoaliesComponent implements OnInit {
     this.dataService.checkDay();
     this.testBrowser = isPlatformBrowser(platformId);
     this.spinTitle = 'Goalie Stats';
+  }
+
+  public getSchedules() {
+    this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
   }
 
   public statToggle() {
@@ -234,7 +239,7 @@ export class StartingGoaliesComponent implements OnInit {
         .subscribe(res => {
 
         if (res[0] != null) {
-          //console.log(res, 'got response from firebase...');
+          console.log(res, 'got response from firebase...');
           this.fullFirebaseResponse = res[0];
           this.startersDate = res[0][0]['todayDate'];
           this.startersDateTomorrow = res[0][2]['tomorrowDate'];
@@ -350,7 +355,7 @@ export class StartingGoaliesComponent implements OnInit {
 
               let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
               this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) || playedStatuses[item['schedule'].playedStatus] != null);
-              //console.log(this.dailySchedule, 'dailyshced after filter')
+              console.log(this.dailySchedule, 'dailyshced after filter')
 
               this.dailySchedule.forEach((item, index) => {
                 dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
@@ -363,39 +368,8 @@ export class StartingGoaliesComponent implements OnInit {
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
               this.gamesToday = true;
               //this.sortData(); //work around when no games
-
-              if (this.teamSchedules.length === 0) {
-                let team;
-                let teamSchedule;
-                const nhlTeamsArray = Object.values(this.teams);
-                forkJoin(
-                  nhlTeamsArray.map(
-                    g => 
-                    
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210222-to-20210228`, { headers })
-                    
-                  )
-                )
-                .subscribe(res => {
-                  res.forEach((item, index) => {
-                    team = nhlTeamsArray[index]['abbreviation'];
-                    //team = teamRef[index].abbreviation;
-                    teamSchedule = {
-                      team: team,
-                      schedule: res[index]['games'],
-                      teamInfo: nhlTeamsArray[index]
-                    }
-                    this.teamSchedules.push(teamSchedule);
-                    //console.log(this.teamSchedules, 'schedules array...');
-
-                  })
-
-                }, (err: HttpErrorResponse) => {
-                  
-                  console.log(err, 'error getting schedule');
-
-              });
-
+              if (this.dataService.nhlTeamsSched.length === 0) {
+                this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
               }
 
               forkJoin(
@@ -501,6 +475,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
  public async sortData() {
+    console.log('sorting data.')
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     let promiseOne;
     
@@ -729,11 +704,11 @@ export class StartingGoaliesComponent implements OnInit {
         }
 
         if (this.myData && this.dailyStats) {
+          console.log('sorting daily goalie stats');
           for (let daily of this.dailyStats) {
             for (let mdata of this.myData) {
-
-              if (daily.player.id === mdata.player.id) {
-          
+              if (this.todayStarters[daily.player.id] != null && daily.player.id === mdata.player.id && daily.stats.goaltending.saves >= 0) {
+                mdata.daily = true;
                 mdata.player.saves = daily.stats.goaltending.saves;
                 mdata.player.shotsFaced = daily.stats.goaltending.shotsAgainst;
                 mdata.player.wins = daily.stats.goaltending.wins;
@@ -742,41 +717,41 @@ export class StartingGoaliesComponent implements OnInit {
                 mdata.player.Shutouts = daily.stats.goaltending.shutouts;
                 mdata.player.ga = daily.stats.goaltending.goalsAgainst;
                 mdata.stats.fpToday = this.util.round(this.nhlUtil.goalieDailyFp(daily), 1);
-                //((daily.stats.goaltending.saves * 0.2) - daily.stats.goaltending.goalsAgainst).toFixed(2);
-
-                if (daily.stats.goaltending.saves > 0) {
-                  // this.starterIdData.push(daily.player.ID);
-
-                  if (mdata.team != null && this.startersDate === mdata.team.today && 
-                    this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === true && mdata.status === 'LIVE' ||
-                    mdata.team != null && this.startersDate === mdata.team.today && 
-                    this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === false && daily.stats.goaltending.gamesStarted === 0 && mdata.status === 'LIVE') {
+                   
+                  let livePending = {'LIVE': 'LIVE', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW'}
+          
+                  if (mdata.team != null && this.startersDate === mdata.team.today &&
+                    this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === true &&
+                     livePending[mdata.status] != null && daily.stats.goaltending.saves > 0) {  
+                      //console.log(this.todayStarters[daily.player.id].name, 'this goealie is the actual starter');
                       this.startingGoaliesToday.push(daily.player.id);
                   }
 
-                  if (mdata.team != null && this.startersDate === mdata.team.today && 
-                    this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === false && mdata.status === 'LIVE') {
+                  if (mdata.team != null && this.startersDate === mdata.team.today &&
+                    this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === false && 
+                    livePending[mdata.status] != null) {
                       this.msfGoaliesToday.push(daily.player.id);
                   }
 
-                  let complete = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW'}
+                  let complete = {'COMPLETED': 'COMPLETED'}
 
-                  if (complete[mdata.status] != null && mdata.team != null) {
+                  if (complete[mdata.status] != null && mdata.team != null && daily.stats.goaltending.shotsAgainst > 0) {
+                      //console.log(this.todayStarters[daily.player.id].name, 'this goealie is the actual starter', daily);
                       this.startingGoaliesToday.push(daily.player.id);
                   }
                   
-                    
-                }
+                  if (daily.stats.goaltending.goalsAgainst === 1) {
+                    mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goal';
+                  } else {
+                    mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goals';
+                  }
 
-                if (daily.stats.goaltending.goalsAgainst === 1) {
-                  mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goal';
-                } else {
-                  mdata.player.GoalsAgainst = daily.stats.goaltending.goalsAgainst + ' goals';
-                }
+                 
               }
-
+             
             }
           }
+          
         }
 
         if (this.myData && this.fullSchedule) {
@@ -860,10 +835,6 @@ export class StartingGoaliesComponent implements OnInit {
 
 
         for (let data of this.myData) {
-          //let imgNum
-          //console.log(this.dataService.isToday, 'isToday?');
-          //console.log(this.dataService.isTomorrow, 'isTomorrow?');
-          //stats.goaltending.savePercentage
 
           data.player.savePercent = data.stats.goaltending.savePercentage;
 
@@ -874,20 +845,20 @@ export class StartingGoaliesComponent implements OnInit {
               data.player.shotsFaced == null && this.todayStarters[data.player.id].probable === true || 
               data.team != null && this.startersDate === data.team.today && 
               this.todayStarters[data.player.id] != null && data.player.saves == 0 && data.player.shotsFaced == 0 && 
-              this.todayStarters[data.player.id].probable === true) {
+              this.todayStarters[data.player.id].probable === true && !this.dataService.isPast) {
               data.player.confirmed = this.todayStarters[data.player.id].confirmed;
               data.player.probable = this.todayStarters[data.player.id].probable;
               data.player.startingToday = true;
               data.player.startingTodayNow = false;
 
-              //console.log(data.player, 'confirmed or probable today');
-              this.startersData.push(data);
+                //console.log(data.player, 'confirmed or probable today');
+                this.startersData.push(data);
             } else if (this.dataService.isTomorrow && data.team != null && this.startersDateTomorrow === data.team.today && 
               this.tomorrowStarters[data.player.id] != null && data.player.saves == null && 
               data.player.shotsFaced == null && this.tomorrowStarters[data.player.id].probable === true || 
               data.team != null && this.startersDateTomorrow === data.team.today && 
               this.tomorrowStarters[data.player.id] != null && data.player.saves == 0 && data.player.shotsFaced == 0 && 
-              this.tomorrowStarters[data.player.id].probable === true) {
+              this.tomorrowStarters[data.player.id].probable === true && !this.dataService.isPast) {
               data.player.confirmed = this.tomorrowStarters[data.player.id].confirmed;
               data.player.probable = this.tomorrowStarters[data.player.id].probable;
               data.player.startingToday = true;
@@ -896,6 +867,26 @@ export class StartingGoaliesComponent implements OnInit {
               //console.log(data.player, 'confirmed or probable tomorrow');
               this.startersData.push(data);
             }
+
+            sleep(3000);
+            console.log('check actual starters from live games');
+
+             if (data.player.shotsFaced == null && data.daily == null && this.todayStarters[data.player.id] != null && 
+               this.todayStarters[data.player.id].probable === true && data.team != null && 
+               this.startersDate === data.team.today && data.status === 'LIVE') {
+               console.log(this.todayStarters[data.player.id].name, 'this goealie is the actual starter');
+               data.player.saves = 0;
+               data.player.shotsFaced = 0;
+               data.player.wins = 0;
+               data.player.losses = 0;
+               data.player.OvertimeLosses = 0;
+               data.player.Shutouts = 0;
+               data.player.ga = 0;
+               data.stats.fpToday = 0;
+               this.startingGoaliesToday.push(data.player.id);
+             }
+
+            
           } else {
             console.log('firebase res not returned yet....');
           }
@@ -963,7 +954,7 @@ export class StartingGoaliesComponent implements OnInit {
               for (let progressdata of this.myData) {
 
                 if (startinprogress === progressdata.player.id) {
-                  console.log('starters of games that have started');
+                  //console.log('starters of games that have started');
                   progressdata.player.startingToday = true;
                   progressdata.player.startingTodayNow = true;
                   this.startersData.push(progressdata);
@@ -983,12 +974,13 @@ export class StartingGoaliesComponent implements OnInit {
                 //startdata.stats.goaltending.gamesStarted > 1
                // this.startersDate != startdata.team.today && this.startingG[startdata.player.id] != null && this.startingG[startdata.player.id].active === true
                if (this.dataService.isToday) {
+                //console.log('is today is true pushing on likely goalies');
                 if (startdata.player.currentTeam != null && 
                   startid === startdata.player.currentTeam.id && 
                   this.startingG[startdata.player.id] != null && 
                   this.startingG[startdata.player.id].active === true) {
                   if (startdata.team != null && this.startersDate != startdata.team.today) {
-
+                 
                     startdata.player.startingToday = false;
                     startdata.player.likelyStartingToday = true;
                     //console.log(startdata.player.FirstName + " " + startdata.player.LastName, "this goalie is not starting yet. but he might start.");
@@ -998,6 +990,7 @@ export class StartingGoaliesComponent implements OnInit {
                   }
                 } else if (startdata.team != null && this.startersDate != startdata.team.today && startid === startdata.player.id) {
                   if (startdata.player.saves == null || startdata.player.saves === 0) {
+                
                     //console.log(startdata.player, 'expected goalies from api');
                     startdata.player.startingToday = true;
                     startdata.player.startingTodayNow = false;
@@ -1012,6 +1005,7 @@ export class StartingGoaliesComponent implements OnInit {
                }
 
                if (this.dataService.isTomorrow) {
+                console.log('is tomorrow is true pushing on likely goalies');
                 if (startdata.player.currentTeam != null && 
                   startid === startdata.player.currentTeam.id && 
                   this.startingG[startdata.player.id] != null && 
@@ -1027,6 +1021,7 @@ export class StartingGoaliesComponent implements OnInit {
                   }
                 } else if (startdata.team != null && this.startersDateTomorrow != startdata.team.today && startid === startdata.player.id) {
                   if (startdata.player.saves == null || startdata.player.saves == '0') {
+
                     //console.log(startdata.player, 'expected goalies from api');
                     startdata.player.startingToday = true;
                     startdata.player.startingTodayNow = false;
@@ -1054,13 +1049,19 @@ export class StartingGoaliesComponent implements OnInit {
             this.statData = this.startersData.reduce(function(r, a) {
               if(a.team != null){
                 r[a.team.gameId] = r[a.team.gameId] || [];
-                r[a.team.gameId].push({'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
+                r[a.team.gameId].push({'gameTime': a['player'].gameTime, 'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
               }
               return r
             }, Object.create(null));
   
             this.gameGroups = Object.keys(this.statData).map((key, index) => {
                 return {game: key, goalies: this.statData[key].sort((a, b) => a.location.localeCompare(b.location))};
+            });
+
+            this.gameGroups.sort((a, b) => {
+              if (a['goalies'][0].gameTime <= b['goalies'][0].gameTime) return -1
+              else if (a['goalies'][0].gameTime >= b['goalies'][0].gameTime) return 1
+              else return 0
             });
 
             this.showMatchups();
@@ -1143,6 +1144,11 @@ public showMatchups() {
 
       this.loading = false;
       this.showData = this.gameGroups;
+      // .sort((a, b) => {
+      //   if (a['goalies'][0].gameTime <= b['goalies'][0].gameTime) return -1
+      //   else if (a['goalies'][0].gameTime >= b['goalies'][0].gameTime) return 1
+      //   else return 0
+      // });
     })
 
      if (this.hitCount != null && this.fbService.userDetails === null) {
@@ -1480,9 +1486,7 @@ public showMatchups() {
                           if (daily.stats.goaltending.saves > 0) {
 
                             if (mdata.team != null && this.startersDate === mdata.team.today && 
-                              this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === true && mdata.status === 'LIVE' ||
-                              mdata.team != null && this.startersDate === mdata.team.today && 
-                              this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === false && daily.stats.goaltending.gamesStarted === 0 && mdata.status === 'LIVE') {
+                              this.todayStarters[daily.player.id] != null && this.todayStarters[daily.player.id].probable === true && mdata.status === 'LIVE') {
                                 
                                 this.startingGoaliesToday.push(daily.player.id);
                             }

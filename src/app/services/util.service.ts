@@ -1637,6 +1637,7 @@ export class UtilService {
   public tomorrow(date, day) {
     let days = 1;
     if (day) {
+      date = new Date();
       days = 1;
     } else {
       days = 2;

@@ -4,10 +4,11 @@ import { NBADataService,
   UtilService, 
   GoogleAnalyticsService, 
   DepthService,
-  NbaUtilService } from '../../services/index';
-import { DatePipe, isPlatformBrowser } from '@angular/common';
-import { Observable, interval, forkJoin } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+  NbaUtilService,
+  NHLDataService } from '../../services/index';
+import { isPlatformBrowser } from '@angular/common';
+import { interval, forkJoin } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 import * as CryptoJS from 'crypto-js';
 
 let headers = null;
@@ -71,7 +72,7 @@ export class StartingFiveComponent implements OnInit {
   public noGamesMsg: string = '';
   public errMessage: string = '';
   public teamSchedule: { team: string, schedule: [] };
-  public teamSchedules: Array <any> = [];
+  public teamSchedules: any;
   public teamsCompletedPlayingToday: Array <any> = [];
   public selectedWeek: string;
   public tsDate: any;
@@ -104,8 +105,10 @@ export class StartingFiveComponent implements OnInit {
   public area: any;
   public testBrowser: boolean;
   public depth: any;
+  public nextWeek: boolean = false;
 
-  constructor(private dataService: NBADataService, 
+  constructor(private dataService: NBADataService,
+              public nhlService: NHLDataService, 
               private http: HttpClient,
               private sanitizer: DomSanitizer,
               private util: UtilService,
@@ -126,6 +129,7 @@ export class StartingFiveComponent implements OnInit {
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
     this.testBrowser = isPlatformBrowser(platformId);
     this.selectedDate = new Date();
+    //this.teamSchedules = [];
   }
 
   public compareDate (start) {
@@ -173,6 +177,10 @@ export class StartingFiveComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(${color}, ${lighter})`);
   }
 
+  public getSchedules() {
+    this.nhlService.getSchedules(this.nextWeek, 'nba', teams);
+  }
+
 
   public getByDate(event) {
     this.loading = true;
@@ -200,6 +208,7 @@ export class StartingFiveComponent implements OnInit {
     this.postponed = false;
     this.gamesToday = false;
     this.noGamesMsg = '';
+    //this.teamSchedules = [];
     this.loadData();
   }
 
@@ -212,6 +221,8 @@ export class StartingFiveComponent implements OnInit {
 
         this.dataService
           .sendHeaderOptions(headers);
+        this.nhlService
+          .sendHeaderOptions(headers);
 
         this.dataService
           .getSchedule().subscribe(res => {
@@ -223,8 +234,7 @@ export class StartingFiveComponent implements OnInit {
               console.log('There are no games being played today.');
             } else {
               if (res['games'][0].schedule.playedStatus === "LIVE") {
-                this.liveGames = true;
-                
+                this.liveGames = true;    
               }
               let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
               this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) || playedStatuses[item['schedule'].playedStatus] != null);
@@ -233,49 +243,10 @@ export class StartingFiveComponent implements OnInit {
               teamRef = res['references'].teamReferences;
               this.gameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
               //let dPipe = new DatePipe("en-US");
-
               this.gamesToday = true;
-              if (this.teamSchedules.length === 0) {
-                let team;
-                let teamSchedule;
-                const nbaTeamsArray = Object.values(teams);
-                forkJoin(
-                  nbaTeamsArray.map(
-                    g => 
-                    
-                     this.http.get(`${this.apiRoot}/games.json?team=${g['abbreviation']}&date=from-20210222-to-20210228`, { headers })
-                    
-                  )
-                )
-                .subscribe(res => {
-                  //console.log(res, 'get team schedules...');
-
-                  res.forEach((item, index) => {
-                    team = nbaTeamsArray[index]['abbreviation'];
-                    //team = teamRef[index].abbreviation;
-                    teamSchedule = {
-                      team: team,
-                      schedule: res[index]['games'],
-                      teamInfo: nbaTeamsArray[index]
-                    }
-                    this.teamSchedules.push(teamSchedule);
-                    //console.log(this.teamSchedules, 'schedules array...');
-
-                  })
-                  
-
-                 // this.sortData();
-
-                }, (err: HttpErrorResponse) => {
-                  
-                  console.log(err, 'error getting schedule');
-
-              });
-
-              } else {
-                //this.sortData();
+              if (this.nhlService.nbaTeamsSched.length === 0) {
+                this.nhlService.getSchedules(this.nextWeek, 'nba', teams);
               }
-
             }
 
             forkJoin(
@@ -501,7 +472,7 @@ export class StartingFiveComponent implements OnInit {
             }  
          }
          
-         for (let team of this.teamSchedules) {
+         for (let team of this.nhlService.nbaTeamsSched) {
           for (let data of this.myData) { 
             if (data.player['currentTeam'] != null && team.team === data.player['currentTeam'].abbreviation && data.player['currentTeam'].id === data.team.id) {
               data.team.gamesThisWeek = team['schedule'].length;

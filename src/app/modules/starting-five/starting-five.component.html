@@ -53,7 +53,9 @@
             Team Ranks
           </span> 
       </div> -->
+      
     </div>
+    <div class="row" *ngIf="scheduleSection"><button (click)="nextWeek = !nextWeek; getSchedules()">Next Week Schedule</button></div>
 </div>
 
 <app-spinner *ngIf="loading" [size]="'lg'" [color]="'white'" [title]="'Starting Five Data'"></app-spinner>
@@ -256,12 +258,12 @@
 
   <section [ngClass]="{'dn' : !scheduleSection}">
     <app-team-schedule *ngIf="!loading && dailySchedule != null"
-    [teamSchedules]="teamSchedules"
+    [teamSchedules]="nhlService.nbaTeamsSched"
     [amount]="4">
     </app-team-schedule>
 
     <app-team-schedule *ngIf="!loading && dailySchedule != null"
-    [teamSchedules]="teamSchedules"
+    [teamSchedules]="nhlService.nbaTeamsSched"
     [amount]="3">
     </app-team-schedule>
   </section>
