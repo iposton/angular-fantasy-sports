@@ -148,9 +148,9 @@ export class NhlUtilService {
         id: 5486,
         firstName: "Troy",
         lastName: "Grosenick",
-        teamId: 24,
-        abbreviation: "EDM",
-        active: false,
+        teamId: 28,
+        abbreviation: "LAK",
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8477234.jpg',
         new: true
@@ -258,8 +258,8 @@ export class NhlUtilService {
         id: 5366,
         firstName: "Michael",
         lastName: "Hutchinson",
-        teamId: 22,
-        abbreviation: "COL",
+        teamId: 12,
+        abbreviation: "TOR",
         active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
@@ -360,6 +360,17 @@ export class NhlUtilService {
         teamId: 9,
         abbreviation: "NYR",
         active: false,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
+      },
+      '5180': {
+        id: 5180,
+        firstName: "Keith",
+        lastName: "Kinkaid",
+        teamId: 9,
+        abbreviation: "NYR",
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -690,7 +701,7 @@ export class NhlUtilService {
         teamId: 30,
         abbreviation: "ARI",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -701,7 +712,7 @@ export class NhlUtilService {
         teamId: 30,
         abbreviation: "ARI",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8477293.jpg',
         new: false
       },
@@ -825,6 +836,17 @@ export class NhlUtilService {
         active: false,
         numberOne: false,
         img: nhlImageRoot+'8480162.jpg',
+        new: false
+      },
+      '15690': {
+        id: 15690,
+        firstName: "Elvis",
+        lastName: "Merzlikins",
+        teamId: 19,
+        abbreviation: "CBJ",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478007.jpg',
         new: false
       },
       '4351': {
@@ -979,17 +1001,6 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8475789.jpg',
-        new: false
-      },
-      '15690': {
-        id: 15690,
-        firstName: "Elvis",
-        lastName: "Merzlikins",
-        teamId: 19,
-        abbreviation: "CBJ",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'8478007.jpg',
         new: false
       },
       '15452': {
