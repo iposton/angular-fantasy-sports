@@ -19,7 +19,7 @@ export class PositionCardComponent implements OnInit {
   @Input('twitter')
   public twitter            :boolean;
   @Input('gameDate')
-  public gameDate           :boolean;
+  public gameDate           :string;
   public stats: any = '1';
   @Output() open = new EventEmitter<object>();
 
