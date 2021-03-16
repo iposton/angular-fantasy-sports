@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { StatLeadersComponent } from './stat-leaders.component';
 
@@ -6,7 +6,7 @@ describe('StartingFiveComponent', () => {
   let component: StatLeadersComponent;
   let fixture: ComponentFixture<StatLeadersComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ StatLeadersComponent ]
     })
