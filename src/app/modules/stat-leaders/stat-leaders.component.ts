@@ -745,7 +745,7 @@ export class StatLeadersComponent implements OnInit {
       promiseOne = new Promise((resolve, reject) => {
         this.nflTeams = this.rankService.rankOffense(res['teamStatsTotals'], this.nflTeams, this.nflWeek);
         this.nflTeams = this.rankService.rankDefense(res['teamStatsTotals'], this.nflTeams, this.nflWeek); 
-        resolve();
+        resolve('done');
       })
     
       let resultOne = await promiseOne;
@@ -815,7 +815,7 @@ export class StatLeadersComponent implements OnInit {
         
         promiseTwo = new Promise((resolve, reject) => {
           this.getRank(this.teamSchedules);
-          resolve();
+          resolve('done');
         })
       })
 

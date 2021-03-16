@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-team-schedule',
@@ -10,9 +10,15 @@ export class TeamScheduleComponent implements OnInit {
   public teamSchedules             :Array<any>;
   @Input('amount')
   public amount                    :string;
+  @Output() week = new EventEmitter();
   public weekResults               :boolean = false;
+  public nextWeek                  :boolean = false;
 
   constructor() { }
+
+  public changeSched() {
+    this.week.emit(this.nextWeek); 
+  }
 
   public crunch(items, team) {
     //console.log('crunching schedule results...', team);

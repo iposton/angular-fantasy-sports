@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { StatToggleComponent } from './stat-toggle.component';
 
@@ -6,7 +6,7 @@ describe('StatToggleComponent', () => {
   let component: StatToggleComponent;
   let fixture: ComponentFixture<StatToggleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ StatToggleComponent ]
     })

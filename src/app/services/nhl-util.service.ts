@@ -558,7 +558,7 @@ export class NhlUtilService {
         teamId: 11,
         abbreviation: "BOS",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8470860.jpg',
         new: false
       },
@@ -568,10 +568,21 @@ export class NhlUtilService {
         lastName: "Rask",
         teamId: 11,
         abbreviation: "BOS",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
+      },
+      '14444': {
+        id: 14444,
+        firstName: "Dan",
+        lastName: "Vladar",
+        teamId: 11,
+        abbreviation: "BOS",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478435.jpg',
+        new: true
       },
       '4561': {
         id: 4561,
