@@ -1,8 +1,11 @@
 <div class="card-wrap-sp mat-elevation-z6 position-box full-box">
   <h2>Weekly Team Schedule</h2> 
+  <span *ngIf="teamSchedules == null"><h3>Fetching Schedule...</h3></span>
   <span *ngIf="teamSchedules[0]?.begin">{{ teamSchedules[0].begin }}-{{ teamSchedules[0].end }}</span>
+  
   <div>
-      Games This Week <button (click)="weekResults = !weekResults"> Team Results</button>
+      Games This Week <button (click)="weekResults = !weekResults"> Team Results</button> 
+      <span> <button (click)="nextWeek = !nextWeek; changeSched()">{{ nextWeek ? 'Current' : 'Next'}} Week Schedule</button></span>
       <div class="content-wrapper">
           <div class="row">
             <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount }">
@@ -43,14 +46,14 @@
 <div class="card-wrap-sp mat-elevation-z6 position-box">
     <h2>Weekly Team Schedule</h2>
     <div>
-        #NBATwitter Teams playing {{amount}} games this week
+        Teams playing {{amount}} games this week
         <div class="content-wrapper">
             <div class="row">
               <div *ngFor="let item of teamSchedules">
                       <span class="left-content">
                             <span class="player-infos">
-                            <span *ngIf="item.schedule.length === amount" class="lg">
-                                {{item.teamInfo.twitter}}
+                            <span [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount }" class="lg">
+                                {{item.teamInfo.twitter}} {{crunch(item.schedule, item.team).title}}
                               </span>
                             </span>
                       </span>

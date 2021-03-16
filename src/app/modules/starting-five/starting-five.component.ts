@@ -48,7 +48,7 @@ export class StartingFiveComponent implements OnInit {
   public starterIdData: Array <any> = [];
   public benchIdData: Array <any> = [];
   public speedResults: Array <any> = [];
-  public gameDate: any;
+  public gameDate: string = '';
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
@@ -369,7 +369,7 @@ export class StartingFiveComponent implements OnInit {
           .getDaily(playerString).subscribe(res => {
             //console.log(res, 'gamelogs');
             if (res != null) this.dailyStats = res['gamelogs'];
-            resolve();
+            resolve('done');
         })
       });
 
@@ -379,7 +379,7 @@ export class StartingFiveComponent implements OnInit {
           .getTeamStats(this.tsDate).subscribe(res => {
             this.teamStatsUpdate = res['lastUpdatedOn'];
             this.teamStats = res['teamStatsTotals'];
-            resolve();
+            resolve('done');
         });
       });
       let resultTwo = await promiseDaily;

@@ -364,7 +364,7 @@ export class NflStartersComponent implements OnInit {
                 promiseOne = new Promise((resolve, reject) => {
                   this.teams = this.rankService.rankOffense(res['teamStatsTotals'], this.teams, this.selectedWeek);
                   this.teams = this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek); 
-                  resolve();
+                  resolve('done');
                 })
               
                 let resultOne = await promiseOne;

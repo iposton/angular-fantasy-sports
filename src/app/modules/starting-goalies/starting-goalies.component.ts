@@ -328,7 +328,7 @@ export class StartingGoaliesComponent implements OnInit {
             });
         }
 
-        resolve();
+        resolve('done');
     });
   });
 
@@ -484,11 +484,11 @@ export class StartingGoaliesComponent implements OnInit {
       this.dataService
         .getDaily().subscribe(res => {
           if (res != null) this.dailyStats = res['gamelogs'];
-          resolve();
+          resolve('done');
         })
     } else {
       console.log('No games');
-      resolve();
+      resolve('done');
     }
   })
 

@@ -10,7 +10,7 @@
             <button [ngClass]="{'dn' : seasonLength === 'otr'}" (click)="seasonLength = 'otr'">Full</button> 
             <button [ngClass]="{'dn' : seasonLength === 'ofh'}" (click)="seasonLength = 'ofh'">First Half</button> 
             <button [ngClass]="{'dn' : seasonLength === 'osh'}" (click)="seasonLength = 'osh'">Second Half</button>
-        </span>
+    </span>
 
     <div class="left" *ngFor="let item of getRank(data, teams, title, seasonLength, week); let i=index">
         <span *ngIf="item?.abbreviation" class="sched-item">
