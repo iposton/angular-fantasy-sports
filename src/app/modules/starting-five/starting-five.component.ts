@@ -294,7 +294,6 @@ export class StartingFiveComponent implements OnInit {
                         this.gameStarter = {
                           playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
                           currentTeam: res2[i2]['team'].abbreviation,
-                          //playerID: item.player.id,
                           gameID: game2.id,
                           score: score2,
                           status: game2.playedStatus,
@@ -318,7 +317,6 @@ export class StartingFiveComponent implements OnInit {
                           this.gameStarter = {
                             playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
                             currentTeam: res2[i2]['team'].abbreviation,
-                            //playerID: item.player.id,
                             gameID: game2.id,
                             score: score2,
                             status: game2.playedStatus,

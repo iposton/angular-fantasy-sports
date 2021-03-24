@@ -1,4 +1,4 @@
-# Starting NHL Goalies and NBA Starters Angular 9 MySportsFeeds API, Heroku - <a href="https://www.fantasy-sports-resources.com">Demo</a> 
+# Starting NHL Goalies and NBA Starters Angular 11 MySportsFeeds API, Heroku - <a href="https://www.fantasy-sports-resources.com">Demo</a> 
 This is a single page app which uses the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#) to get starting NHL goalie data. 
 
 ### Description
@@ -15,14 +15,14 @@ This app can help explain how to fetch data using [Angular's HttpClient Module](
 * Encrypy/Decrypt heroku config vars with Crypto-js.
 
 ### Software used for this application
-* Angular (version 9.0.0) 
-* Angular CLI (version 9.0.1)
-* Node.js (version 10.16.2)     
+* Angular (version 11.2.5) 
+* Angular CLI (version 11.2.4)
+* Node.js (version 14.4.0)    
 * Heroku [Set up a free account ](https://www.heroku.com/)
-* [Firebase](https://firebase.google.com/) (version 4.10.1) 
+* [Firebase](https://firebase.google.com/) (version 7.16.1) 
 * @angular/fire (version 5.2.1)
-* NPM (version 6.13.7)
-* rxjs (version 6.5.4)
+* NPM (version 7.6.3)
+* rxjs (version 6.6.0)
 * [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#)
 * [Crypto-js](https://github.com/brix/crypto-js) (version 4.0.0)
 

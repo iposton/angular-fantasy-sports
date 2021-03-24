@@ -12,6 +12,7 @@ import {
   UtilService,
   GoogleAnalyticsService,
   NhlUtilService,
+  DepthService
  } from '../../services/index';
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
@@ -137,6 +138,7 @@ export class StartingGoaliesComponent implements OnInit {
   public statSkaterData: Array <any> = [];
   public stat: number = 1;
   public nextWeek: boolean = false;
+  public depth: any;
   
 
   constructor(private cdr: ChangeDetectorRef, 
@@ -147,6 +149,7 @@ export class StartingGoaliesComponent implements OnInit {
     public util: UtilService,
     public nhlUtil: NhlUtilService,
     public gaService: GoogleAnalyticsService,
+    public depthService: DepthService,
     @Inject(PLATFORM_ID) platformId: string) {
     yesterday = this.dataService.getYesterday();
     tomorrow = this.dataService.getTomorrow();
@@ -166,6 +169,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.dataService.checkDay();
     this.testBrowser = isPlatformBrowser(platformId);
     this.spinTitle = 'Goalie Stats';
+    this.depth = this.depthService.getNFLDepth();
   }
 
   public getSchedules() {
@@ -400,52 +404,52 @@ export class StartingGoaliesComponent implements OnInit {
                       i2 = index;
                       if (res2[i2].actual != null && res2[i2].expected != null) { 
                         //console.log(res2[i2], 'got player ID for goalie actualy starting!');
-                          for (let position of res2[i2].actual.lineupPositions) {
+                        res2[i2].actual.lineupPositions.forEach(item => {//for (let position of res2[i2].actual.lineupPositions) {
 
-                            if (position.player != null) {
+                            if (item.player != null) {
                               this.gameStarter = {
-                                playerID: position.player.id,
-                                name: position.player.lastName,
+                                playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDate() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,//item.player.id,
+                                name: item.player.lastName,
                                 team: res2[i2].team.id,
                                 gameID: game2.id,
                                 score: score2,
                                 status: game2.playedStatus,
                                 scheduleStatus: game2.scheduleStatus,
-                                position: position.player['position'],
+                                position: item.player['position'],
                                 startType: 'actual'
                               }
-                              if (position.player['position'] === 'G') {
-                                this.starterIdData.push(position.player.id);
+                              if (item.player['position'] === 'G') {
+                                this.starterIdData.push(item.player.id);
                               } else {
                                 this.gameSkaters.push(this.gameStarter);
-                                this.skaterIdData.push(position.player.id);
+                                this.skaterIdData.push(item.player.id);
                               }
                           }
-                        }
+                        })
                         skaterString = this.skaterIdData.join();
                       } else if (res2[i2].actual == null && res2[i2].expected != null) {
-                        for (let position of res2[i2].expected.lineupPositions) {
+                        res2[i2].expected.lineupPositions.forEach(item => {//for (let position of res2[i2].expected.lineupPositions) {
                           //console.log(position, 'got player ID for goalie actualy starting!');
-                            if (position.player != null) {
+                            if (item.player != null) {
                               this.gameStarter = {
-                                playerID: position.player.id,
-                                name: position.player.lastName,
+                                playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDate() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
+                                name: item.player.lastName,
                                 team: res2[i2].team.id,
                                 gameID: game2.id,
                                 score: score2,
                                 status: game2.playedStatus,
                                 scheduleStatus: game2.scheduleStatus,
-                                position: position.player['position'],
+                                position: item.player['position'],
                                 startType: 'actual'
                               }
-                              if (position.player['position'] === 'G') {
-                                this.starterIdData.push(position.player.id);
+                              if (item.player['position'] === 'G') {
+                                this.starterIdData.push(item.player.id);
                               } else {
                                 this.gameSkaters.push(this.gameStarter);
-                                this.skaterIdData.push(position.player.id);
+                                this.skaterIdData.push(item.player.id);
                               }
                           }
-                        }
+                        })
                         skaterString = this.skaterIdData.join();
                        
                       } else {
@@ -609,8 +613,8 @@ export class StartingGoaliesComponent implements OnInit {
               
               
               //sdata.team = {};
-              if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation ||
-              sdata.team != null && schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
+              if (sdata.player != null && schedule['schedule'].awayTeam.abbreviation === sdata.player.currentTeam.abbreviation ||
+              sdata.player != null && schedule['schedule'].homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
 
                 sdata.team.gameId = schedule['schedule'].id;
                 sdata.player.gameTime = schedule['schedule'].startTime;
@@ -628,7 +632,7 @@ export class StartingGoaliesComponent implements OnInit {
                 sdata.postponedStatus = schedule['schedule'].playedStatus;
               }
 
-              if (sdata.team != null && schedule['schedule'].awayTeam.abbreviation === sdata.team.abbreviation) {
+              if (sdata.player != null && schedule['schedule'].awayTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 sdata.player.gameLocation = "away";
                 sdata.team.opponentId = schedule['schedule'].homeTeam.id;
                 sdata.team.id = schedule['schedule'].homeTeam.id;
@@ -649,7 +653,7 @@ export class StartingGoaliesComponent implements OnInit {
                 }
 
               }
-              if (sdata.team != null && schedule['schedule'].homeTeam.abbreviation === sdata.team.abbreviation) {
+              if (sdata.player != null && schedule['schedule'].homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
                 
                 sdata.player.gameLocation = "home";
                 sdata.team.opponentId = schedule['schedule'].awayTeam.id;

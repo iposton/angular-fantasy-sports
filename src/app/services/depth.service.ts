@@ -7,6 +7,7 @@ export class DepthService {
   public actualStarters: any;
   public nflDepth: any;
   public nbaDepth: any;
+  public nhlDepth: any;
 
   constructor() {
     this.actualStarters = {
@@ -1253,7 +1254,45 @@ export class DepthService {
     ],
 
     }
+
+  this.nhlDepth = {
+      '100': [
+        {
+          'gdate': 'Sun Dec 27 2020 00:00:00 GMT-0700 (Pacific Daylight Time)',
+          'DefensePair1-R' : {
+            firstName: 'Anthony',
+            lastName: 'Edwards',
+            id: 27638,
+            status: 'Starter',
+            abbreviation: 'MIN',
+            position: 'SG'
+          },
+          'ForwardLine1-LW' : {
+            firstName: 'DeAngelo',
+            lastName: 'Russell',
+            id: 9285,
+            status: 'Starter',
+            abbreviation: 'MIN',
+            position: 'SG'
+          },
+      }
+    ],
+    '94': [
+      {
+        'gdate': 'Wed Feb 3 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        'Starter5' : {
+          firstName: 'Ish',
+          lastName: 'Smith',
+          id: 9425,
+          status: 'Starter',
+          abbreviation: 'WAS',
+          position: 'PG'
+        },
+    }
+  ],
+
   }
+}
   
   public getActualStarters() {
     return this.actualStarters;
@@ -1263,5 +1302,8 @@ export class DepthService {
   }
   public getNBADepth() {
     return this.nbaDepth;
+  }
+  public getNHLDepth() {
+    return this.nhlDepth;
   }
 }
