@@ -50,8 +50,8 @@
    <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit">Draft Kit</button>
 </div>
 <div class="center" *ngIf="sport != 'nfl'">
-    <button (click)="getByDate('two-weeks', sport)">Two Weeks</button> &nbsp;&nbsp;
-    <button (click)="getByDate('last-week', sport)">Last Week</button> &nbsp;&nbsp; 
+    <button (click)="getByDate('two-weeks', sport)">Last 14 Days</button> &nbsp;&nbsp;
+    <button (click)="getByDate('last-week', sport)">Last 7 Days</button> &nbsp;&nbsp; 
     <button (click)="getByDate('full', sport)">All</button>
     &nbsp;&nbsp; <button (click)="getByDate('today', sport)">Today</button>
     &nbsp;&nbsp; <button (click)="getByDate('yesterday', sport)">Yesterday</button>
