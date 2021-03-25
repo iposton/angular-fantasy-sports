@@ -1591,7 +1591,7 @@ export class UtilService {
         if (data.player['currentTeam'] != null 
         && team['id'] === data.player['currentTeam'].id 
         && data.player['currentTeam'].id === data.team.id 
-        || team['id'] === data.team.id) {
+        || data.player['currentTeam'] != null  && team['id'] === data.player['currentTeam'].id) {
           data.team.logo = team['officialLogoImageSrc'];
           data.team.city = team['city'];
           data.team.name = team['name'];
