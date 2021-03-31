@@ -580,9 +580,7 @@ export class StatLeadersComponent implements OnInit {
 
     this.mlbService
        .getAllStats(this.mlbApiRoot).subscribe(res => {
-          let specialImgNum = null;
-          //this.loading = false;
-          //const mlbTeamsArray = Object.values(this.nbaTeams);
+        
 
           this.mlbPitchingData = res['playerStatsTotals'].filter(
             player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.pitching.inningsPitched > 0); // && player.stats.pitching.pitcherStrikeouts > 6
@@ -598,12 +596,7 @@ export class StatLeadersComponent implements OnInit {
                 //this.loading = false;
 
                 if (data.player.officialImageSrc != null) {
-                  specialImgNum = data.player.officialImageSrc.substring(
-                    data.player.officialImageSrc.lastIndexOf("/") + 1, 
-                    data.player.officialImageSrc.lastIndexOf(".")
-                    );
-                    
-                  data.player.officialImageSrc = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+                  data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
                 }
 
                 if (data.player.officialImageSrc == null) {
@@ -617,19 +610,7 @@ export class StatLeadersComponent implements OnInit {
 
         this.mlbService
           .getInfo().subscribe(res => {
-            
-            for (let n of res['players']) {
-              for (let old of this.mlbPitchingData) {
-                if (old.player['currentTeam'] != null)
-                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
-                } 
-                
-              }
-            }
-            this.util.teamInfo(this.mlbPitchingData, this.mlbTeams);
+            this.util.updatePlayers(res['players'], this.mlbPitchingData, this.mlbTeams);
         });
           
           if (this.timeSpan != 'full') {
@@ -649,7 +630,6 @@ export class StatLeadersComponent implements OnInit {
     this.mlbService
         .getAllHitters(this.mlbApiRoot).subscribe(res => {
         
-         let specialImgNum = null;
 
          this.mlbHittingData = res['playerStatsTotals'].filter(
            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.batting.atBats > 0); //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
@@ -664,12 +644,7 @@ export class StatLeadersComponent implements OnInit {
                this.batterFp(data);
               // this.loading = false;
               if (data.player.officialImageSrc != null) {
-                specialImgNum = data.player.officialImageSrc.substring(
-                  data.player.officialImageSrc.lastIndexOf("/") + 1, 
-                  data.player.officialImageSrc.lastIndexOf(".")
-                  );
-                
-                data.player.officialImageSrc = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+                data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
               }
 
               if (data.player.officialImageSrc == null) {
@@ -682,19 +657,7 @@ export class StatLeadersComponent implements OnInit {
 
          this.mlbService
           .getHitterInfo().subscribe(res => {
-            
-            for (let n of res['players']) {
-              for (let old of this.mlbHittingData) {
-                if (old.player['currentTeam'] != null)
-                  old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                  old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                  old.team.id = n['teamAsOfDate'].id;
-                } 
-                
-              }
-            }
-            this.util.teamInfo(this.mlbHittingData, this.mlbTeams);
+            this.util.updatePlayers(res['players'], this.mlbHittingData, this.mlbTeams);
         });
          
         if (this.timeSpan != 'full') {
