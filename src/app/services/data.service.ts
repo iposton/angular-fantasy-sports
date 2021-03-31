@@ -83,15 +83,10 @@ export class DataService {
     return this.gameid;
   }
 
-  getDailySchedule() {
-
-      //let url = `${this.apiRoot}/daily_game_schedule.json?fordate=`+dailyDate;
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/date/${dailyDate}/games.json`;
-      this.schedule = this.http.get(url, {headers})
-       
-   // }
+  public getDailySchedule() {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/games.json`;
+    this.schedule = this.http.get(url, {headers})
     return this.schedule;
-
   }
 
   getBatStats(players) {
@@ -132,34 +127,39 @@ export class DataService {
     return this.hitterinfo;
   }
 
-  getStarterInfo(players) {
-
-   // if (!this.info) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P&player=${players}`;
-      this.starterInfo = this.http.get(url, {headers})
-        
-   // }
+  public getStarterInfo(players) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/players.json?position=P&player=${players}`;
+    this.starterInfo = this.http.get(url, {headers})
     return this.starterInfo;
   }
 
-   getDaily() {
+   public getDaily() {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/date/${dailyDate}/player_gamelogs.json?position=P`;
     this.daily = this.http.get(url, {headers})
     return this.daily;
   }
 
-  getDailyBatters() {
+  public getDailyBatters() {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
     this.dailyBatters = this.http.get(url, {headers})
     return this.dailyBatters;
   }
 
-  getScore(data) {
+  public getScore(data) {
     let id = null;
     id = data
     let url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
     //let url = `${this.apiRoot}/date/${dailyDate}/team_gamelogs.json`;
     this.score = this.http.get(url, {headers})
     return this.score;
+  }
+
+  public imageSwap(src) {
+    let specialImgNum = null;
+    specialImgNum = src.substring(
+      src.lastIndexOf("/") + 1, 
+      src.lastIndexOf(".")
+    );
+    return `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
   }
 }

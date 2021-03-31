@@ -1647,4 +1647,19 @@ export class UtilService {
     tomorrow.setHours(tomorrow.getHours() - 8);
     return new Date(tomorrow);
   }
+
+  public updatePlayers(info, players, teams) {
+    for (let n of info) {
+      for (let old of players) {
+        if (old.player['currentTeam'] != null)
+          old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
+        if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
+          old.player['currentTeam'].id = n['teamAsOfDate'].id;
+          old.team.id = n['teamAsOfDate'].id;
+        } 
+        
+      }
+    }
+    this.teamInfo(players, teams);
+  }
 }

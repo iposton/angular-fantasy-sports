@@ -30,7 +30,7 @@ export class StartingPitcherComponent implements OnInit {
   public specificFastballDataById: Array <any> = [];
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
   public showData: Array <any>;
   public showBatterData: Array <any>;
   public playerInfo: Array <any>;
@@ -475,13 +475,11 @@ export class StartingPitcherComponent implements OnInit {
                                   sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
                                   //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
                                   sdata.team.opponentId = schedule.schedule.homeTeam.id;
-                                  if (sdata.player.officialImageSrc != null)
-                                    specialImgNum = sdata.player.officialImageSrc.substring(
-                                    sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
-                                    sdata.player.officialImageSrc.lastIndexOf(".")
-                                  );
-                                  
-                                  sdata.player.image = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+
+                                  if (sdata.player.officialImageSrc != null) {
+                                    sdata.player.image = this.dataService.imageSwap(sdata.player.officialImageSrc);
+                                  }
+                                   
 
                                 }
 
@@ -494,13 +492,10 @@ export class StartingPitcherComponent implements OnInit {
                                   sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                                   //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
                                   sdata.team.opponentId = schedule.schedule.awayTeam.id;
-                                  if (sdata.player.officialImageSrc != null)
-                                    specialImgNum = sdata.player.officialImageSrc.substring(
-                                    sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
-                                    sdata.player.officialImageSrc.lastIndexOf(".")
-                                  );
-                                  
-                                  sdata.player.image = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+
+                                  if (sdata.player.officialImageSrc != null) {
+                                    sdata.player.image = this.dataService.imageSwap(sdata.player.officialImageSrc);
+                                  }
                                   
                                 }
 
@@ -528,6 +523,11 @@ export class StartingPitcherComponent implements OnInit {
                             }
                           }  
                        }
+
+                      this.dataService
+                        .getInfo().subscribe(res => {
+                          this.util.updatePlayers(res['players'], this.myData, this.teamRef);    
+                      });
 
                     }
 
@@ -837,13 +837,9 @@ export class StartingPitcherComponent implements OnInit {
                                       sdata.player.gameLocation = "away";
                                       sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;   
                                       sdata.team.opponentId = schedule.schedule.homeTeam.id;
-                                      if (sdata.player.officialImageSrc != null)
-                                        specialImgNum = sdata.player.officialImageSrc.substring(
-                                        sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
-                                        sdata.player.officialImageSrc.lastIndexOf(".")
-                                      );
-                                      
-                                      sdata.player.image = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+                                      if (sdata.player.officialImageSrc != null) {
+                                        sdata.player.image = this.dataService.imageSwap(sdata.player.officialImageSrc);
+                                      }
 
                                     }
                                     if (schedule.schedule.homeTeam.id === sdata.starterTeam) {
@@ -855,13 +851,9 @@ export class StartingPitcherComponent implements OnInit {
                                       sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
                                       sdata.team.opponentId = schedule.schedule.awayTeam.id;
 
-                                      if (sdata.player.officialImageSrc != null)
-                                        specialImgNum = sdata.player.officialImageSrc.substring(
-                                        sdata.player.officialImageSrc.lastIndexOf("/") + 1, 
-                                        sdata.player.officialImageSrc.lastIndexOf(".")
-                                      );
-                                      
-                                      sdata.player.image = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/${specialImgNum}/headshot/67/current`;
+                                      if (sdata.player.officialImageSrc != null) {
+                                        sdata.player.image = this.dataService.imageSwap(sdata.player.officialImageSrc);
+                                      }
                                     }
 
                                     if (sdata.player.officialImageSrc == null) {
@@ -888,6 +880,11 @@ export class StartingPitcherComponent implements OnInit {
                                 }
                               }  
                           }
+
+                          this.dataService
+                            .getHitterInfo().subscribe(res => {
+                              this.util.updatePlayers(res['players'], this.myBatterData, this.teamRef);    
+                          });
                         }
 
                         if (this.myBatterData && this.dailySchedule) {
@@ -1304,7 +1301,7 @@ export class StartingPitcherComponent implements OnInit {
                 .getDaily().subscribe(res => {
                   //console.log(res, "Daily stats updated!");
                 
-                  this.dailyStats = res['gamelogs'];
+                  this.dailyStats = res != null ? res['gamelogs'] : [];
 
                     if (this.myData && this.dailySchedule) {
                       //  console.log('start sorting data for pitching opponent...');
