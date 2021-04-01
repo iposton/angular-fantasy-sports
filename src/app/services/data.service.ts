@@ -95,7 +95,7 @@ export class DataService {
     return this.stats;
   }
 
-  getStats(players) {
+  public getStats(players) {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/player_stats_totals.json?position=P&player=${players}`;
     this.stats = this.http.get(url, {headers})
     return this.stats;
@@ -134,13 +134,13 @@ export class DataService {
   }
 
    public getDaily() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/date/${dailyDate}/player_gamelogs.json?position=P`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/player_gamelogs.json?position=P`;
     this.daily = this.http.get(url, {headers})
     return this.daily;
   }
 
   public getDailyBatters() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
     this.dailyBatters = this.http.get(url, {headers})
     return this.dailyBatters;
   }
