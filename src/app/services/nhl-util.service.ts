@@ -536,7 +536,7 @@ export class NhlUtilService {
         teamId:  23,
         abbreviation: "MIN",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -547,7 +547,7 @@ export class NhlUtilService {
         teamId: 25,
         abbreviation: "MIN",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8478039.jpg',
         new: false
       },

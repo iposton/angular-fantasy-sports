@@ -514,8 +514,8 @@ export class StartingPitcherComponent implements OnInit {
                        for (let team of this.teamRef) {
                          for (let data of this.myData) { 
                             if (team.id === data.starterTeam) {
-                              data.team.color = team.teamColoursHex[0];
-                              data.team.accent = team.teamColoursHex[1];
+                              data.team.color = team.teamColoursHex ? team.teamColoursHex[0] : '#000';
+                              data.team.accent = team.teamColoursHex ? team.teamColoursHex[1] : '#000';
                               data.team.logo = team.officialLogoImageSrc;
                               data.team.city = team.city;
                               data.team.name = team.name;
@@ -871,8 +871,8 @@ export class StartingPitcherComponent implements OnInit {
                           for (let team of this.teamRef) {
                             for (let data of this.myBatterData) { 
                                 if (team.id === data.starterTeam) {
-                                  data.team.color = team.teamColoursHex[0];
-                                  data.team.accent = team.teamColoursHex[1];
+                                  data.team.color = team.teamColoursHex ? team.teamColoursHex[0] : '#000';
+                                  data.team.accent = team.teamColoursHex ? team.teamColoursHex[1] : '#000';
                                   data.team.logo = team.officialLogoImageSrc;
                                   data.team.city = team.city;
                                   data.team.name = team.name;
