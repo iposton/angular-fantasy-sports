@@ -92,6 +92,7 @@ export class StartingPitcherComponent implements OnInit {
   public playerImages: any;
   public actualStarters: any;
   public startingP: any;
+  public selectedDate: any;
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService,
@@ -112,6 +113,8 @@ export class StartingPitcherComponent implements OnInit {
     this.playerImages = this.util.getMLBImages();
     this.actualStarters = this.depth.getActualStarters();
     this.startingP = this.mlbUtil.getStartingPitchers();
+    this.selectedDate = new Date();
+    this.dataService.checkDay();
   }
 
   public statToggle() {
@@ -165,7 +168,8 @@ export class StartingPitcherComponent implements OnInit {
   public getByDate(event) {
     this.loading = true;
     this.dataService.selectedDate(event);
-
+    this.selectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+    this.dataService.checkDay();
     //empty old data on data change 
     this.dailySchedule = [];
     this.gameStarters = [];
@@ -214,14 +218,17 @@ export class StartingPitcherComponent implements OnInit {
               console.log('There are no games being played today.');
             } else {
 
-              this.dailySchedule = res['games'];
+              let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
+              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) || new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) && playedStatuses[item['schedule'].playedStatus] != null);
+              console.log(this.dailySchedule, 'dailysched after filter');
+              //this.dailySchedule = res['games'];
               this.teamRef = this.teams; //res['references'].teamReferences;
               this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
               this.gamesToday = true;
               //console.log(this.dailySchedule, 'sched');
             
               forkJoin(
-                  res['games'].map(
+                this.dailySchedule.map(
                     g => 
                     
                      this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=P,BO1,BO2,BO3,BO4`, { headers })
@@ -247,14 +254,14 @@ export class StartingPitcherComponent implements OnInit {
                       res2 = res[i]['teamLineups'];
                       score2 = this.dailySchedule[i].score;
                     } catch {
-                      console.log('bad endpoint');
+                      console.log(res[i], 'bad endpoint');
                     }
 
                     res2.forEach((item, index) => {
                       gameDay = new Date(this.gameDate);
                       originalStart = game2.originalStartTime != null ? new Date(game2.originalStartTime) : new Date(game2.startTime);
                       //console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
-                      if (gameDay.getDay() === originalStart.getDay() || game2.playedStatus === 'COMPLETED' || game2.playedStatus === 'LIVE') {
+                     // if (gameDay.getDay() === originalStart.getDay() || game2.playedStatus === 'COMPLETED' || game2.playedStatus === 'LIVE') {
                         i2 = index;
                         if (res2[i2].actual != null && res2[i2].expected != null) {
 
@@ -313,7 +320,7 @@ export class StartingPitcherComponent implements OnInit {
                           playerString = this.starterIdData.join(); 
                           batterString = this.batterIdData.join();       
                         } 
-                      }
+                     // }
                     });
                   });
 
@@ -490,7 +497,7 @@ export class StartingPitcherComponent implements OnInit {
                             
                             if (schedule.schedule.awayTeam != null && 
                               schedule.schedule.homeTeam != null) {
-                              if (schedule.schedule.scheduleStatus != "POSTPONED" && gameDay.getDay() === originalStart.getDay()) {
+                              //if (schedule.schedule.scheduleStatus != "POSTPONED" && gameDay.getDay() === originalStart.getDay()) {
 
                                 if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
                                   sdata.sStatus = schedule.schedule.scheduleStatus;
@@ -529,7 +536,7 @@ export class StartingPitcherComponent implements OnInit {
                                   sdata.player.image = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
                                 }
 
-                              }
+                             // }
                                 
                             } 
                            
@@ -760,13 +767,19 @@ export class StartingPitcherComponent implements OnInit {
     this.statData = this.myData.reduce(function(r, a) {
       if(a.team != null){
         r[a.gameId] = r[a.gameId] || [];
-        r[a.gameId].push({'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
+        r[a.gameId].push({'gameTime': a['player'].gameTime, 'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
       }
       return r
     }, Object.create(null));
 
     this.gameGroups = Object.keys(this.statData).map((key, index) => {
         return {game: key, pitchers: this.statData[key].sort((a, b) => a.location.localeCompare(b.location))};
+    });
+
+    this.gameGroups.sort((a, b) => {
+      if (a['pitchers'][0].gameTime <= b['pitchers'][0].gameTime) return -1
+      else if (a['pitchers'][0].gameTime >= b['pitchers'][0].gameTime) return 1
+      else return 0
     });
 
     this.showMatchups('pitcher');

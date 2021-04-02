@@ -20,7 +20,7 @@ export class MlbUtilService {
           rotationSpot: 1,
           active: true,
           img: mlbImageRoot+'605400'+mlbImageEnd,
-          new: true
+          new: false
         },
         '10399':{
           id: 10399,
@@ -31,7 +31,7 @@ export class MlbUtilService {
           rotationSpot: 1,
           active: true,
           img: mlbImageRoot+'608566'+mlbImageEnd,
-          new: true
+          new: false
         },
         '11068':{
           id: 11068,
@@ -42,7 +42,7 @@ export class MlbUtilService {
           rotationSpot: 1,
           active: true,
           img: mlbImageRoot+'605164'+mlbImageEnd,
-          new: true
+          new: false
         },
         '10883':{
           id: 10883,
@@ -53,7 +53,7 @@ export class MlbUtilService {
           rotationSpot: 1,
           active: true,
           img: mlbImageRoot+'518516'+mlbImageEnd,
-          new: true
+          new: false
         },
         '10446':{
           id: 10446,
@@ -64,7 +64,7 @@ export class MlbUtilService {
           rotationSpot: 1,
           active: true,
           img: mlbImageRoot+'571510'+mlbImageEnd,
-          new: true
+          new: false
         },
         '10797':{
           id: 10797,
@@ -75,7 +75,7 @@ export class MlbUtilService {
           rotationSpot: 1,
           active: true,
           img: mlbImageRoot+'641771'+mlbImageEnd,
-          new: true
+          new: false
         },
         
         
