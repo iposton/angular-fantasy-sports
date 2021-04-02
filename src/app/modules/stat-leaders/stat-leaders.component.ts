@@ -30,7 +30,7 @@ export class StatLeadersComponent implements OnInit {
   public teamRef: Array <any>;
   public allSentData: Array <any>;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
-  public mlbApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff";
+  public mlbApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
   public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
   public nhlApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
   public myData: Array <any>;
@@ -182,8 +182,8 @@ export class StatLeadersComponent implements OnInit {
     }
 
     if (this.sport === 'mlb') {
-      this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular" : 
-      "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-playoff";
+      this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular" : 
+      "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
       
       if (this.mlbSection) { 
         this.loadMLB();
