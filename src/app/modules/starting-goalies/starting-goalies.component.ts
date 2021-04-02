@@ -359,7 +359,7 @@ export class StartingGoaliesComponent implements OnInit {
 
               let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
               this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) || playedStatuses[item['schedule'].playedStatus] != null);
-              console.log(this.dailySchedule, 'dailyshced after filter')
+              console.log(this.dailySchedule, 'dailyshced after filter');
 
               this.dailySchedule.forEach((item, index) => {
                 dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 

@@ -35,6 +35,7 @@ export class DataService {
   public env: Observable < any > = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular";
   public dailyDate: any;
+  public isToday: boolean = false;
 
   //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,T,C,TE
 
@@ -44,6 +45,16 @@ export class DataService {
 
   public selectedDate(d) {
     dailyDate = d;
+  }
+
+  public checkDay() {
+    console.log(dailyDate, this.dailyDate)
+    if (dailyDate === this.dailyDate) {
+      this.isToday = true;
+    } else {
+      this.isToday = false;
+    }
+    console.log('is Today?', this.isToday, 'mlb day checked');
   }
 
   sendHeaderOptions(h) {
