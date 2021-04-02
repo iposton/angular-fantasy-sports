@@ -1,6 +1,10 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import {FirebaseService, DataService, UtilService, DepthService} from '../../services/index';
+import {FirebaseService, 
+        DataService, 
+        UtilService, 
+        DepthService,
+        MlbUtilService} from '../../services/index';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
 // import { map } from 'rxjs/operators';
@@ -87,12 +91,14 @@ export class StartingPitcherComponent implements OnInit {
   public stat: any = 1;
   public playerImages: any;
   public actualStarters: any;
+  public startingP: any;
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService,
               private depth: DepthService, 
               private http: HttpClient,
               private util: UtilService,
+              private mlbUtil: MlbUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
     this.fbService
       .getData().subscribe(res => {
@@ -105,6 +111,7 @@ export class StartingPitcherComponent implements OnInit {
     this.testBrowser = isPlatformBrowser(platformId);
     this.playerImages = this.util.getMLBImages();
     this.actualStarters = this.depth.getActualStarters();
+    this.startingP = this.mlbUtil.getStartingPitchers();
   }
 
   public statToggle() {
@@ -144,7 +151,7 @@ export class StartingPitcherComponent implements OnInit {
     twitter = player.team.twitter;
     let searchterm = null;
     searchterm = 'query=' + player.player.lastName + ' ' + twitter;
-    this.image = player.player.officialImageSrc;
+    this.image = player.player.image;
     this.name = player.player.firstName + ' ' + player.player.lastName +' - '+ player.player.primaryPosition +' | #'+ player.player.jerseyNumber;
     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
       this.submitting = false;
@@ -351,6 +358,25 @@ export class StartingPitcherComponent implements OnInit {
               this.myData = removeDuplicatesBy(x => x.player.id, values)
 
                   if (this.starterIdData.length > 0 || this.noGamesToday === true) {
+
+                    const startingPitchers = Object.values(this.startingP);
+           
+                    startingPitchers.forEach((item, index) =>  {
+                      if (startingPitchers[index]['new'] === true) {
+                        let newPitcher = this.mlbUtil.getNewPitcher();
+                        //console.log(newPitcher, 'new Pitcher');
+                        newPitcher.player.id = startingPitchers[index]['id'];
+                        newPitcher.player.firstName = startingPitchers[index]['firstName'];
+                        newPitcher.player.lastName = startingPitchers[index]['lastName'];
+                        newPitcher.player.currentTeam.id = startingPitchers[index]['teamId'];
+                        newPitcher.player.currentTeam.abbreviation = startingPitchers[index]['abbreviation'];
+                        newPitcher.player.officialImageSrc = null;
+                        newPitcher.player.image = startingPitchers[index]['img'];
+                        newPitcher.team.id =  startingPitchers[index]['teamId'];
+                        newPitcher.team.abbreviation =  startingPitchers[index]['abbreviation'];
+                        this.myData.push(newPitcher)
+                      }  
+                    });
                   //  console.log('this.starterIdData.length > 0 || this.noGamesToday === true...');
 
 
@@ -455,7 +481,7 @@ export class StartingPitcherComponent implements OnInit {
                       if (this.myData && this.dailySchedule) {
                         let gameDay = null;
                         let originalStart = null;
-                        let specialImgNum = null;
+                        
                        // console.log('start sorting data for daily schedule...');
                         for (let schedule of this.dailySchedule) {
                           for (let sdata of this.myData) {
@@ -499,7 +525,7 @@ export class StartingPitcherComponent implements OnInit {
                                   
                                 }
 
-                                if (sdata.player.officialImageSrc == null) {
+                                if (sdata.player.officialImageSrc == null && sdata.player.image == null) {
                                   sdata.player.image = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
                                 }
 
@@ -856,7 +882,7 @@ export class StartingPitcherComponent implements OnInit {
                                       }
                                     }
 
-                                    if (sdata.player.officialImageSrc == null) {
+                                    if (sdata.player.officialImageSrc == null && sdata.player.image == null) {
                                       sdata.player.image = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
                                     }
 

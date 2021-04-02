@@ -6,6 +6,7 @@ export * from './nhl-data.service';
 export * from './nfl-data.service';
 export * from './nhl-util.service';
 export * from './nba-util.service';
+export * from './mlb-util.service';
 export * from './firebase.service';
 export * from './util.service';
 export * from './google-analytics.service';
