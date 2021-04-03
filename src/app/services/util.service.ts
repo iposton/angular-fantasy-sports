@@ -131,22 +131,22 @@ export class UtilService {
       "14236": {
         firstName: "Dane",
         lastName: "Dunning",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/641540/headshot/silo/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/641540/headshot/67/current"
       }, 
       "14200": {
         firstName: "Sixto",
         lastName: "Sanchez",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/664350/headshot/silo/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/664350/headshot/67/current"
       },
       "14245": {
         firstName: "Jesus",
         lastName: "Luzardo",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/666200/headshot/silo/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/666200/headshot/67/current"
       },
       "15641": {
         firstName: "Christian",
         lastName: "Javier",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/664299/headshot/silo/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/664299/headshot/67/current"
       },
       "17844": {
         firstName: "Kwang Hyun",
@@ -156,7 +156,7 @@ export class UtilService {
       "15851": {
         firstName: "Devie",
         lastName: "Garcia",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_180,q_100/v1/people/665620/headshot/silo/current"
+        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/665620/headshot/67/current"
       },
       "22220": {
         firstName: "Luis",
