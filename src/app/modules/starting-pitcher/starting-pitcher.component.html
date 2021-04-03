@@ -167,6 +167,99 @@
           </div>
     </div>
 
+    <div *ngIf="twitter">
+      <div class="row">
+        <div class="col">
+            <div class="edit-list-container">
+                <ul>
+                  <li *ngFor="let group of myData">
+                    <ul>
+                      <li class="goalie pitcher">
+                        <img src="{{group.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
+                        {{group.player.lastName}} 
+                        <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+        </div>
+        <div class="col">
+          
+      <div class="edit-list-container">
+          <ul>
+              <li *ngFor="let data of showData" class="goalie pitcher">
+                <span *ngIf="data['pitchers'][0] != null">
+                    <img src="{{data['pitchers'][0]?.playerObj?.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
+                       <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'UNPLAYED'">
+                         ({{ data['pitchers'][0]?.playerObj?.player?.stats?.pitching?.wins + '-' + data['pitchers'][0]?.playerObj?.player?.stats?.pitching?.losses }})
+                       </span>
+
+                        <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'LIVE' || data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
+                            ERA: {{data['pitchers'][0]?.playerObj?.player?.eraToday}} K's: {{data['pitchers'][0]?.playerObj?.player?.strikeoutsToday}}
+                        </span>
+
+                       <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.winToday === 1" style="color: gold;">
+                         W
+                       </span>
+              
+                        <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.loseToday === 1">
+                          L
+                        </span>
+
+                        <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.winToday === 0 && data['pitchers'][0]?.playerObj?.player?.loseToday === 0">
+                          ND
+                        </span>
+
+                </span>
+                <span *ngIf="data['pitchers'][1] != null">
+                    <img src="{{data['pitchers'][1]?.playerObj?.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
+                       <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'UNPLAYED'">
+                         ({{ data['pitchers'][1]?.playerObj?.stats?.pitching?.wins + '-' + data['pitchers'][1]?.playerObj?.stats?.pitching?.losses }})
+                       </span>
+
+                        <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'LIVE' || data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
+                            ERA: {{data['pitchers'][1]?.playerObj?.player?.eraToday}} K's: {{data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}}
+                        </span>
+
+                       <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.winToday === 1" style="color: gold;">
+                         W
+                       </span>
+              
+                        <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.loseToday === 1">
+                          L
+                        </span>
+
+                        <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.winToday === 0 && data['pitchers'][1]?.playerObj?.player?.loseToday === 0">
+                          ND
+                        </span>
+
+                </span>
+              </li>
+            </ul>
+        </div>
+        </div>
+        <div class="col">
+            <div class="edit-list-container">
+          
+              #MLB Starting Pitcher Matchup {{ gameDate | date:'fullDate' }}
+              <div *ngFor="let data of showData" class="goalie pitcher">
+              <span *ngIf="data['pitchers'][0] != null">                  
+                {{data['pitchers'][0]?.playerObj?.team.twitter}} {{data['pitchers'][0]?.playerObj?.player.lastName}} 
+              </span>
+              <span *ngIf="data['pitchers'][0] != null">                  
+                {{data['pitchers'][1]?.playerObj?.team.twitter}} {{data['pitchers'][1]?.playerObj?.player.lastName}} 
+              </span>
+              </div>
+              #Stats #FantasyBaseball #Baseball
+
+            </div>
+        </div>
+      </div>
+      
+
+  </div> 
+
   <!-- 
 
               <span *ngIf="data.player.rookie === true" class="rookie">Rookie  <br></span>

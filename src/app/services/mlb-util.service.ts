@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-let mlbImageRoot = `https://img.mlbstatic.com/mlb-photos/image/upload/w_213,q_100/v1/people/`;
+let mlbImageRoot = `https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/`;
 let mlbImageEnd = `/headshot/67/current`;
 
 @Injectable({

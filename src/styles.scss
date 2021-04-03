@@ -1388,6 +1388,19 @@ ul {
     margin-bottom: 6px;
   }
 
+  .edit-list-container {
+    padding: 4px;
+    background: rgb(150,46,35);
+    background: linear-gradient(90deg, rgba(150,46,35,1) 0%, rgba(192,57,43,1)64%, rgba(223,69,53,1) 100%);
+    text-align: left;
+    .goalie.pitcher img {
+      width: 9%;
+      margin: 0;
+      box-shadow: 0 3px 8px rgb(0 0 0 / 19%), 0 3px 3px rgb(0 0 0 / 23%);
+      border-radius: 16%;
+    }
+  }
+
 }
 
 //Home
