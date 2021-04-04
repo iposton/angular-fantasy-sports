@@ -77,7 +77,39 @@ export class MlbUtilService {
           img: mlbImageRoot+'641771'+mlbImageEnd,
           new: false
         },
-        
+        '12626':{
+          id: 12626,
+          firstName: "Chris",
+          lastName: "Felxan",
+          teamId: 123,
+          abbreviation: "SEA",
+          rotationSpot: 3,
+          active: true,
+          img: mlbImageRoot+'623167'+mlbImageEnd,
+          new: true
+        },
+        '14228':{
+          id: 14228,
+          firstName: "Tanner",
+          lastName: "Houck",
+          teamId: 113,
+          abbreviation: "BOS",
+          rotationSpot: 2,
+          active: true,
+          img: mlbImageRoot+'656557'+mlbImageEnd,
+          new: true
+        }, 
+        '28824':{
+          id: 28824,
+          firstName: "Kohei",
+          lastName: "Arihara",
+          teamId: 121,
+          abbreviation: "TEX",
+          rotationSpot: 3,
+          active: true,
+          img: mlbImageRoot+'685503'+mlbImageEnd,
+          new: true
+        },
         
       }
 

@@ -364,6 +364,14 @@ export class StartingPitcherComponent implements OnInit {
               if (res != null) values = res['playerStatsTotals'];
               this.myData = removeDuplicatesBy(x => x.player.id, values)
 
+              for (let data of this.myData) {
+                data.player.gameLocation = "none";
+
+                if (this.startingP[data.player.id] != null) {
+                  this.startingP[data.player.id].new = false;  
+                }
+              }
+
                   if (this.starterIdData.length > 0 || this.noGamesToday === true) {
 
                     const startingPitchers = Object.values(this.startingP);
