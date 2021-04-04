@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/';
+let mlbImageRoot = `https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/`;
+let mlbImageEnd = `/headshot/67/current`;
 
 @Injectable({
   providedIn: 'root'
@@ -126,45 +128,75 @@ export class UtilService {
       "14207": {
         firstName: "Ian",
         lastName: "Anderson",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/666120/headshot/67/current"
+        image: mlbImageRoot+"666120"+mlbImageEnd
       }, 
       "14236": {
         firstName: "Dane",
         lastName: "Dunning",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/641540/headshot/67/current"
+        image: mlbImageRoot+"641540"+mlbImageEnd
       }, 
       "14200": {
         firstName: "Sixto",
         lastName: "Sanchez",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/664350/headshot/67/current"
+        image: mlbImageRoot+"664350"+mlbImageEnd
       },
       "14245": {
         firstName: "Jesus",
         lastName: "Luzardo",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/666200/headshot/67/current"
+        image: mlbImageRoot+"666200"+mlbImageEnd
       },
       "15641": {
         firstName: "Christian",
         lastName: "Javier",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/664299/headshot/67/current"
+        image: mlbImageRoot+"664299"+mlbImageEnd
       },
       "17844": {
         firstName: "Kwang Hyun",
         lastName: "Kim",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/547942/headshot/67/current"
+        image: mlbImageRoot+"547942"+mlbImageEnd
       },
       "15851": {
         firstName: "Devie",
         lastName: "Garcia",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/665620/headshot/67/current"
+        image: mlbImageRoot+"665620"+mlbImageEnd
       },
       "22220": {
         firstName: "Luis",
         lastName: "Garcia",
-        image: "https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/677651/headshot/67/current"
+        image: mlbImageRoot+"677651"+mlbImageEnd
       },
-      
-      
+      "14228":{
+        firstName: "Tanner",
+        lastName: "Houck",
+        image: mlbImageRoot+'656557'+mlbImageEnd,
+      },
+      "28824":{
+        firstName: "Kohei",
+        lastName: "Arihara",
+        image: mlbImageRoot+'685503'+mlbImageEnd,
+      },
+      "19966":{
+        firstName: "Tarik",
+        lastName: "Skubal",
+        image: mlbImageRoot+'669373'+mlbImageEnd,
+      },
+      "17579":{
+        firstName: "Bruce",
+        lastName: "Zimmermann",
+        image: mlbImageRoot+'669145'+mlbImageEnd,
+      },
+      "15774":{
+        firstName: "Brady",
+        lastName: "Singer",
+        image: mlbImageRoot+'663903'+mlbImageEnd,
+      },
+      "14647":{
+        firstName: "Taylor",
+        lastName: "Widener",
+        image: mlbImageRoot+'642203'+mlbImageEnd,
+      },
+       
+       
     }
 
     this.replaceImg = {
@@ -654,7 +686,7 @@ export class UtilService {
           city: "Toronto",
           name: "Blue Jays",
           abbreviation: "TOR",
-          twitter: "#BlueJays",
+          twitter: "#WeAreBlueJays ",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/141.svg"
         },
         {
@@ -702,7 +734,7 @@ export class UtilService {
           city: "Kansas City",
           name: "Royals",
           abbreviation: "KC",
-          twitter: "#AlwaysRoyal",
+          twitter: "#TogetherRoyal",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/118.svg"
         },
         {
@@ -726,7 +758,7 @@ export class UtilService {
           city: "Texas",
           name: "Rangers",
           abbreviation: "TEX",
-          twitter: "#TogetherWe",
+          twitter: "#StraightUpTX",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/140.svg"
         },
         {
@@ -742,7 +774,7 @@ export class UtilService {
           city: "Seattle",
           name: "Mariners",
           abbreviation: "SEA",
-          twitter: "#TrueToTheBlue",
+          twitter: "#SeaUsRise",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/136.svg"
         },
         {
@@ -750,7 +782,7 @@ export class UtilService {
           city: "Los Angeles",
           name: "Angels",
           abbreviation: "LAA",
-          twitter: "#GoAngels",
+          twitter: "#WeBelieve",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/108.svg"
         },
         {
@@ -758,7 +790,7 @@ export class UtilService {
           city: "Oakland",
           name: "Athletics",
           abbreviation: "OAK",
-          twitter: "#RootedInOakland",
+          twitter: "#RiseAndGrind",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/133.svg"
         },
         {
@@ -822,7 +854,7 @@ export class UtilService {
           city: "St. Louis",
           name: "Cardinals",
           abbreviation: "STL",
-          twitter: "#STLCards",
+          twitter: "#STLFLY",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/138.svg"
         },
         {
@@ -846,7 +878,7 @@ export class UtilService {
           city: "San Francisco",
           name: "Giants",
           abbreviation: "SF",
-          twitter: "#SFGiants",
+          twitter: "#ResilientSF",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/137.svg"
         },
         {
@@ -870,7 +902,7 @@ export class UtilService {
           city: "San Diego",
           name: "Padres",
           abbreviation: "SD",
-          twitter: "#TakeTheCake",
+          twitter: "#HungryForMore",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/135.svg"
         },
         {
