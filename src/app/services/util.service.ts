@@ -195,8 +195,11 @@ export class UtilService {
         lastName: "Widener",
         image: mlbImageRoot+'642203'+mlbImageEnd,
       },
-       
-       
+      "14409":{
+        firstName: "T.J.",
+        lastName: "Zeuch",
+        image: mlbImageRoot+'643615'+mlbImageEnd,
+      },  
     }
 
     this.replaceImg = {
