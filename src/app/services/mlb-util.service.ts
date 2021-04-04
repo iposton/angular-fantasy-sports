@@ -110,6 +110,17 @@ export class MlbUtilService {
           img: mlbImageRoot+'685503'+mlbImageEnd,
           new: true
         },
+        '11083':{
+          id: 11083,
+          firstName: "Domingo",
+          lastName: "German",
+          teamId: 114,
+          abbreviation: "NYY",
+          rotationSpot: 3,
+          active: true,
+          img: mlbImageRoot+'593334'+mlbImageEnd,
+          new: true
+        },
         
       }
 

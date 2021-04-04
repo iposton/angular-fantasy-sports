@@ -287,6 +287,29 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '4310': {
+        id: 4310,
+        firstName: "Curtis",
+        lastName: "McElhinney",
+        teamId: 1,
+        abbreviation: "TBL",
+        active: false,
+        numberOne: false,
+        img: nhlImageRoot+'8470147.jpg',
+        new: false
+      },
+      '5905': {
+        id: 5905,
+        firstName: "Christopher",
+        lastName: "Gibson",
+        teamId: 1,
+        abbreviation: "TBL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8476444.jpg',
+        new: true
+      },
+      
       '5873': {
         id: 5873,
         firstName: "Connor",
@@ -802,17 +825,6 @@ export class NhlUtilService {
         active: false,
         numberOne: false,
         img: nhlImageRoot+'8468011.jpg',
-        new: true
-      },
-      '4310': {
-        id: 4310,
-        firstName: "Curtis",
-        lastName: "McElhinney",
-        teamId: 1,
-        abbreviation: "TBL",
-        active: true,
-        numberOne: false,
-        img: nhlImageRoot+'8470147.jpg',
         new: true
       },
       '3855': {
