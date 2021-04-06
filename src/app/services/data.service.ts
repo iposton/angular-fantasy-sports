@@ -49,7 +49,7 @@ export class DataService {
 
   public checkDay() {
     console.log(dailyDate, this.dailyDate)
-    if (dailyDate === this.dailyDate) {
+    if (dailyDate === this.dailyDate || dailyDate < this.dailyDate) {
       this.isToday = true;
     } else {
       this.isToday = false;

@@ -1393,6 +1393,13 @@ ul {
     background: rgb(150,46,35);
     background: linear-gradient(90deg, rgba(150,46,35,1) 0%, rgba(192,57,43,1)64%, rgba(223,69,53,1) 100%);
     text-align: left;
+    .rookie.opp {
+      background: #222;
+      font-size: 10px;
+      display: inline-block;
+      width: 20px;
+      text-align: center;
+    }
     .goalie.pitcher img {
       width: 9%;
       margin: 0;
@@ -1450,7 +1457,7 @@ ul {
 }
 
 .score-container.mlb {
-  background-size: 130px!important;
+  background-size: 140px!important;
 }
 
 
@@ -1775,18 +1782,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .live {
   color:#2ecc71; 
 }
-
 .plus {
   color: #2ecc71;
 }
 .minus {
   color: #f44336;
 }
-
 section {
   text-align: center;
 }
-
 .row {
   display: flex;
   flex-direction: row;
@@ -1796,7 +1800,6 @@ section {
 .dn, .dn2, .d3 {
   display: none;
 }
-
 form.date-form {
   label {
     color: #fff;
@@ -1826,6 +1829,9 @@ form.date-form {
   font-size: 1.5em;
   margin: 10px;
   font-weight: bold;
+}
+.gold {
+  color: gold;
 }
 
 //nfl
@@ -2605,7 +2611,7 @@ form input[type="text"] {
   .mlb-page {
     .card-wrap-sp {
       display: inline-block;
-      margin: 0 0 20px 0;
+      margin: 0 0 2px 0;
       vertical-align: top;
       width: 100%;
     }
@@ -2613,6 +2619,13 @@ form input[type="text"] {
 
   .baseball-header {
     font-size: 20px;
+  }
+
+  .mlb-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content img, .mlb-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content img {
+    width: 30%;
+  }
+  .mlb-page .card-wrap-sp .mat-card-sp {
+    min-height: 130px;
   }
 
 }

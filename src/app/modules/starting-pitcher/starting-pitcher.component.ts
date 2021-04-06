@@ -108,9 +108,9 @@ export class StartingPitcherComponent implements OnInit {
       });
 
     this.players = this.dataService.getSentStats();
-    this.teams = this.util.getMLBTeams();
+    this.teams = this.mlbUtil.getMLBTeams();
     this.testBrowser = isPlatformBrowser(platformId);
-    this.playerImages = this.util.getMLBImages();
+    this.playerImages = this.mlbUtil.getMLBImages();
     this.actualStarters = this.depth.getActualStarters();
     this.startingP = this.mlbUtil.getStartingPitchers();
     this.selectedDate = new Date();
@@ -350,19 +350,10 @@ export class StartingPitcherComponent implements OnInit {
 
             this.dataService
               .getStats(playerString).subscribe(res => {
-
-                function removeDuplicatesBy(keyFn, array) {
-                  var mySet = new Set();
-                  return array.filter(function(x) {  
-                      var key = keyFn(x), isNew = !mySet.has(key);
-                      if (isNew) mySet.add(key);  
-                      return isNew;
-                  });
-                }
               
               let values = [];
               if (res != null) values = res['playerStatsTotals'];
-              this.myData = removeDuplicatesBy(x => x.player.id, values)
+              this.myData = this.util.removeDuplicatesBy(x => x.player.id, values)
 
               for (let data of this.myData) {
                 data.player.gameLocation = "none";
@@ -805,18 +796,18 @@ export class StartingPitcherComponent implements OnInit {
                 this.dataService
                   .getBatStats(batterString).subscribe(res => {
                     
-                    function removeDuplicatesBy(keyFn, array) {
-                      var mySet = new Set();
-                      return array.filter(function(x) {  
-                          var key = keyFn(x), isNew = !mySet.has(key);
-                          if (isNew) mySet.add(key);  
-                          return isNew;
-                      });
-                    }
+                    // function removeDuplicatesBy(keyFn, array) {
+                    //   var mySet = new Set();
+                    //   return array.filter(function(x) {  
+                    //       var key = keyFn(x), isNew = !mySet.has(key);
+                    //       if (isNew) mySet.add(key);  
+                    //       return isNew;
+                    //   });
+                    // }
                   
                   let values = [];
                   if (res != null) values = res['playerStatsTotals'];
-                  this.myBatterData = removeDuplicatesBy(x => x.player.id, values);
+                  this.myBatterData = this.util.removeDuplicatesBy(x => x.player.id, values);
                   //console.log(this.myBatterData, 'my batter data');
 
                       if (this.batterIdData.length > 0 || this.noGamesToday === true) {
@@ -1047,7 +1038,7 @@ export class StartingPitcherComponent implements OnInit {
     this.statBatterData = this.myBatterData.reduce(function(r, a) {
       if(a.team != null){
         r[a.starterTeam] = r[a.starterTeam] || [];
-        r[a.starterTeam].push({'order': a.order, 'gid': a.gameId, 'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
+        r[a.starterTeam].push({'gameTime': a['player'].gameTime, 'order': a.order, 'gid': a.gameId, 'location': a['player'].gameLocation, 'of': 'of', 'playerObj': a});
       }
       return r
     }, Object.create(null));
@@ -1056,6 +1047,12 @@ export class StartingPitcherComponent implements OnInit {
         return {id: this.statBatterData[key][0].gid != null ?  this.statBatterData[key][0].gid : 
            this.statBatterData[key][1].gid != null ?  this.statBatterData[key][1].gid : 
            this.statBatterData[key][2].gid, game: key, batters: this.statBatterData[key].sort((a, b) => a.order.localeCompare(b.order))};
+    });
+
+    this.gameBatterGroups.sort((a, b) => {
+      if (a['batters'][0].gameTime <= b['batters'][0].gameTime) return -1
+      else if (a['batters'][0].gameTime >= b['batters'][0].gameTime) return 1
+      else return 0
     });
 
     this.showMatchups('batter');

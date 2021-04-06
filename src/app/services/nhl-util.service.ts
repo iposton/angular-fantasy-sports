@@ -56,17 +56,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
-      '5107':{
-        id: 5107,
-        firstName: "Jake",
-        lastName: "Allen",
-        teamId: 14,
-        abbreviation: "MTL",
-        active: true,
-        numberOne: false,
-        img: nhlImageRoot+'8474596.jpg',
-        new: true
-      },
       '5908': {
         id: 5908,
         firstName: "Jordan",
@@ -503,10 +492,32 @@ export class NhlUtilService {
         lastName: "Price",
         teamId: 14,
         abbreviation: "MTL",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
+      },
+      '5107':{
+        id: 5107,
+        firstName: "Jake",
+        lastName: "Allen",
+        teamId: 14,
+        abbreviation: "MTL",
+        active: true,
+        numberOne: true,
+        img: nhlImageRoot+'8474596.jpg',
+        new: false
+      },
+      '17355':{
+        id: 17355,
+        firstName: "Cayden",
+        lastName: "Primeau",
+        teamId: 14,
+        abbreviation: "MTL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8480051.jpg',
+        new: true
       },
       '4862': {
         id: 4862,
@@ -556,7 +567,7 @@ export class NhlUtilService {
         id: 5277,
         firstName: "Cam",
         lastName: "Talbot",
-        teamId:  23,
+        teamId:  25,
         abbreviation: "MIN",
         active: true,
         numberOne: true,
@@ -624,8 +635,8 @@ export class NhlUtilService {
         lastName: "Halak",
         teamId: 11,
         abbreviation: "BOS",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8470860.jpg',
         new: false
       },
@@ -640,6 +651,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '28418': {
+        id: 28418,
+        firstName: "Jeremy",
+        lastName: "Swayman",
+        teamId: 11,
+        abbreviation: "BOS",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: true
+      },
       '14444': {
         id: 14444,
         firstName: "Dan",
@@ -647,9 +669,9 @@ export class NhlUtilService {
         teamId: 11,
         abbreviation: "BOS",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8478435.jpg',
-        new: true
+        new: false
       },
       '4561': {
         id: 4561,
