@@ -335,15 +335,15 @@ export class NHLDataService {
     let printbegin = null;
     let printend = null;
     if (nextWeek) {
+      begin = '20210412';
+      printbegin = '4/12';
+      end = '20210418';
+      printend = '4/18';
+    } else {
       begin = '20210405';
       printbegin = '4/5';
       end = '20210411';
-      printend = '4/11';
-    } else {
-      begin = '20210329';
-      printbegin = '3/29';
-      end = '20210404';
-      printend = '4/4';     
+      printend = '4/11';     
     }
       let team;
       let teamSchedule;

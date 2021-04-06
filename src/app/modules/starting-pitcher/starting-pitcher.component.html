@@ -167,7 +167,7 @@
           </div>
     </div>
 
-    <div *ngIf="twitter">
+    <div *ngIf="twitter && !loading">
       <div class="row">
         <div class="col">
             <div class="edit-list-container">
@@ -199,7 +199,7 @@
                             ERA: {{data['pitchers'][0]?.playerObj?.player?.eraToday}} K's: {{data['pitchers'][0]?.playerObj?.player?.strikeoutsToday}}
                         </span>
 
-                       <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.winToday === 1" style="color: gold;">
+                       <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.winToday === 1" class="gold">
                          W
                        </span>
               
@@ -211,7 +211,7 @@
                           ND
                         </span>
 
-                        <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][0]?.playerObj?.player?.winToday === 1">
+                        <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][0]?.playerObj?.player?.winToday === 1" class="gold">
                              ({{data['pitchers'][0]?.playerObj?.player?.strikeoutsToday}} strikeouts)
                         </span>
 
@@ -226,7 +226,7 @@
                             ERA: {{data['pitchers'][1]?.playerObj?.player?.eraToday}} K's: {{data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}}
                         </span>
 
-                       <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.winToday === 1" style="color: gold;">
+                       <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.winToday === 1" class="gold">
                          W
                        </span>
               
@@ -238,7 +238,7 @@
                           ND
                         </span>
 
-                        <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][1]?.playerObj?.player?.winToday === 1">
+                        <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][1]?.playerObj?.player?.winToday === 1" class="gold">
                             ({{data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}} strikeouts)
                        </span>
 
@@ -261,6 +261,20 @@
               </div>
               #Stats #FantasyBaseball #Baseball
 
+            </div>
+            <div class="edit-list-container">
+          
+                #MLB Starting Pitcher Matchup {{ gameDate | date:'fullDate' }}
+                <div *ngFor="let data of showData" class="goalie pitcher">
+                <span *ngIf="data['pitchers'][0] != null">                  
+                  {{data['pitchers'][0]?.playerObj?.team.twitter}} 
+                </span>
+                <span *ngIf="data['pitchers'][0] != null">                  
+                  {{data['pitchers'][1]?.playerObj?.team.twitter}}  
+                </span>
+                </div>
+                #Stats #FantasyBaseball #Baseball
+  
             </div>
         </div>
       </div>
@@ -724,6 +738,100 @@
               </div>
           </div>
     </div>
+    <div *ngIf="twitter && !loading">
+        <div class="row">
+          <div class="col">
+              <div class="edit-list-container">
+                Leadoff Hitters
+                  <ul>
+                      <li *ngFor="let data of myBatterData" class="goalie pitcher">
+                        <span *ngIf="data['order'] != null && data['order'] === 'BO1'">
+                            <img src="{{data.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
+                            <span class="player-infos">
+                                <span class="rookie opp"> 
+                                   {{data.player?.gameLocation === 'home' ? 'vs' : '@'}} 
+                                   {{data?.team?.opponent}} 
+                                </span>
+                            </span>
+                            {{data?.player?.lastName}} 
+                            <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
+                            {{data?.stats?.hitsToday}} Hits 
+                            <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
+                            <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
+                        </span>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col">
+              <div class="edit-list-container">
+                2nd Spot Hitters
+                  <ul>
+                      <li *ngFor="let data of myBatterData" class="goalie pitcher">
+                        <span *ngIf="data['order'] != null && data['order'] === 'BO2'">
+                            <img src="{{data.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
+                            <span class="player-infos">
+                                <span class="rookie opp"> 
+                                   {{data.player?.gameLocation === 'home' ? 'vs' : '@'}} 
+                                   {{data?.team?.opponent}} 
+                                </span>
+                            </span>
+                            {{data?.player?.lastName}} 
+                            <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
+                            {{data?.stats?.hitsToday}} Hits 
+                            <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
+                            <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
+                        </span>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col">
+              <div class="edit-list-container">
+                3rd Spot Hitters
+                  <ul>
+                      <li *ngFor="let data of myBatterData" class="goalie pitcher">
+                        <span *ngIf="data['order'] != null && data['order'] === 'BO3'">
+                            <img src="{{data.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
+                            <span class="player-infos">
+                                <span class="rookie opp"> 
+                                   {{data.player?.gameLocation === 'home' ? 'vs' : '@'}} 
+                                   {{data?.team?.opponent}} 
+                                </span>
+                            </span>
+                            {{data?.player?.lastName}} 
+                            <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
+                            {{data?.stats?.hitsToday}} Hits 
+                            <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
+                            <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
+                        </span>
+                      </li>
+                  </ul>
+              </div>
+              <div class="edit-list-container">
+                  Cleanup Hitters
+                    <ul>
+                        <li *ngFor="let data of myBatterData" class="goalie pitcher">
+                          <span *ngIf="data['order'] != null && data['order'] === 'BO4'">
+                              <img src="{{data.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
+                              <span class="player-infos">
+                                  <span class="rookie opp"> 
+                                     {{data.player?.gameLocation === 'home' ? 'vs' : '@'}} 
+                                     {{data?.team?.opponent}} 
+                                  </span>
+                              </span>
+                              {{data?.player?.lastName}} 
+                              <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
+                              {{data?.stats?.hitsToday}} Hits 
+                              <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
+                            <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
+                          </span>
+                        </li>
+                    </ul>
+                </div>
+          </div>
+      </div>
+  </div>
 </div>
 <div class="row" *ngIf="!loading && dailySchedule != null">
   <div class="center twitter-btn">

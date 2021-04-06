@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/';
-let mlbImageRoot = `https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/`;
-let mlbImageEnd = `/headshot/67/current`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
-  public weekTimes: Array<any> = []; 
-  public byes: any; 
+  public weekTimes: Array<any> = [];
   public nflTeams: any;
-  public mlbTeams: any; 
   public NFLImages: any;
-  public MLBImages: any;
   public replaceImg: any;
 
   constructor() {
@@ -123,84 +118,6 @@ export class UtilService {
         week: '22' //super bowl
       }
     ];
-
-    this.MLBImages = {
-      "14207": {
-        firstName: "Ian",
-        lastName: "Anderson",
-        image: mlbImageRoot+"666120"+mlbImageEnd
-      }, 
-      "14236": {
-        firstName: "Dane",
-        lastName: "Dunning",
-        image: mlbImageRoot+"641540"+mlbImageEnd
-      }, 
-      "14200": {
-        firstName: "Sixto",
-        lastName: "Sanchez",
-        image: mlbImageRoot+"664350"+mlbImageEnd
-      },
-      "14245": {
-        firstName: "Jesus",
-        lastName: "Luzardo",
-        image: mlbImageRoot+"666200"+mlbImageEnd
-      },
-      "15641": {
-        firstName: "Christian",
-        lastName: "Javier",
-        image: mlbImageRoot+"664299"+mlbImageEnd
-      },
-      "17844": {
-        firstName: "Kwang Hyun",
-        lastName: "Kim",
-        image: mlbImageRoot+"547942"+mlbImageEnd
-      },
-      "15851": {
-        firstName: "Devie",
-        lastName: "Garcia",
-        image: mlbImageRoot+"665620"+mlbImageEnd
-      },
-      "22220": {
-        firstName: "Luis",
-        lastName: "Garcia",
-        image: mlbImageRoot+"677651"+mlbImageEnd
-      },
-      "14228":{
-        firstName: "Tanner",
-        lastName: "Houck",
-        image: mlbImageRoot+'656557'+mlbImageEnd,
-      },
-      "28824":{
-        firstName: "Kohei",
-        lastName: "Arihara",
-        image: mlbImageRoot+'685503'+mlbImageEnd,
-      },
-      "19966":{
-        firstName: "Tarik",
-        lastName: "Skubal",
-        image: mlbImageRoot+'669373'+mlbImageEnd,
-      },
-      "17579":{
-        firstName: "Bruce",
-        lastName: "Zimmermann",
-        image: mlbImageRoot+'669145'+mlbImageEnd,
-      },
-      "15774":{
-        firstName: "Brady",
-        lastName: "Singer",
-        image: mlbImageRoot+'663903'+mlbImageEnd,
-      },
-      "14647":{
-        firstName: "Taylor",
-        lastName: "Widener",
-        image: mlbImageRoot+'642203'+mlbImageEnd,
-      },
-      "14409":{
-        firstName: "T.J.",
-        lastName: "Zeuch",
-        image: mlbImageRoot+'643615'+mlbImageEnd,
-      },  
-    }
 
     this.replaceImg = {
       "8195" : {
@@ -673,250 +590,6 @@ export class UtilService {
       },  
        
     }
-
-
-     this.mlbTeams = [
-        {
-          id: 111,
-          city: "Baltimore",
-          name: "Orioles",
-          abbreviation: "BAL",
-          twitter: "#Birdland",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/110.svg"
-        },
-        {
-          id: 112,
-          city: "Toronto",
-          name: "Blue Jays",
-          abbreviation: "TOR",
-          twitter: "#WeAreBlueJays ",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/141.svg"
-        },
-        {
-          id: 113,
-          city: "Boston",
-          name: "Red Sox",
-          abbreviation: "BOS",
-          twitter: "#DirtyWater",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/111.svg"
-        },
-        {
-          id: 114,
-          city: "New York",
-          name: "Yankees",
-          abbreviation: "NYY",
-          twitter: "#NYYforNY",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/147.svg"
-        },
-        {
-          id: 115,
-          city: "Tampa Bay",
-          name: "Rays",
-          abbreviation: "TB",
-          twitter: "#RaysUp",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/139.svg"
-        },
-        {
-          id: 116,
-          city: "Cleveland",
-          name: "Indians",
-          abbreviation: "CLE",
-          twitter: "#OurTribe",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/114.svg"
-        },
-        {
-          id: 117,
-          city: "Detroit",
-          name: "Tigers",
-          abbreviation: "DET",
-          twitter: "#DetroitRoots",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/116.svg"
-        },
-        {
-          id: 118,
-          city: "Kansas City",
-          name: "Royals",
-          abbreviation: "KC",
-          twitter: "#TogetherRoyal",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/118.svg"
-        },
-        {
-          id: 119,
-          city: "Chicago",
-          name: "White Sox",
-          abbreviation: "CWS",
-          twitter: "#ChangetheGame",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/145.svg"
-        },
-        {
-          id: 120,
-          city: "Minnesota",
-          name: "Twins",
-          abbreviation: "MIN",
-          twitter: "#MNTwins",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/142.svg"
-        },
-        {
-          id: 121,
-          city: "Texas",
-          name: "Rangers",
-          abbreviation: "TEX",
-          twitter: "#StraightUpTX",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/140.svg"
-        },
-        {
-          id: 122,
-          city: "Houston",
-          name: "Astros",
-          abbreviation: "HOU",
-          twitter: "#ForTheH",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/117.svg"
-        },
-        {
-          id: 123,
-          city: "Seattle",
-          name: "Mariners",
-          abbreviation: "SEA",
-          twitter: "#SeaUsRise",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/136.svg"
-        },
-        {
-          id: 124,
-          city: "Los Angeles",
-          name: "Angels",
-          abbreviation: "LAA",
-          twitter: "#WeBelieve",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/108.svg"
-        },
-        {
-          id: 125,
-          city: "Oakland",
-          name: "Athletics",
-          abbreviation: "OAK",
-          twitter: "#RiseAndGrind",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/133.svg"
-        },
-        {
-          id: 126,
-          city: "Washington",
-          name: "Nationals",
-          abbreviation: "WAS",
-          twitter: "#Natitude",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/120.svg"
-        },
-        {
-          id: 127,
-          city: "New York",
-          name: "Mets",
-          abbreviation: "NYM",
-          twitter: "#LGM",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/121.svg"
-        },
-        {
-          id: 128,
-          city: "Miami",
-          name: "Marlins",
-          abbreviation: "MIA",
-          twitter: "#JuntosMiami",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/146.svg"
-        },
-        {
-          id: 129,
-          city: "Philadelphia",
-          name: "Phillies",
-          abbreviation: "PHI",
-          twitter: "#RingTheBell",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/143.svg"
-        },
-        {
-          id: 130,
-          city: "Atlanta",
-          name: "Braves",
-          abbreviation: "ATL",
-          twitter: "#ForTheA",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/144.svg"
-        },
-        {
-          id: 131,
-          city: "Chicago",
-          name: "Cubs",
-          abbreviation: "CHC",
-          twitter: "#WhereStoriesPlay",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/112.svg"
-        },
-        {
-          id: 132,
-          city: "Pittsburgh",
-          name: "Pirates",
-          abbreviation: "PIT",
-          twitter: "#LetsGoBucs",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/134.svg"
-        },
-        {
-          id: 133,
-          city: "St. Louis",
-          name: "Cardinals",
-          abbreviation: "STL",
-          twitter: "#STLFLY",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/138.svg"
-        },
-        {
-          id: 134,
-          city: "Milwaukee",
-          name: "Brewers",
-          abbreviation: "MIL",
-          twitter: "#ThisIsMyCrew",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/158.svg"
-        },
-        {
-          id: 135,
-          city: "Cincinnati",
-          name: "Reds",
-          abbreviation: "CIN",
-          twitter: "#TakeTheCentral",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/113.svg"
-        },
-        {
-          id: 136,
-          city: "San Francisco",
-          name: "Giants",
-          abbreviation: "SF",
-          twitter: "#ResilientSF",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/137.svg"
-        },
-        {
-          id: 137,
-          city: "Los Angeles",
-          name: "Dodgers",
-          abbreviation: "LAD",
-          twitter: "#Dodgers",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/119.svg"
-        },
-        {
-          id: 138,
-          city: "Colorado",
-          name: "Rockies",
-          abbreviation: "COL",
-          twitter: "#Rockies",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/115.svg"
-        },
-        {
-          id: 139,
-          city: "San Diego",
-          name: "Padres",
-          abbreviation: "SD",
-          twitter: "#HungryForMore",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/135.svg"
-        },
-        {
-          id: 140,
-          city: "Arizona",
-          name: "Diamondbacks",
-          abbreviation: "ARI",
-          twitter: "#RattleOn",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/109.svg"
-        }
-    ]
 
      this.nflTeams = [
       {
@@ -1579,18 +1252,6 @@ export class UtilService {
     return this.weekTimes;
   }
 
-  public getByes() {
-    return this.byes;
-  }
-
-  public getMLBTeams() {
-    return this.mlbTeams;
-  }
-
-  public getMLBImages() {
-    return this.MLBImages;
-  }
-
   public getNFLImages() {
     return this.NFLImages;
   }
@@ -1689,7 +1350,10 @@ export class UtilService {
         if (old.player['currentTeam'] != null)
           old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-          old.player['currentTeam'].id = n['teamAsOfDate'].id;
+          if (old.player['currentTeam'] != null)
+            old.player['currentTeam'].id = n['teamAsOfDate'].id;
+          else if (old.player['currentTeam'] == null)
+            old.player['currentTeam'] = {id: n['teamAsOfDate'].id};
           old.team.id = n['teamAsOfDate'].id;
         } 
         

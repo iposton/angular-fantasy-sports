@@ -9,7 +9,8 @@ import { NBADataService,
   NFLDataService,
   RankService,
   NhlUtilService,
-  NbaUtilService } from '../../services/index';
+  NbaUtilService,
+  MlbUtilService } from '../../services/index';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as CryptoJS from 'crypto-js';
 import { forkJoin } from 'rxjs';
@@ -132,17 +133,18 @@ export class StatLeadersComponent implements OnInit {
               public rankService: RankService,
               public nhlUtil: NhlUtilService,
               public nbaUtil: NbaUtilService,
+              public mlbUtil: MlbUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
     this.nbaSection = true;
     this.loading = true;
     this.stats = '1';
     this.nbaTeams = this.nbaUtil.getNBATeams();
     this.nhlTeams = this.nhlUtil.getNHLTeams();
-    this.mlbTeams = this.util.getMLBTeams();
+    this.mlbTeams = this.mlbUtil.getMLBTeams();
     this.nflTeams = this.util.getNFLTeams();
     this.playerImages = this.nbaUtil.getNBAImages();
     nflplayerImages = this.util.getNFLImages();
-    this.mlbplayerImages = this.util.getMLBImages();
+    this.mlbplayerImages = this.mlbUtil.getMLBImages();
     this.nhlplayerImages = this.nhlUtil.getNHLImages();
     repImg = this.util.getRepImages();
     
