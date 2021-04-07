@@ -1344,6 +1344,14 @@ export class UtilService {
     return new Date(tomorrow);
   }
 
+  public formatTime(time) {
+    // let utcDate = null;
+    // let startDate = null
+    // utcDate = new Date(time);
+    // startDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+    return new Date(time);
+  }
+
   public updatePlayers(info, players, teams) {
     for (let n of info) {
       for (let old of players) {
