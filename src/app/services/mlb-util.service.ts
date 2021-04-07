@@ -156,6 +156,17 @@ export class MlbUtilService {
           img: mlbImageRoot+'592717'+mlbImageEnd,
           new: true
         },
+        '10803':{
+          id: 10803,
+          firstName: "Jameson",
+          lastName: "Taillon",
+          teamId: 114,
+          abbreviation: "NY",
+          rotationSpot: 5,
+          active: true,
+          img: mlbImageRoot+'592791'+mlbImageEnd,
+          new: true
+        },
         
       }
 
@@ -283,8 +294,18 @@ export class MlbUtilService {
         "17866":{
           firstName: "Yoshi",
           lastName: "Tsutsugo",
-          image: mlbImageRoot+'660294 '+mlbImageEnd,
-        },        
+          image: mlbImageRoot+'660294'+mlbImageEnd,
+        },
+        "14171":{
+          firstName: "Justin",
+          lastName: "Dunn",
+          image: mlbImageRoot+'643290'+mlbImageEnd,
+        }, 
+        "14309":{
+          firstName: "Evan",
+          lastName: "White",
+          image: mlbImageRoot+'657108'+mlbImageEnd,
+        },
 
       }
 

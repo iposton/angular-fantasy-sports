@@ -646,7 +646,7 @@
 </div>
 <div *ngIf="showBatterData != null && batterSection" class="mlb-page">
     <div class="card-wrap-sp mat-elevation-z6" *ngFor="let data of showBatterData">
-        <div class="mat-card-sp">
+        <div class="mat-card-sp" *ngIf="data['gTime'] != 'undefined'">
               <div class="content-wrapper">
                 <div class="batter-content"
                 [ngStyle]="{background: 'url(' + data['batters'][0]?.playerObj?.team?.logo +')'}">
@@ -745,7 +745,7 @@
                 Leadoff Hitters
                   <ul>
                       <li *ngFor="let data of myBatterData" class="goalie pitcher">
-                        <span *ngIf="data['order'] != null && data['order'] === 'BO1'">
+                        <span *ngIf="data['order'] != null && data['order'] === 'BO1' && data.player['gameTime'] != null">
                             <img src="{{data.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                             <span class="player-infos">
                                 <span class="rookie opp"> 
@@ -768,7 +768,7 @@
                 2nd Spot Hitters
                   <ul>
                       <li *ngFor="let data of myBatterData" class="goalie pitcher">
-                        <span *ngIf="data['order'] != null && data['order'] === 'BO2'">
+                        <span *ngIf="data['order'] != null && data['order'] === 'BO2' && data.player['gameTime'] != null">
                             <img src="{{data.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                             <span class="player-infos">
                                 <span class="rookie opp"> 
@@ -791,7 +791,7 @@
                 3rd Spot Hitters
                   <ul>
                       <li *ngFor="let data of myBatterData" class="goalie pitcher">
-                        <span *ngIf="data['order'] != null && data['order'] === 'BO3'">
+                        <span *ngIf="data['order'] != null && data['order'] === 'BO3' && data.player['gameTime'] != null">
                             <img src="{{data.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                             <span class="player-infos">
                                 <span class="rookie opp"> 
@@ -812,7 +812,7 @@
                   Cleanup Hitters
                     <ul>
                         <li *ngFor="let data of myBatterData" class="goalie pitcher">
-                          <span *ngIf="data['order'] != null && data['order'] === 'BO4'">
+                          <span *ngIf="data['order'] != null && data['order'] === 'BO4' && data.player['gameTime'] != null">
                               <img src="{{data.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                               <span class="player-infos">
                                   <span class="rookie opp"> 

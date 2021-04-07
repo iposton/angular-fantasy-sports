@@ -93,6 +93,7 @@ export class StartingPitcherComponent implements OnInit {
   public actualStarters: any;
   public startingP: any;
   public selectedDate: any;
+  public compareDate: any;
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService,
@@ -114,6 +115,7 @@ export class StartingPitcherComponent implements OnInit {
     this.actualStarters = this.depth.getActualStarters();
     this.startingP = this.mlbUtil.getStartingPitchers();
     this.selectedDate = new Date();
+    this.compareDate = new Date();
     this.dataService.checkDay();
   }
 
@@ -166,9 +168,13 @@ export class StartingPitcherComponent implements OnInit {
   }
 
   public getByDate(event) {
+    let utcDate = null;
     this.loading = true;
     this.dataService.selectedDate(event);
     this.selectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+    //this.compareDate = new Date(event).toLocaleDateString().replace(/\//g, '-');
+    utcDate = new Date(this.selectedDate); //Date object a day behind
+    this.compareDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
     this.dataService.checkDay();
     //empty old data on data change 
     this.dailySchedule = [];
@@ -186,6 +192,8 @@ export class StartingPitcherComponent implements OnInit {
     this.score = [];
     this.players = [];
     this.speedResults = [];
+    this.batterIdData = [];
+    this.gameBatters = [];
     this.batterSection = false;
     this.pitcherSection = true;
     this.liveGames = false;
@@ -202,6 +210,7 @@ export class StartingPitcherComponent implements OnInit {
       .getEnv().subscribe(res => {
         let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
         let originalText = bytes.toString(CryptoJS.enc.Utf8);
+
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
 
         this.dataService
@@ -219,7 +228,9 @@ export class StartingPitcherComponent implements OnInit {
             } else {
 
               let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
-              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) || new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) && playedStatuses[item['schedule'].playedStatus] != null);
+              
+              console.log(this.util.formatTime(res['games'][0].schedule.startTime).getDate(), 'start time', this.util.formatTime(this.selectedDate).getDate(), 'selected date berfore filter', this.util.formatTime(this.selectedDate), 'the selected date before filter');
+              this.dailySchedule = res['games'].filter(item => this.util.formatTime(item['schedule'].startTime).getDate() === new Date(this.compareDate).getDate() || this.util.formatTime(item['schedule'].startTime).getDate() === new Date(this.compareDate).getDate() && playedStatuses[item['schedule'].playedStatus] != null);
               console.log(this.dailySchedule, 'dailysched after filter');
               //this.dailySchedule = res['games'];
               this.teamRef = this.teams; //res['references'].teamReferences;
@@ -243,6 +254,8 @@ export class StartingPitcherComponent implements OnInit {
                   let score2 = null;
                   let originalStart = null;
                   let gameDay = null;
+                  let start = null
+                  let sd = null;
                 
                   
                 res.forEach((item, index) => {
@@ -253,11 +266,15 @@ export class StartingPitcherComponent implements OnInit {
                       game2 = res[i]['game'];
                       res2 = res[i]['teamLineups'];
                       score2 = this.dailySchedule[i].score;
+                      start = this.dailySchedule[i]['schedule'].startTime;
+                      //start = new Date(this.dailySchedule[i]['schedule'].startTime); //Date object a day behind
+                      //sd = new Date(start.getTime() + start.getTimezoneOffset() * 60000)
                     } catch {
                       console.log(res[i], 'bad endpoint');
                     }
 
                     res2.forEach((item, index) => {
+                      console.log(this.util.formatTime(start).getDate(), 'start time', this.util.formatTime(this.selectedDate).getDate(), 'selected date down below');
                       gameDay = new Date(this.gameDate);
                       originalStart = game2.originalStartTime != null ? new Date(game2.originalStartTime) : new Date(game2.startTime);
                       //console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
@@ -796,15 +813,6 @@ export class StartingPitcherComponent implements OnInit {
                 this.dataService
                   .getBatStats(batterString).subscribe(res => {
                     
-                    // function removeDuplicatesBy(keyFn, array) {
-                    //   var mySet = new Set();
-                    //   return array.filter(function(x) {  
-                    //       var key = keyFn(x), isNew = !mySet.has(key);
-                    //       if (isNew) mySet.add(key);  
-                    //       return isNew;
-                    //   });
-                    // }
-                  
                   let values = [];
                   if (res != null) values = res['playerStatsTotals'];
                   this.myBatterData = this.util.removeDuplicatesBy(x => x.player.id, values);
@@ -857,7 +865,7 @@ export class StartingPitcherComponent implements OnInit {
                             let gameDay = null;
                             let originalStart = null;
                             let specialImgNum = null;
-                          // console.log('start sorting data for daily schedule...');
+                          console.log('start sorting data for daily schedule for hitters...', this.dailySchedule);
                             for (let schedule of this.dailySchedule) {
                               for (let sdata of this.myBatterData) {
                                 gameDay = new Date(this.gameDate);
@@ -865,7 +873,7 @@ export class StartingPitcherComponent implements OnInit {
                                 
                                 if (schedule.schedule.awayTeam != null && 
                                   schedule.schedule.homeTeam != null) {
-                                  if (schedule.schedule.scheduleStatus != "POSTPONED" && gameDay.getDay() === originalStart.getDay()) {
+                                 // if (gameDay.getDay() === originalStart.getDay()) {
 
                                     if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
                                       sdata.sStatus = schedule.schedule.scheduleStatus;
@@ -898,7 +906,7 @@ export class StartingPitcherComponent implements OnInit {
                                       sdata.player.image = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
                                     }
 
-                                  }
+                                 // }
                                     
                                 } 
                               
@@ -1044,7 +1052,8 @@ export class StartingPitcherComponent implements OnInit {
     }, Object.create(null));
 
     this.gameBatterGroups = Object.keys(this.statBatterData).map((key, index) => {
-        return {id: this.statBatterData[key][0].gid != null ?  this.statBatterData[key][0].gid : 
+        return {gTime: this.statBatterData[key][0].gameTime != null ? this.statBatterData[key][0].gameTime : this.statBatterData[key][1].gameTime != null ? this.statBatterData[key][1].gameTime : 'undefined',
+          id: this.statBatterData[key][0].gid != null ?  this.statBatterData[key][0].gid : 
            this.statBatterData[key][1].gid != null ?  this.statBatterData[key][1].gid : 
            this.statBatterData[key][2].gid, game: key, batters: this.statBatterData[key].sort((a, b) => a.order.localeCompare(b.order))};
     });
