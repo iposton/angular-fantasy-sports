@@ -706,6 +706,25 @@
                       {{data['batters'][0]?.playerObj?.team?.opponentScore}} FINAL - <span>{{data['batters'][0]?.playerObj?.team?.teamScore > data['batters'][0]?.playerObj?.team?.opponentScore ? data['batters'][0]?.playerObj?.team?.city +' Wins!' : data['batters'][0]?.playerObj?.team?.city +' Lost!'}}</span>
                   </span>
 
+                  <span *ngIf="data['batters'][0]?.playerObj?.gameStatus2nd === 'LIVE'">
+                    <br>
+                      <span class="live"> LIVE </span> 
+                        <span class="inning">
+                            
+                            
+                        </span>
+                        <span class="score-box">
+                            {{data['batters'][0]?.playerObj?.team?.teamScore2nd}} - 
+                            {{data['batters'][0]?.playerObj?.team?.opponentScore2nd}}
+                        </span>
+                  </span> 
+                  <span class="final" *ngIf="data['batters'][0]?.playerObj?.gameStatus2nd === 'COMPLETED' ||
+                  data['batters'][0]?.playerObj?.gameStatus2nd === 'COMPLETED_PENDING_REVIEW'">
+                     <br>
+                      {{data['batters'][0]?.playerObj?.team?.teamScore2nd}} - 
+                      {{data['batters'][0]?.playerObj?.team?.opponentScore2nd}} FINAL - <span>{{data['batters'][0]?.playerObj?.team?.teamScore2nd > data['batters'][0]?.playerObj?.team?.opponentScore2nd ? data['batters'][0]?.playerObj?.team?.city +' Wins!' : data['batters'][0]?.playerObj?.team?.city +' Lost!'}}</span>
+                  </span> 
+
                   <span *ngIf="twitter">  
                     #MLB {{data['batters'][0]?.playerObj?.team?.twitter}} top of #Batting order 
                     <div  *ngFor="let item of data['batters']">
