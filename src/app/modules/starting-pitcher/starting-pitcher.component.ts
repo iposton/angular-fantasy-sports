@@ -15,6 +15,7 @@ let headers = null;
 let playerString = null;
 let batterString = null;
 let today = new Date();
+let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
 
 @Component({
   selector: 'app-starting-pitcher',
@@ -75,6 +76,7 @@ export class StartingPitcherComponent implements OnInit {
   public gameBatterGroups: Array <any>;
   public statData: Array <any> = [];
   public statBatterData: Array <any> = [];
+  public teamGames: Array <any> = [];
   public testBrowser: boolean;
   public twitter: boolean;
   public isOpen: boolean = false;
@@ -94,6 +96,7 @@ export class StartingPitcherComponent implements OnInit {
   public startingP: any;
   public selectedDate: any;
   public compareDate: any;
+ 
   
   constructor(private fbService: FirebaseService, 
               private dataService: DataService,
@@ -168,13 +171,10 @@ export class StartingPitcherComponent implements OnInit {
   }
 
   public getByDate(event) {
-    let utcDate = null;
     this.loading = true;
     this.dataService.selectedDate(event);
     this.selectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-    //this.compareDate = new Date(event).toLocaleDateString().replace(/\//g, '-');
-    utcDate = new Date(this.selectedDate); //Date object a day behind
-    this.compareDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+    this.compareDate = this.util.formatTime(this.selectedDate)
     this.dataService.checkDay();
     //empty old data on data change 
     this.dailySchedule = [];
@@ -194,6 +194,7 @@ export class StartingPitcherComponent implements OnInit {
     this.speedResults = [];
     this.batterIdData = [];
     this.gameBatters = [];
+    this.teamGames = [];
     this.batterSection = false;
     this.pitcherSection = true;
     this.liveGames = false;
@@ -226,13 +227,11 @@ export class StartingPitcherComponent implements OnInit {
               this.noGamesMsg = "There Are No Games Scheduled Today :(";
               console.log('There are no games being played today.');
             } else {
-
-              let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
               
-              console.log(this.util.formatTime(res['games'][0].schedule.startTime).getDate(), 'start time', this.util.formatTime(this.selectedDate).getDate(), 'selected date berfore filter', this.util.formatTime(this.selectedDate), 'the selected date before filter');
-              this.dailySchedule = res['games'].filter(item => this.util.formatTime(item['schedule'].startTime).getDate() === new Date(this.compareDate).getDate() || this.util.formatTime(item['schedule'].startTime).getDate() === new Date(this.compareDate).getDate() && playedStatuses[item['schedule'].playedStatus] != null);
-              console.log(this.dailySchedule, 'dailysched after filter');
-              //this.dailySchedule = res['games'];
+              //console.log(new Date(res['games'][0].schedule.startTime).getDate(), 'start time', this.compareDate.getDate(), 'selected date berfore filter', this.compareDate, 'the selected date before filter');
+              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime).getDate() === this.compareDate.getDate() || this.util.formatTime(item['schedule'].startTime).getDate() === this.compareDate.getDate() && playedStatuses[item['schedule'].playedStatus] != null);
+              //console.log(this.dailySchedule, 'dailysched after filter');
+              
               this.teamRef = this.teams; //res['references'].teamReferences;
               this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
               this.gamesToday = true;
@@ -255,7 +254,6 @@ export class StartingPitcherComponent implements OnInit {
                   let originalStart = null;
                   let gameDay = null;
                   let start = null
-                  let sd = null;
                 
                   
                 res.forEach((item, index) => {
@@ -267,19 +265,19 @@ export class StartingPitcherComponent implements OnInit {
                       res2 = res[i]['teamLineups'];
                       score2 = this.dailySchedule[i].score;
                       start = this.dailySchedule[i]['schedule'].startTime;
-                      //start = new Date(this.dailySchedule[i]['schedule'].startTime); //Date object a day behind
-                      //sd = new Date(start.getTime() + start.getTimezoneOffset() * 60000)
                     } catch {
                       console.log(res[i], 'bad endpoint');
                     }
 
                     res2.forEach((item, index) => {
-                      console.log(this.util.formatTime(start).getDate(), 'start time', this.util.formatTime(this.selectedDate).getDate(), 'selected date down below');
+                      //console.log(new Date(start).getDate(), 'start time', this.compareDate.getDate(), 'selected date down below');
                       gameDay = new Date(this.gameDate);
                       originalStart = game2.originalStartTime != null ? new Date(game2.originalStartTime) : new Date(game2.startTime);
                       //console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
                      // if (gameDay.getDay() === originalStart.getDay() || game2.playedStatus === 'COMPLETED' || game2.playedStatus === 'LIVE') {
+                       
                         i2 = index;
+                        this.teamGames.push({team: res2[i2].team.id, gameID: game2.id, status: game2.playedStatus})
                         if (res2[i2].actual != null && res2[i2].expected != null) {
 
                           for (let position of res2[i2].actual.lineupPositions) {
@@ -358,7 +356,7 @@ export class StartingPitcherComponent implements OnInit {
       });
   }
 
-  sortData() {
+  public sortData() {
     if (this.gamesToday === true) {
       this.dataService
         .getDaily().subscribe(res => {
@@ -672,43 +670,6 @@ export class StartingPitcherComponent implements OnInit {
                         }
                       }
 
-                //  if (this.myData && this.playerInfo) {
-                //   console.log('start sorting data for pictures and other info about player...');
-                //   for (let info of this.playerInfo) {
-                //     for (let data of this.myData) {
-                      
-                //       // if (data.team.Abbreviation === 'HOU' || data.team.Abbreviation === 'CLE' || data.team.Abbreviation === 'NYY' || data.team.Abbreviation === 'MIN' || data.team.Abbreviation === 'BOS') {
-                //       //   data.player.americanLeaguePlayoff = true;
-                //       // }
-
-                //       // if (data.team.Abbreviation === 'LAD' || data.team.Abbreviation === 'WAS' || data.team.Abbreviation === 'CHC' || data.team.Abbreviation === 'ARI' || data.team.Abbreviation === 'COL') {
-                //       //   data.player.nationalLeaguePlayoff = true;
-                //       // }
-
-                //       // if (info.player.id === data.player.id) {
-                //       //   data.player.image = info.player.officialImageSrc;
-                //       //   if (info.player.drafted != null) {
-                //       //     data.player.draftYear = info.player.drafted.year;
-                //       //     data.player.draftRound = info.player.drafted.round;
-                //       //   }
-                //       //   if (info.player.highSchool != null) {
-                //       //     data.player.highSchool = info.player.highSchool;
-                //       //   }
-                //       //   if (info.player.college != null) {
-                //       //     data.player.college = info.player.college;
-                //       //   }
-                //       //   if (info.player.currentContractYear != null) {
-                //       //     data.player.contractStartYear = info.player.currentContractYear.seasonStartYear;
-                //       //     data.player.contractBaseSalary = info.player.currentContractYear.baseSalary;
-                //       //     if (info.player.currentContractYear.overallContract != null)
-                //       //       data.player.contractTotalYears = info.player.currentContractYear.overallContract.totalYears;
-                //       //   }
-                //       // }
-                //     }
-
-
-                //     }
-
                   
 
                 //     this.dataService
@@ -818,13 +779,28 @@ export class StartingPitcherComponent implements OnInit {
                   this.myBatterData = this.util.removeDuplicatesBy(x => x.player.id, values);
                   //console.log(this.myBatterData, 'my batter data');
 
+                  for (let team of this.teamRef) {
+                    for (let data of this.teamGames) { 
+                        if (team.id === data.team) { 
+                          if (team.gameIds.length === 0)  {
+                            team.gamesToday += 1;
+                            team.gameIds.push({game1: data.gameID});
+                          } else if (team.gameIds.length === 1)  {
+                            team.gamesToday += 1;
+                            team.gameIds.push({game2: data.gameID});
+                            team.gameStatus2nd = data.status;
+                          }
+                      }  
+                    } 
+                  }
+
                       if (this.batterIdData.length > 0 || this.noGamesToday === true) {
                         if (this.myBatterData && this.gameBatters) {
                           for (let gb of this.gameBatters) {
                             for (let data of this.myBatterData) {
                               data.player.gameLocation = "none";
                               if (gb.playerID === data.player.id) {
-                                data.gameId = gb.gameID;
+                                //data.gameId = gb.gameID;
                                 data.score = gb.score;
                                 data.gameStatus = gb.status;
                                 data.starterTeam = gb.team;
@@ -865,7 +841,7 @@ export class StartingPitcherComponent implements OnInit {
                             let gameDay = null;
                             let originalStart = null;
                             let specialImgNum = null;
-                          console.log('start sorting data for daily schedule for hitters...', this.dailySchedule);
+                            //console.log('start sorting data for daily schedule for hitters...', this.dailySchedule);
                             for (let schedule of this.dailySchedule) {
                               for (let sdata of this.myBatterData) {
                                 gameDay = new Date(this.gameDate);
@@ -917,20 +893,33 @@ export class StartingPitcherComponent implements OnInit {
                           for (let team of this.teamRef) {
                             for (let data of this.myBatterData) { 
                                 if (team.id === data.starterTeam) {
+                                  if (team.gameIds != null && team.gameIds.length === 1) {
+                                    data.doubleHeader = false;
+                                    data.gameId = team.gameIds[0] ? team.gameIds[0]['game1'] : 0;   
+                                  }
                                   data.team.color = team.teamColoursHex ? team.teamColoursHex[0] : '#000';
                                   data.team.accent = team.teamColoursHex ? team.teamColoursHex[1] : '#000';
                                   data.team.logo = team.officialLogoImageSrc;
                                   data.team.city = team.city;
                                   data.team.name = team.name;
                                   data.team.twitter = team.twitter;
+                                  data.gamesToday = team.gamesToday;
+                                  data.gamesIds = team.gameIds;
+                                  if (team.gameIds != null && team.gameIds.length > 1) {
+                                    data.gameId = team.gameIds[0] ? team.gameIds[0]['game1'] : 0;
+                                    data.doubleHeader = true;
+                                    data.secondGameId = team.gameIds[1] ? team.gameIds[1]['game2'] : 0;
+                                    data.gameStatus2nd = team.gameStatus2nd;
+                                  }
+                                  
                                 }
                               }  
                           }
 
-                          this.dataService
-                            .getHitterInfo().subscribe(res => {
-                              this.util.updatePlayers(res['players'], this.myBatterData, this.teamRef);    
-                          });
+                          // this.dataService
+                          //   .getHitterInfo().subscribe(res => {
+                          //     this.util.updatePlayers(res['players'], this.myBatterData, this.teamRef);    
+                          // });
                         }
 
                         if (this.myBatterData && this.dailySchedule) {
@@ -949,7 +938,7 @@ export class StartingPitcherComponent implements OnInit {
                         for (let gb of this.gameBatters) {
                           for (let data of this.myBatterData) {
                             if (gb.playerID === data.player.id) {
-                              if (gb.status !== "UNPLAYED") {
+                              if (gb.status !== "UNPLAYED" && data.gameId === gb.gameID) {
                                 if (data.player.gameLocation === 'home') {
                                   data.team.teamScore = gb.score['homeScoreTotal'];
                                   data.team.opponentScore = gb.score['awayScoreTotal'];
@@ -958,12 +947,23 @@ export class StartingPitcherComponent implements OnInit {
                                   data.team.opponentScore = gb.score['homeScoreTotal'];
                                 }
                               }
+
+                              if (gb.status !== "UNPLAYED" && data.secondGameId === gb.gameID) {
+                                if (data.player.gameLocation === 'home') {
+                                  data.team.teamScore2nd = gb.score['homeScoreTotal'];
+                                  data.team.opponentScore2nd = gb.score['awayScoreTotal'];
+                                } else if (data.player.gameLocation === 'away') {
+                                  data.team.teamScore2nd = gb.score['awayScoreTotal'];
+                                  data.team.opponentScore2nd = gb.score['homeScoreTotal'];
+                                }
+                              }
                             }
                             
                             if (data.team.opponentId === gb.team && 
                               data.gameId === gb.gameID) {
                                 data.player.po = gb.name;
                             }
+                            
                           }
                         }
 
@@ -971,31 +971,66 @@ export class StartingPitcherComponent implements OnInit {
                         // console.log('start sorting data for daily stats...');
                           for (let daily of this.dailyBatterStats) {
                             for (let mdata of this.myBatterData) {
+                              if (daily.game.id === mdata.gameId) { 
+                                if (daily.player.id === mdata.player.id) {
+                                  //console.log(daily.game, 'get game info by player id')
+                                  mdata.gameId = daily.game.id;
+                                  mdata.player.fpToday = 0;
+                                  mdata.stats.hitsToday = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
+                                  mdata.stats.runsToday = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
+                                  mdata.stats.rbiToday = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
+                                  mdata.stats.hrToday = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
+                                  mdata.stats.dblToday = daily.stats.batting.secondBaseHits ? daily.stats.batting.secondBaseHits : 0;
+                                  mdata.stats.tplToday = daily.stats.batting.thirdBaseHits ? daily.stats.batting.thirdBaseHits : 0;
+                                  mdata.stats.walksToday = daily.stats.batting.batterWalks ? daily.stats.batting.batterWalks : 0;
+                                  mdata.stats.sbToday = daily.stats.batting.stolenBases ? daily.stats.batting.stolenBases : 0;
+                                  mdata.stats.hbpToday = daily.stats.batting.hitByPitch ? daily.stats.batting.hitByPitch : 0;
+                                  mdata.stats.fpToday = (mdata.stats.hitsToday - daily.stats.batting.extraBaseHits) + (mdata.stats.dblToday * 2) + (mdata.stats.tplToday * 3) + (mdata.stats.hrToday * 4) + mdata.stats.runsToday + mdata.stats.rbiToday + mdata.stats.walksToday + mdata.stats.sbToday + mdata.stats.hbpToday;
+                                }
+                            }
 
-                              if (daily.player.id === mdata.player.id) {
-                                //console.log(daily.game, 'get game info by player id')
-                                mdata.gameId = daily.game.id;
-                                mdata.player.fpToday = 0;
-                                mdata.stats.hitsToday = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
-                                mdata.stats.runsToday = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
-                                mdata.stats.rbiToday = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
-                                mdata.stats.hrToday = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
-                                mdata.stats.dblToday = daily.stats.batting.secondBaseHits ? daily.stats.batting.secondBaseHits : 0;
-                                mdata.stats.tplToday = daily.stats.batting.thirdBaseHits ? daily.stats.batting.thirdBaseHits : 0;
-                                mdata.stats.walksToday = daily.stats.batting.batterWalks ? daily.stats.batting.batterWalks : 0;
-                                mdata.stats.sbToday = daily.stats.batting.stolenBases ? daily.stats.batting.stolenBases : 0;
-                                mdata.stats.hbpToday = daily.stats.batting.hitByPitch ? daily.stats.batting.hitByPitch : 0;
-                                mdata.stats.fpToday = (mdata.stats.hitsToday - daily.stats.batting.extraBaseHits) + (mdata.stats.dblToday * 2) + (mdata.stats.tplToday * 3) + (mdata.stats.hrToday * 4) + mdata.stats.runsToday + mdata.stats.rbiToday + mdata.stats.walksToday + mdata.stats.sbToday + mdata.stats.hbpToday;
+                              if (daily.game.id === mdata.secondGameId) {
+                                  if (daily.player.id === mdata.player.id) {
+                                  mdata.player.fpToday2nd = 0;
+                                  mdata.stats.hitsToday2nd = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
+                                  mdata.stats.runsToday2nd = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
+                                  mdata.stats.rbiToday2nd = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
+                                  mdata.stats.hrToday2nd = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
+                                  mdata.stats.dblToday2nd = daily.stats.batting.secondBaseHits ? daily.stats.batting.secondBaseHits : 0;
+                                  mdata.stats.tplToday2nd = daily.stats.batting.thirdBaseHits ? daily.stats.batting.thirdBaseHits : 0;
+                                  mdata.stats.walksToday2nd = daily.stats.batting.batterWalks ? daily.stats.batting.batterWalks : 0;
+                                  mdata.stats.sbToday2nd = daily.stats.batting.stolenBases ? daily.stats.batting.stolenBases : 0;
+                                  mdata.stats.hbpToday2nd = daily.stats.batting.hitByPitch ? daily.stats.batting.hitByPitch : 0;
+                                  mdata.stats.fpToday2nd = (mdata.stats.hitsToday2nd - daily.stats.batting.extraBaseHits) + (mdata.stats.dblToday2nd * 2) + (mdata.stats.tplToday2nd * 3) + (mdata.stats.hrToday2nd * 4) + mdata.stats.runsToday2nd + mdata.stats.rbiToday2nd + mdata.stats.walksToday2nd + mdata.stats.sbToday2nd + mdata.stats.hbpToday2nd;
+                                }
                               }
 
+                              
+                              if (daily.player.id === mdata.player.id && mdata.doubleHeader === true) {  
+                                  mdata.player.fpToday = mdata.player.fpToday ? mdata.player.fpToday : 0  + 
+                                  mdata.player.fpToday2nd ? mdata.player.fpToday2nd : 0;
+                                  mdata.stats.hitsToday = mdata.stats.hitsToday ? mdata.stats.hitsToday : 0 + 
+                                  mdata.stats.hitsToday2nd ? mdata.stats.hitsToday2nd : 0;
+                                  mdata.stats.runsToday = mdata.stats.runsToday ? mdata.stats.runsToday : 0 + 
+                                  mdata.stats.runsToday2nd ? mdata.stats.runsToday2nd : 0;
+                                  mdata.stats.rbiToday = mdata.stats.rbiToday ? mdata.stats.rbiToday : 0 + 
+                                  mdata.stats.rbiToday2nd ? mdata.stats.rbiToday2nd : 0;
+                                  mdata.stats.hrToday = mdata.stats.hrToday ? mdata.stats.hrToday : 0 + 
+                                  mdata.stats.hrToday2nd ? mdata.stats.hrToday2nd : 0;
+                                  mdata.stats.dblToday = mdata.stats.dblToday ? mdata.stats.dblToday : 0  + 
+                                  mdata.stats.dblToday2nd ? mdata.stats.dblToday2nd : 0;
+                                  mdata.stats.tplToday = mdata.stats.tplToday ? mdata.stats.tplToday : 0 + 
+                                  mdata.stats.tplToday2nd ? mdata.stats.tplToday2nd : 0;
+                                  mdata.stats.walksToday = mdata.stats.walksToday ? mdata.stats.walksToday : 0 + 
+                                  mdata.stats.walksToday2nd ? mdata.stats.walksToday2nd : 0;
+                                  mdata.stats.sbToday = mdata.stats.sbToday ? mdata.stats.sbToday : 0 + 
+                                  mdata.stats.sbToday2nd ? mdata.stats.sbToday2nd : 0;
+                                  mdata.stats.hbpToday = mdata.stats.hbpToday ? mdata.stats.hbpToday : 0 + 
+                                  mdata.stats.hbpToday2nd ? mdata.stats.hbpToday2nd : 0;
+                              }
+                              
                             }
                           }
-              //     this.dataService
-              //       .getPrevGameId().subscribe(res => {
-              //       //  console.log(res, 'got previous games array!');
-              //         this.previousGames = res['games'];
-              //     });
-              //   }
 
                           this.groupBatters();
                         } else {
@@ -1143,7 +1178,6 @@ export class StartingPitcherComponent implements OnInit {
                  }
                  this.specificFastballData.push(this.pitcherspeed);
 
-     
                }
 
              })

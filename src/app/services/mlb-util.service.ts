@@ -167,6 +167,28 @@ export class MlbUtilService {
           img: mlbImageRoot+'592791'+mlbImageEnd,
           new: true
         },
+        '10291':{
+          id: 10291,
+          firstName: "Eduardo",
+          lastName: "Rodriguez",
+          teamId: 113,
+          abbreviation: "BOS",
+          rotationSpot: 3,
+          active: true,
+          img: mlbImageRoot+'593958'+mlbImageEnd,
+          new: true
+        },
+        '11041':{
+          id: 11041,
+          firstName: "Joe",
+          lastName: "Ross",
+          teamId: 113,
+          abbreviation: "WAS",
+          rotationSpot: 3,
+          active: true,
+          img: mlbImageRoot+'605452'+mlbImageEnd,
+          new: true
+        },
         
       }
 
@@ -306,6 +328,12 @@ export class MlbUtilService {
           lastName: "White",
           image: mlbImageRoot+'657108'+mlbImageEnd,
         },
+        "14428":{
+          firstName: "Nick",
+          lastName: "Neidert",
+          image: mlbImageRoot+'663734'+mlbImageEnd,
+        },
+   
 
       }
 
@@ -316,7 +344,10 @@ export class MlbUtilService {
           name: "Orioles",
           abbreviation: "BAL",
           twitter: "#Birdland",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/110.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/110.svg",
+          gamesToday: 0,
+          gameIds: []
+          
         },
         {
           id: 112,
@@ -324,7 +355,9 @@ export class MlbUtilService {
           name: "Blue Jays",
           abbreviation: "TOR",
           twitter: "#WeAreBlueJays ",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/141.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/141.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 113,
@@ -332,15 +365,19 @@ export class MlbUtilService {
           name: "Red Sox",
           abbreviation: "BOS",
           twitter: "#DirtyWater",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/111.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/111.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 114,
           city: "New York",
           name: "Yankees",
           abbreviation: "NYY",
-          twitter: "#NYYforNY",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/147.svg"
+          twitter: "#SquadUp",
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/147.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 115,
@@ -348,7 +385,9 @@ export class MlbUtilService {
           name: "Rays",
           abbreviation: "TB",
           twitter: "#RaysUp",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/139.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/139.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 116,
@@ -356,7 +395,9 @@ export class MlbUtilService {
           name: "Indians",
           abbreviation: "CLE",
           twitter: "#OurTribe",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/114.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/114.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 117,
@@ -364,7 +405,9 @@ export class MlbUtilService {
           name: "Tigers",
           abbreviation: "DET",
           twitter: "#DetroitRoots",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/116.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/116.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 118,
@@ -372,7 +415,9 @@ export class MlbUtilService {
           name: "Royals",
           abbreviation: "KC",
           twitter: "#TogetherRoyal",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/118.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/118.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 119,
@@ -380,7 +425,9 @@ export class MlbUtilService {
           name: "White Sox",
           abbreviation: "CWS",
           twitter: "#ChangetheGame",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/145.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/145.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 120,
@@ -388,7 +435,9 @@ export class MlbUtilService {
           name: "Twins",
           abbreviation: "MIN",
           twitter: "#MNTwins",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/142.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/142.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 121,
@@ -396,7 +445,9 @@ export class MlbUtilService {
           name: "Rangers",
           abbreviation: "TEX",
           twitter: "#StraightUpTX",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/140.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/140.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 122,
@@ -404,7 +455,9 @@ export class MlbUtilService {
           name: "Astros",
           abbreviation: "HOU",
           twitter: "#ForTheH",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/117.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/117.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 123,
@@ -412,7 +465,9 @@ export class MlbUtilService {
           name: "Mariners",
           abbreviation: "SEA",
           twitter: "#SeaUsRise",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/136.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/136.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 124,
@@ -420,7 +475,9 @@ export class MlbUtilService {
           name: "Angels",
           abbreviation: "LAA",
           twitter: "#WeBelieve",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/108.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/108.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 125,
@@ -428,7 +485,9 @@ export class MlbUtilService {
           name: "Athletics",
           abbreviation: "OAK",
           twitter: "#RiseAndGrind",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/133.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/133.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 126,
@@ -436,7 +495,9 @@ export class MlbUtilService {
           name: "Nationals",
           abbreviation: "WAS",
           twitter: "#Natitude",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/120.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/120.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 127,
@@ -444,7 +505,9 @@ export class MlbUtilService {
           name: "Mets",
           abbreviation: "NYM",
           twitter: "#LGM",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/121.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/121.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 128,
@@ -452,7 +515,9 @@ export class MlbUtilService {
           name: "Marlins",
           abbreviation: "MIA",
           twitter: "#JuntosMiami",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/146.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/146.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 129,
@@ -460,7 +525,9 @@ export class MlbUtilService {
           name: "Phillies",
           abbreviation: "PHI",
           twitter: "#RingTheBell",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/143.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/143.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 130,
@@ -468,7 +535,9 @@ export class MlbUtilService {
           name: "Braves",
           abbreviation: "ATL",
           twitter: "#ForTheA",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/144.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/144.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 131,
@@ -476,7 +545,9 @@ export class MlbUtilService {
           name: "Cubs",
           abbreviation: "CHC",
           twitter: "#CubTogether",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/112.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/112.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 132,
@@ -484,7 +555,9 @@ export class MlbUtilService {
           name: "Pirates",
           abbreviation: "PIT",
           twitter: "#LetsGoBucs",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/134.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/134.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 133,
@@ -492,7 +565,9 @@ export class MlbUtilService {
           name: "Cardinals",
           abbreviation: "STL",
           twitter: "#STLFLY",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/138.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/138.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 134,
@@ -500,7 +575,9 @@ export class MlbUtilService {
           name: "Brewers",
           abbreviation: "MIL",
           twitter: "#ThisIsMyCrew",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/158.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/158.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 135,
@@ -508,7 +585,9 @@ export class MlbUtilService {
           name: "Reds",
           abbreviation: "CIN",
           twitter: "#ATOBTTR",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/113.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/113.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 136,
@@ -516,7 +595,9 @@ export class MlbUtilService {
           name: "Giants",
           abbreviation: "SF",
           twitter: "#ResilientSF",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/137.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/137.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 137,
@@ -524,7 +605,9 @@ export class MlbUtilService {
           name: "Dodgers",
           abbreviation: "LAD",
           twitter: "#Dodgers",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/119.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/119.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 138,
@@ -532,7 +615,9 @@ export class MlbUtilService {
           name: "Rockies",
           abbreviation: "COL",
           twitter: "#Rockies",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/115.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/115.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 139,
@@ -540,7 +625,9 @@ export class MlbUtilService {
           name: "Padres",
           abbreviation: "SD",
           twitter: "#HungryForMore",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/135.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/135.svg",
+          gamesToday: 0,
+          gameIds: []
         },
         {
           id: 140,
@@ -548,7 +635,9 @@ export class MlbUtilService {
           name: "Diamondbacks",
           abbreviation: "ARI",
           twitter: "#RattleOn",
-          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/109.svg"
+          officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/109.svg",
+          gamesToday: 0,
+          gameIds: []
         }
     ]
 
@@ -684,8 +773,6 @@ export class MlbUtilService {
           walksAndHitsPerInningPitched: 0,
           winPct: 0,
           wins: 0
-
-
         }
           
         }

@@ -1345,11 +1345,11 @@ export class UtilService {
   }
 
   public formatTime(time) {
-    // let utcDate = null;
-    // let startDate = null
-    // utcDate = new Date(time);
-    // startDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
-    return new Date(time);
+    let utcDate = null;
+    let selectedDate = null
+    utcDate = new Date(time);
+    selectedDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+    return new Date(selectedDate);
   }
 
   public updatePlayers(info, players, teams) {
