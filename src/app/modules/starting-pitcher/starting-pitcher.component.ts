@@ -571,10 +571,10 @@ export class StartingPitcherComponent implements OnInit {
                           }  
                        }
 
-                      this.dataService
-                        .getInfo().subscribe(res => {
-                          this.util.updatePlayers(res['players'], this.myData, this.teamRef);    
-                      });
+                      // this.dataService
+                      //   .getInfo().subscribe(res => {
+                      //     this.util.updatePlayers(res['players'], this.myData, this.teamRef);    
+                      // });
 
                     }
 
@@ -642,6 +642,9 @@ export class StartingPitcherComponent implements OnInit {
                             }
                             //console.log(daily.game, 'get game info by player id')
                             mdata.player.fpToday = 0;
+                            mdata.noHitterToday = false;
+                            mdata.completeGameToday = false;
+                            mdata.perfectGameToday = false;
                             mdata.gameId = daily.game.id;
                             mdata.player.winToday = daily.stats.pitching.wins;
                             mdata.player.loseToday = daily.stats.pitching.losses;
@@ -655,6 +658,9 @@ export class StartingPitcherComponent implements OnInit {
                             mdata.player.pickoffsToday = daily.stats.pitching.pickoffs;
                             mdata.player.flyoutsToday = daily.stats.pitching.pitcherFlyOuts;
                             mdata.player.groundoutsToday = daily.stats.pitching.pitcherGroundOuts;
+                            mdata.player.walksToday = daily.stats.pitching.pitcherWalks;
+                            mdata.player.intentionalWalksToday = daily.stats.pitching.pitcherIntentionalWalks;
+                            mdata.player.battersHitToday = daily.stats.pitching.battersHit;
                             mdata.player.fpToday = (mdata.player.earnedrunsToday * -3) + mdata.player.strikeoutsToday + mdata.player.pickoffsToday + mdata.player.flyoutsToday + mdata.player.groundoutsToday;
                             mdata.stats.pitching.pitcher2SeamFastballsToday = daily.stats.pitching.pitcher2SeamFastballs;
                             mdata.stats.pitching.pitcher4SeamFastballsToday = daily.stats.pitching.pitcher4SeamFastballs;
@@ -664,6 +670,26 @@ export class StartingPitcherComponent implements OnInit {
                             mdata.stats.pitching.pitcherSlidersToday = daily.stats.pitching.pitcherSliders;
                             mdata.stats.pitching.pitcherSinkersToday = daily.stats.pitching.pitcherSinkers;
                             mdata.stats.pitching.pitcherSplittersToday = daily.stats.pitching.pitcherSplitters;
+
+                            if (mdata.player.hitsallowedToday === 0 && mdata.player.inningsToday === 9 || 
+                              mdata.player.gameLocation === "away" && mdata.player.inningsToday === 8 && mdata.player.hitsallowedToday === 0) {
+                              mdata.noHitterToday = true;
+                            } 
+
+                            if (mdata.player.inningsToday === 9 || 
+                              mdata.player.gameLocation === "away" && mdata.player.inningsToday === 8) {
+                              //if game over after the 9th inning or if 
+                              // inning length equals game inning length
+                              // or if you pitch 8 innings and away and lose
+                              mdata.completeGameToday = true;
+                            }
+
+                            if (mdata.player.winToday === 1 && mdata.player.hitsallowedToday === 0 && mdata.player.inningsToday === 9 &&
+                              mdata.player.earnedrunsToday === 0 && mdata.player.walksToday === 0 && 
+                              mdata.player.battersHitToday === 0 && mdata.player.intentionalWalksToday === 0) {
+                                //&& no runners on base by team error && win
+                                mdata.perfectGameToday = true;
+                            }
                             
                           }
 

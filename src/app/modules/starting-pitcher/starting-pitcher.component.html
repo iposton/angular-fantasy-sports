@@ -211,8 +211,11 @@
                           ND
                         </span>
 
-                        <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][0]?.playerObj?.player?.winToday === 1" class="gold">
-                             ({{data['pitchers'][0]?.playerObj?.player?.strikeoutsToday}} strikeouts)
+                        <span *ngIf="!data['pitchers'][0]?.playerObj?.noHitterToday && data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][0]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][0]?.playerObj?.player?.winToday === 1" class="gold">
+                            ({{data['pitchers'][0]?.playerObj?.player?.strikeoutsToday}} strikeouts)
+                        </span>
+                        <span *ngIf="data['pitchers'][0]?.playerObj?.noHitterToday" class="gold">
+                            ({{data['pitchers'][0]?.playerObj?.player?.strikeoutsToday}} K's no hitter)
                         </span>
 
                 </span>
@@ -238,9 +241,12 @@
                           ND
                         </span>
 
-                        <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][1]?.playerObj?.player?.winToday === 1" class="gold">
+                        <span *ngIf="!data['pitchers'][1]?.playerObj?.noHitterToday && data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][1]?.playerObj?.player?.winToday === 1" class="gold">
                             ({{data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}} strikeouts)
-                       </span>
+                        </span>
+                        <span *ngIf="data['pitchers'][1]?.playerObj?.noHitterToday" class="gold">
+                            ({{data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}} K's no hitter)
+                        </span>
 
                 </span>
               </li>

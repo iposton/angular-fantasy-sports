@@ -107,7 +107,7 @@ export class DataService {
   }
 
   public getStats(players) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular/player_stats_totals.json?position=P&player=${players}`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/player_stats_totals.json?position=P&player=${players}`;
     this.stats = this.http.get(url, {headers})
     return this.stats;
   }

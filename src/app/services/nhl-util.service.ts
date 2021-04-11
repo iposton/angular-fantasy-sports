@@ -415,7 +415,7 @@ export class NhlUtilService {
         lastName: "Hogberg",
         teamId: 13,
         abbreviation: "OTT",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8477405.jpg',
         new: false
@@ -437,8 +437,8 @@ export class NhlUtilService {
         lastName: "Gustavsson",
         teamId: 13,
         abbreviation: "OTT",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8479406.jpg',
         new: false
       },
@@ -449,9 +449,9 @@ export class NhlUtilService {
         teamId: 13,
         abbreviation: "OTT",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8476341.jpg',
-        new: true
+        new: false
       },
       '10083': {
         id: 10083,
@@ -537,17 +537,6 @@ export class NhlUtilService {
         teamId: 3,
         abbreviation: "CAR",
         active: false,
-        numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
-      },
-      '4666': {
-        id: 4666,
-        firstName: "Devan",
-        lastName: "Dubnyk",
-        teamId: 26,
-        abbreviation: "SJS",
-        active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -747,6 +736,17 @@ export class NhlUtilService {
         abbreviation: "COL",
         active: true,
         numberOne: true,
+        img: nhlImageRoot+'0.jpg',
+        new: false
+      },
+      '4666': {
+        id: 4666,
+        firstName: "Devan",
+        lastName: "Dubnyk",
+        teamId: 22,
+        abbreviation: "COL",
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
