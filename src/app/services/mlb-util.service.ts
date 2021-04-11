@@ -189,6 +189,28 @@ export class MlbUtilService {
           img: mlbImageRoot+'605452'+mlbImageEnd,
           new: true
         },
+        '10944':{
+          id: 10944,
+          firstName: "Chris",
+          lastName: "Archer",
+          teamId: 115,
+          abbreviation: "TB",
+          rotationSpot: 3,
+          active: true,
+          img: mlbImageRoot+'502042'+mlbImageEnd,
+          new: true
+        },
+        '20448':{
+          id: 20448,
+          firstName: "Daniel",
+          lastName: "Castano",
+          teamId: 128,
+          abbreviation: "MIA",
+          rotationSpot: 5,
+          active: true,
+          img: mlbImageRoot+'641447'+mlbImageEnd,
+          new: true
+        },
         
       }
 
@@ -333,7 +355,16 @@ export class MlbUtilService {
           lastName: "Neidert",
           image: mlbImageRoot+'663734'+mlbImageEnd,
         },
-   
+        "17558":{
+          firstName: "Riley",
+          lastName: "Smith",
+          image: mlbImageRoot+'642092'+mlbImageEnd,
+        },
+        "20448":{
+          firstName: "Daniel",
+          lastName: "Castano",
+          image: mlbImageRoot+'641447'+mlbImageEnd,
+        },
 
       }
 
@@ -394,7 +425,7 @@ export class MlbUtilService {
           city: "Cleveland",
           name: "Indians",
           abbreviation: "CLE",
-          twitter: "#OurTribe",
+          twitter: "#OurCLE",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/114.svg",
           gamesToday: 0,
           gameIds: []
