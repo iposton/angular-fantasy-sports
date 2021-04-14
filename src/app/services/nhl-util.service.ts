@@ -95,7 +95,7 @@ export class NhlUtilService {
         lastName: "Andersen",
         teamId: 12,
         abbreviation: "TOR",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -109,6 +109,17 @@ export class NhlUtilService {
         active: true,
         numberOne: true,
         img: nhlImageRoot+'8475789.jpg',
+        new: false
+      },
+      '11724': {
+        id: 11724,
+        firstName: "David",
+        lastName: "Rittich",
+        teamId:  12,
+        abbreviation: "TOR",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8479496.jpg',
         new: false
       },
       '4950': {
@@ -165,6 +176,17 @@ export class NhlUtilService {
         numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
+      },
+      '14443': {
+        id: 14443,
+        firstName: "Josef",
+        lastName: "Korenar",
+        teamId: 26,
+        abbreviation: "SJS",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8480373.jpg',
+        new: true
       },
       '28469': {
         id: 28469,
@@ -706,17 +728,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
-      '11724': {
-        id: 11724,
-        firstName: "David",
-        lastName: "Rittich",
-        teamId:  23,
-        abbreviation: "CGY",
-        active: true,
-        numberOne: false,
-        img: nhlImageRoot+'8479496.jpg',
-        new: false
-      },
       '17974': {
         id: 17974,
         firstName: "Artyom",
@@ -800,8 +811,8 @@ export class NhlUtilService {
         lastName: "Raanta",
         teamId: 30,
         abbreviation: "ARI",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8477293.jpg',
         new: false
       },
@@ -812,9 +823,20 @@ export class NhlUtilService {
         teamId: 30,
         abbreviation: "ARI",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
+      },
+      '17375': {
+        id: 17375,
+        firstName: "Ivan",
+        lastName: "Prosvetov",
+        teamId: 30,
+        abbreviation: "ARI",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: true
       },
       '5227': {
         id: 5227,

@@ -36,6 +36,8 @@ export class StatLeadersComponent implements OnInit {
   public nhlApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
   public myData: Array <any>;
   public fgPlayers: Array <any>;
+  public pitcherERA: Array <any>;
+  public closerERA: Array <any>;
   public mlbPitchingData: Array <any>;
   public mlbHittingData: Array <any>;
   public nflOffenseData: Array <any>;
@@ -1668,6 +1670,7 @@ export class StatLeadersComponent implements OnInit {
             if (s === 'nba') {
               this.crunched = this.myData.filter(player => player.player.span === this.timeSpan);
               this.myData = this.crunched;
+              this.fgPlayers = this.myData.filter(player => player.stats.fieldGoals.fgAtt > (this.timeSpan === ('today' || 'yesterday') ? 5 : 15));
               // console.log(this.myData, 'crunched nba');
               this.loading = false; 
             }

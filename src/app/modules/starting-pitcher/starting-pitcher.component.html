@@ -65,12 +65,13 @@
                         
 
                       </span>  
-                      <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
-                      data['pitchers'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['pitchers'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST</span> 
-                      <span class="postponed" *ngIf="data['pitchers'][0]?.playerObj?.sStatus === 'POSTPONED' && 
+                      <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'UNPLAYED'">{{data['pitchers'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST</span> 
+                      
+                      <!-- <span class="postponed" *ngIf="data['pitchers'][0]?.playerObj?.sStatus === 'POSTPONED' && 
                       data['pitchers'][0]?.playerObj?.gameStatus != 'LIVE' && 
                       data['pitchers'][0]?.playerObj?.gameStatus != 'COMPLETED' && 
-                      data['pitchers'][0]?.playerObj?.gameStatus != 'COMPLETED_PENDING_REVIEW'">PPD</span>
+                      data['pitchers'][0]?.playerObj?.gameStatus != 'COMPLETED_PENDING_REVIEW'">PPD</span> -->
+
                       <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">GAME OVER</span> 
                       <span class="final" *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED'">
                         FINAL <br>

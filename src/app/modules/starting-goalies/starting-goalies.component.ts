@@ -1273,7 +1273,7 @@ public showMatchups() {
                                 if (schedule.schedule.awayTeam != null && 
                                   schedule.schedule.homeTeam != null) {
                                     // schedule.schedule.scheduleStatus != "POSTPONED" && 
-                                  if (gameDay.getDay() === originalStart.getDay()) {
+                                  //if (gameDay.getDay() === originalStart.getDay()) {
 
                                     if (schedule.schedule.awayTeam.id === sdata.starterTeam) {
                                       sdata.sStatus = schedule.schedule.scheduleStatus;
@@ -1295,7 +1295,7 @@ public showMatchups() {
                                       sdata.team.opponentId = schedule.schedule.awayTeam.id;
                                     }
 
-                                  }
+                                  //}
                                     
                                 } 
                               

@@ -15,13 +15,35 @@ export class MlbUtilService {
       this.startingPitchers = {
         '10779':{
           id: 10779,
-          firstName: "Arron",
+          firstName: "Aaron",
           lastName: "Nola",
           teamId: 129,
           abbreviation: "PHI",
           rotationSpot: 1,
           active: true,
           img: mlbImageRoot+'605400'+mlbImageEnd,
+          new: false
+        },
+        '10953':{
+          id: 10953,
+          firstName: "Jake",
+          lastName: "Odorizzi",
+          teamId: 122,
+          abbreviation: "HOU",
+          rotationSpot: 4,
+          active: true,
+          img: mlbImageRoot+'543606'+mlbImageEnd,
+          new: false
+        },
+        '15631':{
+          id: 15631,
+          firstName: "Zac",
+          lastName: "Gallen",
+          teamId: 140,
+          abbreviation: "ARI",
+          rotationSpot: 4,
+          active: true,
+          img: mlbImageRoot+'668678'+mlbImageEnd,
           new: false
         },
         '10399':{
@@ -88,7 +110,7 @@ export class MlbUtilService {
           rotationSpot: 3,
           active: true,
           img: mlbImageRoot+'623167'+mlbImageEnd,
-          new: true
+          new: false
         },
         '14228':{
           id: 14228,
@@ -99,7 +121,7 @@ export class MlbUtilService {
           rotationSpot: 2,
           active: true,
           img: mlbImageRoot+'656557'+mlbImageEnd,
-          new: true
+          new: false
         }, 
         '28824':{
           id: 28824,
@@ -110,7 +132,7 @@ export class MlbUtilService {
           rotationSpot: 3,
           active: true,
           img: mlbImageRoot+'685503'+mlbImageEnd,
-          new: true
+          new: false
         },
         '11083':{
           id: 11083,
@@ -121,7 +143,7 @@ export class MlbUtilService {
           rotationSpot: 3,
           active: true,
           img: mlbImageRoot+'593334'+mlbImageEnd,
-          new: true
+          new: false
         },
         '10891':{
           id: 10891,
@@ -132,7 +154,7 @@ export class MlbUtilService {
           rotationSpot: 4,
           active: true,
           img: mlbImageRoot+'519043'+mlbImageEnd,
-          new: true
+          new: false
         },
         '11017':{
           id: 11017,
@@ -143,7 +165,7 @@ export class MlbUtilService {
           rotationSpot: 2,
           active: true,
           img: mlbImageRoot+'573186'+mlbImageEnd,
-          new: true
+          new: false
         },
         '11014':{
           id: 11014,
@@ -154,7 +176,7 @@ export class MlbUtilService {
           rotationSpot: 5,
           active: true,
           img: mlbImageRoot+'592717'+mlbImageEnd,
-          new: true
+          new: false
         },
         '10803':{
           id: 10803,
@@ -165,7 +187,7 @@ export class MlbUtilService {
           rotationSpot: 5,
           active: true,
           img: mlbImageRoot+'592791'+mlbImageEnd,
-          new: true
+          new: false
         },
         '10291':{
           id: 10291,
@@ -176,7 +198,7 @@ export class MlbUtilService {
           rotationSpot: 3,
           active: true,
           img: mlbImageRoot+'593958'+mlbImageEnd,
-          new: true
+          new: false
         },
         '11041':{
           id: 11041,
@@ -187,7 +209,7 @@ export class MlbUtilService {
           rotationSpot: 3,
           active: true,
           img: mlbImageRoot+'605452'+mlbImageEnd,
-          new: true
+          new: false
         },
         '10944':{
           id: 10944,
@@ -198,6 +220,17 @@ export class MlbUtilService {
           rotationSpot: 3,
           active: true,
           img: mlbImageRoot+'502042'+mlbImageEnd,
+          new: false
+        },
+        '17869':{
+          id: 17869,
+          firstName: "Josh",
+          lastName: "Fleming",
+          teamId: 115,
+          abbreviation: "TB",
+          rotationSpot: 4,
+          active: true,
+          img: mlbImageRoot+'676596'+mlbImageEnd,
           new: true
         },
         '20448':{
@@ -209,7 +242,7 @@ export class MlbUtilService {
           rotationSpot: 5,
           active: true,
           img: mlbImageRoot+'641447'+mlbImageEnd,
-          new: true
+          new: false
         },
         
       }
@@ -365,6 +398,17 @@ export class MlbUtilService {
           lastName: "Castano",
           image: mlbImageRoot+'641447'+mlbImageEnd,
         },
+        "14367":{
+          firstName: "Triston",
+          lastName: "McKenzie",
+          image: mlbImageRoot+'663474'+mlbImageEnd,
+        },
+        "17869":{
+          firstName: "Josh",
+          lastName: "Fleming",
+          image: mlbImageRoot+'676596'+mlbImageEnd,
+        },
+        
 
       }
 
