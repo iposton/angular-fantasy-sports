@@ -241,7 +241,7 @@ export class StartingFiveComponent implements OnInit {
               //this.dailySchedule = res['games'];
               this.teamRef = res['references'].teamReferences;
               teamRef = res['references'].teamReferences;
-              this.gameDate = res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
+              this.gameDate = this.selectedDate; //res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
               //let dPipe = new DatePipe("en-US");
               this.gamesToday = true;
               if (this.nhlService.nbaTeamsSched.length === 0) {
