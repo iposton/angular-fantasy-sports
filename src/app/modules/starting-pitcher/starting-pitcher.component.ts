@@ -788,8 +788,24 @@ export class StartingPitcherComponent implements OnInit {
     this.showMatchups('pitcher');
   }
 
-  public sortBatters() {
+  public async sortBatters() {
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     if (this.gamesToday === true) {
+      for (let team of this.teamRef) {
+        for (let data of this.teamGames) { 
+            if (team.id === data.team) { 
+              if (team.gameIds.length === 0)  {
+                team.gamesToday += 1;
+                team.gameIds.push({game1: data.gameID});
+                team.gameStatus1st = data.status;
+              } else if (team.gameIds.length === 1)  {
+                team.gamesToday += 1;
+                team.gameIds.push({game2: data.gameID});
+                team.gameStatus2nd = data.status;
+              }
+          }  
+        } 
+      }
       this.spinTitle = 'Batter Data';
       this.loading = true;
       this.dataService
@@ -804,22 +820,6 @@ export class StartingPitcherComponent implements OnInit {
                   if (res != null) values = res['playerStatsTotals'];
                   this.myBatterData = this.util.removeDuplicatesBy(x => x.player.id, values);
                   //console.log(this.myBatterData, 'my batter data');
-
-                  for (let team of this.teamRef) {
-                    for (let data of this.teamGames) { 
-                        if (team.id === data.team) { 
-                          if (team.gameIds.length === 0)  {
-                            team.gamesToday += 1;
-                            team.gameIds.push({game1: data.gameID});
-                          } else if (team.gameIds.length === 1)  {
-                            team.gamesToday += 1;
-                            team.gameIds.push({game2: data.gameID});
-                            team.gameStatus2nd = data.status;
-                          }
-                      }  
-                    } 
-                  }
-
                       if (this.batterIdData.length > 0 || this.noGamesToday === true) {
                         if (this.myBatterData && this.gameBatters) {
                           for (let gb of this.gameBatters) {
@@ -922,6 +922,11 @@ export class StartingPitcherComponent implements OnInit {
                                   if (team.gameIds != null && team.gameIds.length === 1) {
                                     data.doubleHeader = false;
                                     data.gameId = team.gameIds[0] ? team.gameIds[0]['game1'] : 0;   
+                                  } else if (team.gameIds != null && team.gameIds.length > 1) {
+                                    data.gameId = team.gameIds[0] ? team.gameIds[0]['game1'] : 0;
+                                    data.doubleHeader = true;
+                                    data.secondGameId = team.gameIds[1] ? team.gameIds[1]['game2'] : 0;
+                                    data.gameStatus2nd = team.gameStatus2nd;
                                   }
                                   data.team.color = team.teamColoursHex ? team.teamColoursHex[0] : '#000';
                                   data.team.accent = team.teamColoursHex ? team.teamColoursHex[1] : '#000';
@@ -931,12 +936,7 @@ export class StartingPitcherComponent implements OnInit {
                                   data.team.twitter = team.twitter;
                                   data.gamesToday = team.gamesToday;
                                   data.gamesIds = team.gameIds;
-                                  if (team.gameIds != null && team.gameIds.length > 1) {
-                                    data.gameId = team.gameIds[0] ? team.gameIds[0]['game1'] : 0;
-                                    data.doubleHeader = true;
-                                    data.secondGameId = team.gameIds[1] ? team.gameIds[1]['game2'] : 0;
-                                    data.gameStatus2nd = team.gameStatus2nd;
-                                  }
+                                  
                                   
                                 }
                               }  
@@ -946,8 +946,9 @@ export class StartingPitcherComponent implements OnInit {
                           //   .getHitterInfo().subscribe(res => {
                           //     this.util.updatePlayers(res['players'], this.myBatterData, this.teamRef);    
                           // });
-                        }
 
+                        }
+                        sleep(1500);
                         if (this.myBatterData && this.dailySchedule) {
                           //console.log('start sorting data for pitching opponent...');
                           for (let schedule of this.myBatterData) {
@@ -963,7 +964,7 @@ export class StartingPitcherComponent implements OnInit {
 
                         for (let gb of this.gameBatters) {
                           for (let data of this.myBatterData) {
-                            if (gb.playerID === data.player.id) {
+                            //if (gb.playerID === data.player.id) {
                               if (gb.status !== "UNPLAYED" && data.gameId === gb.gameID) {
                                 if (data.player.gameLocation === 'home') {
                                   data.team.teamScore = gb.score['homeScoreTotal'];
@@ -983,7 +984,7 @@ export class StartingPitcherComponent implements OnInit {
                                   data.team.opponentScore2nd = gb.score['homeScoreTotal'];
                                 }
                               }
-                            }
+                            //}
                             
                             if (data.team.opponentId === gb.team && 
                               data.gameId === gb.gameID) {
@@ -1032,29 +1033,44 @@ export class StartingPitcherComponent implements OnInit {
                               }
 
                               
-                              if (daily.player.id === mdata.player.id && mdata.doubleHeader === true) {  
-                                  mdata.player.fpToday = mdata.player.fpToday ? mdata.player.fpToday : 0  + 
-                                  mdata.player.fpToday2nd ? mdata.player.fpToday2nd : 0;
-                                  mdata.stats.hitsToday = mdata.stats.hitsToday ? mdata.stats.hitsToday : 0 + 
-                                  mdata.stats.hitsToday2nd ? mdata.stats.hitsToday2nd : 0;
-                                  mdata.stats.runsToday = mdata.stats.runsToday ? mdata.stats.runsToday : 0 + 
-                                  mdata.stats.runsToday2nd ? mdata.stats.runsToday2nd : 0;
-                                  mdata.stats.rbiToday = mdata.stats.rbiToday ? mdata.stats.rbiToday : 0 + 
-                                  mdata.stats.rbiToday2nd ? mdata.stats.rbiToday2nd : 0;
-                                  mdata.stats.hrToday = mdata.stats.hrToday ? mdata.stats.hrToday : 0 + 
-                                  mdata.stats.hrToday2nd ? mdata.stats.hrToday2nd : 0;
-                                  mdata.stats.dblToday = mdata.stats.dblToday ? mdata.stats.dblToday : 0  + 
-                                  mdata.stats.dblToday2nd ? mdata.stats.dblToday2nd : 0;
-                                  mdata.stats.tplToday = mdata.stats.tplToday ? mdata.stats.tplToday : 0 + 
-                                  mdata.stats.tplToday2nd ? mdata.stats.tplToday2nd : 0;
-                                  mdata.stats.walksToday = mdata.stats.walksToday ? mdata.stats.walksToday : 0 + 
-                                  mdata.stats.walksToday2nd ? mdata.stats.walksToday2nd : 0;
-                                  mdata.stats.sbToday = mdata.stats.sbToday ? mdata.stats.sbToday : 0 + 
-                                  mdata.stats.sbToday2nd ? mdata.stats.sbToday2nd : 0;
-                                  mdata.stats.hbpToday = mdata.stats.hbpToday ? mdata.stats.hbpToday : 0 + 
-                                  mdata.stats.hbpToday2nd ? mdata.stats.hbpToday2nd : 0;
-                              }
+                              // if (daily.player.id === mdata.player.id && mdata.doubleHeader === true) {  
+                              //     mdata.player.fpToday = mdata.player.fpToday ? mdata.player.fpToday : 0  + 
+                              //     mdata.player.fpToday2nd ? mdata.player.fpToday2nd : 0;
+                              //     mdata.stats.hitsToday = mdata.stats.hitsToday ? mdata.stats.hitsToday : 0 + 
+                              //     mdata.stats.hitsToday2nd ? mdata.stats.hitsToday2nd : 0;
+                              //     mdata.stats.runsToday = mdata.stats.runsToday ? mdata.stats.runsToday : 0 + 
+                              //     mdata.stats.runsToday2nd ? mdata.stats.runsToday2nd : 0;
+                              //     mdata.stats.rbiToday = mdata.stats.rbiToday ? mdata.stats.rbiToday : 0 + 
+                              //     mdata.stats.rbiToday2nd ? mdata.stats.rbiToday2nd : 0;
+                              //     mdata.stats.hrToday = mdata.stats.hrToday ? mdata.stats.hrToday : 0 + 
+                              //     mdata.stats.hrToday2nd ? mdata.stats.hrToday2nd : 0;
+                              //     mdata.stats.dblToday = mdata.stats.dblToday ? mdata.stats.dblToday : 0  + 
+                              //     mdata.stats.dblToday2nd ? mdata.stats.dblToday2nd : 0;
+                              //     mdata.stats.tplToday = mdata.stats.tplToday ? mdata.stats.tplToday : 0 + 
+                              //     mdata.stats.tplToday2nd ? mdata.stats.tplToday2nd : 0;
+                              //     mdata.stats.walksToday = mdata.stats.walksToday ? mdata.stats.walksToday : 0 + 
+                              //     mdata.stats.walksToday2nd ? mdata.stats.walksToday2nd : 0;
+                              //     mdata.stats.sbToday = mdata.stats.sbToday ? mdata.stats.sbToday : 0 + 
+                              //     mdata.stats.sbToday2nd ? mdata.stats.sbToday2nd : 0;
+                              //     mdata.stats.hbpToday = mdata.stats.hbpToday ? mdata.stats.hbpToday : 0 + 
+                              //     mdata.stats.hbpToday2nd ? mdata.stats.hbpToday2nd : 0;
+                              // }
                               
+                            }
+                          }
+                          sleep(1500);
+                          for (let mdata of this.myBatterData) {
+                              if (mdata.doubleHeader &&  mdata.stats.hitsToday2nd != null) {  
+                                mdata.player.fpToday = (mdata.player.fpToday ? mdata.player.fpToday : 0) + (mdata.player.fpToday2nd ? mdata.player.fpToday2nd : 0);
+                                mdata.stats.hitsToday = (mdata.stats.hitsToday ? mdata.stats.hitsToday : 0) + (mdata.stats.hitsToday2nd ? mdata.stats.hitsToday2nd : 0);
+                                mdata.stats.runsToday = (mdata.stats.runsToday ? mdata.stats.runsToday : 0) + (mdata.stats.runsToday2nd ? mdata.stats.runsToday2nd : 0);
+                                mdata.stats.rbiToday = (mdata.stats.rbiToday ? mdata.stats.rbiToday : 0) + (mdata.stats.rbiToday2nd ? mdata.stats.rbiToday2nd : 0);
+                                mdata.stats.hrToday = (mdata.stats.hrToday ? mdata.stats.hrToday : 0) + (mdata.stats.hrToday2nd ? mdata.stats.hrToday2nd : 0);
+                                mdata.stats.dblToday = (mdata.stats.dblToday ? mdata.stats.dblToday : 0) + (mdata.stats.dblToday2nd ? mdata.stats.dblToday2nd : 0);
+                                mdata.stats.tplToday = (mdata.stats.tplToday ? mdata.stats.tplToday : 0) + (mdata.stats.tplToday2nd ? mdata.stats.tplToday2nd : 0);
+                                mdata.stats.walksToday = (mdata.stats.walksToday ? mdata.stats.walksToday : 0) + (mdata.stats.walksToday2nd ? mdata.stats.walksToday2nd : 0);
+                                mdata.stats.sbToday = (mdata.stats.sbToday ? mdata.stats.sbToday : 0) + (mdata.stats.sbToday2nd ? mdata.stats.sbToday2nd : 0);
+                                mdata.stats.hbpToday = (mdata.stats.hbpToday ? mdata.stats.hbpToday : 0) + (mdata.stats.hbpToday2nd ? mdata.stats.hbpToday2nd : 0);
                             }
                           }
 
