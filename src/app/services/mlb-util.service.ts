@@ -242,7 +242,7 @@ export class MlbUtilService {
           rotationSpot: 5,
           active: true,
           img: mlbImageRoot+'641447'+mlbImageEnd,
-          new: false
+          new: true
         },
         
       }
@@ -407,6 +407,16 @@ export class MlbUtilService {
           firstName: "Josh",
           lastName: "Fleming",
           image: mlbImageRoot+'676596'+mlbImageEnd,
+        },
+        "15793":{
+          firstName: "Ryan",
+          lastName: "Weathers",
+          image: mlbImageRoot+'677960'+mlbImageEnd,
+        },
+        "17123":{
+          firstName: "Michael",
+          lastName: "King",
+          image: mlbImageRoot+'650633'+mlbImageEnd,
         },
         
 
