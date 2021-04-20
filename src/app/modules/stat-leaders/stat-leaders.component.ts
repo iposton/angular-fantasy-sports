@@ -588,6 +588,10 @@ export class StatLeadersComponent implements OnInit {
 
           this.mlbPitchingData = res['playerStatsTotals'].filter(
             player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.pitching.inningsPitched > 0); // && player.stats.pitching.pitcherStrikeouts > 6
+         
+          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0);
+          
+          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > 1 && player.stats.pitching.holds > 0 || player.stats.pitching.pitcherStrikeouts > 1 &&  player.stats.pitching.saves > 0);
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -1640,6 +1644,9 @@ export class StatLeadersComponent implements OnInit {
             if (s === 'mlb' && this.mlbSection) {
               this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched > 0);
               this.mlbPitchingData = this.crunched;
+
+              this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0);
+              this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.holds > 0 ||  player.stats.pitching.saves > 0);
                   
               this.mlbPitchingLoading = false;
             }
