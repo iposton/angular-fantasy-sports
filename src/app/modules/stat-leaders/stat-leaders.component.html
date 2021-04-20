@@ -642,7 +642,7 @@
             ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
-            [data]="mlbPitchingData" 
+            [data]="pitcherERA" 
             [statType]="'pitching'" 
             [statField]="'earnedRunAvg'"
             [page]="page"
@@ -657,7 +657,22 @@
             ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
-            [data]="mlbPitchingData" 
+            [data]="closerERA" 
+            [statType]="'pitching'" 
+            [statField]="'earnedRunAvg'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'ERA (relief)'"
+            [statTag]="'ERA'"
+            [order]="'ASC'"
+            [sport]="'mlb'"
+            [teams]="mlbTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
+            <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
+            [data]="closerERA" 
             [statType]="'pitching'" 
             [statField]="'saves'"
             [page]="page"
@@ -717,7 +732,22 @@
             ></app-stat-card>
 
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
-            [data]="mlbPitchingData" 
+            [data]="pitcherERA" 
+            [statType]="'pitching'" 
+            [statField]="'pitcherWalks'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Walks'"
+            [statTag]="'BB'"
+            [order]="'ASC'"
+            [sport]="'mlb'"
+            [teams]="mlbTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
+            <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
+            [data]="pitcherERA" 
             [statType]="'pitching'" 
             [statField]="'walksAllowedPer9Innings'"
             [page]="page"
@@ -730,6 +760,7 @@
             (open)="authorize($event)"
             [twitter]="twitter"
             ></app-stat-card>
+
         </section>
 
         <section [ngClass]="{'dn' : !mlbHittingSection}">
