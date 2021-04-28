@@ -213,6 +213,8 @@ export class StartingGoaliesComponent implements OnInit {
     teamRef = [];
     this.dailyStats = [];
     this.dailySkaterStats = [];
+    this.gameSkaters = [];
+    this.skaterIdData = [];
     teamString = '';
     skaterString = '';
     this.myData = [];
@@ -497,7 +499,7 @@ export class StartingGoaliesComponent implements OnInit {
   })
 
   this.dataService
-    .getTeamStats().subscribe(res => {
+    .getTeamStats(this.apiRoot).subscribe(res => {
       this.teamStatsUpdate = res['lastUpdatedOn'];
       this.teamStats = res['teamStatsTotals'];         
   });
@@ -1372,10 +1374,10 @@ public showMatchups() {
 
                             }
                           }
-                          this.util.teamRecord(this.teamStats, this.mySkaterData, this.teamStatsUpdate, this.selectedDate);
+                          this.util.teamRecord(this.teamStats, this.mySkaterData);
                           this.groupSkaters();
                         } else {
-                          this.util.teamRecord(this.teamStats, this.mySkaterData, this.teamStatsUpdate, this.selectedDate);
+                          this.util.teamRecord(this.teamStats, this.mySkaterData);
                           this.groupSkaters();
                         }
                       }

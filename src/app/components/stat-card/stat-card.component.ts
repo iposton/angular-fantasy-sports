@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { UtilService } from '../../services/index';
 
 @Component({
   selector: 'app-stat-card',
@@ -48,7 +49,7 @@ export class StatCardComponent implements OnInit {
   public hoveredItem2   :string = '';
   public sortedStats: Array<any>;
 
-  constructor() { }
+  constructor(private util: UtilService) { }
 
   public authorize(player, type) {
     //console.log('trying to emit', player)
@@ -60,17 +61,17 @@ export class StatCardComponent implements OnInit {
     //this.sortedStats = array;
     array.sort((a: any, b: any) => {
         if (order === 'ASC') {
-          if (a['stats'][field1][field2] <= b['stats'][field1][field2]) {
+          if (this.util.round(a['stats'][field1][field2],1) <= this.util.round(b['stats'][field1][field2],1)) {
             return -1;
-          } else if (a['stats'][field1][field2] >= b['stats'][field1][field2]) {
+          } else if (this.util.round(a['stats'][field1][field2],1) >= this.util.round(b['stats'][field1][field2],1)) {
             return 1;
           } else {
             return 0;
           }
         } else if (order === 'DESC') {
-          if (a['stats'][field1][field2] >= b['stats'][field1][field2]) {
+          if (this.util.round(a['stats'][field1][field2],1) >= this.util.round(b['stats'][field1][field2],1)) {
             return -1;
-          } else if (a['stats'][field1][field2] <= b['stats'][field1][field2]) {
+          } else if (this.util.round(a['stats'][field1][field2],1) <= this.util.round(b['stats'][field1][field2],1)) {
             return 1;
           } else {
             return 0;

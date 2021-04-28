@@ -150,12 +150,6 @@ export class NBADataService {
     return this.allstats;
   }
 
-  getTeamStats(date) {
-    let url = `${this.apiRoot}/team_stats_totals.json`;
-    this.teamstats = this.http.get(url, {headers})
-    return this.teamstats;
-  }
-
   getInfo(data) {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?player=${data}`;
     this.info = this.http.get(url, {headers})

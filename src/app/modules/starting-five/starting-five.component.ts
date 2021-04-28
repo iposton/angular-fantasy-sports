@@ -373,8 +373,8 @@ export class StartingFiveComponent implements OnInit {
 
       let promiseOne;
       promiseOne = new Promise((resolve, reject) => {
-        this.dataService
-          .getTeamStats(this.tsDate).subscribe(res => {
+        this.nhlService
+          .getTeamStats(this.apiRoot).subscribe(res => {
             this.teamStatsUpdate = res['lastUpdatedOn'];
             this.teamStats = res['teamStatsTotals'];
             resolve('done');
@@ -525,7 +525,7 @@ export class StartingFiveComponent implements OnInit {
             }
           }
           
-          this.util.teamRecord(this.teamStats, this.myData, this.teamStatsUpdate, this.selectedDate);
+          this.util.teamRecord(this.teamStats, this.myData);
 
 
           this.groups = this.myData.reduce(function (r, a) {

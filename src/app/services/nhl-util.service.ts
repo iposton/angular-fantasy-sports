@@ -1369,6 +1369,17 @@ export class NhlUtilService {
         lastName: "Knight",
         image: nhlImageRoot+'8481519.jpg',
       },
+      "17355":{
+        firstName: "Cayden",
+        lastName: "Primeau",
+        image: nhlImageRoot+'8480051.jpg',
+      },
+      "18026":{
+        firstName: "Jason",
+        lastName: "Robertson",
+        image: nhlImageRoot+'8480027.jpg',
+      },
+      
     }
 
     this.nhlTeams = {

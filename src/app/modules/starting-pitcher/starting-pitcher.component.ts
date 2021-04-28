@@ -1,14 +1,13 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import {FirebaseService, 
         DataService, 
         UtilService, 
         DepthService,
-        MlbUtilService} from '../../services/index';
+        MlbUtilService,
+        NHLDataService} from '../../services/index';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable, interval, forkJoin } from 'rxjs';
-// import { map } from 'rxjs/operators';
-// import { OrderBy } from '../../pipes/orderby.pipe';
+import { interval, forkJoin } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 
 let headers = null;
@@ -74,6 +73,8 @@ export class StartingPitcherComponent implements OnInit {
   public teams: Array <any>;
   public gameGroups: Array <any>;
   public gameBatterGroups: Array <any>;
+  public teamStats: Array <any>;
+  public teamStatsUpdate: any;
   public statData: Array <any> = [];
   public statBatterData: Array <any> = [];
   public teamGames: Array <any> = [];
@@ -85,7 +86,6 @@ export class StartingPitcherComponent implements OnInit {
   public submitting: boolean = false;
   public selectedPlayer: any;
   public type: any;
-  public nflTeamStats: any;
   public name: any;
   public image: any;
   public spinTitle: string = 'Pitcher Data';
@@ -104,6 +104,7 @@ export class StartingPitcherComponent implements OnInit {
               private http: HttpClient,
               private util: UtilService,
               private mlbUtil: MlbUtilService,
+              public nhlService: NHLDataService,
               @Inject(PLATFORM_ID) platformId: string) {
     this.fbService
       .getData().subscribe(res => {
@@ -791,6 +792,7 @@ export class StartingPitcherComponent implements OnInit {
   public async sortBatters() {
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     if (this.gamesToday === true) {
+      
       for (let team of this.teamRef) {
         for (let data of this.teamGames) { 
             if (team.id === data.team) { 
@@ -806,6 +808,14 @@ export class StartingPitcherComponent implements OnInit {
           }  
         } 
       }
+
+      this.nhlService
+        .getTeamStats(this.apiRoot).subscribe(res => {
+          this.teamStatsUpdate = res['lastUpdatedOn'];
+          this.teamStats = res['teamStatsTotals']; 
+          console.log(this.teamStats, 'teamstats');        
+      });
+
       this.spinTitle = 'Batter Data';
       this.loading = true;
       this.dataService
@@ -1073,9 +1083,10 @@ export class StartingPitcherComponent implements OnInit {
                                 mdata.stats.hbpToday = (mdata.stats.hbpToday ? mdata.stats.hbpToday : 0) + (mdata.stats.hbpToday2nd ? mdata.stats.hbpToday2nd : 0);
                             }
                           }
-
+                          this.util.teamRecord(this.teamStats, this.myBatterData);
                           this.groupBatters();
                         } else {
+                          this.util.teamRecord(this.teamStats, this.myBatterData);
                           this.groupBatters();
                         }
                       }
