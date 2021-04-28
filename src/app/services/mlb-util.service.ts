@@ -418,6 +418,22 @@ export class MlbUtilService {
           lastName: "King",
           image: mlbImageRoot+'650633'+mlbImageEnd,
         },
+        "15638":{
+          firstName: "Nico",
+          lastName: "Hoerner",
+          image: mlbImageRoot+'663538'+mlbImageEnd,
+        },
+        "28879":{
+          firstName: "Nick",
+          lastName: "Maton",
+          image: mlbImageRoot+'665155'+mlbImageEnd,
+        },
+        "17718":{
+          firstName: "Jose",
+          lastName: "Rojas",
+          image: mlbImageRoot+'670351'+mlbImageEnd,
+        },
+
         
 
       }

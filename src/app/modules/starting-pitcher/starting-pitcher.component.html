@@ -657,6 +657,9 @@
               <div class="content-wrapper">
                 <div class="batter-content"
                 [ngStyle]="{background: 'url(' + data['batters'][0]?.playerObj?.team?.logo +')'}">
+                <div class="center" style="color:#000; text-transform: uppercase; letter-spacing: 2px;">
+                    <span *ngIf="data['batters'][0]?.playerObj?.team?.name">{{data['batters'][0]?.playerObj?.team?.name}} <span *ngIf="data['batters'][0]?.playerObj?.win != null">({{data['batters'][0]?.playerObj?.win+'-'+data['batters'][0]?.playerObj?.loss}})</span></span> <br>
+                </div>
                   <div  *ngFor="let item of data['batters']; let i = index">
                       <span class="pointer" (click)="authorize(item?.playerObj)">
                         {{i+1}} <img src="{{item?.playerObj?.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">

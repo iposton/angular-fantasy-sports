@@ -308,7 +308,7 @@
           ></app-stat-card>
 
           <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
-          [data]="nhlGoaltenders" 
+          [data]="gaaGoalies" 
           [statType]="'goaltending'" 
           [statField]="'goalsAgainst'"
           [page]="page"
@@ -316,14 +316,14 @@
           [title]="'Goals Against'"
           [statTag]="'GA'"
           [sport]="'nhl'"
-          [order]="'DESC'"
+          [order]="'ASC'"
           [teams]="nhlTeams"
           (open)="authorize($event)"
           [twitter]="twitter"
           ></app-stat-card>
 
           <app-stat-card *ngIf="!nhlGoalieloading && nhlGoaltenders != null" 
-          [data]="nhlGoaltenders" 
+          [data]="gaaGoalies" 
           [statType]="'goaltending'" 
           [statField]="'goalsAgainstAverage'"
           [page]="page"

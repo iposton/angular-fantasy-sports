@@ -247,8 +247,15 @@ export class NHLDataService {
       return this.allstats;
   }
 
-  public getTeamStats() {
-    let url = `${this.apiRoot}/team_stats_totals.json`;
+  // public getTeamStats() {
+  //   let url = `${this.apiRoot}/team_stats_totals.json`;
+  //   this.teamstats = this.http.get(url, {headers})
+  //   return this.teamstats;
+  // }
+
+  public getTeamStats(root) {
+    let url = null;
+    url = `${root}/team_stats_totals.json`;
     this.teamstats = this.http.get(url, {headers})
     return this.teamstats;
   }
@@ -335,15 +342,15 @@ export class NHLDataService {
     let printbegin = null;
     let printend = null;
     if (nextWeek) {
+      begin = '20210503';
+      printbegin = '5/3';
+      end = '20210509';
+      printend = '5/9';
+    } else {
       begin = '20210426';
       printbegin = '4/26';
       end = '20210502';
-      printend = '5/02';
-    } else {
-      begin = '20210419';
-      printbegin = '4/19';
-      end = '20210425';
-      printend = '4/25';     
+      printend = '5/02';     
     }
       let team;
       let teamSchedule;

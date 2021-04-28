@@ -9,6 +9,7 @@ export class UtilService {
   public nflTeams: any;
   public NFLImages: any;
   public replaceImg: any;
+  public teamStats: any;
 
   constructor() {
     this.weekTimes = [
@@ -1308,18 +1309,20 @@ export class UtilService {
     });
   }
 
-  public teamRecord(teams, players, update, date) {
+  public teamRecord(teams, players) {
     for (let team of teams) {
       for (let data of players) { 
         if (data.team.opponentId != null && 
           data.team.id === team.team.id) {
           data.win = team.stats.standings.wins;
           data.loss = team.stats.standings.losses;
-          data.otl = team.stats.standings.overtimeLosses;
+          if (team.stats.standings.overtimeLosses != null)
+            data.otl = team.stats.standings.overtimeLosses;
         } else if (data.player.lineupTeam === team.team.abbreviation) { 
           data.win = team.stats.standings.wins;
           data.loss = team.stats.standings.losses;
-          data.otl = team.stats.standings.overtimeLosses;
+          if (team.stats.standings.overtimeLosses != null)
+            data.otl = team.stats.standings.overtimeLosses;
         }
       }  
     }

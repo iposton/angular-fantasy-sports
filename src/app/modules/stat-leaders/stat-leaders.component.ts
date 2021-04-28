@@ -57,6 +57,7 @@ export class StatLeadersComponent implements OnInit {
   public dSkaters: Array <any>;
   public fSkaters: Array <any>;
   public nhlGoaltenders: Array <any>;
+  public gaaGoalies: Array <any>;
   public loading: boolean = false;
   public nhlSkaterloading: boolean;
   public nhlGoalieloading: boolean;
@@ -380,15 +381,6 @@ export class StatLeadersComponent implements OnInit {
                 data.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data.stats.shifts.timeOnIceSeconds, data.stats.gamesPlayed);
               }
 
-              // if (data.player.officialImageSrc != null) {
-              //   specialImgNum = data.player.officialImageSrc.substring(
-              //     data.player.officialImageSrc.lastIndexOf("/") + 1, 
-              //     data.player.officialImageSrc.lastIndexOf(".")
-              //     );
-                  
-              //   data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
-              // }
-
               if (data.player.officialImageSrc == null) {
                 data.player.officialImageSrc = this.nhlplayerImages[data.player.id] != null ? this.nhlplayerImages[data.player.id].image : null;
               }
@@ -437,6 +429,7 @@ export class StatLeadersComponent implements OnInit {
       const nhlTeamsArray = Object.values(this.nhlTeams);
       this.nhlGoaltenders = res['playerStatsTotals'].filter(
         player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 2); 
+      this.gaaGoalies = this.nhlGoaltenders.filter(player => player.stats.goaltending['gamesStarted'] > 2 && player.stats.goaltending.saves > 50); 
 
         for (let team of nhlTeamsArray) {
           for (let data of this.nhlGoaltenders) { 
@@ -449,15 +442,6 @@ export class StatLeadersComponent implements OnInit {
               
               
             }
-
-            // if (data.player.officialImageSrc != null) {
-            //   specialImgNum = data.player.officialImageSrc.substring(
-            //     data.player.officialImageSrc.lastIndexOf("/") + 1, 
-            //     data.player.officialImageSrc.lastIndexOf(".")
-            //     );
-                
-            //   data.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
-            // }
 
             if (data.player.officialImageSrc == null) {
               data.player.officialImageSrc = this.nhlplayerImages[data.player.id] != null ? this.nhlplayerImages[data.player.id].image : null;
@@ -589,9 +573,8 @@ export class StatLeadersComponent implements OnInit {
           this.mlbPitchingData = res['playerStatsTotals'].filter(
             player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.pitching.inningsPitched > 0); // && player.stats.pitching.pitcherStrikeouts > 6
          
-          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0);
-          
-          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > 1 && player.stats.pitching.holds > 0 || player.stats.pitching.pitcherStrikeouts > 1 &&  player.stats.pitching.saves > 0);
+          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && player.stats.pitching.inningsPitched > 4);
+          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > 3 && player.stats.pitching.holds > 1 || player.stats.pitching.saves > 0);
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -1524,7 +1507,7 @@ export class StatLeadersComponent implements OnInit {
                     hash[key]['10'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 
-                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.pitcherWalks : 
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
 
                     hash[key]['11'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
@@ -1616,6 +1599,7 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.gamesPlayed = data['7'];
                         info.stats.pitching.walksAllowedPer9Innings = ((data['8'] / data['9']) * 9).toFixed(2);
                         info.stats.pitching.inningsPitched = data['9'];
+                        info.stats.pitching.pitcherWalks = data['10'];
                              
                         this.pitcherFp(info);
                       }
@@ -1645,7 +1629,7 @@ export class StatLeadersComponent implements OnInit {
               this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched > 0);
               this.mlbPitchingData = this.crunched;
 
-              this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0);
+              this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && player.stats.pitching.inningsPitched > 2);
               this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.holds > 0 ||  player.stats.pitching.saves > 0);
                   
               this.mlbPitchingLoading = false;
@@ -1661,6 +1645,7 @@ export class StatLeadersComponent implements OnInit {
             if (s === 'nhl' && this.nhlGoalies) {
               this.crunched = this.nhlGoaltenders.filter(player => player.player.span === this.timeSpan);
               this.nhlGoaltenders = this.crunched;
+              this.gaaGoalies = this.nhlGoaltenders.filter(player => player.stats.goaltending['gamesStarted'] > 0 || player.stats.goaltending.saves > (this.timeSpan === 'two-weeks' ? 25 : 15));
                   
               this.nhlGoalieloading = false;
             }
