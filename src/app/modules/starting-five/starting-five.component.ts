@@ -374,7 +374,7 @@ export class StartingFiveComponent implements OnInit {
       let promiseOne;
       promiseOne = new Promise((resolve, reject) => {
         this.nhlService
-          .getTeamStats(this.apiRoot).subscribe(res => {
+          .getTeamStats(this.apiRoot, headers).subscribe(res => {
             this.teamStatsUpdate = res['lastUpdatedOn'];
             this.teamStats = res['teamStatsTotals'];
             resolve('done');

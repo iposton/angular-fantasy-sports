@@ -253,8 +253,10 @@ export class NHLDataService {
   //   return this.teamstats;
   // }
 
-  public getTeamStats(root) {
+  public getTeamStats(root, h) {
     let url = null;
+    if (headers == null)
+      headers = h;
     url = `${root}/team_stats_totals.json`;
     this.teamstats = this.http.get(url, {headers})
     return this.teamstats;

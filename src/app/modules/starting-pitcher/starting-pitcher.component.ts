@@ -218,6 +218,13 @@ export class StartingPitcherComponent implements OnInit {
         this.dataService
           .sendHeaderOptions(headers);
 
+      this.nhlService
+        .getTeamStats(this.apiRoot, headers).subscribe(res => {
+          this.teamStatsUpdate = res['lastUpdatedOn'];
+          this.teamStats = res['teamStatsTotals']; 
+          console.log(this.teamStats, 'teamstats');        
+      });
+
         this.dataService
           .getDailySchedule().subscribe(res => {
             //console.log(res, "schedule...");
@@ -809,12 +816,7 @@ export class StartingPitcherComponent implements OnInit {
         } 
       }
 
-      this.nhlService
-        .getTeamStats(this.apiRoot).subscribe(res => {
-          this.teamStatsUpdate = res['lastUpdatedOn'];
-          this.teamStats = res['teamStatsTotals']; 
-          console.log(this.teamStats, 'teamstats');        
-      });
+      
 
       this.spinTitle = 'Batter Data';
       this.loading = true;
