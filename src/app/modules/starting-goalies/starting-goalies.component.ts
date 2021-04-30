@@ -499,7 +499,7 @@ export class StartingGoaliesComponent implements OnInit {
   })
 
   this.dataService
-    .getTeamStats(this.apiRoot).subscribe(res => {
+    .getTeamStats(this.apiRoot, '').subscribe(res => {
       this.teamStatsUpdate = res['lastUpdatedOn'];
       this.teamStats = res['teamStatsTotals'];         
   });
