@@ -1011,7 +1011,7 @@ export class StartingGoaliesComponent implements OnInit {
                }
 
                if (this.dataService.isTomorrow) {
-                console.log('is tomorrow is true pushing on likely goalies');
+                //console.log('is tomorrow is true pushing on likely goalies');
                 if (startdata.player.currentTeam != null && 
                   startid === startdata.player.currentTeam.id && 
                   this.startingG[startdata.player.id] != null && 

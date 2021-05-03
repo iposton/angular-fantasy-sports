@@ -265,6 +265,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '15159': {
+        id: 15159,
+        firstName: "Philippe",
+        lastName: "Desrosiers",
+        teamId: 4,
+        abbreviation: "FLO",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8477475.jpg',
+        new: true
+      },
       '5540': {
         id: 5540,
         firstName: "Chris",
@@ -437,9 +448,20 @@ export class NhlUtilService {
         lastName: "Luukkonen",
         teamId: 15,
         abbreviation: "BUF",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480045.jpg',
+        new: false
+      },
+      '18273': {
+        id: 18273,
+        firstName: "Michael",
+        lastName: "Houser",
+        teamId: 15,
+        abbreviation: "BUF",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8475920.jpg',
         new: true
       },
       '5894': {
@@ -778,8 +800,8 @@ export class NhlUtilService {
         lastName: "Grubauer",
         teamId: 22,
         abbreviation: "COL",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -790,7 +812,7 @@ export class NhlUtilService {
         teamId: 22,
         abbreviation: "COL",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -811,7 +833,7 @@ export class NhlUtilService {
         lastName: "Johansson",
         teamId: 22,
         abbreviation: "COL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8477992.jpg',
         new: false
@@ -1021,7 +1043,7 @@ export class NhlUtilService {
         teamId: 19,
         abbreviation: "CBJ",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8478007.jpg',
         new: false
       },
@@ -1390,6 +1412,17 @@ export class NhlUtilService {
         lastName: "Robertson",
         image: nhlImageRoot+'8480027.jpg',
       },
+      "18273": {
+        firstName: "Michael",
+        lastName: "Houser",
+        image: nhlImageRoot+'8475920.jpg',
+      },
+      "15159": {
+        firstName: "Philippe",
+        lastName: "Desrosiers",
+        image: nhlImageRoot+'8477475.jpg',
+      },
+      
       
     }
 
