@@ -453,6 +453,26 @@ export class MlbUtilService {
           lastName: "McClanahan",
           image: mlbImageRoot+'663556'+mlbImageEnd,
         },
+        "12400":{
+          firstName: "Kyle",
+          lastName: "Lewis",
+          image: mlbImageRoot+'641786'+mlbImageEnd,
+        },
+        "14328":{
+          firstName: "Jazz",
+          lastName: "Chisholm Jr.",
+          image: mlbImageRoot+'665862'+mlbImageEnd,
+        },
+        "14424":{
+          firstName: "Anthony",
+          lastName: "Kay",
+          image: mlbImageRoot+'641743'+mlbImageEnd,
+        },
+        "15782":{
+          firstName: "Keegan",
+          lastName: "Thompson",
+          image: mlbImageRoot+'624522'+mlbImageEnd,
+        },
          
       }
 
