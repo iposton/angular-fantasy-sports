@@ -482,7 +482,7 @@ export class NhlUtilService {
         teamId: 13,
         abbreviation: "OTT",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8477405.jpg',
         new: false
       },
@@ -515,7 +515,7 @@ export class NhlUtilService {
         teamId: 13,
         abbreviation: "OTT",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8476341.jpg',
         new: false
       },
@@ -1031,10 +1031,10 @@ export class NhlUtilService {
         lastName: "Kivlenieks",
         teamId: 19,
         abbreviation: "CBJ",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8480162.jpg',
-        new: false
+        new: true
       },
       '15690': {
         id: 15690,

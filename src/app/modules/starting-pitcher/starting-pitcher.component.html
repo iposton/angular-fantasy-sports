@@ -784,9 +784,10 @@
                             </span>
                             {{data?.player?.lastName}} - {{data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
-                            {{data?.stats?.hitsToday}} Hits 
+                            {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
                             <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
+                            <span class="gold" *ngIf="data?.stats?.rbiToday &gt; 0"> {{data?.stats?.rbiToday}} RBI </span>
                         </span>
                       </li>
                   </ul>
@@ -807,9 +808,10 @@
                             </span>
                             {{data?.player?.lastName}} - {{data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
-                            {{data?.stats?.hitsToday}} Hits 
+                            {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
                             <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
+                            <span class="gold" *ngIf="data?.stats?.rbiToday &gt; 0"> {{data?.stats?.rbiToday}} RBI </span>
                         </span>
                       </li>
                   </ul>
@@ -830,9 +832,10 @@
                             </span>
                             {{data?.player?.lastName}} - {{data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
-                            {{data?.stats?.hitsToday}} Hits 
+                            {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
                             <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
+                            <span class="gold" *ngIf="data?.stats?.rbiToday &gt; 0"> {{data?.stats?.rbiToday}} RBI </span>
                         </span>
                       </li>
                   </ul>
@@ -851,9 +854,10 @@
                               </span>
                               {{data?.player?.lastName}} - {{data?.player?.primaryPosition}} |
                               <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
-                              {{data?.stats?.hitsToday}} Hits 
+                              {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
                               <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
                             <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
+                            <span class="gold" *ngIf="data?.stats?.rbiToday &gt; 0"> {{data?.stats?.rbiToday}} RBI </span>
                           </span>
                         </li>
                     </ul>
