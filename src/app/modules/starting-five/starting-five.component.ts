@@ -49,7 +49,7 @@ export class StartingFiveComponent implements OnInit {
   public benchIdData: Array <any> = [];
   public speedResults: Array <any> = [];
   public gameDate: string = '';
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
+  public apiRoot: string = "";
   public showData: Array <any> = [];
   public playerInfo: Array <any>;
   public groups: Array <any>;
@@ -106,6 +106,9 @@ export class StartingFiveComponent implements OnInit {
   public testBrowser: boolean;
   public depth: any;
   public nextWeek: boolean = false;
+  public nbaPlayoffDate: string;
+  public isNBAPlayoffs: boolean = false;
+  public nbaSeason: string;
 
   constructor(private dataService: NBADataService,
               public nhlService: NHLDataService, 
@@ -116,6 +119,8 @@ export class StartingFiveComponent implements OnInit {
               private depthService: DepthService,
               private nbaUtil: NbaUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
+    this.nbaSeason = '2020-2021-regular';            
+    this.apiRoot = `https://api.mysportsfeeds.com/v2.1/pull/nba/${this.nbaSeason}`;
     this.depth = this.depthService.getNBADepth();
     this.allSentData = this.dataService.getSentStats();
     this.players = this.allSentData[0];
@@ -129,7 +134,20 @@ export class StartingFiveComponent implements OnInit {
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
     this.testBrowser = isPlatformBrowser(platformId);
     this.selectedDate = new Date();
+    this.nbaPlayoffDate = 'Mon May 17 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.checkPlayoffs(new Date(this.selectedDate))
     //this.teamSchedules = [];
+  }
+
+  public checkPlayoffs(date) {
+    if (date > new Date(this.nbaPlayoffDate))
+      this.isNBAPlayoffs = true;
+    else
+      this.isNBAPlayoffs = false;
+
+    this.dataService.isPlayoffs = this.isNBAPlayoffs;
+    if (this.isNBAPlayoffs)
+      this.nbaSeason = '2021-playoff'
   }
 
   public compareDate (start) {
@@ -253,7 +271,7 @@ export class StartingFiveComponent implements OnInit {
               this.dailySchedule.map(
                 g => 
                 
-                 this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/games/`+g['schedule'].id+`/lineup.json`, { headers })
+                 this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nba/${this.nbaSeason}/games/`+g['schedule'].id+`/lineup.json`, { headers })
                 
               )
             )

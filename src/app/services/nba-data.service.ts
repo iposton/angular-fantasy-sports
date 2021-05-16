@@ -43,9 +43,11 @@ export class NBADataService {
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
+  public apiRoot21PO: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2021-playoff";
   public dailyDate: any;
   public isTomorrow: boolean = false;
   public isToday: boolean = false;
+  public isPlayoffs: boolean = false;
 
   constructor(private http: HttpClient) {
     this.dailyDate = dailyDate;
@@ -120,8 +122,13 @@ export class NBADataService {
     return this.gameid;
   }
 
-  getSchedule() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/date/`+dailyDate+`/games.json`;
+  public getSchedule() {
+    let url = null;
+    console.log(this.isPlayoffs, 'getting schedule is playoffs?')
+    if (this.isPlayoffs) {
+      this.apiRoot = this.apiRoot21PO;
+    }
+    url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
     //let url = `${this.apiRoot}/games.json`;
     this.schedule = this.http.get(url, {headers})
     return this.schedule;
@@ -162,8 +169,13 @@ export class NBADataService {
     return this.starterInfo;
   }
 
-  getDaily(data) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/date/${dailyDate}/player_gamelogs.json?player=${data}`;
+  public getDaily(data) {
+    let url = null;
+    console.log(this.isPlayoffs, 'getting schedule is playoffs?')
+    if (this.isPlayoffs) {
+      this.apiRoot = this.apiRoot21PO;
+    }
+    url = `${this.apiRoot}/date/${dailyDate}/player_gamelogs.json?player=${data}`;
     this.daily = this.http.get(url, {headers})
     return this.daily;
   }

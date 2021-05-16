@@ -88,6 +88,13 @@ export class HomeComponent implements OnInit {
   public testBrowser: boolean;
   public nhlSelectedDate: any;
   public nbaSelectedDate: any;
+  public nhlPlayoffDate: string;
+  public isNHLPlayoffs: boolean = false;
+  public nhlSeason: string;
+  public nbaPlayoffDate: string;
+  public isNBAPlayoffs: boolean = false;
+  public nbaSeason: string;
+  
 
   tweetDay: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-regular";
@@ -135,8 +142,39 @@ export class HomeComponent implements OnInit {
       this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
     }
 
+    this.nhlPlayoffDate = 'Fri May 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.nbaPlayoffDate = 'Mon May 17 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.checkPlayoffs(new Date(this.nhlSelectedDate), 'nhl')
+    this.checkPlayoffs(new Date(this.nbaSelectedDate), 'nba')
+
     this.testBrowser = isPlatformBrowser(platformId);
 
+  }
+
+  public checkPlayoffs(date, type) {
+    if (type === 'nhl') {
+      if (date > new Date(this.nhlPlayoffDate))
+        this.isNHLPlayoffs = true;
+      else
+        this.isNHLPlayoffs = false;
+
+      this.nhlDataService.isPlayoffs = this.isNHLPlayoffs;
+      if (this.isNHLPlayoffs)
+        this.nhlSeason = '2021-playoff'
+    }
+
+    if (type === 'nba') {
+      if (date > new Date(this.nbaPlayoffDate))
+        this.isNBAPlayoffs = true;
+      else
+        this.isNBAPlayoffs = false;
+
+      this.nbaDataService.isPlayoffs = this.isNBAPlayoffs;
+      if (this.isNBAPlayoffs)
+        this.nbaSeason = '2021-playoff'
+    }
+    
+    
   }
 
   public getByDate(event) {
@@ -144,7 +182,9 @@ export class HomeComponent implements OnInit {
       this.nbaLoading = true;
       this.nbaDataService.selectedDate(event);
       this.nbaSelectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+      this.checkPlayoffs(new Date(this.nbaSelectedDate), 'nba')
       this.nbaDataService.checkDay();
+      this.nbaSchedule = [];
       this.loadNBA();
     }
 
@@ -152,7 +192,9 @@ export class HomeComponent implements OnInit {
       this.nhlLoading = true;
       this.nhlDataService.selectedDate(event);
       this.nhlSelectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+      this.checkPlayoffs(new Date(this.nhlSelectedDate), 'nhl')
       this.nhlDataService.checkDay();
+      this.nhlSchedule = [];
       this.loadNHL();
     }
 
@@ -255,6 +297,7 @@ public loadNHL() {
       this.nhlLoading = false;
       this.noNhlGamesToday = true;
       this.noNhlGamesMsg = "No Games Scheduled"
+      this.nhlGameDate = this.nhlSelectedDate;
       console.log('There are no NHL games being played today.');
     } else {
       this.nhlLoading = false;
@@ -281,6 +324,7 @@ public loadNBA() {
       this.nbaLoading = false;
       this.noNbaGamesToday = true;
       this.noNbaGamesMsg = "No Games Scheduled";
+      this.nbaGameDate = this.nbaSelectedDate;
       console.log('There are no NBA games being played today.');
     } else {
       this.nbaLoading = false;
@@ -298,6 +342,7 @@ public loadNBA() {
     }
   }, (err: HttpErrorResponse) => {
     this.nbaLoading = false;
+    this.nbaGameDate = this.nbaSelectedDate;
     this.noNbaGamesToday = true;
     this.noNbaGamesMsg = 'error fetching schedule';
     console.log(err, 'error getting lineup');

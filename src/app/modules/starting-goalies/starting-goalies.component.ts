@@ -85,7 +85,7 @@ export class StartingGoaliesComponent implements OnInit {
   public tomorrowDate: any;
   public fullFirebaseResponse: any;
   public loading: boolean = true;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
+  public apiRoot: string = "";
   public teamSchedules: Array <any> = [];
   public stats: boolean = false;
   public weekResults: boolean = false;
@@ -139,6 +139,9 @@ export class StartingGoaliesComponent implements OnInit {
   public stat: number = 1;
   public nextWeek: boolean = false;
   public depth: any;
+  public isPlayoffs: boolean;
+  public playoffDate: string;
+  public season: string;
   
 
   constructor(private cdr: ChangeDetectorRef, 
@@ -166,10 +169,26 @@ export class StartingGoaliesComponent implements OnInit {
     this.sentYesterday = this.dataService.getYesterday();
     this.sentLastweek = this.dataService.getLastweek();
     this.selectedDate = new Date();
-    this.dataService.checkDay();
+    this.dataService.selectedDate(this.dataService.dailyDate);
     this.testBrowser = isPlatformBrowser(platformId);
+    this.depth = this.depthService.getNHLDepth();
     this.spinTitle = 'Goalie Stats';
-    this.depth = this.depthService.getNFLDepth();
+    this.dataService.checkDay();
+    this.playoffDate = 'Fri May 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.checkPlayoffs(new Date(this.selectedDate))
+    this.season = '2020-2021-regular'
+    this.apiRoot = `https://api.mysportsfeeds.com/v2.1/pull/nhl/${this.season}`;
+  }
+
+  public checkPlayoffs(date) {
+    if (date > new Date(this.playoffDate))
+      this.isPlayoffs = true;
+    else
+      this.isPlayoffs = false;
+
+    this.dataService.isPlayoffs = this.isPlayoffs;
+    if (this.isPlayoffs)
+      this.season = '2021-playoff'
   }
 
   public getSchedules() {
@@ -197,6 +216,7 @@ export class StartingGoaliesComponent implements OnInit {
     this.dataService.selectedDate(event);
     this.selectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
     this.dataService.checkDay();
+    this.checkPlayoffs(new Date(this.selectedDate))
     yesterday = this.dataService.getYesterday();
     tomorrow = this.dataService.getTomorrow();
     today = this.dataService.getToday();

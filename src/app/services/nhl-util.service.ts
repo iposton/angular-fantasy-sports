@@ -197,7 +197,7 @@ export class NhlUtilService {
         active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
-        new: false
+        new: true
       },
       '5528': {
         id: 5528,
@@ -271,7 +271,7 @@ export class NhlUtilService {
         lastName: "Desrosiers",
         teamId: 4,
         abbreviation: "FLO",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8477475.jpg',
         new: true
