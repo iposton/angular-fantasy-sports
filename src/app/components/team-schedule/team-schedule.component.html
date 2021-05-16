@@ -8,7 +8,7 @@
       <span> <button (click)="nextWeek = !nextWeek; changeSched()">{{ nextWeek ? 'Current' : 'Next'}} Week Schedule</button></span>
       <div class="content-wrapper">
           <div class="row">
-            <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount }">
+            <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount || item.schedule.length === 0 }">
                     <span class="left-content" [ngClass]="{'results': weekResults}">
                       <span class="player-infos">
                           <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"> </span>
@@ -35,7 +35,7 @@
                             </span>
                           </span>
                           </span> 
-                          <span *ngIf="weekResults" [ngClass]="{'minus': crunch(item.schedule, item.team).sum &lt; 0, 'plus': crunch(item.schedule, item.team).sum &gt; 0 }"> {{crunch(item.schedule, item.team).title}} </span>    
+                          <span *ngIf="weekResults && item.schedule != null && crunch(item.schedule, item.team) != null" [ngClass]="{'minus': crunch(item.schedule, item.team).sum &lt; 0, 'plus': crunch(item.schedule, item.team).sum &gt; 0 }"> {{crunch(item.schedule, item.team).title}} </span>    
                     </span> 
                     
                   </div>       
@@ -52,7 +52,7 @@
               <div *ngFor="let item of teamSchedules">
                       <span class="left-content">
                             <span class="player-infos">
-                            <span [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount }" class="lg">
+                            <span *ngIf="weekResults && item.schedule != null && crunch(item.schedule, item.team) != null" [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount }" class="lg">
                                 {{item.teamInfo.twitter}} {{crunch(item.schedule, item.team).title}}
                               </span>
                             </span>

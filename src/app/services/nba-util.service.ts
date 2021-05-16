@@ -593,6 +593,12 @@ export class NbaUtilService {
         lastName: "Brown",
         image: nbaImageRoot+"1629650.png"
       },
+      "27680": {
+        firstName: "Facundo",
+        lastName: "Campazzo",
+        image: nbaImageRoot+"1630267.png"
+      },
+      
       
     }
    }
