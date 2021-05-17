@@ -181,14 +181,14 @@ export class StartingGoaliesComponent implements OnInit {
   }
 
   public checkPlayoffs(date) {
-    if (date > new Date(this.playoffDate))
-      this.isPlayoffs = true;
-    else
-      this.isPlayoffs = false;
-
-    this.dataService.isPlayoffs = this.isPlayoffs;
-    if (this.isPlayoffs)
+    if (date > new Date(this.playoffDate)) {
       this.season = '2021-playoff'
+      this.isPlayoffs = true;
+      this.dataService.isPlayoffs = this.isPlayoffs;
+    } else {
+      this.isPlayoffs = false;
+      this.dataService.isPlayoffs = this.isPlayoffs;
+    }    
   }
 
   public getSchedules() {
