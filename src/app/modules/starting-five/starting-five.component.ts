@@ -140,14 +140,14 @@ export class StartingFiveComponent implements OnInit {
   }
 
   public checkPlayoffs(date) {
-    if (date > new Date(this.nbaPlayoffDate))
-      this.isNBAPlayoffs = true;
-    else
-      this.isNBAPlayoffs = false;
-
-    this.dataService.isPlayoffs = this.isNBAPlayoffs;
-    if (this.isNBAPlayoffs)
+    if (date > new Date(this.nbaPlayoffDate)) {
       this.nbaSeason = '2021-playoff'
+      this.isNBAPlayoffs = true;
+      this.dataService.isPlayoffs = this.isNBAPlayoffs;
+    } else {
+      this.isNBAPlayoffs = false;
+      this.dataService.isPlayoffs = this.isNBAPlayoffs;
+    } 
   }
 
   public compareDate (start) {

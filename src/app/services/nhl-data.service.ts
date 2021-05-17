@@ -139,6 +139,8 @@ export class NHLDataService {
     console.log(this.isPlayoffs, 'getting schedule is playoffs?')
     if (this.isPlayoffs) {
       this.apiRoot = this.apiRoot21PO;
+    } else {
+      this.apiRoot = this.apiRoot21;
     }
     url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
     this.schedule = this.http.get(url, {headers})
@@ -366,15 +368,16 @@ export class NHLDataService {
     let printend = null;
     if (nextWeek) {
       season = '2021-playoff'
+      begin = '20210524';
+      printbegin = '5/24';
+      end = '20210530';
+      printend = '5/30 - Playoffs';
+    } else {
+      season = '2021-playoff'
       begin = '20210517';
       printbegin = '5/17';
       end = '20210523';
-      printend = '5/23 - Playoffs';
-    } else {
-      begin = '20210510';
-      printbegin = '5/10';
-      end = '20210516';
-      printend = '5/16';    
+      printend = '5/23 - Playoffs';   
     }
       let team;
       let teamSchedule;

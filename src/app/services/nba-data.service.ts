@@ -43,6 +43,7 @@ export class NBADataService {
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
+  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
   public apiRoot21PO: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2021-playoff";
   public dailyDate: any;
   public isTomorrow: boolean = false;
@@ -127,6 +128,8 @@ export class NBADataService {
     console.log(this.isPlayoffs, 'getting schedule is playoffs?')
     if (this.isPlayoffs) {
       this.apiRoot = this.apiRoot21PO;
+    } else {
+      this.apiRoot = this.apiRoot21;
     }
     url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
     //let url = `${this.apiRoot}/games.json`;
