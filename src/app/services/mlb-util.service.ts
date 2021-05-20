@@ -473,7 +473,11 @@ export class MlbUtilService {
           lastName: "Thompson",
           image: mlbImageRoot+'624522'+mlbImageEnd,
         },
-         
+        "17610":{
+          firstName: "Yermin",
+          lastName: "Mercedes",
+          image: mlbImageRoot+'606213'+mlbImageEnd,
+        },
       }
 
       this.mlbTeams = [

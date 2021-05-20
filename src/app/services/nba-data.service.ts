@@ -150,23 +150,23 @@ export class NBADataService {
     return this.stats;
   }
 
-   getAllStats(span) {
+   public getAllStats(span, season) {
       //cumulative_player_stats.json?position=PG,SG,SF,PF,C&sort=STATS.Miscellaneous-GS.D&limit=180
       let url = null;
-      url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/player_stats_totals.json`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/nba/${season}/player_stats_totals.json`;
       this.allstats = this.http.get(url, {headers})
       
     //}
     return this.allstats;
   }
 
-  getInfo(data) {
+  public getInfo(data) {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?player=${data}`;
     this.info = this.http.get(url, {headers})
     return this.info;
   }
 
-  getStarterInfo(players) {
+  public getStarterInfo(players) {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?position=PG,SG,SF,PF,C&player=${players}`;
     this.starterInfo = this.http.get(url, {headers})
     return this.starterInfo;

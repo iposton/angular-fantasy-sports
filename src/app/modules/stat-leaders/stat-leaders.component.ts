@@ -33,7 +33,10 @@ export class StatLeadersComponent implements OnInit {
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
   public mlbApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
   public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
-  public nhlApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
+  public nbaSeasonType: string = "2021-playoff";
+  public nflSeasonType: string = "2020-2021-regular";
+  public nhlSeasonType: string = "2021-playoff";
+  public mlbSeasonType: string = "2021-regular";
   public myData: Array <any>;
   public fgPlayers: Array <any>;
   public pitcherERA: Array <any>;
@@ -123,7 +126,8 @@ export class StatLeadersComponent implements OnInit {
   public crunchedKicker: Array <any> = [];
   public crunchedDef: Array <any> = [];
   public nhlSeason: boolean = false;
-  public mlbSeason: boolean = false;
+  public nbaSeason: boolean = false;
+  public mlbSeason: boolean = true;
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -175,9 +179,16 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public updateEndpoint() {
+    if (this.sport === 'nba') {
+      this.nbaSeasonType = this.nbaSeason ? "2020-2021-regular" : "2021-playoff";
+      //get nhl playoffs
+      if (this.nbaSection) { 
+        this.sortNBA();
+      }
+    }
+
     if (this.sport === 'nhl') {
-        this.nhlApiRoot = this.nhlSeason ? "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-regular" : 
-        "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-playoff";
+        this.nhlSeasonType = this.nhlSeason ? "2021-regular" : "2021-playoff";
         //get nhl playoffs
         if (this.nhlSection) { 
           this.sortNHL();
@@ -189,6 +200,8 @@ export class StatLeadersComponent implements OnInit {
     if (this.sport === 'mlb') {
       this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular" : 
       "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
+
+      this.mlbSeasonType = this.mlbSeason ? "2021-regular" : "2021-playoff";
       
       if (this.mlbSection) { 
         this.loadMLB();
@@ -282,8 +295,12 @@ export class StatLeadersComponent implements OnInit {
 
   public spanGames() {
     let type = null;
-    if (this.sport === 'nba')
+    let season= null;
+    if (this.sport === 'nba' && this.nbaSection) {
       this.loading = true;
+      season = this.nbaSeasonType;
+    }
+      
 
     if (this.sport === 'nhl' && this.nhlSection) {
       this.nhlSkaterloading = true;
@@ -307,7 +324,7 @@ export class StatLeadersComponent implements OnInit {
       
     let root;
     this.nhlService
-      .getGames(this.timeSpan, this.sport, this.tsDate).subscribe(res => {
+      .getGames(this.timeSpan, this.sport, this.tsDate, season).subscribe(res => {
       //console.log(res['games'], "scheduled games per selected time span...");
       //this.nbaSpanGames = res['games'];
 
@@ -361,7 +378,7 @@ export class StatLeadersComponent implements OnInit {
     this.nhlSkaterloading = true;
 
     this.nhlService
-       .getAllStats('skaters', this.nhlApiRoot).subscribe(res => {
+       .getAllStats('skaters', this.nhlSeasonType).subscribe(res => {
 
         const nhlTeamsArray = Object.values(this.nhlTeams);
         //let specialImgNum = null;
@@ -424,7 +441,7 @@ export class StatLeadersComponent implements OnInit {
 
     this.nhlGoalieloading = true;
     this.nhlService
-      .getAllStats('goalies', this.nhlApiRoot).subscribe(res => {
+      .getAllStats('goalies', this.nhlSeasonType).subscribe(res => {
       //let specialImgNum = null;
       const nhlTeamsArray = Object.values(this.nhlTeams);
       this.nhlGoaltenders = res['playerStatsTotals'].filter(
@@ -490,7 +507,7 @@ export class StatLeadersComponent implements OnInit {
       this.nflDraftKit = false;
       this.sport = 'nba';
       this.nbaService
-       .getAllStats(this.timeSpan).subscribe(res => {
+       .getAllStats(this.timeSpan, this.nbaSeasonType).subscribe(res => {
           const nbaTeamsArray = Object.values(this.nbaTeams);
 
           this.myData = res['playerStatsTotals'].filter(

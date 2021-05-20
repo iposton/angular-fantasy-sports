@@ -244,13 +244,12 @@ export class NHLDataService {
     return this.skateStats;
   }
 
-  public getAllStats(type, root) {
+  public getAllStats(type, season) {
       let url = null;
-      this.apiRoot = root;
       if (type === 'skaters') {
-        url = `${this.apiRoot}/player_stats_totals.json?position=RW,LW,D,C`;
+        url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/${season}/player_stats_totals.json?position=RW,LW,D,C`;
       } else {
-        url = `${this.apiRoot}/player_stats_totals.json?position=G`;
+        url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/${season}/player_stats_totals.json?position=G`;
       }
       
       this.allstats = this.http.get(url, {headers})
@@ -275,9 +274,9 @@ export class NHLDataService {
   getGameId() {
     let url = null;
     if (tomorrowDailyDate === dailyDate) {
-      url = `${this.apiRoot21}/games.json?date=from-`+this.dailyDate+`-to-`+dayAfterTomorrow;
+      url = `${this.apiRoot}/games.json?date=from-`+this.dailyDate+`-to-`+dayAfterTomorrow;
     } else {
-      url = `${this.apiRoot21}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
+      url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate;
     }
     this.gameid = this.http.get(url, {headers})
     return this.gameid;
@@ -290,13 +289,13 @@ export class NHLDataService {
     return this.lastweekgameid;
   }
 
-  getGames(span, sport, date) {
+  getGames(span, sport, date, season) {
     let url = null;
-    let season = null;
-    if (sport != 'nfl' && sport != 'nba')
-      season = '2021-regular';
-    else
-      season = '2020-2021-regular';
+    //let season = null;
+    // if (sport != 'nfl' && sport != 'nba')
+    //   season = '2021-regular';
+    // else
+    //   season = '2020-2021-regular';
     if (span === 'last-week') {
       //sport === 'mlb' ? twoWeekDailyDate : 
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${lastweekDailyDate}-to-${dailyDate}`;
