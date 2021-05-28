@@ -1,6 +1,6 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
@@ -11,14 +11,12 @@ import {
   NFLDataService,
   UtilService,
   NbaUtilService,
-  MlbUtilService } from '../../services/index';
+  MlbUtilService,
+  NflUtilService } from '../../services/index';
 import * as CryptoJS from 'crypto-js';
 
 //DATE FORMAT FOR FULL SCHEDULE API COMPARE DATES FOR BACK TO BACK
-let today = null;
-let tomorrow = null;
-let yesterday = null;
-let teamRef = [];
+
 let headers = null;
 let thisDate = new Date();
 let utcDate = new Date(thisDate.toUTCString());
@@ -79,7 +77,7 @@ export class HomeComponent implements OnInit {
 
   public showLink: boolean = false;
   public liveGames: boolean = false;
-  public nbaSched: boolean = true;
+  public nbaSched: boolean = false;
   public nhlSched: boolean = false;
   public nflSched: boolean = false;
   public mlbSched: boolean = false;
@@ -99,7 +97,7 @@ export class HomeComponent implements OnInit {
   tweetDay: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-regular";
 
-  constructor(private http: HttpClient,
+  constructor(
      public router: Router,
      public dataService: DataService,
      public nhlDataService: NHLDataService,
@@ -108,6 +106,7 @@ export class HomeComponent implements OnInit {
      public util: UtilService,
      public nbaUtil: NbaUtilService,
      public mlbUtil: MlbUtilService,
+     public nflUtil: NflUtilService,
      private meta: Meta,
      @Inject(PLATFORM_ID) platformId: string) {
       this.meta.addTag({ name: 'twitter:card', content: 'summary_large_image' });
@@ -119,12 +118,12 @@ export class HomeComponent implements OnInit {
      //this.getJSON();
     // this.sentYesterdayData = this.yesterdayService.getSentStats();
     this.mlbTeams = this.mlbUtil.getMLBTeams();
-    this.nflTeams = this.util.getNFLTeams();
+    this.nflTeams = this.nflUtil.getNFLTeams();
     this.nbaTeams = this.nbaUtil.getNBATeams();
     this.nbaDataService.selectedDate(dailyDate);
     this.nhlDataService.selectedDate(dailyDate);
     this.selectedWeek = '1';
-    let weekTimes = this.util.getWeekTimes();
+    let weekTimes = this.nflUtil.getWeekTimes();
     let thisDate = new Date();
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
 
@@ -148,6 +147,7 @@ export class HomeComponent implements OnInit {
     this.checkPlayoffs(new Date(this.nbaSelectedDate), 'nba')
 
     this.testBrowser = isPlatformBrowser(platformId);
+    this.nflSched = true;
 
   }
 
@@ -206,11 +206,11 @@ export class HomeComponent implements OnInit {
     
   }
 
-  public onChange(week) {
-    this.nflLoading = true;
-    this.selectedWeek = week;
-    this.loadNFL();
-  }
+public onChange(week) {
+  this.nflLoading = true;
+  this.selectedWeek = week;
+  this.loadNFL();
+}
 
 public compareDate (start) {
   if (new Date(start) < this.tomorrowDate) {
@@ -236,10 +236,8 @@ loadData() {
           .sendHeaderOptions(headers, this.selectedWeek, this.apiRoot);
         this.nhlDataService
           .sendHeaderOptions(headers);
-
-        this.loadNBA();
-
-        
+        //default sport to load
+        this.loadNFL();       
       })
 }
 

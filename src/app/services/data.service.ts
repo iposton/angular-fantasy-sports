@@ -144,14 +144,14 @@ export class DataService {
     return this.starterInfo;
   }
 
-   public getDaily() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/player_gamelogs.json?position=P`;
+   public getDaily(players) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/player_gamelogs.json?&player=${players}` //position=P`;
     this.daily = this.http.get(url, {headers})
     return this.daily;
   }
 
-  public getDailyBatters() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/player_gamelogs.json?position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
+  public getDailyBatters(players) {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/player_gamelogs.json?&player=${players}` //position=OF,1B,2B,3B,C,SS,CF,LF,RF,DH`;
     this.dailyBatters = this.http.get(url, {headers})
     return this.dailyBatters;
   }

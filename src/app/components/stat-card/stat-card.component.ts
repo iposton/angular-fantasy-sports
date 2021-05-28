@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UtilService } from '../../services/index';
 
+
 @Component({
   selector: 'app-stat-card',
   templateUrl: './stat-card.component.html',
@@ -57,21 +58,24 @@ export class StatCardComponent implements OnInit {
   }
 
   public sortStats(array, field1, field2, order, dk, sl, es) {
-    //console.log('sort the data', array);
-    //this.sortedStats = array;
+    let rndTo = 1;
+    if (field2 === 'battingAvg' || field2 === 'goalsAgainstAverage' || field2 === 'earnedRunAvg') {
+      rndTo = 2;
+    }
+
     array.sort((a: any, b: any) => {
         if (order === 'ASC') {
-          if (this.util.round(a['stats'][field1][field2],1) <= this.util.round(b['stats'][field1][field2],1)) {
+          if (this.util.round(a['stats'][field1][field2],rndTo) <= this.util.round(b['stats'][field1][field2],rndTo)) {
             return -1;
-          } else if (this.util.round(a['stats'][field1][field2],1) >= this.util.round(b['stats'][field1][field2],1)) {
+          } else if (this.util.round(a['stats'][field1][field2],rndTo) >= this.util.round(b['stats'][field1][field2],rndTo)) {
             return 1;
           } else {
             return 0;
           }
         } else if (order === 'DESC') {
-          if (this.util.round(a['stats'][field1][field2],1) >= this.util.round(b['stats'][field1][field2],1)) {
+          if (this.util.round(a['stats'][field1][field2],rndTo) >= this.util.round(b['stats'][field1][field2],rndTo)) {
             return -1;
-          } else if (this.util.round(a['stats'][field1][field2],1) <= this.util.round(b['stats'][field1][field2],1)) {
+          } else if (this.util.round(a['stats'][field1][field2],rndTo) <= this.util.round(b['stats'][field1][field2],rndTo)) {
             return 1;
           } else {
             return 0;

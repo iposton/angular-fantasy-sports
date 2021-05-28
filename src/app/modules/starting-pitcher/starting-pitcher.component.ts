@@ -367,7 +367,7 @@ export class StartingPitcherComponent implements OnInit {
   public sortData() {
     if (this.gamesToday === true) {
       this.dataService
-        .getDaily().subscribe(res => {
+        .getDaily(playerString).subscribe(res => {
             //console.log(res, "Daily stats...");
             this.dailyStats = res != null ? res['gamelogs'] : [];
 
@@ -662,7 +662,7 @@ export class StartingPitcherComponent implements OnInit {
                             mdata.player.strikeoutsToday = daily.stats.pitching.pitcherStrikeouts;
                             mdata.player.hitsallowedToday = daily.stats.pitching.hitsAllowed;
                             mdata.player.pitchesthrownToday = daily.stats.pitching.pitchesThrown;
-                            mdata.player.eraToday = parseFloat(daily.stats.pitching.earnedRunAvg).toFixed(2);
+                            mdata.player.eraToday = daily.stats.pitching.earnedRunAvg.toFixed(2);
                             mdata.player.pickoffsToday = daily.stats.pitching.pickoffs;
                             mdata.player.flyoutsToday = daily.stats.pitching.pitcherFlyOuts;
                             mdata.player.groundoutsToday = daily.stats.pitching.pitcherGroundOuts;
@@ -821,7 +821,7 @@ export class StartingPitcherComponent implements OnInit {
       this.spinTitle = 'Batter Data';
       this.loading = true;
       this.dataService
-            .getDailyBatters().subscribe(res => {
+            .getDailyBatters(batterString).subscribe(res => {
                 //console.log(res, "Daily batter stats...");
                 this.dailyBatterStats = res != null ? res['gamelogs'] : [];
                 
@@ -1440,7 +1440,7 @@ export class StartingPitcherComponent implements OnInit {
           .subscribe(() => {
             if (this.gamesToday === true) {
               this.dataService
-                .getDaily().subscribe(res => {
+                .getDaily(playerString).subscribe(res => {
                   //console.log(res, "Daily stats updated!");
                 
                   this.dailyStats = res != null ? res['gamelogs'] : [];
@@ -1515,7 +1515,7 @@ export class StartingPitcherComponent implements OnInit {
                               mdata.player.strikeoutsToday = daily.stats.pitching.pitcherStrikeouts;
                               mdata.player.hitsallowedToday = daily.stats.pitching.hitsAllowed;
                               mdata.player.pitchesthrownToday = daily.stats.pitching.pitchesThrown;
-                              mdata.player.eraToday = daily.stats.pitching.earnedRunAvg;
+                              mdata.player.eraToday = daily.stats.pitching.earnedRunAvg.toFixed(2);
                               mdata.stats.pitcher2SeamFastballsToday = daily.stats.pitching.pitcher2SeamFastballs;
                               mdata.stats.pitcher4SeamFastballsToday = daily.stats.pitching.pitcher4SeamFastballs;
                               mdata.stats.pitcherChangeupsToday = daily.stats.pitching.pitcherChangeups;
