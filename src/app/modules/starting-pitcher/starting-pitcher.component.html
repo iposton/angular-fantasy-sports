@@ -664,7 +664,7 @@
                       <span class="pointer" (click)="authorize(item?.playerObj)">
                         {{i+1}} <img src="{{item?.playerObj?.player.image}}" alt="baseball player" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                       </span>
-                      {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition}} | 
+                      {{item?.playerObj?.player.lastName}} - {{item?.playerObj.player?.primaryPosition === 'P' ? 'DH' : item?.playerObj.player?.primaryPosition}} | 
                       <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
                       data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'" class="stats">
                       &nbsp;
@@ -782,7 +782,7 @@
                                    {{data?.team?.opponent}} 
                                 </span>
                             </span>
-                            {{data?.player?.lastName}} - {{data?.player?.primaryPosition}} |
+                            {{data?.player?.lastName}} - {{data?.player?.primaryPosition === 'P' ? 'DH' : data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
                             {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
@@ -806,7 +806,7 @@
                                    {{data?.team?.opponent}} 
                                 </span>
                             </span>
-                            {{data?.player?.lastName}} - {{data?.player?.primaryPosition}} |
+                            {{data?.player?.lastName}} - {{data?.player?.primaryPosition === 'P' ? 'DH' : data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
                             {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
@@ -830,7 +830,7 @@
                                    {{data?.team?.opponent}} 
                                 </span>
                             </span>
-                            {{data?.player?.lastName}} - {{data?.player?.primaryPosition}} |
+                            {{data?.player?.lastName}} - {{data?.player?.primaryPosition === 'P' ? 'DH' : data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
                             {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
@@ -852,7 +852,7 @@
                                      {{data?.team?.opponent}} 
                                   </span>
                               </span>
-                              {{data?.player?.lastName}} - {{data?.player?.primaryPosition}} |
+                              {{data?.player?.lastName}} - {{data?.player?.primaryPosition === 'P' ? 'DH' : data?.player?.primaryPosition}} |
                               <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
                               {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
                               <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 

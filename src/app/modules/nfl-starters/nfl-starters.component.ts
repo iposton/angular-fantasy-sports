@@ -1,12 +1,14 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { NFLDataService, UtilService, RankService, DepthService } from '../../services/index';
+import { NFLDataService, 
+         UtilService, 
+         DepthService,
+         NflUtilService } from '../../services/index';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
 let headers = null;
 let playerString = null;
-let batterString = null;
 let weekTimes = null;
 let pos = {
   'QB':'o',
@@ -43,6 +45,7 @@ export class NflStartersComponent implements OnInit {
   public gameStarters: Array <any> = [];
   public gameBatters: Array <any> = [];
   public dailyTeamStats: Array <any> = [];
+  public teamSchedules: Array <any> = [];
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular";
   public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-playoff";
   public testBrowser: boolean;
@@ -78,8 +81,10 @@ export class NflStartersComponent implements OnInit {
   public name: any;
   public image: any;
   public mobile: boolean;
-  public repImg: any;
   public depth: any;
+  public showMatchup: boolean;
+  public nflDraftKit: boolean;
+  public seasonLength   : string;
   public gameStarter: { 
     gameID: string, 
     name: any, 
@@ -97,16 +102,18 @@ export class NflStartersComponent implements OnInit {
     private dataService: NFLDataService,
     private util: UtilService,
     private http: HttpClient,
-    private rankService: RankService,
     private depthService: DepthService,
+    private nflUtil: NflUtilService,
     @Inject(PLATFORM_ID) platformId: string) {
-      this.teams = this.util.getNFLTeams();
+      this.showMatchup = false;
+      this.teams = this.nflUtil.getNFLTeams();
       this.testBrowser = isPlatformBrowser(platformId);
-      this.playerImages = this.util.getNFLImages();
-      this.repImg = this.util.getRepImages();
+      this.playerImages = this.nflUtil.getNFLImages();
       this.selectedWeek = '1';
-      weekTimes = this.util.getWeekTimes();
+      weekTimes = this.nflUtil.getWeekTimes();
       this.depth = this.depthService.getNFLDepth();
+      this.nflDraftKit = true;
+      this.seasonLength = 'full';
 
       for (let week of weekTimes) {
         let date = new Date();
@@ -180,6 +187,7 @@ export class NflStartersComponent implements OnInit {
 
         this.dataService
           .sendHeaderOptions(headers, this.selectedWeek, this.apiRoot);
+   if (this.showMatchup) {
 
         this.dataService
           .getSchedule(this.selectedWeek).subscribe(res => {
@@ -266,7 +274,6 @@ export class NflStartersComponent implements OnInit {
                           }
                          
                           playerString = this.starterIdData.join();
-                          //batterString = this.batterIdData.join(); 
                           
                         } else if (res2[i2].actual == null && res2[i2].expected != null && startTime < afterTomorrow && week === parseInt(this.selectedWeek)) {
                           //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
@@ -313,6 +320,9 @@ export class NflStartersComponent implements OnInit {
             console.log(err, 'error getting schedule');
 
           });
+        } else {
+          this.sortTeamRanks();
+        }
       });
   }
 
@@ -349,51 +359,8 @@ export class NflStartersComponent implements OnInit {
             //console.log(res, "Daily stats...");
             this.dailyStats = res != null ? res['gamelogs'] : [];
 
-            this.dataService
-              .getTeamStats(this.tsDate).subscribe(async res => {
-
-                for (let stats of res['teamStatsTotals']) {
-                  for (let team of this.teams) {
-                    if (stats.team.id === team.id) {
-                      stats.bye = team.bye;
-                    }
-                  }
-                }
-
-                let promiseOne;
-                promiseOne = new Promise((resolve, reject) => {
-                  this.teams = this.rankService.rankOffense(res['teamStatsTotals'], this.teams, this.selectedWeek);
-                  this.teams = this.rankService.rankDefense(res['teamStatsTotals'], this.teams, this.selectedWeek); 
-                  resolve('done');
-                })
-              
-                let resultOne = await promiseOne;
-
-                this.nflTeamStats = res['teamStatsTotals'];
-                this.nflTeamStatsLoading = false;
-                // await sleep(500);
-                console.log(this.nflTeamStats, 'nfl team season stats');
-                for (let teamStats of this.nflTeamStats) {
-                  for (let team of this.teams) {
-                    
-                    if (team.id === teamStats.team.id) {
-                      //console.log(team, 'from teams', teamStats, 'team from api');
-                      team.sTeamStats = teamStats;
-                      team.seasonPY = teamStats.stats.passing.passGrossYards;
-                      team.seasonRY = teamStats.stats.rushing.rushYards;
-                      team.seasonPlays = teamStats.stats.rushing.rushAttempts + teamStats.stats.passing.passAttempts;
-                      team.seasonPassPlays = teamStats.stats.passing.passAttempts;
-                      team.seasonRunPlays = teamStats.stats.rushing.rushAttempts;
-                      if (teamStats.stats.rushing.rushAttempts > teamStats.stats.passing.passAttempts) {
-                        team.seasonRun = true;
-                      } else {
-                        team.seasonRun = false;
-                      }
-                    }
-                  }
-                }
-            })
-
+            this.sortTeamRanks();
+            
             this.dataService
               .getStats(playerString).subscribe(res => {
 
@@ -467,12 +434,8 @@ export class NflStartersComponent implements OnInit {
                                 sdata.team.opponentId = schedule.schedule.awayTeam.id;
                               } 
 
-                              if (this.repImg[sdata.player.id] != null) {
-                                sdata.player.officialImageSrc = this.repImg[sdata.player.id].new;
-                              }
-
-                              if (sdata.player.officialImageSrc == null) {
-                                sdata.player.officialImageSrc = this.playerImages[sdata.player.id] != null ? this.playerImages[sdata.player.id].image : null;
+                              if (this.playerImages[sdata.player.id] != null) {
+                                sdata.player.officialImageSrc = this.playerImages[sdata.player.id].image;
                               }
 
                               if (sdata.stats.rushing && sdata.player.primaryPosition === 'RB' && 
@@ -704,4 +667,21 @@ export class NflStartersComponent implements OnInit {
     }
   }
 
+  public seasonChange(sl) {
+    console.log(sl, 'season length changed');
+    this.seasonLength = sl;
+  }
+
+  public sortTeamRanks() {
+    this.nflTeamStatsLoading = true;
+    this.dataService
+      .getTeamStats(this.tsDate).subscribe(res => {
+        this.nflUtil.rank(this.teams, res['teamStatsTotals'], this.selectedWeek)
+        this.nflUtil.updateTeamStats(res['teamStatsTotals'])
+        this.nflTeamStats = res['teamStatsTotals'];
+        this.nflUtil.sortSchedules(this.teamSchedules, this.selectedWeek, headers);
+        this.nflTeamStatsLoading = false;
+        console.log(this.nflTeamStats, 'nfl team season stats');
+    })
+  }
 }

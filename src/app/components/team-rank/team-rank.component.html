@@ -1,12 +1,12 @@
 <div class="schedule-box col">
-    <h2>{{title}}<br> <span *ngIf="title === 'Toughest Defense Schedule 2020' || title === 'Toughest Offense Schedule 2020'"><span *ngIf="seasonLength === 'full'">Full </span> <span *ngIf="seasonLength === 'ofh' || seasonLength === 'dfh'">1st Half of </span> <span *ngIf="seasonLength === 'osh' || seasonLength === 'dsh'">2nd Half of </span> Season</span> </h2> 
+    <h2>{{title}}<br> <span *ngIf="title === 'Toughest Defense Schedule 2021' || title === 'Toughest Offense Schedule 2021'"><span *ngIf="seasonLength === 'full'">Full </span> <span *ngIf="seasonLength === 'ofh' || seasonLength === 'dfh'">1st Half of </span> <span *ngIf="seasonLength === 'osh' || seasonLength === 'dsh'">2nd Half of </span> Season</span> </h2> 
 
-    <span *ngIf="title === 'Toughest Defense Schedule 2020'">
+    <span *ngIf="title === 'Toughest Defense Schedule 2021'">
         <button [ngClass]="{'dn' : seasonLength === 'dtr'}" (click)="seasonLength = 'dtr'">Full</button> 
         <button [ngClass]="{'dn' : seasonLength === 'dfh'}" (click)="seasonLength = 'dfh'">First Half</button> 
         <button [ngClass]="{'dn' : seasonLength === 'dsh'}" (click)="seasonLength = 'dsh'">Second Half</button>
     </span>
-    <span *ngIf="title === 'Toughest Offense Schedule 2020'">
+    <span *ngIf="title === 'Toughest Offense Schedule 2021'">
             <button [ngClass]="{'dn' : seasonLength === 'otr'}" (click)="seasonLength = 'otr'">Full</button> 
             <button [ngClass]="{'dn' : seasonLength === 'ofh'}" (click)="seasonLength = 'ofh'">First Half</button> 
             <button [ngClass]="{'dn' : seasonLength === 'osh'}" (click)="seasonLength = 'osh'">Second Half</button>
@@ -37,7 +37,7 @@
                     Pass TD's: {{item?.stats?.passing?.passTD}}    &nbsp;
                     Rush TD's: {{item?.stats?.rushing?.rushTD}}
                 </span> 
-                <span *ngIf="title === 'Toughest Defense Schedule 2020' && item?.scheduleTicker != null">
+                <span *ngIf="title === 'Toughest Defense Schedule 2021' && item?.scheduleTicker != null">
                     <span *ngFor="let game of item?.scheduleTicker; let i = index;">
                         <span class="game {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'" (mouseout)="hoveredItem = ''">
                            <span [ngClass]="{'white' : game?.dRank === 'BYE', 'red' : game?.dRank &lt;= 10, 'orange' : game?.dRank > 10 && game?.dRank &lt;= 21, 'green' : game?.dRank > 21, 'dn' : seasonLength === 'dfh' && i > 8 || seasonLength === 'dsh' && i &lt;= 8 }">{{game?.printName}}</span>
@@ -45,7 +45,7 @@
                         </span> 
                     </span>
                 </span>
-                <span *ngIf="title === 'Toughest Offense Schedule 2020' && item?.scheduleTicker != null">
+                <span *ngIf="title === 'Toughest Offense Schedule 2021' && item?.scheduleTicker != null">
                     <span *ngFor="let game of item?.scheduleTicker; let i = index;">
                         <span class="game {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'" (mouseout)="hoveredItem = ''">
                             <span [ngClass]="{'white' : game?.oRank === 'BYE', 'red' : game?.oRank &lt;= 10, 'orange' : game?.oRank > 10 && game?.oRank &lt;= 21, 'green' : game?.oRank > 21, 'dn' : seasonLength === 'ofh' && i > 8 || seasonLength === 'osh' && i &lt;= 8 }">{{game?.printName}}</span>
