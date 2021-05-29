@@ -1135,8 +1135,9 @@ export class NflUtilService {
           stats.upOffRank = team.offenseRankLs;
 
           team.sTeamStats = stats;
-          team.seasonPY = stats.stats.passing.passGrossYards;
+          team.seasonPY = stats.stats.passing.passNetYards;
           team.seasonRY = stats.stats.rushing.rushYards;
+          team.ty = team.seasonPY + team.seasonRY;
           team.seasonPlays = stats.stats.rushing.rushAttempts + stats.stats.passing.passAttempts;
           team.seasonPassPlays = stats.stats.passing.passAttempts;
           team.seasonRunPlays = stats.stats.rushing.rushAttempts;
