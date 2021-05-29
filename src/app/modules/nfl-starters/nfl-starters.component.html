@@ -1,32 +1,40 @@
-<div class="main-row stat-leaders">
-    <button (click)="nflDraftKit = !nflDraftKit">{{nflDraftKit ? 'Team Stats' : 'Draft Kit'}}</button>
-<app-spinner *ngIf="nflTeamStatsLoading" [size]="'lg'" [color]="'white'" [title]="'Loading NFL Teams'"></app-spinner>
-<section *ngIf="!showMatchup">
-    <app-team-rank *ngIf="!nflTeamStatsLoading && !nflDraftKit && teamSchedules.length > 0" 
+<app-spinner *ngIf="nflTeamStatsLoading && !teamSchedules.length" [size]="'lg'" [color]="'white'" [title]="'Loading NFL Teams'"></app-spinner>
+<div class="main-row" *ngIf="!nflTeamStatsLoading">
+    <button *ngIf="!showMatchup" (click)="nflDraftKit = !nflDraftKit">{{nflDraftKit ? 'Team Stats' : 'Draft Kit'}}</button>
+    <button *ngIf="!showMatchup && nflDraftKit" (click)="sortToughest(showDef)">{{showDef ? 'Toughest O' : 'Toughest D'}}</button>
+    <button (click)="showMatchup = !showMatchup; loadData()">{{showMatchup ? 'Teams' : 'Matchups'}}</button>
+</div>
+
+<div class="main-row stat-leaders" *ngIf="!showMatchup">   
+<section>
+    <app-team-rank *ngIf="!nflTeamStatsLoading && !nflDraftKit && teamSchedules.length > 0 && showDef" 
         [data]="nflTeamStats" 
         [teams]="teams"
         [title]="'Offense Team Rank'"
         [week]="selectedWeek">
-      </app-team-rank>
+    </app-team-rank>
 
-      <app-team-rank *ngIf="!nflTeamStatsLoading && nflDraftKit && teamSchedules.length > 0" 
+      <app-team-rank *ngIf="!nflTeamStatsLoading && nflDraftKit && teamSchedules.length > 0 && showDef" 
         [data]="nflTeamStats" 
         [teams]="teams"
         [title]="'Toughest Defense Schedule 2021'"
         (seasonChange)="seasonLength = $event"
+        [seasonLength]="seasonLength"
         [week]="selectedWeek">
-      </app-team-rank> <br>
+      </app-team-rank>
 
-      <app-team-rank *ngIf="!nflTeamStatsLoading && !nflDraftKit && teamSchedules.length > 0" 
+      <app-team-rank *ngIf="!nflTeamStatsLoading && !nflDraftKit && teamSchedules.length > 0 && !showDef" 
           [data]="nflTeamStats" 
           [teams]="teams"
           [title]="'Defense Team Rank'">
       </app-team-rank>
 
-      <app-team-rank *ngIf="!nflTeamStatsLoading && nflDraftKit && teamSchedules.length > 0" 
+      <app-team-rank *ngIf="!nflTeamStatsLoading && nflDraftKit && teamSchedules.length > 0 && !showDef" 
           [data]="nflTeamStats" 
           [teams]="teams"
-          [title]="'Toughest Offense Schedule 2021'">
+          [title]="'Toughest Offense Schedule 2021'"
+          [seasonLength]="seasonLengthD"
+          (seasonChangeD)="seasonLengthD = $event">
       </app-team-rank>
 </section>
 </div>

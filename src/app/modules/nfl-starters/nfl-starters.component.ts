@@ -46,6 +46,7 @@ export class NflStartersComponent implements OnInit {
   public gameBatters: Array <any> = [];
   public dailyTeamStats: Array <any> = [];
   public teamSchedules: Array <any> = [];
+  public toughOSchedules: Array <any> = [];
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular";
   public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-playoff";
   public testBrowser: boolean;
@@ -83,8 +84,10 @@ export class NflStartersComponent implements OnInit {
   public mobile: boolean;
   public depth: any;
   public showMatchup: boolean;
+  public showDef: boolean;
   public nflDraftKit: boolean;
-  public seasonLength   : string;
+  public seasonLength   : string = 'dtr';
+  public seasonLengthD  : string = 'otr';
   public gameStarter: { 
     gameID: string, 
     name: any, 
@@ -113,7 +116,8 @@ export class NflStartersComponent implements OnInit {
       weekTimes = this.nflUtil.getWeekTimes();
       this.depth = this.depthService.getNFLDepth();
       this.nflDraftKit = true;
-      this.seasonLength = 'full';
+      this.showDef = true;
+      // this.seasonLength = 'full';
 
       for (let week of weekTimes) {
         let date = new Date();
@@ -667,6 +671,16 @@ export class NflStartersComponent implements OnInit {
     }
   }
 
+  public sortToughest(d) {
+    if (d) {
+      this.seasonLengthD = 'otr'
+      this.showDef = false;
+    } else if (!d) {
+      this.seasonLength = 'dtr'
+      this.showDef = true;
+    }
+  }
+
   public seasonChange(sl) {
     console.log(sl, 'season length changed');
     this.seasonLength = sl;
@@ -680,8 +694,8 @@ export class NflStartersComponent implements OnInit {
         this.nflUtil.updateTeamStats(res['teamStatsTotals'])
         this.nflTeamStats = res['teamStatsTotals'];
         this.nflUtil.sortSchedules(this.teamSchedules, this.selectedWeek, headers);
-        this.nflTeamStatsLoading = false;
         console.log(this.nflTeamStats, 'nfl team season stats');
+        this.nflTeamStatsLoading = false;
     })
   }
 }

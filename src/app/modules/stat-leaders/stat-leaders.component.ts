@@ -452,7 +452,7 @@ export class StatLeadersComponent implements OnInit {
       //let specialImgNum = null;
       const nhlTeamsArray = Object.values(this.nhlTeams);
       this.nhlGoaltenders = res['playerStatsTotals'].filter(
-        player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 2); 
+        player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > (this.nhlSeason ? 2 : 0)); 
       this.gaaGoalies = this.nhlGoaltenders.filter(player => player.stats.goaltending['gamesStarted'] > (this.nhlSeason ? 2 : 0) && player.stats.goaltending.saves > (this.nhlSeason ? 50 : 15)); 
 
         for (let team of nhlTeamsArray) {
@@ -717,6 +717,7 @@ export class StatLeadersComponent implements OnInit {
       this.nflUtil.updateTeamStats(res['teamStatsTotals'])
       this.nflTeamStats = res['teamStatsTotals'];
       this.nflUtil.sortSchedules(this.teamSchedules, this.nflWeek, headers);
+      this.sortToughest();
       this.nflTeamLoading = false;
     })
   
@@ -900,6 +901,7 @@ export class StatLeadersComponent implements OnInit {
     } else {
       this.nflSection = false; 
       this.nflDefenseSection = true;
+      this.sortToughest();
       function teamInfo(array, teams, type, week) {
         
         for (let team of teams) {
@@ -953,6 +955,16 @@ export class StatLeadersComponent implements OnInit {
         this.nflDefenseLoading = false;
       });
       
+    }
+  }
+
+  public sortToughest() {
+    if (this.nflDefenseSection) {
+      this.seasonLengthD = 'otr'
+      // this.showDef = false;
+    } else if (!this.nflDefenseSection) {
+      this.seasonLength = 'dtr'
+      // this.showDef = true;
     }
   }
 

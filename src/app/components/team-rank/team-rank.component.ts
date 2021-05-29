@@ -7,19 +7,21 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TeamRankComponent implements OnInit {
   @Input('data')
-  public data             :Array<any>;
+  public data              :Array<any>;
   @Input('teams')
-  public teams            :Array<any>;
+  public teams             :Array<any>;
   @Input('title')
-  public title            :any;
+  public title             :any;
   @Input('week')
-  public week            :any;
+  public week              :any;
+  @Input('seasonLength')
+  public seasonLength      :any;
   @Output() seasonChange = new EventEmitter();
   @Output() seasonChangeD = new EventEmitter();
 
   public oRank            :Array<any> = [];
   public tRank            :Array<any> = [];
-  public seasonLength: string = 'dtr';
+  // public seasonLength: string = 'dtr';
   public loading: boolean = true;
   public hoveredItem: string = '';
 
@@ -33,7 +35,7 @@ export class TeamRankComponent implements OnInit {
     statTypeO = sl;
     let statTypeD = '';
     statTypeD = sl;
-    // console.log(d, 'data', teams, 'teams', title, 'title');
+     console.log(sl, 'season length', title, 'title');
     if (title === 'Defense Team Rank') {
 
       tRank = teams.slice().sort((a: any, b: any) => {
