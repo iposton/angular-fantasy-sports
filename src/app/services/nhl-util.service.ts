@@ -95,7 +95,7 @@ export class NhlUtilService {
         lastName: "Andersen",
         teamId: 12,
         abbreviation: "TOR",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -117,7 +117,7 @@ export class NhlUtilService {
         lastName: "Rittich",
         teamId:  12,
         abbreviation: "TOR",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8479496.jpg',
         new: false
@@ -558,8 +558,8 @@ export class NhlUtilService {
         lastName: "Price",
         teamId: 14,
         abbreviation: "MTL",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -570,7 +570,7 @@ export class NhlUtilService {
         teamId: 14,
         abbreviation: "MTL",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8474596.jpg',
         new: false
       },
@@ -580,10 +580,10 @@ export class NhlUtilService {
         lastName: "Primeau",
         teamId: 14,
         abbreviation: "MTL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480051.jpg',
-        new: true
+        new: false
       },
       '4862': {
         id: 4862,

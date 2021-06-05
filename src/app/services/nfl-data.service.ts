@@ -226,72 +226,16 @@ export class NFLDataService {
         nflSeason = '2021-playoff';
       }
 
-      if (position === 'qb' && season === 'info' && week === 'all') {
-        let url = `${this.nflRoot}/players.json?position=QB`;
+      if (season === 'info' && week === 'all') {
+        let url = `${this.nflRoot}/players.json?position=${position}`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
-      } else if (position === 'qb' && season === 'stats' && week === 'all') {
-        let url = `${this.apiRoot2021}/player_stats_totals.json?position=QB`;
+      } else if (season === 'stats' && week === 'all') {
+        let url = `${this.apiRoot2021}/player_stats_totals.json?position=${position}`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
-      } else if (week != 'all' && position === 'qb') {
-        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=QB`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      }
-
-      if (position === 'run' && season === 'info' && week === 'all') {
-        let url = `${this.nflRoot}/players.json?position=RB`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (position === 'run' && season === 'stats' && week === 'all') {
-        let url = `${this.apiRoot2021}/player_stats_totals.json?position=RB`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (week != 'all' && position === 'run') {
-        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=RB`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      }
-
-      if (position === 'rec' && season === 'info' && week === 'all') {
-        let url = `${this.nflRoot}/players.json?position=WR`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (position === 'rec' && season === 'stats' && week === 'all') {
-        let url = `${this.apiRoot2021}/player_stats_totals.json?position=WR`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (week != 'all' && position === 'rec') {
-        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=WR`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      }
-
-      if (position === 'te' && season === 'info' && week === 'all') {
-        let url = `${this.nflRoot}/players.json?position=TE`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (position === 'te' && season === 'stats' && week === 'all') {
-        let url = `${this.apiRoot2021}/player_stats_totals.json?position=TE`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (week != 'all' && position === 'te') {
-        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=TE`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      }
-
-      if (position === 'k' && season === 'info' && week === 'all') {
-        let url = `${this.nflRoot}/players.json?position=K`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (position === 'k' && season === 'stats' && week === 'all') {
-        let url = `${this.apiRoot2021}/player_stats_totals.json?position=K`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (week != 'all' && position === 'k') {
-        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=K`;
+      } else if (week != 'all') {
+        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=${position}`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       }
@@ -305,16 +249,16 @@ export class NFLDataService {
         nflSeason = '2021-playoff';
       }
 
-    if (position === 'all' && season === 'info' && week === 'all') {
-      let url = `${this.nflRoot}/players.json?position=CB,S,LB,DT,DE,SS,FS,OLB,ILB,MLB,DB`;
+    if (season === 'info' && week === 'all') {
+      let url = `${this.nflRoot}/players.json?position=${position}`;
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
-    } else if (position === 'all' && season === 'stats' && week === 'all') {
-      let url = `${this.apiRoot2021}/player_stats_totals.json?position=CB,S,LB,DT,DE,FS,SS,OLB,ILB,MLB,DB`;
+    } else if (season === 'stats' && week === 'all') {
+      let url = `${this.apiRoot2021}/player_stats_totals.json?position=${position}`;
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     } else if (week != 'all') {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=CB,S,LB,DT,DE,FS,SS,OLB,ILB,MLB,DB`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=${position}`;
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     }

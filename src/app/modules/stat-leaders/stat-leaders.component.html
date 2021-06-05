@@ -56,6 +56,21 @@
     &nbsp;&nbsp; <button (click)="getByDate('today', sport)">Today</button>
     &nbsp;&nbsp; <button (click)="getByDate('yesterday', sport)">Yesterday</button>
 </div>
+<div class="center" *ngIf="sport === 'nfl' && nflSection">
+  <select name="week" id="week" (change)="onPosChange($event.target.value)">
+    <option value="qb"> QB </option>
+    <option value="rb"> RB </option>
+    <option value="wr"> WR </option>
+    <option value="te"> TE </option>
+    <option value="k"> K </option>
+  </select>
+</div>
+<div class="center" *ngIf="sport === 'nfl' && nflDefenseSection">
+  <select name="week" id="week" (change)="onPosDChange($event.target.value)">
+    <option value="LB,DT,DE,OLB,ILB,MLB"> LB, DE </option>
+    <option value="DB,SS,FS,CB,S"> CB, S </option>
+  </select>
+</div>
 <div class="center" *ngIf="sport === 'hidden'">
     <select name="week" id="week" (change)="onChange($event.target.value)">
       <option value="1"> - </option>
@@ -690,6 +705,21 @@
             <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
             [data]="closerERA" 
             [statType]="'pitching'" 
+            [statField]="'pitcherStrikeouts'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Strikeouts (relief)'"
+            [statTag]="'Ks'"
+            [order]="'DESC'"
+            [sport]="'mlb'"
+            [teams]="mlbTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
+            <app-stat-card *ngIf="!mlbPitchingLoading && mlbPitchingData != null" 
+            [data]="closerERA" 
+            [statType]="'pitching'" 
             [statField]="'saves'"
             [page]="page"
             [amount]="amount"
@@ -917,14 +947,14 @@
           </section>
 
           <section [ngClass]="{'dn' : !nflSection}">
-              <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null" 
-              [data]="nflQBData" 
-              [statType]="'passing'"
-              [statField]="'passYards'"
+              <app-stat-card *ngIf="!nflOffenseLoading && nflData != null && st1 != ''" 
+              [data]="nflData" 
+              [statType]="st1"
+              [statField]="sf1"
               [page]="page"
               [amount]="amount"
-              [title]="'Passing Yards'"
-              [statTag]="'PY'"
+              [title]="t1"
+              [statTag]="tag1"
               [sport]="'nfl'"
               [order]="'DESC'"
               [teams]="nflTeams"
@@ -935,14 +965,14 @@
               [eliteStat]="100"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null" 
-              [data]="nflQBData" 
-              [statType]="'rushing'"
-              [statField]="'rushYards'"
+              <app-stat-card *ngIf="!nflOffenseLoading && nflData != null && st2 != ''" 
+              [data]="nflData" 
+              [statType]="st2"
+              [statField]="sf2"
               [page]="page"
               [amount]="amount"
-              [title]="'QB Rush Yards'"
-              [statTag]="'RY'"
+              [title]="t2"
+              [statTag]="tag2"
               [sport]="'nfl'"
               [order]="'DESC'"
               [teams]="nflTeams"
@@ -953,8 +983,8 @@
               [eliteStat]="50"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null && week === 'three-weeks'" 
-              [data]="nflQBData" 
+              <app-stat-card *ngIf="nflPosition === 'qb' && !nflOffenseLoading && nflData != null && week === 'three-weeks'" 
+              [data]="nflData" 
               [statType]="'passing'"
               [statField]="'ydsPerGame'"
               [page]="page"
@@ -971,14 +1001,14 @@
               [eliteStat]="100"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null" 
-              [data]="nflRushData" 
-              [statType]="'rushing'"
-              [statField]="'rushYards'"
+              <app-stat-card *ngIf="!nflOffenseLoading && nflData != null && st3 != ''" 
+              [data]="nflData" 
+              [statType]="st3"
+              [statField]="sf3"
               [page]="page"
               [amount]="amount"
-              [title]="'Rushing Yards'"
-              [statTag]="'RY'"
+              [title]="t3"
+              [statTag]="tag3"
               [sport]="'nfl'"
               [order]="'DESC'"
               [teams]="nflTeams"
@@ -989,8 +1019,8 @@
               [eliteStat]="850"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null && week === 'three-weeks'" 
-              [data]="nflRushData" 
+              <app-stat-card *ngIf="nflPosition === 'rb' && !nflOffenseLoading && nflData != null && week === 'three-weeks'" 
+              [data]="nflData" 
               [statType]="'rushing'"
               [statField]="'ydsPerGame'"
               [page]="page"
@@ -1007,62 +1037,9 @@
               [eliteStat]="850"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null" 
-              [data]="nflRushData" 
-              [statType]="'receiving'"
-              [statField]="'receptions'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'RB Receptions'"
-              [statTag]="'Rec'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="5"
-              ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
-              [data]="nflRecData" 
-              [statType]="'receiving'"
-              [statField]="'recYards'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'WR Yards'"
-              [statTag]="'Yds'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="1000"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null" 
-              [data]="nflRecData" 
-              [statType]="'receiving'"
-              [statField]="'receptions'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'WR Receptions'"
-              [statTag]="'Rec'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="70"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null && week === 'three-weeks'" 
-              [data]="nflRecData" 
+              <app-stat-card *ngIf="nflPosition === 'wr' && !nflOffenseLoading && nflData != null && week === 'three-weeks'" 
+              [data]="nflData" 
               [statType]="'receiving'"
               [statField]="'ydsPerGame'"
               [page]="page"
@@ -1079,44 +1056,8 @@
               [eliteStat]="70"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflOffenseLoading && nflTEData != null" 
-              [data]="nflTEData" 
-              [statType]="'receiving'"
-              [statField]="'recYards'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'TE Yards'"
-              [statTag]="'Yds'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="1000"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflTEData != null" 
-              [data]="nflTEData" 
-              [statType]="'receiving'"
-              [statField]="'receptions'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'TE Receptions'"
-              [statTag]="'Rec'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="70"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null && week === 'three-weeks'" 
-              [data]="nflTEData" 
+              <app-stat-card *ngIf="nflPosition === 'te' && !nflOffenseLoading && nflData != null && week === 'three-weeks'" 
+              [data]="nflData" 
               [statType]="'receiving'"
               [statField]="'ydsPerGame'"
               [page]="page"
@@ -1131,115 +1072,6 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
               [eliteStat]="70"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflKickerData != null" 
-              [data]="nflKickerData" 
-              [statType]="'fieldGoals'"
-              [statField]="'fgMade'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'FieldGoals'"
-              [statTag]="'FG'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="40"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflKickerData != null" 
-              [data]="nflKickerData" 
-              [statType]="'fieldGoals'"
-              [statField]="'longFgMade'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'FG +40Yards'"
-              [statTag]="'FG'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="40"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflQBData != null && (week === 'all' || week === 'three-weeks')" 
-              [data]="nflQBData" 
-              [statType]="'passing'"
-              [statField]="'totalPassPct'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'Pass Percent of All Plays'"
-              [statTag]="'%'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="40"
-              ></app-stat-card>
-
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRushData != null && (week === 'all' || week === 'three-weeks')" 
-              [data]="nflRushData" 
-              [statType]="'rushing'"
-              [statField]="'touchRunPct'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'Touch Percent of All Rush Plays'"
-              [statTag]="'%'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="40"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflRecData != null && (week === 'all' || week === 'three-weeks')" 
-              [data]="nflRecData" 
-              [statType]="'receiving'"
-              [statField]="'touchCatchPct'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'Touch Percent of All Pass Plays'"
-              [statTag]="'%'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="40"
-              ></app-stat-card>
-
-              <app-stat-card *ngIf="!nflOffenseLoading && nflTEData != null && (week === 'all' || week === 'three-weeks')" 
-              [data]="nflTEData" 
-              [statType]="'receiving'"
-              [statField]="'touchCatchPct'"
-              [page]="page"
-              [amount]="amount"
-              [title]="'Touch Percent of All Pass Plays'"
-              [statTag]="'%'"
-              [sport]="'nfl'"
-              [order]="'DESC'"
-              [teams]="nflTeams"
-              (open)="authorize($event)"
-              [twitter]="twitter"
-              [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
-              [eliteStat]="40"
               ></app-stat-card>
 
               <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && teamSchedules.length > 0" 

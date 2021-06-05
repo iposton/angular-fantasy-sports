@@ -35,7 +35,7 @@ export class TeamRankComponent implements OnInit {
     statTypeO = sl;
     let statTypeD = '';
     statTypeD = sl;
-     console.log(sl, 'season length', title, 'title');
+    //  console.log(sl, 'season length', title, 'title');
     if (title === 'Defense Team Rank') {
 
       tRank = teams.slice().sort((a: any, b: any) => {
