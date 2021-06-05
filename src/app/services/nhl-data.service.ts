@@ -367,16 +367,16 @@ export class NHLDataService {
     let printend = null;
     if (nextWeek) {
       season = '2021-playoff'
-      begin = '20210524';
-      printbegin = '5/24';
-      end = '20210530';
-      printend = '5/30 - Playoffs';
+      begin = '20210607';
+      printbegin = '6/7';
+      end = '20210613';
+      printend = '6/13 - Playoffs';
     } else {
       season = '2021-playoff'
-      begin = '20210517';
-      printbegin = '5/17';
-      end = '20210523';
-      printend = '5/23 - Playoffs';   
+      begin = '20210531';
+      printbegin = '5/31';
+      end = '20210606';
+      printend = '6/6 - Playoffs';   
     }
       let team;
       let teamSchedule;

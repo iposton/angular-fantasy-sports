@@ -45,16 +45,22 @@ export class StatLeadersComponent implements OnInit {
   public mlbPitchingData: Array <any>;
   public mlbHittingData: Array <any>;
   public nflOffenseData: Array <any>;
-  public nflTEData: Array <any>;
-  public nflQBData: Array <any>;
-  public nflRushData: Array <any>;
-  public nflRecData: Array <any>;
+  public nflData: Array <any>;
   public nflDefenseData: Array <any>;
-  public nflKickerData: Array <any>;
-  public newKickerData: Array <any>;
-  public newQBData: Array <any>;
-  public newRushData: Array <any>;
-  public newRecData: Array <any>;
+
+  public st1: any; //passing
+  public st2: any;
+  public st3: any;
+  public sf1: any; //passYards
+  public sf2: any;
+  public sf3: any;
+  public t1: any; //Passing Yards
+  public t2: any;
+  public t3: any;
+  public tag1: any; //PY
+  public tag2: any;
+  public tag3: any;
+
   public newDefenseData: Array <any>;
   public newGoalieData: Array <any>;
   public nhlSkaters: Array <any>;
@@ -120,15 +126,14 @@ export class StatLeadersComponent implements OnInit {
   public sport: string;
   public nflWeek: any;
   public week: any = 'all';
-  public crunchedQB: Array <any> = [];
-  public crunchedRB: Array <any> = [];
-  public crunchedWR: Array <any> = [];
-  public crunchedTE: Array <any> = [];
-  public crunchedKicker: Array <any> = [];
+
+
   public crunchedDef: Array <any> = [];
   public nhlSeason: boolean = false;
   public nbaSeason: boolean = false;
   public mlbSeason: boolean = true;
+  public nflPosition: string;
+  public nflDPosition: string;
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -143,10 +148,27 @@ export class StatLeadersComponent implements OnInit {
               public nflUtil: NflUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
     //default sport load
-    this.nflSection = true;
-    this.sport = 'nfl';
-    this.nflDraftKit = true;
-    this.nflWeek = '1';
+    this.nflSection = true
+    this.sport = 'nfl'
+    this.nflDraftKit = true
+    this.nflWeek = '1'
+    this.nflPosition = 'qb'
+    this.nflDPosition = 'LB,DT,DE,OLB,ILB,MLB';
+
+    this.st1 = 'passing'
+    this.sf1 = 'passYards'
+    this.t1 = 'Passing Yards'
+    this.tag1 = 'PY'
+
+     this.st2 = 'rushing'
+     this.sf2 = 'rushYards'
+     this.t2 = 'QB Rush Yards'
+     this.tag2 = 'RY'
+
+     this.st3 = 'passing'
+     this.sf3 = 'totalPassPct'
+     this.t3 = 'Pass % of All Plays'
+     this.tag3 = '%'
     //default sport load
     
     this.stats = '1';
@@ -297,6 +319,33 @@ export class StatLeadersComponent implements OnInit {
     } 
   }
 
+  public onPosChange(p) {
+
+     this.st1 = p === 'qb' ? 'passing' : p === 'rb' ? 'rushing' : p === 'wr' ? 'receiving' : p === 'te' ? 'receiving' : p === 'k' ? 'fieldGoals' : ''
+     this.sf1 = p === 'qb' ? 'passYards' : p === 'rb' ? 'rushYards' : p === 'wr' ? 'recYards' : p === 'te' ? 'recYards' : p === 'k' ? 'fgMade' : ''
+     this.t1 = p === 'qb' ? 'Passing Yards' : p === 'rb' ? 'Rush Yards' : p === 'wr' ? 'WR Yards' : p === 'te' ? 'TE Yards' : p === 'k' ? 'FieldGoals' : ''
+     this.tag1 = p === 'qb' ? 'PY' : p === 'rb' ? 'RY' : p === 'wr' ? 'Yds' : p === 'te' ? 'Yds' : p === 'k' ? 'FG' : ''
+
+     this.st2 = p === 'qb' ? 'rushing' : p === 'rb' ? 'receiving' : p === 'wr' ? 'receiving' : p === 'te' ? 'receiving' : p === 'k' ? 'fieldGoals' : ''
+     this.sf2 = p === 'qb' ? 'rushYards' : p === 'rb' ? 'receptions' : p === 'wr' ? 'receptions' : p === 'te' ? 'receptions' : p === 'k' ? 'longFgMade' : ''
+     this.t2 = p === 'qb' ? 'QB Rush Yards' : p === 'rb' ? 'RB Receptions' : p === 'wr' ? 'WR Receptions' : p === 'te' ? 'TE Receptions' : p === 'k' ? 'FG +40Yards' : ''
+     this.tag2 = p === 'qb' ? 'RY' : p === 'rb' ? 'Rec' : p === 'wr' ? 'Rec' : p === 'te' ? 'Rec' : p === 'k' ? 'FG' : ''
+
+     this.st3 = p === 'qb' ? 'passing' : p === 'rb' ? 'rushing' : p === 'wr' ? 'receiving' : p === 'te' ? 'receiving' : p === 'k' ? '' : ''
+     this.sf3 = p === 'qb' ? 'totalPassPct' : p === 'rb' ? 'touchRunPct' : p === 'wr' ? 'touchCatchPct' : p === 'te' ? 'touchCatchPct' : p === 'k' ? '' : ''
+     this.t3 = p === 'qb' ? 'Pass % of All Plays' : p === 'rb' ? 'Touch % of All Rush Plays' : p === 'wr' ? 'Target % of All Pass Plays' : p === 'te' ? 'Target % of All Pass Plays' : p === 'k' ? '' : ''
+     this.tag3 = '%'
+
+  
+    this.nflPosition = p;
+    this.loadNFL();
+  }
+
+  public onPosDChange(p) {
+    this.nflDPosition = p;
+    this.defensePlayers();
+  }
+
   public spanGames() {
     let type = null;
     let season= null;
@@ -326,6 +375,7 @@ export class StatLeadersComponent implements OnInit {
       
     if (this.sport === 'mlb' && this.mlbHittingSection) {
       this.mlbHittingLoading = true;
+      season = this.mlbSeasonType;
       type = 'batters';
     }
       
@@ -599,7 +649,7 @@ export class StatLeadersComponent implements OnInit {
             player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 1 : 0)); // && player.stats.pitching.pitcherStrikeouts > 6
          
           this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && player.stats.pitching.inningsPitched > (this.mlbSeason ? 5 : 0));
-          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 5 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 5 : 0) || player.stats.pitching.saves > 0);
+          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 10 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 7 : 0) || player.stats.pitching.saves > 0);
 
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
@@ -711,6 +761,7 @@ export class StatLeadersComponent implements OnInit {
     this.mlbHittingSection = false;
     this.nflSection = true;
     this.sport = 'nfl';
+if (this.nflTeamStats == null) {
 
     this.nflService.getTeamStats(this.tsDate).subscribe(res => {
       this.nflUtil.rank(this.nflTeams, res['teamStatsTotals'], this.nflWeek)
@@ -720,8 +771,12 @@ export class StatLeadersComponent implements OnInit {
       this.sortToughest();
       this.nflTeamLoading = false;
     })
+
+  } else {
+    this.nflTeamLoading = false;
+}
   
-    function teamInfo(array, teams, type, week) {
+    function teamInfo(array, teams, type, week, pos) {
         for (let team of teams) {
           for (let data of array) { 
             if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id && week === 'all' ||
@@ -755,15 +810,19 @@ export class StatLeadersComponent implements OnInit {
             if (data.player.id === 16494) {
               data.player.unsigned = true;
             }
+
+            if (pos === 'k') {
+              data.stats.fieldGoals.longFgMade = data.stats.fieldGoals.fgMade40_49 + data.stats.fieldGoals.fgMade50Plus
+            }
             
           }  
         }
       }
-      // await sleep(2500);
+      await sleep(500);
       this.nflService
-        .getAllOffense('qb', 'stats', this.week).subscribe(res => {
+        .getAllOffense(this.nflPosition, 'stats', this.week).subscribe(res => {
           if (res['gamelogs'] != null) {
-            for (let data of this.nflQBData) {
+            for (let data of this.nflData) {
               for (let wstats of res['gamelogs']) {
                 wstats.player.primaryPosition = wstats.player.position;
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
@@ -774,124 +833,22 @@ export class StatLeadersComponent implements OnInit {
             }
           }
           let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
-          this.nflQBData = stats.filter(
-            player => player.stats != null && player.stats.passing.passYards > 80);
-            console.log(this.nflQBData, 'qb data')
-          teamInfo(this.nflQBData, this.nflTeams, 'o', this.week);
+          this.nflData = stats
+          // .filter(
+            // player => player.stats != null && player.stats.passing.passYards > 80);
+            // console.log(this.nflData, 'qb data')
+          teamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition);
           this.nflService
-            .getAllOffense('qb', 'info', this.week).subscribe(res => {
+            .getAllOffense(this.nflPosition, 'info', this.week).subscribe(res => {
           
-              this.util.updatePlayers(res['players'], this.nflQBData, this.nflTeams);
+              this.util.updatePlayers(res['players'], this.nflData, this.nflTeams);
+              this.nflOffenseLoading = false;
               
           })
       });
 
-      this.nflService
-        .getAllOffense('run', 'stats', this.week).subscribe(res => {
-          if (res['gamelogs'] != null) {
-            for (let data of this.nflRushData) {
-              for (let wstats of res['gamelogs']) {
-                wstats.player.primaryPosition = wstats.player.position;
-                if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
-                  wstats.player.officialImageSrc = data.player.officialImageSrc;
-                  wstats.player.primaryPosition = data.player.primaryPosition;
                 }
               }
-            }
-          }
-          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
-          this.nflRushData = stats.filter(
-            player => player.stats != null && player.stats.rushing.rushYards > 10);
-          teamInfo(this.nflRushData, this.nflTeams, 'o', this.week);
-          this.nflService
-            .getAllOffense('run', 'info', this.week).subscribe(res => {
-          
-              this.util.updatePlayers(res['players'], this.nflRushData, this.nflTeams);
-              this.nflOffenseLoading = false;
-          })
-
-        // this.nflOffenseLoading = false;
-      });
-
-      this.nflService
-        .getAllOffense('rec', 'stats', this.week).subscribe(res => {
-          if (res['gamelogs'] != null) {
-            for (let data of this.nflRecData) {
-              for (let wstats of res['gamelogs']) {
-                wstats.player.primaryPosition = wstats.player.position;
-                if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
-                  wstats.player.officialImageSrc = data.player.officialImageSrc;
-                  wstats.player.primaryPosition = data.player.primaryPosition;
-                }
-              }
-            }
-          }
-          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
-          this.nflRecData = stats.filter(
-            player => player.stats != null && player.stats.receiving.receptions > 0);
-          teamInfo(this.nflRecData, this.nflTeams, 'o', this.week);
-          this.nflService
-            .getAllOffense('rec', 'info', this.week).subscribe(res => {
-          
-              this.util.updatePlayers(res['players'], this.nflRecData, this.nflTeams);           
-          })
-      });
-
-      this.nflService
-        .getAllOffense('te', 'stats', this.week).subscribe(res => {
-          if (res['gamelogs'] != null) {
-            for (let data of this.nflTEData) {
-              for (let wstats of res['gamelogs']) {
-                wstats.player.primaryPosition = wstats.player.position;
-                if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
-                  wstats.player.officialImageSrc = data.player.officialImageSrc;
-                  wstats.player.primaryPosition = data.player.primaryPosition;
-                }
-              }
-            }
-          }
-          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
-          this.nflTEData = stats.filter(
-            player => player.stats != null && player.stats.receiving.receptions > 0);
-          teamInfo(this.nflTEData, this.nflTeams, 'o', this.week);
-          this.nflService
-            .getAllOffense('te', 'info', this.week).subscribe(res => {
-          
-              this.util.updatePlayers(res['players'], this.nflTEData, this.nflTeams);
-          })
-
-      });
-
-      this.nflService
-        .getAllOffense('k', 'stats', this.week).subscribe(res => {
-          if (res['gamelogs'] != null) {
-            for (let data of this.nflKickerData) {
-              for (let wstats of res['gamelogs']) {
-                wstats.player.primaryPosition = wstats.player.position;
-                if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
-                  wstats.player.officialImageSrc = data.player.officialImageSrc;
-                  wstats.player.primaryPosition = data.player.primaryPosition;
-                }
-              }
-            }
-          }
-          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
-          this.nflKickerData = stats.filter(
-            player => player.stats != null && player.stats.fieldGoals.fgMade > 0);
-
-            for (let old of this.nflKickerData) {
-              old.stats.fieldGoals.longFgMade = old.stats.fieldGoals.fgMade40_49 + old.stats.fieldGoals.fgMade50Plus;
-            }
-          teamInfo(this.nflKickerData, this.nflTeams, 'o', this.week);
-          this.nflService
-            .getAllOffense('k', 'info', this.week).subscribe(res => {
-          
-              this.util.updatePlayers(res['players'], this.nflKickerData, this.nflTeams);
-          
-          })
-      });
-    }
-  }
 
   public defensePlayers() {
     if (this.week === 'three-weeks') {
@@ -929,7 +886,7 @@ export class StatLeadersComponent implements OnInit {
       // if (this.nflDefenseData == null || this.week != 'all') {
         this.nflDefenseLoading = true;
 
-        this.nflService.getAllDefense('all', 'stats', this.week).subscribe(res => {
+        this.nflService.getAllDefense(this.nflDPosition, 'stats', this.week).subscribe(res => {
 
           if (res['gamelogs'] != null) {
             for (let data of this.nflDefenseData) {
@@ -947,7 +904,7 @@ export class StatLeadersComponent implements OnInit {
             player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0));
           teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week);
           this.nflService
-            .getAllDefense('all', 'info', this.week).subscribe(res => {
+            .getAllDefense(this.nflDPosition, 'info', this.week).subscribe(res => {
               
               this.util.updatePlayers(res['players'], this.nflDefenseData, this.nflTeams);
           })
@@ -1212,8 +1169,8 @@ export class StatLeadersComponent implements OnInit {
               this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched > 0);
               this.mlbPitchingData = this.crunched;
 
-              this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && player.stats.pitching.inningsPitched > 3);
-              this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.holds > 0 ||  player.stats.pitching.saves > 0);
+              this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && player.stats.pitching.inningsPitched > 5);
+              this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > 3 && player.stats.pitching.holds > 2 && player.stats.pitching.inningsPitched > 3 ||  player.stats.pitching.saves > 0);
                   
               this.mlbPitchingLoading = false;
             }
@@ -1410,10 +1367,11 @@ export class StatLeadersComponent implements OnInit {
 
                
 
-                for (let info of this.nflQBData) {
+                for (let info of this.nflData) {
                   for (let data of this.reduced) {
                     //info.player.span = false;
-                    if (info.player.id === data.id) { 
+                    if (info.player.id === data.id) {
+                        //qb 
                         info.stats.passing.passYards = data['1'];
                         info.stats.passing.passTD = data['2'];
                         info.stats.rushing.rushYards = data['3'];
@@ -1424,115 +1382,116 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.receiving.recYards = data['8'];
                         info.stats.passing.totalPassPct = Math.floor(data['11'] / data['14'] * 100);
                         info.spanOpponents = data['17'];
-                       
-                        //TODO: Get toughness rank per 3 week span
-                        info.player.span = this.timeSpan;
-                    }
-                  }
-                }
-
-                for (let info of this.nflRushData) {
-                  for (let data of this.reduced) {
-                    //info.player.span = false;
-                    if (info.player.id === data.id) { 
-                        info.stats.passing.passYards = data['1'];
-                        info.stats.passing.passTD = data['2'];
-                        info.stats.rushing.rushYards = data['3'];
-                        info.stats.receiving.receptions = data['4'];               
-                        info.stats.receiving.recTD = data['5'];
-                        info.stats.rushing.rushTD = data['6'];
+                        
+                        //rb
                         info.stats.rushing.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
-                        info.stats.receiving.recYards = data['8'];
                         
                         info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
-                        // if (info.stats.rushing.touchRunPct > 100) {
-                        //   console.log(info, 'player', data['12'], 'player rush attemps', data['16'], 'team rush att', data['17'], 'opponent');
-                        // }
                         info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
-                        info.spanOpponents = data['17'];
-                       
-                        //TODO: Get toughness rank per 3 week span
-                        info.player.span = this.timeSpan;
-                    }
-                  }
-                }
 
-                for (let info of this.nflRecData) {
-                  for (let data of this.reduced) {
-                    //info.player.span = false;
-                    if (info.player.id === data.id) { 
-                        info.stats.passing.passYards = data['1'];
-                        info.stats.passing.passTD = data['2'];
-                        info.stats.rushing.rushYards = data['3'];
-                        info.stats.receiving.receptions = data['4'];               
-                        info.stats.receiving.recTD = data['5'];
-                        info.stats.rushing.rushTD = data['6'];
+                        //wr te
+                        
                         info.stats.receiving.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
-                        info.stats.receiving.recYards = data['8'];
-
-                        info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
-                        info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
-                        info.spanOpponents = data['17'];
-                       
-                        //TODO: Get toughness rank per 3 week span
-                        info.player.span = this.timeSpan;
-                    }
-                  }
-                }
-
-                for (let info of this.nflTEData) {
-                  for (let data of this.reduced) {
-                    //info.player.span = false;
-                    if (info.player.id === data.id) { 
-                        info.stats.passing.passYards = data['1'];
-                        info.stats.passing.passTD = data['2'];
-                        info.stats.rushing.rushYards = data['3'];
-                        info.stats.receiving.receptions = data['4'];               
-                        info.stats.receiving.recTD = data['5'];
-                        info.stats.rushing.rushTD = data['6'];
-                        info.stats.receiving.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
-                        info.stats.receiving.recYards = data['8'];
-
-                        info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
-                        info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
-                        info.spanOpponents = data['17'];
-                       
-                        //TODO: Get toughness rank per 3 week span
-                        info.player.span = this.timeSpan;
-                    }
-                  }
-                }
-
-                for (let info of this.nflKickerData) {
-                  for (let data of this.reduced) {
-                    //info.player.span = false;
-                    if (info.player.id === data.id) { 
+                        
+                        // k
                         info.stats.fieldGoals.fgMade = data['9'];
                         info.stats.fieldGoals.longFgMade = data['10'];
-                        info.spanOpponents = data['17'];
+                       
                         //TODO: Get toughness rank per 3 week span
                         info.player.span = this.timeSpan;
                     }
                   }
                 }
+
+                // for (let info of this.nflRushData) {
+                //   for (let data of this.reduced) {
+                //     //info.player.span = false;
+                //     if (info.player.id === data.id) { 
+                //         info.stats.passing.passYards = data['1'];
+                //         info.stats.passing.passTD = data['2'];
+                //         info.stats.rushing.rushYards = data['3'];
+                //         info.stats.receiving.receptions = data['4'];               
+                //         info.stats.receiving.recTD = data['5'];
+                //         info.stats.rushing.rushTD = data['6'];
+                //         info.stats.rushing.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
+                //         info.stats.receiving.recYards = data['8'];
+                        
+                //         info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
+                       
+                //         info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
+                //         info.spanOpponents = data['17'];
+                       
+                //         //TODO: Get toughness rank per 3 week span
+                //         info.player.span = this.timeSpan;
+                //     }
+                //   }
+                // }
+
+                // for (let info of this.nflRecData) {
+                //   for (let data of this.reduced) {
+                //     //info.player.span = false;
+                //     if (info.player.id === data.id) { 
+                //         info.stats.passing.passYards = data['1'];
+                //         info.stats.passing.passTD = data['2'];
+                //         info.stats.rushing.rushYards = data['3'];
+                //         info.stats.receiving.receptions = data['4'];               
+                //         info.stats.receiving.recTD = data['5'];
+                //         info.stats.rushing.rushTD = data['6'];
+                //         info.stats.receiving.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
+                //         info.stats.receiving.recYards = data['8'];
+
+                //         info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
+                //         info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
+                //         info.spanOpponents = data['17'];
+                       
+                //         //TODO: Get toughness rank per 3 week span
+                //         info.player.span = this.timeSpan;
+                //     }
+                //   }
+                // }
+
+                // for (let info of this.nflTEData) {
+                //   for (let data of this.reduced) {
+                //     //info.player.span = false;
+                //     if (info.player.id === data.id) { 
+                //         info.stats.passing.passYards = data['1'];
+                //         info.stats.passing.passTD = data['2'];
+                //         info.stats.rushing.rushYards = data['3'];
+                //         info.stats.receiving.receptions = data['4'];               
+                //         info.stats.receiving.recTD = data['5'];
+                //         info.stats.rushing.rushTD = data['6'];
+                //         info.stats.receiving.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
+                //         info.stats.receiving.recYards = data['8'];
+
+                //         info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
+                //         info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
+                //         info.spanOpponents = data['17'];
+                       
+                //         //TODO: Get toughness rank per 3 week span
+                //         info.player.span = this.timeSpan;
+                //     }
+                //   }
+                // }
+
+                // for (let info of this.nflKickerData) {
+                //   for (let data of this.reduced) {
+                //     //info.player.span = false;
+                //     if (info.player.id === data.id) { 
+                //         info.stats.fieldGoals.fgMade = data['9'];
+                //         info.stats.fieldGoals.longFgMade = data['10'];
+                //         info.spanOpponents = data['17'];
+                //         //TODO: Get toughness rank per 3 week span
+                //         info.player.span = this.timeSpan;
+                //     }
+                //   }
+                // }
 
               }
             });
 
-              this.crunchedQB = this.nflQBData.filter(player => player.player.span === this.timeSpan);
-              this.nflQBData = this.crunchedQB;
+              this.crunched = this.nflData.filter(player => player.player.span === this.timeSpan);
+              this.nflData = this.crunched;
                
-              this.crunchedRB = this.nflRushData.filter(player => player.player.span === this.timeSpan);
-              this.nflRushData = this.crunchedRB;
-               
-              this.crunchedWR = this.nflRecData.filter(player => player.player.span === this.timeSpan);
-              this.nflRecData = this.crunchedWR;
-              
-              this.crunchedTE = this.nflTEData.filter(player => player.player.span === this.timeSpan);
-              this.nflTEData = this.crunchedTE;
-              
-              this.crunchedKicker = this.nflKickerData.filter(player => player.player.span === this.timeSpan);
-              this.nflKickerData = this.crunchedKicker;
               // console.log(this.nhlGoaltenders, 'crunched nhl');
               this.nflOffenseLoading = false;
                  

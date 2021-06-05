@@ -72,8 +72,8 @@ export class UtilService {
   public teamRecord(teams, players) {
     for (let team of teams) {
       for (let data of players) { 
-        if (data.team.opponentId != null && 
-          data.team.id === team.team.id) {
+        if (data.team.opponentId != null && data.player['currentTeam'] != null && 
+        data.player['currentTeam'].id === team.team.id) {
           data.win = team.stats.standings.wins;
           data.loss = team.stats.standings.losses;
           if (team.stats.standings.overtimeLosses != null)
