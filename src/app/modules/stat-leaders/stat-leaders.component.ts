@@ -648,7 +648,7 @@ export class StatLeadersComponent implements OnInit {
           this.mlbPitchingData = res['playerStatsTotals'].filter(
             player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 1 : 0)); // && player.stats.pitching.pitcherStrikeouts > 6
          
-          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && player.stats.pitching.inningsPitched > (this.mlbSeason ? 5 : 0));
+          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 2 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 5 : 0));
           this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 10 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 7 : 0) || player.stats.pitching.saves > 0);
 
           for (let team of this.mlbTeams) {
@@ -658,7 +658,8 @@ export class StatLeadersComponent implements OnInit {
                 data.team.city = team['city'];
                 data.team.name = team['name'];
                 data.team.twitter = team['twitter'];
-                this.pitcherFp(data);
+                //this.pitcherFp(data);
+                this.mlbUtil.fantasyPoints(data,'p')
                 data.stats.pitching.earnedRunAvg = data.stats.pitching.earnedRunAvg.toFixed(2)
                 //this.loading = false;
 
@@ -708,7 +709,8 @@ export class StatLeadersComponent implements OnInit {
                data.team.name = team['name'];
                data.team.twitter = team['twitter'];
                data.stats.batting.battingAvg = data.stats.batting.battingAvg.toFixed(3) 
-               this.batterFp(data);
+               //this.batterFp(data);
+               this.mlbUtil.fantasyPoints(data,'b')
               // this.loading = false;
               if (data.player.officialImageSrc != null) {
                 data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
@@ -733,17 +735,6 @@ export class StatLeadersComponent implements OnInit {
           this.mlbHittingLoading = false;
         }
      })
-  }
-
-  public pitcherFp(player) {
-    player.stats.pitching.fp = (player.stats.pitching.earnedRunsAllowed * -3) + player.stats.pitching.pitcherStrikeouts + player.stats.pitching.pickoffs + player.stats.pitching.pitcherFlyOuts + player.stats.pitching.pitcherGroundOuts;
-    player.stats.pitching.fpa = Math.floor(player.stats.pitching.fp / player.stats.gamesPlayed);
-    player.stats.pitching.pca = Math.floor(player.stats.pitching.pitchesThrown / player.stats.gamesPlayed); 
-  }
-
-  public batterFp(player) {
-    player.stats.batting.fp = (player.stats.batting.hits - player.stats.batting.extraBaseHits) + (player.stats.batting.secondBaseHits * 2) + (player.stats.batting.thirdBaseHits * 3) + (player.stats.batting.homeruns * 4) + player.stats.batting.runs + player.stats.batting.runsBattedIn + player.stats.batting.batterWalks + player.stats.batting.stolenBases + player.stats.batting.hitByPitch;
-    player.stats.batting.fpa = Math.floor(player.stats.batting.fp / player.stats.gamesPlayed);
   }
 
   public async loadNFL() {
@@ -1066,7 +1057,7 @@ if (this.nflTeamStats == null) {
                     hash[key]['13'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].shifts.timeOnIceSeconds : 
-                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
+                    s === 'mlb' && pSec && a.playerStats[0].pitching != null ? (a.playerStats[0].pitching.inningsPitched >= 6 && a.playerStats[0].pitching.earnedRunsAllowed < 4 ? 1 : 0) : 
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
 
                     
@@ -1140,8 +1131,10 @@ if (this.nflTeamStats == null) {
                         info.stats.pitching.walksAllowedPer9Innings = ((data['8'] / data['9']) * 9).toFixed(2);
                         info.stats.pitching.inningsPitched = data['9'];
                         info.stats.pitching.pitcherWalks = data['10'];
+                        info.stats.pitching.qs = data['13'];
                              
-                        this.pitcherFp(info);
+                        //this.pitcherFp(info);
+                        this.mlbUtil.fantasyPoints(info,'p')
                       }
 
                       if (s === 'mlb' && this.mlbHittingSection) {
@@ -1155,7 +1148,8 @@ if (this.nflTeamStats == null) {
                         info.stats.gamesPlayed = data['7'];
                         info.stats.batting.plateAppearances = data['8'];
                          
-                        this.batterFp(info);
+                        //this.batterFp(info);
+                        this.mlbUtil.fantasyPoints(info,'b')
                       }
                       
                       info.player.span = this.timeSpan;
