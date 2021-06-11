@@ -922,4 +922,146 @@ export class MlbUtilService {
       }
     return newPitcher;
   }
+
+  public qs(inn, er) {
+    let quality = null;
+    quality = inn >= 6 && er < 4 ? 1 : 0;
+    return quality;
+  }
+
+  public round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+  }
+
+  public fantasyPoints (player: any, type: string) {
+    if (type === 'p') {
+      //if (player.stats.pitching.wins >= 4 ||  )
+      //TODO QS average if wins => 4 || ERA less than 4.00 qs 8 else if less than 4 wins and => 2 qs 4 else 1
+      player.stats.pitching.fp = (player.stats.pitching.earnedRunsAllowed * -3) + player.stats.pitching.pitcherStrikeouts + player.stats.pitching.pickoffs + player.stats.pitching.pitcherFlyOuts + player.stats.pitching.pitcherGroundOuts;
+      player.stats.pitching.fpa = Math.floor(player.stats.pitching.fp / player.stats.gamesPlayed);
+      player.stats.pitching.pca = Math.floor(player.stats.pitching.pitchesThrown / player.stats.gamesPlayed); 
+
+      player.stats.fanDuelFP = (player.stats.pitching.earnedRunsAllowed * -3) + (this.round(player.stats.pitching.inningsPitched * 3,1)) + (5*4) + (player.stats.pitching.pitcherStrikeouts * 3) + (player.stats.pitching.wins * 6);
+      player.stats.fanDuelFPA = Math.floor(player.stats.fanDuelFP / player.stats.gamesPlayed);
+      player.stats.pitching.fanDuelFP = player.stats.fanDuelFP
+      player.stats.pitching.fanDuelFPA = player.stats.fanDuelFPA
+    }
+
+    if (type === 'b') {
+      player.stats.batting.fp = (player.stats.batting.hits - player.stats.batting.extraBaseHits) + (player.stats.batting.secondBaseHits * 2) + (player.stats.batting.thirdBaseHits * 3) + (player.stats.batting.homeruns * 4) + player.stats.batting.runs + player.stats.batting.runsBattedIn + player.stats.batting.batterWalks + player.stats.batting.stolenBases + player.stats.batting.hitByPitch;
+      player.stats.batting.fpa = Math.floor(player.stats.batting.fp / player.stats.gamesPlayed);
+
+      player.stats.fanDuelFP = ((player.stats.batting.hits - player.stats.batting.extraBaseHits) * 3) + (player.stats.batting.secondBaseHits * 6) + (player.stats.batting.thirdBaseHits * 9) + (player.stats.batting.homeruns * 12) + (this.round(player.stats.batting.runs * 3.2,1)) + (this.round(player.stats.batting.runsBattedIn * 3.5,1)) + (player.stats.batting.batterWalks * 3) + (player.stats.batting.stolenBases * 6) + (player.stats.batting.hitByPitch * 3);  
+      player.stats.fanDuelFPA = Math.floor(player.stats.fanDuelFP / player.stats.gamesPlayed);
+      player.stats.batting.fanDuelFP = player.stats.fanDuelFP
+      player.stats.batting.fanDuelFPA = player.stats.fanDuelFPA
+    }  
+  }
+
+  public dailyFp (mdata, daily, type) {
+    if (type === 'p') {
+
+      if (daily.stats.pitching.pitcher2SeamFastballs >= 0 && 
+        daily.stats.pitching.pitcher4SeamFastballs >= 0 && 
+        daily.stats.pitching.pitcherChangeups >= 0 && 
+        daily.stats.pitching.pitcherCurveballs >= 0 && 
+        daily.stats.pitching.pitcherCutters >= 0 && 
+        daily.stats.pitching.pitcherSliders >= 0 && 
+        daily.stats.pitching.pitcherSinkers >= 0 && 
+        daily.stats.pitching.pitcherSplitters >= 0) {
+        mdata.player.favPitchToday = Math.max(daily.stats.pitching.pitcher2SeamFastballs, daily.stats.pitching.pitcher4SeamFastballs, daily.stats.pitching.pitcherChangeups, daily.stats.pitching.pitcherCurveballs, daily.stats.pitching.pitcherCutters, daily.stats.pitching.pitcherSliders, daily.stats.pitching.pitcherSinkers, daily.stats.pitching.pitcherSplitters);
+        mdata.player.favPitchPercentToday = Math.floor(mdata.player.favPitchToday / daily.stats.pitching.pitchesThrown * 100);
+      }
+      //console.log(daily.game, 'get game info by player id')
+      mdata.player.fpToday = 0;
+      mdata.noHitterToday = false;
+      mdata.completeGameToday = false;
+      mdata.perfectGameToday = false;
+      mdata.gameId = daily.game.id;
+      mdata.player.winToday = daily.stats.pitching.wins;
+      mdata.player.loseToday = daily.stats.pitching.losses;
+      mdata.player.saveToday = daily.stats.pitching.saves;
+      mdata.player.inningsToday = daily.stats.pitching.inningsPitched;
+      mdata.player.earnedrunsToday = daily.stats.pitching.earnedRunsAllowed;
+      mdata.player.strikeoutsToday = daily.stats.pitching.pitcherStrikeouts;
+      mdata.player.hitsallowedToday = daily.stats.pitching.hitsAllowed;
+      mdata.player.pitchesthrownToday = daily.stats.pitching.pitchesThrown;
+      mdata.player.eraToday = daily.stats.pitching.earnedRunAvg.toFixed(2);
+      mdata.player.pickoffsToday = daily.stats.pitching.pickoffs;
+      mdata.player.flyoutsToday = daily.stats.pitching.pitcherFlyOuts;
+      mdata.player.groundoutsToday = daily.stats.pitching.pitcherGroundOuts;
+      mdata.player.walksToday = daily.stats.pitching.pitcherWalks;
+      mdata.player.intentionalWalksToday = daily.stats.pitching.pitcherIntentionalWalks;
+      mdata.player.battersHitToday = daily.stats.pitching.battersHit;
+      mdata.player.qsToday = mdata.player.inningsToday >= 6 && mdata.player.earnedrunsToday < 4 ? 1 : 0;
+      mdata.player.fpToday = (mdata.player.earnedrunsToday * -3) + mdata.player.strikeoutsToday + mdata.player.pickoffsToday + mdata.player.flyoutsToday + mdata.player.groundoutsToday;
+  
+      mdata.player.fanDuelFpToday = (mdata.player.earnedrunsToday * -3) + (this.round(mdata.player.inningsToday * 3,1)) + (mdata.player.qsToday * 4) + (mdata.player.strikeoutsToday * 3) + (mdata.player.winToday * 6)
+      mdata.player.fanDuelFpToday = this.round(mdata.player.fanDuelFpToday, 1)
+      mdata.stats.pitching.pitcher2SeamFastballsToday = daily.stats.pitching.pitcher2SeamFastballs;
+      mdata.stats.pitching.pitcher4SeamFastballsToday = daily.stats.pitching.pitcher4SeamFastballs;
+      mdata.stats.pitching.pitcherChangeupsToday = daily.stats.pitching.pitcherChangeups;
+      mdata.stats.pitching.pitcherCurveballsToday = daily.stats.pitching.pitcherCurveballs;
+      mdata.stats.pitching.pitcherCuttersToday = daily.stats.pitching.pitcherCutters;
+      mdata.stats.pitching.pitcherSlidersToday = daily.stats.pitching.pitcherSliders;
+      mdata.stats.pitching.pitcherSinkersToday = daily.stats.pitching.pitcherSinkers;
+      mdata.stats.pitching.pitcherSplittersToday = daily.stats.pitching.pitcherSplitters;
+  
+      if (mdata.player.hitsallowedToday === 0 && mdata.player.inningsToday === 9 || 
+        mdata.player.gameLocation === "away" && mdata.player.inningsToday === 8 && mdata.player.hitsallowedToday === 0) {
+        mdata.noHitterToday = true;
+      } 
+  
+      if (mdata.player.inningsToday === 9 || 
+        mdata.player.gameLocation === "away" && mdata.player.inningsToday === 8) {
+        //if game over after the 9th inning or if 
+        // inning length equals game inning length
+        // or if you pitch 8 innings and away and lose
+        mdata.completeGameToday = true;
+      }
+  
+      if (mdata.player.winToday === 1 && mdata.player.hitsallowedToday === 0 && mdata.player.inningsToday === 9 &&
+        mdata.player.earnedrunsToday === 0 && mdata.player.walksToday === 0 && 
+        mdata.player.battersHitToday === 0 && mdata.player.intentionalWalksToday === 0) {
+          //&& no runners on base by team error && win
+          mdata.perfectGameToday = true;
+      }
+
+    }
+
+    if (type === 'b1') {
+      mdata.gameId = daily.game.id;
+      mdata.player.fpToday = 0;
+      mdata.stats.hitsToday = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
+      mdata.stats.runsToday = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
+      mdata.stats.rbiToday = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
+      mdata.stats.hrToday = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
+      mdata.stats.dblToday = daily.stats.batting.secondBaseHits ? daily.stats.batting.secondBaseHits : 0;
+      mdata.stats.tplToday = daily.stats.batting.thirdBaseHits ? daily.stats.batting.thirdBaseHits : 0;
+      mdata.stats.walksToday = daily.stats.batting.batterWalks ? daily.stats.batting.batterWalks : 0;
+      mdata.stats.sbToday = daily.stats.batting.stolenBases ? daily.stats.batting.stolenBases : 0;
+      mdata.stats.hbpToday = daily.stats.batting.hitByPitch ? daily.stats.batting.hitByPitch : 0;
+      mdata.stats.fpToday = (mdata.stats.hitsToday - daily.stats.batting.extraBaseHits) + (mdata.stats.dblToday * 2) + (mdata.stats.tplToday * 3) + (mdata.stats.hrToday * 4) + mdata.stats.runsToday + mdata.stats.rbiToday + mdata.stats.walksToday + mdata.stats.sbToday + mdata.stats.hbpToday;
+
+      mdata.stats.fanDuelFpToday = (mdata.stats.hitsToday - daily.stats.batting.extraBaseHits * 3) + (mdata.stats.dblToday * 6) + (mdata.stats.hrToday * 12) + (this.round(mdata.stats.runsToday * 3.2,1)) + (this.round(mdata.stats.rbiToday * 3.5,1)) + (mdata.stats.walksToday * 3) + (mdata.stats.sbToday * 6) + (mdata.stats.hbpToday * 3);  (mdata.stats.dblToday * 2) + (mdata.stats.tplToday * 3) + (mdata.stats.hrToday * 4)
+    }
+
+    if (type === 'b2') {
+      mdata.player.fpToday2nd = 0;
+      mdata.stats.hitsToday2nd = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
+      mdata.stats.runsToday2nd = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
+      mdata.stats.rbiToday2nd = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
+      mdata.stats.hrToday2nd = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
+      mdata.stats.dblToday2nd = daily.stats.batting.secondBaseHits ? daily.stats.batting.secondBaseHits : 0;
+      mdata.stats.tplToday2nd = daily.stats.batting.thirdBaseHits ? daily.stats.batting.thirdBaseHits : 0;
+      mdata.stats.walksToday2nd = daily.stats.batting.batterWalks ? daily.stats.batting.batterWalks : 0;
+      mdata.stats.sbToday2nd = daily.stats.batting.stolenBases ? daily.stats.batting.stolenBases : 0;
+      mdata.stats.hbpToday2nd = daily.stats.batting.hitByPitch ? daily.stats.batting.hitByPitch : 0;
+      mdata.stats.fpToday2nd = (mdata.stats.hitsToday2nd - daily.stats.batting.extraBaseHits) + (mdata.stats.dblToday2nd * 2) + (mdata.stats.tplToday2nd * 3) + (mdata.stats.hrToday2nd * 4) + mdata.stats.runsToday2nd + mdata.stats.rbiToday2nd + mdata.stats.walksToday2nd + mdata.stats.sbToday2nd + mdata.stats.hbpToday2nd;
+
+      mdata.stats.fanDuelFpToday2nd = (mdata.stats.hitsToday2nd - daily.stats.batting.extraBaseHits * 3) + (mdata.stats.dblToday2nd * 6) + (mdata.stats.hrToday2nd * 12) + (this.round(mdata.stats.runsToday2nd * 3.2,1)) + (this.round(mdata.stats.rbiToday2nd * 3.5,1)) + (mdata.stats.walksToday2nd * 3) + (mdata.stats.sbToday2nd * 6) + (mdata.stats.hbpToday2nd * 3)
+
+    }
+  }
 }

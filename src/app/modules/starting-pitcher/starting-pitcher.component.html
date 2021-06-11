@@ -96,7 +96,7 @@
                     {{ data['pitchers'][0]?.playerObj?.stats?.pitching?.earnedRunAvg }} /
                  <span (click)="showFp = !showFp">  
                    <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's</span> 
-                   <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.stats.pitching.fpa }} FPA</span>
+                   <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.stats?.fanDuelFPA}} FPA {{ data['pitchers'][0]?.playerObj?.stats?.pitching?.pca}} PCA</span>
                   </span>
                  </span>
                  <span *ngIf="data['pitchers'][0]?.playerObj?.gameStatus === 'LIVE' || data['pitchers'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
@@ -108,7 +108,7 @@
                     
                     <span (click)="showFp = !showFp">  
                         <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's</span> 
-                        <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.player.fpToday }} FP</span>
+                        <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC</span>
                     </span>
                       
                     
@@ -121,7 +121,7 @@
                     {{ data['pitchers'][0]?.playerObj?.player?.eraToday }} /
                     <span (click)="showFp = !showFp">  
                         <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's</span> 
-                        <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.player.fpToday }} FP</span>
+                        <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC</span>
                     </span>
                  </span>
                 
@@ -132,7 +132,7 @@
                       {{ data['pitchers'][1]?.playerObj?.stats?.pitching?.earnedRunAvg }} /
                       <span (click)="showFp = !showFp">  
                           <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's</span> 
-                          <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.stats.pitching.fpa }} FPA</span>
+                          <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.stats?.fanDuelFPA}} FPA {{ data['pitchers'][1]?.playerObj?.stats?.pitching?.pca}} PCA</span>
                       </span>
                   </span>
                   <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'LIVE' || data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
@@ -141,7 +141,7 @@
                       {{ data['pitchers'][1]?.playerObj?.player?.earnedrunsToday }} ER's 
                       <span (click)="showFp = !showFp">  
                           <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's</span> 
-                          <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.player.fpToday }} FP</span>
+                          <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC</span>
                       </span>
                    </span>
                    <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED'">
@@ -152,7 +152,7 @@
                       {{ data['pitchers'][1]?.playerObj?.player?.eraToday }} /
                       <span (click)="showFp = !showFp">  
                           <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's</span> 
-                          <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.player.fpToday }} FP</span>
+                          <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC</span>
                       </span>
                    </span>
                 </span>
@@ -218,6 +218,9 @@
                         <span *ngIf="data['pitchers'][0]?.playerObj?.noHitterToday" class="gold">
                             ({{data['pitchers'][0]?.playerObj?.player?.strikeoutsToday}} K's no hitter)
                         </span>
+                        <span *ngIf="data['pitchers'][0]?.playerObj?.player?.qsToday" class="gold">
+                          QS
+                        </span>
 
                 </span>
                 <span *ngIf="data['game'] != 'undefined' && data['pitchers'][1] != null">
@@ -242,11 +245,14 @@
                           ND
                         </span>
 
-                        <span *ngIf="!data['pitchers'][1]?.playerObj?.noHitterToday && data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.strikeoutsToday > 8 && data['pitchers'][1]?.playerObj?.player?.winToday === 1" class="gold">
+                        <span *ngIf="!data['pitchers'][1]?.playerObj?.noHitterToday && data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED' && data['pitchers'][1]?.playerObj?.player?.strikeoutsToday > 8" class="gold">
                             ({{data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}} strikeouts)
                         </span>
                         <span *ngIf="data['pitchers'][1]?.playerObj?.noHitterToday" class="gold">
                             ({{data['pitchers'][1]?.playerObj?.player?.strikeoutsToday}} K's no hitter)
+                        </span>
+                        <span *ngIf="data['pitchers'][1]?.playerObj?.player?.qsToday" class="gold">
+                          QS
                         </span>
 
                 </span>
@@ -671,7 +677,7 @@
                       <span (click)="statToggle()" class="stat-toggle pointer">
                           <span [ngClass]="{'dn' : stat != 1}">{{item?.playerObj?.stats?.batting?.hits}} H</span>
                           <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.batting?.homeruns}} HR</span>
-                          <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.batting?.fpa}} FPA</span>
+                          <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.batting?.fanDuelFPA}} FPA</span>
                           <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.batting?.stolenBases}} SB</span>
                           <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.batting?.secondBaseHits}} DBL</span>
                       </span> {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI&nbsp;
@@ -681,7 +687,7 @@
                       <span (click)="statToggle()" class="stat-toggle pointer">
                           <span [ngClass]="{'dn' : stat != 1}">{{item?.playerObj?.stats?.hitsToday}} H</span>
                           <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.hrToday}} HR</span>
-                          <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fpToday}} FPA</span>
+                          <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fanDuelFpToday}} FP</span>
                           <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.sbToday}} SB</span>
                           <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.dblToday}} DBL</span>
                       </span> {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI&nbsp;
@@ -745,7 +751,7 @@
                         <span (click)="statToggle()" class="stat-toggle pointer">
                             <span [ngClass]="{'dn' : stat != 1}">{{item?.playerObj?.stats?.batting?.hits}} H</span>
                             <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.batting?.homeruns}} HR</span>
-                            <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.batting?.fpa}} FPA</span>
+                            <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.batting?.fanDuelFPA}} FPA</span>
                             <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.batting?.stolenBases}} SB</span>
                             <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.batting?.secondBaseHits}} DBL</span>
                         </span> {{item?.playerObj?.stats?.batting?.hits}} H {{item?.playerObj?.stats?.batting?.runs}} R {{item?.playerObj?.stats?.batting?.runsBattedIn}} RBI&nbsp;
@@ -755,7 +761,7 @@
                         <span (click)="statToggle()" class="stat-toggle pointer">
                             <span [ngClass]="{'dn' : stat != 1}">{{item?.playerObj?.stats?.hitsToday}} H</span>
                             <span [ngClass]="{'dn' : stat != 2}">{{item?.playerObj?.stats?.hrToday}} HR</span>
-                            <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fpToday}} FP</span>
+                            <span [ngClass]="{'dn' : stat != 3}">{{item?.playerObj?.stats?.fanDuelFpToday}} FP</span>
                             <span [ngClass]="{'dn' : stat != 4}">{{item?.playerObj?.stats?.sbToday}} SB</span>
                             <span [ngClass]="{'dn' : stat != 5}">{{item?.playerObj?.stats?.dblToday}} DBL</span>
                         </span> {{item?.playerObj?.stats?.hitsToday}} H {{item?.playerObj?.stats?.runsToday}} R {{item?.playerObj?.stats?.rbiToday}} RBI&nbsp;

@@ -476,7 +476,8 @@ export class StartingPitcherComponent implements OnInit {
                             data.gameStatus = gs.status;
                             data.starterTeam = gs.team;
                             data.sStatus = gs.scheduleStatus;
-                            this.pitcherFp(data);
+                            //this.pitcherFp(data);
+                            this.mlbUtil.fantasyPoints(data,'p')
 
                             if (gs.status !== "UNPLAYED") {
                               data.team.currentInning = gs.score['currentInning'];
@@ -637,82 +638,16 @@ export class StartingPitcherComponent implements OnInit {
                         for (let mdata of this.myData) {
 
                           if (daily.player.id === mdata.player.id) {
-                            if (daily.stats.pitching.pitcher2SeamFastballs >= 0 && 
-                              daily.stats.pitching.pitcher4SeamFastballs >= 0 && 
-                              daily.stats.pitching.pitcherChangeups >= 0 && 
-                              daily.stats.pitching.pitcherCurveballs >= 0 && 
-                              daily.stats.pitching.pitcherCutters >= 0 && 
-                              daily.stats.pitching.pitcherSliders >= 0 && 
-                              daily.stats.pitching.pitcherSinkers >= 0 && 
-                              daily.stats.pitching.pitcherSplitters >= 0) {
-                              mdata.player.favPitchToday = Math.max(daily.stats.pitching.pitcher2SeamFastballs, daily.stats.pitching.pitcher4SeamFastballs, daily.stats.pitching.pitcherChangeups, daily.stats.pitching.pitcherCurveballs, daily.stats.pitching.pitcherCutters, daily.stats.pitching.pitcherSliders, daily.stats.pitching.pitcherSinkers, daily.stats.pitching.pitcherSplitters);
-                              mdata.player.favPitchPercentToday = Math.floor(mdata.player.favPitchToday / daily.stats.pitching.pitchesThrown * 100);
-                            }
-                            //console.log(daily.game, 'get game info by player id')
-                            mdata.player.fpToday = 0;
-                            mdata.noHitterToday = false;
-                            mdata.completeGameToday = false;
-                            mdata.perfectGameToday = false;
-                            mdata.gameId = daily.game.id;
-                            mdata.player.winToday = daily.stats.pitching.wins;
-                            mdata.player.loseToday = daily.stats.pitching.losses;
-                            mdata.player.saveToday = daily.stats.pitching.saves;
-                            mdata.player.inningsToday = daily.stats.pitching.inningsPitched;
-                            mdata.player.earnedrunsToday = daily.stats.pitching.earnedRunsAllowed;
-                            mdata.player.strikeoutsToday = daily.stats.pitching.pitcherStrikeouts;
-                            mdata.player.hitsallowedToday = daily.stats.pitching.hitsAllowed;
-                            mdata.player.pitchesthrownToday = daily.stats.pitching.pitchesThrown;
-                            mdata.player.eraToday = daily.stats.pitching.earnedRunAvg.toFixed(2);
-                            mdata.player.pickoffsToday = daily.stats.pitching.pickoffs;
-                            mdata.player.flyoutsToday = daily.stats.pitching.pitcherFlyOuts;
-                            mdata.player.groundoutsToday = daily.stats.pitching.pitcherGroundOuts;
-                            mdata.player.walksToday = daily.stats.pitching.pitcherWalks;
-                            mdata.player.intentionalWalksToday = daily.stats.pitching.pitcherIntentionalWalks;
-                            mdata.player.battersHitToday = daily.stats.pitching.battersHit;
-                            mdata.player.fpToday = (mdata.player.earnedrunsToday * -3) + mdata.player.strikeoutsToday + mdata.player.pickoffsToday + mdata.player.flyoutsToday + mdata.player.groundoutsToday;
-                            mdata.stats.pitching.pitcher2SeamFastballsToday = daily.stats.pitching.pitcher2SeamFastballs;
-                            mdata.stats.pitching.pitcher4SeamFastballsToday = daily.stats.pitching.pitcher4SeamFastballs;
-                            mdata.stats.pitching.pitcherChangeupsToday = daily.stats.pitching.pitcherChangeups;
-                            mdata.stats.pitching.pitcherCurveballsToday = daily.stats.pitching.pitcherCurveballs;
-                            mdata.stats.pitching.pitcherCuttersToday = daily.stats.pitching.pitcherCutters;
-                            mdata.stats.pitching.pitcherSlidersToday = daily.stats.pitching.pitcherSliders;
-                            mdata.stats.pitching.pitcherSinkersToday = daily.stats.pitching.pitcherSinkers;
-                            mdata.stats.pitching.pitcherSplittersToday = daily.stats.pitching.pitcherSplitters;
-
-                            if (mdata.player.hitsallowedToday === 0 && mdata.player.inningsToday === 9 || 
-                              mdata.player.gameLocation === "away" && mdata.player.inningsToday === 8 && mdata.player.hitsallowedToday === 0) {
-                              mdata.noHitterToday = true;
-                            } 
-
-                            if (mdata.player.inningsToday === 9 || 
-                              mdata.player.gameLocation === "away" && mdata.player.inningsToday === 8) {
-                              //if game over after the 9th inning or if 
-                              // inning length equals game inning length
-                              // or if you pitch 8 innings and away and lose
-                              mdata.completeGameToday = true;
-                            }
-
-                            if (mdata.player.winToday === 1 && mdata.player.hitsallowedToday === 0 && mdata.player.inningsToday === 9 &&
-                              mdata.player.earnedrunsToday === 0 && mdata.player.walksToday === 0 && 
-                              mdata.player.battersHitToday === 0 && mdata.player.intentionalWalksToday === 0) {
-                                //&& no runners on base by team error && win
-                                mdata.perfectGameToday = true;
-                            }
-                            
+                           this.mlbUtil.dailyFp(mdata, daily, 'p') 
                           }
-
                         }
                       }
-
-                  
-
                 //     this.dataService
                 //       .getPrevGameId().subscribe(res => {
                 //       //  console.log(res, 'got previous games array!');
                 //         this.previousGames = res['games'];
                 //     });
                 //   }
-
                       this.groupPitchers();
                     } else {
                       this.groupPitchers();
@@ -767,11 +702,6 @@ export class StartingPitcherComponent implements OnInit {
       });
       console.log(this.showBatterData, 'show Batter data');
     }
-  }
-
-  public pitcherFp(player) {
-    player.stats.pitching.fp = (player.stats.pitching.earnedRunsAllowed * -3) + player.stats.pitching.pitcherStrikeouts + player.stats.pitching.pickoffs + player.stats.pitching.pitcherFlyOuts + player.stats.pitching.pitcherGroundOuts;
-    player.stats.pitching.fpa = Math.floor(player.stats.pitching.fp / player.stats.gamesPlayed);
   }
 
   public groupPitchers() {
@@ -844,7 +774,8 @@ export class StartingPitcherComponent implements OnInit {
                                 data.starterTeam = gb.team;
                                 data.sStatus = gb.scheduleStatus;
                                 data.order = gb.position;
-                                this.batterFp(data);
+                                //this.batterFp(data);
+                                this.mlbUtil.fantasyPoints(data,'b')
 
                                 if (gb.status !== "UNPLAYED") {
                                   data.team.currentInning = gb.score['currentInning'];
@@ -1012,61 +943,18 @@ export class StartingPitcherComponent implements OnInit {
                             for (let mdata of this.myBatterData) {
                               if (daily.game.id === mdata.gameId) { 
                                 if (daily.player.id === mdata.player.id) {
+                                  this.mlbUtil.dailyFp(mdata, daily, 'b1')
                                   //console.log(daily.game, 'get game info by player id')
-                                  mdata.gameId = daily.game.id;
-                                  mdata.player.fpToday = 0;
-                                  mdata.stats.hitsToday = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
-                                  mdata.stats.runsToday = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
-                                  mdata.stats.rbiToday = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
-                                  mdata.stats.hrToday = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
-                                  mdata.stats.dblToday = daily.stats.batting.secondBaseHits ? daily.stats.batting.secondBaseHits : 0;
-                                  mdata.stats.tplToday = daily.stats.batting.thirdBaseHits ? daily.stats.batting.thirdBaseHits : 0;
-                                  mdata.stats.walksToday = daily.stats.batting.batterWalks ? daily.stats.batting.batterWalks : 0;
-                                  mdata.stats.sbToday = daily.stats.batting.stolenBases ? daily.stats.batting.stolenBases : 0;
-                                  mdata.stats.hbpToday = daily.stats.batting.hitByPitch ? daily.stats.batting.hitByPitch : 0;
-                                  mdata.stats.fpToday = (mdata.stats.hitsToday - daily.stats.batting.extraBaseHits) + (mdata.stats.dblToday * 2) + (mdata.stats.tplToday * 3) + (mdata.stats.hrToday * 4) + mdata.stats.runsToday + mdata.stats.rbiToday + mdata.stats.walksToday + mdata.stats.sbToday + mdata.stats.hbpToday;
+
                                 }
                             }
 
                               if (daily.game.id === mdata.secondGameId) {
                                   if (daily.player.id === mdata.player.id) {
-                                  mdata.player.fpToday2nd = 0;
-                                  mdata.stats.hitsToday2nd = daily.stats.batting.hits ? daily.stats.batting.hits : 0;
-                                  mdata.stats.runsToday2nd = daily.stats.batting.runs ? daily.stats.batting.runs : 0;
-                                  mdata.stats.rbiToday2nd = daily.stats.batting.runsBattedIn ? daily.stats.batting.runsBattedIn : 0;
-                                  mdata.stats.hrToday2nd = daily.stats.batting.homeruns ? daily.stats.batting.homeruns : 0;
-                                  mdata.stats.dblToday2nd = daily.stats.batting.secondBaseHits ? daily.stats.batting.secondBaseHits : 0;
-                                  mdata.stats.tplToday2nd = daily.stats.batting.thirdBaseHits ? daily.stats.batting.thirdBaseHits : 0;
-                                  mdata.stats.walksToday2nd = daily.stats.batting.batterWalks ? daily.stats.batting.batterWalks : 0;
-                                  mdata.stats.sbToday2nd = daily.stats.batting.stolenBases ? daily.stats.batting.stolenBases : 0;
-                                  mdata.stats.hbpToday2nd = daily.stats.batting.hitByPitch ? daily.stats.batting.hitByPitch : 0;
-                                  mdata.stats.fpToday2nd = (mdata.stats.hitsToday2nd - daily.stats.batting.extraBaseHits) + (mdata.stats.dblToday2nd * 2) + (mdata.stats.tplToday2nd * 3) + (mdata.stats.hrToday2nd * 4) + mdata.stats.runsToday2nd + mdata.stats.rbiToday2nd + mdata.stats.walksToday2nd + mdata.stats.sbToday2nd + mdata.stats.hbpToday2nd;
+                                  this.mlbUtil.dailyFp(mdata, daily, 'b2')
+
                                 }
                               }
-
-                              
-                              // if (daily.player.id === mdata.player.id && mdata.doubleHeader === true) {  
-                              //     mdata.player.fpToday = mdata.player.fpToday ? mdata.player.fpToday : 0  + 
-                              //     mdata.player.fpToday2nd ? mdata.player.fpToday2nd : 0;
-                              //     mdata.stats.hitsToday = mdata.stats.hitsToday ? mdata.stats.hitsToday : 0 + 
-                              //     mdata.stats.hitsToday2nd ? mdata.stats.hitsToday2nd : 0;
-                              //     mdata.stats.runsToday = mdata.stats.runsToday ? mdata.stats.runsToday : 0 + 
-                              //     mdata.stats.runsToday2nd ? mdata.stats.runsToday2nd : 0;
-                              //     mdata.stats.rbiToday = mdata.stats.rbiToday ? mdata.stats.rbiToday : 0 + 
-                              //     mdata.stats.rbiToday2nd ? mdata.stats.rbiToday2nd : 0;
-                              //     mdata.stats.hrToday = mdata.stats.hrToday ? mdata.stats.hrToday : 0 + 
-                              //     mdata.stats.hrToday2nd ? mdata.stats.hrToday2nd : 0;
-                              //     mdata.stats.dblToday = mdata.stats.dblToday ? mdata.stats.dblToday : 0  + 
-                              //     mdata.stats.dblToday2nd ? mdata.stats.dblToday2nd : 0;
-                              //     mdata.stats.tplToday = mdata.stats.tplToday ? mdata.stats.tplToday : 0 + 
-                              //     mdata.stats.tplToday2nd ? mdata.stats.tplToday2nd : 0;
-                              //     mdata.stats.walksToday = mdata.stats.walksToday ? mdata.stats.walksToday : 0 + 
-                              //     mdata.stats.walksToday2nd ? mdata.stats.walksToday2nd : 0;
-                              //     mdata.stats.sbToday = mdata.stats.sbToday ? mdata.stats.sbToday : 0 + 
-                              //     mdata.stats.sbToday2nd ? mdata.stats.sbToday2nd : 0;
-                              //     mdata.stats.hbpToday = mdata.stats.hbpToday ? mdata.stats.hbpToday : 0 + 
-                              //     mdata.stats.hbpToday2nd ? mdata.stats.hbpToday2nd : 0;
-                              // }
                               
                             }
                           }
@@ -1125,11 +1013,6 @@ export class StartingPitcherComponent implements OnInit {
         } else {
           console.log('No games then no daily stats either. :(');
         }
-  }
-
-  public batterFp(player) {
-    player.stats.batting.fp = (player.stats.batting.hits - player.stats.batting.extraBaseHits) + (player.stats.batting.secondBaseHits * 2) + (player.stats.batting.thirdBaseHits * 3) + (player.stats.batting.homeruns * 4) + player.stats.batting.runs + player.stats.batting.runsBattedIn + player.stats.batting.batterWalks + player.stats.batting.stolenBases + player.stats.batting.hitByPitch;
-    player.stats.batting.fpa = Math.floor(player.stats.batting.fp / player.stats.gamesPlayed);
   }
 
   public groupBatters() {
