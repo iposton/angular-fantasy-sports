@@ -942,7 +942,7 @@ export class MlbUtilService {
       player.stats.pitching.fpa = Math.floor(player.stats.pitching.fp / player.stats.gamesPlayed);
       player.stats.pitching.pca = Math.floor(player.stats.pitching.pitchesThrown / player.stats.gamesPlayed); 
 
-      player.stats.fanDuelFP = (player.stats.pitching.earnedRunsAllowed * -3) + (this.round(player.stats.pitching.inningsPitched * 3,1)) + (5*4) + (player.stats.pitching.pitcherStrikeouts * 3) + (player.stats.pitching.wins * 6);
+      player.stats.fanDuelFP = (player.stats.pitching.earnedRunsAllowed * -3) + (this.round(player.stats.pitching.inningsPitched * 3,1)) + (player.stats.pitching.qs ? player.stats.pitching.qs * 4 : 5 * 4) + (player.stats.pitching.pitcherStrikeouts * 3) + (player.stats.pitching.wins * 6);
       player.stats.fanDuelFPA = Math.floor(player.stats.fanDuelFP / player.stats.gamesPlayed);
       player.stats.pitching.fanDuelFP = player.stats.fanDuelFP
       player.stats.pitching.fanDuelFPA = player.stats.fanDuelFPA

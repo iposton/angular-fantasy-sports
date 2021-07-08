@@ -858,7 +858,7 @@ export class StartingPitcherComponent implements OnInit {
                               } 
                             }
                           }
-
+                      sleep(2000);
                           for (let team of this.teamRef) {
                             for (let data of this.myBatterData) { 
                                 if (team.id === data.starterTeam) {
@@ -891,7 +891,7 @@ export class StartingPitcherComponent implements OnInit {
                           // });
 
                         }
-                        sleep(1500);
+                        
                         if (this.myBatterData && this.dailySchedule) {
                           //console.log('start sorting data for pitching opponent...');
                           for (let schedule of this.myBatterData) {

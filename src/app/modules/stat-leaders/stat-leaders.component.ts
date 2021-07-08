@@ -959,18 +959,33 @@ if (this.nflTeamStats == null) {
             let i: number;
             let home;
             let away;
+            let homeTeam;
+            let awayTeam;
 
             res.forEach((item, index) => {
               i = index;
               if (res[i] != null) {
-                home = res[i]['stats'].away.players;
-                away = res[i]['stats'].home.players;
+                home = res[i]['stats'].home.players;
+                away = res[i]['stats'].away.players;
+                
+                homeTeam = res[i]['game'].homeTeam.abbreviation;
+                awayTeam = res[i]['game'].awayTeam.abbreviation;
 
                 away.forEach((item, index) => {
+                  away[index].opponent = {abb: homeTeam, print: `@${homeTeam}`, 
+                  stat: s === 'mlb' && away[index]['playerStats'][0].pitching != null ? 
+                  away[index]['playerStats'][0].pitching.pitcherStrikeouts :
+                  s === 'mlb' && away[index]['playerStats'][0].batting != null ? 
+                  away[index]['playerStats'][0].batting.hits : null}
                   this.combined.push(away[index]);
                 })
 
                 home.forEach((item, index) => {
+                  home[index].opponent = {abb: awayTeam, print: `vs${awayTeam}`, 
+                  stat: s === 'mlb' && home[index]['playerStats'][0].pitching != null ? 
+                  home[index]['playerStats'][0].pitching.pitcherStrikeouts :
+                  s === 'mlb' && home[index]['playerStats'][0].batting != null ? 
+                  home[index]['playerStats'][0].batting.hits : null};
                   this.combined.push(home[index]);
                 })
             
@@ -981,7 +996,7 @@ if (this.nflTeamStats == null) {
                     //console.log(a, 'this is a');
                     let key = a.player.id;
                     if (!hash[key]) {
-                      hash[key] = { id: key, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0, '10': 0, '11': 0, '12': 0, '13': 0};
+                      hash[key] = { id: key, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0, '10': 0, '11': 0, '12': 0, '13': 0, '14': []};
                       r.push(hash[key]);
                     }
 
@@ -1034,34 +1049,54 @@ if (this.nflTeamStats == null) {
                     s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.blockedShots 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.inningsPitched : 
-                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.extraBaseHits : 0;
 
                     hash[key]['10'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.saves : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.pitcherWalks : 
-                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.thirdBaseHits : 0;
 
                     hash[key]['11'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.goalsAgainst : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
-                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.batterWalks : 0;
 
                     hash[key]['12'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.shotsAgainst : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
-                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
+                    s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.hitByPitch : 0;
 
                     hash[key]['13'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
                     s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].shifts.timeOnIceSeconds : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? (a.playerStats[0].pitching.inningsPitched >= 6 && a.playerStats[0].pitching.earnedRunsAllowed < 4 ? 1 : 0) : 
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.plateAppearances : 0;
-
                     
-                    //hash[key].svpercent = Math.round((hash[key].sv * 100) / hash[key].sa);
+                    if (hash[key]['14'].length > 0){
+                      if (hash[key]['14'][0].abb === a.opponent.abb) {
+                        // hash[key]['14'][0].stat += a.opponent.stat
+                      } else if (hash[key]['14'][1] != null && hash[key]['14'][1].abb === a.opponent.abb) {
+                        // hash[key]['14'][1].stat += a.opponent.stat
+                      } else if (hash[key]['14'][2] != null && hash[key]['14'][2].abb === a.opponent.abb) {
+                        // hash[key]['14'][2].stat += a.opponent.stat
+                      } else if (hash[key]['14'][3] != null && hash[key]['14'][3].abb === a.opponent.abb) {
+                        // hash[key]['14'][3].stat += a.opponent.stat
+                      } else if (hash[key]['14'][4] != null && hash[key]['14'][4].abb === a.opponent.abb) {
+                        // hash[key]['14'][4].stat += a.opponent.stat
+                      } else if (hash[key]['14'][5] != null && hash[key]['14'][5].abb === a.opponent.abb) {
+                        // hash[key]['14'][4].stat += a.opponent.stat
+                      } else if (hash[key]['14'][6] != null && hash[key]['14'][6].abb === a.opponent.abb) {
+                        // hash[key]['14'][4].stat += a.opponent.stat
+                      } else {
+                        hash[key]['14'].push(a.opponent);
+                      }
+                    } else {
+                      hash[key]['14'].push(a.opponent);
+                    }
+
                     return r;
                   };
 
@@ -1132,6 +1167,7 @@ if (this.nflTeamStats == null) {
                         info.stats.pitching.inningsPitched = data['9'];
                         info.stats.pitching.pitcherWalks = data['10'];
                         info.stats.pitching.qs = data['13'];
+                        info.stats.pitching.earnedRunsAllowed = data['3']
                              
                         //this.pitcherFp(info);
                         this.mlbUtil.fantasyPoints(info,'p')
@@ -1147,12 +1183,17 @@ if (this.nflTeamStats == null) {
                         info.stats.batting.stolenBases = data['6'];
                         info.stats.gamesPlayed = data['7'];
                         info.stats.batting.plateAppearances = data['8'];
+                        info.stats.batting.extraBaseHits = data['9'];
+                        info.stats.batting.thirdBaseHits = data['10'];
+                        info.stats.batting.batterWalks = data['11'];
+                        info.stats.batting.hitByPitch = data['12'];
                          
                         //this.batterFp(info);
                         this.mlbUtil.fantasyPoints(info,'b')
                       }
-                      
-                      info.player.span = this.timeSpan;
+
+                      info.spanOpponents = data['14']
+                      info.player.span = this.timeSpan
                     }
                   }
                 }

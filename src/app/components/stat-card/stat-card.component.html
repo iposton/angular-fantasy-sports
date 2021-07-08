@@ -25,6 +25,11 @@
                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"
                 loading="lazy"
             />
+            <span class="sched-rank sched-opp" *ngIf="sport === 'mlb' && item?.spanOpponents?.length > 0">
+              <span class="weekopp-top">
+                <span *ngFor="let team of item?.spanOpponents; let i = index;" > {{team.print}} </span> 
+              </span>
+            </span>
             <span class="sched-rank {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem = ''; $event.stopPropagation()">
                   <span class="weekopp-top" *ngIf="sport === 'nfl' && item?.team?.weekOpponent?.length > 0 && !ndk && statType != 'tackles' && statType != 'interceptions'" [ngClass]="{'red' : item?.team?.weekOpponent[0]?.dRank &lt;= 10, 'orange' : item?.team?.weekOpponent[0]?.dRank > 10 && item?.team?.weekOpponent[0]?.dRank &lt;= 21, 'green' : item?.team?.weekOpponent[0]?.dRank > 21}">
                     {{item?.team?.weekOpponent[0]?.printName}} <br>

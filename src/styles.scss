@@ -602,6 +602,18 @@ ul {
           display: block;
         }
       }
+
+      .sched-rank.sched-opp {
+        background: #000;
+        width: 45px;
+        border-radius: 3px;
+        font-size: 10px;
+        margin: 3px;
+      }
+
+      .sched-rank.sched-opp .weekopp-top {
+        font-size: 8px;
+      }
      
     }
 }
