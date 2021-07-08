@@ -25,9 +25,9 @@
                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"
                 loading="lazy"
             />
-            <span class="sched-rank sched-opp" *ngIf="sport === 'mlb' && item?.spanOpponents?.length > 0">
+            <span class="sched-rank sched-opp" *ngIf="sport === 'mlb' && item?.mlbSpanOpponents?.length > 0">
               <span class="weekopp-top">
-                <span *ngFor="let team of item?.spanOpponents; let i = index;" > {{team.print}} </span> 
+                <span *ngFor="let team of item?.mlbSpanOpponents; let i = index;"> {{team.print}} </span> 
               </span>
             </span>
             <span class="sched-rank {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem = ''; $event.stopPropagation()">

@@ -1192,7 +1192,7 @@ if (this.nflTeamStats == null) {
                         this.mlbUtil.fantasyPoints(info,'b')
                       }
 
-                      info.spanOpponents = data['14']
+                      info.mlbSpanOpponents = data['14']
                       info.player.span = this.timeSpan
                     }
                   }
