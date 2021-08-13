@@ -2186,19 +2186,15 @@ form input[type="text"] {
 
 //modal
 #overlay {
-  // position: fixed;
   background-color:transparent;
   height:0;
-  // opacity:0;
-  // transition:opacity 0.3s linear;
-  // z-index: -1;
+ 
   .modal {
     height: 0;
     opacity:0;
     min-width: 350px;
     transition:height 0.25s 0s, opacity 0.25s 0s, min-width 0.25s 0.25s;
-    // transition:height 0.25s 0s, opacity 0.25s 0s, min-width 0.25s 0.25s;
-    // transition:opacity 0.3s linear;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;

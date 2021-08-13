@@ -90,6 +90,19 @@
                     <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct'">{{ item?.stats[statType]?.recTD }} TD</span>
                     <span *ngIf="statField === 'totalTouchPct'">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
                   </span>
+                  <span *ngIf="sport === 'mlb'">
+                    <span *ngIf="statField === 'pitcherStrikeouts'">{{ item?.stats[statType]?.earnedRunAvg }} ERA</span>
+                    <span *ngIf="statField === 'earnedRunAvg'">{{ item?.stats[statType]?.pca }} PCA</span>
+                    <span *ngIf="statField === 'saves'">{{ item?.stats[statType]?.pitcherStrikeouts }} Ks</span>
+                    <span *ngIf="statField === 'wins' && item?.stats[statType]?.qs != null">{{ item?.stats[statType]?.qs }} QS</span>
+                    <span *ngIf="statField === 'runsBattedIn'">{{ item?.stats[statType]?.homeruns }} HR</span>
+                    <span *ngIf="statField === 'battingAvg' || statField === 'plateAppearances'">{{ item?.stats[statType]?.hits }} H</span>
+                    <span *ngIf="statField === 'homeruns' || statField === 'secondBaseHits'">{{ item?.stats[statType]?.runsBattedIn }} RBI</span>
+                    <span *ngIf="statField === 'hits'">{{ item?.stats[statType]?.battingAvg }} BA</span>
+                    <span *ngIf="statField === 'runs'">{{ item?.stats[statType]?.stolenBases }} SB</span>
+                    <span *ngIf="statField === 'stolenBases'">{{ item?.stats[statType]?.runs }} R</span>
+                    
+                  </span>
                 </span>
                 <span *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && statType != 'tackles' && statType != 'interceptions'">
                     <span *ngIf="item?.spanOpponents.length &gt; 0">
