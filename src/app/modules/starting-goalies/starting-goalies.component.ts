@@ -163,6 +163,10 @@ export class StartingGoaliesComponent implements OnInit {
     this.playerImages = this.nhlUtil.getNHLImages();
     this.teams = this.nhlUtil.getNHLTeams();
     this.startingG = this.nhlUtil.getStartingGoalies();
+    this.dataService.getGoalies().subscribe(res => {
+      //TODO replace startingG with this data
+      // console.log(res, 'goalies from my api')
+    })
     startingGoalieArray = Object.values(this.startingG);
     this.sentHotData = this.dataService.getSentHotStats();
     this.sentAllData = this.dataService.getSentAllStats();

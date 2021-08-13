@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
-import { HttpClient, HttpResponse, HttpHeaders, HttpRequest, HttpParams} from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 
 let thisDate = new Date();
 let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
@@ -59,12 +59,14 @@ let sentHot;
 let sendingAll;
 let sentAll;
 
+
 //console.log(dailyDate, 'today\'s date');
 
 @Injectable({ providedIn: 'root' }) 
 export class NHLDataService {
 
   public info: Observable <any> = null;
+  public goalies: any
   public infoSkaters: Observable <any> = null;
   public gToday: Observable <any> = null;
   public sToday: Observable <any> = null;
@@ -212,6 +214,12 @@ export class NHLDataService {
     let url = `${this.root}/players.json?position=G`;
     this.info = this.http.get(url, {headers})
     return this.info;
+  }
+
+  public getGoalies() {
+    let url = `https://ejs-ssr.herokuapp.com/nhlgoalies`
+    this.goalies = this.http.get(url)
+    return this.goalies;
   }
 
   public getInfoSkaters() {

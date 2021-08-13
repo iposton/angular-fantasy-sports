@@ -1025,17 +1025,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
-      '17341': {
-        id: 17341,
-        firstName: "Matiss",
-        lastName: "Kivlenieks",
-        teamId: 19,
-        abbreviation: "CBJ",
-        active: true,
-        numberOne: false,
-        img: nhlImageRoot+'8480162.jpg',
-        new: true
-      },
       '15690': {
         id: 15690,
         firstName: "Elvis",
@@ -1163,17 +1152,6 @@ export class NhlUtilService {
         lastName: "Schneider",
         teamId: 7,
         abbreviation: "NJD",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
-      },
-      '3793': {
-        id: 3793,
-        firstName: "Jimmy",
-        lastName: "Howard",
-        teamId: 16,
-        abbreviation: "DET",
         active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',

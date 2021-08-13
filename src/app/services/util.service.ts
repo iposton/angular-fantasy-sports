@@ -141,6 +141,9 @@ export class UtilService {
         if (n.player.id === old.player.id && n['teamAsOfDate'] == null) {
           old.player.unsigned = true;
         }
+        if (n.player.rookie) {
+          n.stats = {drafted: {overallPick: n.player.drafted != null ? n.player.drafted.overallPick : 9000}}
+        }
         
       }
     }
