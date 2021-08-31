@@ -180,7 +180,7 @@ export class NflUtilService {
         offenseRankLs: 32,
         city: "New York",
         name: "Jets",
-        twitter: "#TakeFlight",
+        twitter: "#JetsNation",
         abbreviation: "NYJ",
         teamColoursHex: [
         "#125740",
@@ -248,7 +248,7 @@ export class NflUtilService {
         offenseRankLs: 28,
         city: "Washington",
         name: "Washington",
-        twitter: "#WashingtonFootball",
+        twitter: "#HTTR",
         abbreviation: "WAS",
         teamColoursHex: [
         "#773141",
@@ -280,7 +280,7 @@ export class NflUtilService {
         offenseRankLs: 30,
         city: "Cincinnati",
         name: "Bengals",
-        twitter: "#SEIZETHEDEY",
+        twitter: "#RuleTheJungle",
         abbreviation: "CIN",
         teamColoursHex: [
         "#fb4f14",
