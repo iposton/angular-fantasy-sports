@@ -114,6 +114,7 @@ export class StatLeadersComponent implements OnInit {
   public teamSchedules: Array <any> = [];
   public nflPlayers: Array <any> = [];
   public nflRookies: Array <any> = [];
+  public defenseRookies: Array <any> = [];
   public nflDPlayers: Array <any> = [];
   public nflDraftKit: boolean;
   public seasonLength   : string = 'full';
@@ -738,6 +739,28 @@ export class StatLeadersComponent implements OnInit {
      })
   }
 
+  public teamInfoRookie(array, teams, type, week, pos) {
+    for (let team of teams) {
+      for (let data of array) { 
+        if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && week === 'all' ||
+        week != 'all' && team['id'] === data.team.id) {
+          data.team = {}
+          data.team.logo = team['officialLogoImageSrc'];
+          data.team.city = team['city'];
+          data.team.name = team['name'];
+          data.team.twitter = team['twitter'];
+          data.team.dtr = team['dtr'];
+          data.team.dfh = team['dfh'];
+          data.team.dsh = team['dsh'];
+          data.team.abbreviation = team['abbreviation'];
+          data.team.scheduleTicker = team['scheduleTicker'];
+          data.team.weekOpponent = team['weekOpponent'];
+          data.playerType = type;
+        }
+      }
+    }
+  }
+
   public async loadNFL() {
     if (this.week === 'three-weeks') {
       // load 3 weeks of nfl games
@@ -768,27 +791,7 @@ if (this.nflTeamStats == null) {
     this.nflTeamLoading = false;
 }
 
-function teamInfoRookie(array, teams, type, week, pos) {
-  for (let team of teams) {
-    for (let data of array) { 
-      if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && week === 'all' ||
-      week != 'all' && team['id'] === data.team.id) {
-        data.team = {}
-        data.team.logo = team['officialLogoImageSrc'];
-        data.team.city = team['city'];
-        data.team.name = team['name'];
-        data.team.twitter = team['twitter'];
-        data.team.dtr = team['dtr'];
-        data.team.dfh = team['dfh'];
-        data.team.dsh = team['dsh'];
-        data.team.abbreviation = team['abbreviation'];
-        data.team.scheduleTicker = team['scheduleTicker'];
-        data.team.weekOpponent = team['weekOpponent'];
-        data.playerType = type;
-      }
-    }
-  }
-}
+
   
     function teamInfo(array, teams, type, week, pos) {
         for (let team of teams) {
@@ -859,7 +862,7 @@ function teamInfoRookie(array, teams, type, week, pos) {
               this.nflRookies = res['players'].filter(
                 player => player.player.drafted != null && player.player.drafted.year === 2021);
               console.log('rookies', this.nflRookies)
-              teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie');
+              this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie');
               this.nflOffenseLoading = false;     
           })
       });
@@ -921,9 +924,12 @@ function teamInfoRookie(array, teams, type, week, pos) {
             player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0));
           teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week);
           this.nflService
-            .getAllDefense(this.nflDPosition, 'info', this.week).subscribe(res => {
-              
+            .getAllDefense(this.nflDPosition, 'info', this.week).subscribe(res => { 
               this.util.updatePlayers(res['players'], this.nflDefenseData, this.nflTeams);
+              this.defenseRookies = res['players'].filter(
+                player => player.player.drafted != null && player.player.drafted.year === 2021);
+              console.log('rookies', this.defenseRookies)
+              this.teamInfoRookie(this.defenseRookies, this.nflTeams, 'd', this.week, 'rookie');
           })
 
         this.nflDefenseLoading = false;

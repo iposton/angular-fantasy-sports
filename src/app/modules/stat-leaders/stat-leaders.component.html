@@ -1224,6 +1224,24 @@
                 [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
+                <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
+              [data]="defenseRookies" 
+              [statType]="'drafted'"
+              [statField]="'overallPick'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Rookies'"
+              [statTag]="'Pick'"
+              [sport]="'nfl'"
+              [order]="'ASC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="850"
+              ></app-stat-card>
+
                 <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && teamSchedules.length > 0" 
                 [data]="nflTeamStats" 
                 [teams]="nflTeams"
