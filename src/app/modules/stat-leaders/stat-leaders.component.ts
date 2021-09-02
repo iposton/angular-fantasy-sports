@@ -749,9 +749,19 @@ export class StatLeadersComponent implements OnInit {
           data.team.city = team['city'];
           data.team.name = team['name'];
           data.team.twitter = team['twitter'];
-          data.team.dtr = team['dtr'];
-          data.team.dfh = team['dfh'];
-          data.team.dsh = team['dsh'];
+
+          if (type === 'o') {
+            data.team.dtr = team['dtr'];
+            data.team.dfh = team['dfh'];
+            data.team.dsh = team['dsh'];
+          }
+          
+          if (type === 'd') {
+            data.team.otr = team['otr'];
+            data.team.ofh = team['ofh'];
+            data.team.osh = team['osh'];
+          }
+          
           data.team.abbreviation = team['abbreviation'];
           data.team.scheduleTicker = team['scheduleTicker'];
           data.team.weekOpponent = team['weekOpponent'];
@@ -855,6 +865,7 @@ if (this.nflTeamStats == null) {
           
             
           teamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition);
+
           this.nflService
             .getAllOffense(this.nflPosition, 'info', this.week).subscribe(res => {
               console.log('got nfl info')

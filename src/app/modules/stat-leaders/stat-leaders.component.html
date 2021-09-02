@@ -1224,7 +1224,7 @@
                 [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
-                <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
+              <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
               [data]="defenseRookies" 
               [statType]="'drafted'"
               [statField]="'overallPick'"
@@ -1238,7 +1238,7 @@
               (open)="authorize($event)"
               [twitter]="twitter"
               [ndk]="nflDraftKit"
-              [seasonLength]="seasonLength"
+              [seasonLength]="seasonLengthD"
               [eliteStat]="850"
               ></app-stat-card>
 
