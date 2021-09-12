@@ -1855,11 +1855,53 @@ form.date-form {
 }
 
 //nfl
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper {
+  display: block!important;
+}
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content, 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content {
   background-size: 269px!important;
   flex: 1 0 43%;
   background-position: 50%!important;
+  text-align: center;
+  width: 100%;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .player-item, 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .player-item {
+  display: inline-block;
+  width: 100px;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats, 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats {
+  font-size: 20px;
+  font-weight: 900;
+  width: 85px;
+  display: inline-block;
+  line-height: 14px;
+
+  background: gold;
+  color: #111;
+  border-radius: 2px;
+
+  .sml-stat {
+    text-transform: uppercase;
+    // font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .inner {
+    border: 1px solid #111;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 2px;
+    width: 75px;
+    padding: 5px 0;
+  }
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp {
@@ -1875,19 +1917,15 @@ form.date-form {
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content img {
   // width: 17%;
   margin: 0;
-  height: 43px;
-  width: 43px;
+  height: 60px;
+  width: 60px;
   object-fit: cover;
   margin: 1px 0 0;
 }
 
-.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content {
-  text-align: left;
-}
-
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper  {
   .team-record {
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
     display: inherit;
     text-transform: uppercase;
@@ -1898,12 +1936,12 @@ form.date-form {
       background: #e74c3c;
       border-radius: 50%;
       display: inline-block;
-      height: 17px;
-      width: 17px;
-      line-height: 17px;
+      height: 18px;
+      width: 18px;
+      line-height: 18px;
       font-style: italic;
       font-weight: bold;
-      font-size: 11px;
+      font-size: 12px;
       color: #fff;
     }
 
@@ -1924,30 +1962,15 @@ form.date-form {
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content {
   flex: 0 0 12%;
+  color: #111;
+  background: #eee;
+  font-size: 16px!important;
   .matchup-text {
     .sml {
       text-transform: uppercase;
       font-weight: 300;
-      font-size: 12px;
+      font-size: 16px;
     }
-  }
-}
-
-.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats,
-.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats {
-  font-size: 20px;
-  font-weight: 900;
-  width: 95px;
-  display: inline-block;
-  line-height: 14px;
-
-  .sml-stat {
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 10px;
-    letter-spacing: 2px;
-    padding: 0;
-    margin: 0;
   }
 }
 
@@ -1963,12 +1986,12 @@ form.date-form {
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .game-text {
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .run-pct {
-  font-size: 12px;
-  font-weight: 200;
+  font-size: 16px;
+  // font-weight: 200;
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp .bottom-content .left-stats,
@@ -2405,7 +2428,7 @@ form input[type="text"] {
 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content img, 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content img {
-    width: 15%;
+    width: 75%!important;
     margin: 0;
   }
 
@@ -2413,6 +2436,20 @@ form input[type="text"] {
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats .sml-stat {
     font-size: 9px;
     letter-spacing: 1px;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .player-item, 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .player-item {
+  width: 78px;
+}
+
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats, 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats {
+  width: 71px;
+  
+  .inner {
+    width: 65px;
+  }
 }
 
 .main-row.stat-leaders .left-content {
