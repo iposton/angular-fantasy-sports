@@ -47,7 +47,7 @@ export class NflStartersComponent implements OnInit {
   public dailyTeamStats: Array <any> = [];
   public teamSchedules: Array <any> = [];
   public toughOSchedules: Array <any> = [];
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular";
   public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-playoff";
   public testBrowser: boolean;
   public gamesToday: boolean = false;
@@ -108,7 +108,7 @@ export class NflStartersComponent implements OnInit {
     private depthService: DepthService,
     private nflUtil: NflUtilService,
     @Inject(PLATFORM_ID) platformId: string) {
-      this.showMatchup = false;
+      this.showMatchup = true;
       this.teams = this.nflUtil.getNFLTeams();
       this.testBrowser = isPlatformBrowser(platformId);
       this.playerImages = this.nflUtil.getNFLImages();
@@ -213,7 +213,7 @@ export class NflStartersComponent implements OnInit {
                   res['games'].map(
                     g => 
                     
-                     this.http.get(`${parseInt(this.selectedWeek) > 17 ? this.poRoot : this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Defense-DE-1,Defense-CB-1,Defense-S-1,Defense-LB-1`, { headers })
+                     this.http.get(`${parseInt(this.selectedWeek) > 17 ? this.poRoot : this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Offense-WR-2`, { headers })
                     
                   )
                 )
@@ -462,6 +462,7 @@ export class NflStartersComponent implements OnInit {
                               data.team.color = team.teamColoursHex[0];
                               data.team.accent = team.teamColoursHex[1];
                               data.team.logo = team.officialLogoImageSrc;
+                              data.team.abbreviation = team.abbreviation;
                               data.team.city = team.city;
                               data.team.name = team.name;
                               data.team.twitter = team.twitter;
