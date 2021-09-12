@@ -57,10 +57,10 @@ export class NFLDataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot2021: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular";
-  public nflRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl";
-  // public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2019-regular"; 
-  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2022-playoff"; //2019-regular"
+  public apiRoot2022: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular"
+  public apiRoot2021: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular"
+  public nflRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl"
+  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2022-playoff" //2019-regular"
   public dailyDate: any;
   public touchTeamRanks: any;
   public lineTeamRanks: any;
@@ -80,7 +80,6 @@ export class NFLDataService {
     console.log("sending hot stats to service...");
     sendingHot = hotstatsArray;
   }
-
 
   //  getSentAllStats() {
   //   console.log("stats sent to component...");
@@ -303,7 +302,7 @@ export class NFLDataService {
       url = `${this.apiRootPO}/week/${selected}/player_gamelogs.json?player=${players}`;
     } else {
       //url = `${this.apiRoot}/week/${selected}/games.json`;
-      url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/player_gamelogs.json?player=${players}`;
+      url = `${this.apiRoot2022}/week/${selected}/player_gamelogs.json?player=${players}`;
     }
     this.daily = this.http.get(url, {headers})
     return this.daily;
