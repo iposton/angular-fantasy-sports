@@ -2436,7 +2436,7 @@ form input[type="text"] {
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats .sml-stat {
     font-size: 9px;
     letter-spacing: 1px;
-}
+  }
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .player-item, 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .player-item {
@@ -2496,8 +2496,6 @@ form input[type="text"] {
 .baseball-header {
   font-size: 20px;
 }
-
-
 
 // starting-five
 
@@ -2684,6 +2682,11 @@ form input[type="text"] {
 
   .mlb-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content, .mlb-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content {
     background-size: 57%!important;
+  }
+
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content, 
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content {
+    background-size: 500px 226px!important;
   }
 
 }
