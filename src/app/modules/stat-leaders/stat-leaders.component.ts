@@ -152,7 +152,7 @@ export class StatLeadersComponent implements OnInit {
     //default sport load
     this.nflSection = true
     this.sport = 'nfl'
-    this.nflDraftKit = true
+    this.nflDraftKit = false
     this.nflWeek = '1'
     this.nflPosition = 'qb'
     this.nflDPosition = 'LB,DT,DE,OLB,ILB,MLB';
@@ -755,7 +755,7 @@ export class StatLeadersComponent implements OnInit {
             data.team.dfh = team['dfh'];
             data.team.dsh = team['dsh'];
           }
-          
+
           if (type === 'd') {
             data.team.otr = team['otr'];
             data.team.ofh = team['ofh'];
@@ -862,20 +862,25 @@ if (this.nflTeamStats == null) {
           }
           let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
           this.nflData = stats
-          
-            
-          teamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition);
 
-          this.nflService
-            .getAllOffense(this.nflPosition, 'info', this.week).subscribe(res => {
-              console.log('got nfl info')
-              this.util.updatePlayers(res['players'], this.nflData, this.nflTeams);
-              this.nflRookies = res['players'].filter(
-                player => player.player.drafted != null && player.player.drafted.year === 2021);
-              console.log('rookies', this.nflRookies)
-              this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie');
-              this.nflOffenseLoading = false;     
-          })
+          // this.nflRookies = res['playerStatsTotals'].filter(
+          //   player => player.player.rookie === true);
+          //   console.log('rookies', this.nflRookies)
+          teamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition);
+          
+          
+          this.nflOffenseLoading = false; 
+
+          // this.nflService
+          //   .getAllOffense(this.nflPosition, 'info', this.week).subscribe(res => {
+          //     console.log('got nfl info')
+          //     this.util.updatePlayers(res['players'], this.nflData, this.nflTeams);
+          //     // this.nflRookies = res['players'].filter(
+          //     //   player => player.player.drafted != null && player.player.drafted.year === 2021);
+          //     // console.log('rookies', this.nflRookies)
+          //     // this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie');
+          //     // this.nflOffenseLoading = false;     
+          // })
       });
 
                 }
@@ -933,15 +938,21 @@ if (this.nflTeamStats == null) {
           let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
           this.nflDefenseData = stats.filter(
             player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0));
+
+          // this.defenseRookies = res['playerStatsTotals'].filter(
+          //   player => player.player.rookie === true);
+          //   console.log('rookies', this.defenseRookies)
+
           teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week);
-          this.nflService
-            .getAllDefense(this.nflDPosition, 'info', this.week).subscribe(res => { 
-              this.util.updatePlayers(res['players'], this.nflDefenseData, this.nflTeams);
-              this.defenseRookies = res['players'].filter(
-                player => player.player.drafted != null && player.player.drafted.year === 2021);
-              console.log('rookies', this.defenseRookies)
-              this.teamInfoRookie(this.defenseRookies, this.nflTeams, 'd', this.week, 'rookie');
-          })
+          
+          // this.nflService
+          //   .getAllDefense(this.nflDPosition, 'info', this.week).subscribe(res => { 
+          //     this.util.updatePlayers(res['players'], this.nflDefenseData, this.nflTeams);
+          //     // this.defenseRookies = res['players'].filter(
+          //     //   player => player.player.drafted != null && player.player.drafted.year === 2021);
+          //     // console.log('rookies', this.defenseRookies)
+          //     // this.teamInfoRookie(this.defenseRookies, this.nflTeams, 'd', this.week, 'rookie');
+          // })
 
         this.nflDefenseLoading = false;
       });
