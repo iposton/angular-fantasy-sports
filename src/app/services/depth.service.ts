@@ -600,22 +600,30 @@ export class DepthService {
     ],
     '62': [
       {
-        'gdate': 19,
-        'Defense-DE-1' : {
-          firstName: 'Za Darius',
-          lastName: 'Smith',
-          id: 6160,
+        'gdate': 1,
+        // 'Defense-DE-1' : {
+        //   firstName: 'Za Darius',
+        //   lastName: 'Smith',
+        //   id: 6160,
+        //   status: 'Starter',
+        //   abbreviation: 'GB',
+        //   position: 'OLB'
+        // }, 
+        // 'Offense-TE-1' : {
+        //   firstName: 'Robert',
+        //   lastName: 'Tonyan',
+        //   id: 12956,
+        //   status: 'Starter',
+        //   abbreviation: 'GB',
+        //   position: 'TE'
+        // }, 
+        'Offense-WR-2' : {
+          firstName: 'Davante',
+          lastName: 'Adams',
+          id: 6924,
           status: 'Starter',
           abbreviation: 'GB',
-          position: 'OLB'
-        }, 
-        'Offense-TE-1' : {
-          firstName: 'Robert',
-          lastName: 'Tonyan',
-          id: 12956,
-          status: 'Starter',
-          abbreviation: 'GB',
-          position: 'TE'
+          position: 'WR'
         }, 
         
       }
@@ -1000,24 +1008,24 @@ export class DepthService {
     ],
     '63': [
       {
-        'gdate': 19,
+        'gdate': 1,
          
-        // 'Offense-RB-1' : {
-        //   firstName: 'Dalvin',
-        //   lastName: 'Cook',
-        //   id: 13132,
-        //   status: 'Starter',
-        //   abbreviation: 'MIN',
-        //   position: 'RB'
-        // },
-        'Offense-TE-1' : {
-          firstName: 'Justin',
-          lastName: 'Jefferson',
-          id: 18648,
+        'Offense-RB-1' : {
+          firstName: 'Dalvin',
+          lastName: 'Cook',
+          id: 13132,
           status: 'Starter',
           abbreviation: 'MIN',
-          position: 'WR'
+          position: 'RB'
         },
+        // 'Offense-TE-1' : {
+        //   firstName: 'Justin',
+        //   lastName: 'Jefferson',
+        //   id: 18648,
+        //   status: 'Starter',
+        //   abbreviation: 'MIN',
+        //   position: 'WR'
+        // },
         // 'Offense-WR-1' : {
         //   firstName: 'Adam',
         //   lastName: 'Thielen',

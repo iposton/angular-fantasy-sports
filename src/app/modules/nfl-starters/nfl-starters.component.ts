@@ -631,21 +631,7 @@ export class NflStartersComponent implements OnInit {
       // this.dataService
       //   .sendStats(this.showData);
     } 
-    
-    // else {
-    //   // this.showBatterData = this.gameBatterGroups.sort((a, b) => {
-    //   //   if (a.id <= b.id) return -1
-    //   //   else if (a.id >= b.id) return 1
-    //   //   else return 0
-    //   // });
-    //   // console.log(this.showBatterData, 'show Batter data');
-    // }
   }
-
-  // public pitcherFp(player) {
-  //   player.stats.pitching.fp = (player.stats.pitching.earnedRunsAllowed * -3) + player.stats.pitching.pitcherStrikeouts + player.stats.pitching.pickoffs + player.stats.pitching.pitcherFlyOuts + player.stats.pitching.pitcherGroundOuts;
-  //   player.stats.pitching.fpa = Math.floor(player.stats.pitching.fp / player.stats.gamesPlayed);
-  // }
 
   public groupPlayers() {
     this.statData = this.myData.reduce(function(r, a) {
