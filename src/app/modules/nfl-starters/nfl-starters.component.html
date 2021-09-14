@@ -104,9 +104,9 @@
                         <span class="rank-circle" *ngIf="typeToHideAway === 'd'" [ngClass]="{'red' : data['oPlayers'][0]?.playerObj?.teamORank &lt;= 10, 'orange' : data['oPlayers'][0]?.playerObj?.teamORank > 10 && data['oPlayers'][0]?.playerObj?.teamORank &lt;= 21, 'green' : data['oPlayers'][0]?.playerObj?.teamORank > 21}">{{data['oPlayers'][0]?.playerObj?.teamORank}} </span> 
                         <span class="rank-circle" *ngIf="typeToHideAway === 'o'" [ngClass]="{'red' : data['oPlayers'][0]?.playerObj?.teamDRank &lt;= 10, 'orange' : data['oPlayers'][0]?.playerObj?.teamDRank > 10 && data['oPlayers'][0]?.playerObj?.teamDRank &lt;= 21, 'green' : data['oPlayers'][0]?.playerObj?.teamDRank > 21}">{{data['oPlayers'][0]?.playerObj?.teamDRank}}</span>    
                     {{data['oPlayers'][0]?.playerObj?.team.name}} 
-                    {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.wins + (data['oPlayers'][0]?.playerObj?.dTeamStats != null ? data['oPlayers'][0]?.playerObj?.dTeamStats?.stats?.standings?.wins : 0)}} - 
-                    {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.losses + (data['oPlayers'][0]?.playerObj?.dTeamStats != null ? data['oPlayers'][0]?.playerObj?.dTeamStats?.stats?.standings?.losses : 0)}} - 
-                    {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.ties + (data['oPlayers'][0]?.playerObj?.dTeamStats != null ? data['oPlayers'][0]?.playerObj?.dTeamStats?.stats?.standings?.ties : 0) }}
+                    {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.wins}} - 
+                    {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.losses}} - 
+                    {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.ties}}
                     </span> <br>
                   <span [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'home' || item?.playerObj?.playerType === 'n', 'dn2' : item?.playerObj?.playerType === typeToHideAway, 'player-item' : item?.playerObj?.player.gameLocation === 'away'}"  *ngFor="let item of data['oPlayers']; let i = index">
                     
@@ -168,10 +168,10 @@
                   </span> 
                   
                 </div>
-                <div class="center-content" *ngIf="!mobile">
+                <div class="center-content">
                     <span class="matchup-text">
                       {{data['oPlayers'][0]?.playerObj?.team.abbreviation}} <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'LIVE' || data['oPlayers'][0]?.playerObj?.gameStatus === 'COMPLETED' || data['oPlayers'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'"> {{data['oPlayers'][0]?.playerObj?.team?.teamScore}} </span> <span class="sml">@</span>  
-                      {{data['oPlayers'][8]?.playerObj?.team.abbreviation}} <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'LIVE' || data['oPlayers'][0]?.playerObj?.gameStatus === 'COMPLETED' || data['oPlayers'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'"> {{data['oPlayers'][0]?.playerObj?.team?.opponentScore}} </span>
+                      {{data['oPlayers'][6]?.playerObj?.team.abbreviation}} <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'LIVE' || data['oPlayers'][0]?.playerObj?.gameStatus === 'COMPLETED' || data['oPlayers'][0]?.playerObj?.gameStatus === 'COMPLETED_PENDING_REVIEW'"> {{data['oPlayers'][0]?.playerObj?.team?.opponentScore}} </span>
                     </span>
                     <span class="game-text">
                       <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'LIVE'">
@@ -197,7 +197,7 @@
                             {{data['oPlayers'][0]?.playerObj?.team?.opponentScore}}
                         </span> -->
                         
-                        {{data['oPlayers'][0]?.playerObj?.team?.teamScore > data['oPlayers'][0]?.playerObj?.team?.opponentScore ? data['oPlayers'][0]?.playerObj?.team?.abbreviation +' Wins!' : data['oPlayers'][8]?.playerObj?.team?.abbreviation +' Wins!'}}
+                        {{data['oPlayers'][0]?.playerObj?.team?.teamScore > data['oPlayers'][0]?.playerObj?.team?.opponentScore ? data['oPlayers'][0]?.playerObj?.team?.abbreviation +' Wins!' : data['oPlayers'][6]?.playerObj?.team?.abbreviation +' Wins!'}}
                         
                       </span> 
                       <span class="run-pct">
@@ -206,19 +206,19 @@
                         {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSPPct : data['oPlayers'][0]?.playerObj?.stats.teamDPPct}}% 
                           
 &nbsp;&nbsp;&nbsp;&nbsp;
-                          {{data['oPlayers'][8]?.playerObj?.team.abbreviation}} - {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][8]?.playerObj?.stats.teamSRPct : data['oPlayers'][8]?.playerObj?.stats.teamDRPct}}%   / 
-                          {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][8]?.playerObj?.stats.teamSPPct : data['oPlayers'][8]?.playerObj?.stats.teamDPPct}}%
+                          {{data['oPlayers'][6]?.playerObj?.team.abbreviation}} - {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][6]?.playerObj?.stats.teamSRPct : data['oPlayers'][6]?.playerObj?.stats.teamDRPct}}%   / 
+                          {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][6]?.playerObj?.stats.teamSPPct : data['oPlayers'][6]?.playerObj?.stats.teamDPPct}}%
                       </span>
                     </span>
                 </div>
                 <div class="right-content" [ngStyle]="{background:'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' + data['oPlayers'][0]?.playerObj?.team?.opponentLogo +')'}">
                     <span class="team-record">
-                        <span class="rank-circle" *ngIf="typeToHideHome === 'd'" [ngClass]="{'red' : data['oPlayers'][8]?.playerObj?.teamORank &lt;= 10, 'orange' : data['oPlayers'][8]?.playerObj?.teamORank > 10 && data['oPlayers'][8]?.playerObj?.teamORank &lt;= 21, 'green' : data['oPlayers'][8]?.playerObj?.teamORank > 21}">{{data['oPlayers'][8]?.playerObj?.teamORank}} </span> 
-                        <span class="rank-circle" *ngIf="typeToHideHome === 'o'" [ngClass]="{'red' : data['oPlayers'][8]?.playerObj?.teamDRank &lt;= 10, 'orange' : data['oPlayers'][8]?.playerObj?.teamDRank > 10 && data['oPlayers'][8]?.playerObj?.teamDRank &lt;= 21, 'green' : data['oPlayers'][8]?.playerObj?.teamDRank > 21}">{{data['oPlayers'][8]?.playerObj?.teamDRank}}</span> 
-                        {{data['oPlayers'][8]?.playerObj?.team.name}} 
-                        {{data['oPlayers'][8]?.playerObj?.teamStats?.stats?.standings?.wins + (data['oPlayers'][8]?.playerObj?.dTeamStats != null ? data['oPlayers'][8]?.playerObj?.dTeamStats?.stats?.standings?.wins : 0)}} - 
-                        {{data['oPlayers'][8]?.playerObj?.teamStats?.stats?.standings?.losses + (data['oPlayers'][8]?.playerObj?.dTeamStats != null ? data['oPlayers'][8]?.playerObj?.dTeamStats?.stats?.standings?.losses : 0)}} - 
-                        {{data['oPlayers'][8]?.playerObj?.teamStats?.stats?.standings?.ties + (data['oPlayers'][8]?.playerObj?.dTeamStats != null ? data['oPlayers'][8]?.playerObj?.dTeamStats?.stats?.standings?.ties : 0) }}
+                        <span class="rank-circle" *ngIf="typeToHideHome === 'd'" [ngClass]="{'red' : data['oPlayers'][6]?.playerObj?.teamORank &lt;= 10, 'orange' : data['oPlayers'][6]?.playerObj?.teamORank > 10 && data['oPlayers'][6]?.playerObj?.teamORank &lt;= 21, 'green' : data['oPlayers'][6]?.playerObj?.teamORank > 21}">{{data['oPlayers'][6]?.playerObj?.teamORank}} </span> 
+                        <span class="rank-circle" *ngIf="typeToHideHome === 'o'" [ngClass]="{'red' : data['oPlayers'][6]?.playerObj?.teamDRank &lt;= 10, 'orange' : data['oPlayers'][6]?.playerObj?.teamDRank > 10 && data['oPlayers'][6]?.playerObj?.teamDRank &lt;= 21, 'green' : data['oPlayers'][6]?.playerObj?.teamDRank > 21}">{{data['oPlayers'][6]?.playerObj?.teamDRank}}</span> 
+                        {{data['oPlayers'][6]?.playerObj?.team.name}} 
+                        {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.standings?.wins}} - 
+                        {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.standings?.losses}} - 
+                        {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.standings?.ties}}
                     </span> <br>
                   <span [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'away' || item?.playerObj?.playerType === 'n', 'dn2' : item?.playerObj?.playerType === typeToHideHome, 'player-item' : item?.playerObj?.player.gameLocation === 'home'}"  *ngFor="let item of data['oPlayers']; let i = index">
                   
@@ -307,29 +307,29 @@
               <span class="right-stats"> 
                   
                   <span *ngIf="typeToHideHome === 'd'">
-                    <span *ngIf="data['oPlayers'][8]?.playerObj?.gameStatus === 'UNPLAYED'">
-                        {{data['oPlayers'][8]?.playerObj?.stats?.seasonRun ? data['oPlayers'][8]?.playerObj?.stats?.teamSRPlays + ' Run Plays / '+ data['oPlayers'][8]?.playerObj?.stats?.teamSRYards + ' Yds' :  data['oPlayers'][8]?.playerObj?.stats?.teamSPPlays + ' Pass Plays / '+ data['oPlayers'][8]?.playerObj?.stats?.teamSPYards + ' Yds'}}
+                    <span *ngIf="data['oPlayers'][6]?.playerObj?.gameStatus === 'UNPLAYED'">
+                        {{data['oPlayers'][6]?.playerObj?.stats?.seasonRun ? data['oPlayers'][6]?.playerObj?.stats?.teamSRPlays + ' Run Plays / '+ data['oPlayers'][6]?.playerObj?.stats?.teamSRYards + ' Yds' :  data['oPlayers'][6]?.playerObj?.stats?.teamSPPlays + ' Pass Plays / '+ data['oPlayers'][6]?.playerObj?.stats?.teamSPYards + ' Yds'}}
                     </span>
-                    <span *ngIf="data['oPlayers'][8]?.playerObj?.gameStatus != 'UNPLAYED'">
-                        {{data['oPlayers'][8]?.playerObj?.stats.dailyRun ? data['oPlayers'][8]?.playerObj?.stats?.teamDRPlays + ' Run Plays / '+ data['oPlayers'][8]?.playerObj?.stats?.teamDRYards + ' Yds' : data['oPlayers'][8]?.playerObj?.stats?.teamDPPlays + ' Pass Plays / ' + data['oPlayers'][8]?.playerObj?.stats?.teamDPYards + ' Yds'}}
+                    <span *ngIf="data['oPlayers'][6]?.playerObj?.gameStatus != 'UNPLAYED'">
+                        {{data['oPlayers'][6]?.playerObj?.stats.dailyRun ? data['oPlayers'][6]?.playerObj?.stats?.teamDRPlays + ' Run Plays / '+ data['oPlayers'][6]?.playerObj?.stats?.teamDRYards + ' Yds' : data['oPlayers'][6]?.playerObj?.stats?.teamDPPlays + ' Pass Plays / ' + data['oPlayers'][6]?.playerObj?.stats?.teamDPYards + ' Yds'}}
                     </span>
                   </span>
 
                   <span *ngIf="typeToHideHome === 'o'">    
-                      <span *ngIf="data['oPlayers'][8]?.playerObj?.gameStatus === 'UNPLAYED'">
-                        {{data['oPlayers'][8]?.playerObj?.teamStats?.stats?.standings?.pointsAgainst}} pts against {{data['oPlayers'][8]?.playerObj?.teamStats?.stats?.tackles?.sacks}} sack {{data['oPlayers'][8]?.playerObj?.teamStats?.stats?.interceptions?.passesDefended}} pd
+                      <span *ngIf="data['oPlayers'][6]?.playerObj?.gameStatus === 'UNPLAYED'">
+                        {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.standings?.pointsAgainst}} pts against {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.tackles?.sacks}} sack {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.interceptions?.passesDefended}} pd
                       </span>
-                      <span *ngIf="data['oPlayers'][8]?.playerObj?.gameStatus != 'UNPLAYED'">
-                        {{data['oPlayers'][8]?.playerObj?.dTeamStats?.stats?.standings?.pointsAgainst}} pts against {{data['oPlayers'][8]?.playerObj?.dTeamStats?.stats?.tackles?.sacks}} sack {{data['oPlayers'][8]?.playerObj?.dTeamStats?.stats?.interceptions?.passesDefended}} pd
+                      <span *ngIf="data['oPlayers'][6]?.playerObj?.gameStatus != 'UNPLAYED'">
+                        {{data['oPlayers'][6]?.playerObj?.dTeamStats?.stats?.standings?.pointsAgainst}} pts against {{data['oPlayers'][6]?.playerObj?.dTeamStats?.stats?.tackles?.sacks}} sack {{data['oPlayers'][6]?.playerObj?.dTeamStats?.stats?.interceptions?.passesDefended}} pd
                       </span>
                   </span>
                   
                 </span>
-                <span class="center block" *ngIf="mobile">
+                <!-- <span class="center block" *ngIf="mobile">
                   <br>
                     <span class="matchup-text">
                         {{data['oPlayers'][0]?.playerObj?.team.abbreviation}} <span class="sml">@</span>  
-                        {{data['oPlayers'][8]?.playerObj?.team.abbreviation}} 
+                        {{data['oPlayers'][6]?.playerObj?.team.abbreviation}} 
                       </span>
                       <span class="game-text">
                         <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'LIVE'">
@@ -356,16 +356,16 @@
                               {{data['oPlayers'][0]?.playerObj?.team?.opponentScore}} 
                           </span> 
                           
-                          {{data['oPlayers'][0]?.playerObj?.team?.teamScore > data['oPlayers'][0]?.playerObj?.team?.opponentScore ? data['oPlayers'][0]?.playerObj?.team?.abbreviation +' Wins!' : data['oPlayers'][8]?.playerObj?.team?.abbreviation +' Wins!'}}
+                          {{data['oPlayers'][0]?.playerObj?.team?.teamScore > data['oPlayers'][0]?.playerObj?.team?.opponentScore ? data['oPlayers'][0]?.playerObj?.team?.abbreviation +' Wins!' : data['oPlayers'][6]?.playerObj?.team?.abbreviation +' Wins!'}}
                           
                         </span> 
                         
                       </span>
-                </span>
+                </span> -->
                 <div *ngIf="twitter">
                   <br>
                   #NFL Starters offense rank {{data['oPlayers'][0]?.playerObj?.teamORank}}  defense rank {{data['oPlayers'][0]?.playerObj?.teamDRank}} {{data['oPlayers'][0]?.playerObj?.team?.twitter}} 
-                  offense rank {{data['oPlayers'][8]?.playerObj?.teamORank}}  defense rank {{data['oPlayers'][8]?.playerObj?.teamDRank}} {{data['oPlayers'][8]?.playerObj?.team?.twitter}}
+                  offense rank {{data['oPlayers'][6]?.playerObj?.teamORank}}  defense rank {{data['oPlayers'][6]?.playerObj?.teamDRank}} {{data['oPlayers'][6]?.playerObj?.team?.twitter}}
                   <div  *ngFor="let item of data['oPlayers']" [ngClass]="{'dn' : item?.playerObj?.player.gameLocation === 'away' && item?.playerObj?.playerType === typeToHideAway, 'dn2' : item?.playerObj?.player.gameLocation === 'home' && item?.playerObj?.playerType === typeToHideHome}">                   
                     {{item?.playerObj?.player.lastName}} 
 

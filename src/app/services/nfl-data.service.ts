@@ -183,20 +183,8 @@ export class NFLDataService {
   }
 
   public getStats(players) {
-
-    //if (!this.stats) {
-      //console.log('getting cumulative_player_stats by player ID from API...', players);
-      //let url = `${this.apiRoot}/cumulative_player_stats.json?position=G,C,OT,NT,DT,DE&player=`+playerID;
-     // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
-      // } else {
-      //   url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
-      // }
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/player_stats_totals.json?player=${players}`;
-      this.stats = this.http.get(url, {headers})
-      
-    //}
+    let url = `${this.apiRoot2022}/player_stats_totals.json?player=${players}`;
+    this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
@@ -220,9 +208,9 @@ export class NFLDataService {
   }
 
   getAllOffense(position, season, week) {
-      let nflSeason = '2020-2021-regular';
-      if (parseInt(week) > 17) {
-        nflSeason = '2021-playoff';
+      let nflSeason = '2021-2022-regular';
+      if (parseInt(week) > 18) {
+        nflSeason = '2022-playoff';
       }
 
       if (season === 'info' && week === 'all') {
@@ -230,7 +218,7 @@ export class NFLDataService {
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       } else if (season === 'stats' && week === 'all') {
-        let url = `${this.apiRoot2021}/player_stats_totals.json?position=${position}`;
+        let url = `${this.apiRoot2022}/player_stats_totals.json?position=${position}`;
         this.offenseStats = this.http.get(url, {headers})
         return this.offenseStats;
       } else if (week != 'all') {
@@ -243,9 +231,9 @@ export class NFLDataService {
   }
 
   getAllDefense(position, season, week) {
-    let nflSeason = '2020-2021-regular';
-      if (parseInt(week) > 17) {
-        nflSeason = '2021-playoff';
+    let nflSeason = '2021-2022-regular';
+      if (parseInt(week) > 18) {
+        nflSeason = '2022-playoff';
       }
 
     if (season === 'info' && week === 'all') {
@@ -253,7 +241,7 @@ export class NFLDataService {
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     } else if (season === 'stats' && week === 'all') {
-      let url = `${this.apiRoot2021}/player_stats_totals.json?position=${position}`;
+      let url = `${this.apiRoot2022}/player_stats_totals.json?position=${position}`;
       this.defenseStats = this.http.get(url, {headers})
       return this.defenseStats;
     } else if (week != 'all') {
@@ -264,7 +252,7 @@ export class NFLDataService {
       
   }
 
-  getTeamStats(date) {
+  public getTeamStats(date) {
       //console.log('getting total team stats from API...');
       // let url = null;
       // if (parseInt(sWeek) > 17) {
@@ -274,31 +262,17 @@ export class NFLDataService {
       // }
       let url = null;
       if (date != null) {
-        url = `${this.apiRoot2021}/team_stats_totals.json?date=${date}`;
+        url = `${this.apiRoot2022}/team_stats_totals.json?date=${date}`;
       } else {
-        url = `${this.apiRoot2021}/team_stats_totals.json`;
+        url = `${this.apiRoot2022}/team_stats_totals.json`;
       }
       this.teamstats = this.http.get(url, {headers})
       return this.teamstats;
   }
 
-  getInfo() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE`;
-    //console.log('getting active player data from API...');
-    this.info = this.http.get(url, {headers})
-    return this.info;
-  }
-
-  getStarterInfo(players) {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE&player=${players}`;
-    //console.log('getting active player data from API...');
-    this.starterInfo = this.http.get(url, {headers})
-    return this.starterInfo;
-  }
-
-   getDaily(selected, players) {
+   public getDaily(selected, players) {
     let url = null
-    if (parseInt(selected) > 17) {
+    if (parseInt(selected) > 18) {
       url = `${this.apiRootPO}/week/${selected}/player_gamelogs.json?player=${players}`;
     } else {
       //url = `${this.apiRoot}/week/${selected}/games.json`;
@@ -310,37 +284,22 @@ export class NFLDataService {
 
   public dailyTeams(selected) {  
     let url = null
-    if (parseInt(selected) > 17) {
+    if (parseInt(selected) > 18) {
       url = `${this.apiRootPO}/week/${selected}/team_gamelogs.json?`;
     } else {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular/week/${selected}/team_gamelogs.json?`;
+      url = `${this.apiRoot2022}/week/${selected}/team_gamelogs.json?`;
     }
     this.dailyT = this.http.get(url, {headers})
     return this.dailyT;
   }
 
-  getDailyTouches(selected) {
-    // pass in week
-    // if (!this.daily) {
-       //let url = `${this.apiRoot}/daily_player_stats.json?fordate=`+dailyDate+`&position=P`;
-      // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
-      // } else {
-      //   url = `${this.apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
-      // }
+  public getDailyTouches(selected) {
        let url = `${apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
        this.daily = this.http.get(url, {headers})
        return this.daily;
    }
 
-  getWeek(selected) {
-      // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/week/${selected}/team_gamelogs.json`;
-      // } else {
-      //   url = `${this.apiRoot}/week/${selected}/team_gamelogs.json`;
-      // }
+  public getWeek(selected) {
        let url = `${apiRoot}/week/${selected}/team_gamelogs.json`;
        this.weekly = this.http.get(url, {headers})
        return this.weekly;

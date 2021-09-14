@@ -1064,7 +1064,7 @@
               [eliteStat]="850"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflRookies != null" 
+              <!-- <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflRookies != null" 
               [data]="nflRookies" 
               [statType]="'drafted'"
               [statField]="'overallPick'"
@@ -1080,7 +1080,7 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
               [eliteStat]="850"
-              ></app-stat-card>
+              ></app-stat-card> -->
 
               <app-stat-card *ngIf="nflPosition === 'rb' && !nflOffenseLoading && nflData != null && week === 'three-weeks'" 
               [data]="nflData" 
@@ -1224,7 +1224,7 @@
                 [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
-              <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
+              <!-- <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
               [data]="defenseRookies" 
               [statType]="'drafted'"
               [statField]="'overallPick'"
@@ -1240,7 +1240,7 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLengthD"
               [eliteStat]="850"
-              ></app-stat-card>
+              ></app-stat-card> -->
 
                 <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && teamSchedules.length > 0" 
                 [data]="nflTeamStats" 
