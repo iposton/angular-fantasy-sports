@@ -202,12 +202,26 @@
                       </span> 
                       <span class="run-pct">
                         <br>
-                        <b>Run / Pass Pct</b> {{data['oPlayers'][0]?.playerObj?.team.abbreviation}} - {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSRPct : data['oPlayers'][0]?.playerObj?.stats.teamDRPct}}% / 
+                        <b>Run / Pass Pct</b> &nbsp; {{data['oPlayers'][0]?.playerObj?.team.abbreviation}} - {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSRPct : data['oPlayers'][0]?.playerObj?.stats.teamDRPct}}% / 
                         {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][0]?.playerObj?.stats.teamSPPct : data['oPlayers'][0]?.playerObj?.stats.teamDPPct}}% 
                           
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           {{data['oPlayers'][6]?.playerObj?.team.abbreviation}} - {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][6]?.playerObj?.stats.teamSRPct : data['oPlayers'][6]?.playerObj?.stats.teamDRPct}}%   / 
-                          {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][6]?.playerObj?.stats.teamSPPct : data['oPlayers'][6]?.playerObj?.stats.teamDPPct}}%
+                          {{data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED' ? data['oPlayers'][6]?.playerObj?.stats.teamSPPct : data['oPlayers'][6]?.playerObj?.stats.teamDPPct}}% <br>
+
+                          <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED'">
+                            {{data['oPlayers'][0]?.playerObj?.stats?.seasonRun ? data['oPlayers'][0]?.playerObj?.stats?.teamSRPlays + ' Run Plays / '+ data['oPlayers'][0]?.playerObj?.stats?.teamSRYards + ' Yds' :  data['oPlayers'][0]?.playerObj?.stats?.teamSPPlays + ' Pass Plays / '+ data['oPlayers'][0]?.playerObj?.stats?.teamSPYards + ' Yds'}}
+                          </span>
+                          <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus != 'UNPLAYED'">
+                            {{data['oPlayers'][0]?.playerObj?.stats?.dailyRun ? data['oPlayers'][0]?.playerObj?.stats?.teamDRPlays + ' Run Plays / '+ data['oPlayers'][0]?.playerObj?.stats?.teamDRYards + ' Yds' : data['oPlayers'][0]?.playerObj?.stats?.teamDPPlays + ' Pass Plays / ' + data['oPlayers'][0]?.playerObj?.stats?.teamDPYards + ' Yds'}}
+                          </span>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <span *ngIf="data['oPlayers'][6]?.playerObj?.gameStatus === 'UNPLAYED'">
+                            {{data['oPlayers'][6]?.playerObj?.stats?.seasonRun ? data['oPlayers'][6]?.playerObj?.stats?.teamSRPlays + ' Run Plays / '+ data['oPlayers'][6]?.playerObj?.stats?.teamSRYards + ' Yds' :  data['oPlayers'][6]?.playerObj?.stats?.teamSPPlays + ' Pass Plays / '+ data['oPlayers'][6]?.playerObj?.stats?.teamSPYards + ' Yds'}}
+                        </span>
+                        <span *ngIf="data['oPlayers'][6]?.playerObj?.gameStatus != 'UNPLAYED'">
+                            {{data['oPlayers'][6]?.playerObj?.stats.dailyRun ? data['oPlayers'][6]?.playerObj?.stats?.teamDRPlays + ' Run Plays / '+ data['oPlayers'][6]?.playerObj?.stats?.teamDRYards + ' Yds' : data['oPlayers'][6]?.playerObj?.stats?.teamDPPlays + ' Pass Plays / ' + data['oPlayers'][6]?.playerObj?.stats?.teamDPYards + ' Yds'}}
+                        </span>
                       </span>
                     </span>
                 </div>
@@ -283,7 +297,7 @@
                 </div>
               </div>
               <div class="bottom-content">
-              <span class="left-stats">
+              <!-- <span class="left-stats">
 
                 <span *ngIf="typeToHideAway === 'd'"> 
                   <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED'">
@@ -324,7 +338,7 @@
                       </span>
                   </span>
                   
-                </span>
+                </span> -->
                 <!-- <span class="center block" *ngIf="mobile">
                   <br>
                     <span class="matchup-text">
