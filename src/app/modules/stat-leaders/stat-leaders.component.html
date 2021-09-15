@@ -71,7 +71,7 @@
     <option value="DB,SS,FS,CB,S"> CB, S </option>
   </select>
 </div>
-<div class="center" *ngIf="sport === 'hidden'">
+<div class="center" *ngIf="sport === 'nfl'">
     <select name="week" id="week" (change)="onChange($event.target.value)">
       <option value="1"> - </option>
       <option value="1">1</option>
@@ -97,7 +97,7 @@
       <option value="22">conf championship</option>
       <option value="23">super bowl</option> -->
     </select>
-    &nbsp;&nbsp; <button (click)="onChange('three-weeks')">Three Weeks</button>
+    <!-- &nbsp;&nbsp; <button (click)="onChange('three-weeks')">Three Weeks</button> -->
     &nbsp;&nbsp; <button (click)="onChange('all')">ALL</button>
   </div>
 <app-spinner *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading" [size]="'lg'" [color]="'white'" [title]="'Stat Leader Data'"></app-spinner>
