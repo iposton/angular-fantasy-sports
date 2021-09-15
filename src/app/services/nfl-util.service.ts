@@ -166,7 +166,7 @@ export class NflUtilService {
         city: "New England",
         name: "Patriots",
         abbreviation: "NE",
-        twitter: "#GoPats",
+        twitter: "#ForeverNE",
         teamColoursHex: [
         "#002244",
         "#c60c30",
@@ -249,7 +249,7 @@ export class NflUtilService {
         offenseRankLs: 28,
         city: "Washington",
         name: "Washington",
-        twitter: "#HTTR",
+        twitter: "#WashingtonFootball",
         abbreviation: "WAS",
         teamColoursHex: [
         "#773141",
@@ -598,7 +598,7 @@ export class NflUtilService {
         offenseRankLs: 7,
         city: "Arizona",
         name: "Cardinals",
-        twitter: "#RedSea",
+        twitter: "#AZCardinals",
         abbreviation: "ARI",
         teamColoursHex: [
         "#97233f",
