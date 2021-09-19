@@ -123,7 +123,7 @@ export class NflStartersComponent implements OnInit {
         let date = new Date();
         if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
           this.selectedWeek = week.week;
-          if (date < new Date('Tue Jan 05 2021 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+          if (date < new Date(week.dateEnd)) {
             let utcDate = new Date(week.dateBeg);
             utcDate.setHours(utcDate.getHours() - 24);
             let myDate = new Date(utcDate);
@@ -479,7 +479,7 @@ export class NflStartersComponent implements OnInit {
                                 data.stats.teamSPPlays = team.seasonPassPlays;
                                 data.stats.teamSRPct = Math.floor(team.seasonRunPlays / team.seasonPlays * 100);
                                 data.stats.teamSPPct = Math.floor(team.seasonPassPlays / team.seasonPlays * 100);
-                                data.stats.seasonRun = team.seasonRun;
+                                data.stats.seasonRun = team.seasonRunPlays > team.seasonPassPlays ? true : false;
                                 data.teamStats = team.sTeamStats; 
                                 data.teamORank = team.offenseRankLs;
                                 data.teamDRank = team.defenseRankLs;
