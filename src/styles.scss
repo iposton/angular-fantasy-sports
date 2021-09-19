@@ -1986,6 +1986,11 @@ form.date-form {
   font-weight: 200;
 }
 
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname.sm,
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname.sm {
+  font-size: 11px;
+}
+
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .dn2,
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .dn2 {
   display: none;
@@ -2424,6 +2429,11 @@ form input[type="text"] {
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname, 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname {
     font-size: 9px;
+  }
+
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .pname.sm,
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .pname.sm {
+    font-size: 8px;
   }
 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content img, 

@@ -711,9 +711,6 @@ export class NflUtilService {
         "18578" : {
           image: nflImageRoot+"xcymtg1vdkbntbzlmbrw"
         },
-        "6756" : {
-          image: nflImageRoot+"a7y4lor47rsusu08bise"
-        },
         "19375" : {
           image: nflImageRoot+"m6btiz85brkj9bwim4yv"
         },
@@ -822,9 +819,6 @@ export class NflUtilService {
         "9834" : {
           image: nflImageRoot+"jpdzcfis6a3qmwyn7mbu"
         },
-        "8377" : {
-          image: nflImageRoot+"sd67wjznwou2pwqs2m3h"
-        },
         "7013" : {
           image: nflImageRoot+"rfdif7ec0f3czwyeyfxq"
         },
@@ -929,9 +923,6 @@ export class NflUtilService {
         },
         "13466" : {
           image: nflImageRoot+"o7flzlafkwup1al6ujiw"
-        },
-        "8019" : {
-          image: nflImageRoot+"fk3xbu2ah4c06vla1bhy"
         },
         "9743" : {
           image: nflImageRoot+"zi77vkqwrmklt5ic6lc6"
@@ -1252,7 +1243,117 @@ export class NflUtilService {
           firstName: "Kenny",
           lastName: "Golladay",
           image: nflImageRoot+"gdihhyi6bpsvyljtenua"
-        }        
+        },
+        "7485": {
+          firstName: "Kyle",
+          lastName: "Rudolph",
+          image: nflImageRoot+"lvve7xyvlupkydsgma0q"
+        },
+        "30306": {
+          firstName: "Dyami",
+          lastName: "Brown",
+          image: nflImageRoot+"ok8mvanlgwi5cfqndl0n"
+        },
+        "7459": {
+          firstName: "Taylor",
+          lastName: "Heinicke",
+          image: nflImageRoot+"hik6marceggrf4cmukci"
+        },
+        "6224": {
+          firstName: "Sammy",
+          lastName: "Watkins",
+          image: nflImageRoot+"uulusc1rbfhi3k0yhcch"
+        },
+        "27502": {
+          firstName: "Ty'Son",
+          lastName: "Williams",
+          image: nflImageRoot+"ucxy1zbyppgm62iyvrdr"
+        },
+        "6477": {
+          firstName: "A.J.",
+          lastName: "Green",
+          image: nflImageRoot+"ibugzfv4xaeq9y4xurmj"
+        },
+        "30193": {
+          firstName: "Eli",
+          lastName: "Mitchell",
+          image: nflImageRoot+"csra0oiqwh6i2utjdlud"
+        },
+        "13409": {
+          firstName: "Gerald",
+          lastName: "Everett",
+          image: nflImageRoot+"cstlbdkqplchtbgjdcxf"
+        },
+        "13529": {
+          firstName: "Jonnu",
+          lastName: "Smith",
+          image: nflImageRoot+"uqux8vr24dx5tvqf97hb"
+        },
+        "18657": {
+          firstName: "Adam",
+          lastName: "Trautman",
+          image: nflImageRoot+"uzw6h7whiuhlo15vneqk"
+        },
+        "8019": {
+          firstName: "Nelson",
+          lastName: "Aghgolor",
+          image: nflImageRoot+"cym6r5v9z8uizic8ak5i"
+        },
+        "8565": {
+          firstName: "Adam",
+          lastName: "Humphries",
+          image: nflImageRoot+"l56ywjejfpraigzs4qia"
+        },
+        "12670": {
+          firstName: "Corey",
+          lastName: "Davis",
+          image: nflImageRoot+"e96ltr3bnrq6bs4o0gvx"
+        },
+        "6756": {
+          firstName: "Emmanuel",
+          lastName: "Saunders",
+          image: nflImageRoot+"potkibjtm855tsawozs0"
+        },
+        "6479": {
+          firstName: "Marvin",
+          lastName: "Jones Jr.",
+          image: nflImageRoot+"x09ruarqlcrdsjqq5mpg"
+        },
+        "7287": {
+          firstName: "Chris",
+          lastName: "Conley",
+          image: nflImageRoot+"capkuyfgpghldch9dzl7"
+        },
+        "8208": {
+          firstName: "Tyrell",
+          lastName: "Williams",
+          image: nflImageRoot+"qixhze7yidydtc1vyeih"
+        },
+        "11501": {
+          firstName: "Kalif",
+          lastName: "Raymond",
+          image: nflImageRoot+"v5tzzalsktjaeeepc59o"
+        },
+        "8377": {
+          firstName: "Mike",
+          lastName: "Davis",
+          image: nflImageRoot+"a12intlc15po42xebdxv"
+        },
+        "6487": {
+          firstName: "Tyler",
+          lastName: "Kroft",
+          image: nflImageRoot+"jatdbdpswqdwvukemp1t"
+        },
+        "6845": {
+          firstName: "Eric",
+          lastName: "Ebron",
+          image: nflImageRoot+"uaxsxymncppase7ihczd"
+        },
+        // "13430": {
+        //   firstName: "Pharaoh",
+        //   lastName: "Brown",
+        //   image: nflImageRoot+""
+        // } 
       }
    }
 
