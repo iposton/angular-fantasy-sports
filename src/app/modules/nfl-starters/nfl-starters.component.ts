@@ -88,6 +88,8 @@ export class NflStartersComponent implements OnInit {
   public nflDraftKit: boolean;
   public seasonLength   : string = 'dtr';
   public seasonLengthD  : string = 'otr';
+  public currentWeek: string
+  public isPast: boolean
   public gameStarter: { 
     gameID: string, 
     name: any, 
@@ -115,14 +117,16 @@ export class NflStartersComponent implements OnInit {
       this.selectedWeek = '1';
       weekTimes = this.nflUtil.getWeekTimes();
       this.depth = this.depthService.getNFLDepth();
-      this.nflDraftKit = true;
-      this.showDef = true;
+      this.nflDraftKit = true
+      this.showDef = true
+      this.isPast = false
       // this.seasonLength = 'full';
 
       for (let week of weekTimes) {
         let date = new Date();
         if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
-          this.selectedWeek = week.week;
+          this.selectedWeek = week.week
+          this.currentWeek = week.week
           if (date < new Date(week.dateEnd)) {
             let utcDate = new Date(week.dateBeg);
             utcDate.setHours(utcDate.getHours() - 24);
@@ -203,6 +207,7 @@ export class NflStartersComponent implements OnInit {
               this.noGamesMsg = "There Are No Games Scheduled Today :(";
               console.log('There are no games being played today.');
             } else {
+              this.isPast = this.currentWeek > this.selectedWeek ? true : false
               this.dailySchedule = res['games'];
               this.teamRef = this.teams; //res['references'].teamReferences;
               this.gameDate = res['games'][0].schedule.startTime ? res['games'][0].schedule.startTime : res['games'][1].schedule.startTime;
@@ -341,6 +346,9 @@ export class NflStartersComponent implements OnInit {
                 for (let team of this.teams) {
                   if (team.id === teamStats.team.id) {
                     team.dTeamStats = teamStats;
+                    team.winToday = teamStats.stats.standings.wins
+                    team.lossToday = teamStats.stats.standings.losses
+                    team.tieToday = teamStats.stats.standings.ties
                     team.dailyPY = teamStats.stats.passing.passGrossYards;
                     team.dailyRY = teamStats.stats.rushing.rushYards;
                     team.dailyPlays = teamStats.stats.rushing.rushAttempts + teamStats.stats.passing.passAttempts;
@@ -483,6 +491,9 @@ export class NflStartersComponent implements OnInit {
                                 data.teamStats = team.sTeamStats; 
                                 data.teamORank = team.offenseRankLs;
                                 data.teamDRank = team.defenseRankLs;
+                                data.winToday = 0
+                                data.lossToday = 0
+                                data.tieToday = 0
                             }
                           }  
                        }
@@ -580,7 +591,13 @@ export class NflStartersComponent implements OnInit {
                               data.stats.teamDRPct = Math.floor(team.dailyRunPlays / team.dailyPlays * 100);
                               data.stats.teamDPPct = Math.floor(team.dailyPassPlays / team.dailyPlays * 100);
                               data.stats.dailyRun = team.dailyRun;
-                              data.dTeamStats = team.dTeamStats; 
+                              data.dTeamStats = team.dTeamStats
+                              if (team.dTeamStats != null) {
+                                data.winToday = this.isPast ? 0 : team.winToday
+                                data.lossToday = this.isPast ? 0 : team.lossToday
+                                data.tieToday = this.isPast ? 0 : team.tieToday 
+                              }
+                              
                            }
                          }  
                       }
