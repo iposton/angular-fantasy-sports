@@ -191,8 +191,9 @@ export class StatLeadersComponent implements OnInit {
     for (let week of weekTimes) {
       let date = new Date();
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
-        this.nflWeek = week.week; 
-
+        this.nflWeek = week.week
+        // this.timeSpan = week.week
+        // this.week = week.week
         if (date < new Date(week.dateEnd)) {
           let utcDate = new Date(week.dateBeg);
           utcDate.setHours(utcDate.getHours() - 24);
@@ -785,24 +786,29 @@ export class StatLeadersComponent implements OnInit {
     this.nhlGoalies = false;
     this.mlbHittingSection = false;
     this.nflSection = true;
-    this.sport = 'nfl';
-if (this.nflTeamStats == null) {
+    this.sport = 'nfl'
+    
+    if (this.nflTeamStats == null) {
 
-    this.nflService.getTeamStats(this.tsDate).subscribe(res => {
-      this.nflUtil.rank(this.nflTeams, res['teamStatsTotals'], this.nflWeek)
-      this.nflUtil.updateTeamStats(res['teamStatsTotals'])
-      this.nflTeamStats = res['teamStatsTotals'];
-      this.nflUtil.sortSchedules(this.teamSchedules, this.nflWeek, headers);
-      this.sortToughest();
+        this.nflService.getTeamStats(this.tsDate).subscribe(res => {
+          this.nflUtil.rank(this.nflTeams, res['teamStatsTotals'], this.nflWeek)
+          this.nflUtil.updateTeamStats(res['teamStatsTotals'])
+          this.nflTeamStats = res['teamStatsTotals'];
+          this.nflUtil.sortSchedules(this.teamSchedules, this.nflWeek, headers);
+          this.sortToughest();
+          this.nflTeamLoading = false;
+        })
+
+    } else {
+      if (this.timeSpan != 'full') {
+        this.nflService.dailyTeams(this.week).subscribe(res => {
+          this.nflUtil.updateTeamWeek(res['gamelogs'])
+        })
+      }
       this.nflTeamLoading = false;
-    })
-
-  } else {
-    this.nflTeamLoading = false;
-}
+    }
 
 
-  
     function teamInfo(array, teams, type, week, pos) {
         for (let team of teams) {
           for (let data of array) { 
@@ -848,6 +854,7 @@ if (this.nflTeamStats == null) {
       await sleep(500);
       this.nflService
         .getAllOffense(this.nflPosition, 'stats', this.week).subscribe(res => {
+          
           console.log('got nfl stats')
           if (res['gamelogs'] != null) {
             for (let data of this.nflData) {
@@ -860,8 +867,10 @@ if (this.nflTeamStats == null) {
               }
             }
           }
+
           let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
           this.nflData = stats
+          
 
           // this.nflRookies = res['playerStatsTotals'].filter(
           //   player => player.player.rookie === true);
