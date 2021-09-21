@@ -1418,6 +1418,19 @@ export class NflUtilService {
     }
    }
 
+   public updateTeamWeek(tStats) {
+    for (let stats of tStats) {
+      for (let team of this.nflTeams) {
+        if (stats.team.id === team.id) {
+          stats.bye = team.bye;
+          team.plays = stats.stats.rushing.rushAttempts + stats.stats.passing.passAttempts
+          team.passPlays = stats.stats.passing.passAttempts
+          team.runPlays = stats.stats.rushing.rushAttempts
+        }
+      }
+    }
+   }
+
    public getSchedToughness(sched, type, mainTeam, bye, nflWeek) {
     let halfwayThrough = Math.floor(sched.length / 2);
     let arrayFirstHalf = sched.slice(0, halfwayThrough);
