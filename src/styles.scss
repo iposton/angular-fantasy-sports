@@ -218,6 +218,23 @@ footer {
 
     .sched-item {
       .abb-single {
+
+        .team-st {
+          background: #ccc;
+          padding: 4px 2px;
+          border-radius: 3px;
+          
+          .inner-st {
+            background: #111;
+            padding: 2px;
+            border-radius: 2px;
+
+            span {
+              font-weight: 600;
+            }
+          }
+        }
+
         .game {
           cursor: pointer;
           position: relative;

@@ -462,7 +462,7 @@ export class NflUtilService {
         offenseRankLs: 20,
         city: "Atlanta",
         name: "Falcons",
-        twitter: "#RiseUpATL",
+        twitter: " #DirtyBirds",
         abbreviation: "ATL",
         teamColoursHex: [
         "#a71930",
