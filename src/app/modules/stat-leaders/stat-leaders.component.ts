@@ -339,8 +339,9 @@ export class StatLeadersComponent implements OnInit {
      this.t3 = p === 'qb' ? 'Pass % of All Plays' : p === 'rb' ? 'Touch % of All Rush Plays' : p === 'wr' ? 'Target % of All Pass Plays' : p === 'te' ? 'Target % of All Pass Plays' : p === 'k' ? '' : ''
      this.tag3 = '%'
 
-  
-    this.nflPosition = p;
+    this.week = 'all'
+    this.timeSpan = 'full'
+    this.nflPosition = p
     this.loadNFL();
   }
 
