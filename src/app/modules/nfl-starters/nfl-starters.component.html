@@ -1,4 +1,4 @@
-<app-spinner *ngIf="nflTeamStatsLoading && !teamSchedules.length" [size]="'lg'" [color]="'white'" [title]="'Loading NFL Teams'"></app-spinner>
+<app-spinner *ngIf="nflTeamStatsLoading && !teamSchedules.length && !loading" [size]="'lg'" [color]="'white'" [title]="'Loading NFL Teams'"></app-spinner>
 <div class="main-row" *ngIf="!nflTeamStatsLoading">
     <button *ngIf="!showMatchup" (click)="nflDraftKit = !nflDraftKit">{{nflDraftKit ? 'Team Stats' : 'Draft Kit'}}</button>
     <button *ngIf="!showMatchup && nflDraftKit" (click)="sortToughest(showDef)">{{showDef ? 'Toughest O' : 'Toughest D'}}</button>
@@ -114,7 +114,7 @@
                     <span class="pointer" (click)="authorize(item?.playerObj)">
                       <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="football player" onError="this.src='./assets/fb-player.png'">
                     </span> <br>
-                    <span class="pname" [ngClass]="{'sm' : item?.playerObj?.player.lastName === 'Edwards-Helaire' || item?.playerObj?.player.lastName === 'Valdes-Scantling' || item?.playerObj?.player.lastName === 'O\'Shaughnessy' || item?.playerObj?.player.lastName === 'Roethlisberger' || item?.playerObj?.player.lastName === 'Smith-Schuster'}">{{item?.playerObj?.player.lastName}} {{item?.playerObj.player?.primaryPosition}}</span> <br>
+                    <span class="pname" [ngClass]="{'sm' : item?.playerObj?.player.lastName === 'Edwards-Helaire' || item?.playerObj?.player.lastName === 'Valdes-Scantling' || item?.playerObj?.player.lastName === 'O\'Shaughnessy' || item?.playerObj?.player.lastName === 'Roethlisberger' || item?.playerObj?.player.lastName === 'Smith-Schuster' || item?.playerObj?.player.lastName === 'Peoples-Jones' }">{{item?.playerObj?.player.lastName}} {{item?.playerObj.player?.primaryPosition}}</span> <br>
                     <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED'" class="stats">
                       <span class="inner">
                           <span *ngIf="item?.playerObj.player?.primaryPosition === 'WR' || item?.playerObj.player?.primaryPosition === 'TE'">
@@ -240,7 +240,7 @@
                     <span class="pointer" (click)="authorize(item?.playerObj)">
                       <img src="{{item?.playerObj?.player.officialImageSrc}}" alt="football player" onError="this.src='./assets/fb-player.png'">
                     </span> <br>
-                  <span class="pname" [ngClass]="{'sm' : item?.playerObj?.player.lastName === 'Edwards-Helaire' || item?.playerObj?.player.lastName === 'Valdes-Scantling' || item?.playerObj?.player.lastName === 'O\'Shaughnessy' || item?.playerObj?.player.lastName === 'Roethlisberger' || item?.playerObj?.player.lastName === 'Smith-Schuster'}">{{item?.playerObj?.player.lastName}} {{item?.playerObj.player?.primaryPosition}}</span> <br>
+                  <span class="pname" [ngClass]="{'sm' : item?.playerObj?.player.lastName === 'Edwards-Helaire' || item?.playerObj?.player.lastName === 'Valdes-Scantling' || item?.playerObj?.player.lastName === 'O\'Shaughnessy' || item?.playerObj?.player.lastName === 'Roethlisberger' || item?.playerObj?.player.lastName === 'Smith-Schuster' || item?.playerObj?.player.lastName === 'Peoples-Jones'}">{{item?.playerObj?.player.lastName}} {{item?.playerObj.player?.primaryPosition}}</span> <br>
 
                   <span *ngIf="data['oPlayers'][0]?.playerObj?.gameStatus === 'UNPLAYED'" class="stats">
                     <span class="inner">
