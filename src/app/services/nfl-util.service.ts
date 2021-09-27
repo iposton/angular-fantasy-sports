@@ -1404,6 +1404,86 @@ export class NflUtilService {
           lastName: "Tremble",
           image: nflImageRoot+"tvqixry9ad1tnsy9xdor"
         },
+        "9878": {
+          firstName: "Blake",
+          lastName: "Martinez",
+          image: nflImageRoot+"cryuvmmnkryxlgjfgziw"
+        },
+        "9937": {
+          firstName: "Jacoby",
+          lastName: "Brissett",
+          image: nflImageRoot+"z8e0godak9btfkl9nu6s"
+        },
+        "18787": {
+          firstName: "Quintez",
+          lastName: "Cephus",
+          image: nflImageRoot+"i8qrouusz4vbkmhcg0ks"
+        },
+        "30122": {
+          firstName: "Micheal",
+          lastName: "Carter II",
+          image: nflImageRoot+"admwfoo0pgl2z2zvqcp2"
+        },
+        "30935": {
+          firstName: "Trey",
+          lastName: "Sermon",
+          image: nflImageRoot+"v2igdor3vf1ijb0qyyp1"
+        },
+        "14522": {
+          firstName: "Sony",
+          lastName: "Michel",
+          image: nflImageRoot+"sge9qla3wyhfzemqaq5f"
+        },
+        
+        
+        
+        
+        // "": {
+        //   firstName: "",
+        //   lastName: "Schobert",
+        //   image: nflImageRoot+""
+        // },
+        "18555": {
+          firstName: "Isaiah",
+          lastName: "Simmons",
+          image: nflImageRoot+"o0xgwhoevo1fpjrowgpq"
+        },
+        "18581": {
+          firstName: "Logan",
+          lastName: "Wilson",
+          image: nflImageRoot+"s3g0kgjmwhvw69jewwyr"
+        },
+        "23257": {
+          firstName: "Nick",
+          lastName: "Westbrook",
+          image: nflImageRoot+"qkfbmmwufx3fmqd9cth9"
+        },
+        "7477": {
+          firstName: "Cordarrelle",
+          lastName: "Patterson",
+          image: nflImageRoot+"jnj4vueqtpbhjuqjrakr"
+        },
+        "5956": {
+          firstName: "Darren",
+          lastName: "Fells",
+          image: nflImageRoot+"eh0rbweg4wbzgzpvprnv"
+        },
+        "13188": {
+          firstName: "James",
+          lastName: "Conner",
+          image: nflImageRoot+"nq7mtvvxmgc2vukwwcpo"
+        },
+        
+        
+        
+     
+        // "": {
+        //   firstName: "",
+        //   lastName: "Perryman",
+        //   image: nflImageRoot+""
+        // },
+      
+        
         // "13430": {
         //   firstName: "Pharaoh",
         //   lastName: "Brown",
