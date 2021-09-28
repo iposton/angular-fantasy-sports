@@ -97,7 +97,7 @@
       <option value="22">conf championship</option>
       <option value="23">super bowl</option> -->
     </select>
-    <!-- &nbsp;&nbsp; <button (click)="onChange('three-weeks')">Three Weeks</button> -->
+    &nbsp;&nbsp; <button (click)="onChange('three-weeks')">Three Weeks</button>
     &nbsp;&nbsp; <button (click)="onChange('all')">ALL</button>
   </div>
 <app-spinner *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading" [size]="'lg'" [color]="'white'" [title]="'Stat Leader Data'"></app-spinner>
@@ -1064,6 +1064,24 @@
               [eliteStat]="850"
               ></app-stat-card>
 
+              <app-stat-card *ngIf="!nflOffenseLoading && nflRookies != null && st4 != ''" 
+              [data]="nflRookies" 
+              [statType]="st4"
+              [statField]="sf4"
+              [page]="page"
+              [amount]="amount"
+              [title]="t4"
+              [statTag]="tag4"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="100"
+              ></app-stat-card>
+
               <!-- <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflRookies != null" 
               [data]="nflRookies" 
               [statType]="'drafted'"
@@ -1224,16 +1242,37 @@
                 [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
-              <!-- <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
+              <!-- [statType]="'drafted'"
+              [statField]="'overallPick'" -->
+
+              <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
               [data]="defenseRookies" 
-              [statType]="'drafted'"
-              [statField]="'overallPick'"
+              [statType]="'tackles'" 
+              [statField]="'tackleTotal'"
               [page]="page"
               [amount]="amount"
-              [title]="'Rookies'"
-              [statTag]="'Pick'"
+              [title]="'Rookie Tackles'"
+              [statTag]="'Tkls'"
               [sport]="'nfl'"
-              [order]="'ASC'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLengthD"
+              [eliteStat]="850"
+              ></app-stat-card>
+
+              <!-- <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
+              [data]="defenseRookies" 
+              [statType]="'interceptions'" 
+              [statField]="'passesDefended'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Rookie Pass Defended'"
+              [statTag]="'PD'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
               [teams]="nflTeams"
               (open)="authorize($event)"
               [twitter]="twitter"
