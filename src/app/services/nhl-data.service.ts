@@ -300,10 +300,10 @@ export class NHLDataService {
   getGames(span, sport, date, season) {
     let url = null;
     //let season = null;
-    // if (sport != 'nfl' && sport != 'nba')
-    //   season = '2021-regular';
-    // else
-    //   season = '2020-2021-regular';
+    if (sport != 'nfl' && sport != 'nba')
+      season = '2021-regular';
+    else
+      season = '2021-2022-regular';
     if (span === 'last-week') {
       //sport === 'mlb' ? twoWeekDailyDate : 
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${lastweekDailyDate}-to-${dailyDate}`;
@@ -314,7 +314,7 @@ export class NHLDataService {
     } else if (span === 'two-weeks') {
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${twoWeekDailyDate}-to-${dailyDate}`;
     } else if (span === 'three-weeks') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${threeWeekDailyDate}-to-${date}`;
+      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${threeWeekDailyDate}-to-${dailyDate}`;
     }
     
     this.games = this.http.get(url, {headers})
