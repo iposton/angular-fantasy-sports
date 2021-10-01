@@ -1531,6 +1531,12 @@ export class NflUtilService {
           lastName: "Palmer",
           image: nflImageRoot+"x2gobzerrjxzgpxij4ac"
         },
+        "30926": {
+          firstName: "Luke",
+          lastName: "Farrell",
+          image: nflImageRoot+"nfuvxexlyqkcfr4ug9ng"
+        },
+        
         
         
 
