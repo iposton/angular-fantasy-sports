@@ -777,7 +777,7 @@ export class DepthService {
     ],
     '60': [
       {
-        'gdate': 3,
+        'gdate': 4,
         'Offense-QB-1' : {
           firstName: 'Justin',
           lastName: 'Fields',
@@ -786,14 +786,14 @@ export class DepthService {
           abbreviation: 'CHI',
           position: 'QB'
         },
-        'Offense-RB-1' : {
-          firstName: 'David',
-          lastName: 'Montgomery',
-          id: 16039,
-          status: 'Starter',
-          abbreviation: 'CHI',
-          position: 'RB'
-        }, 
+        // 'Offense-RB-1' : {
+        //   firstName: 'David',
+        //   lastName: 'Montgomery',
+        //   id: 16039,
+        //   status: 'Starter',
+        //   abbreviation: 'CHI',
+        //   position: 'RB'
+        // }, 
         
       }
     ],
@@ -877,14 +877,14 @@ export class DepthService {
         //   abbreviation: 'PIT',
         //   position: 'OLB'
         // }, 
-        'Offense-WR-1' : {
-          firstName: 'Chase',
-          lastName: 'Claypool',
-          id: 18672,
-          status: 'Starter',
-          abbreviation: 'PIT',
-          position: 'WR'
-        },
+        // 'Offense-WR-1' : {
+        //   firstName: 'Chase',
+        //   lastName: 'Claypool',
+        //   id: 18672,
+        //   status: 'Starter',
+        //   abbreviation: 'PIT',
+        //   position: 'WR'
+        // },
         'Offense-TE-1' : {
           firstName: 'Pat',
           lastName: 'Freiermuth',
@@ -1147,23 +1147,24 @@ export class DepthService {
     ],
     '71': [
       {
-        'gdate': 19,
-        'Defense-DE-1' : {
-          firstName: 'Devin',
-          lastName: 'White',
-          id: 16242,
+        'gdate': 4,
+       
+        // 'Offense-RB-1' : {
+        //   firstName: 'Leonard',
+        //   lastName: 'Fournette',
+        //   id: 12606,
+        //   status: 'Starter',
+        //   abbreviation: 'TB',
+        //   position: 'RB'
+        // },  
+        'Offense-TE-1' : {
+          firstName: 'Cameron',
+          lastName: 'Brate',
+          id: 8570,
           status: 'Starter',
           abbreviation: 'TB',
-          position: 'LB'
-        },
-        'Offense-RB-1' : {
-          firstName: 'Leonard',
-          lastName: 'Fournette',
-          id: 12606,
-          status: 'Starter',
-          abbreviation: 'TB',
-          position: 'RB'
-        },  
+          position: 'TE'
+        }, 
       }
     ],
     '73': [
