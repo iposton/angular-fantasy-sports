@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { CompletionKind } from '@angular/compiler-cli/src/ngtsc/typecheck/api';
+import { WrappedNodeExpr } from '@angular/compiler';
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/';
 
 @Injectable({
@@ -1536,7 +1537,38 @@ export class NflUtilService {
           lastName: "Farrell",
           image: nflImageRoot+"nfuvxexlyqkcfr4ug9ng"
         },
+        "13356": {
+          firstName: "Keelan",
+          lastName: "Cole",
+          image: nflImageRoot+"boajq2m1njwe88c23lpd"
+        },
+        "30447": {
+          firstName: "Kadarius",
+          lastName: "Toney",
+          image: nflImageRoot+"hyl8jzsa7dto7qekd7vl"
+        },
+        "8466": {
+          firstName: "Malcom",
+          lastName: "Brown",
+          image: nflImageRoot+"zxnjheichwlnvvu5qdyl"
+        },
+        "30609": {
+          firstName: "Pete",
+          lastName: "Warner",
+          image: nflImageRoot+"odhi45hkqjbxr5xqxctg"
+        },
+        "14521": {
+          firstName: "Mike",
+          lastName: "Hughes",
+          image: nflImageRoot+"ohydfhzyltb4qbnqz1ti"
+        },
+        "8715": {
+          firstName: "Jason",
+          lastName: "McCourty",
+          image: nflImageRoot+"myk5ccdezt1lhjc8szbm"
+        },
         
+ 
         
         
 
