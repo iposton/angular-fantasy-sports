@@ -6,8 +6,9 @@
   <div>
     <div class="content-wrapper">
       <div class="row">
-        <div *ngFor="let item of sortStats(data, statType, statField, order, ndk, seasonLength, eliteStat ? eliteStat : 0); let i = index">
-            <!-- let item of data | sortBy: statType:statField:order;let i = index -->
+        <div *ngFor="let item of sortStats(data, statType, statField, order, ndk, seasonLength, eliteStat ? eliteStat : 0); let i = index" 
+        [ngStyle]="{width: item?.spanOpponents != null ? '100%' : null, height: item?.spanOpponents != null ? '110px' : null}">
+           
           <span
             [ngClass]="{
               'left-content': i <= page,
@@ -16,7 +17,12 @@
               'dn3': begin === 21 && !ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= 10 : begin === 21 && !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= 10 : begin === 21 && item?.team[seasonLength] <= 10,
               'sm' : item?.spanOpponents != null
             }"
+            [ngStyle]="{background: item?.spanOpponents != null ? 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' + item?.team?.logo +')' : null,
+            backgroundSize: item?.spanOpponents != null ? '414px' : null, backgroundPosition: item?.spanOpponents != null ? '0% 32%' : null}"
             >
+            <span class="tw">
+
+            
             <span class="index-rank" [ngClass]="{'dn' : sport === 'nfl' && ndk}">{{ i + 1 }}</span>
             <span (click)="authorize(item, sport)" class="point" (mouseover)="$event.stopPropagation()" (mouseout)="$event.stopPropagation()">
               <img
@@ -74,7 +80,7 @@
                   
               </span>
 
-              <span class="team-image {{sport}}">
+              <span *nfIf="item?.spanOpponents == null" class="team-image {{sport}}">
                 <img src="{{ item?.team?.logo }}" alt="{{ item?.team?.name }} logo" loading="lazy" />
               </span>
 
@@ -109,7 +115,7 @@
                     
                   </span>
                 </span>
-                <span *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && statType != 'tackles' && statType != 'interceptions'">
+                <span class="three-week" *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && statType != 'tackles' && statType != 'interceptions'">
                     <span *ngIf="item?.spanOpponents.length &gt; 0">
                       <span class="sm" *ngFor="let team of item?.spanOpponents; let i = index;" 
                       [ngClass]="{'red' : team?.dRank &lt;= 10, 'orange' : team?.dRank > 10 && team?.dRank &lt;= 21, 'green' : team?.dRank > 21}">
@@ -166,6 +172,7 @@
                 </span>
               </span>
             </span>
+          </span>
           </span>
         </div>
       </div>
