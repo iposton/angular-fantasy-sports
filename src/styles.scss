@@ -2443,6 +2443,11 @@ form input[type="text"] {
 
 @media only screen and (max-width: 600px) {
 
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .game-text, 
+  .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .center-content .run-pct {
+    font-size: 14px;
+  }
+
   .nfl-page .card-wrap-sp .mat-card-sp .bottom-content {
     font-size: 13px;
   }
