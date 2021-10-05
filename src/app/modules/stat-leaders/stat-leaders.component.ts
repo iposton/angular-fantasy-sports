@@ -895,7 +895,7 @@ export class StatLeadersComponent implements OnInit {
           this.nflData = stats
           
 
-          this.nflRookies = res['playerStatsTotals'].filter(
+          this.nflRookies = this.nflData.filter(
             player => player.player.rookie === true);
             console.log('rookies', this.nflRookies)
           teamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition);
