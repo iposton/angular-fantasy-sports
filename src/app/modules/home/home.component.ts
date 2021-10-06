@@ -86,13 +86,16 @@ export class HomeComponent implements OnInit {
   public testBrowser: boolean;
   public nhlSelectedDate: any;
   public nbaSelectedDate: any;
+  public mlbSelectedDate: any;
   public nhlPlayoffDate: string;
   public isNHLPlayoffs: boolean = false;
   public nhlSeason: string;
   public nbaPlayoffDate: string;
   public isNBAPlayoffs: boolean = false;
   public nbaSeason: string;
-  
+  public mlbPlayoffDate: string;
+  public isMLBPlayoffs: boolean = false;
+  public mlbSeason: string;
 
   tweetDay: any;
   apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-regular";
@@ -137,14 +140,17 @@ export class HomeComponent implements OnInit {
     let date = new Date();
     this.nhlSelectedDate = new Date();
     this.nbaSelectedDate = new Date();
+    this.mlbSelectedDate = new Date();
     if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
       this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
     }
 
     this.nhlPlayoffDate = 'Fri May 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.nbaPlayoffDate = 'Mon May 17 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.mlbPlayoffDate = 'Tue Oct 5 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.checkPlayoffs(new Date(this.nhlSelectedDate), 'nhl')
     this.checkPlayoffs(new Date(this.nbaSelectedDate), 'nba')
+    this.checkPlayoffs(new Date(this.mlbSelectedDate), 'mlb')
 
     this.testBrowser = isPlatformBrowser(platformId);
     this.nflSched = true;
@@ -173,8 +179,17 @@ export class HomeComponent implements OnInit {
       if (this.isNBAPlayoffs)
         this.nbaSeason = '2021-playoff'
     }
-    
-    
+
+    if (type === 'mlb') {
+      if (date > new Date(this.mlbPlayoffDate))
+        this.isMLBPlayoffs = true;
+      else
+        this.isMLBPlayoffs = false;
+
+      this.dataService.isPlayoffs = this.isMLBPlayoffs;
+      if (this.isMLBPlayoffs)
+        this.mlbSeason = '2021-playoff'
+    }  
   }
 
   public getByDate(event) {
@@ -201,6 +216,10 @@ export class HomeComponent implements OnInit {
     if (this.mlbSched) {
       this.mlbLoading = true;
       this.dataService.selectedDate(event);
+      this.mlbSelectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+      this.checkPlayoffs(new Date(this.mlbSelectedDate), 'nhl')
+      this.dataService.checkDay();
+      this.mlbSchedule = [];
       this.loadMLB();
     }
     
