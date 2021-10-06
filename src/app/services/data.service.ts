@@ -33,11 +33,11 @@ export class DataService {
   public hitterinfo: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2020-regular";
+  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-playoff";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
   public dailyDate: any;
   public isToday: boolean = false;
-
-  //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,T,C,TE
+  public isPlayoffs: boolean = false;
 
   constructor(private http: HttpClient) {
     this.dailyDate = dailyDate;
@@ -95,9 +95,19 @@ export class DataService {
   }
 
   public getDailySchedule() {
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/games.json`;
-    this.schedule = this.http.get(url, {headers})
-    return this.schedule;
+      let url = null;
+      console.log(this.isPlayoffs, 'getting MLB schedule is playoffs?')
+      if (this.isPlayoffs) {
+        this.apiRoot = this.apiRootPO;
+      } else {
+        this.apiRoot = this.apiRoot;
+      }
+      url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
+      this.schedule = this.http.get(url, {headers})
+      return this.schedule;
+    // let url = `https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular/date/${dailyDate}/games.json`;
+    // this.schedule = this.http.get(url, {headers})
+    // return this.schedule;
   }
 
   public getBatStats(players) {

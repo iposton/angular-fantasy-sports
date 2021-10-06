@@ -96,6 +96,9 @@ export class StartingPitcherComponent implements OnInit {
   public startingP: any;
   public selectedDate: any;
   public compareDate: any;
+  public isPlayoffs: boolean;
+  public playoffDate: string;
+  public season: string;
  
   
   constructor(private fbService: FirebaseService, 
@@ -121,6 +124,21 @@ export class StartingPitcherComponent implements OnInit {
     this.selectedDate = new Date();
     this.compareDate = new Date();
     this.dataService.checkDay();
+    this.season = '2021-regular'
+    this.playoffDate = 'Tue Oct 5 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.checkPlayoffs(new Date(this.selectedDate))
+    this.apiRoot = `https://api.mysportsfeeds.com/v2.1/pull/mlb/${this.season}`;
+  }
+
+  public checkPlayoffs(date) {
+    if (date > new Date(this.playoffDate)) {
+      this.season = '2021-playoff'
+      this.isPlayoffs = true;
+      this.dataService.isPlayoffs = this.isPlayoffs;
+    } else {
+      this.isPlayoffs = false;
+      this.dataService.isPlayoffs = this.isPlayoffs;
+    }    
   }
 
   public statToggle() {
@@ -176,6 +194,7 @@ export class StartingPitcherComponent implements OnInit {
     this.dataService.selectedDate(event);
     this.selectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
     this.compareDate = this.util.formatTime(this.selectedDate)
+    this.checkPlayoffs(new Date(this.selectedDate))
     this.dataService.checkDay();
     //empty old data on data change 
     this.dailySchedule = [];

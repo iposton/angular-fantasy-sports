@@ -322,6 +322,19 @@ footer {
 
     .player-infos.sm {
 
+      .fn {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 200;
+      }
+
+      .ln {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 800;
+        font-style: italic;
+      }
+
       font-size: 14px;
       .team-image img {
         width: 38px;
@@ -415,7 +428,7 @@ footer {
 
   .left-content.sm {
     height: 100px;
-    margin-top: 0;
+    margin-top: 3px;
     padding-top: 5px;
     // img {
     //   height: 40px;
@@ -760,6 +773,8 @@ ul {
     .player-infos {
       font-weight: 200;
       color: #fff;
+
+     
 
       .injury-circle {
         font-family: roboto; 
