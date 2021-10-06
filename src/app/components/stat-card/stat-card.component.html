@@ -7,7 +7,7 @@
     <div class="content-wrapper">
       <div class="row">
         <div *ngFor="let item of sortStats(data, statType, statField, order, ndk, seasonLength, eliteStat ? eliteStat : 0); let i = index" 
-        [ngStyle]="{width: item?.spanOpponents != null ? '100%' : null, height: item?.spanOpponents != null ? '110px' : null}">
+        [ngStyle]="{width: item?.spanOpponents != null ? '100%' : '100%'}">
            
           <span
             [ngClass]="{
@@ -74,11 +74,14 @@
           </span>
             <span class="player-infos" [ngClass]="{'sm' : item?.spanOpponents != null}">
               <span *ngIf="item.player?.rookie === true && !ndk" class="rookie">R</span>
-              <span class="names">
+              <span class="names" *ngIf="item?.spanOpponents == null">
                   {{ !mobile && !ndk && item?.spanOpponents == null ? item.player.firstName + " " + item.player.lastName : item.player.lastName}} 
-                   <span> - {{ item?.player?.primaryPosition }}</span> 
-                  
+                   <span> - {{ item?.player?.primaryPosition }}</span>  
               </span>
+              <span class="names" *ngIf="item?.spanOpponents != null">
+                <span class="fn">{{item.player.firstName}} </span>  <span class="ln"> {{item.player.lastName}}</span>
+                 <span> - {{ item?.player?.primaryPosition }}</span>  
+               </span>
 
               <span *nfIf="item?.spanOpponents == null" class="team-image {{sport}}">
                 <img src="{{ item?.team?.logo }}" alt="{{ item?.team?.name }} logo" loading="lazy" />

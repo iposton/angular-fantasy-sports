@@ -237,7 +237,7 @@ export class StatLeadersComponent implements OnInit {
 
     if (this.sport === 'mlb') {
       this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular" : 
-      "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
+      "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-playoff";
 
       this.mlbSeasonType = this.mlbSeason ? "2021-regular" : "2021-playoff";
       
