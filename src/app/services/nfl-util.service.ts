@@ -182,7 +182,7 @@ export class NflUtilService {
         offenseRankLs: 32,
         city: "New York",
         name: "Jets",
-        twitter: "#JetsNation",
+        twitter: "#TakeFlight",
         abbreviation: "NYJ",
         teamColoursHex: [
         "#125740",
@@ -1567,11 +1567,32 @@ export class NflUtilService {
           lastName: "McCourty",
           image: nflImageRoot+"myk5ccdezt1lhjc8szbm"
         },
-        
- 
-        
-        
-
+        "9753": {
+          firstName: "Matt",
+          lastName: "Judon",
+          image: nflImageRoot+"gzqaca6m73uzgwczrw7z"
+        },
+        "18961": {
+          firstName: "Tae",
+          lastName: "Crowder",
+          image: nflImageRoot+"kzdlpqta1ngescib3es0"
+        },
+        "17072": {
+          firstName: "Jalen",
+          lastName: "Thompson",
+          image: nflImageRoot+"ldeja3lkrjadp11cz1jo"
+        },
+        "6371": {
+          firstName: "Graham",
+          lastName: "Gano",
+          image: nflImageRoot+"kibotlfb4ipuxdirxzp0"
+        },
+        "16066": {
+          firstName: "Chase",
+          lastName: "McLaughlin",
+          image: nflImageRoot+"kehs9z6fpllcdqzdkvmo"
+        },
+       
         // "": {
         //   firstName: "",
         //   lastName: "Perryman",

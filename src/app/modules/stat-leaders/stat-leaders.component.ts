@@ -362,6 +362,8 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public onPosDChange(p) {
+    this.week = 'all'
+    this.timeSpan = 'full'
     this.nflDPosition = p;
     this.defensePlayers();
   }
@@ -1486,14 +1488,12 @@ export class StatLeadersComponent implements OnInit {
 
                 }(Object.create(null)), []);
 
-               
-
                 for (let info of this.nflData) {
                   for (let data of this.reduced) {
                     //info.player.span = false;
                     if (info.player.id === data.id) {
-
-                      if (info.player.position != 'K') {
+                     
+                      if (info.player['primaryPosition'] != 'K') {
                         //qb 
                         info.stats.passing.passYards = data['1'];
                         info.stats.passing.passTD = data['2'];
@@ -1514,6 +1514,7 @@ export class StatLeadersComponent implements OnInit {
                       } else {
                         info.stats.fieldGoals.fgMade = data['9'];
                         info.stats.fieldGoals.longFgMade = data['10'];
+                        info.spanOpponents = data['17'];
                       }
                         //TODO: Get toughness rank per 3 week span
                         info.player.span = this.timeSpan;
