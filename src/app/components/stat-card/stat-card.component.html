@@ -143,7 +143,7 @@
                       </span>
                   </span>
                 </span>
-                <span *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && (statType === 'tackles' || statType === 'interceptions')">
+                <span class="three-week" *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && (statType === 'tackles' || statType === 'interceptions')">
                     <span *ngIf="item?.spanOpponents.length &gt; 0">
                       <span class="sm" *ngFor="let team of item?.spanOpponents; let i = index;" 
                       [ngClass]="{'red' : team?.oRank &lt;= 10, 'orange' : team?.oRank > 10 && team?.oRank &lt;= 21, 'green' : team?.oRank > 21}">
