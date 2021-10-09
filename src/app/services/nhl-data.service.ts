@@ -86,8 +86,8 @@ export class NHLDataService {
   public dailySkaters: Observable <any> = null;
   public games: Observable <any> = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
-  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular";
-  public apiRoot21PO: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-playoff";
+  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-2022-regular";
+  public apiRoot21PO: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2022-playoff";
   public root: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl";
   public headers: any;
   public dailyDate: string = '';
@@ -241,13 +241,13 @@ export class NHLDataService {
   }
 
   public getStats(teams) {
-    let url = `${this.root}/2021-playoff/player_stats_totals.json?position=G`;
+    let url = `${this.root}/2020-2021-regular/player_stats_totals.json?position=G`;
     this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
   public getSkateStats(players) {
-    let url = `${this.root}/2021-playoff/player_stats_totals.json?player=`+players;
+    let url = `${this.root}/2020-2021-regular/player_stats_totals.json?player=`+players;
     this.skateStats = this.http.get(url, {headers})
     return this.skateStats;
   }
@@ -374,17 +374,17 @@ export class NHLDataService {
     let printbegin = null;
     let printend = null;
     if (nextWeek) {
-      season = '2021-playoff'
-      begin = '20210614';
-      printbegin = '6/14';
-      end = '20210620';
-      printend = '6/20 - Playoffs';
+      season = '2021-2022-regular'
+      begin = '20211020';
+      printbegin = '10/20';
+      end = '20211026';
+      printend = '10/26';
     } else {
-      season = '2021-playoff'
-      begin = '20210607';
-      printbegin = '6/7';
-      end = '20210613';
-      printend = '6/13 - Playoffs';   
+      season = '2021-2022-regular'
+      begin = '20211012';
+      printbegin = '10/12';
+      end = '20211019';
+      printend = '10/19';   
     }
       let team;
       let teamSchedule;

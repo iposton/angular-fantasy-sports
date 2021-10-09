@@ -178,15 +178,15 @@ export class StartingGoaliesComponent implements OnInit {
     this.depth = this.depthService.getNHLDepth();
     this.spinTitle = 'Goalie Stats';
     this.dataService.checkDay();
-    this.playoffDate = 'Fri May 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.playoffDate = 'Fri May 14 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.checkPlayoffs(new Date(this.selectedDate))
-    this.season = '2020-2021-regular'
+    this.season = '2021-2022-regular'
     this.apiRoot = `https://api.mysportsfeeds.com/v2.1/pull/nhl/${this.season}`;
   }
 
   public checkPlayoffs(date) {
     if (date > new Date(this.playoffDate)) {
-      this.season = '2021-playoff'
+      this.season = '2022-playoff'
       this.isPlayoffs = true;
       this.dataService.isPlayoffs = this.isPlayoffs;
     } else {
@@ -196,7 +196,8 @@ export class StartingGoaliesComponent implements OnInit {
   }
 
   public getSchedules() {
-    this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
+    console.log('cant get shcedule yet')
+    //this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
   }
 
   public statToggle() {
@@ -399,7 +400,8 @@ export class StartingGoaliesComponent implements OnInit {
               this.gamesToday = true;
               //this.sortData(); //work around when no games
               if (this.dataService.nhlTeamsSched.length === 0) {
-                this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
+                console.log('cant get schedules yet')
+               // this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
               }
 
               forkJoin(
@@ -523,7 +525,7 @@ export class StartingGoaliesComponent implements OnInit {
   })
 
   this.dataService
-    .getTeamStats(this.apiRoot, '').subscribe(res => {
+    .getTeamStats('https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular', '').subscribe(res => {
       this.teamStatsUpdate = res['lastUpdatedOn'];
       this.teamStats = res['teamStatsTotals'];         
   });
@@ -997,7 +999,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
           if (this.starterIdData.length > 0) {
-            console.log('start sorting data for starters matchups...');
+            console.log('start sorting data for starters matchups...', this.starterIdData, this.myData);
             for (let startid of this.starterIdData) {
 
               for (let startdata of this.myData) {

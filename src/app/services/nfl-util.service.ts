@@ -1592,6 +1592,24 @@ export class NflUtilService {
           lastName: "McLaughlin",
           image: nflImageRoot+"kehs9z6fpllcdqzdkvmo"
         },
+        "10014": {
+          firstName: "Alex",
+          lastName: "Collins",
+          image: nflImageRoot+"ddlhbm7zsi5o69wh6z5o"
+        },
+        "12705": {
+          firstName: "Ricky",
+          lastName: "Seals-Jones",
+          image: nflImageRoot+"qodkouwmexklezoqmcg6"
+        },
+        "7373": {
+          firstName: "Damien",
+          lastName: "Williams",
+          image: nflImageRoot+"n8s6juvkggzwt8ejry63"
+        },
+        
+        
+       
        
         // "": {
         //   firstName: "",

@@ -145,8 +145,8 @@ export class HomeComponent implements OnInit {
       this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
     }
 
-    this.nhlPlayoffDate = 'Fri May 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
-    this.nbaPlayoffDate = 'Mon May 17 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.nhlPlayoffDate = 'Fri May 14 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.nbaPlayoffDate = 'Mon May 17 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.mlbPlayoffDate = 'Tue Oct 5 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.checkPlayoffs(new Date(this.nhlSelectedDate), 'nhl')
     this.checkPlayoffs(new Date(this.nbaSelectedDate), 'nba')
@@ -166,7 +166,7 @@ export class HomeComponent implements OnInit {
 
       this.nhlDataService.isPlayoffs = this.isNHLPlayoffs;
       if (this.isNHLPlayoffs)
-        this.nhlSeason = '2021-playoff'
+        this.nhlSeason = '2022-playoff'
     }
 
     if (type === 'nba') {
@@ -177,7 +177,7 @@ export class HomeComponent implements OnInit {
 
       this.nbaDataService.isPlayoffs = this.isNBAPlayoffs;
       if (this.isNBAPlayoffs)
-        this.nbaSeason = '2021-playoff'
+        this.nbaSeason = '2022-playoff'
     }
 
     if (type === 'mlb') {
