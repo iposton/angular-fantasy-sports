@@ -6,6 +6,7 @@ import { NFLDataService,
          NflUtilService } from '../../services/index';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, interval, forkJoin } from 'rxjs';
+import { delay, debounceTime } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js';
 let headers = null;
 let playerString = null;
@@ -216,9 +217,11 @@ export class NflStartersComponent implements OnInit {
             
               forkJoin(
                   res['games'].map(
+                    
                     g => 
                     
-                     this.http.get(`${parseInt(this.selectedWeek) > 17 ? this.poRoot : this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Offense-WR-2`, { headers })
+                     this.http.get(`${parseInt(this.selectedWeek) > 17 ? this.poRoot : this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Offense-WR-2`, { headers }).pipe(
+                      debounceTime(500))
                     
                   )
                 )

@@ -43,8 +43,8 @@ export class NBADataService {
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
-  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
-  public apiRoot21PO: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2021-playoff";
+  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2021-2022-regular";
+  public apiRoot21PO: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2022-playoff";
   public dailyDate: any;
   public isTomorrow: boolean = false;
   public isToday: boolean = false;

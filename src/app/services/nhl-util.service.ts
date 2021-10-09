@@ -45,17 +45,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'8467950.jpg',
         new: false
       },
-      '4863':{
-        id: 4863,
-        firstName: "Braden",
-        lastName: "Holtby",
-        teamId: 21,
-        abbreviation: "VAN",
-        active: true,
-        numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
-      },
       '5908': {
         id: 5908,
         firstName: "Jordan",
@@ -280,8 +269,8 @@ export class NhlUtilService {
         id: 5540,
         firstName: "Chris",
         lastName: "Driedger",
-        teamId: 4,
-        abbreviation: "FLO",
+        teamId: 143,
+        abbreviation: "SEA",
         active: false,
         numberOne: false,
         img: nhlImageRoot+'8476904.jpg',
@@ -607,17 +596,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
-      '11703': {
-        id: 11703,
-        firstName: "Alex",
-        lastName: "Nedeljkovic",
-        teamId: 3,
-        abbreviation: "CAR",
-        active: true,
-        numberOne: false,
-        img: nhlImageRoot+'8477968.jpg',
-        new: false
-      },
       '4947': {
         id: 4947,
         firstName: "Alex",
@@ -761,6 +739,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8479979.jpg',
         new: false
       },
+      '4863':{
+        id: 4863,
+        firstName: "Braden",
+        lastName: "Holtby",
+        teamId: 27,
+        abbreviation: "DAL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
+      },
       '4763': {
         id: 4763,
         firstName: "Anton",
@@ -798,8 +787,8 @@ export class NhlUtilService {
         id: 5176,
         firstName: "Philipp",
         lastName: "Grubauer",
-        teamId: 22,
-        abbreviation: "COL",
+        teamId: 143,
+        abbreviation: "SEA",
         active: true,
         numberOne: true,
         img: nhlImageRoot+'0.jpg',
@@ -1046,6 +1035,17 @@ export class NhlUtilService {
         numberOne: false,
         img: nhlImageRoot+'8480760.jpg',
         new: true
+      },
+      '11703': {
+        id: 11703,
+        firstName: "Alex",
+        lastName: "Nedeljkovic",
+        teamId: 16,
+        abbreviation: "DET",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8477968.jpg',
+        new: false
       },
       '4351': {
         id: 4351,
@@ -1619,6 +1619,10 @@ export class NhlUtilService {
         name: "Stars",
         abbreviation: "DAL", 
         twitter: "#GoStars",
+        teamColoursHex: [
+          "#006847",
+          "#8f8f8c",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/25.svg"
       },
       "LAK": {
@@ -1627,6 +1631,10 @@ export class NhlUtilService {
         name: "Kings",
         abbreviation: "LAK",
         twitter: "#GoKingsGo",
+        teamColoursHex: [
+          "#111111",
+          "#a2aaad",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/26.svg"
       },
       "ANA": {
@@ -1635,6 +1643,10 @@ export class NhlUtilService {
         name: "Ducks",
         abbreviation: "ANA",
         twitter: "#FlyTogether",
+        teamColoursHex: [
+          "#f47a38",
+          "#b9975b",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/24.svg"
       },
       "ARI": {
@@ -1643,6 +1655,10 @@ export class NhlUtilService {
         name: "Coyotes",
         abbreviation: "ARI",
         twitter: "#Yotes",
+        teamColoursHex: [
+          "#8c2633",
+          "#e2d6b5",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/53.svg"
       },
       "VGK": {
@@ -1651,8 +1667,23 @@ export class NhlUtilService {
         name: "Golden Knights",
         abbreviation: "VGK",
         twitter: "#VegasBorn",
+        teamColoursHex: [
+          "#b4975a",
+          "#333f42",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/54.svg"
-      }
+      },
+      "SEA": {
+        id: 143,
+        city: "Seattle",
+        name: "Kraken",
+        abbreviation: "SEA",
+        teamColoursHex: [
+        "#355464",
+        "#68a2b9",
+        ],
+        officialLogoImageSrc: "https://cms.nhl.bamgrid.com/images/assets/binary/317578370/binary-file/file.svg"
+        }
     }
     
    }
