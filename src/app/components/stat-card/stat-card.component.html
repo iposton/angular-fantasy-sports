@@ -83,7 +83,7 @@
                  <span> - {{ item?.player?.primaryPosition }}</span>  
                </span>
 
-              <span *nfIf="item?.spanOpponents == null" class="team-image {{sport}}">
+              <span *ngIf="!item?.spanOpponents" class="team-image {{sport}}">
                 <img src="{{ item?.team?.logo }}" alt="{{ item?.team?.name }} logo" loading="lazy" />
               </span>
 

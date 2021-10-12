@@ -33,9 +33,9 @@ export class StatLeadersComponent implements OnInit {
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
   public mlbApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
   public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular";
-  public nbaSeasonType: string = "2021-playoff";
+  public nbaSeasonType: string = "2020-2021-regular";
   public nflSeasonType: string = "2020-2021-regular";
-  public nhlSeasonType: string = "2021-playoff";
+  public nhlSeasonType: string = "2020-2021-regular";
   public mlbSeasonType: string = "2021-regular";
   public myData: Array <any>;
   public fgPlayers: Array <any>;
@@ -135,8 +135,8 @@ export class StatLeadersComponent implements OnInit {
 
 
   public crunchedDef: Array <any> = [];
-  public nhlSeason: boolean = false;
-  public nbaSeason: boolean = false;
+  public nhlSeason: boolean = true;
+  public nbaSeason: boolean = true;
   public mlbSeason: boolean = true;
   public nflPosition: string;
   public nflDPosition: string;
@@ -226,7 +226,7 @@ export class StatLeadersComponent implements OnInit {
     }
 
     if (this.sport === 'nhl') {
-        this.nhlSeasonType = this.nhlSeason ? "2021-regular" : "2021-playoff";
+        this.nhlSeasonType = this.nhlSeason ? "2020-2021-regular" : "2021-playoff";
         //get nhl playoffs
         if (this.nhlSection) { 
           this.sortNHL();
@@ -484,24 +484,10 @@ export class StatLeadersComponent implements OnInit {
             }  
           }
 
-        //   this.nhlService
-        //   .getInfoSkaters().subscribe(res => {
-            
-        //     this.newGoalieData = res['players'];
-        //     for (let n of this.newGoalieData) {
-        //       for (let old of this.nhlSkaters) {
-        //         if (old.player['currentTeam'] != null)
-        //           old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-        //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-        //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
-        //           old.team.id = n['teamAsOfDate'].id;
-        //         } 
-                
-        //       }
-        //     }
-        //     this.util.teamInfo(this.nhlSkaters, nhlTeamsArray);
-            
-        // });
+        this.nhlService
+          .getInfoSkaters().subscribe(res => {
+            this.util.updatePlayers(res['players'], this.nhlSkaters, nhlTeamsArray);
+        })
 
         if (this.timeSpan === 'full') {
           this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D');
@@ -545,24 +531,10 @@ export class StatLeadersComponent implements OnInit {
           }  
         }
 
-        // this.nhlService
-        //   .getInfo().subscribe(res => {
-            
-        //     this.newGoalieData = res['players'];
-        //     for (let n of this.newGoalieData) {
-        //       for (let old of this.nhlGoaltenders) {
-        //         if (old.player['currentTeam'] != null)
-        //           old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-        //         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-        //           old.player['currentTeam'].id = n['teamAsOfDate'].id;
-        //           old.team.id = n['teamAsOfDate'].id;
-        //         } 
-                
-        //       }
-        //     }
-        //     this.util.teamInfo(this.nhlGoaltenders, nhlTeamsArray);
-        //     // this.nflOffenseLoading = false;
-        // });
+        this.nhlService
+          .getInfo().subscribe(res => {
+            this.util.updatePlayers(res['players'], this.nhlGoaltenders, nhlTeamsArray);
+        })
 
         
         if (this.timeSpan != 'full') {
@@ -613,6 +585,11 @@ export class StatLeadersComponent implements OnInit {
               
             }  
           }
+
+          this.nbaService.allInfo().subscribe(res => {
+            this.util.updatePlayers(res['players'], this.myData, nbaTeamsArray);
+          })
+
           if (this.timeSpan != 'full')
             this.spanGames();
           

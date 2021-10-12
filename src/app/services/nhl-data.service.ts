@@ -375,16 +375,16 @@ export class NHLDataService {
     let printend = null;
     if (nextWeek) {
       season = '2021-2022-regular'
-      begin = '20211020';
-      printbegin = '10/20';
-      end = '20211026';
-      printend = '10/26';
+      begin = '20211018';
+      printbegin = '10/18';
+      end = '20211024';
+      printend = '10/24';
     } else {
       season = '2021-2022-regular'
       begin = '20211012';
       printbegin = '10/12';
-      end = '20211019';
-      printend = '10/19';   
+      end = '20211017';
+      printend = '10/17';   
     }
       let team;
       let teamSchedule;
