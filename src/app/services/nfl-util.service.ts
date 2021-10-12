@@ -1312,7 +1312,7 @@ export class NflUtilService {
         },
         "6756": {
           firstName: "Emmanuel",
-          lastName: "Saunders",
+          lastName: "Sanders",
           image: nflImageRoot+"potkibjtm855tsawozs0"
         },
         "6479": {
@@ -1607,10 +1607,24 @@ export class NflUtilService {
           lastName: "Williams",
           image: nflImageRoot+"n8s6juvkggzwt8ejry63"
         },
+        "8109": {
+          firstName: "Antonio",
+          lastName: "Brown",
+          image: nflImageRoot+"ecxsx9t7bfg42bgfwj3v"
+        },
+        "8548": {
+          firstName: "Mike",
+          lastName: "Glennon",
+          image: nflImageRoot+"mubobrjbeudtezxv0t0p"
+        },
+        "13281": {
+          firstName: "Marcus",
+          lastName: "Johnson",
+          image: nflImageRoot+"zliegu0pfjyehqw1ozzh"
+        },
         
         
-       
-       
+        
         // "": {
         //   firstName: "",
         //   lastName: "Perryman",

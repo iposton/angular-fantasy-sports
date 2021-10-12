@@ -543,38 +543,19 @@ export class StartingGoaliesComponent implements OnInit {
       if (res != null) values = res['playerStatsTotals'];
       this.myData = this.util.removeDuplicatesBy(x => x.player.id, values)
 
-      // this.dataService
-      //     .getGoaliesToday(teamString).subscribe(res => {
-      //       console.log('got players');
-      //       this.newGoalieData = res['players'];
-      //       for (let n of this.newGoalieData) {
+      this.dataService
+          .getGoaliesToday(teamString).subscribe(res => {
+
               for (let old of this.myData) {
                 old.player.gameLocation = "none";
-                // if (old.player['currentTeam'] != null)
-                //   old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                // if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                //   old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                //   old.player['currentTeam'].abbreviation = n['teamAsOfDate'].abbreviation;
-                //   old.team.abbreviation = n['teamAsOfDate'].abbreviation;
-                //   old.team.id = n['teamAsOfDate'].id;
-                // } 
-                
-                // if (old.player.officialImageSrc != null) {
-                //   specialImgNum = old.player.officialImageSrc.substring(
-                //     old.player.officialImageSrc.lastIndexOf("/") + 1, 
-                //     old.player.officialImageSrc.lastIndexOf(".")
-                //     );
-                    
-                //   old.player.officialImageSrc = "https://cms.nhl.bamgrid.com/images/headshots/current/168x168/"+specialImgNum+".jpg";
-                // }
+            
   
                 if (old.player.officialImageSrc == null) {
                   old.player.officialImageSrc = this.playerImages[old.player.id] != null ? this.playerImages[old.player.id].image : null;
                 }
 
                 if (this.startingG[old.player.id] != null) {
-                  this.startingG[old.player.id].new = false;
-                  
+                  this.startingG[old.player.id].new = false; 
                 }
               
             }
@@ -590,18 +571,21 @@ export class StartingGoaliesComponent implements OnInit {
                 newGoalie.player.currentTeam.id = startingGoalies[index]['teamId'];
                 newGoalie.player.currentTeam.abbreviation = startingGoalies[index]['abbreviation'];
                 newGoalie.player.officialImageSrc = startingGoalies[index]['img'];
-                newGoalie.team.id =  startingGoalies[index]['teamId'];
+                newGoalie.team.id = startingGoalies[index]['teamId'];
                 newGoalie.team.abbreviation =  startingGoalies[index]['abbreviation'];
                 this.myData.push(newGoalie)
               }  
             });
 
-            this.util.teamInfo(this.myData, nhlTeamsArray);
+            // this.util.teamInfo(this.myData, nhlTeamsArray);
+          
+            this.util.updatePlayers(res['players'], this.myData, nhlTeamsArray);
+            
             // this.nflOffenseLoading = false;
-        //});
+        })
 
-        //console.log('waiting 6 seconds');
-        //await sleep(6000);
+        console.log('waiting 6 seconds');
+        await sleep(6000);
         if (this.myData && this.dailySchedule) {
           //console.log('ok 6 seconds up lets go!!')
           if (this.dataService.isToday) {
@@ -678,6 +662,7 @@ export class StartingGoaliesComponent implements OnInit {
                   sdata.team.opponent = team.city +' '+ team.name;   
                   sdata.team.opponentCity = team.city;
                   sdata.team.opponentName = team.name;
+                  sdata.team.opponentLogo = team.logo;
                 }
 
               }
@@ -700,6 +685,7 @@ export class StartingGoaliesComponent implements OnInit {
                   sdata.team.opponent = team.city +' '+ team.name;   
                   sdata.team.opponentCity = team.city;
                   sdata.team.opponentName = team.name;
+                  sdata.team.opponentLogo = team.officialLogoImageSrc;
                 }
 
               }
@@ -727,7 +713,7 @@ export class StartingGoaliesComponent implements OnInit {
             if (sdata.team != null && sdata.team.opponentId != null && schedule.player.currentTeam != null &&
               sdata.team.opponentId === schedule.player.currentTeam.id && 
               sdata.gameId === schedule.gameId) {
-              sdata.team.opponentLogo = schedule.team.logo;
+              // sdata.team.opponentLogo = schedule.team.logo;
               sdata.team.opponentCity = schedule.team.city;
               sdata.team.opponentName = schedule.team.name;
               sdata.opponentColor = schedule.team.color;
@@ -1037,7 +1023,7 @@ export class StartingGoaliesComponent implements OnInit {
                }
 
                if (this.dataService.isTomorrow) {
-                //console.log('is tomorrow is true pushing on likely goalies');
+                //console.log(startdata.player.firstName + " " + startdata.player.lastName, startdata, 'is tomorrow is true pushing on likely goalies');
                 if (startdata.player.currentTeam != null && 
                   startid === startdata.player.currentTeam.id && 
                   this.startingG[startdata.player.id] != null && 
@@ -1046,15 +1032,16 @@ export class StartingGoaliesComponent implements OnInit {
 
                     startdata.player.startingToday = false;
                     startdata.player.likelyStartingToday = true;
-                    //console.log(startdata.player.FirstName + " " + startdata.player.LastName, "this goalie is not starting yet. but he might start.");
+                    //console.log(startdata.player.firstName + " " + startdata.player.lastName, "this goalie is not starting yet. but he might start.");
                     this.startersData.push(startdata);
+                    console.log(this.startersData, 'starters')
 
 
                   }
                 } else if (startdata.team != null && this.startersDateTomorrow != startdata.team.today && startid === startdata.player.id) {
                   if (startdata.player.saves == null || startdata.player.saves == '0') {
 
-                    //console.log(startdata.player, 'expected goalies from api');
+                    console.log(startdata.player, 'expected goalies from api');
                     startdata.player.startingToday = true;
                     startdata.player.startingTodayNow = false;
                     if (this.fullFirebaseResponse[3][startdata.player.id] != null) {

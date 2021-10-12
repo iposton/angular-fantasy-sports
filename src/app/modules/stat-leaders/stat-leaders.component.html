@@ -41,7 +41,7 @@
 </div>
 <div class="center buttons">
    <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button> 
-   <button [ngClass]="{'dn' : !nbaSection && !nhlSection && !mlbSection && !mlbHittingSection}" (click)="nhlSeason = !nhlSeason; nbaSeason = !nbaSeason; mlbSeason = !mlbSeason; updateEndpoint(); timeSpan = 'full'">{{nhlSeason ? 'Playoffs' : nbaSeason ? 'Playoffs' : mlbSeason ? 'Playoffs' : 'Season'}}</button>
+   <button [ngClass]="{'dn' : !nbaSection && !mlbSection && !mlbHittingSection}" (click)="nbaSeason = !nbaSeason; mlbSeason = !mlbSeason; updateEndpoint(); timeSpan = 'full'">{{nbaSeason ? 'Playoffs' : mlbSeason ? 'Playoffs' : 'Season'}}</button>
    <button [ngClass]="{'dn' : !nhlSection}" (click)="goalies(); nhlSection = false; nhlGoalies = true; timeSpan = 'full'">NHL Goalies</button>  
    <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false; timeSpan = 'full'">NHL Skaters</button>
    <button [ngClass]="{'dn' : !mlbSection}" (click)="loadHitters(); timeSpan = 'full'">MLB Hitters</button>  

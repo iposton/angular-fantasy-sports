@@ -122,17 +122,21 @@ export class UtilService {
         if (old.player['currentTeam'] != null)
           old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
         if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-          if (old.player['currentTeam'] != null)
-            old.player['currentTeam'].id = n['teamAsOfDate'].id;
-          else if (old.player['currentTeam'] == null)
-            old.player['currentTeam'] = {id: n['teamAsOfDate'].id};
-          old.team.id = n['teamAsOfDate'].id;
+          if (old.player['currentTeam'] != null) {
+            old.player['currentTeam'].id = n['teamAsOfDate'].id
+            old.player['currentTeam'].abbreviation = n['teamAsOfDate'].abbreviation
+          } else if (old.player['currentTeam'] == null) {
+            old.player['currentTeam'] = {id: n['teamAsOfDate'].id}
+          } 
+          old.team.id = n['teamAsOfDate'].id;    
+          old.team.abbreviation = n['teamAsOfDate'].abbreviation;
 
           // if (old.player.id === 7457) {
           //   old.player['currentTeam'].id = 72;
           //   old.team.id = 72;
           //   old.team.abbreviation = 'DEN';
           // }
+
           old.player.unsigned = false;
           if (old.player.id === 16494) {
             old.player.unsigned = true;

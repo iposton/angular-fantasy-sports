@@ -137,17 +137,10 @@ export class NBADataService {
     return this.schedule;
   }
 
-  getStats(players) {
-
-    //if (!this.stats) {
-      //console.log('getting cumulative_player_stats by player ID from API...', players);
-      //let url = `${this.apiRoot}/cumulative_player_stats.json?position=PG,SG,SF,PF,C&player=`+playerID;
-      //let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2018-2019-regular/player_stats_totals.json?position=PG,SG,SF,PF,C`; 
+  public getStats(players) {
       let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/player_stats_totals.json?player=${players}`;
       this.stats = this.http.get(url, {headers})
-      
-    //}
-    return this.stats;
+      return this.stats;
   }
 
    public getAllStats(span, season) {
@@ -162,6 +155,12 @@ export class NBADataService {
 
   public getInfo(data) {
     let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json?player=${data}`;
+    this.info = this.http.get(url, {headers})
+    return this.info;
+  }
+
+  public allInfo() {
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/players.json`;
     this.info = this.http.get(url, {headers})
     return this.info;
   }
