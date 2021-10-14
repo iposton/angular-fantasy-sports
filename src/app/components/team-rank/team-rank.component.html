@@ -20,10 +20,10 @@
                 <span class="team-rec" *ngIf="title === 'Defense Team Rank' || title === 'Offense Team Rank'"> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span> &nbsp; 
                 <span class="team-st" *ngIf="title === 'Defense Team Rank'">
                   <span class="inner-st">
-                    Points Allowed: <span [ngStyle]="{color: item.stats.standings.pointsAgainst &gt; 108 ? '#e74c3c' : 'gold'}">{{item?.stats?.standings?.pointsAgainst}}</span>   &nbsp;
-                    Sacks: <span [ngStyle]="{color: item.stats.tackles.sacks &lt; 9 ? '#e74c3c' : 'gold'}">{{item?.stats?.tackles.sacks}}</span>   &nbsp;
-                    Int: <span [ngStyle]="{color: item.stats.interceptions?.interceptions &lt; 2 ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.interceptions}}</span>   &nbsp;
-                    Passes Defened: <span [ngStyle]="{color: item.stats.interceptions?.passesDefended &lt; 16 ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.passesDefended}}</span> &nbsp;
+                    Points Allowed: <span [ngStyle]="{color: item.stats.standings.pointsAgainst &gt; 129 ? '#e74c3c' : 'gold'}">{{item?.stats?.standings?.pointsAgainst}}</span>   &nbsp;
+                    Sacks: <span [ngStyle]="{color: item.stats.tackles.sacks &lt; 11 ? '#e74c3c' : 'gold'}">{{item?.stats?.tackles.sacks}}</span>   &nbsp;
+                    Int: <span [ngStyle]="{color: item.stats.interceptions?.interceptions &lt; 3 ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.interceptions}}</span>   &nbsp;
+                    Passes Defened: <span [ngStyle]="{color: item.stats.interceptions?.passesDefended &lt; 19 ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.passesDefended}}</span> &nbsp;
                     <span *ngIf="item?.opponentYdsArr && item?.opponentYdsArr.length > 0">
                             <b>Yds Allowed:</b> 
                         <span *ngFor="let g of item?.opponentYdsArr"> 
@@ -34,11 +34,11 @@
                 </span>
                 <span class="team-st" *ngIf="title === 'Offense Team Rank'">
                     <span class="inner-st">
-                    Total Yards: <span [ngStyle]="{color: item.ty &lt; 1000 ? '#e74c3c' : 'gold'}">{{item?.ty}}</span>   &nbsp;
+                    Total Yards: <span [ngStyle]="{color: item.ty &lt; 1250 ? '#e74c3c' : 'gold'}">{{item?.ty}}</span>   &nbsp;
                     Avg Yards Per Play: <span [ngStyle]="{color: item?.stats?.miscellaneous?.offenseAvgYds &lt; 5 ? '#e74c3c' : 'gold'}">{{item?.stats?.miscellaneous?.offenseAvgYds}}</span>   &nbsp;
-                    Sacks Given up: <span [ngStyle]="{color: item?.stats?.passing?.passSacks &gt; 8 ? '#e74c3c' : 'gold'}">{{item?.stats?.passing?.passSacks}}</span>   &nbsp;
-                    Pass TD's: <span [ngStyle]="{color: item?.stats?.passing?.passTD &lt; 5 ? '#e74c3c' : 'gold'}">{{item?.stats?.passing?.passTD}}</span>    &nbsp;
-                    Rush TD's: <span [ngStyle]="{color: item?.stats?.rushing?.rushTD &lt; 4 ? '#e74c3c' : 'gold'}">{{item?.stats?.rushing?.rushTD}}</span>
+                    Sacks Given up: <span [ngStyle]="{color: item?.stats?.passing?.passSacks &gt; 10 ? '#e74c3c' : 'gold'}">{{item?.stats?.passing?.passSacks}}</span>   &nbsp;
+                    Pass TD's: <span [ngStyle]="{color: item?.stats?.passing?.passTD &lt; 7 ? '#e74c3c' : 'gold'}">{{item?.stats?.passing?.passTD}}</span>    &nbsp;
+                    Rush TD's: <span [ngStyle]="{color: item?.stats?.rushing?.rushTD &lt; 5 ? '#e74c3c' : 'gold'}">{{item?.stats?.rushing?.rushTD}}</span>
                   </span>
                 </span> 
                 <span *ngIf="title === 'Toughest Defense Schedule 2021' && item?.scheduleTicker != null">
