@@ -577,9 +577,7 @@ export class StartingGoaliesComponent implements OnInit {
               }  
             });
 
-            // this.util.teamInfo(this.myData, nhlTeamsArray);
-          
-            this.util.updatePlayers(res['players'], this.myData, nhlTeamsArray);
+            this.util.updatePlayers(res['players'], this.myData, nhlTeamsArray)
             
             // this.nflOffenseLoading = false;
         })
@@ -985,7 +983,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
           if (this.starterIdData.length > 0) {
-            console.log('start sorting data for starters matchups...', this.starterIdData, this.myData);
+            //console.log('start sorting data for starters matchups...', this.starterIdData, this.myData);
             for (let startid of this.starterIdData) {
 
               for (let startdata of this.myData) {
@@ -1034,7 +1032,7 @@ export class StartingGoaliesComponent implements OnInit {
                     startdata.player.likelyStartingToday = true;
                     //console.log(startdata.player.firstName + " " + startdata.player.lastName, "this goalie is not starting yet. but he might start.");
                     this.startersData.push(startdata);
-                    console.log(this.startersData, 'starters')
+                    //console.log(this.startersData, 'starters')
 
 
                   }
@@ -1201,8 +1199,8 @@ public showMatchups() {
             this.mySkaterData = this.util.removeDuplicatesBy(x => x.player.id, values);
                   //console.log(this.mySkaterData, 'my batter data');
 
-            // this.dataService
-            //   .getSkatersToday(skaterString).subscribe(res => {
+            this.dataService
+              .getSkatersToday(skaterString).subscribe(res => {
             
             // this.newSkaterData = res['players'];
             // for (let n of this.newSkaterData) {
@@ -1219,9 +1217,10 @@ public showMatchups() {
                 }
               }
            // }
-            this.util.teamInfo(this.mySkaterData, nhlTeamsArray);
+            //this.util.teamInfo(this.mySkaterData, nhlTeamsArray);
+            this.util.updatePlayers(res['players'], this.mySkaterData, nhlTeamsArray);
             // this.nflOffenseLoading = false;
-       // });
+        });
 
                       if (this.skaterIdData.length > 0 || this.noGamesToday === true) {
                         if (this.mySkaterData && this.gameSkaters) {
