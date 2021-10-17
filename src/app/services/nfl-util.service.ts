@@ -626,7 +626,7 @@ export class NflUtilService {
       },
       {
         id: 78,
-        bye: 11,
+        bye: 6,
         defenseRankLs: 19,
         offenseRankLs: 15,
         city: "San Francisco",
@@ -1622,9 +1622,26 @@ export class NflUtilService {
           lastName: "Johnson",
           image: nflImageRoot+"zliegu0pfjyehqw1ozzh"
         },
-        
-        
-        
+        "30440": {
+          firstName: "Micah",
+          lastName: "Parsons",
+          image: nflImageRoot+"u6uanv3mp0skqysqv5wx"
+        },
+        "12688": {
+          firstName: "Haason",
+          lastName: "Reddick",
+          image: nflImageRoot+"ug4cbgz6sttovqkzqgkm"
+        },
+        "19276": {
+          firstName: "Geno",
+          lastName: "Smith",
+          image: nflImageRoot+"jdkrvzqqhkbg62hstgtw"
+        },
+        "30593": {
+          firstName: "Kahlil",
+          lastName: "Herbert",
+          image: nflImageRoot+"q3joomqliqwvrqs9vkmj"
+        },
         // "": {
         //   firstName: "",
         //   lastName: "Perryman",

@@ -241,13 +241,13 @@ export class NHLDataService {
   }
 
   public getStats(teams) {
-    let url = `${this.root}/2020-2021-regular/player_stats_totals.json?position=G`;
+    let url = `${this.root}/2021-2022-regular/player_stats_totals.json?position=G`;
     this.stats = this.http.get(url, {headers})
     return this.stats;
   }
 
   public getSkateStats(players) {
-    let url = `${this.root}/2020-2021-regular/player_stats_totals.json?player=`+players;
+    let url = `${this.root}/2021-2022-regular/player_stats_totals.json?player=`+players;
     this.skateStats = this.http.get(url, {headers})
     return this.skateStats;
   }
