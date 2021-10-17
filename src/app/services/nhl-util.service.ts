@@ -20,8 +20,8 @@ export class NhlUtilService {
         abbreviation: "WSH",
         active: true,
         numberOne: true,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8478492.jpg',
+        new: true
       }, 
       '14365':{
         id: 14365,
@@ -42,8 +42,8 @@ export class NhlUtilService {
         abbreviation: "STL",
         active: true,
         numberOne: true,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8476412.jpg',
+        new: true
       },
       '13661': {
         id: 13661,
@@ -54,7 +54,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8478024.jpg',
-        new: false
+        new: true
       },
       '5033': {
         id: 5033,
@@ -74,7 +74,7 @@ export class NhlUtilService {
         teamId: 12,
         abbreviation: "TOR",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -85,7 +85,7 @@ export class NhlUtilService {
         teamId: 12,
         abbreviation: "TOR",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8475789.jpg',
         new: false
       },
@@ -141,8 +141,8 @@ export class NhlUtilService {
         abbreviation: "SJS",
         active: true,
         numberOne: true,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8478499.jpg',
+        new: true
       },
       '4862': {
         id: 4862,
@@ -153,7 +153,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8473503.jpg',
-        new: false
+        new: true
       },
       '28469': {
         id: 28469,
@@ -230,7 +230,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8470860.jpg',
-        new: false
+        new: true
       },
       '5366': {
         id: 5366,
@@ -243,17 +243,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       }, 
-      '15525': {
-        id: 15525,
-        firstName: "Sam",
-        lastName: "Montembeault",
-        teamId: 4,
-        abbreviation: "FLO",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
-      },
       '15159': {
         id: 15159,
         firstName: "Philippe",
@@ -394,9 +383,9 @@ export class NhlUtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8474682.jpg',
-        new: false
+        new: true
       },
       '10074': {
         id: 10074,
@@ -416,7 +405,7 @@ export class NhlUtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8467950.jpg',
         new: false
       },
@@ -450,8 +439,8 @@ export class NhlUtilService {
         abbreviation: "OTT",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8476899.jpg',
+        new: true
       },
       '15452': {
         id: 15452,
@@ -552,6 +541,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8474596.jpg',
         new: false
       },
+      '15525': {
+        id: 15525,
+        firstName: "Sam",
+        lastName: "Montembeault",
+        teamId: 14,
+        abbreviation: "MTL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: false
+      },
       '17355':{
         id: 17355,
         firstName: "Cayden",
@@ -627,7 +627,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8478039.jpg',
-        new: false
+        new: true
       },
       '5335': {
         id: 5335,
@@ -692,8 +692,8 @@ export class NhlUtilService {
         abbreviation: "BOS",
         active: true,
         numberOne: true,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8476999.jpg',
+        new: true
       }, 
       '28418': {
         id: 28418,
@@ -703,8 +703,8 @@ export class NhlUtilService {
         abbreviation: "BOS",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8480280.jpg',
+        new: true
       },
       '14444': {
         id: 14444,
@@ -769,8 +769,8 @@ export class NhlUtilService {
         abbreviation: "CGY",
         active: true,
         numberOne: true,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8474593.jpg',
+        new: true
       },
       '17974': {
         id: 17974,
@@ -954,7 +954,7 @@ export class NhlUtilService {
         lastName: "Hart",
         teamId: 6,
         abbreviation: "PHI",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -1066,8 +1066,8 @@ export class NhlUtilService {
         abbreviation: "DET",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8471306.jpg',
+        new: true
       },
       '5467': {
         id: 5467,
@@ -1176,8 +1176,8 @@ export class NhlUtilService {
         abbreviation: "LAK",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8471734.jpg',
+        new: true
       },
       '15384': {
         id: 15384,
@@ -1445,7 +1445,7 @@ export class NhlUtilService {
         city: "Florida",
         name: "Panthers",
         abbreviation: "FLO",
-        twitter: "#FlaPanthers",
+        twitter: "#TimeToHunt",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/13.svg"
       },
       "WSH": {
@@ -1629,7 +1629,7 @@ export class NhlUtilService {
         city: "Dallas",
         name: "Stars",
         abbreviation: "DAL", 
-        twitter: "#GoStars",
+        twitter: "#TexasHockey",
         teamColoursHex: [
           "#006847",
           "#8f8f8c",
