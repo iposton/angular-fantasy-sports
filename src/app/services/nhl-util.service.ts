@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-let nhlImageRoot = 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/';
-
+let nhlImageRoot = 'https://cms.nhl.bamgrid.com/images/headshots/current/168x168/'
 @Injectable({
   providedIn: 'root'
 })
@@ -73,7 +72,7 @@ export class NhlUtilService {
         lastName: "Mrazek",
         teamId: 12,
         abbreviation: "TOR",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -89,6 +88,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8475789.jpg',
         new: false
       },
+      '5366': {
+        id: 5366,
+        firstName: "Michael",
+        lastName: "Hutchinson",
+        teamId: 12,
+        abbreviation: "TOR",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8474636.jpg',
+        new: true
+      }, 
       '11724': {
         id: 11724,
         firstName: "David",
@@ -108,8 +118,8 @@ export class NhlUtilService {
         abbreviation: "EDM",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8475156.jpg',
+        new: true
       },
       '3486': {
         id: 3486,
@@ -232,17 +242,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'8470860.jpg',
         new: true
       },
-      '5366': {
-        id: 5366,
-        firstName: "Michael",
-        lastName: "Hutchinson",
-        teamId: 12,
-        abbreviation: "TOR",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
-      }, 
       '15159': {
         id: 15159,
         firstName: "Philippe",
@@ -274,7 +273,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8481519.jpg',
-        new: false
+        new: true
       },
       '5420': {
         id: 5420,
@@ -470,10 +469,10 @@ export class NhlUtilService {
         lastName: "Gustavsson",
         teamId: 13,
         abbreviation: "OTT",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8479406.jpg',
-        new: false
+        new: true
       },
       '5481': {
         id: 5481,
@@ -704,7 +703,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8480280.jpg',
-        new: true
+        new: false
       },
       '14444': {
         id: 14444,
@@ -792,7 +791,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8476904.jpg',
-        new: false
+        new: true
       },
       '5176': {
         id: 5176,
@@ -955,7 +954,7 @@ export class NhlUtilService {
         teamId: 6,
         abbreviation: "PHI",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -967,8 +966,8 @@ export class NhlUtilService {
         abbreviation: "PHI",
         active: true,
         numberOne: true,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8474889.jpg',
+        new: true
       },
       '4867': {
         id: 4867,
@@ -1020,10 +1019,10 @@ export class NhlUtilService {
         lastName: "Korpisalo",
         teamId: 19,
         abbreviation: "CBJ",
-        active: false,
+        active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8476914.jpg',
+        new: true
       },
       '15690': {
         id: 15690,
@@ -1088,8 +1087,8 @@ export class NhlUtilService {
         abbreviation: "NYI",
         active: false,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8473575.jpg',
+        new: true
       },
       '28379': {
         id: 28379,
@@ -1110,8 +1109,8 @@ export class NhlUtilService {
         abbreviation: "NJD",
         active: true,
         numberOne: true,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8478406.jpg',
+        new: true
       },
       '4271': {
         id: 4271,
@@ -1597,7 +1596,7 @@ export class NhlUtilService {
         city: "Calgary",
         name: "Flames",
         abbreviation: "CGY",
-        twitter: "#CofRed",
+        twitter: "#Flames",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/20.svg"
       },
      "EDM": {
