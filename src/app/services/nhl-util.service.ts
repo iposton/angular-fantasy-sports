@@ -452,27 +452,16 @@ export class NhlUtilService {
         img: nhlImageRoot+'8477405.jpg',
         new: false
       },
-      '5794': {
-        id: 5794,
-        firstName: "Joey",
-        lastName: "Daccord",
-        teamId: 13,
-        abbreviation: "OTT",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'8478916.jpg',
-        new: false
-      },
       '14120': {
         id: 14120,
         firstName: "Filip",
         lastName: "Gustavsson",
         teamId: 13,
         abbreviation: "OTT",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8479406.jpg',
-        new: true
+        new: false
       },
       '5481': {
         id: 5481,
@@ -788,7 +777,7 @@ export class NhlUtilService {
         lastName: "Driedger",
         teamId: 143,
         abbreviation: "SEA",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8476904.jpg',
         new: true
@@ -803,6 +792,17 @@ export class NhlUtilService {
         numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
+      },
+      '5794': {
+        id: 5794,
+        firstName: "Joey",
+        lastName: "Daccord",
+        teamId: 143,
+        abbreviation: "SEA",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478916.jpg',
+        new: true
       },
       '5168': {
         id: 5168,
@@ -821,7 +821,7 @@ export class NhlUtilService {
         lastName: "Dubnyk",
         teamId: 22,
         abbreviation: "COL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -843,10 +843,10 @@ export class NhlUtilService {
         lastName: "Johansson",
         teamId: 22,
         abbreviation: "COL",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8477992.jpg',
-        new: false
+        new: true
       },
       '15442': {
         id: 15442,
@@ -965,7 +965,7 @@ export class NhlUtilService {
         teamId: 6,
         abbreviation: "PHI",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8474889.jpg',
         new: true
       },
@@ -1107,8 +1107,8 @@ export class NhlUtilService {
         lastName: "Blackwood",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8478406.jpg',
         new: true
       },
@@ -1119,7 +1119,7 @@ export class NhlUtilService {
         teamId: 7,
         abbreviation: "NJD",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8473541.jpg',
         new: false
       },
@@ -1129,10 +1129,10 @@ export class NhlUtilService {
         lastName: "Wedgewood",
         teamId: 7,
         abbreviation: "NJD",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8475809.jpg',
-        new: false
+        new: true
       },
       '12468': {
         id: 12468,
@@ -1410,6 +1410,11 @@ export class NhlUtilService {
         lastName: "Desrosiers",
         image: nhlImageRoot+'8477475.jpg',
       },
+      "28418": {
+        firstName: "Jeremy",
+        lastName: "Swayman",
+        image: nhlImageRoot+'8480280.jpg',
+      },
       
       
     }
@@ -1460,7 +1465,7 @@ export class NhlUtilService {
         city: "Philadelphia",
         name: "Flyers",
         abbreviation: "PHI",
-        twitter: "#AnytimeAnywhere",
+        twitter: "#BringItToBroad",
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/4.svg"
       },
       "NJD": {

@@ -177,7 +177,7 @@ export class StatLeadersComponent implements OnInit {
      this.tag3 = '%'
 
     this.st4 = 'passing'
-    this.sf4 = 'passYards'
+    this.sf4 = 'totalPassYards'
     this.t4 = 'Rookie Total Yds'
     this.tag4 = 'Yds'
     //default sport load
@@ -1382,10 +1382,15 @@ export class StatLeadersComponent implements OnInit {
                        gamePY: oPos[player['player'].position] ? player['playerStats'][0].passing.passYards : 0,
                        gamePA: oPos[player['player'].position] ? player['playerStats'][0].passing.passAttempts : 0, 
                        gamePI: oPos[player['player'].position] ? player['playerStats'][0].passing.passInt : 0,
+                       gamePTD: oPos[player['player'].position] ? player['playerStats'][0].passing.passTD : 0,
                        gameRY: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushYards : 0, 
-                       gameRA: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushAttempts : 0, 
+                       gameRA: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushAttempts : 0,
+                       gameRTD: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushTD : 0,
+                       gameFUM: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushFumbles : 0,
+                       gameRecF: oPos[player['player'].position] ? player['playerStats'][0].receiving.recFumbles : 0,
                        gameRecY: oPos[player['player'].position] ? player['playerStats'][0].receiving.recYards : 0,
                        gameRecR: oPos[player['player'].position] ? player['playerStats'][0].receiving.receptions : 0,
+                       gameRecTD: oPos[player['player'].position] ? player['playerStats'][0].receiving.recTD : 0,
                        gameFGM: player['player'].position === 'K' ? player['playerStats'][0].fieldGoals.fgMade : 0,
                        gameLFGM: player['player'].position === 'K' ? player['playerStats'][0].fieldGoals.fgMade40_49 + player['playerStats'][0].fieldGoals.fgMade50Plus : 0,
                        playerName: player.player['firstName'],
