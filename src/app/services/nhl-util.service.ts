@@ -117,7 +117,7 @@ export class NhlUtilService {
         teamId: 24,
         abbreviation: "EDM",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8475156.jpg',
         new: true
       },
@@ -127,8 +127,8 @@ export class NhlUtilService {
         lastName: "Smith",
         teamId: 24,
         abbreviation: "EDM",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8469608.jpg',
         new: false
       },
@@ -138,10 +138,10 @@ export class NhlUtilService {
         lastName: "Skinner",
         teamId: 24,
         abbreviation: "EDM",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8479973.jpg',
-        new: false
+        new: true
       },
       '5671': {
         id: 5671,
