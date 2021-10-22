@@ -79,7 +79,7 @@
                    <span> - {{ item?.player?.primaryPosition }}</span>  
               </span>
               <span class="names" *ngIf="item?.spanOpponents != null">
-                <span *nfIf="!mobile" class="fn">{{item.player.firstName}} </span>  <span class="ln"> {{item.player.lastName}}</span>
+                <span *ngIf="!mobile" class="fn">{{item.player.firstName}} </span>  <span class="ln"> {{item.player.lastName}}</span>
                  <span> - {{ item?.player?.primaryPosition }}</span>  
                </span>
 

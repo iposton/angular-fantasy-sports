@@ -197,7 +197,7 @@ export class StartingGoaliesComponent implements OnInit {
 
   public getSchedules() {
     console.log('cant get shcedule yet')
-    //this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
+    this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
   }
 
   public statToggle() {
@@ -401,7 +401,7 @@ export class StartingGoaliesComponent implements OnInit {
               //this.sortData(); //work around when no games
               if (this.dataService.nhlTeamsSched.length === 0) {
                 console.log('cant get schedules yet')
-               // this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
+                this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
               }
 
               forkJoin(
