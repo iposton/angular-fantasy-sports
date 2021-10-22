@@ -33,9 +33,9 @@ export class StatLeadersComponent implements OnInit {
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
   public mlbApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
   public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular";
-  public nbaSeasonType: string = "2020-2021-regular";
+  public nbaSeasonType: string = "2021-2022-regular";
   public nflSeasonType: string = "2020-2021-regular";
-  public nhlSeasonType: string = "2020-2021-regular";
+  public nhlSeasonType: string = "2021-2022-regular";
   public mlbSeasonType: string = "2021-regular";
   public myData: Array <any>;
   public fgPlayers: Array <any>;
@@ -218,16 +218,16 @@ export class StatLeadersComponent implements OnInit {
 
   public updateEndpoint() {
     if (this.sport === 'nba') {
-      this.nbaSeasonType = this.nbaSeason ? "2020-2021-regular" : "2021-playoff";
-      //get nhl playoffs
+      this.nbaSeasonType = this.nbaSeason ? "2021-2022-regular" : "2022-playoff";
+     
       if (this.nbaSection) { 
         this.sortNBA();
       }
     }
 
     if (this.sport === 'nhl') {
-        this.nhlSeasonType = this.nhlSeason ? "2020-2021-regular" : "2021-playoff";
-        //get nhl playoffs
+        this.nhlSeasonType = this.nhlSeason ? "2021-2022-regular" : "2022-playoff";
+       
         if (this.nhlSection) { 
           this.sortNHL();
         } else {
@@ -586,9 +586,9 @@ export class StatLeadersComponent implements OnInit {
             }  
           }
 
-          this.nbaService.allInfo().subscribe(res => {
-            this.util.updatePlayers(res['players'], this.myData, nbaTeamsArray);
-          })
+          // this.nbaService.allInfo().subscribe(res => {
+          //   this.util.updatePlayers(res['players'], this.myData, nbaTeamsArray);
+          // })
 
           if (this.timeSpan != 'full')
             this.spanGames();

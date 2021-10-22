@@ -360,7 +360,7 @@ export class NHLDataService {
   }
 
   public getSchedules(nextWeek, sport, teams) {
-    let season = '2020-2021-regular'
+    let season = '2021-2022-regular'
     if (sport === 'nba')
       this.nbaTeamsSched = [];
     if (sport === 'nhl') {
@@ -375,16 +375,16 @@ export class NHLDataService {
     let printend = null;
     if (nextWeek) {
       season = '2021-2022-regular'
+      begin = '20211025';
+      printbegin = '10/25';
+      end = '20211031';
+      printend = '10/31';
+    } else {
+      season = '2021-2022-regular'
       begin = '20211018';
       printbegin = '10/18';
       end = '20211024';
-      printend = '10/24';
-    } else {
-      season = '2021-2022-regular'
-      begin = '20211012';
-      printbegin = '10/12';
-      end = '20211017';
-      printend = '10/17';   
+      printend = '10/24';   
     }
       let team;
       let teamSchedule;
