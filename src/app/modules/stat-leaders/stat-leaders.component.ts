@@ -1478,9 +1478,13 @@ export class StatLeadersComponent implements OnInit {
                       if (info.player['primaryPosition'] != 'K') {
                         //qb 
                         info.stats.passing.passYards = data['1'];
+                        info.stats.passing.totalPassYards = data['1'] + data['3'];
                         info.stats.passing.passTD = data['2'];
+                        info.stats.passing.totalPassTd = data['2'] + data['5'] + data['6'];
                         info.stats.rushing.rushYards = data['3'];
-                        info.stats.receiving.receptions = data['4'];               
+                        info.stats.receiving.receptions = data['4'];
+                        info.stats.receiving.totalYards = data['3'] + data['8'];  
+                        info.stats.receiving.totalTd = data['2'] + data['5'] + data['6'];           
                         info.stats.receiving.recTD = data['5'];
                         info.stats.rushing.rushTD = data['6'];
                         info.stats.passing.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
