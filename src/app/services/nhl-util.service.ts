@@ -1123,16 +1123,27 @@ export class NhlUtilService {
         img: nhlImageRoot+'8473541.jpg',
         new: false
       },
+      '30089': {
+        id: 30089,
+        firstName: "Nico",
+        lastName: "Daws",
+        teamId: 20,
+        abbreviation: "NJD",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8482076.jpg',
+        new: true
+      },
       '8952': {
         id: 8952,
         firstName: "Scott",
         lastName: "Wedgewood",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8475809.jpg',
-        new: true
+        new: false
       },
       '12468': {
         id: 12468,
