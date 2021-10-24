@@ -628,6 +628,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8477202.jpg',
         new: false
       },
+      '13942': {
+        id: 13942,
+        firstName: "Connor",
+        lastName: "Ingram",
+        teamId: 18,
+        abbreviation: "NSH",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478971.jpg',
+        new: true
+      },
       '3810': {
         id: 3810,
         firstName: "Pekka",
@@ -693,18 +704,7 @@ export class NhlUtilService {
         numberOne: false,
         img: nhlImageRoot+'8480280.jpg',
         new: false
-      },
-      '14444': {
-        id: 14444,
-        firstName: "Dan",
-        lastName: "Vladar",
-        teamId: 11,
-        abbreviation: "BOS",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'8478435.jpg',
-        new: false
-      },
+      },     
       '4561': {
         id: 4561,
         firstName: "Ben",
@@ -758,6 +758,17 @@ export class NhlUtilService {
         active: true,
         numberOne: true,
         img: nhlImageRoot+'8474593.jpg',
+        new: false
+      },
+      '14444': {
+        id: 14444,
+        firstName: "Dan",
+        lastName: "Vladar",
+        teamId: 23,
+        abbreviation: "CGY",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8478435.jpg',
         new: true
       },
       '17974': {
@@ -1101,6 +1112,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8478009.jpg',
         new: false
       },
+      '4575': {
+        id: 4575,
+        firstName: "Cory",
+        lastName: "Schneider",
+        teamId: 8,
+        abbreviation: "NYI",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8471239.jpg',
+        new: true
+      },
       '15438': {
         id: 15438,
         firstName: "Mackenzie",
@@ -1166,18 +1188,7 @@ export class NhlUtilService {
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
-      }, 
-      '4575': {
-        id: 4575,
-        firstName: "Cory",
-        lastName: "Schneider",
-        teamId: 7,
-        abbreviation: "NJD",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
-      }, 
+      },  
       '4333': {
         id: 4333,
         firstName: "Jonathan",
@@ -1426,8 +1437,17 @@ export class NhlUtilService {
         lastName: "Swayman",
         image: nhlImageRoot+'8480280.jpg',
       },
-      
-      
+      "13942": {
+        firstName: "Connor",
+        lastName: "Ingram",
+        image: nhlImageRoot+'8478971.jpg',
+      },
+      "30089": {
+        firstName: "Nico",
+        lastName: "Daws",
+        image: nhlImageRoot+'8482076.jpg',
+      },
+            
     }
 
     this.nhlTeams = {
