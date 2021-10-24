@@ -42,7 +42,7 @@ export class NBADataService {
   public info: Observable <any> = null;
   public starterInfo: Observable <any> = null;
   public env: Observable < any > = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular";
+  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2021-2022-regular";
   public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2021-2022-regular";
   public apiRoot21PO: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2022-playoff";
   public dailyDate: any;
@@ -138,7 +138,7 @@ export class NBADataService {
   }
 
   public getStats(players) {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/player_stats_totals.json?player=${players}`;
+      let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2021-2022-regular/player_stats_totals.json?player=${players}`;
       this.stats = this.http.get(url, {headers})
       return this.stats;
   }
@@ -186,7 +186,7 @@ export class NBADataService {
   getScore(data) {
     let id = null;
     id = data
-    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2020-2021-regular/games/`+id+`/boxscore.json`;
+    let url = `https://api.mysportsfeeds.com/v2.1/pull/nba/2021-2022-regular/games/`+id+`/boxscore.json`;
     this.score = this.http.get(url, {headers})
     return this.score;
   }

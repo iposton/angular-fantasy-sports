@@ -299,11 +299,13 @@ export class NHLDataService {
 
   getGames(span, sport, date, season) {
     let url = null;
+    console.log(season, 'season')
     //let season = null;
-    if (sport != 'nfl' && sport != 'nba')
-      season = '2021-regular';
-    else
-      season = '2021-2022-regular';
+    // if (sport != 'nfl' && sport != 'nba')
+    //   season = '2021-regular';
+    // else
+    //   season = '2021-2022-regular';
+    
     if (span === 'last-week') {
       //sport === 'mlb' ? twoWeekDailyDate : 
       url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${lastweekDailyDate}-to-${dailyDate}`;
