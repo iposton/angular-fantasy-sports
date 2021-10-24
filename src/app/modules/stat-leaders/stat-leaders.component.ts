@@ -408,7 +408,7 @@ export class StatLeadersComponent implements OnInit {
       //this.nbaSpanGames = res['games'];
 
       if (this.sport != 'nfl') {
-        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2020-regular`;
+        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/${season}`;
         this.sortStats(root, res['games'], this.sport, type)
       } else if (this.sport === 'nfl' && this.nflSection) {
         root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2021-2022-regular`;

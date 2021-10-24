@@ -1455,6 +1455,12 @@ export class NflUtilService {
           lastName: "Anzalone",
           image: nflImageRoot+"fcsmqw0nq4mw1wvji2z4"
         },
+        "30221": {
+          firstName: "Rashod",
+          lastName: "Bateman",
+          image: nflImageRoot+"vpcmsc93xuzhv4bupbzu"
+        },
+        
         
         
         // "": {
