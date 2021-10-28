@@ -571,7 +571,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8477293.jpg',
-        new: false
+        new: true
       },
       '13662': {
         id: 13662,
@@ -1140,8 +1140,8 @@ export class NhlUtilService {
         lastName: "Bernier",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8473541.jpg',
         new: false
       },
@@ -1149,12 +1149,12 @@ export class NhlUtilService {
         id: 30089,
         firstName: "Nico",
         lastName: "Daws",
-        teamId: 20,
+        teamId: 7,
         abbreviation: "NJD",
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8482076.jpg',
-        new: true
+        new: false
       },
       '8952': {
         id: 8952,
@@ -1162,7 +1162,7 @@ export class NhlUtilService {
         lastName: "Wedgewood",
         teamId: 7,
         abbreviation: "NJD",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8475809.jpg',
         new: false

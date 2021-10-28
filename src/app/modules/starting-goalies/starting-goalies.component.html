@@ -240,7 +240,7 @@
               <br>
               <span>
                   <span (click)="authorize({player: g.playerObj, area: 'top'})" class="player-img"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"></span>
-                  <br> <span style="font-weight: bold;">{{ g.playerObj?.player.firstName + ' ' + g.playerObj?.player.lastName }}</span> <span >
+                  <br> <span style="font-weight: bold;">{{ g.playerObj?.player.firstName + ' ' + g.playerObj?.player.lastName }}</span> <span *ngIf="g.playerObj?.player.currentInjury != null && fbService.userDetails != null" style="color: red;">*</span> <span>
                     ({{ g.playerObj.player?.currentTeam?.abbreviation + ' - ' + g.playerObj?.player.primaryPosition }})
                   </span>
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
@@ -293,7 +293,7 @@
               <br>
               <span>
                   <span (click)="authorize({player: g.playerObj, area: 'top'})" class="player-img"><img src="{{ g.playerObj?.player?.officialImageSrc }}" onError="this.src='https://cms.nhl.bamgrid.com/images/headshots/current/168x168/goalie.jpg'"></span>
-                  <br> <span style="font-weight: bold;">{{ g.playerObj?.player.firstName + ' ' + g.playerObj?.player.lastName }}</span> <span >
+                  <br> <span style="font-weight: bold;">{{ g.playerObj?.player.firstName + ' ' + g.playerObj?.player.lastName }}</span> <span *ngIf="g.playerObj?.player.currentInjury != null && fbService.userDetails != null" style="color: red;">*</span> <span>
                     ({{ g.playerObj.player?.currentTeam?.abbreviation + ' - ' + g.playerObj?.player.primaryPosition }})
                   </span>
                   <br> <span *ngIf="!mobile">Wins - Losses:</span> <span> {{ g.playerObj?.stats.goaltending.wins + ' - ' + g.playerObj?.stats.goaltending.losses + ' - ' + g.playerObj?.stats.goaltending.overtimeLosses }} </span>
