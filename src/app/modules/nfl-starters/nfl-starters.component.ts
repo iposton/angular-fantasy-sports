@@ -380,8 +380,8 @@ export class NflStartersComponent implements OnInit {
               .getStats(playerString).subscribe(res => {
 
               let values = [];
-              if (res != null) values = res['playerStatsTotals'];
-              this.myData = values;
+              if (res != null) values = res['playerStatsTotals']
+              this.myData = this.util.removeDuplicatesBy(x => x.player.id, values)
                   if (this.starterIdData.length > 0 || this.noGamesToday === true) {
                     if (this.myData && this.gameStarters) {
                       for (let gs of this.gameStarters) {

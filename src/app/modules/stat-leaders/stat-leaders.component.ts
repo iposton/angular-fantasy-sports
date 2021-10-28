@@ -131,7 +131,8 @@ export class StatLeadersComponent implements OnInit {
   public combined: Array <any> = [];
   public sport: string;
   public nflWeek: any;
-  public week: any = 'all';
+  public week: any = 'all'
+  public defaultWeek: string = ''
 
 
   public crunchedDef: Array <any> = [];
@@ -320,6 +321,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public onChange(week) {
+    this.defaultWeek = week
     this.week = week;
     this.timeSpan = week;
     this.combined = [];
@@ -358,13 +360,15 @@ export class StatLeadersComponent implements OnInit {
     this.week = 'all'
     this.timeSpan = 'full'
     this.nflPosition = p
+    this.defaultWeek = ''
     this.loadNFL();
   }
 
   public onPosDChange(p) {
     this.week = 'all'
     this.timeSpan = 'full'
-    this.nflDPosition = p;
+    this.nflDPosition = p
+    this.defaultWeek = ''
     this.defensePlayers();
   }
 
@@ -399,6 +403,10 @@ export class StatLeadersComponent implements OnInit {
       this.mlbHittingLoading = true;
       season = this.mlbSeasonType;
       type = 'batters';
+    }
+
+    if (this.sport === 'nfl') {     
+      season = '2021-2022-regular';
     }
       
     let root;
@@ -871,7 +879,8 @@ export class StatLeadersComponent implements OnInit {
           }
 
           let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
-          this.nflData = stats
+          this.nflData = stats //this.util.removeDuplicatesBy(x => x.player.id, stats)
+          
           
 
           this.nflRookies = this.nflData.filter(
@@ -947,6 +956,7 @@ export class StatLeadersComponent implements OnInit {
             }
           }
           let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
+          //this.util.removeDuplicatesBy(x => x.player.id, stats)
           this.nflDefenseData = stats.filter(
             player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0));
 
