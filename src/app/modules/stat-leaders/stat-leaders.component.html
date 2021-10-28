@@ -57,7 +57,7 @@
     &nbsp;&nbsp; <button (click)="getByDate('yesterday', sport)">Yesterday</button>
 </div>
 <div class="center" *ngIf="sport === 'nfl' && nflSection">
-  <select name="week" id="week" (change)="onPosChange($event.target.value)">
+  <select name="pos" id="pos" (change)="onPosChange($event.target.value)">
     <option value="qb"> QB </option>
     <option value="rb"> RB </option>
     <option value="wr"> WR </option>
@@ -66,13 +66,13 @@
   </select>
 </div>
 <div class="center" *ngIf="sport === 'nfl' && nflDefenseSection">
-  <select name="week" id="week" (change)="onPosDChange($event.target.value)">
+  <select name="dpos" id="dpos" (change)="onPosDChange($event.target.value)">
     <option value="LB,DT,DE,OLB,ILB,MLB"> LB, DE </option>
     <option value="DB,SS,FS,CB,S"> CB, S </option>
   </select>
 </div>
 <div class="center" *ngIf="sport === 'nfl'">
-    <select name="week" id="week" (change)="onChange($event.target.value)">
+    <select name="week" id="week" (change)="onChange($event.target.value)" [value]="defaultWeek">
       <option value="1"> - </option>
       <option value="1">1</option>
       <option value="2">2</option>
