@@ -331,6 +331,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
+      '12468': {
+        id: 12468,
+        firstName: "Eric",
+        lastName: "Comrie",
+        teamId: 2,
+        abbreviation: "WPJ",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8477480.jpg',
+        new: true
+      },   
       '3647': {
         id: 3647,
         firstName: "Henrik",
@@ -877,9 +888,9 @@ export class NhlUtilService {
         teamId: 30,
         abbreviation: "ARI",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
-        new: true
+        new: false
       },
       '5224': {
         id: 5224,
@@ -887,8 +898,8 @@ export class NhlUtilService {
         lastName: "Hutton",
         teamId: 30,
         abbreviation: "ARI",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -898,10 +909,10 @@ export class NhlUtilService {
         lastName: "Korenar",
         teamId: 30,
         abbreviation: "ARI",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8480373.jpg',
-        new: false
+        new: true
       },
       '17375': {
         id: 17375,
@@ -1166,18 +1177,7 @@ export class NhlUtilService {
         numberOne: false,
         img: nhlImageRoot+'8475809.jpg',
         new: false
-      },
-      '12468': {
-        id: 12468,
-        firstName: "Eric",
-        lastName: "Comrie",
-        teamId: 2,
-        abbreviation: "WPJ",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'8477480.jpg',
-        new: false
-      },     
+      },  
       '5518': {
         id: 5518,
         firstName: "Louis",
@@ -1232,7 +1232,7 @@ export class NhlUtilService {
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
-      },
+      }
      
     }
 
@@ -1446,8 +1446,7 @@ export class NhlUtilService {
         firstName: "Nico",
         lastName: "Daws",
         image: nhlImageRoot+'8482076.jpg',
-      },
-            
+      }       
     }
 
     this.nhlTeams = {

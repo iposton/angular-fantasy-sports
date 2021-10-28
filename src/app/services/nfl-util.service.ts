@@ -698,7 +698,7 @@ export class NflUtilService {
           image: nflImageRoot+"htlt0h1p8gmpgrrbjyyj"
         },
         "18672" : {
-          image: "https://static.www.nfl.com/image/private/t_headshot_desktop_2x/f_auto/league/to50lyvotmzynmy3ds1a"
+          image: nflImageRoot+"zxk0jfinayjjhguk83gw"  
         },
         "6114" : {
           image: nflImageRoot+"ublljy2omv3mulxf7kkp"
@@ -1360,11 +1360,6 @@ export class NflUtilService {
           lastName: "Swaim",
           image: nflImageRoot+"zkurufp1suswhdb611hs"
         },
-        // "": {
-        //   firstName: "Ty",
-        //   lastName: "Johnson",
-        //   image: nflImageRoot+""
-        // },
         "9694": {
           firstName: "Kenyan",
           lastName: "Drake",
@@ -1460,14 +1455,6 @@ export class NflUtilService {
           lastName: "Bateman",
           image: nflImageRoot+"vpcmsc93xuzhv4bupbzu"
         },
-        
-        
-        
-        // "": {
-        //   firstName: "",
-        //   lastName: "Schobert",
-        //   image: nflImageRoot+""
-        // },
         "18555": {
           firstName: "Isaiah",
           lastName: "Simmons",
@@ -1683,19 +1670,6 @@ export class NflUtilService {
           lastName: "White",
           image: nflImageRoot+"uplanmusamdr4bzil0v4"
         },
-        
-        // "": {
-        //   firstName: "",
-        //   lastName: "Perryman",
-        //   image: nflImageRoot+""
-        // },
-      
-        
-        // "13430": {
-        //   firstName: "Pharaoh",
-        //   lastName: "Brown",
-        //   image: nflImageRoot+""
-        // } 
       }
    }
 
