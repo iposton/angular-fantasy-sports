@@ -582,8 +582,8 @@ export class StartingGoaliesComponent implements OnInit {
             // this.nflOffenseLoading = false;
         })
 
-        console.log('waiting 6 seconds');
-        await sleep(6000);
+        //console.log('waiting 6 seconds');
+        //await sleep(6000);
         if (this.myData && this.dailySchedule) {
           //console.log('ok 6 seconds up lets go!!')
           if (this.dataService.isToday) {
