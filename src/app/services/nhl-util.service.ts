@@ -909,7 +909,7 @@ export class NhlUtilService {
         lastName: "Korenar",
         teamId: 30,
         abbreviation: "ARI",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480373.jpg',
         new: true
@@ -920,10 +920,10 @@ export class NhlUtilService {
         lastName: "Prosvetov",
         teamId: 30,
         abbreviation: "ARI",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
-        new: false
+        new: true
       },
       '5227': {
         id: 5227,
@@ -1107,7 +1107,7 @@ export class NhlUtilService {
         lastName: "Varlamov",
         teamId: 8,
         abbreviation: "NYI",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8473575.jpg',
         new: true
@@ -1129,7 +1129,7 @@ export class NhlUtilService {
         lastName: "Schneider",
         teamId: 8,
         abbreviation: "NYI",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8471239.jpg',
         new: true
@@ -1151,8 +1151,8 @@ export class NhlUtilService {
         lastName: "Bernier",
         teamId: 7,
         abbreviation: "NJD",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'8473541.jpg',
         new: false
       },
@@ -1162,7 +1162,7 @@ export class NhlUtilService {
         lastName: "Daws",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8482076.jpg',
         new: false

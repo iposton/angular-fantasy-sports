@@ -599,7 +599,7 @@ export class NflUtilService {
         offenseRankLs: 7,
         city: "Arizona",
         name: "Cardinals",
-        twitter: "#AZCardinals",
+        twitter: "#RedSea",
         abbreviation: "ARI",
         teamColoursHex: [
         "#97233f",
