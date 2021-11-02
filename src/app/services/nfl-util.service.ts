@@ -1670,6 +1670,12 @@ export class NflUtilService {
           lastName: "White",
           image: nflImageRoot+"uplanmusamdr4bzil0v4"
         },
+        "18666": {
+          firstName: "Denzel",
+          lastName: "Mims",
+          image: nflImageRoot+"nvoyxkpbc7pp9pjkwqbw"
+        },
+        
       }
    }
 
