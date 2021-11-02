@@ -448,9 +448,9 @@ export class NhlUtilService {
         teamId: 13,
         abbreviation: "OTT",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8476899.jpg',
-        new: true
+        new: false
       },
       '15452': {
         id: 15452,
@@ -469,7 +469,7 @@ export class NhlUtilService {
         lastName: "Gustavsson",
         teamId: 13,
         abbreviation: "OTT",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8479406.jpg',
         new: false
@@ -480,8 +480,8 @@ export class NhlUtilService {
         lastName: "Forsberg",
         teamId: 13,
         abbreviation: "OTT",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8476341.jpg',
         new: false
       },
@@ -745,7 +745,7 @@ export class NhlUtilService {
         teamId: 27,
         abbreviation: "DAL",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -756,7 +756,7 @@ export class NhlUtilService {
         teamId: 27,
         abbreviation: "DAL",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8471418.jpg',
         new: false
       },
@@ -1456,6 +1456,9 @@ export class NhlUtilService {
         name: "Lightning",
         abbreviation: "TBL",
         twitter: "#GoBolts",
+        teamColoursHex: [
+          "#002868"
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/14.svg"
       },
       "WPJ": {
@@ -1464,6 +1467,10 @@ export class NhlUtilService {
         name: "Jets",
         abbreviation: "WPJ",
         twitter: "#GoJetsGo",
+        teamColoursHex: [
+          "#041e42",
+          "#004c97",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/52.svg"
       },
      "CAR": {
@@ -1472,6 +1479,10 @@ export class NhlUtilService {
         name: "Hurricanes",
         abbreviation: "CAR",
         twitter: "#LetsGoCanes",
+        teamColoursHex: [
+          "#cc0000",
+          "#76232f"
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/12.svg"
       },
       "FLO": {
@@ -1480,6 +1491,10 @@ export class NhlUtilService {
         name: "Panthers",
         abbreviation: "FLO",
         twitter: "#TimeToHunt",
+        teamColoursHex: [
+          "#041e42",
+          "#c8102e",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/13.svg"
       },
       "WSH": {
@@ -1488,6 +1503,10 @@ export class NhlUtilService {
         name: "Capitals",
         abbreviation: "WSH",
         twitter: "#ALLCAPS",
+        teamColoursHex: [
+          "#041e42",
+          "#c8102e",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/15.svg"
       },
       "PHI": {
@@ -1496,6 +1515,10 @@ export class NhlUtilService {
         name: "Flyers",
         abbreviation: "PHI",
         twitter: "#BringItToBroad",
+        teamColoursHex: [
+          "#f74902",
+          "#000000",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/4.svg"
       },
       "NJD": {
@@ -1504,6 +1527,10 @@ export class NhlUtilService {
         name: "Devils",
         abbreviation: "NJD",
         twitter: "#NJDevils",
+        teamColoursHex: [
+          "#ce1126",
+          "#000000",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/1.svg"
       },
       "NYI" : {
@@ -1512,6 +1539,10 @@ export class NhlUtilService {
         name: "Islanders",
         abbreviation: "NYI",
         twitter: "#Isles",
+        teamColoursHex: [
+          "#00539b",
+          "#f47d30"
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/2.svg"
       },
       "NYR": {
@@ -1520,6 +1551,10 @@ export class NhlUtilService {
         name: "Rangers",
         abbreviation: "NYR",
         twitter: "#NYR",
+        teamColoursHex: [
+          "#0038a8",
+          "#ce1126",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/3.svg"
       },
       "PIT": {
@@ -1528,6 +1563,10 @@ export class NhlUtilService {
         name: "Penguins",
         abbreviation: "PIT",
         twitter: "#LetsGoPens",
+        teamColoursHex: [
+          "#cfc493",
+          "#fcb514"
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/5.svg"
       },
       "BOS": {
@@ -1536,6 +1575,10 @@ export class NhlUtilService {
         name: "Bruins",
         abbreviation: "BOS",
         twitter: "#NHLBruins",
+        teamColoursHex: [
+          "#ffb81c",
+          "#000000"
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/6.svg"
       },
       "TOR": {
@@ -1544,6 +1587,9 @@ export class NhlUtilService {
         name: "Maple Leafs",
         abbreviation: "TOR",
         twitter: "#LeafsForever",
+        teamColoursHex: [
+          "#00205b",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/10.svg"
       },
       "OTT": {
@@ -1552,6 +1598,10 @@ export class NhlUtilService {
         name: "Senators",
         abbreviation: "OTT",
         twitter: "#GoSensGo",
+        teamColoursHex: [
+          "#c52032",
+          "#c2912c",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/9.svg"
       },
       "MTL": {
@@ -1560,6 +1610,10 @@ export class NhlUtilService {
         name: "Canadiens",
         abbreviation: "MTL",
         twitter: "#GoHabsGo",
+        teamColoursHex: [
+          "#af1e2d",
+          "#192168"
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/8.svg"
       },
       "BUF": {
@@ -1568,6 +1622,10 @@ export class NhlUtilService {
         name: "Sabres",
         abbreviation: "BUF",
         twitter: "#LetsGoBuffalo",
+        teamColoursHex: [
+          "#002654",
+          "#fcb514",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/7.svg"
       },
       "DET": {
@@ -1576,6 +1634,9 @@ export class NhlUtilService {
         name: "Red Wings",
         abbreviation: "DET",
         twitter: "#LGRW",
+        teamColoursHex: [
+          "#ce1126",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/17.svg"
       },
      "STL": {
@@ -1584,6 +1645,10 @@ export class NhlUtilService {
         name: "Blues",
         abbreviation: "STL",
         twitter: "#STLBlues",
+        teamColoursHex: [
+          "#002f87",
+          "#fcb514",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/19.svg"
       },
       "NSH": {
@@ -1592,6 +1657,10 @@ export class NhlUtilService {
         name: "Predators",
         abbreviation: "NSH",
         twitter: "#Preds",
+        teamColoursHex: [
+          "#ffb81c",
+          "#041e42",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/18.svg"
       },
       "CBJ": {
@@ -1600,6 +1669,10 @@ export class NhlUtilService {
         name: "Blue Jackets",
         abbreviation: "CBJ",
         twitter: "#CBJ",
+        teamColoursHex: [
+          "#002654",
+          "#ce1126",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/29.svg"
       },
       "CHI": {
@@ -1608,6 +1681,10 @@ export class NhlUtilService {
         name: "Blackhawks",
         abbreviation: "CHI",
         twitter: "#Blackhawks",
+        teamColoursHex: [
+          "#cf0a2c",
+          "#ff671b",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/16.svg"
       },
       "VAN": {
@@ -1616,6 +1693,10 @@ export class NhlUtilService {
         name: "Canucks",
         abbreviation: "VAN",
         twitter: "#Canucks",
+        teamColoursHex: [
+          "#00205b",
+          "#00843d",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/23.svg"
       },
       "COL": {
@@ -1624,6 +1705,10 @@ export class NhlUtilService {
         name: "Avalanche",
         abbreviation: "COL",
         twitter: "#GoAvsGo",
+        teamColoursHex: [
+          "#6f263d",
+          "#236192",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/21.svg"
       },
       "CGY": {
@@ -1632,6 +1717,10 @@ export class NhlUtilService {
         name: "Flames",
         abbreviation: "CGY",
         twitter: "#Flames",
+        teamColoursHex: [
+          "#c8102e",
+          "#f1be48",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/20.svg"
       },
      "EDM": {
@@ -1640,6 +1729,10 @@ export class NhlUtilService {
         name: "Oilers",
         abbreviation: "EDM",
         twitter: "#LetsGoOilers",
+        teamColoursHex: [
+          "#041e42",
+          "#ff4c00"
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/22.svg"
       },
       "MIN": {
@@ -1648,6 +1741,10 @@ export class NhlUtilService {
         name: "Wild",
         abbreviation: "MIN",
         twitter: "#MNWild",
+        teamColoursHex: [
+          "#a6192e",
+          "#154734",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/30.svg"
       },
       "SJS": {
@@ -1656,6 +1753,10 @@ export class NhlUtilService {
         name: "Sharks",
         abbreviation: "SJS",
         twitter: "#SJSharks",
+        teamColoursHex: [
+          "#006d75",
+          "#ea7200",
+        ],
         officialLogoImageSrc: "https://www-league.nhlstatic.com/images/logos/teams-current-primary-light/28.svg"
       },
       "DAL": {
