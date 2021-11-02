@@ -525,7 +525,7 @@ export class StartingGoaliesComponent implements OnInit {
   })
 
   this.dataService
-    .getTeamStats('https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular', '').subscribe(res => {
+    .getTeamStats('https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-2022-regular', '').subscribe(res => {
       this.teamStatsUpdate = res['lastUpdatedOn'];
       this.teamStats = res['teamStatsTotals'];         
   });
@@ -1202,24 +1202,17 @@ public showMatchups() {
             this.dataService
               .getSkatersToday(skaterString).subscribe(res => {
             
-            // this.newSkaterData = res['players'];
-            // for (let n of this.newSkaterData) {
+          
               for (let old of this.mySkaterData) {
-                // if (old.player['currentTeam'] != null)
-                //   old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
-                // if (n.player.id === old.player.id && n['teamAsOfDate'] != null) {
-                //   old.player['currentTeam'].id = n['teamAsOfDate'].id;
-                //   old.team.id = n['teamAsOfDate'].id;
-                // } 
-
+             
                 if (old.player.officialImageSrc == null) {
                   old.player.officialImageSrc = this.playerImages[old.player.id] != null ? this.playerImages[old.player.id].image : null;
                 }
               }
-           // }
-            //this.util.teamInfo(this.mySkaterData, nhlTeamsArray);
-            this.util.updatePlayers(res['players'], this.mySkaterData, nhlTeamsArray);
-            // this.nflOffenseLoading = false;
+          
+           
+           // this.util.updatePlayers(res['players'], this.mySkaterData, nhlTeamsArray);
+           
         });
 
                       if (this.skaterIdData.length > 0 || this.noGamesToday === true) {
@@ -1698,7 +1691,7 @@ public showMatchups() {
         forkJoin(
             res['games'].map(
               g =>
-              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-2021-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
+              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-2022-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
               //.map(response => response.json())
             )
           )
