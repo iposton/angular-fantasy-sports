@@ -50,9 +50,20 @@ export class NhlUtilService {
         lastName: "Husso",
         teamId: 17,
         abbreviation: "STL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8478024.jpg',
+        new: true
+      },
+      '20062': {
+        id: 20062,
+        firstName: "Joel",
+        lastName: "Hofer",
+        teamId: 17,
+        abbreviation: "STL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8480981.jpg',
         new: true
       },
       '5033': {
@@ -1446,7 +1457,12 @@ export class NhlUtilService {
         firstName: "Nico",
         lastName: "Daws",
         image: nhlImageRoot+'8482076.jpg',
-      }       
+      },
+      "20062": {
+        firstName: "Joel",
+        lastName: "Hofer",
+        image: nhlImageRoot+'8480981.jpg',
+      },      
     }
 
     this.nhlTeams = {
