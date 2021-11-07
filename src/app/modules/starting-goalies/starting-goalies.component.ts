@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { DatePipe, PercentPipe, isPlatformBrowser } from '@angular/common';
+import { debounceTime } from 'rxjs/operators';
 import * as CryptoJS from 'crypto-js';
 
 import {
@@ -1691,8 +1692,8 @@ public showMatchups() {
         forkJoin(
             res['games'].map(
               g =>
-              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-2022-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers})
-              //.map(response => response.json())
+              this.http.get('https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-2022-regular/games/'+ g.schedule.id +'/boxscore.json?playerstats=Sv,GA,GAA,GS,SO,MIN,W,L,SA,OTL,OTW', {headers}).pipe(
+                debounceTime(500))
             )
           )
           .subscribe(res => {
