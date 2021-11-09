@@ -1675,6 +1675,18 @@ export class NflUtilService {
           lastName: "Mims",
           image: nflImageRoot+"nvoyxkpbc7pp9pjkwqbw"
         },
+        "18607": {
+          firstName: "Jordan",
+          lastName: "Love",
+          image: nflImageRoot+"tm8zrpwj62zkn2mqxef1"
+        },
+        "6741": {
+          firstName: "Trevor",
+          lastName: "Siemian",
+          image: nflImageRoot+"pizeafmn2cj95emcydg3"
+        },
+        
+        
         
       }
    }
