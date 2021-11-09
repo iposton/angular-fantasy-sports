@@ -105,9 +105,20 @@ export class NhlUtilService {
         lastName: "Hutchinson",
         teamId: 12,
         abbreviation: "TOR",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8474636.jpg',
+        new: true
+      }, 
+      '15693': {
+        id: 15693,
+        firstName: "Joseph",
+        lastName: "Woll",
+        teamId: 12,
+        abbreviation: "TOR",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8479361.jpg',
         new: true
       }, 
       '4950': {
@@ -275,6 +286,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8481519.jpg',
         new: true
       },
+      '5905': {
+        id: 5905,
+        firstName: "Christopher",
+        lastName: "Gibson",
+        teamId: 4,
+        abbreviation: "FLO",
+        active: false,
+        numberOne: false,
+        img: nhlImageRoot+'8476444.jpg',
+        new: true
+      },
       '5420': {
         id: 5420,
         firstName: "Andrei",
@@ -308,18 +330,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'8470147.jpg',
         new: false
       },
-      '5905': {
-        id: 5905,
-        firstName: "Christopher",
-        lastName: "Gibson",
-        teamId: 1,
-        abbreviation: "TBL",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'8476444.jpg',
-        new: false
-      },
-      
       '5873': {
         id: 5873,
         firstName: "Connor",
@@ -393,7 +403,7 @@ export class NhlUtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8474682.jpg',
         new: true
       },
@@ -403,10 +413,10 @@ export class NhlUtilService {
         lastName: "Dell",
         teamId: 15,
         abbreviation: "BUF",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8477180.jpg',
-        new: false
+        new: true
       },
       '757': {
         id: 757,
@@ -414,8 +424,8 @@ export class NhlUtilService {
         lastName: "Anderson",
         teamId: 15,
         abbreviation: "BUF",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8467950.jpg',
         new: false
       },
