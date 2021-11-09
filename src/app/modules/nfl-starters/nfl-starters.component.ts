@@ -102,7 +102,19 @@ export class NflStartersComponent implements OnInit {
     position: any,
     startType: any,
     playerType: any;
-  };
+  }
+
+  public longNames: any = {
+    'Edwards-Helaire' : 'Edwards-Helaire',
+    'Valdes-Scantling' : 'Valdes-Scantling', 
+    'O\'Shaughnessy' : 'O\'Shaughnessy',
+    'Roethlisberger' : 'Roethlisberger',
+    'Smith-Schuster' : 'Smith-Schuster',
+    'Peoples-Jones' : 'Peoples-Jones',
+    'Beckham Jr.' : 'Beckham Jr.',
+    'Westbrook-Ikhine' : 'Westbrook-Ikhine',
+    'Okwuegbunam' : 'Okwuegbunam'
+  }
   
   constructor(
     private dataService: NFLDataService,
