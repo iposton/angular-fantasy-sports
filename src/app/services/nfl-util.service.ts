@@ -277,7 +277,7 @@ export class NflUtilService {
       },
       {
         id: 57,
-        bye: 13,
+        bye: 10,
         defenseRankLs: 20,
         offenseRankLs: 30,
         city: "Cincinnati",
@@ -292,7 +292,7 @@ export class NflUtilService {
       },
       {
         id: 58,
-        bye: 9,
+        bye: 13,
         defenseRankLs: 17,
         offenseRankLs: 13,
         city: "Cleveland",
@@ -388,7 +388,7 @@ export class NflUtilService {
       },
       {
         id: 64,
-        bye: 9,
+        bye: 10,
         defenseRankLs: 28,
         offenseRankLs: 16,
         city: "Houston",
@@ -542,7 +542,7 @@ export class NflUtilService {
       },
       {
         id: 73,
-        bye: 10,
+        bye: 12,
         defenseRankLs: 13,
         offenseRankLs: 12,
         city: "Kansas City",
@@ -1684,9 +1684,7 @@ export class NflUtilService {
           firstName: "Trevor",
           lastName: "Siemian",
           image: nflImageRoot+"pizeafmn2cj95emcydg3"
-        },
-        
-        
+        },   
         
       }
    }
