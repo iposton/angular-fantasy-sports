@@ -984,10 +984,8 @@ export class StatLeadersComponent implements OnInit {
   public sortToughest() {
     if (this.nflDefenseSection) {
       this.seasonLengthD = 'otr'
-      // this.showDef = false;
     } else if (!this.nflDefenseSection) {
       this.seasonLength = 'dtr'
-      // this.showDef = true;
     }
   }
 
