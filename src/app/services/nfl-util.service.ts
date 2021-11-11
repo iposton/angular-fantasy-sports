@@ -874,9 +874,6 @@ export class NflUtilService {
         "9832" : {
           image: nflImageRoot+"jqwqm12gfrwvnljq3zpz"
         },
-        "9791" : {
-          image: nflImageRoot+"ncyji5loojotez33t5uz"
-        },
         "18757" : {
           image: nflImageRoot+"sxldzvwuh31gcmbiuavt"
         },
@@ -1684,8 +1681,12 @@ export class NflUtilService {
           firstName: "Trevor",
           lastName: "Siemian",
           image: nflImageRoot+"pizeafmn2cj95emcydg3"
-        },   
-        
+        }, 
+        "9791": {
+          firstName: "Jordan",
+          lastName: "Howard",
+          image: nflImageRoot+"nbvb6bsrmjupmqrrf1n4"
+        }, 
       }
    }
 
@@ -2079,6 +2080,7 @@ export class NflUtilService {
 
   rank2O = dataO.slice().sort((a: any, b: any) => {
     // console.log('rank Sacks and Picks');
+    //TODO add FG made to algo
     if ((a['stats'].passing.passTD + a['stats'].rushing.rushTD
     + (parseInt(week) < 15 && a.bye < parseInt(week) ? 3 : 0)) 
      >= (b['stats'].passing.passTD + b['stats'].rushing.rushTD + (parseInt(week) < 15 && b.bye < parseInt(week) ? 3 : 0))) {

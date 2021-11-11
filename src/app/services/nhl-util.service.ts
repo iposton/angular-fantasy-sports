@@ -17,10 +17,10 @@ export class NhlUtilService {
         lastName: "Samsonov",
         teamId: 5,
         abbreviation: "WSH",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8478492.jpg',
-        new: true
+        new: false
       }, 
       '14365':{
         id: 14365,
@@ -29,9 +29,20 @@ export class NhlUtilService {
         teamId: 5,
         abbreviation: "WSH",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
+      }, 
+      '12345':{
+        id: 12345,
+        firstName: "Zachery",
+        lastName: "Fucale",
+        teamId: 5,
+        abbreviation: "WSH",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8477457.jpg',
+        new: true
       }, 
       '5908': {
         id: 5908,

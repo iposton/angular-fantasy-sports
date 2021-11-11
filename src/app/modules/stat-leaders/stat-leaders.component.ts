@@ -798,6 +798,7 @@ export class StatLeadersComponent implements OnInit {
           this.nflUtil.rank(this.nflTeams, res['teamStatsTotals'], this.nflWeek)
           this.nflUtil.updateTeamStats(res['teamStatsTotals'])
           this.nflTeamStats = res['teamStatsTotals'];
+          //Stop go to component
           this.nflUtil.sortSchedules(this.teamSchedules, this.nflWeek, headers);
           this.sortToughest();
           this.nflTeamLoading = false;
