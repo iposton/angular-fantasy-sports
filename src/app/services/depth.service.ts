@@ -443,7 +443,7 @@ export class DepthService {
     ],
     '51': [
       {
-        'gdate': 9,
+        'gdate': 10,
         
         // 'Offense-RB-1' : {
         //   firstName: 'Michael',
@@ -677,7 +677,7 @@ export class DepthService {
     ],
     '58': [
       {
-        'gdate': 9,
+        'gdate': 10,
      
         // 'Offense-WR-1' : {
         //   firstName: 'Rashard',
@@ -687,14 +687,14 @@ export class DepthService {
         //   abbreviation: 'CLE',
         //   position: 'WR'
         // },
-        'Offense-WR-2' : {
-          firstName: '',
-          lastName: 'Peoples-Jones',
-          id: 18771,
-          status: 'Starter',
-          abbreviation: 'CLE',
-          position: 'WR'
-        },
+        // 'Offense-WR-2' : {
+        //   firstName: '',
+        //   lastName: 'Peoples-Jones',
+        //   id: 18771,
+        //   status: 'Starter',
+        //   abbreviation: 'CLE',
+        //   position: 'WR'
+        // },
         // 'Offense-RB-1' : {
         //   firstName: 'Kareem',
         //   lastName: 'Hunt',
@@ -703,14 +703,14 @@ export class DepthService {
         //   abbreviation: 'CLE',
         //   position: 'RB'
         // },
-        // 'Offense-RB-1' : {
-        //   firstName: 'DeErnest',
-        //   lastName: 'Johnson',
-        //   id: 16858,
-        //   status: 'Starter',
-        //   abbreviation: 'CLE',
-        //   position: 'RB'
-        // },
+        'Offense-RB-1' : {
+          firstName: 'DeErnest',
+          lastName: 'Johnson',
+          id: 16858,
+          status: 'Starter',
+          abbreviation: 'CLE',
+          position: 'RB'
+        },
         // 'Offense-TE-1' : {
         //   firstName: 'David',
         //   lastName: 'Njoku',
@@ -1035,7 +1035,7 @@ export class DepthService {
     ],
     '56': [
       {
-        'gdate': 9,
+        'gdate': 10,
        
         'Offense-TE-1' : {
           firstName: 'Mark',
@@ -1123,7 +1123,7 @@ export class DepthService {
     ],
     '49': [
       {
-        'gdate': 8,
+        'gdate': 10,
    
         // 'Offense-WR-2' : {
         //   firstName: 'Jaylen',
@@ -1133,14 +1133,30 @@ export class DepthService {
         //   abbreviation: 'MIA',
         //   position: 'WR'
         // },
-        'Offense-TE-1' : {
-          firstName: 'Mike',
-          lastName: 'Gesicki',
-          id: 14706,
-          status: 'Starter',
-          abbreviation: 'MIA',
-          position: 'TE'
-        },
+        // 'Offense-WR-2' : {
+        //     firstName: 'Mack',
+        //     lastName: 'Hollins',
+        //     id: 13280,
+        //     status: 'Starter',
+        //     abbreviation: 'MIA',
+        //     position: 'WR'
+        //   },
+        'Offense-WR-1' : {
+            firstName: 'Albert',
+            lastName: 'Wilson',
+            id: 7296,
+            status: 'Starter',
+            abbreviation: 'MIA',
+            position: 'WR'
+          },
+        // 'Offense-TE-1' : {
+        //   firstName: 'Mike',
+        //   lastName: 'Gesicki',
+        //   id: 14706,
+        //   status: 'Starter',
+        //   abbreviation: 'MIA',
+        //   position: 'TE'
+        // },
         // 'Offense-RB-1' : {
         //   firstName: 'Myles',
         //   lastName: 'Gaskin',
@@ -1323,7 +1339,7 @@ export class DepthService {
     ],
     '77': [
       {
-        'gdate': 1,
+        'gdate': 10,
         // 'Offense-QB-1' : {
         //   firstName: 'Jared',
         //   lastName: 'Goff',
@@ -1332,10 +1348,18 @@ export class DepthService {
         //   abbreviation: 'LA',
         //   position: 'QB'
         // },
+        // 'Offense-WR-2' : {
+        //   firstName: 'Robert',
+        //   lastName: 'Woods',
+        //   id: 6225,
+        //   status: 'Starter',
+        //   abbreviation: 'LA',
+        //   position: 'WR'
+        // },
         'Offense-WR-2' : {
-          firstName: 'Robert',
-          lastName: 'Woods',
-          id: 6225,
+          firstName: 'Odell',
+          lastName: 'Beckham Jr.',
+          id: 7746,
           status: 'Starter',
           abbreviation: 'LA',
           position: 'WR'

@@ -794,7 +794,7 @@ export class StatLeadersComponent implements OnInit {
     
     if (this.nflTeamStats == null) {
 
-        this.nflService.getTeamStats(this.tsDate).subscribe(res => {
+          this.nflService.getTeamStats(this.tsDate).subscribe(res => {
           this.nflUtil.rank(this.nflTeams, res['teamStatsTotals'], this.nflWeek)
           this.nflUtil.updateTeamStats(res['teamStatsTotals'])
           this.nflTeamStats = res['teamStatsTotals'];
