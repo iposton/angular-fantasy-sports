@@ -263,7 +263,7 @@ export class DepthService {
   ],
   '79': [
     {
-      'gdate': 8,
+      'gdate': 10,
       
       // 'Offense-RB-1' : {
       //   firstName: 'DeeJay',
@@ -282,13 +282,21 @@ export class DepthService {
       //   abbreviation: 'SEA',
       //   position: 'RB'
       // },
-      'Offense-WR-2' : {
-        firstName: 'DK',
-        lastName: 'Metcalf',
-        id: 16123,
+      // 'Offense-WR-2' : {
+      //   firstName: 'DK',
+      //   lastName: 'Metcalf',
+      //   id: 16123,
+      //   status: 'Starter',
+      //   abbreviation: 'SEA',
+      //   position: 'WR'
+      // },
+      'Offense-QB-1' : {
+        firstName: 'Russell',
+        lastName: 'Wilson',
+        id: 8283,
         status: 'Starter',
         abbreviation: 'SEA',
-        position: 'WR'
+        position: 'QB'
       },
       // 'Offense-TE-1' : {
       //   firstName: 'Will',
@@ -303,15 +311,15 @@ export class DepthService {
     ],
     '76': [
       {
-        'gdate': 7,
-        'Offense-TE-1' : {
-          firstName: 'Zach',
-          lastName: 'Ertz',
-          id: 8032,
-          status: 'Starter',
-          abbreviation: 'ARI',
-          position: 'TE'
-        },
+        'gdate': 10,
+        // 'Offense-TE-1' : {
+        //   firstName: 'Zach',
+        //   lastName: 'Ertz',
+        //   id: 8032,
+        //   status: 'Starter',
+        //   abbreviation: 'ARI',
+        //   position: 'TE'
+        // },
         // 'Offense-TE-1' : {
         //   firstName: 'Rondale',
         //   lastName: 'Moore',
@@ -328,14 +336,22 @@ export class DepthService {
         //   abbreviation: 'ARI',
         //   position: 'RB'
         // },
-        // 'Offense-WR-2' : {
-        //   firstName: 'Christian',
-        //   lastName: 'Kirk',
-        //   id: 14654,
-        //   status: 'Starter',
-        //   abbreviation: 'ARI',
-        //   position: 'WR'
-        // },
+        'Offense-WR-1' : {
+          firstName: 'Christian',
+          lastName: 'Kirk',
+          id: 14654,
+          status: 'Starter',
+          abbreviation: 'ARI',
+          position: 'WR'
+        },
+        'Offense-QB-1' : {
+          firstName: 'Colt',
+          lastName: 'McCoy',
+          id: 8733,
+          status: 'Starter',
+          abbreviation: 'ARI',
+          position: 'QB'
+        },
         
       }
     ],
