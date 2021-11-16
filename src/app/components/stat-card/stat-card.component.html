@@ -115,7 +115,13 @@
                     <span *ngIf="statField === 'hits'">{{ item?.stats[statType]?.battingAvg }} BA</span>
                     <span *ngIf="statField === 'runs'">{{ item?.stats[statType]?.stolenBases }} SB</span>
                     <span *ngIf="statField === 'stolenBases'">{{ item?.stats[statType]?.runs }} R</span>
-                    
+                  </span>
+
+                  <span *ngIf="sport === 'nhl'">
+                    <span *ngIf="statField === 'iceTimeAvg'" [ngStyle]="{color: item?.stats[statType]?.fanDuelFP &gt; 200 ? 'gold' : 'white'}">{{ item?.stats[statType]?.fanDuelFP }} FP</span>     
+                    <span *ngIf="statField === 'shots'" [ngStyle]="{color: item?.stats['scoring']?.goals &gt; 9 ? 'gold' : 'white'}">{{ item?.stats['scoring']?.goals }} G</span> 
+                    <span *ngIf="statField === 'goals'" [ngStyle]="{color: item?.stats[statType]?.assists &gt; 9 ? 'gold' : 'white'}">{{ item?.stats[statType]?.assists }} A</span> 
+                    <span *ngIf="statField === 'blockedShots'" [ngStyle]="{color: item?.stats[statType]?.hits &gt; 25 ? 'gold' : 'white'}">{{ item?.stats[statType]?.hits }} H</span>        
                   </span>
                 </span>
                 <span class="three-week" *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && statType != 'tackles' && statType != 'interceptions'">

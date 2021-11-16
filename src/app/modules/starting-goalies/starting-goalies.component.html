@@ -337,7 +337,7 @@
       </div>
             <div class="center">
             <p class="game-info" *ngIf="data?.goalies?.home != null">
-              <img src="{{ data?.goalies?.home[0]?.playerObj?.team.opponentLogo }}" alt=""> VS <img src="{{ data?.goalies?.home[0]?.playerObj?.team.logo }}" alt="">
+              <img src="{{ data?.goalies?.home[0]?.playerObj?.team.opponentLogo }}" alt=""> &nbsp; <img src="{{ data?.goalies?.home[0]?.playerObj?.team.logo }}" alt="">
               <br> {{data?.goalies?.home[0]?.playerObj?.team.opponent}} @ {{data?.goalies?.home[0]?.playerObj?.team.city +' '+ data?.goalies?.home[0]?.playerObj?.team.name}}
               <br>
               <span class="green-dot" *ngIf="data?.goalies?.home[0]?.playerObj?.status === 'LIVE'"></span> 

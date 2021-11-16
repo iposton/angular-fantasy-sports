@@ -28,8 +28,8 @@ export class NhlUtilService {
         lastName: "Vanecek",
         teamId: 5,
         abbreviation: "WSH",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       }, 
@@ -39,10 +39,10 @@ export class NhlUtilService {
         lastName: "Fucale",
         teamId: 5,
         abbreviation: "WSH",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8477457.jpg',
-        new: true
+        new: false
       }, 
       '5908': {
         id: 5908,
@@ -765,10 +765,10 @@ export class NhlUtilService {
         lastName: "Oettinger",
         teamId: 27,
         abbreviation: "DAL",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8479979.jpg',
-        new: false
+        new: true
       },
       '4863':{
         id: 4863,
@@ -776,8 +776,8 @@ export class NhlUtilService {
         lastName: "Holtby",
         teamId: 27,
         abbreviation: "DAL",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -788,7 +788,7 @@ export class NhlUtilService {
         teamId: 27,
         abbreviation: "DAL",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8471418.jpg',
         new: false
       },
