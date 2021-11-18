@@ -1,8 +1,8 @@
-# Starting NHL Goalies and NBA Starters Angular 11 MySportsFeeds API, Heroku - <a href="https://www.fantasy-sports-resources.com">Demo</a> 
+# Starting NHL Goalies and NBA Starters Angular 12 MySportsFeeds API, Heroku - <a href="https://www.fantasy-sports-resources.com">Demo</a> 
 This is a single page app which uses the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#) to get starting NHL goalie data. 
 
 ### Description
-This [application](https://nhl-starting-goalies-angular.herokuapp.com/) is made with Angular (version 10.0.4) and the most current version of angular material2. This SPA app is hosted for free on Heroku (cloud application platform). The data is sourced through the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#).
+This [application](https://nhl-starting-goalies-angular.herokuapp.com/) is made with Angular (version 12.2.4) and the most current version of angular material2. This SPA app is hosted for free on Heroku (cloud application platform). The data is sourced through the [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#).
 
 This app can help explain how to fetch data using [Angular's HttpClient Module](https://angular.io/guide/http) from a robust api.  
 
@@ -11,18 +11,18 @@ This app can help explain how to fetch data using [Angular's HttpClient Module](
 * Get realtime data updates from firebase. 
 * Use twitter API to get player updates.   
 * [Use the HttpClient module to connect to an api and get data returned in milliseconds.](https://www.ianposton.com/angular4-httpclient/)
-* [Deploy an Angular 9 app to Heroku.](https://www.ianposton.com/angular4-deploy-to-heroku/) 
+* [Deploy an Angular 12 app to Heroku.](https://www.ianposton.com/angular4-deploy-to-heroku/) 
 * Encrypy/Decrypt heroku config vars with Crypto-js.
 
 ### Software used for this application
-* Angular (version 11.2.5) 
-* Angular CLI (version 11.2.4)
-* Node.js (version 14.4.0)    
+* Angular (version 12.2.4) 
+* Angular CLI (version 12.2.4)
+* Node.js (version 14.7.5)    
 * Heroku [Set up a free account ](https://www.heroku.com/)
 * [Firebase](https://firebase.google.com/) (version 7.16.1) 
-* @angular/fire (version 5.2.1)
-* NPM (version 7.6.3)
-* rxjs (version 6.6.0)
+* @angular/fire (version 6.0.2)
+* NPM (version 7.21.1)
+* rxjs (version 7.6.0)
 * [MySportsFeeds API](https://www.mysportsfeeds.com/data-feeds/api-docs/#)
 * [Crypto-js](https://github.com/brix/crypto-js) (version 4.0.0)
 

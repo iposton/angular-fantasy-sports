@@ -18,7 +18,7 @@ export class NhlUtilService {
         teamId: 5,
         abbreviation: "WSH",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8478492.jpg',
         new: false
       }, 
