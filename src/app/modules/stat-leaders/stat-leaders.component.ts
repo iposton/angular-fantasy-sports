@@ -1132,7 +1132,7 @@ export class StatLeadersComponent implements OnInit {
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.thirdBaseHits : 0;
 
                     hash[key]['11'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
-                    s === 'nhl' && skateSec ? a.playerStats[0].shifts.timeOnIceSeconds 
+                    s === 'nhl' && skateSec ? a.playerStats[0].skating.hits 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.goalsAgainst : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.batterWalks : 0;
@@ -1204,7 +1204,8 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.scoring.gameWinningGoals = data['6'];
                         info.stats.gamesPlayed = data['7'];
                         info.stats.skating.shots = data['8'];
-                        info.stats.skating.blockedShots = data['9'];  
+                        info.stats.skating.blockedShots = data['9']; 
+                        info.stats.skating.hits = data['11'];  
                         info.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data['10'], data['7']);   
                         //this.skaterFp(info);
                         info.stats.scoring.fanDuelFP = this.util.round(this.nhlUtil.skaterSLFP(info),1);
