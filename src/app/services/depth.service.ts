@@ -412,7 +412,7 @@ export class DepthService {
     ],
     '52': [
       {
-        'gdate': 11,
+        'gdate': 12,
       
         // 'Offense-QB-1' : {
         //   firstName: 'Garett',
@@ -896,7 +896,7 @@ export class DepthService {
     ],
     '60': [
       {
-        'gdate': 11,
+        'gdate': 12,
         // 'Offense-QB-1' : {
         //   firstName: 'Justin',
         //   lastName: 'Fields',
@@ -905,6 +905,14 @@ export class DepthService {
         //   abbreviation: 'CHI',
         //   position: 'QB'
         // },
+        'Offense-QB-1' : {
+          firstName: 'Andy',
+          lastName: 'Dalton',
+          id: 6464,
+          status: 'Starter',
+          abbreviation: 'CHI',
+          position: 'QB'
+        },
         'Offense-RB-1' : {
           firstName: 'David',
           lastName: 'Montgomery',
