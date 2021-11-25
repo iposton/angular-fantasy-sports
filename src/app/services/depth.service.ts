@@ -651,7 +651,7 @@ export class DepthService {
           abbreviation: 'GB',
           position: 'TE'
         }, 
-        'Offense-WR-2' : {
+        'Offense-WR-1' : {
           firstName: '',
           lastName: 'Valdes',
           id: 14688,
@@ -1273,7 +1273,7 @@ export class DepthService {
         //   abbreviation: 'TEN',
         //   position: 'WR'
         // },
-        'Offense-WR-2' : {
+        'Offense-WR-1' : {
           firstName: 'Nick',
           lastName: 'Westbrook',
           id: 23257,

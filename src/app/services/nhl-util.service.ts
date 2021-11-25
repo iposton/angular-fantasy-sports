@@ -556,8 +556,8 @@ export class NhlUtilService {
         lastName: "Allen",
         teamId: 14,
         abbreviation: "MTL",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'8474596.jpg',
         new: false
       },
@@ -568,7 +568,7 @@ export class NhlUtilService {
         teamId: 14,
         abbreviation: "MTL",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -578,10 +578,10 @@ export class NhlUtilService {
         lastName: "Primeau",
         teamId: 14,
         abbreviation: "MTL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480051.jpg',
-        new: true
+        new: false
       },
       '5109': {
         id: 5109,
