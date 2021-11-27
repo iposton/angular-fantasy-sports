@@ -1719,10 +1719,27 @@ export class NflUtilService {
           lastName: "Goodwin",
           image: nflImageRoot+"pmssb3pyiripkxwqmnqp"
         },
+        "8749" : {
+          firstName: "Tony",
+          lastName: "Jones",
+          image: nflImageRoot+"zotzkoxxn358hpgmesdv"
+        },
+        "30625" : {
+          firstName: "Amon",
+          lastName: "St. Brown",
+          image: nflImageRoot+"wriyln01fppggo6jwvc0"
+        },
+        "18605" : {
+          firstName: "Josiah",
+          lastName: "Deguara",
+          image: nflImageRoot+"yzw2xy9ibxvwfogeywcx"
+        }, 
+        "14678" : {
+          firstName: "Ced",
+          lastName: "Wilson",
+          image: nflImageRoot+"mqx2ue8p1i49rsft8lrx"
+        }, 
         
-        
-        
-         
       }
    }
 
