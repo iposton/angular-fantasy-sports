@@ -1739,7 +1739,17 @@ export class NflUtilService {
           lastName: "Wilson",
           image: nflImageRoot+"mqx2ue8p1i49rsft8lrx"
         }, 
-        
+        "8748" : {
+          firstName: "DeSean",
+          lastName: "Jackson",
+          image: nflImageRoot+"pr5m864fqvnoozihylrh"
+        },
+        "30717" : {
+          firstName: "Dez",
+          lastName: "Fitzpatrick",
+          image: nflImageRoot+"unxs3jdj0qphnyh6i0jm"
+        },
+          
       }
    }
 

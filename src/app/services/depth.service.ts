@@ -1305,6 +1305,14 @@ export class DepthService {
           abbreviation: 'TEN',
           position: 'WR'
         },
+        'Offense-WR-1' : {
+          firstName: 'Dez',
+          lastName: 'Fitzpatrick',
+          id: 30717,
+          status: 'Starter',
+          abbreviation: 'TEN',
+          position: 'WR'
+        },
         // 'Offense-WR-1' : {
         //   firstName: 'Julio',
         //   lastName: 'Jones',

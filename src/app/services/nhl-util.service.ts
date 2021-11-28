@@ -172,9 +172,9 @@ export class NhlUtilService {
         teamId: 26,
         abbreviation: "SJS",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8478499.jpg',
-        new: true
+        new: false
       },
       '4862': {
         id: 4862,
@@ -183,9 +183,9 @@ export class NhlUtilService {
         teamId: 26,
         abbreviation: "SJS",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8473503.jpg',
-        new: true
+        new: false
       },
       '28469': {
         id: 28469,
