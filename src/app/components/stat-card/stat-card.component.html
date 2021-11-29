@@ -118,10 +118,10 @@
                   </span>
 
                   <span *ngIf="sport === 'nhl'">
-                    <span *ngIf="statField === 'iceTimeAvg'" [ngStyle]="{color: item?.stats[statType]?.fanDuelFP &gt; 200 ? 'gold' : 'white'}">{{ item?.stats[statType]?.fanDuelFP }} FP</span>     
-                    <span *ngIf="statField === 'shots'" [ngStyle]="{color: item?.stats['scoring']?.goals &gt; 9 ? 'gold' : 'white'}">{{ item?.stats['scoring']?.goals }} G</span> 
-                    <span *ngIf="statField === 'goals'" [ngStyle]="{color: item?.stats[statType]?.assists &gt; 9 ? 'gold' : 'white'}">{{ item?.stats[statType]?.assists }} A</span> 
-                    <span *ngIf="statField === 'blockedShots'" [ngStyle]="{color: item?.stats[statType]?.hits &gt; 25 ? 'gold' : 'white'}">{{ item?.stats[statType]?.hits }} H</span>        
+                    <span *ngIf="statField === 'iceTimeAvg'" [ngStyle]="{color: item?.stats[statType]?.fanDuelFP &gt; (item?.stats?.sl === 'last-week' ? 34 : item?.stats?.sl === 'two-weeks' ? 68 : 250) ? 'gold' : 'white'}">{{ item?.stats[statType]?.fanDuelFP }} FP</span>     
+                    <span *ngIf="statField === 'shots'" [ngStyle]="{color: item?.stats['scoring']?.goals &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 4 : 11) ? 'gold' : 'white'}">{{ item?.stats['scoring']?.goals }} G</span> 
+                    <span *ngIf="statField === 'goals'" [ngStyle]="{color: item?.stats[statType]?.assists &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 4 : 11) ? 'gold' : 'white'}">{{ item?.stats[statType]?.assists }} A</span> 
+                    <span *ngIf="statField === 'blockedShots'" [ngStyle]="{color: item?.stats[statType]?.hits &gt; (item?.stats?.sl === 'last-week' ? 4 : item?.stats?.sl === 'two-weeks' ? 8 : 30) ? 'gold' : 'white'}">{{ item?.stats[statType]?.hits }} H</span>        
                   </span>
                 </span>
                 <span class="three-week" *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && statType != 'tackles' && statType != 'interceptions'">

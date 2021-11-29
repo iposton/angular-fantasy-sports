@@ -1132,7 +1132,7 @@ export class StatLeadersComponent implements OnInit {
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.thirdBaseHits : 0;
 
                     hash[key]['11'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
-                    s === 'nhl' && skateSec ? a.playerStats[0].skating.hits 
+                    s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.hits 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.goalsAgainst : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.batterWalks : 0;
@@ -1210,6 +1210,7 @@ export class StatLeadersComponent implements OnInit {
                         //this.skaterFp(info);
                         info.stats.scoring.fanDuelFP = this.util.round(this.nhlUtil.skaterSLFP(info),1);
                         info.stats.scoring.fanDuelFPA = this.util.round(this.nhlUtil.skaterSLFPA(info),1);
+                        info.stats.sl = this.timeSpan
                         
                       }
 
@@ -1224,7 +1225,7 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.goaltending.goalsAgainst = data['11'];
                         info.stats.goaltending.shotsAgainst = data['12'];
                         info.stats.goaltending.goalsAgainstAverage = this.util.round(Math.floor(data['11'] * 60) / Math.floor(data['13'] / 60), 3);  
-
+                        info.stats.sl = this.timeSpan
                         //this.util.round(this.nhlUtil.goalieFp(info),1);
                         info.stats.goaltending.fanDuelFP = this.util.round(this.nhlUtil.goalieSLFP(info),1);
                         info.stats.goaltending.fanDuelFPA = this.util.round(this.nhlUtil.goalieSLFPA(info),1);
