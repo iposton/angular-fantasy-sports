@@ -2284,17 +2284,22 @@ export class NflUtilService {
   }
 
   public offenseFp(player) {
-    if (player.primaryPosition != 'K' && player.stats.receiving != null && player.primaryPosition != 'n' && player.primaryPosition != 'd') {
+  
+    if (player.player.primaryPosition != 'K' && player.stats.receiving != null) {
       player.stats.receiving.fanDuelFP = player.stats.gamesPlayed > 0 && player.stats.twoPointAttempts != null ? ((player.stats.twoPointAttempts.twoPtPassMade + player.stats.twoPointAttempts.twoPtPassRec + player.stats.twoPointAttempts.twoPtRushMade * 2) - (player.stats.fumbles.fumLost * 2) + (player.stats.fumbles.fumTD * 6) - (player.stats.interceptions.interceptions) + (player.stats.kickoffReturns.krTD * 6) + (player.stats.puntReturns.prTD * 6) + (player.stats.passing.passTD * 4) + (player.stats.passing.passYards * 0.04) + (player.stats.receiving.receptions * 0.5) + (player.stats.receiving.recTD * 6) + (player.stats.receiving.recYards * 0.1) + (player.stats.rushing.rushTD * 6) + (player.stats.rushing.rushYards * 0.1)).toFixed(2) : 0;
       player.stats.receiving.fanDuelFPA = player.stats.gamesPlayed > 0 ? Math.floor(parseInt(player.stats.receiving.fanDuelFP) / player.stats.gamesPlayed) : 0;
-    } else if (player.primaryPosition === 'K' && player.stats != null) {
+    } 
+    
+    if (player.player.primaryPosition === 'K' && player.stats.fieldGoals != null) {
+      console.log(player, 'kickers???')
       player.stats.fieldGoals.fanDuelFP = player.stats.gamesPlayed > 0 ? ((player.stats.extraPointAttempts.xpMade) + (player.stats.fieldGoals.fgMade1_19 + player.stats.fieldGoals.fgMade20_29 + player.stats.fieldGoals.fgMade30_39 * 3) + (player.stats.fieldGoals.fgMade40_49 * 4) + (player.stats.fieldGoals.fgMade50Plus * 5)).toFixed(2) : 0;
-      player.stats.fieldGoals.fanDuelFPA = player.stats.gamesPlayed > 0 ? Math.floor(parseInt(player.stats.receiving.fanDuelFP) / player.stats.gamesPlayed) : 0;
+      player.stats.fieldGoals.fanDuelFPA = player.stats.gamesPlayed > 0 ? Math.floor(parseInt(player.stats.fieldGoals.fanDuelFP) / player.stats.gamesPlayed) : 0;
     }
   }
 
+
   public offDailyFp(mdata, daily) {
-    if (mdata.primaryPosition != 'K' && mdata.stats.receiving != null && mdata.primaryPosition != 'n' && mdata.primaryPosition != 'd') {
+    if (mdata.player.primaryPosition != 'K' && mdata.stats.receiving != null) {
       mdata.stats.fanDuelDFP = daily.stats.twoPointAttempts != null ? ((daily.stats.twoPointAttempts.twoPtPassMade + daily.stats.twoPointAttempts.twoPtPassRec + daily.stats.twoPointAttempts.twoPtRushMade * 2) - (daily.stats.fumbles.fumLost * 2) + (daily.stats.fumbles.fumTD * 6) - (daily.stats.interceptions.interceptions) + (daily.stats.kickoffReturns.krTD * 6) + (daily.stats.puntReturns.prTD * 6) + (daily.stats.passing.passTD * 4) + (daily.stats.passing.passYards * 0.04) + (daily.stats.receiving.receptions * 0.5) + (daily.stats.receiving.recTD * 6) + (daily.stats.receiving.recYards * 0.1) + (daily.stats.rushing.rushTD * 6) + (daily.stats.rushing.rushYards * 0.1)).toFixed(2) : 0;
     }
   }

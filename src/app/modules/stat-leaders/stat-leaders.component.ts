@@ -373,12 +373,12 @@ export class StatLeadersComponent implements OnInit {
      this.t4 = p === 'k' ? 'Rookie FieldGoals' : 'Rookie Total Yds'
      this.tag4 = p === 'k' ? 'FG' : 'Yds'
 
-     this.st5 = p === 'k' ? 'fieldgoals' : 'receiving'
+     this.st5 = p === 'k' ? 'fieldGoals' : 'receiving'
      this.sf5 = 'fanDuelFP'
      this.t5 = 'Fantasy Points'
      this.tag5 = 'FP'
 
-     this.st6 = p === 'k' ? 'fieldgoals' : 'receiving'
+     this.st6 = p === 'k' ? 'fieldGoals' : 'receiving'
      this.sf6 = 'fanDuelFPA'
      this.t6 = 'Fantasy Points Average'
      this.tag6 = 'FPA'
@@ -1435,6 +1435,8 @@ export class StatLeadersComponent implements OnInit {
                        gameRecTD: oPos[player['player'].position] ? player['playerStats'][0].receiving.recTD : 0,
                        gameFGM: player['player'].position === 'K' ? player['playerStats'][0].fieldGoals.fgMade : 0,
                        gameLFGM: player['player'].position === 'K' ? player['playerStats'][0].fieldGoals.fgMade40_49 + player['playerStats'][0].fieldGoals.fgMade50Plus : 0,
+                       gameFP: oPos[player['player'].position] ? ((player['playerStats'][0].twoPointAttempts.twoPtPassMade + player['playerStats'][0].twoPointAttempts.twoPtPassRec + player['playerStats'][0].twoPointAttempts.twoPtRushMade * 2) - (player['playerStats'][0].fumbles.fumLost * 2) + (player['playerStats'][0].fumbles.fumTD * 6) - (player['playerStats'][0].interceptions.interceptions) + (player['playerStats'][0].kickoffReturns.krTD * 6) + (player['playerStats'][0].puntReturns.prTD * 6) + (player['playerStats'][0].passing.passTD * 4) + (player['playerStats'][0].passing.passYards * 0.04) + (player['playerStats'][0].receiving.receptions * 0.5) + (player['playerStats'][0].receiving.recTD * 6) + (player['playerStats'][0].receiving.recYards * 0.1) + (player['playerStats'][0].rushing.rushTD * 6) + (player['playerStats'][0].rushing.rushYards * 0.1)).toFixed(2) : 
+                       player['player'].position === 'K' ? ((player['playerStats'][0].extraPointAttempts.xpMade) + (player['playerStats'][0].fieldGoals.fgMade1_19 + player['playerStats'][0].fieldGoals.fgMade20_29 + player['playerStats'][0].fieldGoals.fgMade30_39 * 3) + (player['playerStats'][0].fieldGoals.fgMade40_49 * 4) + (player['playerStats'][0].fieldGoals.fgMade50Plus * 5)).toFixed(2) : 0,
                        playerName: player.player['firstName'],
                        playerId: player.player.id
                       };
@@ -1539,14 +1541,17 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
                         //wr te
                         info.stats.receiving.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7'])
+                        this.nflUtil.offenseFp(info)
+                        info.stats.receiving.fanDuelFPA = Math.floor(parseInt(info.stats.receiving.fanDuelFP) / data['7'])
                       } else {
                         info.stats.fieldGoals.fgMade = data['9'];
                         info.stats.fieldGoals.longFgMade = data['10'];
                         info.spanOpponents = data['17'];
+                        this.nflUtil.offenseFp(info)
+                        info.stats.fieldGoals.fanDuelFPA = Math.floor(parseInt(info.stats.fieldGoals.fanDuelFP) / data['7'])
                       }
                         //TODO: Get toughness rank per 3 week span
-                        this.nflUtil.offenseFp(info)
-                        info.stats.receiving.fanDuelFPA = Math.floor(parseInt(info.stats.receiving.fanDuelFP) / data['7'])
+                        
                         info.player.span = this.timeSpan
                     }
                   }

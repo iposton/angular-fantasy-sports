@@ -154,6 +154,7 @@
                             TD: {{team?.gameRecTD}}</span>
                           <span *ngIf="statField === 'fgMade'">FG: {{team?.gameFGM}}</span>
                           <span *ngIf="statField === 'longFgMade'">FG+: {{team?.gameLFGM}}</span>
+                          <span *ngIf="statField === 'fanDuelFP' || statField === 'fanDuelFPA'">FP: {{team?.gameFP}}</span>
                       </span>
                   </span>
                 </span>

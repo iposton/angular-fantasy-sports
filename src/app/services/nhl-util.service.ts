@@ -198,17 +198,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'0.jpg',
         new: false
       },
-      '5528': {
-        id: 5528,
-        firstName: "Malcolm",
-        lastName: "Subban",
-        teamId: 20,
-        abbreviation: "CHI",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
-      },
       '483': {
         id: 483,
         firstName: "Marc-Andre",
@@ -438,6 +427,17 @@ export class NhlUtilService {
         active: false,
         numberOne: false,
         img: nhlImageRoot+'8467950.jpg',
+        new: false
+      },
+      '5528': {
+        id: 5528,
+        firstName: "Malcolm",
+        lastName: "Subban",
+        teamId: 15,
+        abbreviation: "BUF",
+        active: false,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
         new: false
       },
       '15149': {
@@ -1084,10 +1084,10 @@ export class NhlUtilService {
         lastName: "Korpisalo",
         teamId: 19,
         abbreviation: "CBJ",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8476914.jpg',
-        new: true
+        new: false
       },
       '15690': {
         id: 15690,
@@ -1110,6 +1110,17 @@ export class NhlUtilService {
         numberOne: false,
         img: nhlImageRoot+'8480760.jpg',
         new: false
+      },
+      '5521': {
+        id: 5521,
+        firstName: "Daniil",
+        lastName: "Tarasov",
+        teamId: 19,
+        abbreviation: "CBJ",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'0.jpg',
+        new: true
       },
       '11703': {
         id: 11703,
