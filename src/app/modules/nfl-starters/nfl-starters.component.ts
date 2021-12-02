@@ -91,6 +91,7 @@ export class NflStartersComponent implements OnInit {
   public seasonLengthD  : string = 'otr';
   public currentWeek: string
   public isPast: boolean
+  public fantasyPoints: boolean
   public gameStarter: { 
     gameID: string, 
     name: any, 
@@ -133,6 +134,7 @@ export class NflStartersComponent implements OnInit {
       this.nflDraftKit = true
       this.showDef = true
       this.isPast = false
+      this.fantasyPoints = false
       // this.seasonLength = 'full';
 
       for (let week of weekTimes) {
@@ -529,7 +531,7 @@ export class NflStartersComponent implements OnInit {
                         for (let data of this.myData) {
 
                           if (gs.playerID === data.player.id) {
-
+                            this.nflUtil.offenseFp(data)
                             if (gs.status !== "UNPLAYED") {
                               if (data.player.gameLocation === 'home') {
                                 data.team.teamScore = gs.score['homeScoreTotal'];
@@ -571,19 +573,20 @@ export class NflStartersComponent implements OnInit {
                             mdata.stats.tyToday = daily.stats.receiving ?  daily.stats.receiving.recYards + daily.stats.rushing.rushYards : 0;
                             mdata.stats.tqbyToday = daily.stats.passing ?  daily.stats.passing.passYards + daily.stats.rushing.rushYards : 0;
                             mdata.stats.ttdToday = daily.stats.receiving ? daily.stats.passing.passTD + daily.stats.rushing.rushTD + daily.stats.receiving.recTD  : 0;
+                            this.nflUtil.offDailyFp(mdata, daily)
                             if (mdata.stats.receiving) {
                               mdata.stats.receiving.dailyTotalTouches = daily.stats.rushing ? daily.stats.rushing.rushAttempts + daily.stats.receiving.targets : 0;
                               mdata.stats.receiving.dailyRTouches = daily.stats.rushing ? daily.stats.rushing.rushAttempts : 0;
                               mdata.stats.receiving.dailyPTouches = daily.stats.rushing ? daily.stats.receiving.targets : 0;
                             }
-                            mdata.stats.tacklesToday = daily.stats.tackles ? daily.stats.tackles.tackleTotal : 0;
-                            mdata.stats.pdToday = daily.stats.interceptions ? daily.stats.interceptions.passesDefended : 0;
-                            mdata.stats.sacksToday = daily.stats.tackles ? daily.stats.tackles.sacks : 0;
-                            mdata.stats.intToday = daily.stats.interceptions ? daily.stats.interceptions.interceptions : 0;
-                            mdata.stats.intTdToday = daily.stats.interceptions ? daily.stats.interceptions.intTD : 0;
-                            mdata.stats.ffToday = daily.stats.fumbles ? daily.stats.fumbles.fumForced : 0;
-                            mdata.stats.frToday = daily.stats.fumbles ? daily.stats.fumbles.fumOppRec : 0;
-                            mdata.stats.fumTdToday = daily.stats.fumbles ? daily.stats.fumbles.fumTD : 0;
+                            // mdata.stats.tacklesToday = daily.stats.tackles ? daily.stats.tackles.tackleTotal : 0;
+                            // mdata.stats.pdToday = daily.stats.interceptions ? daily.stats.interceptions.passesDefended : 0;
+                            // mdata.stats.sacksToday = daily.stats.tackles ? daily.stats.tackles.sacks : 0;
+                            // mdata.stats.intToday = daily.stats.interceptions ? daily.stats.interceptions.interceptions : 0;
+                            // mdata.stats.intTdToday = daily.stats.interceptions ? daily.stats.interceptions.intTD : 0;
+                            // mdata.stats.ffToday = daily.stats.fumbles ? daily.stats.fumbles.fumForced : 0;
+                            // mdata.stats.frToday = daily.stats.fumbles ? daily.stats.fumbles.fumOppRec : 0;
+                            // mdata.stats.fumTdToday = daily.stats.fumbles ? daily.stats.fumbles.fumTD : 0;
                             
                           }
 

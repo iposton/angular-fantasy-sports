@@ -96,7 +96,7 @@
                     <span *ngIf="statType === 'passing' && statField == 'ydsPerGame'">{{ item?.stats[statType]?.passTD + item?.stats?.rushing?.rushTD }} TD</span>
                     <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'">{{ item?.stats[statType]?.rushTD }} TD</span>
                     <span *ngIf="statType === 'rushing' && statField == 'ydsPerGame'">{{ item?.stats[statType]?.rushTD + item?.stats?.receiving?.recTD }} TD</span>
-                    <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct'">{{ item?.stats[statType]?.recTD }} TD</span>
+                    <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct' && statField != 'fanDuelFP' && statField != 'fanDuelFPA'">{{ item?.stats[statType]?.recTD }} TD</span>
                     <span *ngIf="statField === 'totalTouchPct'">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
                   </span>
                   <span *ngIf="sport === 'nfl' && title == 'Rookie Total Yds'">

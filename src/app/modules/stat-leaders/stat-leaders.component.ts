@@ -52,18 +52,26 @@ export class StatLeadersComponent implements OnInit {
   public st2: any;
   public st3: any;
   public st4: any;
+  public st5: any;
+  public st6: any;
   public sf1: any; //passYards
   public sf2: any;
   public sf3: any;
   public sf4: any;
+  public sf5: any;
+  public sf6: any;
   public t1: any; //Passing Yards
   public t2: any;
   public t3: any;
   public t4: any;
+  public t5: any;
+  public t6: any;
   public tag1: any; //PY
   public tag2: any;
   public tag3: any;
   public tag4: any;
+  public tag5: any;
+  public tag6: any;
 
   public newDefenseData: Array <any>;
   public newGoalieData: Array <any>;
@@ -181,6 +189,16 @@ export class StatLeadersComponent implements OnInit {
     this.sf4 = 'totalPassYards'
     this.t4 = 'Rookie Total Yds'
     this.tag4 = 'Yds'
+
+    this.st5 = 'receiving'
+    this.sf5 = 'fanDuelFP'
+    this.t5 = 'Fantasy Points'
+    this.tag5 = 'FP'
+
+    this.st6 = 'receiving'
+    this.sf6 = 'fanDuelFPA'
+    this.t6 = 'Fantasy Points Average'
+    this.tag6 = 'FPA'
     //default sport load
     
     this.stats = '1';
@@ -355,6 +373,16 @@ export class StatLeadersComponent implements OnInit {
      this.t4 = p === 'k' ? 'Rookie FieldGoals' : 'Rookie Total Yds'
      this.tag4 = p === 'k' ? 'FG' : 'Yds'
 
+     this.st5 = p === 'k' ? 'fieldgoals' : 'receiving'
+     this.sf5 = 'fanDuelFP'
+     this.t5 = 'Fantasy Points'
+     this.tag5 = 'FP'
+
+     this.st6 = p === 'k' ? 'fieldgoals' : 'receiving'
+     this.sf6 = 'fanDuelFPA'
+     this.t6 = 'Fantasy Points Average'
+     this.tag6 = 'FPA'
+
      
 
     this.week = 'all'
@@ -492,10 +520,10 @@ export class StatLeadersComponent implements OnInit {
             }  
           }
 
-        this.nhlService
-          .getInfoSkaters().subscribe(res => {
-            this.util.updatePlayers(res['players'], this.nhlSkaters, nhlTeamsArray);
-        })
+        // this.nhlService
+        //   .getInfoSkaters().subscribe(res => {
+        //     this.util.updatePlayers(res['players'], this.nhlSkaters, nhlTeamsArray);
+        // })
 
         if (this.timeSpan === 'full') {
           this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D');
@@ -539,10 +567,10 @@ export class StatLeadersComponent implements OnInit {
           }  
         }
 
-        this.nhlService
-          .getInfo().subscribe(res => {
-            this.util.updatePlayers(res['players'], this.nhlGoaltenders, nhlTeamsArray);
-        })
+        // this.nhlService
+        //   .getInfo().subscribe(res => {
+        //     this.util.updatePlayers(res['players'], this.nhlGoaltenders, nhlTeamsArray);
+        // })
 
         
         if (this.timeSpan != 'full') {
@@ -814,54 +842,7 @@ export class StatLeadersComponent implements OnInit {
     }
 
 
-    function teamInfo(array, teams, type, week, pos) {
-        for (let team of teams) {
-          for (let data of array) { 
-            if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id && week === 'all' ||
-            week != 'all' && team['id'] === data.team.id) {
-              data.team.logo = team['officialLogoImageSrc'];
-              data.team.city = team['city'];
-              data.team.name = team['name'];
-              data.team.twitter = team['twitter'];
-              data.team.dtr = team['dtr'];
-              data.team.dfh = team['dfh'];
-              data.team.dsh = team['dsh'];
-              data.team.abbreviation = team['abbreviation'];
-              data.team.scheduleTicker = team['scheduleTicker'];
-              data.team.weekOpponent = team['weekOpponent'];
-              data.playerType = type;
-            }
-            //data.player['currentTeam'].lastYearTeamId
-            if (week === 'all' && data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.stats.rushing || 
-            week != 'all' && team['id'] === data.team.id && data.stats.rushing) {
-              data.stats.passing.totalPassYards = data.stats.rushing.rushYards + data.stats.passing.passYards
-              data.stats.passing.totalPassTd = data.stats.rushing.rushTD + data.stats.passing.passTD
-
-              data.stats.receiving.totalYards = data.stats.rushing.rushYards + data.stats.receiving.recYards
-              data.stats.receiving.totalTd = data.stats.rushing.rushTD + data.stats.receiving.recTD
-
-              data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets;
-              data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.plays * 100);
-              data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100);
-              data.stats.receiving.touchCatchPct = Math.floor(data.stats.receiving.targets / team.passPlays * 100);
-              data.stats.passing.totalPassPct = Math.floor(data.stats.passing.passAttempts / team.plays * 100);
-            }
-
-            if (nflplayerImages[data.player.id] != null) {
-              data.player.officialImageSrc = nflplayerImages[data.player.id].image;
-            }
-
-            if (data.player.id === 16494) {
-              data.player.unsigned = true;
-            }
-
-            if (pos === 'k') {
-              data.stats.fieldGoals.longFgMade = data.stats.fieldGoals.fgMade40_49 + data.stats.fieldGoals.fgMade50Plus
-            }
-            
-          }  
-        }
-      }
+    
       await sleep(500);
       this.nflService
         .getAllOffense(this.nflPosition, 'stats', this.week).subscribe(res => {
@@ -887,9 +868,8 @@ export class StatLeadersComponent implements OnInit {
           this.nflRookies = this.nflData.filter(
             player => player.player.rookie === true);
             console.log('rookies', this.nflRookies)
-          teamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition);
-          
-          
+          this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition);
+             
           this.nflOffenseLoading = false; 
 
           // this.nflService
@@ -963,7 +943,7 @@ export class StatLeadersComponent implements OnInit {
 
           this.defenseRookies = this.nflDefenseData.filter(
             player => player.player.rookie === true);
-            console.log('rookies', this.defenseRookies)
+            
 
           teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week);
           
@@ -979,6 +959,57 @@ export class StatLeadersComponent implements OnInit {
         this.nflDefenseLoading = false;
       });
       
+    }
+  }
+
+  public nflTeamInfo(array, teams, type, week, pos) {
+    for (let team of teams) {
+      for (let data of array) { 
+        if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id && week === 'all' ||
+        week != 'all' && team['id'] === data.team.id) {
+          data.team.logo = team['officialLogoImageSrc'];
+          data.team.city = team['city'];
+          data.team.name = team['name'];
+          data.team.twitter = team['twitter'];
+          data.team.dtr = team['dtr'];
+          data.team.dfh = team['dfh'];
+          data.team.dsh = team['dsh'];
+          data.team.abbreviation = team['abbreviation'];
+          data.team.scheduleTicker = team['scheduleTicker'];
+          data.team.weekOpponent = team['weekOpponent'];
+          data.playerType = type;
+          this.nflUtil.offenseFp(data)
+        }
+        //data.player['currentTeam'].lastYearTeamId
+        if (week === 'all' && data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.stats.rushing || 
+        week != 'all' && team['id'] === data.team.id && data.stats.rushing) {
+          data.stats.passing.totalPassYards = data.stats.rushing.rushYards + data.stats.passing.passYards
+          data.stats.passing.totalPassTd = data.stats.rushing.rushTD + data.stats.passing.passTD
+
+          data.stats.receiving.totalYards = data.stats.rushing.rushYards + data.stats.receiving.recYards
+          data.stats.receiving.totalTd = data.stats.rushing.rushTD + data.stats.receiving.recTD
+
+          data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets;
+          data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.plays * 100);
+          data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100);
+          data.stats.receiving.touchCatchPct = Math.floor(data.stats.receiving.targets / team.passPlays * 100);
+          data.stats.passing.totalPassPct = Math.floor(data.stats.passing.passAttempts / team.plays * 100);
+          
+        }
+
+        if (nflplayerImages[data.player.id] != null) {
+          data.player.officialImageSrc = nflplayerImages[data.player.id].image;
+        }
+
+        if (data.player.id === 16494) {
+          data.player.unsigned = true;
+        }
+
+        if (pos === 'k') {
+          data.stats.fieldGoals.longFgMade = data.stats.fieldGoals.fgMade40_49 + data.stats.fieldGoals.fgMade50Plus
+        }
+        
+      }  
     }
   }
 
@@ -1514,7 +1545,9 @@ export class StatLeadersComponent implements OnInit {
                         info.spanOpponents = data['17'];
                       }
                         //TODO: Get toughness rank per 3 week span
-                        info.player.span = this.timeSpan;
+                        this.nflUtil.offenseFp(info)
+                        info.stats.receiving.fanDuelFPA = Math.floor(parseInt(info.stats.receiving.fanDuelFP) / data['7'])
+                        info.player.span = this.timeSpan
                     }
                   }
                 }
