@@ -402,10 +402,10 @@ export class NhlUtilService {
         lastName: "Tokarski",
         teamId: 15,
         abbreviation: "BUF",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8474682.jpg',
-        new: true
+        new: false
       },
       '10074': {
         id: 10074,
@@ -416,7 +416,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8477180.jpg',
-        new: true
+        new: false
       },
       '757': {
         id: 757,
@@ -435,10 +435,10 @@ export class NhlUtilService {
         lastName: "Subban",
         teamId: 15,
         abbreviation: "BUF",
-        active: false,
+        active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8476876.jpg',
+        new: true
       },
       '15149': {
         id: 15149,
@@ -864,8 +864,8 @@ export class NhlUtilService {
         lastName: "Kuemper",
         teamId: 22,
         abbreviation: "COL",
-        active:true,
-        numberOne:true,
+        active:false,
+        numberOne:false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -891,6 +891,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8480112.jpg',
         new: false
       },
+      '28463': {
+        id: 28463,
+        firstName: "Justus",
+        lastName: "Annunen",
+        teamId: 22,
+        abbreviation: "COL",
+        active:true,
+        numberOne:false,
+        img: nhlImageRoot+'8481020.jpg',
+        new: false
+      },
       '17380': {
         id: 17380,
         firstName: "Jonas",
@@ -898,9 +909,9 @@ export class NhlUtilService {
         teamId: 22,
         abbreviation: "COL",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8477992.jpg',
-        new: true
+        new: false
       },
       '15442': {
         id: 15442,
@@ -1494,7 +1505,12 @@ export class NhlUtilService {
         firstName: "Joel",
         lastName: "Hofer",
         image: nhlImageRoot+'8480981.jpg',
-      },      
+      }, 
+      "28463": {
+        firstName: "Justus",
+        lastName: "Annunen",
+        image: nhlImageRoot+'8481020.jpg',
+      },     
     }
 
     this.nhlTeams = {

@@ -1428,8 +1428,8 @@ export class StatLeadersComponent implements OnInit {
                        gameRY: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushYards : 0, 
                        gameRA: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushAttempts : 0,
                        gameRTD: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushTD : 0,
-                       gameFUM: oPos[player['player'].position] ? player['playerStats'][0].rushing.rushFumbles : 0,
-                       gameRecF: oPos[player['player'].position] ? player['playerStats'][0].receiving.recFumbles : 0,
+                       gameFUM: oPos[player['player'].position] ? player['playerStats'][0].fumbles.fumLost : 0,
+                       gameRecF: oPos[player['player'].position] ? player['playerStats'][0].fumbles.fumLost : 0,
                        gameRecY: oPos[player['player'].position] ? player['playerStats'][0].receiving.recYards : 0,
                        gameRecR: oPos[player['player'].position] ? player['playerStats'][0].receiving.receptions : 0,
                        gameRecTD: oPos[player['player'].position] ? player['playerStats'][0].receiving.recTD : 0,
@@ -1487,7 +1487,7 @@ export class StatLeadersComponent implements OnInit {
                     //console.log(a, 'this is a');
                     let key = a.player.id;
                     if (!hash[key]) {
-                      hash[key] = { id: key, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0, '10': 0, '11': 0, '12': 0, '13': 0, '14': 0, '15': 0, '16': 0, '17': []};
+                      hash[key] = { id: key, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0, '10': 0, '11': 0, '12': 0, '13': 0, '14': 0, '15': 0, '16': 0, '17': [], '18': 0, '19': 0, '20': 0, '21': 0, '22': 0, '23': 0, '24': 0, '25': 0, '26': 0, '27': 0, '28': 0, '29': 0, '30': 0, '31': 0};
                       r.push(hash[key]);
                     }
 
@@ -1508,6 +1508,22 @@ export class StatLeadersComponent implements OnInit {
                     hash[key]['14'] += oPos[a.player['position']] != null ? a.tp : 0;
                     hash[key]['15'] += oPos[a.player['position']] != null ? a.pp : 0;
                     hash[key]['16'] += oPos[a.player['position']] != null ? a.rp : 0;
+
+                    hash[key]['18'] += oPos[a.player['position']] != null ? a.playerStats[0].twoPointAttempts.twoPtPassMade : 0;
+                    hash[key]['19'] += oPos[a.player['position']] != null ? a.playerStats[0].twoPointAttempts.twoPtPassRec : 0;
+                    hash[key]['20'] += oPos[a.player['position']] != null ? a.playerStats[0].twoPointAttempts.twoPtRushMade : 0;
+                    hash[key]['21'] += oPos[a.player['position']] != null ? a.playerStats[0].fumbles.fumLost : 0;
+                    hash[key]['22'] += oPos[a.player['position']] != null ? a.playerStats[0].fumbles.fumTD : 0;
+                    hash[key]['23'] += oPos[a.player['position']] != null ? a.playerStats[0].kickoffReturns.krTD : 0;
+                    hash[key]['24'] += oPos[a.player['position']] != null ? a.playerStats[0].puntReturns.prTD : 0;
+                    hash[key]['25'] += oPos[a.player['position']] != null ? a.playerStats[0].passing.passInt : 0;
+                    hash[key]['26'] += a.player['position'] === 'K' ? a.playerStats[0].extraPointAttempts.xpMade : 0;
+                    hash[key]['27'] += a.player['position'] === 'K' ? a.playerStats[0].fieldGoals.fgMade1_19 : 0;
+                    hash[key]['28'] += a.player['position'] === 'K' ? a.playerStats[0].fieldGoals.fgMade20_29 : 0;
+                    hash[key]['29'] += a.player['position'] === 'K' ? a.playerStats[0].fieldGoals.fgMade30_39 : 0;
+                    hash[key]['30'] += a.player['position'] === 'K' ? a.playerStats[0].fieldGoals.fgMade40_49 : 0;
+                    hash[key]['31'] += a.player['position'] === 'K' ? a.playerStats[0].fieldGoals.fgMade50Plus : 0;
+                    
                     hash[key]['17'].push(a.opponent);
                     return r;
                   };
@@ -1541,17 +1557,37 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.receiving.touchCatchPct = Math.floor(data['13'] / data['15'] * 100);
                         //wr te
                         info.stats.receiving.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7'])
+      
+                        //fantasy point stuff
+                        info.stats.twoPointAttempts.twoPtPassMade = data['18']
+                        info.stats.twoPointAttempts.twoPtPassRec = data['19']
+                        info.stats.twoPointAttempts.twoPtRushMade = data['20']
+                        info.stats.fumbles.fumLost = data['21']
+                        info.stats.fumbles.fumTD = data['22']
+                        info.stats.kickoffReturns.krTD = data['23']
+                        info.stats.puntReturns.prTD = data['24']
+                        info.stats.passing.passInt = data['25']
+
                         this.nflUtil.offenseFp(info)
                         info.stats.receiving.fanDuelFPA = Math.floor(parseInt(info.stats.receiving.fanDuelFP) / data['7'])
+
                       } else {
                         info.stats.fieldGoals.fgMade = data['9'];
                         info.stats.fieldGoals.longFgMade = data['10'];
                         info.spanOpponents = data['17'];
+
+                        //fantasy point stuff
+                        info.stats.extraPointAttempts.xpMade = data['26']
+                        info.stats.fieldGoals.fgMade1_19 = data['27']
+                        info.stats.fieldGoals.fgMade20_29 = data['28']
+                        info.stats.fieldGoals.fgMade30_39 = data['29']
+                        info.stats.fieldGoals.fgMade40_49 = data['30']
+                        info.stats.fieldGoals.fgMade50Plus = data['31']
+
                         this.nflUtil.offenseFp(info)
                         info.stats.fieldGoals.fanDuelFPA = Math.floor(parseInt(info.stats.fieldGoals.fanDuelFP) / data['7'])
                       }
                         //TODO: Get toughness rank per 3 week span
-                        
                         info.player.span = this.timeSpan
                     }
                   }

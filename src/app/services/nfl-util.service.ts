@@ -1749,6 +1749,12 @@ export class NflUtilService {
           lastName: "Fitzpatrick",
           image: nflImageRoot+"unxs3jdj0qphnyh6i0jm"
         },
+        "16736" : {
+          firstName: "Gardner",
+          lastName: "Minshew",
+          image: nflImageRoot+"y2wmde4s0fgnudjvl4m9"
+        },
+       
           
       }
    }
@@ -2283,15 +2289,13 @@ export class NflUtilService {
     return this.weekTimes;
   }
 
-  public offenseFp(player) {
-  
+  public offenseFp(player) { 
     if (player.player.primaryPosition != 'K' && player.stats.receiving != null) {
-      player.stats.receiving.fanDuelFP = player.stats.gamesPlayed > 0 && player.stats.twoPointAttempts != null ? ((player.stats.twoPointAttempts.twoPtPassMade + player.stats.twoPointAttempts.twoPtPassRec + player.stats.twoPointAttempts.twoPtRushMade * 2) - (player.stats.fumbles.fumLost * 2) + (player.stats.fumbles.fumTD * 6) - (player.stats.interceptions.interceptions) + (player.stats.kickoffReturns.krTD * 6) + (player.stats.puntReturns.prTD * 6) + (player.stats.passing.passTD * 4) + (player.stats.passing.passYards * 0.04) + (player.stats.receiving.receptions * 0.5) + (player.stats.receiving.recTD * 6) + (player.stats.receiving.recYards * 0.1) + (player.stats.rushing.rushTD * 6) + (player.stats.rushing.rushYards * 0.1)).toFixed(2) : 0;
+      player.stats.receiving.fanDuelFP = player.stats.gamesPlayed > 0 && player.stats.twoPointAttempts != null ? ((player.stats.twoPointAttempts.twoPtPassMade + player.stats.twoPointAttempts.twoPtPassRec + player.stats.twoPointAttempts.twoPtRushMade * 2) - (player.stats.fumbles.fumLost * 2) + (player.stats.fumbles.fumTD * 6) - (player.stats.passing.passInt) + (player.stats.kickoffReturns.krTD * 6) + (player.stats.puntReturns.prTD * 6) + (player.stats.passing.passTD * 4) + (player.stats.passing.passYards * 0.04) + (player.stats.receiving.receptions * 0.5) + (player.stats.receiving.recTD * 6) + (player.stats.receiving.recYards * 0.1) + (player.stats.rushing.rushTD * 6) + (player.stats.rushing.rushYards * 0.1)).toFixed(2) : 0;
       player.stats.receiving.fanDuelFPA = player.stats.gamesPlayed > 0 ? Math.floor(parseInt(player.stats.receiving.fanDuelFP) / player.stats.gamesPlayed) : 0;
     } 
     
     if (player.player.primaryPosition === 'K' && player.stats.fieldGoals != null) {
-      console.log(player, 'kickers???')
       player.stats.fieldGoals.fanDuelFP = player.stats.gamesPlayed > 0 ? ((player.stats.extraPointAttempts.xpMade) + (player.stats.fieldGoals.fgMade1_19 + player.stats.fieldGoals.fgMade20_29 + player.stats.fieldGoals.fgMade30_39 * 3) + (player.stats.fieldGoals.fgMade40_49 * 4) + (player.stats.fieldGoals.fgMade50Plus * 5)).toFixed(2) : 0;
       player.stats.fieldGoals.fanDuelFPA = player.stats.gamesPlayed > 0 ? Math.floor(parseInt(player.stats.fieldGoals.fanDuelFP) / player.stats.gamesPlayed) : 0;
     }
