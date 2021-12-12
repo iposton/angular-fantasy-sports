@@ -83,10 +83,10 @@ export class NhlUtilService {
         lastName: "Hofer",
         teamId: 17,
         abbreviation: "STL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480981.jpg',
-        new: true
+        new: false
       },
       '5033': {
         id: 5033,
@@ -402,10 +402,10 @@ export class NhlUtilService {
         lastName: "Huska",
         teamId: 9,
         abbreviation: "NYR",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8478903.jpg',
-        new: true
+        new: false
       },
       '5180': {
         id: 5180,
@@ -413,10 +413,10 @@ export class NhlUtilService {
         lastName: "Kinkaid",
         teamId: 9,
         abbreviation: "NYR",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
-        new: false
+        new: true
       },
       '4759': {
         id: 4759,
@@ -886,8 +886,8 @@ export class NhlUtilService {
         lastName: "Kuemper",
         teamId: 22,
         abbreviation: "COL",
-        active:false,
-        numberOne:false,
+        active:true,
+        numberOne:true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -919,8 +919,8 @@ export class NhlUtilService {
         lastName: "Annunen",
         teamId: 22,
         abbreviation: "COL",
-        active:true,
-        numberOne:false,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8481020.jpg',
         new: false
       },
@@ -931,7 +931,7 @@ export class NhlUtilService {
         teamId: 22,
         abbreviation: "COL",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8477992.jpg',
         new: false
       },
@@ -1238,7 +1238,7 @@ export class NhlUtilService {
         lastName: "Bernier",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8473541.jpg',
         new: false
