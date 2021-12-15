@@ -61,8 +61,8 @@ export class NhlUtilService {
         lastName: "Husso",
         teamId: 17,
         abbreviation: "STL",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8478024.jpg',
         new: false
       },
@@ -73,7 +73,7 @@ export class NhlUtilService {
         teamId: 17,
         abbreviation: "STL",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8479292.jpg',
         new: false
       },
@@ -415,7 +415,7 @@ export class NhlUtilService {
         abbreviation: "NYR",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
+        img: nhlImageRoot+'8476234.jpg',
         new: true
       },
       '4759': {
@@ -1243,6 +1243,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8473541.jpg',
         new: false
       },
+      '12288': {
+        id: 12288,
+        firstName: "Jon",
+        lastName: "Gillies",
+        teamId: 7,
+        abbreviation: "NJD",
+        active: false,
+        numberOne: false,
+        img: nhlImageRoot+'8476903.jpg',
+        new: true
+      },
       '30089': {
         id: 30089,
         firstName: "Nico",
@@ -1252,6 +1263,17 @@ export class NhlUtilService {
         active: false,
         numberOne: false,
         img: nhlImageRoot+'8482076.jpg',
+        new: false
+      }, 
+      '36945': {
+        id: 36945,
+        firstName: "Akira",
+        lastName: "Schmid",
+        teamId: 7,
+        abbreviation: "NJD",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8481033.jpg',
         new: false
       }, 
       '5518': {
@@ -1537,7 +1559,12 @@ export class NhlUtilService {
         firstName: "Adam",
         lastName: "Huska",
         image: nhlImageRoot+'8478903.jpg',
-      },    
+      },
+      "36945": {
+        firstName: "Akira",
+        lastName: "Schmid",
+        image: nhlImageRoot+'8481033.jpg',
+      },     
     }
 
     this.nhlTeams = {
