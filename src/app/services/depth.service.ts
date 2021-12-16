@@ -845,7 +845,7 @@ export class DepthService {
     ],
     '57': [
       {
-        'gdate': 13,
+        'gdate': 14,
         
         'Offense-RB-1' : {
           firstName: 'Joe',
@@ -1129,6 +1129,14 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'LAC',
           position: 'WR'
+        },
+        'Offense-RB-1' : {
+          firstName: 'Austin',
+          lastName: 'Ekeler',
+          id: 13378,
+          status: 'Starter',
+          abbreviation: 'LAC',
+          position: 'RB'
         },
         // 'Offense-TE-1' : {
         //   firstName: 'Jared',
