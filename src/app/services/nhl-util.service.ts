@@ -297,6 +297,17 @@ export class NhlUtilService {
         img: nhlImageRoot+'8481519.jpg',
         new: true
       },
+      '17380': {
+        id: 17380,
+        firstName: "Jonas",
+        lastName: "Johansson",
+        teamId: 4,
+        abbreviation: "FLO",
+        active: false,
+        numberOne: false,
+        img: nhlImageRoot+'8477992.jpg',
+        new: false
+      },
       '5905': {
         id: 5905,
         firstName: "Christopher",
@@ -919,20 +930,9 @@ export class NhlUtilService {
         lastName: "Annunen",
         teamId: 22,
         abbreviation: "COL",
-        active: false,
-        numberOne: false,
-        img: nhlImageRoot+'8481020.jpg',
-        new: false
-      },
-      '17380': {
-        id: 17380,
-        firstName: "Jonas",
-        lastName: "Johansson",
-        teamId: 22,
-        abbreviation: "COL",
         active: true,
         numberOne: false,
-        img: nhlImageRoot+'8477992.jpg',
+        img: nhlImageRoot+'8481020.jpg',
         new: false
       },
       '15442': {
