@@ -1315,9 +1315,20 @@ export class NhlUtilService {
         lastName: "Ingham",
         teamId: 28,
         abbreviation: "LAK",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480857.jpg',
+        new: true
+      },
+      '5878': {
+        id: 5878,
+        firstName: "Garret",
+        lastName: "Sparks",
+        teamId: 28,
+        abbreviation: "LAK",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8476343.jpg',
         new: true
       },
       '5486': {
