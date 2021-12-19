@@ -50,8 +50,8 @@ export class NhlUtilService {
         lastName: "Binnington",
         teamId: 17,
         abbreviation: "STL",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'8476412.jpg',
         new: false
       },
@@ -73,7 +73,7 @@ export class NhlUtilService {
         teamId: 17,
         abbreviation: "STL",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8479292.jpg',
         new: false
       },
@@ -446,8 +446,8 @@ export class NhlUtilService {
         lastName: "Dell",
         teamId: 15,
         abbreviation: "BUF",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8477180.jpg',
         new: false
       },
@@ -468,7 +468,7 @@ export class NhlUtilService {
         lastName: "Subban",
         teamId: 15,
         abbreviation: "BUF",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8476876.jpg',
         new: false
@@ -480,9 +480,9 @@ export class NhlUtilService {
         teamId: 15,
         abbreviation: "BUF",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8480045.jpg',
-        new: true
+        new: false
       },
       '18273': {
         id: 18273,
@@ -897,8 +897,8 @@ export class NhlUtilService {
         lastName: "Kuemper",
         teamId: 22,
         abbreviation: "COL",
-        active:true,
-        numberOne:true,
+        active:false,
+        numberOne:false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -941,10 +941,10 @@ export class NhlUtilService {
         lastName: "Francouz",
         teamId: 22,
         abbreviation: "COL",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'8480925.jpg',
-        new: false
+        new: true
       },
       '5741': {
         id: 5741,
@@ -1227,8 +1227,8 @@ export class NhlUtilService {
         lastName: "Blackwood",
         teamId: 7,
         abbreviation: "NJD",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8478406.jpg',
         new: false
       },
@@ -1249,7 +1249,7 @@ export class NhlUtilService {
         lastName: "Gillies",
         teamId: 7,
         abbreviation: "NJD",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8476903.jpg',
         new: true
@@ -1272,7 +1272,7 @@ export class NhlUtilService {
         teamId: 7,
         abbreviation: "NJD",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8481033.jpg',
         new: false
       }, 
@@ -1294,9 +1294,9 @@ export class NhlUtilService {
         teamId: 28,
         abbreviation: "LAK",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8471734.jpg',
-        new: true
+        new: false
       },
       '15384': {
         id: 15384,
@@ -1304,10 +1304,21 @@ export class NhlUtilService {
         lastName: "Petersen",
         teamId: 28,
         abbreviation: "LAK",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8477361.jpg',
         new: false
+      },
+      '28456': {
+        id: 28456,
+        firstName: "Jacob",
+        lastName: "Ingham",
+        teamId: 28,
+        abbreviation: "LAK",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8480857.jpg',
+        new: true
       },
       '5486': {
         id: 5486,
@@ -1564,7 +1575,12 @@ export class NhlUtilService {
         firstName: "Akira",
         lastName: "Schmid",
         image: nhlImageRoot+'8481033.jpg',
-      },     
+      }, 
+      "28456": {
+        firstName: "Jacob",
+        lastName: "Ingham",
+        image: nhlImageRoot+'8480857.jpg',
+      },    
     }
 
     this.nhlTeams = {
