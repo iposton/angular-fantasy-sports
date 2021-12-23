@@ -197,7 +197,7 @@ export class StartingGoaliesComponent implements OnInit {
   }
 
   public getSchedules() {
-    console.log('cant get shcedule yet')
+    console.log('fetching schedule')
     this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
   }
 
@@ -402,7 +402,11 @@ export class StartingGoaliesComponent implements OnInit {
               //this.sortData(); //work around when no games
               if (this.dataService.nhlTeamsSched.length === 0) {
                 console.log('cant get schedules yet')
-                this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
+                this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams)
+                this.loading = false
+                this.noGamesToday = true
+                this.noGamesMsg = "There Are No Games Scheduled Today :("
+                console.log('There are no games being played today.')
               }
 
               forkJoin(
