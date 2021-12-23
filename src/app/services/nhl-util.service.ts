@@ -1117,7 +1117,7 @@ export class NhlUtilService {
         lastName: "Korpisalo",
         teamId: 19,
         abbreviation: "CBJ",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8476914.jpg',
         new: false
@@ -1150,7 +1150,7 @@ export class NhlUtilService {
         lastName: "Tarasov",
         teamId: 19,
         abbreviation: "CBJ",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: true
