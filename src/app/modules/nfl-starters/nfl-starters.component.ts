@@ -335,14 +335,14 @@ export class NflStartersComponent implements OnInit {
                   this.sortData();
 
                 }, (err: HttpErrorResponse) => {
-                  
+                  this.errMessage = err.status+' error getting lineup'
                   console.log(err, 'error getting lineup');
 
               });
 
             }
           }, (err: HttpErrorResponse) => {
-
+            this.errMessage = err.status+' error getting lineup'
             console.log(err, 'error getting schedule');
 
           });

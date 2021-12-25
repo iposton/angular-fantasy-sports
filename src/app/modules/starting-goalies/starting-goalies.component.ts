@@ -1025,8 +1025,8 @@ export class StartingGoaliesComponent implements OnInit {
                 } 
                }
 
-               if (this.dataService.isTomorrow) {
-                //console.log(startdata.player.firstName + " " + startdata.player.lastName, startdata, 'is tomorrow is true pushing on likely goalies');
+               if (this.dataService.isTomorrow || !this.dataService.isTomorrow && !this.dataService.isToday && !this.dataService.isPast) {
+                console.log(startdata.player.firstName + " " + startdata.player.lastName, startdata, 'is tomorrow is true pushing on likely goalies or way in the future true');
                 if (startdata.player.currentTeam != null && 
                   startid === startdata.player.currentTeam.id && 
                   this.startingG[startdata.player.id] != null && 
@@ -1035,9 +1035,9 @@ export class StartingGoaliesComponent implements OnInit {
 
                     startdata.player.startingToday = false;
                     startdata.player.likelyStartingToday = true;
-                    //console.log(startdata.player.firstName + " " + startdata.player.lastName, "this goalie is not starting yet. but he might start.");
+                    console.log(startdata.player.firstName + " " + startdata.player.lastName, "this goalie is not starting yet. but he might start.");
                     this.startersData.push(startdata);
-                    //console.log(this.startersData, 'starters')
+                    console.log(this.startersData, 'starters')
 
 
                   }
