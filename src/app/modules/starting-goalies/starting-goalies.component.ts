@@ -403,9 +403,9 @@ export class StartingGoaliesComponent implements OnInit {
               if (this.dataService.nhlTeamsSched.length === 0) {
                 console.log('cant get schedules yet')
                 this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams)
-                this.loading = false
-                this.noGamesToday = true
-                this.noGamesMsg = "There Are No Games Scheduled Today :("
+                // this.loading = false
+                // this.noGamesToday = true
+                // this.noGamesMsg = "There Are No Games Scheduled Today :("
                 console.log('There are no games being played today.')
               }
 
@@ -1026,7 +1026,7 @@ export class StartingGoaliesComponent implements OnInit {
                }
 
                if (this.dataService.isTomorrow || !this.dataService.isTomorrow && !this.dataService.isToday && !this.dataService.isPast) {
-                console.log(startdata.player.firstName + " " + startdata.player.lastName, startdata, 'is tomorrow is true pushing on likely goalies or way in the future true');
+                //console.log(startdata.player.firstName + " " + startdata.player.lastName, startdata, 'is tomorrow is true pushing on likely goalies or way in the future true');
                 if (startdata.player.currentTeam != null && 
                   startid === startdata.player.currentTeam.id && 
                   this.startingG[startdata.player.id] != null && 
@@ -1035,9 +1035,9 @@ export class StartingGoaliesComponent implements OnInit {
 
                     startdata.player.startingToday = false;
                     startdata.player.likelyStartingToday = true;
-                    console.log(startdata.player.firstName + " " + startdata.player.lastName, "this goalie is not starting yet. but he might start.");
+                    //console.log(startdata.player.firstName + " " + startdata.player.lastName, "this goalie is not starting yet. but he might start.");
                     this.startersData.push(startdata);
-                    console.log(this.startersData, 'starters')
+                    //console.log(this.startersData, 'starters')
 
 
                   }
