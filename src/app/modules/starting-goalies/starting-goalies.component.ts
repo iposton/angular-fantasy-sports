@@ -555,7 +555,7 @@ export class StartingGoaliesComponent implements OnInit {
                 old.player.gameLocation = "none";
             
   
-                if (old.player.officialImageSrc == null) {
+                if (this.playerImages[old.player.id] != null) {
                   old.player.officialImageSrc = this.playerImages[old.player.id] != null ? this.playerImages[old.player.id].image : null;
                 }
 
