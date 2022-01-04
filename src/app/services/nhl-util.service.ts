@@ -229,7 +229,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'8480420.jpg',
-        new: true
+        new: false
       },
       '34842': {
         id: 34842,
@@ -237,10 +237,10 @@ export class NhlUtilService {
         lastName: "Soderblom",
         teamId: 20,
         abbreviation: "CHI",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8482821.jpg',
-        new: true
+        new: false
       },
       '13876': {
         id: 13876,
@@ -1073,8 +1073,8 @@ export class NhlUtilService {
         lastName: "Hart",
         teamId: 6,
         abbreviation: "PHI",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -1085,9 +1085,9 @@ export class NhlUtilService {
         teamId: 6,
         abbreviation: "PHI",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8474889.jpg',
-        new: true
+        new: false
       },
       '5665': {
         id: 5665,
@@ -1095,10 +1095,10 @@ export class NhlUtilService {
         lastName: "Sandstrom",
         teamId: 6,
         abbreviation: "PHI",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8478433.jpg',
-        new: true
+        new: false
       },
       '4867': {
         id: 4867,
