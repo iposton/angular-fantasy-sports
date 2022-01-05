@@ -61,7 +61,7 @@ export class NhlUtilService {
         lastName: "Husso",
         teamId: 17,
         abbreviation: "STL",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8478024.jpg',
         new: false
@@ -72,7 +72,7 @@ export class NhlUtilService {
         lastName: "Lindgren",
         teamId: 17,
         abbreviation: "STL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8479292.jpg',
         new: false
@@ -1106,8 +1106,8 @@ export class NhlUtilService {
         lastName: "Lehner",
         teamId: 142,
         abbreviation: "VGK",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -1118,7 +1118,7 @@ export class NhlUtilService {
         teamId: 142,
         abbreviation: "VGK",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8476316.jpg',
         new: false
       },
@@ -1139,10 +1139,10 @@ export class NhlUtilService {
         lastName: "Thompson",
         teamId: 142,
         abbreviation: "VGK",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
-        new: false
+        new: true
       },
       '5887': {
         id: 5887,
