@@ -2321,7 +2321,7 @@ export class NflUtilService {
     
     if (player.player.primaryPosition != 'K' && player.stats.receiving != null) {
       player.stats.receiving.fanDuelFP = (player.stats.gamesPlayed > 0 && player.stats.twoPointAttempts != null || player.stats.receiving != null && player.stats.twoPointAttempts != null) ? ((player.stats.twoPointAttempts.twoPtPassMade + player.stats.twoPointAttempts.twoPtPassRec + player.stats.twoPointAttempts.twoPtRushMade * 2) - (player.stats.fumbles.fumLost * 2) + (player.stats.fumbles.fumTD * 6) - (player.stats.passing.passInt) + (player.stats.kickoffReturns.krTD * 6) + (player.stats.puntReturns.prTD * 6) + (player.stats.passing.passTD * 4) + (player.stats.passing.passYards * 0.04) + (player.stats.receiving.receptions * 0.5) + (player.stats.receiving.recTD * 6) + (player.stats.receiving.recYards * 0.1) + (player.stats.rushing.rushTD * 6) + (player.stats.rushing.rushYards * 0.1)).toFixed(2) : 0;
-      player.stats.receiving.fanDuelFPA = player.stats.gamesPlayed > 0 ? Math.floor(parseInt(player.stats.receiving.fanDuelFP) / player.stats.gamesPlayed) : 0;
+      player.stats.receiving.fanDuelFPA = player.stats.gamesPlayed > 0 ? (parseInt(player.stats.receiving.fanDuelFP) / player.stats.gamesPlayed).toFixed(1) : 0;
     } 
     
     if (player.player.primaryPosition === 'K' && player.stats.fieldGoals != null) {

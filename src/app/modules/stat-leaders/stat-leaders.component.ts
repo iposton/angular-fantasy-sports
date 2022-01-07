@@ -860,10 +860,8 @@ export class StatLeadersComponent implements OnInit {
             }
           }
 
-          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
-          this.nflData = stats //this.util.removeDuplicatesBy(x => x.player.id, stats)
-          
-          
+          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'].filter(x => x.player.currentTeam != null && x.player.currentTeam.id === x.team.id && x.stats.gamesPlayed > 3) : res['gamelogs'];
+          this.nflData = stats
 
           this.nflRookies = this.nflData.filter(
             player => player.player.rookie === true);
@@ -936,8 +934,8 @@ export class StatLeadersComponent implements OnInit {
               }
             }
           }
-          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'] : res['gamelogs'];
-          //this.util.removeDuplicatesBy(x => x.player.id, stats)
+          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'].filter(x => x.player.currentTeam != null && x.player.currentTeam.id === x.team.id) : res['gamelogs'];
+         
           this.nflDefenseData = stats.filter(
             player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0));
 
