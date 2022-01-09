@@ -234,7 +234,7 @@ export class NflStartersComponent implements OnInit {
                     
                     g => 
                     
-                     this.http.get(`${parseInt(this.selectedWeek) > 17 ? this.poRoot : this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Offense-WR-2`, { headers }).pipe(
+                     this.http.get(`${parseInt(this.selectedWeek) > 18 ? this.poRoot : this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Offense-WR-2`, { headers }).pipe(
                       debounceTime(500))
                     
                   )

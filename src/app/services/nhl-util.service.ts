@@ -28,7 +28,7 @@ export class NhlUtilService {
         lastName: "Vanecek",
         teamId: 5,
         abbreviation: "WSH",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -39,10 +39,10 @@ export class NhlUtilService {
         lastName: "Fucale",
         teamId: 5,
         abbreviation: "WSH",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8477457.jpg',
-        new: false
+        new: true
       }, 
       '5908': {
         id: 5908,
@@ -1029,8 +1029,8 @@ export class NhlUtilService {
         lastName: "Gibson",
         teamId: 29,
         abbreviation: "ANA",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -1046,15 +1046,26 @@ export class NhlUtilService {
         new: false
       },
       '11348': {
-        id: 178,
+        id: 11348,
         firstName: "Anthony",
         lastName: "Stolarz",
         teamId: 29,
         abbreviation: "ANA",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8468011.jpg',
         new: false
+      },
+      '29748': {
+        id: 29748,
+        firstName: "Lukas",
+        lastName: "Dostal",
+        teamId: 29,
+        abbreviation: "ANA",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8480843.jpg',
+        new: true
       },
       '3855': {
         id: 3855,
@@ -1106,8 +1117,8 @@ export class NhlUtilService {
         lastName: "Lehner",
         teamId: 142,
         abbreviation: "VGK",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -1117,8 +1128,8 @@ export class NhlUtilService {
         lastName: "Brossoit",
         teamId: 142,
         abbreviation: "VGK",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8476316.jpg',
         new: false
       },
@@ -1142,7 +1153,7 @@ export class NhlUtilService {
         active: true,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
-        new: true
+        new: false
       },
       '5887': {
         id: 5887,
