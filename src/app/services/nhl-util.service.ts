@@ -424,8 +424,8 @@ export class NhlUtilService {
         lastName: "Georgiev",
         teamId: 9,
         abbreviation: "NYR",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'8480382.jpg',
         new: false
       },
@@ -435,8 +435,8 @@ export class NhlUtilService {
         lastName: "Shesterkin",
         teamId: 9,
         abbreviation: "NYR",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -1348,7 +1348,7 @@ export class NhlUtilService {
         lastName: "Petersen",
         teamId: 28,
         abbreviation: "LAK",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8477361.jpg',
         new: false
@@ -1370,10 +1370,10 @@ export class NhlUtilService {
         lastName: "Sparks",
         teamId: 28,
         abbreviation: "LAK",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8476343.jpg',
-        new: true
+        new: false
       },
       '5486': {
         id: 5486,
@@ -1655,6 +1655,11 @@ export class NhlUtilService {
         firstName: "Arvid",
         lastName: "Soderblom",
         image: nhlImageRoot+'8482821.jpg',
+      },
+      "29748": {
+        firstName: "Lukas",
+        lastName: "Dostal",
+        image: nhlImageRoot+'8480843.jpg',
       },
     }
 
