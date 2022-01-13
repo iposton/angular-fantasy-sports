@@ -252,17 +252,10 @@ export class NFLDataService {
       
   }
 
-  public getTeamStats(date) {
-      //console.log('getting total team stats from API...');
-      // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/team_stats_totals.json?date=${date}`;
-      // } else {
-      //   url = `${this.apiRoot}/team_stats_totals.json?date=${date}`;
-      // }
+  public getTeamStats(selected, date) {
       let url = null;
-      if (date != null) {
-        url = `${this.apiRoot2022}/team_stats_totals.json?date=${date}`;
+      if (parseInt(selected) > 18) {
+        url = `${this.apiRoot2022}/team_stats_totals.json` //?date=${date}`;
       } else {
         url = `${this.apiRoot2022}/team_stats_totals.json`;
       }

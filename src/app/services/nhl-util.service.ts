@@ -479,8 +479,8 @@ export class NhlUtilService {
         lastName: "Dell",
         teamId: 15,
         abbreviation: "BUF",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'8477180.jpg',
         new: false
       },
@@ -501,7 +501,7 @@ export class NhlUtilService {
         lastName: "Subban",
         teamId: 15,
         abbreviation: "BUF",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8476876.jpg',
         new: false
@@ -512,8 +512,8 @@ export class NhlUtilService {
         lastName: "Luukkonen",
         teamId: 15,
         abbreviation: "BUF",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8480045.jpg',
         new: false
       },
@@ -523,10 +523,10 @@ export class NhlUtilService {
         lastName: "Houser",
         teamId: 15,
         abbreviation: "BUF",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8475920.jpg',
-        new: false
+        new: true
       },
       '5894': {
         id: 5894,
@@ -534,7 +534,7 @@ export class NhlUtilService {
         lastName: "Murray",
         teamId: 13,
         abbreviation: "OTT",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8476899.jpg',
         new: false
@@ -556,8 +556,8 @@ export class NhlUtilService {
         lastName: "Gustavsson",
         teamId: 13,
         abbreviation: "OTT",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'8479406.jpg',
         new: false
       },
@@ -568,7 +568,7 @@ export class NhlUtilService {
         teamId: 13,
         abbreviation: "OTT",
         active: true,
-        numberOne: false,
+        numberOne: true,
         img: nhlImageRoot+'8476341.jpg',
         new: false
       },
@@ -776,10 +776,10 @@ export class NhlUtilService {
         lastName: "Rask",
         teamId: 11,
         abbreviation: "BOS",
-        active: false,
+        active: true,
         numberOne: false,
-        img: nhlImageRoot+'0.jpg',
-        new: false
+        img: nhlImageRoot+'8471695.jpg',
+        new: true
       },
       '5842': {
         id: 5842,
@@ -798,7 +798,7 @@ export class NhlUtilService {
         lastName: "Swayman",
         teamId: 11,
         abbreviation: "BOS",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480280.jpg',
         new: false

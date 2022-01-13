@@ -141,13 +141,14 @@
       <li>#NHL #Goalies <br> {{ gameDate | date:'fullDate' }}</li>
       <li *ngFor="let data of showData" class="goalie">
           <span *ngFor="let g of data?.goalies?.away">
-              {{g.playerObj?.player.twitterHandle}} {{g.playerObj?.player.lastName}} <br>
-            </span>
-            <span *ngFor="let g of data?.goalies?.home">
-              {{g.playerObj?.player.twitterHandle}} {{g.playerObj?.player.lastName}} <br>
-            </span>
-      </li>
-      <li>#HockeyTwitter #StanleyCup #NHLPlayoffs</li>
+            <span [ngClass]="{'dn': filterOutLosers && (g.playerObj?.player.losses == '1' || g.playerObj?.player.OvertimeLosses == '1')}">{{g.playerObj?.player.twitterHandle}} {{g.playerObj?.player.lastName}}</span> <br>
+          </span>
+          <span *ngFor="let g of data?.goalies?.home">
+            <span [ngClass]="{'dn': filterOutLosers && (g.playerObj?.player.losses == '1' || g.playerObj?.player.OvertimeLosses == '1')}"> {{g.playerObj?.player.twitterHandle}} {{g.playerObj?.player.lastName}}</span> <br>
+          </span>
+      </li>   
+      <li>#HockeyTwitter #FantasyHockey #StanleyCup #NHLPlayoffs</li>
+      <li><button (click)="filterOutLosers = !filterOutLosers">Filter Losers</button></li>
     </ul>
     
     <ul>

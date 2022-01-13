@@ -822,7 +822,7 @@ export class StatLeadersComponent implements OnInit {
     
     if (this.nflTeamStats == null) {
 
-          this.nflService.getTeamStats(this.tsDate).subscribe(res => {
+          this.nflService.getTeamStats(this.nflWeek, this.tsDate).subscribe(res => {
           this.nflUtil.rank(this.nflTeams, res['teamStatsTotals'], this.nflWeek)
           this.nflUtil.updateTeamStats(res['teamStatsTotals'])
           this.nflTeamStats = res['teamStatsTotals'];
@@ -1160,7 +1160,7 @@ export class StatLeadersComponent implements OnInit {
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.pitcherWalks : 
                     s === 'mlb' && bSec && a.playerStats[0].batting != null ? a.playerStats[0].batting.thirdBaseHits : 0;
 
-                    hash[key]['11'] += s === 'nba' ? a.playerStats[0].fieldGoals.fgMade  : 
+                    hash[key]['11'] += s === 'nba' ? a.playerStats[0].rebounds.rebPerGame  : 
                     s === 'nhl' && skateSec && a.player['position'] != 'G' ? a.playerStats[0].skating.hits 
                     : s === 'nhl' && gSec && a.playerStats[0].goaltending != null ? a.playerStats[0].goaltending.goalsAgainst : 
                     s === 'mlb' && pSec && a.playerStats[0].pitching != null ? a.playerStats[0].pitching.hitsAllowed : 
@@ -1221,6 +1221,8 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.fieldGoals.fg3PtMade = data['8'];
                         info.stats.fieldGoals.fgAtt = data['9'];
                         info.stats.fieldGoals.fgPct = Math.floor(data['10'] / data['9'] * 100);
+                        info.stats.rebounds.rebPerGame =  Math.floor(data['3'] / data['7']);
+                        info.stats.sl = this.timeSpan
                         this.playerFp(info);
                       }
                       

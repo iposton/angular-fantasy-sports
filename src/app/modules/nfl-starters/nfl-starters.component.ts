@@ -49,7 +49,7 @@ export class NflStartersComponent implements OnInit {
   public teamSchedules: Array <any> = [];
   public toughOSchedules: Array <any> = [];
   public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular";
-  public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-playoff";
+  public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2022-playoff";
   public testBrowser: boolean;
   public gamesToday: boolean = false;
   public noGamesToday: boolean = false;
@@ -711,7 +711,7 @@ export class NflStartersComponent implements OnInit {
   public sortTeamRanks() {
     this.nflTeamStatsLoading = true;
     this.dataService
-      .getTeamStats(this.tsDate).subscribe(res => {
+      .getTeamStats(this.selectedWeek, this.tsDate).subscribe(res => {
         this.nflUtil.rank(this.teams, res['teamStatsTotals'], this.selectedWeek)
         this.nflUtil.updateTeamStats(res['teamStatsTotals'])
         this.nflTeamStats = res['teamStatsTotals'];

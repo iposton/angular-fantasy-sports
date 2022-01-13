@@ -143,6 +143,7 @@ export class StartingGoaliesComponent implements OnInit {
   public isPlayoffs: boolean;
   public playoffDate: string;
   public season: string;
+  public filterOutLosers: boolean = false;
   
 
   constructor(private cdr: ChangeDetectorRef, 

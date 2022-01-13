@@ -119,9 +119,16 @@
 
                   <span *ngIf="sport === 'nhl'">
                     <span *ngIf="statField === 'iceTimeAvg'" [ngStyle]="{color: item?.stats[statType]?.fanDuelFP &gt; (item?.stats?.sl === 'last-week' ? 34 : item?.stats?.sl === 'two-weeks' ? 68 : 250) ? 'gold' : 'white'}">{{ item?.stats[statType]?.fanDuelFP }} FP</span>     
-                    <span *ngIf="statField === 'shots'" [ngStyle]="{color: item?.stats['scoring']?.goals &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 4 : 11) ? 'gold' : 'white'}">{{ item?.stats['scoring']?.goals }} G</span> 
-                    <span *ngIf="statField === 'goals'" [ngStyle]="{color: item?.stats[statType]?.assists &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 4 : 11) ? 'gold' : 'white'}">{{ item?.stats[statType]?.assists }} A</span> 
-                    <span *ngIf="statField === 'blockedShots'" [ngStyle]="{color: item?.stats[statType]?.hits &gt; (item?.stats?.sl === 'last-week' ? 4 : item?.stats?.sl === 'two-weeks' ? 8 : 30) ? 'gold' : 'white'}">{{ item?.stats[statType]?.hits }} H</span>        
+                    <span *ngIf="statField === 'shots'" [ngStyle]="{color: item?.stats['scoring']?.goals &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 4 : 20) ? 'gold' : 'white'}">{{ item?.stats['scoring']?.goals }} G</span> 
+                    <span *ngIf="statField === 'goals'" [ngStyle]="{color: item?.stats[statType]?.assists &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 4 : 20) ? 'gold' : 'white'}">{{ item?.stats[statType]?.assists }} A</span> 
+                    <span *ngIf="statField === 'blockedShots'" [ngStyle]="{color: item?.stats[statType]?.hits &gt; (item?.stats?.sl === 'last-week' ? 4 : item?.stats?.sl === 'two-weeks' ? 8 : 48) ? 'gold' : 'white'}">{{ item?.stats[statType]?.hits }} H</span>        
+                  </span>
+
+                  <span *ngIf="sport === 'nba'">
+                    <span *ngIf="statField === 'ptsPerGame'" [ngStyle]="{color: item?.stats['rebounds']?.rebPerGame &gt; (item?.stats?.sl === 'last-week' ? 6 : item?.stats?.sl === 'two-weeks' ? 6 : 6) ? 'gold' : 'white'}">{{ item?.stats['rebounds']?.rebPerGame }} Reb</span>     
+                    <span *ngIf="statField === 'fgAtt' || statField === 'fgPct'" [ngStyle]="{color: item?.stats['offense']?.pts &gt; (item?.stats?.sl === 'last-week' ? 75 : item?.stats?.sl === 'two-weeks' ? 150 : 760) ? 'gold' : 'white'}">{{ item?.stats['offense']?.pts }} Pts</span> 
+                    <span *ngIf="statField === 'reb'" [ngStyle]="{color: item?.stats['defense']?.blk &gt; (item?.stats?.sl === 'last-week' ? 3 : item?.stats?.sl === 'two-weeks' ? 6 : 45) ? 'gold' : 'white'}">{{ item?.stats['defense']?.blk }} Blk</span> 
+                    <span *ngIf="statField === 'ast'" [ngStyle]="{color: item?.stats['fieldGoals']?.fg3PtMade &gt; (item?.stats?.sl === 'last-week' ? 4 : item?.stats?.sl === 'two-weeks' ? 8 : 90) ? 'gold' : 'white'}">{{ item?.stats['fieldGoals']?.fg3PtMade }} 3PM</span>        
                   </span>
                 </span>
                 <span class="three-week" *ngIf="item?.spanOpponents != null && sport === 'nfl' && !ndk && statType != 'tackles' && statType != 'interceptions'">
