@@ -1779,11 +1779,22 @@ export class NflUtilService {
           lastName: "Jefferson",
           image: nflImageRoot+"snmaivk9ikcatxwexvku"
         },
-        
-        
-        
-       
-          
+        "12769" : {
+          firstName: "Zay",
+          lastName: "Jones",
+          image: nflImageRoot+"cbusqo5hvl7zlb25n9n0"
+        },
+        "19027" : {
+          firstName: "Tyler",
+          lastName: "Johnson",
+          image: nflImageRoot+"d6e5mwllmmwixl01o93g"
+        },
+        "18682" : {
+          firstName: "Keshawn",
+          lastName: "Vaughn",
+          image: nflImageRoot+"to1j3eftgyobffvygini"
+        },
+            
       }
    }
 
