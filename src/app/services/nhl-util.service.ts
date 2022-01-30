@@ -270,7 +270,7 @@ export class NhlUtilService {
         lastName: "Martin",
         teamId: 21,
         abbreviation: "VAN",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8477484.jpg',
         new: true
@@ -1051,7 +1051,7 @@ export class NhlUtilService {
         lastName: "Wedgewood",
         teamId: 30,
         abbreviation: "ARI",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8475809.jpg',
         new: false
@@ -1062,7 +1062,7 @@ export class NhlUtilService {
         lastName: "Prosvetov",
         teamId: 30,
         abbreviation: "ARI",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: true

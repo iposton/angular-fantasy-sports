@@ -118,12 +118,12 @@ export class NflUtilService {
       {
         dateBeg: 'Thu Jan 27 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
         dateEnd: 'Thu Feb 10 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '22' //afc nfc final 4
+        week: '21' //afc nfc final 4
       },
       {
         dateBeg: 'Thu Feb 10 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
         dateEnd: 'Thu Feb 17 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '23' //super bowl
+        week: '22' //super bowl
       }
     ];
 
