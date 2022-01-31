@@ -183,7 +183,7 @@ export class NFLDataService {
   }
 
   public getStats(players) {
-    let url = `${this.apiRoot2022}/player_stats_totals.json?player=${players}`;
+    let url = `${this.apiRootPO}/player_stats_totals.json?player=${players}`;
     this.stats = this.http.get(url, {headers})
     return this.stats;
   }

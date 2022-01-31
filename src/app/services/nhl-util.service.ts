@@ -248,8 +248,8 @@ export class NhlUtilService {
         lastName: "Demko",
         teamId: 21,
         abbreviation: "VAN",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -260,7 +260,7 @@ export class NhlUtilService {
         teamId: 21,
         abbreviation: "VAN",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'8470860.jpg',
         new: false
       },
@@ -281,7 +281,7 @@ export class NhlUtilService {
         lastName: "DiPietro",
         teamId: 21,
         abbreviation: "VAN",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480022.jpg',
         new: true
@@ -1095,7 +1095,7 @@ export class NhlUtilService {
         lastName: "Stolarz",
         teamId: 29,
         abbreviation: "ANA",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8468011.jpg',
         new: false
@@ -1106,7 +1106,7 @@ export class NhlUtilService {
         lastName: "Dostal",
         teamId: 29,
         abbreviation: "ANA",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8480843.jpg',
         new: false
