@@ -546,7 +546,7 @@ export class StartingGoaliesComponent implements OnInit {
       //const startingGoalies = Object.values(this.startingG);
       let values = [];
       console.log('got player stats')
-      if (res != null) values = res['playerStatsTotals'].filter(x => x.player.currentTeam.id === x.team.id)
+      if (res != null) values = res['playerStatsTotals'].filter(x => x.player.currentTeam != null && x.team != null && x.player.currentTeam.id === x.team.id)
      
       this.myData = values //this.util.removeDuplicatesBy(x => x.player.id, values)
 
