@@ -123,7 +123,7 @@ export class NflUtilService {
       {
         dateBeg: 'Thu Feb 10 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
         dateEnd: 'Thu Feb 17 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '22' //super bowl
+        week: '23' //super bowl
       }
     ];
 
