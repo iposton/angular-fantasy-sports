@@ -10,7 +10,7 @@
 <div class="center">
     <app-date-picker (setDate)="getByDate($event)"></app-date-picker>
   </div>
-<h1 class="center no-game-header" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1>
+<h1 class="center no-game-header msg" *ngIf="noGamesToday === true">{{noGamesMsg}}</h1>
 <div class="matchup-layout goalie-layout" *ngIf="fbService.userDetails != null">
   <div class="edit-list-container" *ngIf="fullFirebaseResponse != null">
     
@@ -475,15 +475,15 @@
     </div> 
 </section>
 <section *ngIf="scheduleSection nhl-page">
-  <app-team-schedule *ngIf="!loading && dailySchedule != null"
+  <app-team-schedule *ngIf="!loading && dailySchedule != null && nhlTeamsSched != null"
   (week)="nextWeek = $event; getSchedules()"
-  [teamSchedules]="dataService.nhlTeamsSched"
+  [teamSchedules]="nhlTeamsSched"
   [amount]="4">
   </app-team-schedule>
 
-  <app-team-schedule *ngIf="!loading && dailySchedule != null"
+  <app-team-schedule *ngIf="!loading && dailySchedule != null && nhlTeamsSched != null"
   (week)="nextWeek = $event; getSchedules()"
-  [teamSchedules]="dataService.nhlTeamsSched"
+  [teamSchedules]="nhlTeamsSched"
   [amount]="3">
   </app-team-schedule> 
 </section>

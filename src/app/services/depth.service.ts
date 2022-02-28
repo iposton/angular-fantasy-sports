@@ -909,7 +909,7 @@ export class DepthService {
     ],
     '57': [
       {
-        'gdate': 21,
+        'gdate': 23,
         
         'Offense-RB-1' : {
           firstName: 'Joe',
@@ -935,14 +935,14 @@ export class DepthService {
         //   abbreviation: 'CIN',
         //   position: 'WR'
         // },
-        'Offense-WR-2' : {
-          firstName: 'J',
-          lastName: 'Chase',
-          id: 30433,
-          status: 'Starter',
-          abbreviation: 'CIN',
-          position: 'WR'
-        },
+        // 'Offense-WR-2' : {
+        //   firstName: 'J',
+        //   lastName: 'Chase',
+        //   id: 30433,
+        //   status: 'Starter',
+        //   abbreviation: 'CIN',
+        //   position: 'WR'
+        // },
         
       }
     ],

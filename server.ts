@@ -1,23 +1,22 @@
-import 'zone.js/node';
-import {enableProdMode} from '@angular/core';
-import { ngExpressEngine } from '@nguniversal/express-engine';
-import * as express from 'express';
-import { join } from 'path';
+import 'zone.js/node'
+import {enableProdMode} from '@angular/core'
+import { ngExpressEngine } from '@nguniversal/express-engine'
+import * as express from 'express'
+import { join } from 'path'
 
-import { AppServerModule } from './src/main.server';
-import { APP_BASE_HREF } from '@angular/common';
-import { existsSync } from 'fs';
+import { AppServerModule } from './src/main.server'
+import { APP_BASE_HREF } from '@angular/common'
+import { existsSync } from 'fs'
 
-const bodyParser = require('body-parser');
-const request = require('request');
-const cors = require('cors');
-const http = require('http');
-//const path = require('path');
-const CryptoJS = require("crypto-js");
-let ciphertext = null;
+const bodyParser = require('body-parser')
+const request = require('request')
+const cors = require('cors')
+const http = require('http')
+const CryptoJS = require("crypto-js")
+let ciphertext = null
+import { api } from './api/api'
 
-
-enableProdMode();
+enableProdMode()
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
@@ -32,10 +31,11 @@ export function app() {
   global['document'] = win.document;
   global['navigator'] = win.navigator;
 
-  let TOKEN = '';
-  let consumerkey = process.env.TWITTER_KEY;
-  let consumersecret = process.env.TWITTER_SECRET;
-  let bearertoken = '';
+  let TOKEN = ''
+  let consumerkey = process.env.TWITTER_KEY
+  let consumersecret = process.env.TWITTER_SECRET
+  let bearertoken = ''
+  let msfToken = process.env.TOKEN
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
@@ -79,10 +79,66 @@ export function app() {
   });
 
   server.get('/heroku-env', (req, res) => {
-    ciphertext = CryptoJS.AES.encrypt(process.env.TOKEN, 'footballSack').toString();
+    ciphertext = CryptoJS.AES.encrypt(msfToken, 'footballSack').toString();
     TOKEN = ciphertext;
     res.json(TOKEN);
   });
+
+  server.post('/info', async (req, res) => {
+    //console.log(req.body.team, 'body')
+    let sport = req.body.query
+    let encSport = encodeURIComponent(sport)
+    let dailyDate = req.body.dailyDate
+    let encDD = encodeURIComponent(dailyDate)
+    let season = req.body.season
+    let encSeason = encodeURIComponent(season)
+    let feedType = req.body.feedType
+    let encFeedType = encodeURIComponent(feedType)
+    let dateBegin = ''
+    let dateEnd = ''
+    let player = ''
+    let position = req.body.position
+    let encPosition = encodeURIComponent(position)
+    let team = req.body.team
+    let selectedDate = req.body.selectedDate
+    let encSelectedDate = encodeURIComponent(selectedDate)
+    let isToday = req.body.isToday
+    let encIsToday = encodeURIComponent(isToday)
+    let dataType = req.body.dataType
+    let encDataType = encodeURIComponent(dataType)
+    let fromTo = req.body.fromTo
+    let encFromTo = encodeURIComponent(fromTo)
+    let fromToWeek = req.body.fromToWeek
+    let encFromToWeek = encodeURIComponent(fromToWeek)
+    let fromToNext = req.body.fromToNext
+    let encFromToNext = encodeURIComponent(fromToNext)
+    let haveSchedules = req.body.haveSchedules
+    let encHaveSchedules = encodeURIComponent(haveSchedules)
+    const data =  await api.data.getInfo(msfToken, encSport, encDD, encSeason, encFeedType, dateBegin, dateEnd, player, encPosition, team, encSelectedDate, encIsToday, encDataType, encFromTo, encFromToWeek, encFromToNext, encHaveSchedules)
+    res.status(200).json(data);
+  })
+
+  // server.post('/schedules', async (req, res) => {
+  //   console.log(req.body, 'body')
+  //   let sport = req.body.query
+  //   let encSport = encodeURIComponent(sport)
+  //   let dailyDate = req.body.dailyDate
+  //   let encDD = encodeURIComponent(dailyDate)
+  //   let season = req.body.season
+  //   let encSeason = encodeURIComponent(season)
+  //   let feedType = req.body.feedType
+  //   let encFeedType = encodeURIComponent(feedType)                                                                                                                                               
+  //   let team = req.body.team
+  //   let encTeam = encodeURIComponent(team)
+  //   let dataType = req.body.dataType
+  //   let encDataType = encodeURIComponent(dataType)
+  //   let fromToWeek = req.body.fromToWeek
+  //   let encFromToWeek = encodeURIComponent(fromToWeek)
+  //   let fromToNext = req.body.fromToNext
+  //   let encFromToNext = encodeURIComponent(fromToNext)
+  //   const data =  await api.data.getInfo('27d30381-6ca8-4c17-b912-bd2c8f', encSport, encDD, encSeason, encFeedType, encTeam, encDataType, encFromToWeek, encFromToNext)
+  //   res.status(200).json(data);
+  // })
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'

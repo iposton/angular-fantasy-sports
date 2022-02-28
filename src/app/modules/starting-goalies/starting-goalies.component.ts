@@ -143,7 +143,10 @@ export class StartingGoaliesComponent implements OnInit {
   public isPlayoffs: boolean;
   public playoffDate: string;
   public season: string;
-  public filterOutLosers: boolean = false;
+  public filterOutLosers: boolean = false
+  public nhlTeamsSched: Array <any> = []
+  public serverInfo: Array <any> = []
+  public haveSchedules: boolean
   
 
   constructor(private cdr: ChangeDetectorRef, 
@@ -183,7 +186,8 @@ export class StartingGoaliesComponent implements OnInit {
     this.playoffDate = 'Fri May 14 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.checkPlayoffs(new Date(this.selectedDate))
     this.season = '2021-2022-regular'
-    this.apiRoot = `https://api.mysportsfeeds.com/v2.1/pull/nhl/${this.season}`;
+    this.apiRoot = `https://api.mysportsfeeds.com/v2.1/pull/nhl/${this.season}`
+    this.haveSchedules = false
   }
 
   public checkPlayoffs(date) {
@@ -199,7 +203,10 @@ export class StartingGoaliesComponent implements OnInit {
 
   public getSchedules() {
     console.log('fetching schedule')
-    this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
+    this.nhlTeamsSched = this.nextWeek ? this.serverInfo['nextSchedule'] : this.serverInfo['weeklySchedule']
+    //console.log(this.serverInfo['weeklySchedule'], 'weekly sched')
+   // console.log(this.serverInfo['nextSchedule'], 'next sched')
+    //this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams);
   }
 
   public statToggle() {
@@ -230,7 +237,11 @@ export class StartingGoaliesComponent implements OnInit {
     this.tomorrowDate = tomorrow;
     console.log(yesterday + ' yesterday, ' + today + ' today, ' + tomorrow + ' tomorrow, ');
 
-    //empty old data on data change 
+    if (this.nhlTeamsSched != null) {
+      this.haveSchedules = true
+    }
+
+    //empty old data on date change 
     this.dailySchedule = [];
     dailyTeams = [];
     this.starterIdData = [];
@@ -374,64 +385,70 @@ export class StartingGoaliesComponent implements OnInit {
         headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
        
         this.dataService
-          .sendHeaderOptions(headers);
+          .sendHeaderOptions(headers)
 
-        this.dataService
-          .getDailySchedule().subscribe(res => {
+          this.dataService.serverInfo('nhl', 
+          '2021-2022-regular', 
+          'games', 
+          'dateB', 
+          'dateE', 
+          'player', 
+          'Goalie-starter,ForwardLine1-LW,ForwardLine1-RW,ForwardLine1-C,DefensePair1-R,DefensePair1-L', 
+          this.teams,
+          this.selectedDate, 
+          this.dataService.isToday,
+          'dailySchedule',
+          this.haveSchedules).subscribe(res => {
+            console.log(res, 'client res: schedlule')
+            this.serverInfo = res
+            this.fullSchedule = res['fullSchedule'].games
 
-            if (res['games'].length === 0) {
-              this.loading = false;
-              this.noGamesToday = true;
-              this.noGamesMsg = "There Are No Games Scheduled Today :(";
-              console.log('There are no games being played today.');
+            if (typeof res['games'] === 'string') {
+              document.querySelector(".msg").innerHTML = res['games']
+            } else if (res['games'].length === 0 || res['games'].games.length === 0) {
+              this.loading = false
+              this.noGamesToday = true
+              this.noGamesMsg = 'There Are No Games Scheduled Today :('
+              console.log('There are no games being played today.')
             } else {
-
-              let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
-              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) || playedStatuses[item['schedule'].playedStatus] != null);
-              console.log(this.dailySchedule, 'dailyshced after filter');
-
+              this.dailySchedule = res['games'].games
               this.dailySchedule.forEach((item, index) => {
-                dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation); 
-                teamString = dailyTeams.join();
-              });
+                dailyTeams.push(item['schedule'].homeTeam.abbreviation, item['schedule'].awayTeam.abbreviation)
+                teamString = dailyTeams.join()
+              })
               
-              teamRef = res['references'] ? res['references'].teamReferences : [];
-              this.gameDate = this.selectedDate; //res['games'][0] != null ? res['games'][0].schedule.startTime : res['games'][1] != null ? res['games'][1].schedule.startTime : new Date(); //res['games'][0].date;
-              let dPipe = new DatePipe("en-US");
-              this.tweetDay = dPipe.transform(this.gameDate, 'EEEE');
+              teamRef = res['games'].references ? res['games'].references.teamReferences : [];
+              this.gameDate = this.selectedDate
+              let dPipe = new DatePipe("en-US")
+              this.tweetDay = dPipe.transform(this.gameDate, 'EEEE')
               this.gamesToday = true;
               //this.sortData(); //work around when no games
-              if (this.dataService.nhlTeamsSched.length === 0) {
-                console.log('cant get schedules yet')
-                this.dataService.getSchedules(this.nextWeek, 'nhl', this.teams)
+              if (this.nhlTeamsSched.length === 0) {
+                console.log('go define schedules')
+                //this.nhlTeamsSched = res['weeklySchedule']
+                this.getSchedules()
                 // this.loading = false
                 // this.noGamesToday = true
                 // this.noGamesMsg = "There Are No Games Scheduled Today :("
-                console.log('There are no games being played today.')
+                //console.log('There are no games being played today.')
               }
 
-              forkJoin(
-                this.dailySchedule.map(
-                    g =>  this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=Goalie-starter,ForwardLine1-LW,ForwardLine1-RW,ForwardLine1-C,DefensePair1-R,DefensePair1-L`, {headers})
-                  )
-                )
-                .subscribe(res => {
                   let i;
                   let i2;
                   let res2;
                   let game2 = null;
                   let score2 = null;
                   
-                  res.forEach((item, index) => {
+                  res.dailyLineup.forEach((item, index) => {
                     i = index;
                     try {
-                      game2 = res[i]['game'];
-                      res2 = res[i]['teamLineups'];
+                      game2 = res.dailyLineup[i]['game'];
+                      res2 = res.dailyLineup[i]['teamLineups'];
                       score2 = this.dailySchedule[i].score;
                     } catch {
                       console.log('bad endpoint');
                     }
-                    //console.log(res[i]['teamLineups'], 'got starting lineups data!');
+                    //console.log(res.dailyLineup[i]['teamLineups'], 'got starting lineups data!');
                     
                     res2.forEach((item, index) => {
 
@@ -487,30 +504,17 @@ export class StartingGoaliesComponent implements OnInit {
                         skaterString = this.skaterIdData.join();
                        
                       } else {
-                        //console.log(res2[i2].team.City + " " + res2[i2].team.Name, 'no starters yet!');
                         this.starterIdData.push(res2[i2].team.id);
                       }
 
                     });
                   });
-
+                  
                   this.sortData();
-
-                });
             }
-
-          })
-
-        this.dataService
-          .getGameId().subscribe(res => {
-           // console.log(res['games'], "scheduled games for yesterday today and tomorrow...");
-            this.fullSchedule = res['games'];
-          })
-
+        })
       })
-
   }
-
 
  public async sortData() {
     console.log('sorting data.')
@@ -522,6 +526,7 @@ export class StartingGoaliesComponent implements OnInit {
       this.dataService
         .getDaily().subscribe(res => {
           if (res != null) this.dailyStats = res['gamelogs'];
+          console.log(res, 'got daily stats')
           resolve('done');
         })
     } else {
@@ -533,11 +538,14 @@ export class StartingGoaliesComponent implements OnInit {
   this.dataService
     .getTeamStats('https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-2022-regular', '').subscribe(res => {
       this.teamStatsUpdate = res['lastUpdatedOn'];
-      this.teamStats = res['teamStatsTotals'];         
+      this.teamStats = res['teamStatsTotals']; 
+      console.log('got team stats')
+              
   });
 
   let resultOne = await promiseOne;
   await sleep(1000);
+  console.log('await daily stats promise : wait one more second')
 
     this.dataService
       .getStats(teamString).subscribe(async res => {
@@ -549,6 +557,7 @@ export class StartingGoaliesComponent implements OnInit {
       if (res != null) values = res['playerStatsTotals'].filter(x => x.player.currentTeam != null && x.team != null && x.player.currentTeam.id === x.team.id)
      
       this.myData = values //this.util.removeDuplicatesBy(x => x.player.id, values)
+      //console.log('got my data by team', teamString)
 
       this.dataService
           .getGoaliesToday(teamString).subscribe(res => {
@@ -589,8 +598,9 @@ export class StartingGoaliesComponent implements OnInit {
             // this.nflOffenseLoading = false;
         })
 
-        //console.log('waiting 6 seconds');
-        await sleep(1000);
+        
+        // await sleep(3000);
+        // console.log('waited 3 seconds');
         if (this.myData && this.dailySchedule) {
           //console.log('ok 6 seconds up lets go!!')
           if (this.dataService.isToday) {
@@ -628,7 +638,7 @@ export class StartingGoaliesComponent implements OnInit {
               sdata.player.lastweekLosses = 0;
               sdata.player.lastweekOtl = 0;
               
-              
+              //console.log(schedule, 'schedule')
               //sdata.team = {};
               if (sdata.player != null && schedule['schedule'].awayTeam.abbreviation === sdata.player.currentTeam.abbreviation ||
               sdata.player != null && schedule['schedule'].homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
@@ -730,16 +740,18 @@ export class StartingGoaliesComponent implements OnInit {
           console.log('sorting daily goalie stats');
           for (let daily of this.dailyStats) {
             for (let mdata of this.myData) {
+              //console.log(this.todayStarters[daily.player.id], 'todayStarters')
               if (this.todayStarters[daily.player.id] != null && daily.player.id === mdata.player.id && daily.stats.goaltending.saves >= 0) {
-                mdata.daily = true;
-                mdata.player.saves = daily.stats.goaltending.saves;
-                mdata.player.shotsFaced = daily.stats.goaltending.shotsAgainst;
-                mdata.player.wins = daily.stats.goaltending.wins;
-                mdata.player.losses = daily.stats.goaltending.losses;
-                mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses;
-                mdata.player.Shutouts = daily.stats.goaltending.shutouts;
-                mdata.player.ga = daily.stats.goaltending.goalsAgainst;
-                mdata.stats.fpToday = this.util.round(this.nhlUtil.goalieDailyFp(daily), 1);
+                //console.log('apply goalie stats from live or completed games')
+                mdata.daily = true
+                mdata.player.saves = daily.stats.goaltending.saves
+                mdata.player.shotsFaced = daily.stats.goaltending.shotsAgainst
+                mdata.player.wins = daily.stats.goaltending.wins
+                mdata.player.losses = daily.stats.goaltending.losses
+                mdata.player.OvertimeLosses = daily.stats.goaltending.overtimeLosses
+                mdata.player.Shutouts = daily.stats.goaltending.shutouts
+                mdata.player.ga = daily.stats.goaltending.goalsAgainst
+                mdata.stats.fpToday = this.util.round(this.nhlUtil.goalieDailyFp(daily), 1)
                    
                   let livePending = {'LIVE': 'LIVE', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW'}
           
@@ -891,7 +903,6 @@ export class StartingGoaliesComponent implements OnInit {
               this.startersData.push(data);
             }
 
-            sleep(3000);
             console.log('check actual starters from live games');
 
              if (data.player.shotsFaced == null && data.daily == null && this.todayStarters[data.player.id] != null && 
@@ -970,6 +981,7 @@ export class StartingGoaliesComponent implements OnInit {
         }
 
         if (this.myData && this.gamesToday === true) {
+          //console.log('handle goalies for yesterday', this.startingGoaliesToday);
           if (this.startingGoaliesToday.length > 0) {
             console.log('start sorting data for starters of games in progress...');
             for (let startinprogress of this.startingGoaliesToday) {
@@ -990,7 +1002,7 @@ export class StartingGoaliesComponent implements OnInit {
 
 
           if (this.starterIdData.length > 0) {
-            //console.log('start sorting data for starters matchups...', this.starterIdData, this.myData);
+           // console.log('start sorting data for starters matchups...', this.starterIdData, this.myData);
             for (let startid of this.starterIdData) {
 
               for (let startdata of this.myData) {
@@ -1046,7 +1058,7 @@ export class StartingGoaliesComponent implements OnInit {
                 } else if (startdata.team != null && this.startersDateTomorrow != startdata.team.today && startid === startdata.player.id) {
                   if (startdata.player.saves == null || startdata.player.saves == '0') {
 
-                    console.log(startdata.player, 'expected goalies from api');
+                    //console.log(startdata.player, 'expected goalies from api');
                     startdata.player.startingToday = true;
                     startdata.player.startingTodayNow = false;
                     if (this.fullFirebaseResponse[3][startdata.player.id] != null) {
