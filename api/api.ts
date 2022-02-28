@@ -1,5 +1,3 @@
-let MySportsFeeds = require("mysportsfeeds-node")
-let msf = new MySportsFeeds("2.0", true)
 let request = require('request');
 let methods: any = {}
 let apiRoot: string = `https://api.mysportsfeeds.com/v2.1/pull`
