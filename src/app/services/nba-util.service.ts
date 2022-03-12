@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-let nbaImageRoot = 'https://cdn.nba.com/headshots/nba/latest/1040x760/';
+let nbaImageRoot = 'https://cdn.nba.com/headshots/nba/latest/1040x760/'
+let nbaTeamRoot = 'https://global.nba.com/media/img/teams/00/logos/'
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class NbaUtilService {
       name: "Raptors",
       abbreviation: "TOR",
       twitter: "#WeTheNorth",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/TOR_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"TOR_logo.svg"
       },
       "BOS": {
       id: 82,
@@ -24,7 +25,7 @@ export class NbaUtilService {
       name: "Celtics",
       abbreviation: "BOS",
       twitter: "#BleedGreen",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/BOS_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"BOS_logo.svg"
       },
       "NYK": {
       id: 83,
@@ -32,7 +33,7 @@ export class NbaUtilService {
       name: "Knicks",
       abbreviation: "NYK",
       twitter: "#NewYorkForever",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/NYK_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"NYK_logo.svg"
       },
       "BRO": {
       id: 84,
@@ -40,7 +41,7 @@ export class NbaUtilService {
       name: "Nets",
       abbreviation: "BRO",
       twitter: "#BrooklynTogether",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/BKN_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"BKN_logo.svg"
       },
       "PHI": {
       id: 85,
@@ -48,7 +49,7 @@ export class NbaUtilService {
       name: "76ers",
       abbreviation: "PHI",
       twitter: "#HereTheyCome",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/PHI_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"PHI_logo.svg"
       },
       "CLE": {
       id: 86,
@@ -56,7 +57,7 @@ export class NbaUtilService {
       name: "Cavaliers",
       abbreviation: "CLE",
       twitter: "#BeTheFight",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/CLE_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"CLE_logo.svg"
       },
       "IND": {
       id: 87,
@@ -64,7 +65,7 @@ export class NbaUtilService {
       name: "Pacers",
       abbreviation: "IND",
       twitter: "#AlwaysGame",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/IND_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"IND_logo.svg"
       },
       "DET": {
       id: 88,
@@ -72,7 +73,7 @@ export class NbaUtilService {
       name: "Pistons",
       abbreviation: "DET",
       twitter: "#DetroitUp",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/DET_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"DET_logo.svg"
       },
       "CHI": {
       id: 89,
@@ -80,7 +81,7 @@ export class NbaUtilService {
       name: "Bulls",
       abbreviation: "CHI",
       twitter: "#BullsNation",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/CHI_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"CHI_logo.svg"
       },
       "MIL": {
       id: 90,
@@ -88,7 +89,7 @@ export class NbaUtilService {
       name: "Bucks",
       abbreviation: "MIL",
       twitter: "#FearTheDeer",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/MIL_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"MIL_logo.svg"
       },
       "ATL": {
       id: 91,
@@ -96,7 +97,7 @@ export class NbaUtilService {
       name: "Hawks",
       abbreviation: "ATL",
       twitter: "#TrueToAtlanta",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/ATL_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"ATL_logo.svg"
       },
       "MIA": {
       id: 92,
@@ -104,7 +105,7 @@ export class NbaUtilService {
       name: "Heat",
       abbreviation: "MIA",
       twitter: "#HeatTwitter",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/MIA_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"MIA_logo.svg"
       },
       "CHA": {
       id: 93,
@@ -112,7 +113,7 @@ export class NbaUtilService {
       name: "Hornets",
       abbreviation: "CHA",
       twitter: "#AllFly",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/CHA_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"CHA_logo.svg"
       },
       "WAS": {
       id: 94,
@@ -120,7 +121,7 @@ export class NbaUtilService {
       name: "Wizards",
       abbreviation: "WAS",
       twitter: "#DCAboveAll",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/WAS_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"WAS_logo.svg"
       },
       "ORL": {
       id: 95,
@@ -128,7 +129,7 @@ export class NbaUtilService {
       name: "Magic",
       abbreviation: "ORL",
       twitter: "#MagicTogether",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/ORL_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"ORL_logo.svg"
       },
       "OKL": {
       id: 96,
@@ -136,7 +137,7 @@ export class NbaUtilService {
       name: "Thunder",
       abbreviation: "OKL",
       twitter: "#ThunderUp",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/OKC_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"OKC_logo.svg"
       },
       "POR": {
       id: 97,
@@ -144,7 +145,7 @@ export class NbaUtilService {
       name: "Trail Blazers",
       abbreviation: "POR",
       twitter: "#RipCity",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/POR_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"POR_logo.svg"
       },
       "UTA": {
       id: 98,
@@ -152,7 +153,7 @@ export class NbaUtilService {
       name: "Jazz",
       abbreviation: "UTA",
       twitter: "#TakeNote",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/UTA_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"UTA_logo.svg"
       },
       "DEN": {
       id: 99,
@@ -160,7 +161,7 @@ export class NbaUtilService {
       name: "Nuggets",
       abbreviation: "DEN",
       twitter: "#MileHighBasketball",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/DEN_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"DEN_logo.svg"
       },
       "MIN": {
       id: 100,
@@ -168,7 +169,7 @@ export class NbaUtilService {
       name: "Timberwolves",
       abbreviation: "MIN",
       twitter: "#RaisedByWolves",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/MIN_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"MIN_logo.svg"
       },
       "GSW": {
       id: 101,
@@ -176,7 +177,7 @@ export class NbaUtilService {
       name: "Warriors",
       abbreviation: "GSW",
       twitter: "#DubNation",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/GSW_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"GSW_logo.svg"
       },
       "LAC": {
       id: 102,
@@ -184,7 +185,7 @@ export class NbaUtilService {
       name: "Clippers",
       abbreviation: "LAC",
       twitter: "#ClipperNation",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/LAC_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"LAC_logo.svg"
       },
       "SAC": {
       id: 103,
@@ -192,7 +193,7 @@ export class NbaUtilService {
       name: "Kings",
       abbreviation: "SAC",
       twitter: "#SacramentoProud",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/SAC_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"SAC_logo.svg"
       },
       "PHX": {
       id: 104,
@@ -200,7 +201,7 @@ export class NbaUtilService {
       name: "Suns",
       abbreviation: "PHX",
       twitter: "#WeAreTheValley",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/PHX_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"PHX_logo.svg"
       },
       "LAL": {
       id: 105,
@@ -208,7 +209,7 @@ export class NbaUtilService {
       name: "Lakers",
       abbreviation: "LAL",
       twitter: "#LakeShow",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/LAL_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"LAL_logo.svg"
       },
       "SAS": {
       id: 106,
@@ -216,7 +217,7 @@ export class NbaUtilService {
       name: "Spurs",
       abbreviation: "SAS",
       twitter: "#GoSpursGo",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/SAS_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"SAS_logo.svg"
       },
       "MEM": {
       id: 107,
@@ -224,7 +225,7 @@ export class NbaUtilService {
       name: "Grizzlies",
       abbreviation: "MEM",
       twitter: "#GrindCity",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/MEM_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"MEM_logo.svg"
       },
       "DAL": {
       id: 108,
@@ -232,7 +233,7 @@ export class NbaUtilService {
       name: "Mavericks",
       abbreviation: "DAL",
       twitter: "#MFFL",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/DAL_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"DAL_logo.svg"
       },
       "HOU": {
       id: 109,
@@ -240,7 +241,7 @@ export class NbaUtilService {
       name: "Rockets",
       abbreviation: "HOU",
       twitter: "#Rockets",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/HOU_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"HOU_logo.svg"
       },
       "NOP": {
       id: 110,
@@ -248,7 +249,7 @@ export class NbaUtilService {
       name: "Pelicans",
       abbreviation: "NOP",
       twitter: "#WontBowDown",
-      officialLogoImageSrc: "https://global.nba.com/media/img/teams/00/logos/NOP_logo.svg"
+      officialLogoImageSrc: nbaTeamRoot+"NOP_logo.svg"
       }
     }
 

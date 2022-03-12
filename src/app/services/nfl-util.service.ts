@@ -2102,7 +2102,7 @@ export class NflUtilService {
     }
   }
 
-  public sortSchedules(schedules, week, headers) {
+  public sortSchedules(schedules, week, schedGames) {
   
     if (schedules.length === 0) {
       let team: any;
@@ -2122,20 +2122,21 @@ export class NflUtilService {
         weekOpponent: any
       };
     
-      forkJoin(
-        this.nflTeams.map(
-          g => 
+      // forkJoin(
+      //   this.nflTeams.map(
+      //     g => 
           
-          this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular/games.json?team=${g.abbreviation}`, { headers })
+      //     this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular/games.json?team=${g.abbreviation}`, { headers })
           
-        )
-      )
-      .subscribe(res => {
+      //   )
+      // )
+      // .subscribe(res => {
         //console.log(res, 'get team schedules...');
+        let res = schedGames
         res.forEach((item, index) => { 
-          team = this.nflTeams[index].id;
-          bye = this.nflTeams[index].bye;
-          abbreviation = this.nflTeams[index].abbreviation;
+          team = this.nflTeams[index].id
+          bye = this.nflTeams[index].bye
+          abbreviation = this.nflTeams[index].abbreviation
           teamSchedule = {
             team: team,
             abbreviation: abbreviation,
@@ -2152,10 +2153,6 @@ export class NflUtilService {
           schedules.push(teamSchedule);
           this.getRank(schedules);
         })
-    
-      }, (err: HttpErrorResponse) => {       
-        console.log(err, 'error ranking teams');
-      });
     }
   }
 

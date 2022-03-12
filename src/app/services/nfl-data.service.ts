@@ -1,15 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-let headers = null;
-let sWeek = null;
-let apiRoot = null;
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
 
 let sending = [];
 let sent = [];
-let sendingT = [];
-let sentT = [];
 let sendingAll;
 let sentAll;
 
@@ -42,34 +35,13 @@ let lastweek = lastweekMyDate.toISOString().slice(0, 10);
 
 export class NFLDataService {
 
-  public schedule: Observable <any> = null;
-  public stats: Observable <any> = null;
-  public daily: Observable <any> = null;
-  public dailyT: Observable <any> = null;
-  public weekly: Observable <any> = null;
-  public score: Observable <any> = null;
-  public allstats: Observable <any> = null;
-  public offenseStats: Observable <any> = null;
-  public defenseStats: Observable <any> = null;
-  public teamstats: Observable <any> = null;
-  public lastweekgameid: Observable <any> = null;
-  public gameid: Observable <any> = null;
-  public info: Observable <any> = null;
-  public starterInfo: Observable <any> = null;
-  public env: Observable < any > = null;
-  public apiRoot2022: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular"
-  public apiRoot2021: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-2021-regular"
-  public nflRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl"
-  public apiRootPO: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2022-playoff" //2019-regular"
   public dailyDate: any;
   public touchTeamRanks: any;
   public lineTeamRanks: any;
   public premiumRanks: any;
 
-  //https://api.mysportsfeeds.com/v2.1/pull/nfl/players.json?position=G,C,OT,NT,DT,DE
-
   constructor(private http: HttpClient) {
-    this.dailyDate = dailyDate;
+    this.dailyDate = dailyDate
   }
 
   public selectedDate(d) {
@@ -91,32 +63,6 @@ export class NFLDataService {
     console.log("stats sent to component...");
     sentHot = sendingHot;
     return sentHot;
-  }
-
-  sendHeaderOptions(h, week, root) {
-    headers = h;
-    sWeek = week;
-    apiRoot = root;
-  }
-
-  sendTouchStats(statsArray) {
-    console.log("sending touch stats to service...");
-    if (statsArray.length > 0) {
-      console.log('save touch team ranks');
-      this.touchTeamRanks = statsArray[1][2]; 
-    } 
-    sendingT = statsArray;
-  }
-
-  getSentTouchStats() {
-    console.log("stats sent to component...");
-    sentT = [];
-    sentT = sendingT;
-    return sentT;
-  }
-
-  sendPremiumRanks(pRanks) {
-    this.premiumRanks = pRanks;
   }
 
   sendStats(statsArray) {
@@ -146,12 +92,6 @@ export class NFLDataService {
     return sentAll;
   }
 
-  getEnv() {
-    console.log("trying to get heroku env...");
-    this.env = this.http.get('/heroku-env')
-    return this.env;
-  }
-
   getYesterday() {
     console.log("send yesterday..."); 
     return yesterday; 
@@ -162,172 +102,4 @@ export class NFLDataService {
     return lastweek;
   }
 
-  getPrevGameId() {
-    // let url = `${this.apiRoot}/games.json?date=from-7-days-ago-to-5-days-ago`;
-    // this.gameid = this.http.get(url, {headers})
-    // return this.gameid;
-  }
-
-  getSchedule(selected) {
-    //console.log('getting nfl schedule for today from api...', dailyDate);
-    let url = null
-    if (parseInt(selected) > 18) {
-      url = `${this.apiRootPO}/week/${selected}/games.json`;
-    } else {
-      //url = `${this.apiRoot}/week/${selected}/games.json`;
-      url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular/week/${selected}/games.json`;
-    }
-    this.schedule = this.http.get(url, {headers})
-    return this.schedule;
-
-  }
-
-  public getStats(players) {
-    let url = `${this.apiRootPO}/player_stats_totals.json?player=${players}`;
-    this.stats = this.http.get(url, {headers})
-    return this.stats;
-  }
-
-  getAllStats() {
-
-    //if (!this.allstats) {
-
-      //console.log('getting total player stats from API...');
-      // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
-      // } else {
-      //   url = `${this.apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
-      // }
-      //cumulative_player_stats.json?position=G,C,OT,NT,DT,DE&sort=STATS.Miscellaneous-GS.D&limit=180
-      let url = `${apiRoot}/player_stats_totals.json?position=G,C,OT,NT,DT,DE`;
-      this.allstats = this.http.get(url, {headers})
-      
-    //}
-    return this.allstats;
-  }
-
-  getAllOffense(position, season, week) {
-      let nflSeason = '2021-2022-regular';
-      if (parseInt(week) > 18) {
-        nflSeason = '2022-playoff';
-      }
-
-      if (season === 'info' && week === 'all') {
-        let url = `${this.nflRoot}/players.json?position=${position}`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (season === 'stats' && week === 'all') {
-        let url = `${this.apiRoot2022}/player_stats_totals.json?position=${position}`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      } else if (week != 'all') {
-        let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=${position}`;
-        this.offenseStats = this.http.get(url, {headers})
-        return this.offenseStats;
-      }
-
-      return null;
-  }
-
-  getAllDefense(position, season, week) {
-    let nflSeason = '2021-2022-regular';
-      if (parseInt(week) > 18) {
-        nflSeason = '2022-playoff';
-      }
-
-    if (season === 'info' && week === 'all') {
-      let url = `${this.nflRoot}/players.json?position=${position}`;
-      this.defenseStats = this.http.get(url, {headers})
-      return this.defenseStats;
-    } else if (season === 'stats' && week === 'all') {
-      let url = `${this.apiRoot2022}/player_stats_totals.json?position=${position}`;
-      this.defenseStats = this.http.get(url, {headers})
-      return this.defenseStats;
-    } else if (week != 'all') {
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nfl/${nflSeason}/week/${week}/player_gamelogs.json?position=${position}`;
-      this.defenseStats = this.http.get(url, {headers})
-      return this.defenseStats;
-    }
-      
-  }
-
-  public getTeamStats(selected, date) {
-      let url = null;
-      if (parseInt(selected) > 18) {
-        url = `${this.apiRoot2022}/team_stats_totals.json` //?date=${date}`;
-      } else {
-        url = `${this.apiRoot2022}/team_stats_totals.json`;
-      }
-      this.teamstats = this.http.get(url, {headers})
-      return this.teamstats;
-  }
-
-   public getDaily(selected, players) {
-    let url = null
-    if (parseInt(selected) > 18) {
-      url = `${this.apiRootPO}/week/${selected}/player_gamelogs.json?player=${players}`;
-    } else {
-      //url = `${this.apiRoot}/week/${selected}/games.json`;
-      url = `${this.apiRoot2022}/week/${selected}/player_gamelogs.json?player=${players}`;
-    }
-    this.daily = this.http.get(url, {headers})
-    return this.daily;
-  }
-
-  public dailyTeams(selected) {  
-    let url = null
-    if (parseInt(selected) > 18) {
-      url = `${this.apiRootPO}/week/${selected}/team_gamelogs.json?`;
-    } else {
-      url = `${this.apiRoot2022}/week/${selected}/team_gamelogs.json?`;
-    }
-    this.dailyT = this.http.get(url, {headers})
-    return this.dailyT;
-  }
-
-  public getDailyTouches(selected) {
-       let url = `${apiRoot}/week/${selected}/player_gamelogs.json?position=WR,TE,RB,QB`;
-       this.daily = this.http.get(url, {headers})
-       return this.daily;
-   }
-
-  public getWeek(selected) {
-       let url = `${apiRoot}/week/${selected}/team_gamelogs.json`;
-       this.weekly = this.http.get(url, {headers})
-       return this.weekly;
-   }
-
-  getScore(data) {
-      let id = null;
-      id = data
-      // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/games/`+id+`/boxscore.json`;
-      // } else {
-      //   url = `${this.apiRoot}/games/`+id+`/boxscore.json`;
-      // }
-    //if (!this.score) {
-      //console.log(`${this.apiRoot}/games/`+id+`/boxscore.json`, 'getting daily scores of todays games from API...');
-      let url = `${apiRoot}/games/`+id+`/boxscore.json`;
-      this.score = this.http.get(url, {headers})
-      return this.score;
-  }
-
-  getLastweekGameId() {
-
-    if (!this.lastweekgameid) {
-      console.log('getting 1 week of games from API...');
-      // let url = null;
-      // if (parseInt(sWeek) > 17) {
-      //   url = `${this.apiRootPO}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
-      // } else {
-      //   url = `${this.apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
-      // }
-      let url = `${apiRoot}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
-      this.lastweekgameid = this.http.get(url, {headers})
-        
-    }
-    return this.lastweekgameid;
-  }
 }

@@ -108,7 +108,10 @@ export class StartingFiveComponent implements OnInit {
   public nextWeek: boolean = false;
   public nbaPlayoffDate: string;
   public isNBAPlayoffs: boolean = false;
-  public nbaSeason: string;
+  public haveSchedules: boolean
+  public nbaSeason: string
+  public nbaTeamsSched: Array <any> = []
+  public serverInfo: Array <any> = []
 
   constructor(private dataService: NBADataService,
               public nhlService: NHLDataService, 
@@ -136,6 +139,7 @@ export class StartingFiveComponent implements OnInit {
     this.selectedDate = new Date();
     this.nbaPlayoffDate = 'Mon May 17 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.checkPlayoffs(new Date(this.selectedDate))
+    this.haveSchedules = false
     //this.teamSchedules = [];
   }
 
@@ -196,13 +200,15 @@ export class StartingFiveComponent implements OnInit {
   }
 
   public getSchedules() {
-    this.nhlService.getSchedules(this.nextWeek, 'nba', teams);
+    console.log('fetching schedule')
+    this.nbaTeamsSched = this.nextWeek ? this.serverInfo['nextSchedule'] : this.serverInfo['weeklySchedule']
   }
 
 
   public getByDate(event) {
     this.loading = true;
-    this.dataService.selectedDate(event);
+    this.dataService.selectedDate(event)
+    this.nhlService.selectedDate(event)
     this.selectedDate = event.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
     //empty old data on data change 
     this.dailySchedule = [];
@@ -231,182 +237,160 @@ export class StartingFiveComponent implements OnInit {
   }
 
   loadData() {
-    this.dataService
-      .getEnv().subscribe(res => {
-        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
-        let originalText = bytes.toString(CryptoJS.enc.Utf8);
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
 
-        this.dataService
-          .sendHeaderOptions(headers);
-        this.nhlService
-          .sendHeaderOptions(headers);
+      this.nhlService.serverInfo(
+      'nba', 
+      this.nbaSeason, 
+      'games', 
+      'dateB', 
+      'dateE', 
+      'player', 
+      '', 
+      this.teams,
+      this.selectedDate, 
+      this.dataService.isToday,
+      'dailySchedule',
+      this.haveSchedules,
+      '').subscribe(res => {
+        console.log(res, 'client res: schedlule')
+        this.serverInfo = res
 
-        this.dataService
-          .getSchedule().subscribe(res => {
+        if (res['games'].games.length === 0) {
+          this.loading = false
+          this.noGamesToday = true
+          this.noGamesMsg = "There Are No Games Scheduled Today :("
+          console.log('There are no games being played today.')
+        } else {
+          if (res['games'].games[0].schedule.playedStatus === "LIVE") {
+            this.liveGames = true;    
+          }
 
-            if (res['games'].length === 0) {
-              this.loading = false;
-              this.noGamesToday = true;
-              this.noGamesMsg = "There Are No Games Scheduled Today :(";
-              console.log('There are no games being played today.');
-            } else {
-              if (res['games'][0].schedule.playedStatus === "LIVE") {
-                this.liveGames = true;    
-              }
-              let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COMPLETED_PENDING_REVIEW', 'LIVE' : 'LIVE'}
-              this.dailySchedule = res['games'].filter(item => new Date(item['schedule'].startTime) < this.util.tomorrow(this.selectedDate, this.dataService.isToday) || playedStatuses[item['schedule'].playedStatus] != null);
-              //this.dailySchedule = res['games'];
-              this.teamRef = res['references'].teamReferences;
-              teamRef = res['references'].teamReferences;
-              this.gameDate = this.selectedDate; //res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
-              //let dPipe = new DatePipe("en-US");
-              this.gamesToday = true;
-              if (this.nhlService.nbaTeamsSched.length === 0) {
-                this.nhlService.getSchedules(this.nextWeek, 'nba', teams);
-              }
+          this.dailySchedule = res['games'].games
+          this.teamRef = res['games']['references'].teamReferences
+          teamRef = res['games']['references'].teamReferences
+          this.gameDate = this.selectedDate //res['games'][0].schedule.startTime && res['games'][0].schedule.scheduleStatus != 'POSTPONED' ? res['games'][0].schedule.startTime : new Date();
+          this.gamesToday = true;
+          if (this.nbaTeamsSched.length === 0) {
+            //this.nhlService.getSchedules(this.nextWeek, 'nba', teams);
+            this.getSchedules()
+          }
+        }
+
+          let i = null;
+          let i2 = null;
+          let res2 = null;
+          let game2 = null;
+          let score2 = null;
+        
+          
+          res.dailyLineup.forEach((item, index) => {
+            //console.log(this.dailySchedule[i], 'score for games');
+            //console.log(res, 'got starting lineups data!');
+            i = index;
+            if (res.dailyLineup[i]['game'].playedStatus != "UNPLAYED" && res.dailyLineup[i]['game'].playedStatus != "COMPLETED") {
+              this.liveGames = true;
+              //console.log('interval set...');
+            }
+              
+            try {
+              game2 = res.dailyLineup[i]['game'];
+              res2 = res.dailyLineup[i]['teamLineups'];
+              score2 = this.dailySchedule[i].score;
+            } catch {
+              console.log('bad endpoint');
             }
 
-            forkJoin(
-              this.dailySchedule.map(
-                g => 
-                
-                 this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nba/${this.nbaSeason}/games/`+g['schedule'].id+`/lineup.json`, { headers })
-                
-              )
-            )
-            .subscribe(res => {
-              let i = null;
-              let i2 = null;
-              let res2 = null;
-              let game2 = null;
-              let score2 = null;
-            
+            res2.forEach((item, index) => {
+              i2 = index;
+              //console.log(res2[i2], 'looking of starters');
               
-            res.forEach((item, index) => {
-                //console.log(this.dailySchedule[i], 'score for games');
-                //console.log(res, 'got starting lineups data!');
-                i = index;
-                if (res[i]['game'].playedStatus != "UNPLAYED" && res[i]['game'].playedStatus != "COMPLETED") {
-                  this.liveGames = true;
-                  //console.log('interval set...');
-                }
-                 
-                try {
-                  game2 = res[i]['game'];
-                  res2 = res[i]['teamLineups'];
-                  score2 = this.dailySchedule[i].score;
-                } catch {
-                  console.log('bad endpoint');
-                }
-
-                res2.forEach((item, index) => {
-                  i2 = index;
-                  //console.log(res2[i2], 'looking of starters');
-                  
-                  if (res2[i2].actual != null && res2[i2].expected != null)  {
-                    //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
-                    res2[i2].actual.lineupPositions.forEach(item => {
-                      //console.log(item, 'whats up');
-                      if (starterNames[item.position] && item.player != null) {
-                        this.gameStarter = {
-                          playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
-                          currentTeam: res2[i2]['team'].abbreviation,
-                          gameID: game2.id,
-                          score: score2,
-                          status: game2.playedStatus,
-                          scheduleStatus: game2.scheduleStatus,
-                          position: item.position,
-                          playerStatus: 'actual',
-                          bench: true ? benchNames[item.position] : false
-                        }
-                        this.gameStarters.push(this.gameStarter);
-                        this.starterIdData.push(this.gameStarter['playerID']);
-                        
-                      }
-                    })
-                    playerString = this.starterIdData.join();
-
-                  } else if (res2[i2].actual == null && res2[i2].expected != null) {
-
-                      res2[i2].expected.lineupPositions.forEach(item => {
-                       // console.log(item, 'whats up');
-                        if (starterNames[item.position] && item.player != null) {
-                          this.gameStarter = {
-                            playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
-                            currentTeam: res2[i2]['team'].abbreviation,
-                            gameID: game2.id,
-                            score: score2,
-                            status: game2.playedStatus,
-                            scheduleStatus: game2.scheduleStatus,
-                            playerStatus: 'expected',
-                            position: item.position,
-                            bench: true ? benchNames[item.position] : false
-                          }
-                          this.gameStarters.push(this.gameStarter);
-                          this.starterIdData.push(this.gameStarter['playerID']);
-                          
-                        }
-                      })
-                      playerString = this.starterIdData.join();
-                    //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
-                   
+              if (res2[i2].actual != null && res2[i2].expected != null)  {
+                //console.log(res2[i2].actual.lineupPositions[0].player, 'got player ID for pitcher..');
+                res2[i2].actual.lineupPositions.forEach(item => {
+                  //console.log(item, 'whats up');
+                  if (starterNames[item.position] && item.player != null) {
+                    this.gameStarter = {
+                      playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
+                      currentTeam: res2[i2]['team'].abbreviation,
+                      gameID: game2.id,
+                      score: score2,
+                      status: game2.playedStatus,
+                      scheduleStatus: game2.scheduleStatus,
+                      position: item.position,
+                      playerStatus: 'actual',
+                      bench: true ? benchNames[item.position] : false
+                    }
+                    this.gameStarters.push(this.gameStarter);
+                    this.starterIdData.push(this.gameStarter['playerID']);
                     
-                  } else {
-                    //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
                   }
+                })
+                playerString = this.starterIdData.join();
 
-                });
-              });
+              } else if (res2[i2].actual == null && res2[i2].expected != null) {
 
-              this.sortData();
+                  res2[i2].expected.lineupPositions.forEach(item => {
+                    // console.log(item, 'whats up');
+                    if (starterNames[item.position] && item.player != null) {
+                      this.gameStarter = {
+                        playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][item['position']] != null && new Date(this.depth[res2[i2].team.id][0]['gdate']).getDate() === new Date(game2.startTime).getDay() ? this.depth[res2[i2].team.id][0][item['position']].id : item.player.id,
+                        currentTeam: res2[i2]['team'].abbreviation,
+                        gameID: game2.id,
+                        score: score2,
+                        status: game2.playedStatus,
+                        scheduleStatus: game2.scheduleStatus,
+                        playerStatus: 'expected',
+                        position: item.position,
+                        bench: true ? benchNames[item.position] : false
+                      }
+                      this.gameStarters.push(this.gameStarter);
+                      this.starterIdData.push(this.gameStarter['playerID']);
+                      
+                    }
+                  })
+                  playerString = this.starterIdData.join();
+                //console.log(res2[i2].expected.lineupPositions[0].player.id, 'got player ID for goalie expected to start!');
+                
+                
+              } else {
+                //console.log(res2[i2].team.Name, 'player is not expected or actual yet...');
+              }
 
-            }, (err: HttpErrorResponse) => {
-              this.loading = false;
-              this.errMessage = 'error getting lineup';
-              console.log(err, 'error getting lineup');
-
+            });
           });
-          }, (err: HttpErrorResponse) => {
-            this.loading = false;
-            this.errMessage = 'error getting schedule';
-            console.log(err, 'error getting schedule');
 
-          });
-      });
-
+          this.sortData();
+      })
   }
 
   public async sortData() {
     if (this.gamesToday === true) {
-      let promiseDaily;
-      promiseDaily = new Promise((resolve, reject) => {
-        this.dataService
-          .getDaily(playerString).subscribe(res => {
-            //console.log(res, 'gamelogs');
-            if (res != null) this.dailyStats = res['gamelogs'];
-            resolve('done');
-        })
-      });
 
-      let promiseOne;
-      promiseOne = new Promise((resolve, reject) => {
-        this.nhlService
-          .getTeamStats(this.apiRoot, headers).subscribe(res => {
-            this.teamStatsUpdate = res['lastUpdatedOn'];
-            this.teamStats = res['teamStatsTotals'];
-            resolve('done');
-        });
-      });
-      let resultTwo = await promiseDaily;
-      let resultOne = await promiseOne;
+      this.nhlService.myStats(
+      'nba', 
+      this.nbaSeason, 
+      'player_gamelogs', 
+      'team_stats_totals', 
+      'player_stats_totals', 
+      playerString, 
+      'G', 
+      '',
+      this.selectedDate, 
+      this.dataService.isToday,
+      'stats',
+      'nbaPlayers',
+      'nflWeek',
+      'noUpdate',
+      'none',
+      'haveSchedules').subscribe(async res => {
+       console.log(res, 'stats')
+       this.dailyStats = res['dailyStats'].gamelogs
+       this.teamStats = res['teamStats'].teamStatsTotals
+       this.myData = res['playerStats'].playerStatsTotals
+       this.teamStatsUpdate = res['teamStats'].lastUpdatedOn
+       const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-      this.dataService
-       .getStats(playerString).subscribe(res => {
-
-          let values = res['playerStatsTotals'];
-          this.myData = this.util.removeDuplicatesBy(x => x.player.id, values)
-          //this.myData =  Array.from(new Set(this.myData));
+          console.log('start sorting my data with gameStarters')
             for (let starter of this.gameStarters) {
               for (let data of this.myData) {
   
@@ -471,7 +455,7 @@ export class StartingFiveComponent implements OnInit {
                 data.team.name = team.name;
                 data.winToday = false;
                 data.lostToday = false;
-                //data.flip = 'inactive';
+
                 // data.dRank = team.dRank;
                 // data.oRank = team.oRank;
                 // data.teamRank = team.teamRank; //Math.floor(((team.dRank*1 + team.oRank*1) /2));
@@ -524,27 +508,25 @@ export class StartingFiveComponent implements OnInit {
             for (let daily of this.dailyStats) {
               for (let data of this.myData) {
                 if (daily.player.id === data.player.id) {
-                  data.player.tpm = daily.stats.fieldGoals.fg3PtMade;
-                  data.player.stl = daily.stats.defense.stl;
-                  data.player.blk = daily.stats.defense.blk;
-                  data.player.pts = daily.stats.offense.pts;
-                  data.player.ast = daily.stats.offense.ast;
-                  data.player.reb = daily.stats.rebounds.reb;
-                  data.player.ptsAvg = daily.stats.offense.ptsPerGame;
-                  data.player.fga = daily.stats.fieldGoals.fgAtt;
-                  data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
-                  data.player.tov = daily.stats.defense.tov;
-                  data.player.fpToday = Math.floor(data.player.pts + (data.player.ast * 1.5) + (data.player.reb * 1.2) + (data.player.stl * 3) + (data.player.blk * 3) - data.player.tov);
+                  data.player.tpm = daily.stats.fieldGoals.fg3PtMade
+                  data.player.stl = daily.stats.defense.stl
+                  data.player.blk = daily.stats.defense.blk
+                  data.player.pts = daily.stats.offense.pts
+                  data.player.ast = daily.stats.offense.ast
+                  data.player.reb = daily.stats.rebounds.reb
+                  data.player.ptsAvg = daily.stats.offense.ptsPerGame
+                  data.player.fga = daily.stats.fieldGoals.fgAtt
+                  data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60)
+                  data.player.tov = daily.stats.defense.tov
+                  data.player.fpToday = Math.floor(data.player.pts + (data.player.ast * 1.5) + (data.player.reb * 1.2) + (data.player.stl * 3) + (data.player.blk * 3) - data.player.tov)
                   //data.player.startsdaily.stats.miscellaneous.gamesStarted
-                  // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
-                 
+                  //data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60)
                 }
               }
             }
           }
           
-          this.util.teamRecord(this.teamStats, this.myData);
-
+          this.util.teamRecord(this.teamStats, this.myData)
 
           this.groups = this.myData.reduce(function (r, a) {
             r[a.player['currentTeam'].abbreviation] = r[a.player['currentTeam'].abbreviation] || [];
@@ -636,66 +618,97 @@ export class StartingFiveComponent implements OnInit {
   ngOnInit() {
     if (this.testBrowser) {
       if (window.innerWidth < 700) {
-        this.mobile = true;
+        this.mobile = true
       }
       if (this.players === undefined) {
-        this.loadData();
+        this.loadData()
         console.log('fetch data on init...');
         // get our data every subsequent 10 minutes
-        const MILLISECONDS_IN_TEN_MINUTES = 600000;
+        const MILLISECONDS_IN_TEN_MINUTES = 600000
         interval(MILLISECONDS_IN_TEN_MINUTES)
           .subscribe(() => {
             console.log('interval get data again...');
             if (this.gamesToday === true && this.liveGames === true) {
-              //this.loadData();
-              this.dataService
-                .getSchedule().subscribe(res => {
-                  //console.log(res, "schedule...");
-                  if (res['games'].length === 0) {
-                    this.loading = false;
-                    this.noGamesToday = true;
-                    this.noGamesMsg = "There Are No Games Scheduled Today :(";
-                    console.log('There are no games being played today.');
-                  } else {
-                    this.dailySchedule = res['games'];
-                  }
-              
-                this.dataService
-                  .getDaily(playerString).subscribe(res => {
-                    console.log(res, "Daily stats...");
-                    this.dailyStats = res != null ? res['gamelogs'] : [];
+              this.nhlService.myStats(
+                'nba', 
+                this.nbaSeason, 
+                'player_gamelogs', 
+                'team_stats_totals', 
+                'player_stats_totals', 
+                playerString, 
+                'G', 
+                '',
+                this.selectedDate, 
+                this.dataService.isToday,
+                'stats',
+                'nbaPlayers',
+                'nflWeek',
+                'nbaUpdate',
+                'none',
+                'haveSchedules').subscribe(async res => {
+                  console.log(res, 'updated nba schedule')
+                  this.dailyStats = res['dailyStats'].gamelogs
+                  this.dailySchedule = res['updatedSchedule'].games
 
                   if (this.myData && this.dailyStats) {
-                      console.log('getting daily stats again, live update...');
-                      for (let daily of this.dailyStats) {
-                        for (let data of this.myData) {
-                          if (daily.player.id === data.player.id) {
-                            data.player.pts = daily.stats.offense.pts;
-                            data.player.ptsAvg = daily.stats.offense.ptsPerGame;
-                            data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
-                            // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
+                    console.log('start sorting data for daily stats...')
+
+                    for (let schedule of this.dailySchedule) {
+                      for (let sdata of this.myData) {
+
+                        if (sdata.player != null && schedule['schedule'].awayTeam.abbreviation === sdata.player.currentTeam.abbreviation || sdata.player != null && schedule['schedule'].homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {
+                          sdata.status = schedule['schedule'].playedStatus
+                          sdata.gameStatus = schedule['schedule'].playedStatus
+                        }
+                        if (sdata.player != null && schedule['schedule'].awayTeam.abbreviation === sdata.player.currentTeam.abbreviation) {    
+                          sdata.team.teamScore = schedule['score'].awayScoreTotal
+                          sdata.team.opponentScore = schedule['score'].homeScoreTotal
+                        }
+                        if (sdata.player != null && schedule['schedule'].homeTeam.abbreviation === sdata.player.currentTeam.abbreviation) {    
+                          sdata.team.teamScore = schedule['score'].homeScoreTotal
+                          sdata.team.opponentScore = schedule['score'].awayScoreTotal
+                        }
+
+                      }
+                    }
+
+                    for (let daily of this.dailyStats) {
+                      for (let data of this.myData) {
+                        if (daily.player.id === data.player.id) {
+                          data.player.pts = daily.stats.offense.pts;
+                          data.player.ptsAvg = daily.stats.offense.ptsPerGame;
+                          data.player.min = Math.floor(daily.stats.miscellaneous.minSeconds / 60);
+                          // data.player.minAvg = Math.floor(daily.stats.miscellaneous.minSecondsPerGame / 60);
+
+                          if (data.status === "COMPLETED" || data.status === "COMPLETED_PENDING_REVIEW") {
+                            if (data.team.teamScore > data.team.opponentScore) {
+                              data.winToday = true;
+                            } else {
+                              data.lostToday = true;
+                            }
                           }
                         }
                       }
+                    }
+
                   }
-                })
               })
 
             } else {
               console.log('No games or all complete, nothing to update...');
             }
-          });
+          })
       } else {
           this.loading = false;
           this.showData = this.players;
-          this.gameDate = this.showData[0].offensePlayers[0].playerObj['player'].gameTime;
+          this.gameDate = this.showData[0].offensePlayers[0].playerObj['player'].gameTime
 
           for (let p of this.players) {
             if (p.playingRightNow === true) {
-              this.liveGames = true;
+              this.liveGames = true
             } 
             if (p.playingOver === true) {
-              this.gameover = true;
+              this.gameover = true
             }
           }
       }

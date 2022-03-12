@@ -143,12 +143,14 @@ export class StatLeadersComponent implements OnInit {
   public defaultWeek: string = ''
 
 
-  public crunchedDef: Array <any> = [];
-  public nhlSeason: boolean = true;
-  public nbaSeason: boolean = true;
-  public mlbSeason: boolean = true;
-  public nflPosition: string;
-  public nflDPosition: string;
+  public crunchedDef: Array <any> = []
+  public nhlSeason: boolean = true
+  public nbaSeason: boolean = true
+  public mlbSeason: boolean = true
+  public nflSeason: string
+  public nflPosition: string
+  public nflDPosition: string
+  public haveNflSchedules: boolean
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -163,12 +165,15 @@ export class StatLeadersComponent implements OnInit {
               public nflUtil: NflUtilService,
               @Inject(PLATFORM_ID) platformId: string) {
     //default sport load
-    this.nflSection = true
-    this.sport = 'nfl'
+    this.nflSection = false
+    //this.sport = 'nfl'
     this.nflDraftKit = false
     this.nflWeek = '1'
     this.nflPosition = 'qb'
-    this.nflDPosition = 'LB,DT,DE,OLB,ILB,MLB';
+    this.nflDPosition = 'LB,DT,DE,OLB,ILB,MLB'
+
+    this.nhlSection = true
+    this.sport = 'nhl'
 
     this.st1 = 'passing'
     this.sf1 = 'passYards'
@@ -201,25 +206,30 @@ export class StatLeadersComponent implements OnInit {
     this.tag6 = 'FPA'
     //default sport load
     
-    this.stats = '1';
-    this.nbaTeams = this.nbaUtil.getNBATeams();
-    this.nhlTeams = this.nhlUtil.getNHLTeams();
-    this.mlbTeams = this.mlbUtil.getMLBTeams();
-    this.nflTeams = this.nflUtil.getNFLTeams();
-    this.playerImages = this.nbaUtil.getNBAImages();
-    nflplayerImages = this.nflUtil.getNFLImages();
-    this.mlbplayerImages = this.mlbUtil.getMLBImages();
-    this.nhlplayerImages = this.nhlUtil.getNHLImages();
+    this.stats = '1'
+    this.nbaTeams = this.nbaUtil.getNBATeams()
+    this.nhlTeams = this.nhlUtil.getNHLTeams()
+    this.mlbTeams = this.mlbUtil.getMLBTeams()
+    this.nflTeams = this.nflUtil.getNFLTeams()
+    this.playerImages = this.nbaUtil.getNBAImages()
+    nflplayerImages = this.nflUtil.getNFLImages()
+    this.mlbplayerImages = this.mlbUtil.getMLBImages()
+    this.nhlplayerImages = this.nhlUtil.getNHLImages()
     
-    let thisDate = new Date();
-    this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000));
-    this.testBrowser = isPlatformBrowser(platformId);
-    let weekTimes = this.nflUtil.getWeekTimes();
+    let thisDate = new Date()
+    this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000))
+    this.testBrowser = isPlatformBrowser(platformId)
+    let weekTimes = this.nflUtil.getWeekTimes()
+    this.nflSeason = '2021-2022-regular'
+    //reset global daily date
+    this.nhlService.selectedDate(this.nhlService.dailyDate)
 
     for (let week of weekTimes) {
       let date = new Date();
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.nflWeek = week.week
+
+        this.nflSeason = this.nflWeek > 18 ? '2022-playoff' : '2021-2022-regular'
         // this.timeSpan = week.week
         // this.week = week.week
         if (date < new Date(week.dateEnd)) {
@@ -229,9 +239,7 @@ export class StatLeadersComponent implements OnInit {
           let dailyDate = myDate.toISOString().slice(0, 10).replace(/-/g, "");
           this.tsDate = dailyDate; 
         }
-
-      }
-      
+      }  
     } 
   }
 
@@ -240,7 +248,7 @@ export class StatLeadersComponent implements OnInit {
       this.nbaSeasonType = this.nbaSeason ? "2021-2022-regular" : "2022-playoff";
      
       if (this.nbaSection) { 
-        this.sortNBA();
+        this.sortNBA()
       }
     }
 
@@ -248,22 +256,21 @@ export class StatLeadersComponent implements OnInit {
         this.nhlSeasonType = this.nhlSeason ? "2021-2022-regular" : "2022-playoff";
        
         if (this.nhlSection) { 
-          this.sortNHL();
+          this.sortNHL()
         } else {
-          this.goalies();
+          this.goalies()
         }
     }
 
     if (this.sport === 'mlb') {
-      this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular" : 
-      "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-playoff";
+      this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular" : "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-playoff"
 
-      this.mlbSeasonType = this.mlbSeason ? "2021-regular" : "2021-playoff";
+      this.mlbSeasonType = this.mlbSeason ? "2021-regular" : "2021-playoff"
       
       if (this.mlbSection) { 
-        this.loadMLB();
+        this.loadMLB()
       } else {
-        this.loadHitters();
+        this.loadHitters()
       }
     }
   }
@@ -340,14 +347,15 @@ export class StatLeadersComponent implements OnInit {
 
   public onChange(week) {
     this.defaultWeek = week
-    this.week = week;
-    this.timeSpan = week;
-    this.combined = [];
-    this.reduced = [];
+    this.week = week
+    this.nflSeason = week > 18 ? '2022-playoff' : '2021-2022-regular'
+    this.timeSpan = week
+    this.combined = []
+    this.reduced = []
     if (this.nflDefenseSection) {
-      this.defensePlayers();
+      this.defensePlayers()
     } else if (this.nflSection) {
-      this.loadNFL();
+      this.loadNFL()
     } 
   }
 
@@ -383,123 +391,122 @@ export class StatLeadersComponent implements OnInit {
      this.t6 = 'Fantasy Points Average'
      this.tag6 = 'FPA'
 
-     
-
-    this.week = 'all'
-    this.timeSpan = 'full'
-    this.nflPosition = p
-    this.defaultWeek = ''
-    this.loadNFL();
+     this.week = 'all'
+     this.timeSpan = 'full'
+     this.nflPosition = p
+     this.defaultWeek = ''
+     this.loadNFL()
   }
 
   public onPosDChange(p) {
+    console.log(p+' : new nfl defense position')
     this.week = 'all'
     this.timeSpan = 'full'
     this.nflDPosition = p
     this.defaultWeek = ''
-    this.defensePlayers();
+    this.defensePlayers()
   }
 
   public spanGames() {
-    let type = null;
-    let season= null;
+    let type = null
+    let season= null
     if (this.sport === 'nba' && this.nbaSection) {
-      this.loading = true;
-      season = this.nbaSeasonType;
+      this.loading = true
+      season = this.nbaSeasonType
     }
       
 
     if (this.sport === 'nhl' && this.nhlSection) {
-      this.nhlSkaterloading = true;
-      season = this.nhlSeasonType;
-      type = 'skaters';
+      this.nhlSkaterloading = true
+      season = this.nhlSeasonType
+      type = 'skaters'
     }
       
     if (this.sport === 'nhl' && this.nhlGoalies) {
-      this.nhlGoalieloading = true;
-      season = this.nhlSeasonType;
-      type = 'goalies';
+      this.nhlGoalieloading = true
+      season = this.nhlSeasonType
+      type = 'goalies'
     }
 
     if (this.sport === 'mlb' && this.mlbSection) {
-      this.mlbPitchingLoading = true;
-      season = this.mlbSeasonType;
-      type = 'pitchers';
+      this.mlbPitchingLoading = true
+      season = this.mlbSeasonType
+      type = 'pitchers'
     }
       
     if (this.sport === 'mlb' && this.mlbHittingSection) {
       this.mlbHittingLoading = true;
       season = this.mlbSeasonType;
-      type = 'batters';
+      type = 'batters'
     }
 
     if (this.sport === 'nfl') {     
-      season = '2021-2022-regular';
+      season = '2021-2022-regular'
     }
-      
-    let root;
-    this.nhlService
-      .getGames(this.timeSpan, this.sport, this.tsDate, season).subscribe(res => {
-      //console.log(res['games'], "scheduled games per selected time span...");
-      //this.nbaSpanGames = res['games'];
+
+      this.nhlService.myStats(
+        this.sport, 
+        season, 
+        'player_gamelogs', 
+        'team_stats_totals', 
+        'player_stats_totals', 
+        'player', 
+        this.nflPosition, 
+        this.nflTeams,
+        this.tsDate, 
+        'isToday',
+        'spanStats',
+        'nflOffense',
+        'nflWeek',
+        'nflSpanUpdate',
+        this.timeSpan,
+        this.haveNflSchedules).subscribe(async res => {
+          console.log(res, this.sport+' span stats data')
 
       if (this.sport != 'nfl') {
-        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/${season}`;
-        this.sortStats(root, res['games'], this.sport, type)
+        this.sortStats(res['boxscores'], this.sport, type)
       } else if (this.sport === 'nfl' && this.nflSection) {
-        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2021-2022-regular`;
-        this.sortNFLStats(root, res['games'], this.sport, type, this.nflTeams);
+        this.sortNFLStats(res['boxscores'], this.sport, type, this.nflTeams)
       } else if (this.sport === 'nfl' && this.nflDefenseSection) {
-        root = `https://api.mysportsfeeds.com/v2.1/pull/${this.sport}/2021-2022-regular`;
-        this.sortNFLDStats(root, res['games'], this.sport, type, this.nflTeams);
+        this.sortNFLDStats(res['boxscores'], this.sport, type, this.nflTeams)
       }
       
     })
   }
 
-  loadData() {
-
-    this.nbaService
-      .getEnv().subscribe(res => {
-        let bytes  = CryptoJS.AES.decrypt(res, 'footballSack');
-        let originalText = bytes.toString(CryptoJS.enc.Utf8);
-        headers = new HttpHeaders().set("Authorization", "Basic " + btoa(originalText + ":" + 'MYSPORTSFEEDS'));
-        let nflRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-regular";
-        this.nbaService
-          .sendHeaderOptions(headers);
-        this.nhlService
-          .sendHeaderOptions(headers);
-        this.mlbService
-          .sendHeaderOptions(headers);
-        this.nflService
-          .sendHeaderOptions(headers, '1', nflRoot);
-
-       this.loadNFL(); // this.sortNBA();
-        
-      });
-
-  }
-
   public sortNHL() {
-    this.nbaSection = false; 
-    this.nhlSection = true; 
-    this.mlbSection = false;
-    this.mlbHittingSection = false;
-    this.nhlGoalies = false;
-    this.nflSection = false;
-    this.nflDefenseSection = false;
-    this.nflDraftKit = false;
-    this.sport = 'nhl';
-    this.nhlSkaterloading = true;
+    this.nbaSection = false
+    this.nhlSection = true 
+    this.mlbSection = false
+    this.mlbHittingSection = false
+    this.nhlGoalies = false
+    this.nflSection = false
+    this.nflDefenseSection = false
+    this.nflDraftKit = false
+    this.sport = 'nhl'
+    this.nhlSkaterloading = true
 
-    this.nhlService
-       .getAllStats('skaters', this.nhlSeasonType).subscribe(res => {
+    this.nhlService.myStats(
+      'nhl', 
+      this.nhlSeasonType, 
+      'player_gamelogs', 
+      'team_stats_totals', 
+      'player_stats_totals', 
+      'player', 
+      'RW,LW,D,C', 
+      this.nhlTeams,
+      this.tsDate, 
+      'isToday',
+      'stats',
+      'nhlGoalies',
+      'all',
+      'noUpdate',
+      'none',
+      'haveSchedules').subscribe(async res => {
+        console.log(res, 'nhl stats data')
+        const nhlTeamsArray = Object.values(this.nhlTeams)
 
-        const nhlTeamsArray = Object.values(this.nhlTeams);
-        //let specialImgNum = null;
-
-        this.nhlSkaters = res['playerStatsTotals'].filter(
-          player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > 1);
+        this.nhlSkaters = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > 1);
 
           for (let team of nhlTeamsArray) {
             for (let data of this.nhlSkaters) { 
@@ -520,34 +527,46 @@ export class StatLeadersComponent implements OnInit {
             }  
           }
 
-        // this.nhlService
-        //   .getInfoSkaters().subscribe(res => {
-        //     this.util.updatePlayers(res['players'], this.nhlSkaters, nhlTeamsArray);
-        // })
+        //this.util.updatePlayers(res['players'], this.nhlSkaters, nhlTeamsArray)
 
         if (this.timeSpan === 'full') {
-          this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D');
-          this.fSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition != 'D');
+          this.dSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition === 'D')
+          this.fSkaters = this.nhlSkaters.filter(player => player.player.primaryPosition != 'D')
         }
           
         if (this.timeSpan != 'full') {
-          this.spanGames();
+          this.spanGames()
         } else {
-          this.nhlSkaterloading = false;
+          this.nhlSkaterloading = false
         } 
     })
   }
 
   public goalies() {
+    this.nhlGoalieloading = true
 
-    this.nhlGoalieloading = true;
-    this.nhlService
-      .getAllStats('goalies', this.nhlSeasonType).subscribe(res => {
-      //let specialImgNum = null;
-      const nhlTeamsArray = Object.values(this.nhlTeams);
-      this.nhlGoaltenders = res['playerStatsTotals'].filter(
-        player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.gamesPlayed > (this.nhlSeason ? 2 : 0)); 
-      this.gaaGoalies = this.nhlGoaltenders.filter(player => player.stats.goaltending['gamesStarted'] > (this.nhlSeason ? 2 : 0) && player.stats.goaltending.saves > (this.nhlSeason ? 50 : 15)); 
+      this.nhlService.myStats(
+        'nhl', 
+        this.nhlSeasonType, 
+        'player_gamelogs', 
+        'team_stats_totals', 
+        'player_stats_totals', 
+        'player', 
+        'G', 
+        this.nhlTeams,
+        this.tsDate, 
+        'isToday',
+        'stats',
+        'nhlGoalies',
+        'all',
+        'noUpdate',
+        'none',
+        'haveSchedules').subscribe(async res => {
+         console.log(res, 'stats')
+
+        const nhlTeamsArray = Object.values(this.nhlTeams)
+        this.nhlGoaltenders = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > (this.nhlSeason ? 2 : 0)); 
+        this.gaaGoalies = this.nhlGoaltenders.filter(player => player.stats.goaltending['gamesStarted'] > (this.nhlSeason ? 2 : 0) && player.stats.goaltending.saves > (this.nhlSeason ? 50 : 15)); 
 
         for (let team of nhlTeamsArray) {
           for (let data of this.nhlGoaltenders) { 
@@ -562,49 +581,58 @@ export class StatLeadersComponent implements OnInit {
 
             if (data.player.officialImageSrc == null) {
               data.player.officialImageSrc = this.nhlplayerImages[data.player.id] != null ? this.nhlplayerImages[data.player.id].image : null;
-            }
-            
+            } 
           }  
         }
 
-        // this.nhlService
-        //   .getInfo().subscribe(res => {
-        //     this.util.updatePlayers(res['players'], this.nhlGoaltenders, nhlTeamsArray);
-        // })
+        //this.util.updatePlayers(res['players'], this.nhlGoaltenders, nhlTeamsArray);
 
         
         if (this.timeSpan != 'full') {
-          this.spanGames();
+          this.spanGames()
         } else {
-          this.nhlGoalieloading = false;
+          this.nhlGoalieloading = false
         }
         
     })
   }
   public async sortNBA() {
-      this.loading = true;
-      this.nbaSection = true; 
-      this.nhlSection = false; 
-      this.mlbHittingSection = false; 
-      this.mlbSection = false; 
-      this.nhlGoalies = false; 
-      this.nflSection = false; 
-      this.nflDefenseSection = false; 
-      this.nflDraftKit = false;
-      this.sport = 'nba';
-      this.nbaService
-       .getAllStats(this.timeSpan, this.nbaSeasonType).subscribe(res => {
+      this.loading = true
+      this.nbaSection = true
+      this.nhlSection = false 
+      this.mlbHittingSection = false
+      this.mlbSection = false
+      this.nhlGoalies = false
+      this.nflSection = false
+      this.nflDefenseSection = false
+      this.nflDraftKit = false
+      this.sport = 'nba'
+
+      this.nhlService.myStats(
+        'nba', 
+        this.nbaSeasonType, 
+        'player_gamelogs', 
+        'team_stats_totals', 
+        'player_stats_totals', 
+        'playerString', 
+        'G,PG,SG,SF,PF,C', 
+        '',
+        this.tsDate, 
+        'isToday',
+        'stats',
+        'statLeaders',
+        'all',
+        'noUpdate',
+        'none',
+        'haveSchedules').subscribe(async res => {
+          console.log(res, 'nba stat leaders')
+          
           const nbaTeamsArray = Object.values(this.nbaTeams);
 
-          this.myData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null);
-
-          this.fgPlayers = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && nbabig[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.nbaSeason ? 150 : 8));
-          this.smPlayers = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && nbasmall[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.nbaSeason ? 150 : 8));
+          this.myData = res['playerStats'].playerStatsTotals
+          this.fgPlayers = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && nbabig[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.nbaSeason ? 250 : 8));
+          this.smPlayers = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && nbasmall[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.nbaSeason ? 250 : 8));
             
-
           for (let team of nbaTeamsArray) {
             for (let data of this.myData) { 
               if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
@@ -621,15 +649,11 @@ export class StatLeadersComponent implements OnInit {
               
             }  
           }
-
-          // this.nbaService.allInfo().subscribe(res => {
-          //   this.util.updatePlayers(res['players'], this.myData, nbaTeamsArray);
-          // })
+          //this.util.updatePlayers(res['players'], this.myData, nbaTeamsArray);
 
           if (this.timeSpan != 'full')
-            this.spanGames();
-          
-      }) 
+            this.spanGames()       
+    }) 
   }
 
   public playerFp(player) {
@@ -649,39 +673,54 @@ export class StatLeadersComponent implements OnInit {
 
   ngOnInit() {
     if (this.testBrowser) {
-      if (window.innerWidth < 700) { // 768px portrait
-        this.mobile = true;
+      if (window.innerWidth < 700) {
+        this.mobile = true
       }
       if (this.myData === undefined) {
-        this.loadData();
-        console.log('fetch data on init...');
+        this.sortNHL() //this.loadData()
+        console.log('fetch data on init...')
       } else {
-          this.loading = false;
+          this.loading = false
       }
     }
   }
 
   public loadMLB() {
     
-    this.nbaSection = false; 
-    this.nhlSection = false; 
-    this.mlbSection = true;
-    this.mlbHittingSection = false; 
-    this.nhlGoalies = false;
-    this.nflSection = false;
-    this.nflDefenseSection = false;
-    this.nflDraftKit = false;
-    this.sport = 'mlb';
-
-    this.mlbPitchingLoading = true;
+    this.nbaSection = false
+    this.nhlSection = false
+    this.mlbSection = true
+    this.mlbHittingSection = false
+    this.nhlGoalies = false
+    this.nflSection = false
+    this.nflDefenseSection = false
+    this.nflDraftKit = false
+    this.sport = 'mlb'
+    this.mlbPitchingLoading = true
     
 
-    this.mlbService
-       .getAllStats(this.mlbApiRoot).subscribe(res => {
-        
+    // this.mlbService
+    //    .getAllStats(this.mlbApiRoot).subscribe(res => {
+      this.nhlService.myStats(
+        'mlb', 
+        this.mlbSeasonType, 
+        'player_gamelogs', 
+        'team_stats_totals', 
+        'player_stats_totals', 
+        'playerString', 
+        'P', 
+        '',
+        this.tsDate, 
+        'isToday',
+        'stats',
+        'statLeaders',
+        'all',
+        'noUpdate',
+        'none',
+        'haveSchedules').subscribe(async res => {
+          console.log(res, 'mlb pitchers stat leaders')
 
-          this.mlbPitchingData = res['playerStatsTotals'].filter(
-            player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 1 : 0)); // && player.stats.pitching.pitcherStrikeouts > 6
+          this.mlbPitchingData = res['playerStats'].playerStatsTotals //.filter(player => player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 1 : 0)); // && player.stats.pitching.pitcherStrikeouts > 6
          
           this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 2 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 5 : 0));
           this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 10 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 7 : 0) || player.stats.pitching.saves > 0);
@@ -689,10 +728,10 @@ export class StatLeadersComponent implements OnInit {
           for (let team of this.mlbTeams) {
             for (let data of this.mlbPitchingData) { 
               if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-                data.team.logo = team['officialLogoImageSrc'];
-                data.team.city = team['city'];
-                data.team.name = team['name'];
-                data.team.twitter = team['twitter'];
+                data.team.logo = team['officialLogoImageSrc']
+                data.team.city = team['city']
+                data.team.name = team['name']
+                data.team.twitter = team['twitter']
                 //this.pitcherFp(data);
                 this.mlbUtil.fantasyPoints(data,'p')
                 data.stats.pitching.earnedRunAvg = data.stats.pitching.earnedRunAvg.toFixed(2)
@@ -710,11 +749,7 @@ export class StatLeadersComponent implements OnInit {
               
             }  
           }
-
-        // this.mlbService
-        //   .getInfo().subscribe(res => {
-        //     this.util.updatePlayers(res['players'], this.mlbPitchingData, this.mlbTeams);
-        // });
+        //this.util.updatePlayers(res['players'], this.mlbPitchingData, this.mlbTeams)
           
           if (this.timeSpan != 'full') {
             this.spanGames();
@@ -730,11 +765,28 @@ export class StatLeadersComponent implements OnInit {
     this.mlbHittingSection = true;
     this.mlbHittingLoading = true;
 
-    this.mlbService
-        .getAllHitters(this.mlbApiRoot).subscribe(res => {
+    // this.mlbService
+    //     .getAllHitters(this.mlbApiRoot).subscribe(res => {
+
+      this.nhlService.myStats(
+        'mlb', 
+        this.mlbSeasonType, 
+        'player_gamelogs', 
+        'team_stats_totals', 
+        'player_stats_totals', 
+        'playerString', 
+        'OF,1B,2B,3B,C,SS,CF,LF,RF,DH', 
+        '',
+        this.tsDate, 
+        'isToday',
+        'stats',
+        'statLeaders',
+        'all',
+        'noUpdate',
+        'none',
+        'haveSchedules').subscribe(async res => {
         
-         this.mlbHittingData = res['playerStatsTotals'].filter(
-           player => player.team != null && player.player['currentTeam'] != null && player.player['currentTeam'].abbreviation === player.team.abbreviation && player.stats != null && player.stats.batting.atBats > (this.mlbSeason ? 15 : 0)); //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
+         this.mlbHittingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.batting.atBats > (this.mlbSeason ? 15 : 0)) //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
 
          for (let team of this.mlbTeams) {
            for (let data of this.mlbHittingData) { 
@@ -758,11 +810,7 @@ export class StatLeadersComponent implements OnInit {
              }
            }  
          }
-
-         this.mlbService
-          .getHitterInfo().subscribe(res => {
-            this.util.updatePlayers(res['players'], this.mlbHittingData, this.mlbTeams);
-        });
+        //this.util.updatePlayers(res['players'], this.mlbHittingData, this.mlbTeams)
          
         if (this.timeSpan != 'full') {
           this.spanGames();
@@ -807,8 +855,8 @@ export class StatLeadersComponent implements OnInit {
   public async loadNFL() {
     if (this.week === 'three-weeks') {
       // load 3 weeks of nfl games
-      this.nflOffenseLoading = true;
-      this.spanGames();
+      this.nflOffenseLoading = true
+      this.spanGames()
     } else {
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     this.nflOffenseLoading = true;
@@ -819,83 +867,90 @@ export class StatLeadersComponent implements OnInit {
     this.mlbHittingSection = false;
     this.nflSection = true;
     this.sport = 'nfl'
-    
-    if (this.nflTeamStats == null) {
+    this.haveNflSchedules = (this.teamSchedules.length > 0 ? true : false)
 
-          this.nflService.getTeamStats(this.nflWeek, this.tsDate).subscribe(res => {
-          this.nflUtil.rank(this.nflTeams, res['teamStatsTotals'], this.nflWeek)
-          this.nflUtil.updateTeamStats(res['teamStatsTotals'])
-          this.nflTeamStats = res['teamStatsTotals'];
-          //Stop go to component
-          this.nflUtil.sortSchedules(this.teamSchedules, this.nflWeek, headers);
-          this.sortToughest();
-          this.nflTeamLoading = false;
-        })
+    this.nhlService.myStats(
+      'nfl', 
+      this.nflSeason, 
+      'player_gamelogs', 
+      'team_stats_totals', 
+      'player_stats_totals', 
+      'player', 
+      this.nflPosition, 
+      this.nflTeams,
+      this.tsDate, 
+      'isToday',
+      'stats',
+      'nflOffense',
+      this.week,
+      'noUpdate',
+      'none',
+      this.haveNflSchedules).subscribe(async res => {
+        console.log(res, 'nfl stats data')
 
-    } else {
-      if (this.timeSpan != 'full') {
-        this.nflService.dailyTeams(this.week).subscribe(res => {
-          this.nflUtil.updateTeamWeek(res['gamelogs'])
-        })
-      }
-      this.nflTeamLoading = false;
-    }
+        if (this.nflTeamStats == null) {
+          this.nflUtil.rank(this.nflTeams, res['teamStats'].teamStatsTotals, this.nflWeek)
+          this.nflUtil.updateTeamStats(res['teamStats'].teamStatsTotals)
+          this.nflTeamStats = res['teamStats'].teamStatsTotals
 
+          if (this.haveNflSchedules === false) 
+            this.nflUtil.sortSchedules(this.teamSchedules, this.nflWeek, res['scheduleGames'])
 
-    
-      await sleep(500);
-      this.nflService
-        .getAllOffense(this.nflPosition, 'stats', this.week).subscribe(res => {
+          this.sortToughest()
+          this.nflTeamLoading = false
+        } else {
+          if (this.timeSpan != 'full') {
+            this.nflUtil.updateTeamWeek(res['team'].gamelogs)
+          }
+          this.nflTeamLoading = false
+        }
           
-          console.log('got nfl stats')
-          if (res['gamelogs'] != null) {
-            for (let data of this.nflData) {
-              for (let wstats of res['gamelogs']) {
-                wstats.player.primaryPosition = wstats.player.position;
-                if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
-                  wstats.player.officialImageSrc = data.player.officialImageSrc;
-                  wstats.player.primaryPosition = data.player.primaryPosition;
-                }
+        console.log('got nfl stats')
+        if (res['dailyStats'].gamelogs != null && res['dailyStats'].gamelogs.length > 0) {
+          console.log(res['dailyStats'].gamelogs, 'game logs')
+          for (let data of this.nflData) {
+            for (let wstats of res['dailyStats'].gamelogs) {
+              wstats.player.primaryPosition = wstats.player.position;
+              if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
+                wstats.player.officialImageSrc = data.player.officialImageSrc;
+                wstats.player.primaryPosition = data.player.primaryPosition;
               }
             }
           }
+        }
 
-          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'].filter(x => x.player.currentTeam != null && x.player.currentTeam.id === x.team.id && x.stats.gamesPlayed > 3) : res['gamelogs'];
-          this.nflData = stats
+        let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(x => x.stats.gamesPlayed > 3) : res['dailyStats'].gamelogs)
+        this.nflData = stats
 
-          this.nflRookies = this.nflData.filter(
-            player => player.player.rookie === true);
-            console.log('rookies', this.nflRookies)
-          this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition);
-             
-          this.nflOffenseLoading = false; 
+        this.nflRookies = this.nflData.filter(player => player.player.rookie === true)
+        console.log('rookies', this.nflRookies)
+        this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition)       
+        this.nflOffenseLoading = false
 
-          // this.nflService
-          //   .getAllOffense(this.nflPosition, 'info', this.week).subscribe(res => {
-          //     console.log('got nfl info')
-          //     this.util.updatePlayers(res['players'], this.nflData, this.nflTeams);
-          //     // this.nflRookies = res['players'].filter(
-          //     //   player => player.player.drafted != null && player.player.drafted.year === 2021);
-          //     // console.log('rookies', this.nflRookies)
-          //     // this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie');
-          //     // this.nflOffenseLoading = false;     
-          // })
-      });
+    //     console.log('got nfl info')
+    //     this.util.updatePlayers(res['players'], this.nflData, this.nflTeams);
+    //     // this.nflRookies = res['players'].filter(
+    //     //   player => player.player.drafted != null && player.player.drafted.year === 2021);
+    //     // console.log('rookies', this.nflRookies)
+    //     // this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie');
+    //     // this.nflOffenseLoading = false;     
 
-                }
-              }
+        })
+    }
+  }
 
   public defensePlayers() {
     if (this.week === 'three-weeks') {
       // load 3 weeks of nfl games
-      this.nflDefenseLoading = true;
-      this.spanGames();
+      this.nflDefenseLoading = true
+      this.spanGames()
     } else {
-      this.nflSection = false; 
-      this.nflDefenseSection = true;
-      this.sortToughest();
+      this.nflSection = false
+      this.nflDefenseSection = true
+      this.haveNflSchedules = (this.teamSchedules.length > 0 != null ? true : false)
+      this.sortToughest()
       function teamInfo(array, teams, type, week) {
-        
+        console.log('sort defense data and team data')
         for (let team of teams) {
           for (let data of array) { 
             if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id && week === 'all' ||
@@ -919,13 +974,32 @@ export class StatLeadersComponent implements OnInit {
         }
       }
       // if (this.nflDefenseData == null || this.week != 'all') {
-        this.nflDefenseLoading = true;
+        this.nflDefenseLoading = true
 
-        this.nflService.getAllDefense(this.nflDPosition, 'stats', this.week).subscribe(res => {
+        this.nhlService.myStats(
+          'nfl', 
+          this.nflSeason, 
+          'player_gamelogs', 
+          'team_stats_totals', 
+          'player_stats_totals', 
+          'player', 
+          this.nflDPosition, 
+          this.nflTeams,
+          this.tsDate, 
+          'isToday',
+          'stats',
+          'nflDefense',
+          this.week,
+          'noUpdate',
+          'none',
+          this.haveNflSchedules).subscribe(async res => {
+            console.log(res, 'nfl defense stats data')
 
-          if (res['gamelogs'] != null) {
+        //this.nflService.getAllDefense(this.nflDPosition, 'stats', this.week).subscribe(res => {
+
+          if (res['dailyStats'].gamelogs != null && res['dailyStats'].gamelogs.length > 0) {
             for (let data of this.nflDefenseData) {
-              for (let wstats of res['gamelogs']) {
+              for (let wstats of res['dailyStats'].gamelogs) {
                 wstats.player.primaryPosition = wstats.player.position;
                 if (data.player.id === wstats.player.id && data.player.officialImageSrc != null) {
                   wstats.player.officialImageSrc = data.player.officialImageSrc;
@@ -934,16 +1008,13 @@ export class StatLeadersComponent implements OnInit {
               }
             }
           }
-          let stats = res['playerStatsTotals'] != null ? res['playerStatsTotals'].filter(x => x.player.currentTeam != null && x.player.currentTeam.id === x.team.id) : res['gamelogs'];
          
-          this.nflDefenseData = stats.filter(
-            player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0));
+          let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0)) : res['dailyStats'].gamelogs)
+          this.nflDefenseData = stats
 
-          this.defenseRookies = this.nflDefenseData.filter(
-            player => player.player.rookie === true);
+          this.defenseRookies = this.nflDefenseData.filter(player => player.player.rookie === true)
             
-
-          teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week);
+          teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week)
           
           // this.nflService
           //   .getAllDefense(this.nflDPosition, 'info', this.week).subscribe(res => { 
@@ -954,13 +1025,14 @@ export class StatLeadersComponent implements OnInit {
           //     // this.teamInfoRookie(this.defenseRookies, this.nflTeams, 'd', this.week, 'rookie');
           // })
 
-        this.nflDefenseLoading = false;
-      });
+        this.nflDefenseLoading = false
+      })
       
     }
   }
 
   public nflTeamInfo(array, teams, type, week, pos) {
+    console.log('sort team info for nfl offense')
     for (let team of teams) {
       for (let data of array) { 
         if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id && week === 'all' ||
@@ -1024,7 +1096,7 @@ export class StatLeadersComponent implements OnInit {
     this.seasonLength = sl;
   }
 
-  public sortStats(root, games, sport, type) {
+  public sortStats(games, sport, type) {
     let s = sport;
     let skateSec;
     let gSec;
@@ -1051,19 +1123,13 @@ export class StatLeadersComponent implements OnInit {
       skateSec = false;
     }
   
-        forkJoin(
-            games.map(
-              g =>
-              this.http.get(`${root}/games/`+ g.schedule.id +`/boxscore.json`, {headers})
-              //.map(response => response.json())
-            )
-          )
-          .subscribe(res => {
+    
             let i: number;
             let home;
             let away;
             let homeTeam;
             let awayTeam;
+            let res = games
 
             res.forEach((item, index) => {
               i = index;
@@ -1344,16 +1410,16 @@ export class StatLeadersComponent implements OnInit {
             if (s === 'nba') {
               this.crunched = this.myData.filter(player => player.player.span === this.timeSpan);
               this.myData = this.crunched;
-              this.fgPlayers = this.myData.filter(player => nbabig[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.timeSpan === ('today' || 'yesterday') ? 5 : 15));
-              this.smPlayers = this.myData.filter(player => nbasmall[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.timeSpan === ('today' || 'yesterday') ? 5 : 15));
+              this.fgPlayers = this.myData.filter(player => nbabig[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.timeSpan === ('today' || 'yesterday') ? 5 : 18));
+              this.smPlayers = this.myData.filter(player => nbasmall[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.timeSpan === ('today' || 'yesterday') ? 5 : 18));
               // console.log(this.myData, 'crunched nba');
               this.loading = false; 
             }
                  
-          });
+          //});
   }
   
-  public sortNFLStats(root, games, sport, type, nflTeams) {
+  public sortNFLStats(games, sport, type, nflTeams) {
     let oPos = {
       'QB':'QB',
       'WR':'WR',
@@ -1380,13 +1446,13 @@ export class StatLeadersComponent implements OnInit {
       'G':'n',
     }
   
-        forkJoin(
-            games.map(
-              g =>
-              this.http.get(`${root}/games/`+ g.schedule.id +`/boxscore.json`, {headers})
-            )
-          )
-          .subscribe(res => {
+        // forkJoin(
+        //     games.map(
+        //       g =>
+        //       this.http.get(`${root}/games/`+ g.schedule.id +`/boxscore.json`, {headers})
+        //     )
+        //   )
+        //   .subscribe(res => {
             let i: number;
             let home;
             let away;
@@ -1400,16 +1466,8 @@ export class StatLeadersComponent implements OnInit {
             let homeOpponent;
             let awayTeam;
             let homeTeam;
+            let res = games
 
-            // function findRank(team, print) {
-            //   let info;
-            //   for (let t of nflTeams) {
-            //      if (team === t.abbreviation) {
-            //        info = {printName: print, oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation};
-            //        return info; 
-            //      }
-            //   }
-            // }
 
             function findRank(team, print, player) {
               let info;
@@ -1602,10 +1660,10 @@ export class StatLeadersComponent implements OnInit {
               // console.log(this.nhlGoaltenders, 'crunched nhl');
               this.nflOffenseLoading = false;
                  
-          });
+          //});
   } 
   
-  public sortNFLDStats(root, games, sport, type, nflTeams) {
+  public sortNFLDStats(games, sport, type, nflTeams) {
     let oPos = {
       'QB':'QB',
       'WR':'WR',
@@ -1632,13 +1690,13 @@ export class StatLeadersComponent implements OnInit {
       // 'G':'n',
     }
   
-        forkJoin(
-            games.map(
-              g =>
-              this.http.get(`${root}/games/`+ g.schedule.id +`/boxscore.json`, {headers})
-            )
-          )
-          .subscribe(res => {
+        // forkJoin(
+        //     games.map(
+        //       g =>
+        //       this.http.get(`${root}/games/`+ g.schedule.id +`/boxscore.json`, {headers})
+        //     )
+        //   )
+        //   .subscribe(res => {
             let i: number;
             let home;
             let away;
@@ -1649,6 +1707,7 @@ export class StatLeadersComponent implements OnInit {
             let awayTeam;
             let homeTeam;
             let opponentYdsArr = [];
+            let res = games
 
             function applyOY(team, print, oy) {  
               
@@ -1762,7 +1821,7 @@ export class StatLeadersComponent implements OnInit {
               
               this.nflDefenseLoading = false;
                  
-          });
+         // });
   } 
 }
 

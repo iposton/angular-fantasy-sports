@@ -79,7 +79,7 @@
                   <div class="col team-name-col">
                     <div class="team-name-box" [style.background-image]="getBackground(data.offensePlayers[0].playerObj.team.color)" >
                         <p class="center">
-                            <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.name">{{data?.offensePlayers[0]?.playerObj?.team?.name == 'timberwolves' && mobile ? 'T-Wolves' : data?.offensePlayers[0]?.playerObj?.team?.name}} <span *ngIf="data?.offensePlayers[0]?.playerObj?.win != null">({{data?.offensePlayers[0]?.playerObj?.win+'-'+data?.offensePlayers[0]?.playerObj?.loss}})</span></span> <br>
+                            <span *ngIf="data?.offensePlayers[0]?.playerObj?.team?.name">{{data?.offensePlayers[0]?.playerObj?.team?.name == 'Timberwolves' && mobile ? 'T-Wolves' : data?.offensePlayers[0]?.playerObj?.team?.name}} <span *ngIf="data?.offensePlayers[0]?.playerObj?.win != null">({{data?.offensePlayers[0]?.playerObj?.win+'-'+data?.offensePlayers[0]?.playerObj?.loss}})</span></span> <br>
                         </p>
                     </div>
                   </div>
@@ -258,13 +258,13 @@
   <section [ngClass]="{'dn' : !scheduleSection}">
     <app-team-schedule *ngIf="!loading && dailySchedule != null"
     (week)="nextWeek = $event; getSchedules()"
-    [teamSchedules]="nhlService.nbaTeamsSched"
+    [teamSchedules]="nbaTeamsSched"
     [amount]="4">
     </app-team-schedule>
 
     <app-team-schedule *ngIf="!loading && dailySchedule != null"
     (week)="nextWeek = $event; getSchedules()"
-    [teamSchedules]="nhlService.nbaTeamsSched"
+    [teamSchedules]="nbaTeamsSched"
     [amount]="3">
     </app-team-schedule>
   </section>

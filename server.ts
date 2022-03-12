@@ -25,13 +25,12 @@ export function app() {
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
   const domino = require('domino');
   const win = domino.createWindow(indexHtml);
-  server.use(bodyParser.urlencoded({extended: true}));
+  server.use(bodyParser.urlencoded({limit: "5mb", extended: true}))
   server.use(cors());
   global['window'] = win;
   global['document'] = win.document;
   global['navigator'] = win.navigator;
 
-  let TOKEN = ''
   let consumerkey = process.env.TWITTER_KEY
   let consumersecret = process.env.TWITTER_SECRET
   let bearertoken = ''
@@ -78,67 +77,59 @@ export function app() {
       })
   });
 
-  server.get('/heroku-env', (req, res) => {
-    ciphertext = CryptoJS.AES.encrypt(msfToken, 'footballSack').toString();
-    TOKEN = ciphertext;
-    res.json(TOKEN);
-  });
+  // server.get('/heroku-env', (req, res) => {
+  //   ciphertext = CryptoJS.AES.encrypt(msfToken, 'footballSack').toString();
+  //   TOKEN = ciphertext;
+  //   res.json(TOKEN);
+  // });
 
   server.post('/info', async (req, res) => {
-    //console.log(req.body.team, 'body')
+    //console.log(req.body, 'body')
     let sport = req.body.query
-    let encSport = encodeURIComponent(sport)
     let dailyDate = req.body.dailyDate
-    let encDD = encodeURIComponent(dailyDate)
     let season = req.body.season
-    let encSeason = encodeURIComponent(season)
     let feedType = req.body.feedType
-    let encFeedType = encodeURIComponent(feedType)
     let dateBegin = ''
     let dateEnd = ''
-    let player = ''
+    let player = req.body.player
     let position = req.body.position
-    let encPosition = encodeURIComponent(position)
     let team = req.body.team
     let selectedDate = req.body.selectedDate
-    let encSelectedDate = encodeURIComponent(selectedDate)
     let isToday = req.body.isToday
-    let encIsToday = encodeURIComponent(isToday)
     let dataType = req.body.dataType
-    let encDataType = encodeURIComponent(dataType)
     let fromTo = req.body.fromTo
-    let encFromTo = encodeURIComponent(fromTo)
     let fromToWeek = req.body.fromToWeek
-    let encFromToWeek = encodeURIComponent(fromToWeek)
     let fromToNext = req.body.fromToNext
-    let encFromToNext = encodeURIComponent(fromToNext)
     let haveSchedules = req.body.haveSchedules
-    let encHaveSchedules = encodeURIComponent(haveSchedules)
-    const data =  await api.data.getInfo(msfToken, encSport, encDD, encSeason, encFeedType, dateBegin, dateEnd, player, encPosition, team, encSelectedDate, encIsToday, encDataType, encFromTo, encFromToWeek, encFromToNext, encHaveSchedules)
+    let selectedWeek = req.body.selectedWeek
+    const data =  await api.data.getInfo(msfToken, sport, dailyDate, season, feedType, dateBegin, dateEnd, player, position, team, selectedDate, isToday, dataType, fromTo, fromToWeek, fromToNext, haveSchedules, selectedWeek)
     res.status(200).json(data);
   })
 
-  // server.post('/schedules', async (req, res) => {
-  //   console.log(req.body, 'body')
-  //   let sport = req.body.query
-  //   let encSport = encodeURIComponent(sport)
-  //   let dailyDate = req.body.dailyDate
-  //   let encDD = encodeURIComponent(dailyDate)
-  //   let season = req.body.season
-  //   let encSeason = encodeURIComponent(season)
-  //   let feedType = req.body.feedType
-  //   let encFeedType = encodeURIComponent(feedType)                                                                                                                                               
-  //   let team = req.body.team
-  //   let encTeam = encodeURIComponent(team)
-  //   let dataType = req.body.dataType
-  //   let encDataType = encodeURIComponent(dataType)
-  //   let fromToWeek = req.body.fromToWeek
-  //   let encFromToWeek = encodeURIComponent(fromToWeek)
-  //   let fromToNext = req.body.fromToNext
-  //   let encFromToNext = encodeURIComponent(fromToNext)
-  //   const data =  await api.data.getInfo('27d30381-6ca8-4c17-b912-bd2c8f', encSport, encDD, encSeason, encFeedType, encTeam, encDataType, encFromToWeek, encFromToNext)
-  //   res.status(200).json(data);
-  // })
+  server.post('/stats', async (req, res) => {
+    //console.log(req.body, 'body')
+    let sport = req.body.query
+    let dailyDate = req.body.dailyDate
+    let season = req.body.season
+    let feedType = req.body.feedType
+    let feedType2 = req.body.feedType2
+    let feedType3 = req.body.feedType3
+    let player = req.body.player
+    let position = req.body.position
+    let team = req.body.team
+    let selectedDate = req.body.selectedDate
+    let isToday = req.body.isToday
+    let dataType = req.body.dataType
+    let playerType = req.body.playerType
+    let fromTo = req.body.fromTo
+    let nflWeek = req.body.nflWeek
+    let liveUpdate = req.body.liveUpdate
+    let spanDate = req.body.spanDate
+    let haveSchedules = req.body.haveSchedules
+    const data =  await api.data.getStats(msfToken, sport, dailyDate, season, feedType, feedType2, feedType3, player, position, team, selectedDate, isToday, dataType, fromTo, playerType, nflWeek, liveUpdate, spanDate, haveSchedules)
+    res.status(200).json(data)
+  })
+
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
-import { Observable, forkJoin, from } from 'rxjs'
+import { Observable } from 'rxjs'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-// const myHeaders = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded')
 
 let thisDate = new Date();
 let tomorrowDate = new Date(thisDate.getTime() + (24 * 60 * 60 * 1000));
@@ -65,31 +64,8 @@ let sentAll;
 
 @Injectable({ providedIn: 'root' }) 
 export class NHLDataService {
-
-  public info: Observable <any> = null;
   public goalies: any
-  public infoSkaters: Observable <any> = null;
-  public gToday: Observable <any> = null;
-  public sToday: Observable <any> = null;
-  public stats: Observable <any> = null;
-  public skateStats: Observable <any> = null;
-  public allstats: Observable <any> = null;
-  public uStats: Observable <any> = null;
-  public env: Observable <any> = null;
-  public gameid: Observable <any> = null;
-  public lastweekgameid: Observable <any> = null;
-  public daily: Observable <any> = null;
-  public schedule: Observable <any> = null;
-  public score: Observable <any> = null;
-  public play: Observable <any> = null;
-  public injured: Observable <any> = null;
-  public teamstats: Observable <any> = null;
-  public dailySkaters: Observable <any> = null;
-  public games: Observable <any> = null;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-2022-regular";
-  public apiRoot21: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2021-2022-regular";
-  public apiRoot21PO: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2022-playoff";
-  public root: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl";
+  
   public headers: any;
   public dailyDate: string = '';
   public isToday: boolean = false;
@@ -101,8 +77,8 @@ export class NHLDataService {
   public si: any;
 
   constructor(private http: HttpClient) {
-     this.dailyDate = dailyDate;
-     console.log(this.isPlayoffs, 'is playoffs onInit?')
+     this.dailyDate = dailyDate
+     //console.log(this.isPlayoffs, 'is playoffs onInit?')
   }
 
   public selectedDate(d) {
@@ -137,13 +113,13 @@ export class NHLDataService {
     headers = h;
   }
 
-  public serverInfo(sport, season, feedType, dateBegin, dateEnd, player, position, team, selectedDate, isToday, dataType, haveSchedules) {
+  public serverInfo(sport, season, feedType, dateBegin, dateEnd, player, position, team, selectedDate, isToday, dataType, haveSchedules, selectedWeek) {
     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded')
     let fromTo = tomorrowDailyDate === dailyDate ? `from-${this.dailyDate}-to-${dayAfterTomorrow}` : `from-${yesterdayDailyDate}-to-${tomorrowDailyDate}`
-    let fromToWeek = `from-20220221-to-20220227`
-    let fromToNext = `from-20220228-to-20220306`
+    let fromToWeek = `from-20220307-to-20220313`
+    let fromToNext = `from-20220314-to-20220320`
     let strTeam = JSON.stringify(team)
-    let data = `query=${sport}&dailyDate=${dailyDate}&season=${season}&feedType=${feedType}&position=${position}&selectedDate=${selectedDate}&isToday=${isToday}&dataType=${dataType}&fromTo=${fromTo}&fromToWeek=${fromToWeek}&fromToNext=${fromToNext}&team=${strTeam}&haveSchedules=${haveSchedules}`
+    let data = `query=${sport}&dailyDate=${dailyDate}&season=${season}&feedType=${feedType}&position=${position}&selectedDate=${selectedDate}&isToday=${isToday}&dataType=${dataType}&fromTo=${fromTo}&fromToWeek=${fromToWeek}&fromToNext=${fromToNext}&team=${strTeam}&haveSchedules=${haveSchedules}&player=${player}&selectedWeek=${selectedWeek}`
     try {
       this.si = this.http.post('/info', data, {headers})
       return this.si
@@ -152,40 +128,32 @@ export class NHLDataService {
     }
   }
 
-  // public getsSchedules(sport, season, feedType, dateBegin, dateEnd, player, position, team, selectedDate, isToday, dataType) {
-  //   let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded')
-  //   let fromTo = tomorrowDailyDate === dailyDate ? `from-${this.dailyDate}-to-${dayAfterTomorrow}` : `from-${yesterdayDailyDate}-to-${tomorrowDailyDate}`
-  //   let fromToWeek = `from-20220214-to-20220220`
-  //   let fromToNext = `from-20220221-to-20220227`
-  //   let strTeam = JSON.stringify(team)
-  //   let data = `query=${sport}&dailyDate=${dailyDate}&season=${season}&feedType=${feedType}&position=${position}&selectedDate=${selectedDate}&isToday=${isToday}&dataType=${dataType}&fromTo=${fromTo}&fromToWeek=${fromToWeek}&fromToNext=${fromToNext}&team${strTeam}`
-  //   try {
-  //     this.si = this.http.post('/schedules', data, {headers})
-  //     return this.si
-  //   } catch (e) {
-  //     console.log(e, 'error')
-  //   }
-  // }
-
-
-  getDailySchedule() {
-    let url = null;
-    console.log(this.isPlayoffs, 'getting schedule is playoffs?')
-    if (this.isPlayoffs) {
-      this.apiRoot = this.apiRoot21PO;
-    } else {
-      this.apiRoot = this.apiRoot21;
+  public myStats(sport, season, feedType, feedType2, feedType3, player, position, team, selectedDate, isToday, dataType, playerType, nflWeek, liveUpdate, span, haveSchedules) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded')
+    let fromTo = tomorrowDailyDate === dailyDate ? `from-${this.dailyDate}-to-${dayAfterTomorrow}` : `from-${yesterdayDailyDate}-to-${tomorrowDailyDate}`
+    let strTeam = JSON.stringify(team)
+    let spanDate = ''
+    if (span === 'last-week') {
+      spanDate = `from-${lastweekDailyDate}-to-${dailyDate}`
+    } else if (span === 'yesterday') {
+      spanDate = `${yesterdayDailyDate}`
+    } else if (span === 'today') {
+      spanDate = `${dailyDate}`
+    } else if (span === 'two-weeks') {
+      spanDate = `from-${twoWeekDailyDate}-to-${dailyDate}`
+    } else if (span === 'three-weeks') {
+      spanDate = `from-${threeWeekDailyDate}-to-${dailyDate}`
     }
-    url = `${this.apiRoot}/date/`+dailyDate+`/games.json`;
-    this.schedule = this.http.get(url, {headers})
-    return this.schedule;
+    let data = `query=${sport}&dailyDate=${dailyDate}&season=${season}&feedType=${feedType}&feedType2=${feedType2}&feedType3=${feedType3}&position=${position}&selectedDate=${selectedDate}&isToday=${isToday}&dataType=${dataType}&fromTo=${fromTo}&team=${strTeam}&player=${player}&playerType=${playerType}&nflWeek=${nflWeek}&liveUpdate=${liveUpdate}&spanDate=${spanDate}&haveSchedules=${haveSchedules}`
+    try {
+      this.si = this.http.post('/stats', data, {headers})
+      return this.si
+    } catch (e) {
+      console.log(e, 'error')
+    }
   }
 
 
-  getEnv() {
-    this.env = this.http.get('/heroku-env')
-    return this.env;
-  }
 
   getYesterday() {
     if (tomorrowDailyDate === dailyDate) {
@@ -242,215 +210,11 @@ export class NHLDataService {
     return sentHot;
   }
 
-  public getInfo() {
-    let url = `${this.root}/players.json?position=G`;
-    this.info = this.http.get(url, {headers})
-    return this.info;
-  }
-
-  public getGoalies() {
-    let url = `https://ejs-ssr.herokuapp.com/nhlgoalies`
-    this.goalies = this.http.get(url)
-    return this.goalies;
-  }
-
-  public getInfoSkaters() {
-    let url = `${this.root}/players.json?position=RW,LW,D,C`;
-    this.infoSkaters = this.http.get(url, {headers})
-    return this.infoSkaters;
-  }
-
-  public getGoaliesToday(teams) {
-    let url = `${this.root}/players.json?position=G`;
-    this.gToday = this.http.get(url, {headers})
-    return this.gToday;
-  }
-
-  public getSkatersToday(players) {
-    let url = `${this.root}/players.json?player=`+players;
-    this.sToday = this.http.get(url, {headers})
-    return this.sToday;
-  }
-
-  public getStats(teams) {
-    let url = `${this.root}/2021-2022-regular/player_stats_totals.json?position=G`;
-    this.stats = this.http.get(url, {headers})
-    return this.stats;
-  }
-
-  public getSkateStats(players) {
-    let url = `${this.root}/2021-2022-regular/player_stats_totals.json?player=`+players;
-    this.skateStats = this.http.get(url, {headers})
-    return this.skateStats;
-  }
-
-  public getAllStats(type, season) {
-      let url = null;
-      if (type === 'skaters') {
-        url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/${season}/player_stats_totals.json?position=RW,LW,D,C`;
-      } else {
-        url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/${season}/player_stats_totals.json?position=G`;
-      }
-      
-      this.allstats = this.http.get(url, {headers})
-      return this.allstats;
-  }
-
-  // public getTeamStats() {
-  //   let url = `${this.apiRoot}/team_stats_totals.json`;
-  //   this.teamstats = this.http.get(url, {headers})
-  //   return this.teamstats;
+  // public getGoalies() {
+  //   let url = `https://ejs-ssr.herokuapp.com/nhlgoalies`
+  //   this.goalies = this.http.get(url)
+  //   return this.goalies;
   // }
-
-  public getTeamStats(root, h) {
-    let url = null;
-    if (headers == null)
-      headers = h;
-    url = `${root}/team_stats_totals.json`;
-    this.teamstats = this.http.get(url, {headers})
-    return this.teamstats;
-  }
-
-  getGameId() {
-    let url = null;
-    if (tomorrowDailyDate === dailyDate) {
-      url = `${this.apiRoot}/games.json?date=from-`+this.dailyDate+`-to-`+dayAfterTomorrow
-    } else {
-      url = `${this.apiRoot}/games.json?date=from-`+yesterdayDailyDate+`-to-`+tomorrowDailyDate
-    }
-    this.gameid = this.http.get(url, {headers})
-    return this.gameid;
-  }
-
-
-  getLastweekGameId() {
-    let url = `${this.apiRoot21}/games.json?date=from-`+lastweekDailyDate+`-to-`+yesterdayDailyDate;
-    this.lastweekgameid = this.http.get(url, {headers})
-    return this.lastweekgameid;
-  }
-
-  getGames(span, sport, date, season) {
-    let url = null;
-    console.log(season, 'season')
-    //let season = null;
-    // if (sport != 'nfl' && sport != 'nba')
-    //   season = '2021-regular';
-    // else
-    //   season = '2021-2022-regular';
-    
-    if (span === 'last-week') {
-      //sport === 'mlb' ? twoWeekDailyDate : 
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${lastweekDailyDate}-to-${dailyDate}`;
-    } else if (span === 'yesterday') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=${yesterdayDailyDate}`;
-    } else if (span === 'today') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=${dailyDate}`;
-    } else if (span === 'two-weeks') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${twoWeekDailyDate}-to-${dailyDate}`;
-    } else if (span === 'three-weeks') {
-      url = `https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?date=from-${threeWeekDailyDate}-to-${dailyDate}`;
-    }
-    
-    this.games = this.http.get(url, {headers})
-    return this.games;
-  }
-
-  public getDaily() {
-    let url = null;
-    if (this.isPlayoffs) {
-      this.apiRoot = this.apiRoot21PO;
-    }
-    url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=G`;
-    this.daily = this.http.get(url, {headers})  
-    return this.daily;
-  }
-
-  public getDailySkaters() {
-    let url = null;
-    if (this.isPlayoffs) {
-      this.apiRoot = this.apiRoot21PO;
-    }
-    url = `${this.apiRoot}/date/`+dailyDate+`/player_gamelogs.json?position=RW,LW,D,C`;
-    this.dailySkaters = this.http.get(url, {headers})  
-    return this.dailySkaters;
-  }
-
-   getInjured() {
-
-    if (!this.injured) {
-      console.log('getting goalie injuries from api...');
-      let url = `https://api.mysportsfeeds.com/v2.1/pull/nhl/injuries.json?position=G`;
-      this.injured = this.http.get(url, {headers})
-        
-    }
-    return this.injured;
-  }
-
-
-  getScore(id) {
-    let url = `${this.apiRoot}/date/${dailyDate}/team_gamelogs.json`;
-    this.score = this.http.get(url, {headers})     
-    return this.score;
-  }
-
-  public getSchedules(nextWeek, sport, teams) {
-    let season = '2021-2022-regular'
-    if (sport === 'nba')
-      this.nbaTeamsSched = [];
-    if (sport === 'nhl') {
-      this.nhlTeamsSched = [];
-      // if (this.isPlayoffs)
-        
-    }
-      
-    let begin = null;
-    let end = null;
-    let printbegin = null;
-    let printend = null;
-    if (nextWeek) {
-      season = '2021-2022-regular'
-      begin = '20220221'
-      printbegin = '2/21'
-      end = '20220227'
-      printend = '2/27'
-    } else {
-      season = '2021-2022-regular'
-      begin = '20220214'
-      printbegin = '2/14'
-      end = '20220220'
-      printend = '2/20'
-    }
-      let team;
-      let teamSchedule;
-      const teamsArray = Object.values(teams);
-      forkJoin(
-        teamsArray.map(
-          g => 
-          
-           this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/${sport}/${season}/games.json?team=${g['abbreviation']}&date=from-${begin}-to-${end}`, { headers })
-          
-        )
-      )
-      .subscribe(res => {
-        //console.log(res, 'get team schedules...');
-        res.forEach((item, index) => {
-          team = teamsArray[index]['abbreviation'];
-          //team = teamRef[index].abbreviation;
-          teamSchedule = {
-            team: team,
-            schedule: res[index]['games'],
-            teamInfo: teamsArray[index],
-            begin: printbegin,
-            end: printend
-          }
-          if (sport === 'nba')
-            this.nbaTeamsSched.push(teamSchedule);
-          if (sport === 'nhl')
-            this.nhlTeamsSched.push(teamSchedule);
-          //console.log(this.teamSchedules, 'schedules array...');
-        })
-      })
-  }
 
   public iceTimeAvg(time, gp) {
     return Math.floor((time / gp) / 60);
