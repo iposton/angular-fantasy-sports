@@ -526,7 +526,7 @@ export class StartingGoaliesComponent implements OnInit {
       'none',
       'haveSchedules').subscribe(async res => {
        console.log(res, 'stats')
-       this.dailyStats = res['dailyStats'].gamelogs
+       this.dailyStats = res['dailyStats'] != null ? res['dailyStats'].gamelogs : []
        this.teamStats = res['teamStats'].teamStatsTotals
        this.myData = res['playerStats'].playerStatsTotals
        this.teamStatsUpdate = res['teamStats'].lastUpdatedOn

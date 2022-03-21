@@ -128,7 +128,11 @@ export class StatLeadersComponent implements OnInit {
   public nflRookies: Array <any> = [];
   public defenseRookies: Array <any> = [];
   public nflDPlayers: Array <any> = [];
-  public nflDraftKit: boolean;
+  public nflDraftKit: boolean
+  public skaterRookies: Array <any> = []
+  public pitcherRookies: Array <any> = []
+  public hitterRookies: Array <any> = []
+  public nbaRookies: Array <any> = []
   public seasonLength   : string = 'full';
   public seasonLengthD  : string = 'full';
   public testBrowser: boolean;
@@ -136,9 +140,9 @@ export class StatLeadersComponent implements OnInit {
   public nbaSpanGames: Array <any> = [];
   public reduced: Array <any> = [];
   public crunched: Array <any> = [];
-  public combined: Array <any> = [];
-  public sport: string;
-  public nflWeek: any;
+  public combined: Array <any> = []
+  public sport: string
+  public nflWeek: any
   public week: any = 'all'
   public defaultWeek: string = ''
 
@@ -215,6 +219,7 @@ export class StatLeadersComponent implements OnInit {
     nflplayerImages = this.nflUtil.getNFLImages()
     this.mlbplayerImages = this.mlbUtil.getMLBImages()
     this.nhlplayerImages = this.nhlUtil.getNHLImages()
+
     
     let thisDate = new Date()
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000))
@@ -504,28 +509,11 @@ export class StatLeadersComponent implements OnInit {
       'none',
       'haveSchedules').subscribe(async res => {
         console.log(res, 'nhl stats data')
-        const nhlTeamsArray = Object.values(this.nhlTeams)
 
-        this.nhlSkaters = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > 1);
-
-          for (let team of nhlTeamsArray) {
-            for (let data of this.nhlSkaters) { 
-              if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-                data.team.logo = team['officialLogoImageSrc'];
-                data.team.city = team['city'];
-                data.team.name = team['name'];
-                //this.skaterFp(data);
-                data.stats.scoring.fanDuelFP = this.util.round(this.nhlUtil.skaterSLFP(data),1);
-                data.stats.scoring.fanDuelFPA = this.util.round(this.nhlUtil.skaterSLFPA(data),1);
-                data.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data.stats.shifts.timeOnIceSeconds, data.stats.gamesPlayed);
-              }
-
-              if (data.player.officialImageSrc == null) {
-                data.player.officialImageSrc = this.nhlplayerImages[data.player.id] != null ? this.nhlplayerImages[data.player.id].image : null;
-              }
-              
-            }  
-          }
+        this.nhlSkaters = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > 1)
+        this.skaterRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
+        this.nhlInfo(this.nhlSkaters)
+        this.nhlInfo(this.skaterRookies)
 
         //this.util.updatePlayers(res['players'], this.nhlSkaters, nhlTeamsArray)
 
@@ -565,8 +553,9 @@ export class StatLeadersComponent implements OnInit {
          console.log(res, 'stats')
 
         const nhlTeamsArray = Object.values(this.nhlTeams)
-        this.nhlGoaltenders = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > (this.nhlSeason ? 2 : 0)); 
-        this.gaaGoalies = this.nhlGoaltenders.filter(player => player.stats.goaltending['gamesStarted'] > (this.nhlSeason ? 2 : 0) && player.stats.goaltending.saves > (this.nhlSeason ? 50 : 15)); 
+        this.nhlGoaltenders = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > (this.nhlSeason ? 2 : 0))
+        this.gaaGoalies = this.nhlGoaltenders.filter(player => player.stats.goaltending['gamesStarted'] > (this.nhlSeason ? 2 : 0) && player.stats.goaltending.saves > (this.nhlSeason ? 50 : 15))
+        //this.nhlInfo(this.nhlGoaltenders)
 
         for (let team of nhlTeamsArray) {
           for (let data of this.nhlGoaltenders) { 
@@ -626,29 +615,14 @@ export class StatLeadersComponent implements OnInit {
         'none',
         'haveSchedules').subscribe(async res => {
           console.log(res, 'nba stat leaders')
-          
-          const nbaTeamsArray = Object.values(this.nbaTeams);
 
           this.myData = res['playerStats'].playerStatsTotals
-          this.fgPlayers = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && nbabig[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.nbaSeason ? 250 : 8));
-          this.smPlayers = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && nbasmall[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.nbaSeason ? 250 : 8));
+          this.nbaRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
+          this.fgPlayers = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && nbabig[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.nbaSeason ? 250 : 8))
+          this.smPlayers = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && nbasmall[player.player['primaryPosition']] != null && player.stats.fieldGoals.fgAtt > (this.nbaSeason ? 250 : 8))
+          this.nbaInfo(this.myData)
+          this.nbaInfo(this.nbaRookies)
             
-          for (let team of nbaTeamsArray) {
-            for (let data of this.myData) { 
-              if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-                data.team.logo = team['officialLogoImageSrc'];
-                data.team.city = team['city'];
-                data.team.name = team['name'];
-                this.playerFp(data);
-                this.loading = false;
-              }
-
-              if (data.player.officialImageSrc == null) {
-                data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
-              }
-              
-            }  
-          }
           //this.util.updatePlayers(res['players'], this.myData, nbaTeamsArray);
 
           if (this.timeSpan != 'full')
@@ -721,34 +695,37 @@ export class StatLeadersComponent implements OnInit {
           console.log(res, 'mlb pitchers stat leaders')
 
           this.mlbPitchingData = res['playerStats'].playerStatsTotals //.filter(player => player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 1 : 0)); // && player.stats.pitching.pitcherStrikeouts > 6
-         
-          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 2 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 5 : 0));
-          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 10 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 7 : 0) || player.stats.pitching.saves > 0);
+          this.pitcherRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
+          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 2 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 5 : 0))
+          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 10 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 7 : 0) || player.stats.pitching.saves > 0)
 
-          for (let team of this.mlbTeams) {
-            for (let data of this.mlbPitchingData) { 
-              if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-                data.team.logo = team['officialLogoImageSrc']
-                data.team.city = team['city']
-                data.team.name = team['name']
-                data.team.twitter = team['twitter']
-                //this.pitcherFp(data);
-                this.mlbUtil.fantasyPoints(data,'p')
-                data.stats.pitching.earnedRunAvg = data.stats.pitching.earnedRunAvg.toFixed(2)
-                //this.loading = false;
+          this.pitcherInfo(this.mlbPitchingData)
+          this.pitcherInfo(this.pitcherRookies)
 
-                if (data.player.officialImageSrc != null) {
-                  data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
-                }
+          // for (let team of this.mlbTeams) {
+          //   for (let data of this.mlbPitchingData) { 
+          //     if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+          //       data.team.logo = team['officialLogoImageSrc']
+          //       data.team.city = team['city']
+          //       data.team.name = team['name']
+          //       data.team.twitter = team['twitter']
+          //       //this.pitcherFp(data);
+          //       this.mlbUtil.fantasyPoints(data,'p')
+          //       data.stats.pitching.earnedRunAvg = data.stats.pitching.earnedRunAvg.toFixed(2)
+          //       //this.loading = false;
 
-                if (data.player.officialImageSrc == null) {
-                  data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
-                }
+          //       if (data.player.officialImageSrc != null) {
+          //         data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
+          //       }
+
+          //       if (data.player.officialImageSrc == null) {
+          //         data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
+          //       }
                 
-              } 
+          //     } 
               
-            }  
-          }
+          //   }  
+          // }
         //this.util.updatePlayers(res['players'], this.mlbPitchingData, this.mlbTeams)
           
           if (this.timeSpan != 'full') {
@@ -762,11 +739,8 @@ export class StatLeadersComponent implements OnInit {
   public loadHitters() {
     this.sport = 'mlb';
     this.mlbSection = false;
-    this.mlbHittingSection = true;
-    this.mlbHittingLoading = true;
-
-    // this.mlbService
-    //     .getAllHitters(this.mlbApiRoot).subscribe(res => {
+    this.mlbHittingSection = true
+    this.mlbHittingLoading = true
 
       this.nhlService.myStats(
         'mlb', 
@@ -787,29 +761,32 @@ export class StatLeadersComponent implements OnInit {
         'haveSchedules').subscribe(async res => {
         
          this.mlbHittingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.batting.atBats > (this.mlbSeason ? 15 : 0)) //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
+         this.hitterRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
+         this.hitterInfo(this.mlbHittingData)
+         this.hitterInfo(this.hitterRookies)
 
-         for (let team of this.mlbTeams) {
-           for (let data of this.mlbHittingData) { 
-             if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-               data.team.logo = team['officialLogoImageSrc'];
-               data.team.city = team['city'];
-               data.team.name = team['name'];
-               data.team.twitter = team['twitter'];
-               data.stats.batting.battingAvg = data.stats.batting.battingAvg.toFixed(3) 
-               //this.batterFp(data);
-               this.mlbUtil.fantasyPoints(data,'b')
-              // this.loading = false;
-              if (data.player.officialImageSrc != null) {
-                data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
-              }
+        //  for (let team of this.mlbTeams) {
+        //    for (let data of this.mlbHittingData) { 
+        //      if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+        //        data.team.logo = team['officialLogoImageSrc'];
+        //        data.team.city = team['city'];
+        //        data.team.name = team['name'];
+        //        data.team.twitter = team['twitter'];
+        //        data.stats.batting.battingAvg = data.stats.batting.battingAvg.toFixed(3) 
+           
+        //        this.mlbUtil.fantasyPoints(data,'b')
+            
+        //       if (data.player.officialImageSrc != null) {
+        //         data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
+        //       }
 
-              if (data.player.officialImageSrc == null) {
-                data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
-              }
+        //       if (data.player.officialImageSrc == null) {
+        //         data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
+        //       }
                 
-             }
-           }  
-         }
+        //      }
+        //    }  
+        //  }
         //this.util.updatePlayers(res['players'], this.mlbHittingData, this.mlbTeams)
          
         if (this.timeSpan != 'full') {
@@ -818,6 +795,100 @@ export class StatLeadersComponent implements OnInit {
           this.mlbHittingLoading = false;
         }
      })
+  }
+
+  public nhlInfo(stuff) {
+    const nhlTeamsArray = Object.values(this.nhlTeams)
+    for (let team of nhlTeamsArray) {
+      for (let data of stuff) { 
+        if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+          data.team.logo = team['officialLogoImageSrc'];
+          data.team.city = team['city'];
+          data.team.name = team['name'];
+          
+          data.stats.scoring.fanDuelFP = this.util.round(this.nhlUtil.skaterSLFP(data),1);
+          data.stats.scoring.fanDuelFPA = this.util.round(this.nhlUtil.skaterSLFPA(data),1);
+          data.stats.scoring.iceTimeAvg = this.nhlService.iceTimeAvg(data.stats.shifts.timeOnIceSeconds, data.stats.gamesPlayed);
+        }
+
+        if (data.player.officialImageSrc == null) {
+          data.player.officialImageSrc = this.nhlplayerImages[data.player.id] != null ? this.nhlplayerImages[data.player.id].image : null;
+        }
+        
+      }  
+    }
+  }
+
+  public nbaInfo(stuff) {
+    const nbaTeamsArray = Object.values(this.nbaTeams)
+    for (let team of nbaTeamsArray) {
+      for (let data of stuff) { 
+        if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+          data.team.logo = team['officialLogoImageSrc'];
+          data.team.city = team['city'];
+          data.team.name = team['name'];
+          this.playerFp(data);
+          this.loading = false;
+        }
+
+        if (data.player.officialImageSrc == null) {
+          data.player.officialImageSrc = this.playerImages[data.player.id] != null ? this.playerImages[data.player.id].image : null;
+        }
+        
+      }  
+    }
+  }
+
+  public hitterInfo(stuff) {
+    for (let team of this.mlbTeams) {
+      for (let data of stuff) { 
+        if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+          data.team.logo = team['officialLogoImageSrc'];
+          data.team.city = team['city'];
+          data.team.name = team['name'];
+          data.team.twitter = team['twitter'];
+          data.stats.batting.battingAvg = data.stats.batting.battingAvg.toFixed(3) 
+      
+          this.mlbUtil.fantasyPoints(data,'b')
+       
+         if (data.player.officialImageSrc != null) {
+           data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
+         }
+
+         if (data.player.officialImageSrc == null) {
+           data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
+         }
+           
+        }
+      }  
+    }
+  }
+
+  public pitcherInfo(stuff) {
+    for (let team of this.mlbTeams) {
+      for (let data of this.mlbPitchingData) { 
+        if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
+          data.team.logo = team['officialLogoImageSrc']
+          data.team.city = team['city']
+          data.team.name = team['name']
+          data.team.twitter = team['twitter']
+          //this.pitcherFp(data);
+          this.mlbUtil.fantasyPoints(data,'p')
+          data.stats.pitching.earnedRunAvg = data.stats.pitching.earnedRunAvg.toFixed(2)
+          //this.loading = false;
+
+          if (data.player.officialImageSrc != null) {
+            data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
+          }
+
+          if (data.player.officialImageSrc == null) {
+            data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
+          }
+          
+        } 
+        
+      }  
+    }
   }
 
   public teamInfoRookie(array, teams, type, week, pos) {
@@ -922,18 +993,17 @@ export class StatLeadersComponent implements OnInit {
         let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(x => x.stats.gamesPlayed > 3) : res['dailyStats'].gamelogs)
         this.nflData = stats
 
-        this.nflRookies = this.nflData.filter(player => player.player.rookie === true)
+        this.nflRookies = res['playerStats'].rookies ? res['playerStats'].rookies : [] //this.nflData.filter(player => player.player.rookie === true)
         console.log('rookies', this.nflRookies)
-        this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition)       
-        this.nflOffenseLoading = false
+        this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition)
 
     //     console.log('got nfl info')
     //     this.util.updatePlayers(res['players'], this.nflData, this.nflTeams);
     //     // this.nflRookies = res['players'].filter(
     //     //   player => player.player.drafted != null && player.player.drafted.year === 2021);
     //     // console.log('rookies', this.nflRookies)
-    //     // this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie');
-    //     // this.nflOffenseLoading = false;     
+      this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie');
+      this.nflOffenseLoading = false;     
 
         })
     }
@@ -1012,7 +1082,7 @@ export class StatLeadersComponent implements OnInit {
           let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(player => player.stats != null && (player.stats.tackles.tackleTotal > 0 || player.stats.interceptions.passesDefended > 0)) : res['dailyStats'].gamelogs)
           this.nflDefenseData = stats
 
-          this.defenseRookies = this.nflDefenseData.filter(player => player.player.rookie === true)
+          this.defenseRookies = res['playerStats'].rookies ? res['playerStats'].rookies : [] //this.nflDefenseData.filter(player => player.player.rookie === true)
             
           teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week)
           
@@ -1022,7 +1092,7 @@ export class StatLeadersComponent implements OnInit {
           //     // this.defenseRookies = res['players'].filter(
           //     //   player => player.player.drafted != null && player.player.drafted.year === 2021);
           //     // console.log('rookies', this.defenseRookies)
-          //     // this.teamInfoRookie(this.defenseRookies, this.nflTeams, 'd', this.week, 'rookie');
+          this.teamInfoRookie(this.defenseRookies, this.nflTeams, 'd', this.week, 'rookie');
           // })
 
         this.nflDefenseLoading = false

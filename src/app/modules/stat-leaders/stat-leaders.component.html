@@ -229,6 +229,21 @@
           [twitter]="twitter"
           ></app-stat-card>
 
+          <app-stat-card *ngIf="!loading && nbaRookies != null" 
+          [data]="nbaRookies" 
+          [statType]="'fieldGoals'" 
+          [statField]="'fgAtt'"
+          [page]="page"
+          [amount]="amount"
+          [title]="'Rookies'"
+          [statTag]="'Shots'"
+          [sport]="'nba'"
+          [order]="'DESC'"
+          [teams]="nbaTeams"
+          (open)="authorize($event)"
+          [twitter]="twitter"
+          ></app-stat-card>
+
           <app-stat-card *ngIf="!loading && smPlayers != null" 
           [data]="smPlayers" 
           [statType]="'fieldGoals'" 
@@ -595,6 +610,21 @@
             [twitter]="twitter"
             ></app-stat-card>
 
+            <app-stat-card *ngIf="!nhlSkaterloading && skaterRookies != null" 
+            [data]="skaterRookies" 
+            [statType]="'skating'" 
+            [statField]="'shots'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Rookies'"
+            [statTag]="'Shots'"
+            [sport]="'nhl'"
+            [order]="'DESC'"
+            [teams]="nhlTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
             <app-stat-card *ngIf="!nhlSkaterloading && nhlSkaters != null" 
             [data]="nhlSkaters" 
             [statType]="'skating'" 
@@ -837,6 +867,21 @@
             [twitter]="twitter"
             ></app-stat-card>
 
+            <app-stat-card *ngIf="!mlbPitchingLoading && pitcherRookies != null" 
+            [data]="pitcherRookies" 
+            [statType]="'pitching'" 
+            [statField]="'pitcherStrikeouts'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Rookies'"
+            [statTag]="'Ks'"
+            [sport]="'mlb'"
+            [order]="'DESC'"
+            [teams]="mlbTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
         </section>
 
         <section [ngClass]="{'dn' : !mlbHittingSection}">
@@ -892,6 +937,21 @@
             [page]="page"
             [amount]="amount"
             [title]="'Hits'"
+            [statTag]="'H'"
+            [sport]="'mlb'"
+            [order]="'DESC'"
+            [teams]="mlbTeams"
+            (open)="authorize($event)"
+            [twitter]="twitter"
+            ></app-stat-card>
+
+            <app-stat-card *ngIf="!mlbHittingLoading && hitterRookies != null" 
+            [data]="hitterRookies" 
+            [statType]="'batting'" 
+            [statField]="'hits'"
+            [page]="page"
+            [amount]="amount"
+            [title]="'Rookies'"
             [statTag]="'H'"
             [sport]="'mlb'"
             [order]="'DESC'"

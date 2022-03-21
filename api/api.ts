@@ -86,9 +86,9 @@ methods.getInfo = async (
         jsonTeam = await JSON.parse(team)
       //console.log(jsonTeam, 'json') 
       console.log(gamesUrl, 'games url')
-      //console.log(fromToUrl, 'from to url')
+      console.log(fromToUrl, 'from to url')
 
-      if(sport === '!nfl') {
+      if(sport != 'nfl') {
         const optionsFromTo = {
             method: 'GET',
             url: fromToUrl ,
@@ -220,8 +220,8 @@ methods.getInfo = async (
                     team: team['abbreviation'],
                     schedule: item['games'],
                     teamInfo: team,
-                    begin:'3/7',
-                    end: '3/13'
+                    begin:'3/14',
+                    end: '3/20'
                   }
                   teamsSched.push(teamSchedule)
                   info[0]['weeklySchedule'] = teamsSched
@@ -239,8 +239,8 @@ methods.getInfo = async (
                     team: team['abbreviation'],
                     schedule: item['games'],
                     teamInfo: team,
-                    begin:'3/14',
-                    end: '3/20'
+                    begin:'3/21',
+                    end: '3/27'
                   }
                   nextWeekSched.push(nextWeekSchedule)
                   info[0]['nextSchedule'] = nextWeekSched    
@@ -379,7 +379,7 @@ methods.getStats = async (
         dailyTeamUrl = `${apiRoot}/${sport}/${season}/week/${nflWeek}/team_gamelogs.json`
         
         //console.log(playerStatsUrl, 'player stats totals url for', sport)
-        //console.log(dailyUrl, 'dailyurl url for', sport)
+        console.log(dailyUrl, 'dailyurl url for', sport)
         //console.log(nflWeek , 'nflWeek')
         stats[0].dailyStats = []
 
@@ -392,8 +392,19 @@ methods.getStats = async (
           }
   
           request(dailyOptions, async (error, response, body) => {
-              console.log('got todays stats')
-              stats[0].dailyStats = await body
+              
+              try {
+                if (body.gamelogs != null) {
+                  console.log(`Got daily stats for ${sport}!`)
+                  stats[0].dailyStats = await body
+                } else {
+                  console.log('daily games no responding properly', body)
+                  stats[0].dailyStats = []
+                }
+              } catch(e) {
+                console.log(colors.fg.red+'Daily stats error:', e, colors.reset)
+              } 
+              
           })
         }
 
@@ -456,14 +467,17 @@ methods.getStats = async (
         }
   
         request(psOptions, async (error, response, body) => {
-            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 2200)
+            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 2800)
             let values = null
+            let rookieVal
             await sleep(10)
             try {        
               if (body['playerStatsTotals'] != null) {
                 console.log('got player season total stats')
                 values = body['playerStatsTotals'].filter(x => x.player.currentTeam != null && x.team != null && x.player.currentTeam.id === x.team.id)
+                rookieVal = body['playerStatsTotals'].filter(player => player.player.rookie === true)
                 body['playerStatsTotals'] = values
+                body.rookies = rookieVal
                 stats[0].playerStats = await body
                 await sleep(sleepTime)
                 console.log(colors.fg.green+`Waited ${sleepTime} milliseconds for other stats, Resolve`, colors.reset)
@@ -518,7 +532,7 @@ methods.getStats = async (
               resolve('done')
             } else {
               await sleep(2000)
-              console.log(`Something went wrong updating {$sport} Games.`)
+              console.log(`Something went wrong updating ${sport} Games.`)
               resolve('done')
               stats[0].updatedSchedule = body
             } 
