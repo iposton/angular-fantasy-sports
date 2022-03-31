@@ -214,7 +214,7 @@
            Starting Line
           </span> 
       </div>
-      <div [ngClass]="{'active': scheduleSection}" class="col" (click)="goalieSection = false; lineSection = false; scheduleSection = true">
+      <div [ngClass]="{'active': scheduleSection}" class="col" (click)="goalieSection = false; lineSection = false; scheduleSection = true; getSchedules()">
           <span class="sched-item">
             Weekly Schedule
           </span> 

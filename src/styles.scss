@@ -709,6 +709,7 @@ ul {
   }
 }
 
+
 .mat-card-sp:not([class*=mat-elevation-z]) {
   box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 }
@@ -2270,6 +2271,34 @@ form input[type="text"] {
   width: 12%;
 }
 
+.card-wrap-sp.position-box.team-sched-box {
+  //weekly schedules
+  .team-sched-container {
+    font-size: 15px;
+    width: 100%;
+    border: 1px solid #fff;
+    background: #111;
+    .team-image {
+      display: block;
+      img {
+        height: 42px;
+      }
+      .team-name {
+        font-style: italic;
+        font-weight: bold;
+        line-height: 30px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+
+    .sums {
+      background: #111;
+    }
+    
+  }
+}
+
 //modal
 #overlay {
   background-color:transparent;
@@ -2718,6 +2747,39 @@ form input[type="text"] {
 
 
   //goalies 
+   //weekly schedules
+  .card-wrap-sp.position-box.team-sched-box {
+      //weekly schedules
+      .team-sched-container {
+        font-size: 12px;
+        width: 100%;
+        border: 1px solid #fff;
+        background: #111;
+        .team-image {
+          display: block;
+          img {
+            height: 32px;
+          }
+          .team-name {
+            font-style: italic;
+            font-weight: bold;
+            line-height: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          }
+        }
+
+        .sums {
+          background: #111;
+        }
+        
+      }
+  }
+
+  .starting-five .left-content .lg {
+    font-size: 11px;
+  }
+
 
   .material-icons.md-48 {
     font-size: 38px;

@@ -688,8 +688,8 @@ export class NhlUtilService {
         lastName: "Allen",
         teamId: 14,
         abbreviation: "MTL",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'8474596.jpg',
         new: false
       },
@@ -700,7 +700,7 @@ export class NhlUtilService {
         teamId: 14,
         abbreviation: "MTL",
         active: true,
-        numberOne: true,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -721,7 +721,7 @@ export class NhlUtilService {
         lastName: "Hammond",
         teamId: 14,
         abbreviation: "MTL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8477202.jpg',
         new: false
@@ -902,13 +902,24 @@ export class NhlUtilService {
         img: nhlImageRoot+'8479979.jpg',
         new: false
       },
+      '8952': {
+        id: 8952,
+        firstName: "Scott",
+        lastName: "Wedgewood",
+        teamId: 27,
+        abbreviation: "DAL",
+        active: true,
+        numberOne: false,
+        img: nhlImageRoot+'8475809.jpg',
+        new: true
+      }, 
       '4863':{
         id: 4863,
         firstName: "Braden",
         lastName: "Holtby",
         teamId: 27,
         abbreviation: "DAL",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
@@ -1078,17 +1089,6 @@ export class NhlUtilService {
         img: nhlImageRoot+'8480373.jpg',
         new: true
       },
-      '8952': {
-        id: 8952,
-        firstName: "Scott",
-        lastName: "Wedgewood",
-        teamId: 30,
-        abbreviation: "ARI",
-        active: true,
-        numberOne: false,
-        img: nhlImageRoot+'8475809.jpg',
-        new: false
-      }, 
       '17375': {
         id: 17375,
         firstName: "Ivan",

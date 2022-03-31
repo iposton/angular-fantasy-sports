@@ -43,7 +43,7 @@
             Starters By Position
           </span> 
       </div>
-      <div [ngClass]="{'active': scheduleSection}" class="col" (click)="startersSection = false; positionSection = false; scheduleSection = true">
+      <div [ngClass]="{'active': scheduleSection}" class="col" (click)="startersSection = false; positionSection = false; scheduleSection = true; getSchedules()">
           <span class="sched-item">
             Weekly Schedule
           </span> 

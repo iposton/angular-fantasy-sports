@@ -1,4 +1,4 @@
-<div class="card-wrap-sp mat-elevation-z6 position-box full-box">
+<div class="card-wrap-sp mat-elevation-z6 position-box full-box team-sched-box">
   <h2>Weekly Team Schedule</h2> 
   <span *ngIf="teamSchedules == null"><h3>Fetching Schedule...</h3></span>
   <span *ngIf="teamSchedules[0]?.begin">{{ teamSchedules[0].begin }}-{{ teamSchedules[0].end }}</span>
@@ -8,12 +8,12 @@
       <span> <button (click)="nextWeek = !nextWeek; changeSched()">{{ nextWeek ? 'Current' : 'Next'}} Week Schedule</button></span>
       <div class="content-wrapper">
           <div class="row">
-            <div *ngFor="let item of teamSchedules" [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount || item.schedule.length === 0 }">
+            <div class="team-sched-container" *ngFor="let item of teamSchedules" [ngClass]="{'dn' : amount == '3' && item.schedule.length &gt; amount || amount == '4' && item.schedule.length &lt; amount || item.schedule.length === 0 }" [ngStyle]="{'backgroundColor': item?.teamInfo?.teamColoursHex ? item?.teamInfo?.teamColoursHex[0] : 'black' }">
                     <span class="left-content" [ngClass]="{'results': weekResults}">
                       <span class="player-infos">
-                          <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo"> </span>
+                          <span class="team-image"> <img src="{{item?.teamInfo?.officialLogoImageSrc}}" alt="{{item?.team}} logo">  <span class="team-name">{{item.teamInfo.city + ' ' + item.teamInfo.name}}</span></span>
                           <span *ngFor="let g of item.schedule">
-                            <span class="lg" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
+                            <span class="lg sums" *ngIf="item.team === g.schedule.homeTeam.abbreviation">
                               <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &gt; g.score?.awayScoreTotal">(W <span class="plus">+{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span> 
                               <span *ngIf="weekResults && g.score?.homeScoreTotal != null && g.score?.homeScoreTotal &lt; g.score?.awayScoreTotal">(L <span class="minus">-{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span> 
                               <span *ngIf="!weekResults"> 
@@ -23,7 +23,7 @@
                                 vs {{g.schedule.awayTeam.abbreviation}}
                               </span>
                             </span>
-                            <span class="lg" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
+                            <span class="lg sums" *ngIf="item.team === g.schedule.awayTeam.abbreviation">
                               <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &gt; g.score?.homeScoreTotal">(W <span class="plus">+{{(g.score?.awayScoreTotal) - (g.score?.homeScoreTotal)}}</span>) </span>
                               <span *ngIf="weekResults && g.score?.awayScoreTotal != null && g.score?.awayScoreTotal &lt; g.score?.homeScoreTotal">(L <span class="minus">-{{(g.score?.homeScoreTotal) - (g.score?.awayScoreTotal)}}</span>) </span>
                                 <span *ngIf="!weekResults"> 
@@ -35,7 +35,7 @@
                             </span>
                           </span>
                           </span> 
-                          <span *ngIf="weekResults && item.schedule != null && crunch(item.schedule, item.team) != null" [ngClass]="{'minus': crunch(item.schedule, item.team).sum &lt; 0, 'plus': crunch(item.schedule, item.team).sum &gt; 0 }"> {{crunch(item.schedule, item.team).title}} </span>    
+                          <span class="sums" *ngIf="weekResults && item.schedule != null && crunch(item.schedule, item.team) != null" [ngClass]="{'minus': crunch(item.schedule, item.team).sum &lt; 0, 'plus': crunch(item.schedule, item.team).sum &gt; 0 }"> {{crunch(item.schedule, item.team).title}} Total: {{crunch(item.schedule, item.team).goals}} </span>    
                     </span> 
                     
                   </div>       

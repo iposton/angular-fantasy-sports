@@ -22,7 +22,8 @@ export class TeamScheduleComponent implements OnInit {
 
   public crunch(items, team) {
     //console.log('crunching schedule results...', team);
-    let sum = 0;
+    let sum = 0
+    let sumGoals = 0
     let w = 0;
     let l = 0;
     let result = null;
@@ -33,17 +34,19 @@ export class TeamScheduleComponent implements OnInit {
         } else if (item.score.homeScoreTotal - item.score.awayScoreTotal < 0) {
           l += 1;
         }
-        sum += (item.score.homeScoreTotal - item.score.awayScoreTotal);
+        sum += (item.score.homeScoreTotal - item.score.awayScoreTotal)
+        sumGoals += item.score.homeScoreTotal
       } else if (team === item.schedule.awayTeam.abbreviation) {
         if (item.score.awayScoreTotal - item.score.homeScoreTotal > 0) {
           w += 1;
         } else if (item.score.awayScoreTotal - item.score.homeScoreTotal < 0)  {
           l += 1;
         }
-        sum += (item.score.awayScoreTotal - item.score.homeScoreTotal);
+        sum += (item.score.awayScoreTotal - item.score.homeScoreTotal)
+        sumGoals += item.score.awayScoreTotal
       }
 
-      result = {sum: sum, title: sum+' ('+w+'-'+l+')'};
+      result = {goals: sumGoals, sum: sum, title: sum+' ('+w+'-'+l+')'};
     });
     return result;
   }

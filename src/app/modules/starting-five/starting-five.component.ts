@@ -112,6 +112,8 @@ export class StartingFiveComponent implements OnInit {
   public nbaSeason: string
   public nbaTeamsSched: Array <any> = []
   public serverInfo: Array <any> = []
+  public schedInfo: Array <any> = []
+  public dailyLineup: Array <any> = []
 
   constructor(private dataService: NBADataService,
               public nhlService: NHLDataService, 
@@ -200,8 +202,34 @@ export class StartingFiveComponent implements OnInit {
   }
 
   public getSchedules() {
-    console.log('fetching schedule')
-    this.nbaTeamsSched = this.nextWeek ? this.serverInfo['nextSchedule'] : this.serverInfo['weeklySchedule']
+   // console.log('fetching schedule')
+    //this.nbaTeamsSched = this.nextWeek ? this.serverInfo['nextSchedule'] : this.serverInfo['weeklySchedule']
+
+    if (this.nbaTeamsSched.length === 0) {
+      console.log('fetching schedule')
+      this.nhlService.serverInfo('nba', 
+          '2021-2022-regular', 
+          'games', 
+          'dateB', 
+          'dateE', 
+          'player', 
+          'G', 
+          this.teams,
+          this.selectedDate, 
+          this.dataService.isToday,
+          'schedules',
+          this.haveSchedules,
+          '').subscribe(res => {
+            console.log(res, 'schedule info')
+            this.schedInfo = res
+            this.nbaTeamsSched = this.nextWeek ? this.schedInfo['nextSchedule'] : this.schedInfo['weeklySchedule']
+          })
+
+    } else {
+      console.log('already have schedule')
+      this.nbaTeamsSched = this.nextWeek ? this.schedInfo['nextSchedule'] : this.schedInfo['weeklySchedule']
+    }
+    
   }
 
 
@@ -254,6 +282,14 @@ export class StartingFiveComponent implements OnInit {
       '').subscribe(res => {
         console.log(res, 'client res: schedlule')
         this.serverInfo = res
+        this.dailyLineup = res.dailyLineup
+
+        for(let item of this.dailyLineup) {
+          for(let sched of res['games'].games)
+          if (item.game.id === sched.schedule.id) {
+            item.game.score = sched.score
+          }
+        }
 
         if (res['games'].games.length === 0) {
           this.loading = false
@@ -272,7 +308,7 @@ export class StartingFiveComponent implements OnInit {
           this.gamesToday = true;
           if (this.nbaTeamsSched.length === 0) {
             //this.nhlService.getSchedules(this.nextWeek, 'nba', teams);
-            this.getSchedules()
+            //this.getSchedules()
           }
         }
 
@@ -283,19 +319,19 @@ export class StartingFiveComponent implements OnInit {
           let score2 = null;
         
           
-          res.dailyLineup.forEach((item, index) => {
+          this.dailyLineup.forEach((item, index) => {
             //console.log(this.dailySchedule[i], 'score for games');
             //console.log(res, 'got starting lineups data!');
             i = index;
-            if (res.dailyLineup[i]['game'].playedStatus != "UNPLAYED" && res.dailyLineup[i]['game'].playedStatus != "COMPLETED") {
+            if (this.dailyLineup[i]['game'].playedStatus != "UNPLAYED" && this.dailyLineup[i]['game'].playedStatus != "COMPLETED") {
               this.liveGames = true;
               //console.log('interval set...');
             }
               
             try {
-              game2 = res.dailyLineup[i]['game'];
-              res2 = res.dailyLineup[i]['teamLineups'];
-              score2 = this.dailySchedule[i].score;
+              game2 = this.dailyLineup[i]['game']
+              res2 = this.dailyLineup[i]['teamLineups']
+              score2 = this.dailyLineup[i]['game'].score
             } catch {
               console.log('bad endpoint');
             }

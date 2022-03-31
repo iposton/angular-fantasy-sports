@@ -7,8 +7,6 @@ let info = [
     {
       games: [],
       dailyLineup: [],
-      weeklySchedule: [],
-      nextSchedule: [],
       fullSchedule: []
     }
   ]
@@ -33,6 +31,13 @@ let info = [
       nhl: [],
       nfl: [],
       mlb: []
+    }
+  ]
+
+  let schedules = [
+    {
+      weeklySchedule: [],
+      nextSchedule: []
     }
   ]
 
@@ -72,6 +77,10 @@ methods.getInfo = async (
     selectedWeek: string) => {
       const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
       let headers = {"Authorization": "Basic " + Buffer.from(apiKey + ":" + "MYSPORTSFEEDS").toString('base64')}
+      let jsonTeam = null
+      await sleep(10)
+      if (haveSchedules === 'false')
+        jsonTeam = await JSON.parse(team)
 
   if (dataType === 'dailySchedule') {
     console.log(colors.fg.yellow+`Fetch data for ${sport}`, colors.reset)
@@ -80,10 +89,8 @@ methods.getInfo = async (
       let dailyLineup = []
       let gamesUrl = sport != 'nfl' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json` : `${apiRoot}/${sport}/${season}/week/${selectedWeek}/${feedType}.json`
       let fromToUrl = `${apiRoot}/${sport}/${season}/${feedType}.json?date=${fromTo}`
-      let jsonTeam = null
-      await sleep(10)
-      if (haveSchedules === 'false')
-        jsonTeam = await JSON.parse(team)
+      
+      
       //console.log(jsonTeam, 'json') 
       console.log(gamesUrl, 'games url')
       console.log(fromToUrl, 'from to url')
@@ -165,103 +172,11 @@ methods.getInfo = async (
           )
         }
 
-        if (sport != 'nfl' && haveSchedules === 'false') {
-          console.log(`Fetching ${sport} schedules, all teams, this week, next week`)
-          let teamsSched = []
-          let teamSchedule
-          let nextWeekSched = []
-          let nextWeekSchedule
-          let items = []
-          let items2 = []
-          const teamsArray = Object.values(jsonTeam)
-          //console.log(teamsArray, 'teams')
-
-          forkJoin(
-            teamsArray.map(
-              g => request(`${apiRoot}/${sport}/${season}/${feedType}.json?team=${g['abbreviation']}&date=${fromToWeek}`, {headers},
-                async function(err, res, body) {
-                  //console.log(body, 'lineup')
-                  //await sleep(10)
-                  try {
-                    let data = await JSON.parse(body)
-                    data.gamesBelongTo = g['abbreviation']
-                    items.push(data)
-                  } catch(e) {
-                    console.log(colors.fg.red+'Fromto Week error', e, colors.reset)
-                  }
-                })
-            )
-          )
-
-          forkJoin(
-            teamsArray.map(
-              g => request(`${apiRoot}/${sport}/${season}/${feedType}.json?team=${g['abbreviation']}&date=${fromToNext}`, {headers},
-                async function(err, res, body) {
-                  //await sleep(10)
-                  try {
-                    let data = await JSON.parse(body)
-                    data.gamesBelongTo = g['abbreviation']
-                    items2.push(data)
-                  } catch(e) {
-                    console.log(colors.fg.red+'FromtoNext Week error', e, colors.reset)
-                  }
-                })
-            )
-          )
-
-          await sleep(3000)
-          console.log(`Waited 3 seconds for ${sport} schedules`)
-          
-          if (items.length > 0) {
-            for (let item of items) {
-              for (let team of teamsArray) {
-                if(item.gamesBelongTo === team['abbreviation']) {
-                  teamSchedule = {
-                    team: team['abbreviation'],
-                    schedule: item['games'],
-                    teamInfo: team,
-                    begin:'3/14',
-                    end: '3/20'
-                  }
-                  teamsSched.push(teamSchedule)
-                  info[0]['weeklySchedule'] = teamsSched
-                }
-              }
-            }
-          }
-
-          if (items2.length > 0) {
-            console.log('sort next week and resolve')
-            for (let item of items2) {
-              for (let team of teamsArray) {
-                if(item.gamesBelongTo === team['abbreviation']) {
-                  nextWeekSchedule = {
-                    team: team['abbreviation'],
-                    schedule: item['games'],
-                    teamInfo: team,
-                    begin:'3/21',
-                    end: '3/27'
-                  }
-                  nextWeekSched.push(nextWeekSchedule)
-                  info[0]['nextSchedule'] = nextWeekSched    
-                }
-              }
-            }
-            await sleep(1200)
-            console.log(colors.fg.green+`Waiter 1 second, Resolve ${sport} Info`, colors.reset)
-            resolve('done')
-          } else if (items2.length === 0) {
-            console.log(`Could not Get ${sport} Schedules, try again`)
-            await sleep(1200)
-            resolve('done')
-          } 
-        } else {
-          console.log(colors.fg.green+`Dont Need To Fetch ${sport} Schedules, Resolve`, colors.reset)
-          await sleep(1200)
-          resolve('done')
-        }
+      await sleep(1000)
+      resolve('done')
       })  //end of daily games req
     })
+    
     let result = await firstPromise
     //console.log(info[0], 'info resolved')
     return info[0]
@@ -319,7 +234,7 @@ methods.getInfo = async (
       request(nflOptions, async (error, response, body) => {
         games[0].nfl = body
         await sleep(1000)
-        console.log(colors.fg.green+'Waiter 1 Second to Finish Getting Games, Got NFL, NHL, MLB, and NBA Games, Resolve', colors.reset)
+        console.log(colors.fg.green+'Waited 1 Second to Finish Getting Games, Got NFL, NHL, MLB, and NBA Games, Resolve', colors.reset)
         resolve('done')
       })
 
@@ -327,6 +242,112 @@ methods.getInfo = async (
     let result = await gamePromise
     //console.log(info[0], 'info resolved')
     return games[0]
+  }
+
+  if (dataType === 'schedules') {
+    let schedPromise = new Promise(async(resolve, reject) => {
+    if (sport != 'nfl' && haveSchedules === 'false') {
+      
+      console.log(`Fetching ${sport} schedules, all teams, this week, next week`)
+      let teamsSched = []
+      let teamSchedule
+      let nextWeekSched = []
+      let nextWeekSchedule
+      let items = []
+      let items2 = []
+      const teamsArray = Object.values(jsonTeam)
+      //console.log(teamsArray, 'teams')
+      console.log(`${apiRoot}/${sport}/${season}/${feedType}.json?team=123&date=${fromToWeek}`, 'fromtoweek')
+      forkJoin(
+        teamsArray.map(
+          g => request(`${apiRoot}/${sport}/${season}/${feedType}.json?team=${g['abbreviation']}&date=${fromToWeek}`, {headers},
+            async function(err, res, body) {
+              //console.log(body, 'lineup')
+              //await sleep(10)
+              try {
+                let data = await JSON.parse(body)
+                data.gamesBelongTo = g['abbreviation']
+                items.push(data)
+              } catch(e) {
+                console.log(colors.fg.red+'Fromto Week error', e, colors.reset)
+              }
+            })
+        )
+      )
+
+      forkJoin(
+        teamsArray.map(
+          g => request(`${apiRoot}/${sport}/${season}/${feedType}.json?team=${g['abbreviation']}&date=${fromToNext}`, {headers},
+            async function(err, res, body) {
+              //await sleep(10)
+              try {
+                let data = await JSON.parse(body)
+                data.gamesBelongTo = g['abbreviation']
+                items2.push(data)
+              } catch(e) {
+                console.log(colors.fg.red+'FromtoNext Week error', e, colors.reset)
+              }
+            })
+        )
+      )
+
+      await sleep(5000)
+      console.log(`Waited 5 seconds for ${sport} schedules`)
+      
+      if (items.length > 0) {
+        for (let item of items) {
+          for (let team of teamsArray) {
+            if(item.gamesBelongTo === team['abbreviation']) {
+              teamSchedule = {
+                team: team['abbreviation'],
+                schedule: item['games'],
+                teamInfo: team,
+                begin:'3/21',
+                end: '3/27'
+              }
+              teamsSched.push(teamSchedule)
+              schedules[0]['weeklySchedule'] = teamsSched
+            }
+          }
+        }
+      }
+
+      if (items2.length > 0) {
+        console.log('sort next week and resolve')
+        for (let item of items2) {
+          for (let team of teamsArray) {
+            if(item.gamesBelongTo === team['abbreviation']) {
+              nextWeekSchedule = {
+                team: team['abbreviation'],
+                schedule: item['games'],
+                teamInfo: team,
+                begin:'3/28',
+                end: '4/3'
+              }
+              nextWeekSched.push(nextWeekSchedule)
+              schedules[0]['nextSchedule'] = nextWeekSched    
+            }
+          }
+        }
+        await sleep(1200)
+        console.log(colors.fg.green+`Waited 1.2 second, Resolve ${sport} Info`, colors.reset)
+        resolve('done')
+      } else if (items2.length === 0) {
+        console.log(`Could not Get ${sport} Schedules, try again`)
+        await sleep(1200)
+        resolve('done')
+      } 
+
+  
+    } else {
+      console.log(colors.fg.green+`Dont Need To Fetch ${sport} Schedules, Resolve`, colors.reset)
+      await sleep(1200)
+      resolve('done')
+    }
+  })
+  let result = await schedPromise
+  //console.log(info[0], 'info resolved')
+  return schedules[0]
   }
 }
 
@@ -378,7 +399,7 @@ methods.getStats = async (
         playerInfoUrl = `${apiRoot}/${sport}/players.json?position=${position}`
         dailyTeamUrl = `${apiRoot}/${sport}/${season}/week/${nflWeek}/team_gamelogs.json`
         
-        //console.log(playerStatsUrl, 'player stats totals url for', sport)
+        console.log(playerStatsUrl, 'player stats totals url for', sport)
         console.log(dailyUrl, 'dailyurl url for', sport)
         //console.log(nflWeek , 'nflWeek')
         stats[0].dailyStats = []
@@ -394,11 +415,12 @@ methods.getStats = async (
           request(dailyOptions, async (error, response, body) => {
               
               try {
+                await sleep(10)
                 if (body.gamelogs != null) {
                   console.log(`Got daily stats for ${sport}!`)
                   stats[0].dailyStats = await body
                 } else {
-                  console.log('daily games no responding properly', body)
+                  console.log(colors.fg.red+'Daily Games Not Responding Properly', body, colors.reset)
                   stats[0].dailyStats = []
                 }
               } catch(e) {
@@ -467,10 +489,10 @@ methods.getStats = async (
         }
   
         request(psOptions, async (error, response, body) => {
-            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 2800)
+            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 3000)
             let values = null
             let rookieVal
-            await sleep(10)
+            await sleep(30)
             try {        
               if (body['playerStatsTotals'] != null) {
                 console.log('got player season total stats')
@@ -485,7 +507,7 @@ methods.getStats = async (
               } else {
                 stats[0].playerStats = await body
                 await sleep(sleepTime)
-                console.log(colors.fg.red+'Something went wrong: player season total stats', colors.reset)
+                console.log(colors.fg.red+`Waited ${sleepTime} milliseconds. Something went wrong: player season total stats, resolve`, colors.reset)
                 resolve('done')
               }  
             } catch(e) {

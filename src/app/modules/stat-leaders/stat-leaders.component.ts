@@ -866,7 +866,7 @@ export class StatLeadersComponent implements OnInit {
 
   public pitcherInfo(stuff) {
     for (let team of this.mlbTeams) {
-      for (let data of this.mlbPitchingData) { 
+      for (let data of stuff) { 
         if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
           data.team.logo = team['officialLogoImageSrc']
           data.team.city = team['city']
@@ -874,7 +874,9 @@ export class StatLeadersComponent implements OnInit {
           data.team.twitter = team['twitter']
           //this.pitcherFp(data);
           this.mlbUtil.fantasyPoints(data,'p')
-          data.stats.pitching.earnedRunAvg = data.stats.pitching.earnedRunAvg.toFixed(2)
+          if (data.stats.pitching.earnedRunAvg == null)
+            console.log(data, 'players')
+          data.stats.pitching.earnedRunAvg = data.stats.pitching.earnedRunAvg != null ? data.stats.pitching.earnedRunAvg.toFixed(2) : null
           //this.loading = false;
 
           if (data.player.officialImageSrc != null) {

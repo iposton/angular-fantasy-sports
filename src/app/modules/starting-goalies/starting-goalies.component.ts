@@ -41,6 +41,7 @@ export class StartingGoaliesComponent implements OnInit {
   public goalies = new FormControl();
   public starters: Array <any>;
   public dailySchedule: Array <any>;
+  public dailyLineup: Array <any>;
   public fullSchedule: Array <any>;
   public starterIdData: Array <any> = [];
   public startersData: Array <any> = [];
@@ -146,6 +147,7 @@ export class StartingGoaliesComponent implements OnInit {
   public filterOutLosers: boolean = false
   public nhlTeamsSched: Array <any> = []
   public serverInfo: Array <any> = []
+  public schedInfo: Array <any> = []
   public goalieInfo: Array <any> = []
   public skaterInfo: Array <any> = []
   public haveSchedules: boolean
@@ -206,8 +208,30 @@ export class StartingGoaliesComponent implements OnInit {
   }
 
   public getSchedules() {
-    console.log('fetching schedule')
-    this.nhlTeamsSched = this.nextWeek ? this.serverInfo['nextSchedule'] : this.serverInfo['weeklySchedule']
+    if (this.nhlTeamsSched.length === 0) {
+      console.log('fetching schedule')
+      this.dataService.serverInfo('nhl', 
+          '2021-2022-regular', 
+          'games', 
+          'dateB', 
+          'dateE', 
+          'player', 
+          'G', 
+          this.teams,
+          this.selectedDate, 
+          this.dataService.isToday,
+          'schedules',
+          this.haveSchedules,
+          '').subscribe(res => {
+            console.log(res, 'schedule info')
+            this.schedInfo = res
+            this.nhlTeamsSched = this.nextWeek ? this.schedInfo['nextSchedule'] : this.schedInfo['weeklySchedule']
+          })
+
+    } else {
+      console.log('already have schedule')
+      this.nhlTeamsSched = this.nextWeek ? this.schedInfo['nextSchedule'] : this.schedInfo['weeklySchedule']
+    } 
   }
 
   public statToggle() {
@@ -393,6 +417,14 @@ export class StartingGoaliesComponent implements OnInit {
             console.log(res, 'client res: schedlule')
             this.serverInfo = res
             this.fullSchedule = res['fullSchedule'].games
+            this.dailyLineup = res['dailyLineup']
+
+            for(let item of this.dailyLineup) {
+              for(let sched of res['games'].games)
+              if (item.game.id === sched.schedule.id) {
+                item.game.score = sched.score
+              }
+            }
 
             if (typeof res['games'] === 'string') {
               console.log(res['games'], 'res msg')
@@ -417,27 +449,27 @@ export class StartingGoaliesComponent implements OnInit {
               this.tweetDay = dPipe.transform(this.gameDate, 'EEEE')
               this.gamesToday = true;
               //this.sortData(); //work around when no games
-              if (this.nhlTeamsSched.length === 0) {
-                console.log('go define schedules')
-                this.getSchedules()
-              }
+              // if (this.nhlTeamsSched.length === 0) {
+              //   console.log('go define schedules')
+              //   this.getSchedules()
+              // }
 
-                  let i;
-                  let i2;
-                  let res2;
-                  let game2 = null;
-                  let score2 = null;
+                  let i,
+                  i2,
+                  res2,
+                  game2 = null,
+                  score = null            
                   
-                  res.dailyLineup.forEach((item, index) => {
+                  this.dailyLineup.forEach((item, index) => {
                     i = index;
                     try {
-                      game2 = res.dailyLineup[i]['game'];
-                      res2 = res.dailyLineup[i]['teamLineups'];
-                      score2 = this.dailySchedule[i].score;
+                      game2 = this.dailyLineup[i]['game']
+                      res2 = this.dailyLineup[i]['teamLineups'] 
+                      score = this.dailyLineup[i]['game'].score
                     } catch {
                       console.log('bad endpoint');
                     }
-                    //console.log(res.dailyLineup[i]['teamLineups'], 'got starting lineups data!');
+                    //console.log(this.dailyLineup[i]['teamLineups'], 'got starting lineups data!');
                     
                     res2.forEach((item, index) => {
 
@@ -452,7 +484,7 @@ export class StartingGoaliesComponent implements OnInit {
                                 name: item.player.lastName,
                                 team: res2[i2].team.id,
                                 gameID: game2.id,
-                                score: score2,
+                                score: score,
                                 status: game2.playedStatus,
                                 scheduleStatus: game2.scheduleStatus,
                                 position: item.player['position'],
@@ -476,7 +508,7 @@ export class StartingGoaliesComponent implements OnInit {
                                 name: item.player.lastName,
                                 team: res2[i2].team.id,
                                 gameID: game2.id,
-                                score: score2,
+                                score: score,
                                 status: game2.playedStatus,
                                 scheduleStatus: game2.scheduleStatus,
                                 position: item.player['position'],
@@ -1204,8 +1236,9 @@ public showMatchups() {
                         this.util.round(data.stats.fanDuelFP,1);
 
                         if (gb.status !== "UNPLAYED") {
-                          data.team.currentPeriod = gb.score['currentPeriod'];
-                          data.team.currentIntermission = gb.score['currentIntermission'];
+                          console.log(gb, 'game skater')
+                          data.team.currentPeriod = gb.score != null ? gb.score['currentPeriod'] : null
+                          data.team.currentIntermission = gb.score != null ? gb.score['currentIntermission'] : null
                         }
                         //console.log(game, 'is game over?');
                         if (gb.status === "COMPLETED" 
