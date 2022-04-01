@@ -726,7 +726,7 @@ export class StatLeadersComponent implements OnInit {
               
           //   }  
           // }
-        //this.util.updatePlayers(res['players'], this.mlbPitchingData, this.mlbTeams)
+         this.util.updatePlayers(res['playerInfo'].players, this.mlbPitchingData, this.mlbTeams)
           
           if (this.timeSpan != 'full') {
             this.spanGames();
@@ -787,7 +787,7 @@ export class StatLeadersComponent implements OnInit {
         //      }
         //    }  
         //  }
-        //this.util.updatePlayers(res['players'], this.mlbHittingData, this.mlbTeams)
+        this.util.updatePlayers(res['playerInfo'].players, this.mlbHittingData, this.mlbTeams)
          
         if (this.timeSpan != 'full') {
           this.spanGames();

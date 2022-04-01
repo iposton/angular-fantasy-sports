@@ -564,18 +564,22 @@ methods.getStats = async (
           }
         })
       }
-        // const piOptions = {
-        //   method: 'GET',
-        //   url: playerInfoUrl ,
-        //   headers: headers,
-        //   json: true
-        // }
 
-        // request(piOptions, async (error, response, body) => {
-        //     //only use at the start of season to fetch all players
-        //     console.log('got player info')
-        //     stats[0].playerInfo = await body
-        // })
+      if (sport === 'mlb') {
+        const piOptions = {
+          method: 'GET',
+          url: playerInfoUrl ,
+          headers: headers,
+          json: true
+        }
+
+        request(piOptions, async (error, response, body) => {
+            //only use at the start of season to fetch all players
+            console.log(`got player info for ${sport}`)
+            stats[0].playerInfo = await body
+        })
+      }
+      
       })
       let result = await firstPromise
       //console.log(stats[0], 'info resolved')

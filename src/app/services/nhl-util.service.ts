@@ -1205,7 +1205,7 @@ export class NhlUtilService {
         lastName: "Brossoit",
         teamId: 142,
         abbreviation: "VGK",
-        active: true,
+        active: false,
         numberOne: false,
         img: nhlImageRoot+'8476316.jpg',
         new: false
@@ -1227,7 +1227,7 @@ export class NhlUtilService {
         lastName: "Thompson",
         teamId: 142,
         abbreviation: "VGK",
-        active: false,
+        active: true,
         numberOne: false,
         img: nhlImageRoot+'8480313.jpg',
         new: false
