@@ -302,8 +302,8 @@ methods.getInfo = async (
                 team: team['abbreviation'],
                 schedule: item['games'],
                 teamInfo: team,
-                begin:'3/21',
-                end: '3/27'
+                begin:'3/28',
+                end: '4/3'
               }
               teamsSched.push(teamSchedule)
               schedules[0]['weeklySchedule'] = teamsSched
@@ -321,8 +321,8 @@ methods.getInfo = async (
                 team: team['abbreviation'],
                 schedule: item['games'],
                 teamInfo: team,
-                begin:'3/28',
-                end: '4/3'
+                begin:'4/4',
+                end: '4/10'
               }
               nextWeekSched.push(nextWeekSchedule)
               schedules[0]['nextSchedule'] = nextWeekSched    

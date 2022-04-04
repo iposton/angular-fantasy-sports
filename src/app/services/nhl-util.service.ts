@@ -105,8 +105,8 @@ export class NhlUtilService {
         lastName: "Mrazek",
         teamId: 12,
         abbreviation: "TOR",
-        active: true,
-        numberOne: true,
+        active: false,
+        numberOne: false,
         img: nhlImageRoot+'0.jpg',
         new: false
       },
@@ -116,8 +116,8 @@ export class NhlUtilService {
         lastName: "Campbell",
         teamId: 12,
         abbreviation: "TOR",
-        active: false,
-        numberOne: false,
+        active: true,
+        numberOne: true,
         img: nhlImageRoot+'8475789.jpg',
         new: false
       },

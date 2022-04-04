@@ -116,8 +116,8 @@ export class NHLDataService {
   public serverInfo(sport, season, feedType, dateBegin, dateEnd, player, position, team, selectedDate, isToday, dataType, haveSchedules, selectedWeek) {
     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded')
     let fromTo = tomorrowDailyDate === dailyDate ? `from-${this.dailyDate}-to-${dayAfterTomorrow}` : `from-${yesterdayDailyDate}-to-${tomorrowDailyDate}`
-    let fromToWeek = `from-20220321-to-20220327`
-    let fromToNext = `from-20220328-to-20220403`
+    let fromToWeek = `from-20220328-to-20220403`
+    let fromToNext = `from-20220404-to-20220410`
     let strTeam = JSON.stringify(team)
     let data = `query=${sport}&dailyDate=${dailyDate}&season=${season}&feedType=${feedType}&position=${position}&selectedDate=${selectedDate}&isToday=${isToday}&dataType=${dataType}&fromTo=${fromTo}&fromToWeek=${fromToWeek}&fromToNext=${fromToNext}&team=${strTeam}&haveSchedules=${haveSchedules}&player=${player}&selectedWeek=${selectedWeek}`
     try {

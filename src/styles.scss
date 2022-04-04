@@ -1485,6 +1485,16 @@ ul {
   border-radius: 5px;
 }
 
+.main-row.stat-leaders.mlb {
+  .mlb.team-image {
+    img {
+      height: 32px;
+      width: 32px;
+      border-radius: 0;
+    }  
+  }
+}
+
 //Home
 
 .fixed-button {
