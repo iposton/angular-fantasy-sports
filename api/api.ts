@@ -95,7 +95,7 @@ methods.getInfo = async (
       console.log(gamesUrl, 'games url')
       console.log(fromToUrl, 'from to url')
 
-      if(sport != 'nfl') {
+      if(sport === 'nhl') {
         const optionsFromTo = {
             method: 'GET',
             url: fromToUrl ,

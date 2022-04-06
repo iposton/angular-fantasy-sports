@@ -125,7 +125,7 @@ export class StartingPitcherComponent implements OnInit {
     this.compareDate = new Date();
     this.dataService.checkDay();
     this.season = '2021-regular'
-    this.playoffDate = 'Tue Oct 5 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.playoffDate = 'Tue Oct 5 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.checkPlayoffs(new Date(this.selectedDate))
     this.apiRoot = `https://api.mysportsfeeds.com/v2.1/pull/mlb/${this.season}`;
   }
@@ -231,7 +231,7 @@ export class StartingPitcherComponent implements OnInit {
 
           this.nhlService.serverInfo(
           'mlb', 
-          this.season, 
+          '2022-regular', 
           'games', 
           'dateB', 
           'dateE', 
@@ -619,10 +619,9 @@ export class StartingPitcherComponent implements OnInit {
                           }  
                        }
 
-                      // this.dataService
-                      //   .getInfo().subscribe(res => {
-                      //     this.util.updatePlayers(res['players'], this.myData, this.teamRef);    
-                      // });
+                    
+                      this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teamRef);    
+                    
 
                     }
 
@@ -932,7 +931,7 @@ export class StartingPitcherComponent implements OnInit {
                               }  
                           }
 
-                          //this.util.updatePlayers(res['players'], this.myBatterData, this.teamRef)
+                          this.util.updatePlayers(res['playerInfo'].players, this.myBatterData, this.teamRef)
                         }
                         
                         if (this.myBatterData && this.dailySchedule) {

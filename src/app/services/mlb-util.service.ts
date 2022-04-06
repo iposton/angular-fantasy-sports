@@ -231,7 +231,7 @@ export class MlbUtilService {
           rotationSpot: 4,
           active: true,
           img: mlbImageRoot+'676596'+mlbImageEnd,
-          new: true
+          new: false
         },
         '20448':{
           id: 20448,
@@ -242,7 +242,7 @@ export class MlbUtilService {
           rotationSpot: 5,
           active: true,
           img: mlbImageRoot+'641447'+mlbImageEnd,
-          new: true
+          new: false
         },
         
       }
@@ -478,6 +478,18 @@ export class MlbUtilService {
           lastName: "Mercedes",
           image: mlbImageRoot+'606213'+mlbImageEnd,
         },
+        "29999":{
+          firstName: "Tylor",
+          lastName: "Megill",
+          image: mlbImageRoot+'656731'+mlbImageEnd,
+        },
+        "29949":{
+          firstName: "Joe",
+          lastName: "Ryan",
+          image: mlbImageRoot+'657746'+mlbImageEnd,
+        },
+        
+        
       }
 
       this.mlbTeams = [

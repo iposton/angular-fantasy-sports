@@ -36,7 +36,7 @@ export class StatLeadersComponent implements OnInit {
   public nbaSeasonType: string = "2021-2022-regular";
   public nflSeasonType: string = "2020-2021-regular";
   public nhlSeasonType: string = "2021-2022-regular";
-  public mlbSeasonType: string = "2021-regular";
+  public mlbSeasonType: string = "2022-regular";
   public myData: Array <any>;
   public fgPlayers: Array <any>;
   public smPlayers: Array <any>;
@@ -270,7 +270,7 @@ export class StatLeadersComponent implements OnInit {
     if (this.sport === 'mlb') {
       this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular" : "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-playoff"
 
-      this.mlbSeasonType = this.mlbSeason ? "2021-regular" : "2021-playoff"
+      this.mlbSeasonType = this.mlbSeason ? "2022-regular" : "2022-playoff"
       
       if (this.mlbSection) { 
         this.loadMLB()
