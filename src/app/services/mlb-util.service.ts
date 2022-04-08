@@ -488,8 +488,21 @@ export class MlbUtilService {
           lastName: "Ryan",
           image: mlbImageRoot+'657746'+mlbImageEnd,
         },
-        
-        
+        "18401":{
+          firstName: "Reiver",
+          lastName: "Sanmartin",
+          image: mlbImageRoot+'665665'+mlbImageEnd,
+        },
+        "15858":{
+          firstName: "Josiah",
+          lastName: "Gray",
+          image: mlbImageRoot+'680686'+mlbImageEnd,
+        }, 
+        "15527":{
+          firstName: "Justin",
+          lastName: "Steele",
+          image: mlbImageRoot+'657006'+mlbImageEnd,
+        }  
       }
 
       this.mlbTeams = [
