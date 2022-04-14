@@ -191,27 +191,27 @@ methods.getInfo = async (
       let nhlUrl = `${apiRoot}/nhl/${season}/date/${dailyDate}/${feedType}.json`
       let mlbUrl = `${apiRoot}/mlb/2022-regular/date/${dailyDate}/${feedType}.json`
 
-      const nbaOptions = {
-        method: 'GET',
-        url: nbaUrl ,
-        headers: headers,
-        json: true
-      }
+      // const nbaOptions = {
+      //   method: 'GET',
+      //   url: nbaUrl ,
+      //   headers: headers,
+      //   json: true
+      // }
           
-      request(nbaOptions, async (error, response, body) => {
-        games[0].nba = body
-      })
+      // request(nbaOptions, async (error, response, body) => {
+      //   games[0].nba = body
+      // })
 
-      const nhlOptions = {
-        method: 'GET',
-        url: nhlUrl ,
-        headers: headers,
-        json: true
-      }
+      // const nhlOptions = {
+      //   method: 'GET',
+      //   url: nhlUrl ,
+      //   headers: headers,
+      //   json: true
+      // }
           
-      request(nhlOptions, async (error, response, body) => {
-        games[0].nhl = body
-      })
+      // request(nhlOptions, async (error, response, body) => {
+      //   games[0].nhl = body
+      // })
 
       const mlbOptions = {
         method: 'GET',
@@ -222,21 +222,23 @@ methods.getInfo = async (
           
       request(mlbOptions, async (error, response, body) => {
         games[0].mlb = body
-      })
-
-      const nflOptions = {
-        method: 'GET',
-        url: nflUrl ,
-        headers: headers,
-        json: true
-      }
-          
-      request(nflOptions, async (error, response, body) => {
-        games[0].nfl = body
-        await sleep(1000)
-        console.log(colors.fg.green+'Waited 1 Second to Finish Getting Games, Got NFL, NHL, MLB, and NBA Games, Resolve', colors.reset)
+        console.log(colors.fg.green+'MLB Games, Resolve', colors.reset)
         resolve('done')
       })
+
+      // const nflOptions = {
+      //   method: 'GET',
+      //   url: nflUrl ,
+      //   headers: headers,
+      //   json: true
+      // }
+          
+      // request(nflOptions, async (error, response, body) => {
+      //   games[0].nfl = body
+      //   await sleep(1000)
+      //   console.log(colors.fg.green+'Waited 1 Second to Finish Getting Games, Got NFL, NHL, MLB, and NBA Games, Resolve', colors.reset)
+      //   resolve('done')
+      // })
 
     })
     let result = await gamePromise
@@ -302,8 +304,8 @@ methods.getInfo = async (
                 team: team['abbreviation'],
                 schedule: item['games'],
                 teamInfo: team,
-                begin:'3/28',
-                end: '4/3'
+                begin:'4/4',
+                end: '4/10'
               }
               teamsSched.push(teamSchedule)
               schedules[0]['weeklySchedule'] = teamsSched
@@ -321,8 +323,8 @@ methods.getInfo = async (
                 team: team['abbreviation'],
                 schedule: item['games'],
                 teamInfo: team,
-                begin:'4/4',
-                end: '4/10'
+                begin:'4/11',
+                end: '4/17'
               }
               nextWeekSched.push(nextWeekSchedule)
               schedules[0]['nextSchedule'] = nextWeekSched    
@@ -564,7 +566,7 @@ methods.getStats = async (
         })
       }
 
-      if (sport === 'mlb') {
+      if (sport === 'none') {
         const piOptions = {
           method: 'GET',
           url: playerInfoUrl ,

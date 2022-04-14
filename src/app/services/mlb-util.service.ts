@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-let mlbImageRoot = `https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/`;
-let mlbImageEnd = `/headshot/67/current`;
+import { Injectable } from '@angular/core'
+let mlbImageRoot = `https://img.mlbstatic.com/mlb-photos/image/upload/w_426,q_100/v1/people/`
+let mlbImageEnd = `/headshot/67/current`
 
 @Injectable({
   providedIn: 'root'
@@ -502,7 +502,40 @@ export class MlbUtilService {
           firstName: "Justin",
           lastName: "Steele",
           image: mlbImageRoot+'657006'+mlbImageEnd,
-        }  
+        }, 
+        "14262":{
+          firstName: "Wander",
+          lastName: "Franco",
+          image: mlbImageRoot+'677551'+mlbImageEnd,
+        }, 
+        "29372":{
+          firstName: "Steven",
+          lastName: "Kwan",
+          image: mlbImageRoot+'680757'+mlbImageEnd,
+        }, 
+        "20042":{
+          firstName: "Bobby",
+          lastName: "Witt Jr.",
+          image: mlbImageRoot+'677951'+mlbImageEnd,
+        },
+        "14185":{
+          firstName: "Ke'Bryan",
+          lastName: "Hayes",
+          image: mlbImageRoot+'663647'+mlbImageEnd,
+        },
+        "15877":{
+          firstName: "Jonathan",
+          lastName: "India",
+          image: mlbImageRoot+'663697'+mlbImageEnd,
+        },
+        "14266":{
+          firstName: "Sean",
+          lastName: "Murphy",
+          image: mlbImageRoot+'669221'+mlbImageEnd,
+        }
+        
+        
+         
       }
 
       this.mlbTeams = [
@@ -560,7 +593,7 @@ export class MlbUtilService {
         {
           id: 116,
           city: "Cleveland",
-          name: "Indians",
+          name: "Guardians",
           abbreviation: "CLE",
           twitter: "#OurCLE",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/114.svg",

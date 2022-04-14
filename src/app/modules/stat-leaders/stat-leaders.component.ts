@@ -176,8 +176,9 @@ export class StatLeadersComponent implements OnInit {
     this.nflPosition = 'qb'
     this.nflDPosition = 'LB,DT,DE,OLB,ILB,MLB'
 
-    this.nhlSection = true
-    this.sport = 'nhl'
+    this.nhlSection = false
+    this.mlbSection = true
+    this.sport = 'mlb'
 
     this.st1 = 'passing'
     this.sf1 = 'passYards'
@@ -651,7 +652,7 @@ export class StatLeadersComponent implements OnInit {
         this.mobile = true
       }
       if (this.myData === undefined) {
-        this.sortNHL() //this.loadData()
+        this.loadMLB() //this.loadData()
         console.log('fetch data on init...')
       } else {
           this.loading = false
@@ -696,37 +697,13 @@ export class StatLeadersComponent implements OnInit {
 
           this.mlbPitchingData = res['playerStats'].playerStatsTotals //.filter(player => player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 1 : 0)); // && player.stats.pitching.pitcherStrikeouts > 6
           this.pitcherRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
-          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 2 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 5 : 0))
-          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 10 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 7 : 0) || player.stats.pitching.saves > 0)
+          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 0 : 0))
+          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 0 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 0 : 0) || player.stats.pitching.saves > 0)
 
           this.pitcherInfo(this.mlbPitchingData)
           this.pitcherInfo(this.pitcherRookies)
 
-          // for (let team of this.mlbTeams) {
-          //   for (let data of this.mlbPitchingData) { 
-          //     if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-          //       data.team.logo = team['officialLogoImageSrc']
-          //       data.team.city = team['city']
-          //       data.team.name = team['name']
-          //       data.team.twitter = team['twitter']
-          //       //this.pitcherFp(data);
-          //       this.mlbUtil.fantasyPoints(data,'p')
-          //       data.stats.pitching.earnedRunAvg = data.stats.pitching.earnedRunAvg.toFixed(2)
-          //       //this.loading = false;
-
-          //       if (data.player.officialImageSrc != null) {
-          //         data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
-          //       }
-
-          //       if (data.player.officialImageSrc == null) {
-          //         data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
-          //       }
-                
-          //     } 
-              
-          //   }  
-          // }
-         this.util.updatePlayers(res['playerInfo'].players, this.mlbPitchingData, this.mlbTeams)
+         //this.util.updatePlayers(res['playerInfo'].players, this.mlbPitchingData, this.mlbTeams)
           
           if (this.timeSpan != 'full') {
             this.spanGames();
@@ -760,34 +737,13 @@ export class StatLeadersComponent implements OnInit {
         'none',
         'haveSchedules').subscribe(async res => {
         
-         this.mlbHittingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.batting.atBats > (this.mlbSeason ? 15 : 0)) //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
+         this.mlbHittingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.batting.atBats > (this.mlbSeason ? 3 : 0)) //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
          this.hitterRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
          this.hitterInfo(this.mlbHittingData)
          this.hitterInfo(this.hitterRookies)
 
-        //  for (let team of this.mlbTeams) {
-        //    for (let data of this.mlbHittingData) { 
-        //      if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && data.player['currentTeam'].id === data.team.id) {
-        //        data.team.logo = team['officialLogoImageSrc'];
-        //        data.team.city = team['city'];
-        //        data.team.name = team['name'];
-        //        data.team.twitter = team['twitter'];
-        //        data.stats.batting.battingAvg = data.stats.batting.battingAvg.toFixed(3) 
-           
-        //        this.mlbUtil.fantasyPoints(data,'b')
-            
-        //       if (data.player.officialImageSrc != null) {
-        //         data.player.officialImageSrc = this.mlbService.imageSwap(data.player.officialImageSrc);
-        //       }
-
-        //       if (data.player.officialImageSrc == null) {
-        //         data.player.officialImageSrc = this.mlbplayerImages[data.player.id] != null ? this.mlbplayerImages[data.player.id].image : null;
-        //       }
-                
-        //      }
-        //    }  
-        //  }
-        this.util.updatePlayers(res['playerInfo'].players, this.mlbHittingData, this.mlbTeams)
+       
+        //this.util.updatePlayers(res['playerInfo'].players, this.mlbHittingData, this.mlbTeams)
          
         if (this.timeSpan != 'full') {
           this.spanGames();

@@ -34,7 +34,6 @@ export class StartingPitcherComponent implements OnInit {
   public specificFastballDataById: Array <any> = [];
   public speedResults: Array <any> = [];
   public gameDate: any;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
   public showData: Array <any>;
   public showBatterData: Array <any>;
   public playerInfo: Array <any>;
@@ -66,8 +65,9 @@ export class StartingPitcherComponent implements OnInit {
     startType: any 
   };
   public pitcherspeed: { pitcher: string, pitchspeedStart: string, lastName: string };
-  public gameStarters: Array <any> = [];
-  public gameBatters: Array <any> = [];
+  public gameStarters: Array <any> = []
+  public gameBatters: Array <any> = []
+  public dailyLineup: Array <any> = []
   public teamsCompletedPlayingToday: Array <any> = [];
   public maxD = new Date(today.getTime() + (24 * 60 * 60 * 1000));
   public teams: Array <any>;
@@ -127,16 +127,15 @@ export class StartingPitcherComponent implements OnInit {
     this.season = '2021-regular'
     this.playoffDate = 'Tue Oct 5 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.checkPlayoffs(new Date(this.selectedDate))
-    this.apiRoot = `https://api.mysportsfeeds.com/v2.1/pull/mlb/${this.season}`;
   }
 
   public checkPlayoffs(date) {
     if (date > new Date(this.playoffDate)) {
-      this.season = '2021-playoff'
+      this.season = '2022-playoff'
       this.isPlayoffs = true
       this.dataService.isPlayoffs = this.isPlayoffs
     } else {
-      this.season = '2021-regular'
+      this.season = '2022-regular'
       this.isPlayoffs = false
       this.dataService.isPlayoffs = this.isPlayoffs
     }    
@@ -244,19 +243,15 @@ export class StartingPitcherComponent implements OnInit {
           'haveSchedules',
           '').subscribe(res => {
             console.log(res, 'client res: schedlule')
-            //this.serverInfo = res
-            //this.fullSchedule = res['fullSchedule'].games
 
-      // this.nhlService
-      //   .getTeamStats(this.apiRoot, headers).subscribe(res => {
-      //     this.teamStatsUpdate = res['lastUpdatedOn'];
-      //     this.teamStats = res['teamStatsTotals']; 
-      //     console.log(this.teamStats, 'teamstats');        
-      // });
+            this.dailyLineup = res['dailyLineup']
 
-        // this.dataService
-        //   .getDailySchedule().subscribe(res => {
-            //console.log(res, "schedule...");
+            for(let item of this.dailyLineup) {
+              for(let sched of res['games'].games)
+              if (item.game.id === sched.schedule.id) {
+                item.game.score = sched.score
+              }
+            }
 
             if (res['games'].games.length === 0) {
               this.loading = false;
@@ -270,27 +265,12 @@ export class StartingPitcherComponent implements OnInit {
               this.gameDate = res['games'].games[0].schedule.startTime ? res['games'].games[0].schedule.startTime : res['games'].games[1].schedule.startTime;
               this.gamesToday = true
               //console.log(this.dailySchedule, 'sched');
-            
-              // forkJoin(
-              //   this.dailySchedule.map(
-              //       g => 
-                    
-              //        this.http.get(`${this.apiRoot}/games/`+g['schedule'].id+`/lineup.json?position=P,BO1,BO2,BO3,BO4`, { headers })
-                    
-              //     )
-              //   )
-              //   .subscribe(res => {
-
 
                   let i = null;
                   let i2 = null;
                   let res2 = null;
                   let game2 = null;
                   let score2 = null;
-                  let originalStart = null;
-                  let gameDay = null;
-                  let start = null
-                
                   
                   res.dailyLineup.forEach((item, index) => {
                     //console.log(this.dailySchedule[i], 'score for games');
@@ -299,8 +279,8 @@ export class StartingPitcherComponent implements OnInit {
                     try {
                       game2 = res.dailyLineup[i]['game'];
                       res2 = res.dailyLineup[i]['teamLineups'];
-                      score2 = this.dailySchedule[i].score;
-                      start = this.dailySchedule[i]['schedule'].startTime;
+                      score2 = this.dailyLineup[i]['game'].score
+                      //start = this.dailySchedule[i]['schedule'].startTime;
                     } catch(e) {
                       console.log(e, 'lineup error')
                       console.log(res.dailyLineup[i], 'error data')
@@ -308,12 +288,12 @@ export class StartingPitcherComponent implements OnInit {
 
                     res2.forEach((item, index) => {
                       //console.log(new Date(start).getDate(), 'start time', this.compareDate.getDate(), 'selected date down below');
-                      gameDay = new Date(this.gameDate);
-                      originalStart = game2.originalStartTime != null ? new Date(game2.originalStartTime) : new Date(game2.startTime);
+                      //gameDay = new Date(this.gameDate);
+                      //originalStart = game2.originalStartTime != null ? new Date(game2.originalStartTime) : new Date(game2.startTime);
                       //console.log(gameDay.getDay(), 'game day', originalStart.getDay(), 'original start', game2.homeTeam.abbreviation);
                      // if (gameDay.getDay() === originalStart.getDay() || game2.playedStatus === 'COMPLETED' || game2.playedStatus === 'LIVE') {
                        
-                        i2 = index;
+                        i2 = index
                         this.teamGames.push({team: res2[i2].team.id, gameID: game2.id, status: game2.playedStatus})
                         if (res2[i2].actual != null && res2[i2].expected != null) {
 
@@ -405,23 +385,15 @@ export class StartingPitcherComponent implements OnInit {
         'haveNflSchedules').subscribe(async res => {
           console.log(res, 'nfl stats data')
 
-      // this.dataService
-      //   .getDaily(playerString).subscribe(res => {
-            //console.log(res, "Daily stats...");
             this.dailyStats = res['dailyStats'].gamelogs
             this.teamStats = res['teamStats'].teamStatsTotals
-
-            // this.dataService
-            //   .getStats(playerString).subscribe(res => {
-              
-           
-              this.myData = res['playerStats'].playerStatsTotals
+            this.myData = res['playerStats'].playerStatsTotals
 
               for (let data of this.myData) {
-                data.player.gameLocation = "none";
+                data.player.gameLocation = "none"
 
                 if (this.startingP[data.player.id] != null) {
-                  this.startingP[data.player.id].new = false;  
+                  this.startingP[data.player.id].new = false  
                 }
               }
 
@@ -620,7 +592,7 @@ export class StartingPitcherComponent implements OnInit {
                        }
 
                     
-                      this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teamRef);    
+                      //this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teamRef);    
                     
 
                     }
@@ -931,7 +903,7 @@ export class StartingPitcherComponent implements OnInit {
                               }  
                           }
 
-                          this.util.updatePlayers(res['playerInfo'].players, this.myBatterData, this.teamRef)
+                          //this.util.updatePlayers(res['playerInfo'].players, this.myBatterData, this.teamRef)
                         }
                         
                         if (this.myBatterData && this.dailySchedule) {

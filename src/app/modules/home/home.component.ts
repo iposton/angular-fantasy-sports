@@ -160,9 +160,10 @@ export class HomeComponent implements OnInit {
     this.checkPlayoffs(new Date(this.mlbSelectedDate), 'mlb')
 
     this.testBrowser = isPlatformBrowser(platformId);
-    //this.nflSched = true;
-    this.nhlSched = true
-    this.load = 'loadNHL'
+    //this.nflSched = true
+    //this.nhlSched = true
+    this.mlbSched = true
+    this.load = 'loadMLB'
 
   }
 
