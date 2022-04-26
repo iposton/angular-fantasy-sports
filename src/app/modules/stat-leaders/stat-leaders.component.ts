@@ -695,10 +695,10 @@ export class StatLeadersComponent implements OnInit {
         'haveSchedules').subscribe(async res => {
           console.log(res, 'mlb pitchers stat leaders')
 
-          this.mlbPitchingData = res['playerStats'].playerStatsTotals //.filter(player => player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 1 : 0)); // && player.stats.pitching.pitcherStrikeouts > 6
+          this.mlbPitchingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 2 : 0) || player.stats.pitching.saves > 0 || player.stats.pitching.wins > 0); // && player.stats.pitching.pitcherStrikeouts > 6
           this.pitcherRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
-          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 0 : 0))
-          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 0 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 0 : 0) || player.stats.pitching.saves > 0)
+          this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 2 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 2 : 0))
+          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 3 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 1 : 0) || player.stats.pitching.saves > 0)
 
           this.pitcherInfo(this.mlbPitchingData)
           this.pitcherInfo(this.pitcherRookies)
@@ -737,7 +737,7 @@ export class StatLeadersComponent implements OnInit {
         'none',
         'haveSchedules').subscribe(async res => {
         
-         this.mlbHittingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.batting.atBats > (this.mlbSeason ? 3 : 0)) //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
+         this.mlbHittingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > 2 && player.stats.batting.atBats > (this.mlbSeason ? 8 : 0) || player.stats.batting.homeruns > (this.mlbSeason ? 0 : 0)) //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
          this.hitterRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
          this.hitterInfo(this.mlbHittingData)
          this.hitterInfo(this.hitterRookies)
