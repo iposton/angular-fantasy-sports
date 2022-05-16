@@ -95,7 +95,7 @@
                     ({{ data['pitchers'][0]?.playerObj?.stats?.pitching?.wins +'-'+ data['pitchers'][0]?.playerObj?.stats?.pitching?.losses }}) /
                     {{ data['pitchers'][0]?.playerObj?.stats?.pitching?.earnedRunAvg }} /
                  <span (click)="showFp = !showFp">  
-                   <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's</span> 
+                   <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's {{ data['pitchers'][0]?.playerObj?.stats?.pitching?.pca}} PCA</span> 
                    <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.stats?.fanDuelFPA}} FPA {{ data['pitchers'][0]?.playerObj?.stats?.pitching?.pca}} PCA</span>
                   </span>
                  </span>
@@ -107,7 +107,7 @@
                     {{ data['pitchers'][0]?.playerObj?.player?.earnedrunsToday }} ER's 
                     
                     <span (click)="showFp = !showFp">  
-                        <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's</span> 
+                        <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC</span> 
                         <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC</span>
                     </span>
                       
@@ -120,7 +120,7 @@
                     </span>
                     {{ data['pitchers'][0]?.playerObj?.player?.eraToday }} /
                     <span (click)="showFp = !showFp">  
-                        <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's</span> 
+                        <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC</span> 
                         <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC</span>
                     </span>
                  </span>
@@ -131,7 +131,7 @@
                       ({{ data['pitchers'][1]?.playerObj?.stats?.pitching?.wins +'-'+ data['pitchers'][1]?.playerObj?.stats?.pitching?.losses }}) /
                       {{ data['pitchers'][1]?.playerObj?.stats?.pitching?.earnedRunAvg }} /
                       <span (click)="showFp = !showFp">  
-                          <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's</span> 
+                          <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.stats.pitching.pitcherStrikeouts }}K's {{ data['pitchers'][1]?.playerObj?.stats?.pitching?.pca}} PCA</span> 
                           <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.stats?.fanDuelFPA}} FPA {{ data['pitchers'][1]?.playerObj?.stats?.pitching?.pca}} PCA</span>
                       </span>
                   </span>
@@ -140,7 +140,7 @@
                        {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC 
                       {{ data['pitchers'][1]?.playerObj?.player?.earnedrunsToday }} ER's 
                       <span (click)="showFp = !showFp">  
-                          <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's</span> 
+                          <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC</span> 
                           <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC</span>
                       </span>
                    </span>
@@ -151,7 +151,7 @@
                       </span>
                       {{ data['pitchers'][1]?.playerObj?.player?.eraToday }} /
                       <span (click)="showFp = !showFp">  
-                          <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's</span> 
+                          <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC</span> 
                           <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC</span>
                       </span>
                    </span>
@@ -178,7 +178,40 @@
                       <li class="goalie pitcher" *ngIf="group?.gameId != null">
                         <img src="{{group.player.image}}" alt="" onError="this.src='https://img.mlbstatic.com/mlb-photos/image/upload/w_60,q_100/v1/people/generic/headshot/silo/current'">
                         {{group.player.lastName}} 
+                        <span class="sched-rank sched-opp">
+                          <span class="weekopp-top">
+                            <span> {{group?.player?.opponent}} </span> 
+                          </span>
+                        </span>
                         <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span>
+                        <span *ngIf="group?.gameStatus === 'LIVE' || group?.gameStatus === 'COMPLETED_PENDING_REVIEW'">
+                          ERA: {{group?.player?.eraToday}} K's: {{group?.player?.strikeoutsToday}} 
+                        </span> 
+                        <span *ngIf="group?.gameStatus === 'COMPLETED' && group?.player?.winToday === 1" class="gold">
+                          W 
+                        </span>
+                        <span *ngIf="group?.gameStatus === 'COMPLETED' && group?.player?.loseToday === 1">
+                           L 
+                        </span> 
+                        <span *ngIf="group?.gameStatus === 'COMPLETED' && group?.player?.winToday === 0 && group?.player?.loseToday === 0">
+                           ND 
+                        </span> 
+
+                        <span *ngIf="group?.gameStatus === 'COMPLETED'" [ngClass]="{'gold' : group?.player?.eraToday &lt; 3.50}">
+                          {{group?.player?.eraToday}} ERA 
+                        </span> 
+                        <span *ngIf="group?.gameStatus === 'COMPLETED'" [ngClass]="{'gold' : group?.player?.pitchesthrownToday &gt; 85}">
+                          {{group?.player?.pitchesthrownToday}} PC 
+                        </span> 
+                        <span *ngIf="!group?.noHitterToday && group?.gameStatus === 'COMPLETED'" [ngClass]="{'gold' : group?.player?.strikeoutsToday &gt; 6}">
+                             {{group?.player?.strikeoutsToday}} K's
+                        </span> 
+                         <span *ngIf="group?.noHitterToday" class="gold">
+                             ({{group?.player?.strikeoutsToday}} K's no hitter)
+                         </span> 
+                         <span *ngIf="group?.player?.qsToday" class="gold">
+                           QS
+                         </span> 
                       </li>
                     </ul>
                   </li>

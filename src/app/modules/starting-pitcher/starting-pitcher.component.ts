@@ -539,7 +539,8 @@ export class StartingPitcherComponent implements OnInit {
                                   sdata.team.gameField = schedule.schedule.venue.name;
                                   //sdata.gameId = schedule.id;
                                   sdata.player.gameLocation = "away";
-                                  sdata.team.opponent = schedule.schedule.homeTeam.abbreviation;
+                                  sdata.team.opponent = schedule.schedule.homeTeam.abbreviation
+                                  sdata.player.opponent = "@ "+schedule.schedule.homeTeam.abbreviation
                                   //sdata.team.opponentCity = schedule.schedule.homeTeam.city;
                                   sdata.team.opponentId = schedule.schedule.homeTeam.id;
 
@@ -556,7 +557,8 @@ export class StartingPitcherComponent implements OnInit {
                                   sdata.team.gameField = schedule.schedule.venue.name;
                                   //sdata.gameId = schedule.schedule.id;
                                   sdata.player.gameLocation = "home";
-                                  sdata.team.opponent = schedule.schedule.awayTeam.abbreviation;
+                                  sdata.team.opponent = schedule.schedule.awayTeam.abbreviation
+                                  sdata.player.opponent = "vs "+schedule.schedule.awayTeam.abbreviation
                                   //sdata.team.opponentCity = schedule.schedule.awayTeam.city;
                                   sdata.team.opponentId = schedule.schedule.awayTeam.id;
 

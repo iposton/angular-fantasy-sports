@@ -532,10 +532,77 @@ export class MlbUtilService {
           firstName: "Sean",
           lastName: "Murphy",
           image: mlbImageRoot+'669221'+mlbImageEnd,
-        }
-        
-        
-         
+        },
+        "14237":{
+          firstName: "Mackenzie",
+          lastName: "Gore",
+          image: mlbImageRoot+'669022'+mlbImageEnd,
+        },
+        "29928":{
+          firstName: "Alek",
+          lastName: "Manoah",
+          image: mlbImageRoot+'666201'+mlbImageEnd,
+        },
+        "17733":{
+          firstName: "J.P.",
+          lastName: "Feyereisen",
+          image: mlbImageRoot+'656420'+mlbImageEnd,
+        },
+        "20509":{
+          firstName: "Drew",
+          lastName: "Rasmussen",
+          image: mlbImageRoot+'656876'+mlbImageEnd,
+        },
+        "20045":{
+          firstName: "Owen",
+          lastName: "Miller",
+          image: mlbImageRoot+'680911'+mlbImageEnd,
+        },
+        "15595":{
+          firstName: "Julio",
+          lastName: "Rodriguez",
+          image: mlbImageRoot+'677594'+mlbImageEnd,
+        },
+        "38539":{
+          firstName: "Seiya",
+          lastName: "Suzuki",
+          image: mlbImageRoot+'673548'+mlbImageEnd,
+        },
+        "35224":{
+          firstName: "Juan",
+          lastName: "Yepez",
+          image: mlbImageRoot+'660766'+mlbImageEnd,
+        },
+        "22487":{
+          firstName: "Alejandro",
+          lastName: "Kirk",
+          image: mlbImageRoot+'672386'+mlbImageEnd,
+        },
+        "15597":{
+          firstName: "Logan",
+          lastName: "Gilbert",
+          image: mlbImageRoot+'669302'+mlbImageEnd,
+        },
+        "17816":{
+          firstName: "Steven",
+          lastName: "Wilson",
+          image: mlbImageRoot+'621051'+mlbImageEnd,
+        },
+        "15795":{
+          firstName: "Garrett",
+          lastName: "Whitlock",
+          image: mlbImageRoot+'676477'+mlbImageEnd,
+        },
+        "17098":{
+          firstName: "David",
+          lastName: "Bednar",
+          image: mlbImageRoot+'670280'+mlbImageEnd,
+        },
+        "29012":{
+          firstName: "Reid",
+          lastName: "Detmers",
+          image: mlbImageRoot+'672282'+mlbImageEnd,
+        }   
       }
 
       this.mlbTeams = [

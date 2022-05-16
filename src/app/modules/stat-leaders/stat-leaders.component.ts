@@ -695,10 +695,10 @@ export class StatLeadersComponent implements OnInit {
         'haveSchedules').subscribe(async res => {
           console.log(res, 'mlb pitchers stat leaders')
 
-          this.mlbPitchingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 2 : 0) || player.stats.pitching.saves > 0 || player.stats.pitching.wins > 0); // && player.stats.pitching.pitcherStrikeouts > 6
+          this.mlbPitchingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.pitching.inningsPitched > (this.mlbSeason ? 4 : 0) || (player.stats.pitching.saves > 0 || player.stats.pitching.wins > 0)) // && player.stats.pitching.pitcherStrikeouts > 6
           this.pitcherRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
           this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 2 && this.timeSpan == 'full' || player.stats.miscellaneous['gamesStarted'] > 0 && this.timeSpan != 'full' && player.stats.pitching.inningsPitched > (this.mlbSeason ? 2 : 0))
-          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 3 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 1 : 0) || player.stats.pitching.saves > 0)
+          this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > (this.mlbSeason ? 6 : 0) && player.stats.pitching.holds > (this.mlbSeason ? 3 : 0) || player.stats.pitching.saves > 0)
 
           this.pitcherInfo(this.mlbPitchingData)
           this.pitcherInfo(this.pitcherRookies)
@@ -737,7 +737,7 @@ export class StatLeadersComponent implements OnInit {
         'none',
         'haveSchedules').subscribe(async res => {
         
-         this.mlbHittingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > 2 && player.stats.batting.atBats > (this.mlbSeason ? 8 : 0) || player.stats.batting.homeruns > (this.mlbSeason ? 0 : 0)) //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
+         this.mlbHittingData = res['playerStats'].playerStatsTotals.filter(player => player.stats != null && player.stats.gamesPlayed > (this.timeSpan == 'full' ? 5 : 2) && player.stats.batting.atBats > (this.timeSpan == 'full' ? 16 : 8) || player.stats.batting.homeruns > (this.timeSpan == 'full' ? 2 : 0)) //player.stats.gamesPlayed > 4 && player.stats.batting.atBats > 15
          this.hitterRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
          this.hitterInfo(this.mlbHittingData)
          this.hitterInfo(this.hitterRookies)
@@ -1369,7 +1369,7 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.pitching.pitcherWalks = data['10'];
                         info.stats.pitching.qs = data['13'];
                         info.stats.pitching.earnedRunsAllowed = data['3']
-                             
+                        info.stats.sl = this.timeSpan   
                         //this.pitcherFp(info);
                         this.mlbUtil.fantasyPoints(info,'p')
                       }
@@ -1388,7 +1388,7 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.batting.thirdBaseHits = data['10'];
                         info.stats.batting.batterWalks = data['11'];
                         info.stats.batting.hitByPitch = data['12'];
-                         
+                        info.stats.sl = this.timeSpan
                         //this.batterFp(info);
                         this.mlbUtil.fantasyPoints(info,'b')
                       }
@@ -1402,11 +1402,31 @@ export class StatLeadersComponent implements OnInit {
             });
 
             if (s === 'mlb' && this.mlbSection) {
-              this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched > 0);
-              this.mlbPitchingData = this.crunched;
+              this.crunched = this.mlbPitchingData.filter(player => player.player.span === this.timeSpan && player.stats.pitching.inningsPitched > 0)
+              this.mlbPitchingData = this.crunched
+
+              let pRookies = []
+              for(let pd of this.mlbPitchingData) {
+                for(let r of this.pitcherRookies) {
+                  if(pd.player.id === r.player.id) {
+                    pRookies.push(pd)
+                  }
+                }
+              }
+              this.pitcherRookies = pRookies
 
               this.pitcherERA = this.mlbPitchingData.filter(player => player.stats.miscellaneous['gamesStarted'] > 0 && player.stats.pitching.inningsPitched > 5);
-              this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > 3 && player.stats.pitching.holds > 2 && player.stats.pitching.inningsPitched > 3 ||  player.stats.pitching.saves > 0);
+              this.closerERA = this.mlbPitchingData.filter(player => player.stats.pitching.pitcherStrikeouts > 3 && player.stats.pitching.holds > 2 && player.stats.pitching.inningsPitched > 3 ||  player.stats.pitching.saves > 0)
+
+              let bRookies = []
+              for(let pd of this.mlbPitchingData) {
+                for(let r of this.hitterRookies) {
+                  if(pd.player.id === r.player.id) {
+                    bRookies.push(pd)
+                  }
+                }
+              }
+              this.hitterRookies = bRookies
                   
               this.mlbPitchingLoading = false;
             }
@@ -1682,8 +1702,8 @@ export class StatLeadersComponent implements OnInit {
               }
             });
 
-              this.crunched = this.nflData.filter(player => player.player.span === this.timeSpan);
-              this.nflData = this.crunched;
+              this.crunched = this.nflData.filter(player => player.player.span === this.timeSpan)
+              this.nflData = this.crunched
                
               // console.log(this.nhlGoaltenders, 'crunched nhl');
               this.nflOffenseLoading = false;
