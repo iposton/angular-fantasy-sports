@@ -602,7 +602,38 @@ export class MlbUtilService {
           firstName: "Reid",
           lastName: "Detmers",
           image: mlbImageRoot+'672282'+mlbImageEnd,
-        }   
+        },
+        "28873":{
+          firstName: "Christopher",
+          lastName: "Morel",
+          image: mlbImageRoot+'666624'+mlbImageEnd,
+        },
+        "14324":{
+          firstName: "Daulton",
+          lastName: "Varsho",
+          image: mlbImageRoot+'662139'+mlbImageEnd,
+        },
+        "20027":{
+          firstName: "Andrew",
+          lastName: "Vaughn",
+          image: mlbImageRoot+'683734'+mlbImageEnd,
+        },
+        "34925":{
+          firstName: "Spencer",
+          lastName: "Strider",
+          image: mlbImageRoot+'675911'+mlbImageEnd,
+        },
+        "15811":{
+          firstName: "Aaron",
+          lastName: "Ashby",
+          image: mlbImageRoot+'676879'+mlbImageEnd,
+        },
+        "29295":{
+          firstName: "Glenn",
+          lastName: "Otto",
+          image: mlbImageRoot+'657248'+mlbImageEnd,
+        }
+            
       }
 
       this.mlbTeams = [
@@ -614,8 +645,11 @@ export class MlbUtilService {
           twitter: "#Birdland",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/110.svg",
           gamesToday: 0,
-          gameIds: []
-          
+          gameIds: [],
+          teamColoursHex: [
+            "#df4601",
+            "#000000"
+          ]
         },
         {
           id: 112,
@@ -625,7 +659,12 @@ export class MlbUtilService {
           twitter: "#WeAreBlueJays ",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/141.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#134a8e",
+            "#1d2d5c",
+            "#e8291c"
+          ]
         },
         {
           id: 113,
@@ -635,7 +674,11 @@ export class MlbUtilService {
           twitter: "#DirtyWater",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/111.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#bd3039",
+            "#0c2340"
+          ]
         },
         {
           id: 114,
@@ -645,7 +688,12 @@ export class MlbUtilService {
           twitter: "#SquadUp",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/147.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#003087",
+            "#e4002c",
+            "#0c2340"
+          ]
         },
         {
           id: 115,
@@ -655,7 +703,12 @@ export class MlbUtilService {
           twitter: "#RaysUp",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/139.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#092c5c",
+            "#8fbce6",
+            "#f5d130"
+          ]
         },
         {
           id: 116,
@@ -665,7 +718,11 @@ export class MlbUtilService {
           twitter: "#OurCLE",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/114.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#0c2340",
+            "#e31937"
+          ]
         },
         {
           id: 117,
@@ -675,7 +732,11 @@ export class MlbUtilService {
           twitter: "#DetroitRoots",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/116.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#0c2340",
+            "#fa4616"
+          ]
         },
         {
           id: 118,
@@ -685,7 +746,11 @@ export class MlbUtilService {
           twitter: "#TogetherRoyal",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/118.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#004687",
+            "#bd9b60"
+          ]
         },
         {
           id: 119,
@@ -695,7 +760,11 @@ export class MlbUtilService {
           twitter: "#ChangetheGame",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/145.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#27251f",
+            "#c4ced4"
+          ]
         },
         {
           id: 120,
@@ -705,7 +774,10 @@ export class MlbUtilService {
           twitter: "#MNTwins",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/142.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#1A2B56"
+         ]
         },
         {
           id: 121,
@@ -715,7 +787,11 @@ export class MlbUtilService {
           twitter: "#StraightUpTX",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/140.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#003278",
+            "#c0111f"
+          ]
         },
         {
           id: 122,
@@ -725,7 +801,10 @@ export class MlbUtilService {
           twitter: "#ForTheH",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/117.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#EC821D"
+          ]
         },
         {
           id: 123,
@@ -735,7 +814,13 @@ export class MlbUtilService {
           twitter: "#SeaUsRise",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/136.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#0c2c56",
+            "#005c5c",
+            "#c4ced4",
+            "#d50032"
+          ]
         },
         {
           id: 124,
@@ -745,7 +830,14 @@ export class MlbUtilService {
           twitter: "#WeBelieve",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/108.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#003263",
+            "#ba0021",
+            "#862633",
+            "#c4ced4",
+            "#ffffff"
+          ]
         },
         {
           id: 125,
@@ -755,7 +847,10 @@ export class MlbUtilService {
           twitter: "#RiseAndGrind",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/133.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#00362F"
+          ]
         },
         {
           id: 126,
@@ -775,7 +870,11 @@ export class MlbUtilService {
           twitter: "#LGM",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/121.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#002d72",
+            "#ff5910"
+          ]
         },
         {
           id: 128,
@@ -785,7 +884,13 @@ export class MlbUtilService {
           twitter: "#JuntosMiami",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/146.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#00a3e0",
+            "#ef3340",
+            "#41748d",
+            "#000000"
+          ]
         },
         {
           id: 129,
@@ -795,7 +900,11 @@ export class MlbUtilService {
           twitter: "#RingTheBell",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/143.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#e81828",
+            "#002d72"
+          ]
         },
         {
           id: 130,
@@ -805,7 +914,10 @@ export class MlbUtilService {
           twitter: "#ForTheA",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/144.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#C7123F"
+          ],
         },
         {
           id: 131,
@@ -815,7 +927,11 @@ export class MlbUtilService {
           twitter: "#CubTogether",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/112.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#0e3386",
+            "#cc3433"
+          ]
         },
         {
           id: 132,
@@ -825,7 +941,11 @@ export class MlbUtilService {
           twitter: "#LetsGoBucs",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/134.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#27251f",
+            "#fdb827"
+          ]
         },
         {
           id: 133,
@@ -835,7 +955,10 @@ export class MlbUtilService {
           twitter: "#STLFLY",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/138.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#B70C13"
+          ],
         },
         {
           id: 134,
@@ -845,7 +968,10 @@ export class MlbUtilService {
           twitter: "#ThisIsMyCrew",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/158.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#112649"
+          ]
         },
         {
           id: 135,
@@ -855,7 +981,11 @@ export class MlbUtilService {
           twitter: "#ATOBTTR",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/113.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#c6011f",
+            "#000000"
+          ]
         },
         {
           id: 136,
@@ -865,7 +995,13 @@ export class MlbUtilService {
           twitter: "#ResilientSF",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/137.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#fd5a1e",
+            "#27251f",
+            "#efd19f",
+            "#ae8f6f"
+          ]
         },
         {
           id: 137,
@@ -875,7 +1011,10 @@ export class MlbUtilService {
           twitter: "#Dodgers",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/119.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#025797"
+          ]
         },
         {
           id: 138,
@@ -885,7 +1024,12 @@ export class MlbUtilService {
           twitter: "#Rockies",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/115.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#33006f",
+            "#c4ced4",
+            "#000000"
+          ]
         },
         {
           id: 139,
@@ -895,7 +1039,11 @@ export class MlbUtilService {
           twitter: "#HungryForMore",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/135.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#002d62",
+            "#a2aaad"
+          ]
         },
         {
           id: 140,
@@ -905,7 +1053,14 @@ export class MlbUtilService {
           twitter: "#RattleOn",
           officialLogoImageSrc: "https://www.mlbstatic.com/team-logos/109.svg",
           gamesToday: 0,
-          gameIds: []
+          gameIds: [],
+          teamColoursHex: [
+            "#a71930",
+            "#e3d4ad",
+            "#000000",
+            "#30ced8",
+            "#ffffff"
+          ]
         }
     ]
 

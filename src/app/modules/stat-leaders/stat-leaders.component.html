@@ -49,6 +49,17 @@
    <button [ngClass]="{'dn' : !nflSection}" (click)="week = 'all'; timeSpan = 'full'; defensePlayers();">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
    <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</button>
 </div>
+<div class="center" *ngIf="sport === 'mlb' && mlbHittingSection">
+  <select name="pos" id="pos" (change)="onHitterChange($event.target.value)">
+    <option value="OF,RF,LF,CF"> OF </option>
+    <option value="1B"> 1B </option>
+    <option value="2B"> 2B </option>
+    <option value="3B"> 3B </option>
+    <option value="SS"> SS </option>
+    <option value="C"> C </option>
+    <option value="DH"> DH </option>
+  </select>
+</div>
 <div class="center" *ngIf="sport != 'nfl'">
     <button (click)="getByDate('two-weeks', sport)">Last 14 Days</button> &nbsp;&nbsp;
     <button (click)="getByDate('last-week', sport)">Last 7 Days</button> &nbsp;&nbsp; 

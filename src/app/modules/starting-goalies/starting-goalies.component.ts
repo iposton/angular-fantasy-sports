@@ -1,11 +1,9 @@
 import { Observable, interval, forkJoin } from 'rxjs';
 import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren, PLATFORM_ID  } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
-import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { DatePipe, PercentPipe, isPlatformBrowser } from '@angular/common';
-import { debounceTime } from 'rxjs/operators';
-import * as CryptoJS from 'crypto-js';
+import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http'
+import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router'
+import { DatePipe, PercentPipe, isPlatformBrowser } from '@angular/common'
 
 import {
   NHLDataService,

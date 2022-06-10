@@ -107,8 +107,8 @@
                     {{ data['pitchers'][0]?.playerObj?.player?.earnedrunsToday }} ER's 
                     
                     <span (click)="showFp = !showFp">  
-                        <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC</span> 
-                        <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][0]?.playerObj?.player?.pitchesthrownToday }} PC</span>
+                        <span *ngIf="!showFp">{{ data['pitchers'][0]?.playerObj?.player?.strikeoutsToday }}K's</span> 
+                        <span *ngIf="showFp">{{ data['pitchers'][0]?.playerObj?.player.fanDuelFpToday }} FP</span>
                     </span>
                       
                     
@@ -140,8 +140,8 @@
                        {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC 
                       {{ data['pitchers'][1]?.playerObj?.player?.earnedrunsToday }} ER's 
                       <span (click)="showFp = !showFp">  
-                          <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC</span> 
-                          <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.player.fanDuelFpToday }} FP {{ data['pitchers'][1]?.playerObj?.player?.pitchesthrownToday }} PC</span>
+                          <span *ngIf="!showFp">{{ data['pitchers'][1]?.playerObj?.player?.strikeoutsToday }}K's </span> 
+                          <span *ngIf="showFp">{{ data['pitchers'][1]?.playerObj?.player.fanDuelFpToday }} FP </span>
                       </span>
                    </span>
                    <span *ngIf="data['pitchers'][1]?.playerObj?.gameStatus === 'COMPLETED'">
@@ -744,7 +744,7 @@
                       </span>
                   </span>  
                   <span *ngIf="data['batters'][0]?.playerObj?.gameStatus === 'UNPLAYED' &&
-                  data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['batters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['batters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['batters'][0]?.playerObj?.team?.opponent}}</span> </span> 
+                  data['batters'][0]?.playerObj?.sStatus != 'POSTPONED'">{{data['batters'][0]?.playerObj?.player.gameTime | date: 'shortTime'}} PST <span>{{data['batters'][0]?.playerObj?.player?.gameLocation === 'home' ? 'vs' : '@'}} {{data['batters'][0]?.playerObj?.team?.opponent}} &nbsp; (P - {{data['batters'][0]?.playerObj?.player?.pitchingOpponent}})</span> </span> 
                   <span class="postponed" *ngIf="data['batters'][0]?.playerObj?.sStatus === 'POSTPONED' && 
                   data['batters'][0]?.playerObj?.gameStatus != 'LIVE' && 
                   data['batters'][0]?.playerObj?.gameStatus != 'COMPLETED' &&
@@ -823,7 +823,8 @@
                             </span>
                             {{data?.player?.lastName}} - {{data?.player?.primaryPosition === 'P' ? 'DH' : data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
-                            {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
+                            <span *ngIf="data?.gameStatus === 'LIVE'">{{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} </span> <span *ngIf="data?.gameStatus === 'UNPLAYED' &&
+                            data?.sStatus != 'POSTPONED'"> {{data?.player?.pitchingOpponent}} </span>
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
                             <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
                             <span class="gold" *ngIf="data?.stats?.rbiToday &gt; 0"> {{data?.stats?.rbiToday}} RBI </span>
@@ -847,7 +848,8 @@
                             </span>
                             {{data?.player?.lastName}} - {{data?.player?.primaryPosition === 'P' ? 'DH' : data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
-                            {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
+                            <span *ngIf="data?.gameStatus === 'LIVE'">{{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} </span> <span *ngIf="data?.gameStatus === 'UNPLAYED' &&
+                            data?.sStatus != 'POSTPONED'"> {{data?.player?.pitchingOpponent}} </span> 
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
                             <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
                             <span class="gold" *ngIf="data?.stats?.rbiToday &gt; 0"> {{data?.stats?.rbiToday}} RBI </span>
@@ -871,7 +873,8 @@
                             </span>
                             {{data?.player?.lastName}} - {{data?.player?.primaryPosition === 'P' ? 'DH' : data?.player?.primaryPosition}} |
                             <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
-                            {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
+                            <span *ngIf="data?.gameStatus === 'LIVE'">{{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} </span> <span *ngIf="data?.gameStatus === 'UNPLAYED' &&
+                            data?.sStatus != 'POSTPONED'"> {{data?.player?.pitchingOpponent}} </span> 
                             <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
                             <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
                             <span class="gold" *ngIf="data?.stats?.rbiToday &gt; 0"> {{data?.stats?.rbiToday}} RBI </span>
@@ -893,7 +896,8 @@
                               </span>
                               {{data?.player?.lastName}} - {{data?.player?.primaryPosition === 'P' ? 'DH' : data?.player?.primaryPosition}} |
                               <span style="color: #2ecc71;" ngDefaultControl><i class="material-icons md-18" style="background: #fff; border-radius: 50%;">check_circle</i></span> 
-                              {{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} 
+                              <span *ngIf="data?.gameStatus === 'LIVE'">{{data?.stats?.hitsToday}} {{ data?.stats?.hitsToday === 1 ? 'Hit' : 'Hits' }} </span> <span *ngIf="data?.gameStatus === 'UNPLAYED' &&
+                            data?.sStatus != 'POSTPONED'"> {{data?.player?.pitchingOpponent}} </span> 
                               <span class="gold" *ngIf="data?.stats?.hrToday &gt; 0"> {{data?.stats?.hrToday}} HR </span> 
                             <span class="gold" *ngIf="data?.stats?.sbToday &gt; 0"> {{data?.stats?.sbToday}} SB </span>
                             <span class="gold" *ngIf="data?.stats?.rbiToday &gt; 0"> {{data?.stats?.rbiToday}} RBI </span>

@@ -145,6 +145,7 @@ export class StatLeadersComponent implements OnInit {
   public nflWeek: any
   public week: any = 'all'
   public defaultWeek: string = ''
+  public hitterPosition: string
 
 
   public crunchedDef: Array <any> = []
@@ -179,6 +180,7 @@ export class StatLeadersComponent implements OnInit {
     this.nhlSection = false
     this.mlbSection = true
     this.sport = 'mlb'
+    this.hitterPosition = 'OF,LF,RF,CF'
 
     this.st1 = 'passing'
     this.sf1 = 'passYards'
@@ -402,6 +404,12 @@ export class StatLeadersComponent implements OnInit {
      this.nflPosition = p
      this.defaultWeek = ''
      this.loadNFL()
+  }
+
+  public onHitterChange(p) {
+    this.hitterPosition = p
+    this.timeSpan = 'full'
+    this.loadHitters()
   }
 
   public onPosDChange(p) {
@@ -726,7 +734,7 @@ export class StatLeadersComponent implements OnInit {
         'team_stats_totals', 
         'player_stats_totals', 
         'playerString', 
-        'OF,1B,2B,3B,C,SS,CF,LF,RF,DH', 
+        this.hitterPosition, 
         '',
         this.tsDate, 
         'isToday',
@@ -741,9 +749,6 @@ export class StatLeadersComponent implements OnInit {
          this.hitterRookies = res['playerStats'].rookies ? res['playerStats'].rookies : []
          this.hitterInfo(this.mlbHittingData)
          this.hitterInfo(this.hitterRookies)
-
-       
-        //this.util.updatePlayers(res['playerInfo'].players, this.mlbHittingData, this.mlbTeams)
          
         if (this.timeSpan != 'full') {
           this.spanGames();

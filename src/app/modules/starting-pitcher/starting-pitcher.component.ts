@@ -5,10 +5,8 @@ import {FirebaseService,
         UtilService, 
         DepthService,
         MlbUtilService,
-        NHLDataService} from '../../services/index';
-import { isPlatformBrowser } from '@angular/common';
-import { interval, forkJoin } from 'rxjs';
-import * as CryptoJS from 'crypto-js';
+        NHLDataService} from '../../services/index'
+import { isPlatformBrowser } from '@angular/common'
 
 let headers = null;
 let playerString = null;
@@ -177,7 +175,7 @@ export class StartingPitcherComponent implements OnInit {
     let twitter = null;
     twitter = player.team.twitter;
     let searchterm = null;
-    searchterm = 'query=' + player.player.lastName + ' ' + twitter;
+    searchterm = 'query=' + player.player.lastName + ' ' + twitter
     this.image = player.player.image;
     this.name = player.player.firstName + ' ' + player.player.lastName +' - '+ player.player.primaryPosition +' | #'+ player.player.jerseyNumber;
     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
@@ -383,7 +381,7 @@ export class StartingPitcherComponent implements OnInit {
         'noUpdate',
         'none',
         'haveNflSchedules').subscribe(async res => {
-          console.log(res, 'nfl stats data')
+          console.log(res, 'pitcher stats data')
 
             this.dailyStats = res['dailyStats'].gamelogs
             this.teamStats = res['teamStats'].teamStatsTotals
@@ -910,11 +908,11 @@ export class StartingPitcherComponent implements OnInit {
                         
                         if (this.myBatterData && this.dailySchedule) {
                           //console.log('start sorting data for pitching opponent...');
-                          for (let schedule of this.myBatterData) {
+                          for (let schedule of this.myData) {
                             for (let sdata of this.myBatterData) {
                               if (sdata.team.opponentId === schedule.team.id && 
                                 sdata.gameId === schedule.gameId) {
-                                sdata.player.pitchingOpponent = schedule.player.firstName + ' ' + schedule.player.lastName;
+                                sdata.player.pitchingOpponent = schedule.player.lastName + ' ' + schedule.stats.pitching.earnedRunAvg
                                 sdata.team.opponentLogo = schedule.team.logo;
                               }
                             }

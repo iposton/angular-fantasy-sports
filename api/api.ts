@@ -2,6 +2,7 @@ let request = require('request')
 let methods: any = {}
 let apiRoot: string = `https://api.mysportsfeeds.com/v2.1/pull`
 import { forkJoin } from 'rxjs'
+import { debounceTime, delay, take } from 'rxjs/operators'
 
 let info = [
     {
@@ -624,12 +625,12 @@ methods.getStats = async (
                     }
                   })
               )
-            )
+            ) //.pipe(delay(10))
           } else {
             console.log('Something went wrong getting Boxscores')
           }
-          await sleep(2000)
-          console.log(colors.fg.green+'Waited 2 seconds for boxscores, Resolve', colors.reset)
+          await sleep(3500)
+          console.log(colors.fg.green+'Waited 3.5 seconds for boxscores, Resolve', colors.reset)
           resolve('done')
         })
        }) 
