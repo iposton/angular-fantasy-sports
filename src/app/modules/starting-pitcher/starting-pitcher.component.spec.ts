@@ -8,8 +8,9 @@ describe('StartingPitcherComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StartingPitcherComponent ]
-    })
+    declarations: [StartingPitcherComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

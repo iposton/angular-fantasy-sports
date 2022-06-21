@@ -8,8 +8,9 @@ describe('TeamRankComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeamRankComponent ]
-    })
+    declarations: [TeamRankComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

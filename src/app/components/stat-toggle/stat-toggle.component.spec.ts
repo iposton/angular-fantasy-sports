@@ -8,8 +8,9 @@ describe('StatToggleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatToggleComponent ]
-    })
+    declarations: [StatToggleComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

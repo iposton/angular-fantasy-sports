@@ -8,8 +8,9 @@ describe('StartingGoaliesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StartingGoaliesComponent ]
-    })
+    declarations: [StartingGoaliesComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

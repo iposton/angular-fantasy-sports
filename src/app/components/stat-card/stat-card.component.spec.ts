@@ -8,8 +8,9 @@ describe('StatCardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatCardComponent ]
-    })
+    declarations: [StatCardComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

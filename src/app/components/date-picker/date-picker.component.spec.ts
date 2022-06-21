@@ -8,8 +8,9 @@ describe('DatePickerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DatePickerComponent ]
-    })
+    declarations: [DatePickerComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

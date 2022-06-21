@@ -8,8 +8,9 @@ describe('TeamScheduleComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeamScheduleComponent ]
-    })
+    declarations: [TeamScheduleComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

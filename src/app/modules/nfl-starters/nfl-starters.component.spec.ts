@@ -8,8 +8,9 @@ describe('NflStartersComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NflStartersComponent ]
-    })
+    declarations: [NflStartersComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

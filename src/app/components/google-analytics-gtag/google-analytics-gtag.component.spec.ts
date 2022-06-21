@@ -8,8 +8,9 @@ describe('GoogleAnalyticsGtagComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ GoogleAnalyticsGtagComponent ]
-    })
+    declarations: [GoogleAnalyticsGtagComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

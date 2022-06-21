@@ -34,48 +34,47 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
 import { NflStartersComponent } from './modules/nfl-starters/nfl-starters.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    StartingPitcherComponent,
-    OrderBy,
-    StartingGoaliesComponent,
-    StartingFiveComponent,
-    HomeComponent,
-    StatLeadersComponent,
-    MinuteSecondsPipe,
-    GoogleAnalyticsGtagComponent,
-    SpinnerComponent,
-    SortByPipe,
-    StatCardComponent,
-    TeamRankComponent,
-    StatToggleComponent,
-    PositionCardComponent,
-    TeamScheduleComponent,
-    DialogComponent,
-    DatePickerComponent,
-    NflStartersComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    BrowserTransferStateModule,
-    BrowserAnimationsModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TransferStateInterceptor,
-      multi: true
-    }
-  ],
-  entryComponents: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        StartingPitcherComponent,
+        OrderBy,
+        StartingGoaliesComponent,
+        StartingFiveComponent,
+        HomeComponent,
+        StatLeadersComponent,
+        MinuteSecondsPipe,
+        GoogleAnalyticsGtagComponent,
+        SpinnerComponent,
+        SortByPipe,
+        StatCardComponent,
+        TeamRankComponent,
+        StatToggleComponent,
+        PositionCardComponent,
+        TeamScheduleComponent,
+        DialogComponent,
+        DatePickerComponent,
+        NflStartersComponent
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        BrowserTransferStateModule,
+        BrowserAnimationsModule,
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AppRoutingModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TransferStateInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

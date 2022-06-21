@@ -8,8 +8,9 @@ describe('StartingFiveComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StartingFiveComponent ]
-    })
+    declarations: [StartingFiveComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 
