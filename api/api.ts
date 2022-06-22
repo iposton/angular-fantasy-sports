@@ -220,12 +220,17 @@ methods.getInfo = async (
         headers: headers,
         json: true
       }
-          
-      request(mlbOptions, async (error, response, body) => {
-        games[0].mlb = body
-        console.log(colors.fg.green+'MLB Games, Resolve', colors.reset)
-        resolve('done')
-      })
+      try {
+        request(mlbOptions, async (error, response, body) => {
+          // console.log(error, 'error')
+          games[0].mlb = body
+          console.log(colors.fg.green+'MLB Games, Resolve', colors.reset)
+          resolve('done')
+        })
+      } catch(e) {
+        console.log(e, 'error')
+      }   
+      
 
       // const nflOptions = {
       //   method: 'GET',

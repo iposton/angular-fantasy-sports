@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase/app'
+import "firebase/auth"
 //import firebase from 'firebase/app'
 
 
@@ -38,13 +39,13 @@ export class FirebaseService {
   }
 
  signInRegular(email, password) {
-   const credential = firebase.auth.EmailAuthProvider.credential( email, password );
+   //const credential = firebase.auth.EmailAuthProvider.credential( email, password );
    return this.firebaseAuth.signInWithEmailAndPassword(email, password)
  }
 
  isLoggedIn() {
   if (this.userDetails == null ) {
-      console.log("this.userDetails are null");
+      console.log("userDetails are null");
       return false;
     } else {
       //console.log(this.userDetails, "this.userDetails is true and logged in...");
