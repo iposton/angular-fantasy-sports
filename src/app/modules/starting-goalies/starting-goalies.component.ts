@@ -1,6 +1,6 @@
 import { Observable, interval, forkJoin } from 'rxjs';
 import { Component, ViewChild, Inject, OnInit, ChangeDetectorRef, ViewChildren, PLATFORM_ID  } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http'
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router'
 import { DatePipe, PercentPipe, isPlatformBrowser } from '@angular/common'
@@ -36,7 +36,7 @@ export class StartingGoaliesComponent implements OnInit {
 
   @ViewChildren('myInput') vc;
 
-  public goalies = new FormControl();
+  public goalies = new UntypedFormControl();
   public starters: Array <any>;
   public dailySchedule: Array <any>;
   public dailyLineup: Array <any>;
