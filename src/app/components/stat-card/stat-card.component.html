@@ -92,30 +92,32 @@
                   {{ (item?.stats)[statType][statField] }} {{ statTag }}
                   <span *ngIf="sport === 'nfl' && title != 'Rookie Total Yds'">
                     <span *ngIf="statType === 'interceptions' && item?.stats[statType]?.intTD &gt; 0">{{ item?.stats[statType]?.intTD }} TD</span>
-                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame'">{{ item?.stats[statType]?.passTD }} TD</span>
+                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField != 'offSnapPct'" [ngStyle]="{color: item?.stats[statType]?.passTD &gt; 30 ? 'gold' : 'white'}">{{ item?.stats[statType]?.passTD }} TD</span>
+                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField == 'offSnapPct'" [ngStyle]="{color: (item?.stats.rushing?.rushYards + item?.stats?.receiving?.recYards) &gt; (item?.player?.primaryPosition == 'rb' ? 900 : 1100) ? 'gold' : 'white'}">{{ item?.stats.rushing?.rushYards + item?.stats?.receiving?.recYards }} Yds </span> 
+                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField == 'offSnapPct'" [ngStyle]="{color: item?.stats?.receiving?.receptions &gt; (item?.player?.primaryPosition == 'rb' ? 45 : 85) ? 'gold' : 'white'}"> {{ item?.stats?.receiving?.receptions }} Rec</span>
                     <span *ngIf="statType === 'passing' && statField == 'ydsPerGame'">{{ item?.stats[statType]?.passTD + item?.stats?.rushing?.rushTD }} TD</span>
-                    <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'">{{ item?.stats[statType]?.rushTD }} TD</span>
+                    <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'" [ngStyle]="{color: item?.stats[statType]?.rushTD &gt; 8 ? 'gold' : 'white'}">{{ item?.stats[statType]?.rushTD }} TD</span>
                     <span *ngIf="statType === 'rushing' && statField == 'ydsPerGame'">{{ item?.stats[statType]?.rushTD + item?.stats?.receiving?.recTD }} TD</span>
-                    <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct' && statField != 'fanDuelFP' && statField != 'fanDuelFPA'">{{ item?.stats[statType]?.recTD }} TD</span>
-                    <span *ngIf="statField === 'totalTouchPct'">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
+                    <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct' && statField != 'fanDuelFP' && statField != 'fanDuelFPA'" [ngStyle]="{color: item?.stats[statType]?.recTD &gt; 8 ? 'gold' : 'white'}">{{ item?.stats[statType]?.recTD }} TD</span>
+                    <span *ngIf="statField === 'totalTouchPct'" [ngStyle]="{color: (item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD) &gt; 8 ? 'gold' : 'white'}">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
+                    <span *ngIf="statField == 'fanDuelFPA'">{{ item?.stats.gamesPlayed }} GP</span>
                   </span>
                   <span *ngIf="sport === 'nfl' && title == 'Rookie Total Yds'">
                     <span *ngIf="statType === 'passing'">{{ item?.stats[statType]?.totalPassTd }} TD</span>
                     <span *ngIf="statType === 'receiving'">{{ item?.stats[statType]?.totalTd }} TD</span>
-                    
                   </span>
                   <span *ngIf="sport === 'mlb'">
                     <span *ngIf="statField === 'pitcherStrikeouts'" [ngStyle]="{color: item?.stats[statType]?.earnedRunAvg &lt; 3.35 ? 'gold' : 'white'}">{{ item?.stats[statType]?.earnedRunAvg }} ERA</span>
                     <span *ngIf="statField === 'earnedRunAvg'" [ngStyle]="{color: item?.stats[statType]?.pca &gt; 84 ? 'gold' : 'white'}">{{ item?.stats[statType]?.pca }} PCA</span>
-                    <span *ngIf="statField === 'fanDuelFP' && statType === 'pitching'" [ngStyle]="{color: item?.stats[statType]?.pitcherStrikeouts &gt; (item?.stats?.sl === 'last-week' ? 9 : item?.stats?.sl === 'two-weeks' ? 17 : 33) ? 'gold' : 'white'}">{{ item?.stats[statType]?.pitcherStrikeouts }} Ks</span>
-                    <span *ngIf="statField === 'saves' && statType === 'pitching'" [ngStyle]="{color: item?.stats[statType]?.pitcherStrikeouts &gt; (item?.stats?.sl === 'last-week' ? 4 : item?.stats?.sl === 'two-weeks' ? 7 : 14) ? 'gold' : 'white'}">{{ item?.stats[statType]?.pitcherStrikeouts }} Ks </span> 
+                    <span *ngIf="statField === 'fanDuelFP' && statType === 'pitching'" [ngStyle]="{color: item?.stats[statType]?.pitcherStrikeouts &gt; (item?.stats?.sl === 'last-week' ? 9 : item?.stats?.sl === 'two-weeks' ? 17 : 119) ? 'gold' : 'white'}">{{ item?.stats[statType]?.pitcherStrikeouts }} Ks</span>
+                    <span *ngIf="statField === 'saves' && statType === 'pitching'" [ngStyle]="{color: item?.stats[statType]?.pitcherStrikeouts &gt; (item?.stats?.sl === 'last-week' ? 4 : item?.stats?.sl === 'two-weeks' ? 7 : 39) ? 'gold' : 'white'}">{{ item?.stats[statType]?.pitcherStrikeouts }} Ks </span> 
                     <span *ngIf="statField === 'wins' && item?.stats[statType]?.qs != null || statField === 'fanDuelFP' && statType === 'pitching' && item?.stats[statType]?.qs != null"> {{ item?.stats[statType]?.qs }} QS</span>
-                    <span *ngIf="statField === 'runsBattedIn'" [ngStyle]="{color: item?.stats[statType]?.homeruns &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 3 : 6) ? 'gold' : 'white'}">{{ item?.stats[statType]?.homeruns }} HR</span>
-                    <span *ngIf="statField === 'battingAvg' || statField === 'plateAppearances'" [ngStyle]="{color: item?.stats[statType]?.hits &gt; (item?.stats?.sl === 'last-week' ? 6 : item?.stats?.sl === 'two-weeks' ? 10 : 20) ? 'gold' : 'white'}">{{ item?.stats[statType]?.hits }} H</span>
-                    <span *ngIf="statField === 'homeruns' || statField === 'secondBaseHits' || statField === 'fanDuelFP' && statType === 'batting'" [ngStyle]="{color: item?.stats[statType]?.runsBattedIn &gt; (item?.stats?.sl === 'last-week' ? 6 : item?.stats?.sl === 'two-weeks' ? 10 : 22) ? 'gold' : 'white'}">{{ item?.stats[statType]?.runsBattedIn }} RBI</span>
+                    <span *ngIf="statField === 'runsBattedIn'" [ngStyle]="{color: item?.stats[statType]?.homeruns &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 3 : 14) ? 'gold' : 'white'}">{{ item?.stats[statType]?.homeruns }} HR</span>
+                    <span *ngIf="statField === 'battingAvg' || statField === 'plateAppearances'" [ngStyle]="{color: item?.stats[statType]?.hits &gt; (item?.stats?.sl === 'last-week' ? 6 : item?.stats?.sl === 'two-weeks' ? 10 : 49) ? 'gold' : 'white'}">{{ item?.stats[statType]?.hits }} H</span>
+                    <span *ngIf="statField === 'homeruns' || statField === 'secondBaseHits' || statField === 'fanDuelFP' && statType === 'batting'" [ngStyle]="{color: item?.stats[statType]?.runsBattedIn &gt; (item?.stats?.sl === 'last-week' ? 6 : item?.stats?.sl === 'two-weeks' ? 10 : 49) ? 'gold' : 'white'}">{{ item?.stats[statType]?.runsBattedIn }} RBI</span>
                     <span *ngIf="statField === 'hits'" [ngStyle]="{color: item?.stats[statType]?.battingAvg &gt; 0.274 ? 'gold' : 'white'}">{{ item?.stats[statType]?.battingAvg }} BA</span>
-                    <span *ngIf="statField === 'runs'" [ngStyle]="{color: item?.stats[statType]?.stolenBases &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 3 : 3) ? 'gold' : 'white'}">{{ item?.stats[statType]?.stolenBases }} SB</span>
-                    <span *ngIf="statField === 'stolenBases'" [ngStyle]="{color: item?.stats[statType]?.runs &gt; (item?.stats?.sl === 'last-week' ? 3 : item?.stats?.sl === 'two-weeks' ? 5 : 17) ? 'gold' : 'white'}">{{ item?.stats[statType]?.runs }} R</span>
+                    <span *ngIf="statField === 'runs'" [ngStyle]="{color: item?.stats[statType]?.stolenBases &gt; (item?.stats?.sl === 'last-week' ? 2 : item?.stats?.sl === 'two-weeks' ? 3 : 9) ? 'gold' : 'white'}">{{ item?.stats[statType]?.stolenBases }} SB</span>
+                    <span *ngIf="statField === 'stolenBases'" [ngStyle]="{color: item?.stats[statType]?.runs &gt; (item?.stats?.sl === 'last-week' ? 3 : item?.stats?.sl === 'two-weeks' ? 5 : 49) ? 'gold' : 'white'}">{{ item?.stats[statType]?.runs }} R</span>
                   </span>
 
                   <span *ngIf="sport === 'nhl'">

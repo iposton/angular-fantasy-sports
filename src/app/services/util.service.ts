@@ -131,19 +131,19 @@ export class UtilService {
           old.team.id = n['teamAsOfDate'].id;    
           old.team.abbreviation = n['teamAsOfDate'].abbreviation;
 
-          // if (old.player.id === 7457) {
-          //   old.player['currentTeam'].id = 72;
-          //   old.team.id = 72;
-          //   old.team.abbreviation = 'DEN';
-          // }
+          if (old.player.id === 9712) {
+            old.player['currentTeam'].id = 55
+            old.team.id = 55
+            old.team.abbreviation = 'WAS'
+          }
 
-          old.player.unsigned = false;
-          if (old.player.id === 16494) {
-            old.player.unsigned = true;
+          old.player.unsigned = false
+          if (old.player.id === 8100) {
+            old.player.unsigned = true
           }
         }
         if (n.player.id === old.player.id && n['teamAsOfDate'] == null) {
-          old.player.unsigned = true;
+          old.player.unsigned = true
         }
         if (n.player.rookie) {
           n.stats = {drafted: {overallPick: n.player.drafted != null ? n.player.drafted.overallPick : 9000}}
@@ -151,6 +151,6 @@ export class UtilService {
         
       }
     }
-    this.teamInfo(players, teams);
+    this.teamInfo(players, teams)
   }
 }

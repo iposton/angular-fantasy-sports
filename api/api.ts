@@ -225,26 +225,25 @@ methods.getInfo = async (
           // console.log(error, 'error')
           games[0].mlb = body
           console.log(colors.fg.green+'MLB Games, Resolve', colors.reset)
-          resolve('done')
+          //resolve('done')
         })
       } catch(e) {
         console.log(e, 'error')
       }   
       
-
-      // const nflOptions = {
-      //   method: 'GET',
-      //   url: nflUrl ,
-      //   headers: headers,
-      //   json: true
-      // }
+      const nflOptions = {
+        method: 'GET',
+        url: nflUrl ,
+        headers: headers,
+        json: true
+      }
           
-      // request(nflOptions, async (error, response, body) => {
-      //   games[0].nfl = body
-      //   await sleep(1000)
-      //   console.log(colors.fg.green+'Waited 1 Second to Finish Getting Games, Got NFL, NHL, MLB, and NBA Games, Resolve', colors.reset)
-      //   resolve('done')
-      // })
+      request(nflOptions, async (error, response, body) => {
+        games[0].nfl = body
+        await sleep(1000)
+        console.log(colors.fg.green+'Waited 1 Second to Finish Getting Games, Got NFL, MLB Games, Resolve', colors.reset)
+        resolve('done')
+      })
 
     })
     let result = await gamePromise
@@ -472,13 +471,21 @@ methods.getStats = async (
           console.log(`Get ${sport} schedule games for sort ranks.`)
           forkJoin(
             jsonTeam.map(
-              g => request(`${apiRoot}/${sport}/${season}/games.json?team=${g.abbreviation}`, {headers},
+              g => request(`${apiRoot}/${sport}/2022-2023-regular/games.json?team=${g.abbreviation}`, {headers},
                 async function(err, res, body) {
                   try {
                     //getting nfl schedules
                     let data = await JSON.parse(body)
-                    stats[0].scheduleGames.push(data)
+                    let byes = data.teamByeWeeks
                     data.gamesBelongTo = g['abbreviation']
+                    data.gamesBelongId = g['id']
+                    byes.forEach ((item) => {
+                      if (item.team.id === data.gamesBelongId) {
+                        data.bye = item.byeWeeks[0]
+                      }
+                    })
+                    stats[0].scheduleGames.push(data)
+
                   } catch(e) {
                     console.log(colors.fg.red+'Schedule games error:', e, colors.reset)
                   }
@@ -572,10 +579,10 @@ methods.getStats = async (
         })
       }
 
-      if (sport === 'none') {
+      if (sport === 'nfl') {
         const piOptions = {
           method: 'GET',
-          url: playerInfoUrl ,
+          url: playerInfoUrl,
           headers: headers,
           json: true
         }
@@ -583,7 +590,10 @@ methods.getStats = async (
         request(piOptions, async (error, response, body) => {
             //only use at the start of season to fetch all players
             console.log(`got player info for ${sport}`)
+            let rookies = null
+            body.rookies = body['players'].filter(item => item.player.rookie === true && item.player.drafted != null && item.player.drafted.year == 2022)
             stats[0].playerInfo = await body
+            
         })
       }
       

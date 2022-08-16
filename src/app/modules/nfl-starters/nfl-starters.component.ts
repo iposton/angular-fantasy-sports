@@ -673,6 +673,7 @@ export class NflStartersComponent implements OnInit {
 
   public sortTeamRanks() {
     this.nflTeamStatsLoading = true
+    this.nflUtil.teamFp(this.teams, this.teamStats)
     this.nflUtil.rank(this.teams, this.teamStats, this.selectedWeek)
     this.nflUtil.updateTeamStats(this.teamStats)
     this.nflTeamStats = this.teamStats

@@ -24,6 +24,8 @@
                     Sacks: <span [ngStyle]="{color: item.stats.tackles.sacks &lt; 30 ? '#e74c3c' : 'gold'}">{{item?.stats?.tackles.sacks}}</span>   &nbsp;
                     Int: <span [ngStyle]="{color: item.stats.interceptions?.interceptions &lt; 13 ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.interceptions}}</span>   &nbsp;
                     Passes Defened: <span [ngStyle]="{color: item.stats.interceptions?.passesDefended &lt; 84 ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.passesDefended}}</span> &nbsp;
+                    TD: <span [ngStyle]="{color: item?.stats?.receiving.defTD &lt; 1 ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving.defTD}}</span> &nbsp;
+                    FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamFDFP &lt; 400 ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamDefFDFP}}</span>
                     <span *ngIf="item?.opponentYdsArr && item?.opponentYdsArr.length > 0">
                             <b>Yds Allowed:</b> 
                         <span *ngFor="let g of item?.opponentYdsArr"> 
@@ -38,7 +40,8 @@
                     Avg Yards Per Play: <span [ngStyle]="{color: item?.stats?.miscellaneous?.offenseAvgYds &lt; 5 ? '#e74c3c' : 'gold'}">{{item?.stats?.miscellaneous?.offenseAvgYds}}</span>   &nbsp;
                     Sacks Given up: <span [ngStyle]="{color: item?.stats?.passing?.passSacks &gt; 30 ? '#e74c3c' : 'gold'}">{{item?.stats?.passing?.passSacks}}</span>   &nbsp;
                     Pass TD's: <span [ngStyle]="{color: item?.stats?.passing?.passTD &lt; 27 ? '#e74c3c' : 'gold'}">{{item?.stats?.passing?.passTD}}</span>    &nbsp;
-                    Rush TD's: <span [ngStyle]="{color: item?.stats?.rushing?.rushTD &lt; 14 ? '#e74c3c' : 'gold'}">{{item?.stats?.rushing?.rushTD}}</span>
+                    Rush TD's: <span [ngStyle]="{color: item?.stats?.rushing?.rushTD &lt; 14 ? '#e74c3c' : 'gold'}">{{item?.stats?.rushing?.rushTD}}</span> &nbsp;
+                    FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamFDFP &lt; 1200 ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamFDFP}}</span>
                   </span>
                 </span> 
                 <span *ngIf="title === 'Toughest Defense Schedule 2021' && item?.scheduleTicker != null">

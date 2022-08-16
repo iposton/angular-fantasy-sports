@@ -4,6 +4,8 @@ import { forkJoin } from 'rxjs';
 import { CompletionKind } from '@angular/compiler-cli/src/ngtsc/typecheck/api';
 import { WrappedNodeExpr } from '@angular/compiler';
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/';
+let time22 = `2022 00:00:00 GMT-0700 (Pacific Daylight Time)`
+let time23 = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
 
 @Injectable({
   providedIn: 'root'
@@ -16,113 +18,113 @@ export class NflUtilService {
   constructor(private http: HttpClient) {
     this.weekTimes = [
       {
-        dateBeg: 'Thu Sep 09 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Sep 16 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Sep 08 ${time22}`,
+        dateEnd: `Thu Sep 15 ${time22}`,
         week: '1'
       },
       {
-        dateBeg: 'Thu Sep 16 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Sep 23 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Sep 15 ${time22}`,
+        dateEnd: `Thu Sep 22 ${time22}`,
         week: '2'
       },
       {
-        dateBeg: 'Thu Sep 23 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Sep 30 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Sep 22 ${time22}`,
+        dateEnd: `Thu Sep 29 ${time22}`,
         week: '3'
       },
       {
-        dateBeg: 'Thu Sep 30 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Oct 07 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Sep 29 ${time22}`,
+        dateEnd: `Thu Oct 06 ${time22}`,
         week: '4'
       },
       {
-        dateBeg: 'Thu Oct 07 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Oct 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Oct 06 ${time22}`,
+        dateEnd: `Thu Oct 13 ${time22}`,
         week: '5'
       },
       {
-        dateBeg: 'Thu Oct 14 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Oct 21 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Oct 13 ${time22}`,
+        dateEnd: `Thu Oct 20 ${time22}`,
         week: '6'
       },
       {
-        dateBeg: 'Thu Oct 21 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Oct 28 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Oct 20 ${time22}`,
+        dateEnd: `Thu Oct 27 ${time22}`,
         week: '7'
       },
       {
-        dateBeg: 'Thu Oct 28 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Nov 04 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Oct 27 ${time22}`,
+        dateEnd: `Thu Nov 03 ${time22}`,
         week: '8'
       },
       {
-        dateBeg: 'Thu Nov 04 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Nov 11 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Nov 03 ${time22}`,
+        dateEnd: `Thu Nov 10 ${time22}`,
         week: '9'
       },
       {
-        dateBeg: 'Thu Nov 11 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Nov 18 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Nov 10 ${time22}`,
+        dateEnd: `Thu Nov 17 ${time22}`,
         week: '10'
       },
       {
-        dateBeg: 'Thu Nov 18 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Nov 25 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Nov 17 ${time22}`,
+        dateEnd: `Thu Nov 24 ${time22}`,
         week: '11'
       },
       {
-        dateBeg: 'Thu Nov 25 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Dec 02 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Nov 24 ${time22}`,
+        dateEnd: `Thu Dec 01 ${time22}`,
         week: '12'
       },
       {
-        dateBeg: 'Thu Dec 02 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Dec 09 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Dec 01 ${time22}`,
+        dateEnd: `Thu Dec 08 ${time22}`,
         week: '13'
       },
       {
-        dateBeg: 'Thu Dec 09 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Dec 16 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Dec 08 ${time22}`,
+        dateEnd: `Thu Dec 15 ${time22}`,
         week: '14'
       },
       {
-        dateBeg: 'Thu Dec 16 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Dec 23 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Dec 15 ${time22}`,
+        dateEnd: `Thu Dec 22 ${time22}`,
         week: '15'
       },
       {
-        dateBeg: 'Thu Dec 23 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Dec 30 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Dec 22 ${time22}`,
+        dateEnd: `Thu Dec 29 ${time22}`,
         week: '16'
       },
       {
-        dateBeg: 'Thu Dec 30 2021 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Jan 06 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Dec 29 ${time22}`,
+        dateEnd: `Thu Jan 05 ${time23}`,
         week: '17'
       },
       {
-        dateBeg: 'Thu Jan 06 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Jan 13 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Jan 05 ${time23}`,
+        dateEnd: `Thu Jan 12 ${time23}`,
         week: '18'
       },
       {
-        dateBeg: 'Thu Jan 13 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Jan 20 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        week: '19'
+        dateBeg: `Thu Jan 12 ${time23}`,
+        dateEnd: `Thu Jan 19 ${time23}`,
+        week: '19' //playoff
       },
       {
-        dateBeg: 'Thu Jan 20 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Jan 27 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Jan 19 ${time23}`,
+        dateEnd: `Thu Jan 26 ${time23}`,
         week: '20' //wild card
       },
       {
-        dateBeg: 'Thu Jan 27 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Feb 10 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Jan 26 ${time23}`,
+        dateEnd: `Thu Feb 09 ${time23}`,
         week: '21' //afc nfc final 4
       },
       {
-        dateBeg: 'Thu Feb 10 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
-        dateEnd: 'Thu Feb 17 2022 00:00:00 GMT-0700 (Pacific Daylight Time)',
+        dateBeg: `Thu Feb 09 ${time23}`,
+        dateEnd: `Thu Feb 16 ${time23}`,
         week: '23' //super bowl
       }
     ];
@@ -145,7 +147,7 @@ export class NflUtilService {
       },
       {
         id: 49,
-        bye: 14,
+        bye: 11,
         defenseRankLs: 7,
         offenseRankLs: 22,
         city: "Miami",
@@ -161,7 +163,7 @@ export class NflUtilService {
       },
       {
         id: 50,
-        bye: 14,
+        bye: 10,
         defenseRankLs: 17,
         offenseRankLs: 29,
         city: "New England",
@@ -177,7 +179,7 @@ export class NflUtilService {
       },
       {
         id: 51,
-        bye: 6,
+        bye: 10,
         defenseRankLs: 24,
         offenseRankLs: 32,
         city: "New York",
@@ -193,7 +195,7 @@ export class NflUtilService {
       },
       {
         id: 52,
-        bye: 7,
+        bye: 9,
         defenseRankLs: 31,
         offenseRankLs: 19,
         city: "Dallas",
@@ -211,7 +213,7 @@ export class NflUtilService {
       },
       {
         id: 53,
-        bye: 10,
+        bye: 9,
         defenseRankLs: 9,
         offenseRankLs: 31,
         city: "New York",
@@ -227,7 +229,7 @@ export class NflUtilService {
       },
       {
         id: 54,
-        bye: 14,
+        bye: 7,
         defenseRankLs: 21,
         offenseRankLs: 24,
         city: "Philadelphia",
@@ -245,11 +247,11 @@ export class NflUtilService {
       },
       {
         id: 55,
-        bye: 9,
+        bye: 14,
         defenseRankLs: 4,
         offenseRankLs: 28,
         city: "Washington",
-        name: "Washington",
+        name: "Commanders",
         twitter: "#WashingtonFootball",
         abbreviation: "WAS",
         teamColoursHex: [
@@ -260,7 +262,7 @@ export class NflUtilService {
       },
       {
         id: 56,
-        bye: 8,
+        bye: 10,
         defenseRankLs: 6,
         offenseRankLs: 14,
         city: "Baltimore",
@@ -292,7 +294,7 @@ export class NflUtilService {
       },
       {
         id: 58,
-        bye: 13,
+        bye: 9,
         defenseRankLs: 17,
         offenseRankLs: 13,
         city: "Cleveland",
@@ -308,7 +310,7 @@ export class NflUtilService {
       },
       {
         id: 59,
-        bye: 7,
+        bye: 9,
         defenseRankLs: 1,
         offenseRankLs: 21,
         city: "Pittsburgh",
@@ -326,7 +328,7 @@ export class NflUtilService {
       },
       {
         id: 60,
-        bye: 10,
+        bye: 14,
         defenseRankLs: 16,
         offenseRankLs: 25,
         city: "Chicago",
@@ -341,7 +343,7 @@ export class NflUtilService {
       },
       {
         id: 61,
-        bye: 9,
+        bye: 6,
         defenseRankLs: 32,
         offenseRankLs: 18,
         city: "Detroit",
@@ -358,7 +360,7 @@ export class NflUtilService {
       },
       {
         id: 62,
-        bye: 13,
+        bye: 14,
         defenseRankLs: 15,
         offenseRankLs: 2,
         city: "Green Bay",
@@ -388,7 +390,7 @@ export class NflUtilService {
       },
       {
         id: 64,
-        bye: 10,
+        bye: 6,
         defenseRankLs: 28,
         offenseRankLs: 16,
         city: "Houston",
@@ -418,7 +420,7 @@ export class NflUtilService {
       },
       {
         id: 66,
-        bye: 7,
+        bye: 11,
         defenseRankLs: 29,
         offenseRankLs: 27,
         city: "Jacksonville",
@@ -439,7 +441,7 @@ export class NflUtilService {
       },
       {
         id: 67,
-        bye: 13,
+        bye: 6,
         defenseRankLs: 23,
         offenseRankLs: 1,
         city: "Tennessee",
@@ -458,7 +460,7 @@ export class NflUtilService {
       },
       {
         id: 68,
-        bye: 6,
+        bye: 14,
         defenseRankLs: 22,
         offenseRankLs: 20,
         city: "Atlanta",
@@ -494,7 +496,7 @@ export class NflUtilService {
       },
       {
         id: 70,
-        bye: 6,
+        bye: 14,
         defenseRankLs: 3,
         offenseRankLs: 8,
         city: "New Orleans",
@@ -509,7 +511,7 @@ export class NflUtilService {
       },
       {
         id: 71,
-        bye: 9,
+        bye: 11,
         defenseRankLs: 5,
         offenseRankLs: 5,
         city: "Tampa Bay",
@@ -527,7 +529,7 @@ export class NflUtilService {
       },
       {
         id: 72,
-        bye: 11,
+        bye: 9,
         defenseRankLs: 18,
         offenseRankLs: 26,
         city: "Denver",
@@ -542,7 +544,7 @@ export class NflUtilService {
       },
       {
         id: 73,
-        bye: 12,
+        bye: 8,
         defenseRankLs: 13,
         offenseRankLs: 12,
         city: "Kansas City",
@@ -557,7 +559,7 @@ export class NflUtilService {
       },
       {
         id: 74,
-        bye: 8,
+        bye: 6,
         defenseRankLs: 27,
         offenseRankLs: 9,
         city: "Las Vegas",
@@ -578,7 +580,7 @@ export class NflUtilService {
       },
       {
         id: 75,
-        bye: 7,
+        bye: 8,
         defenseRankLs: 26,
         offenseRankLs: 12,
         city: "Los Angeles",
@@ -594,7 +596,7 @@ export class NflUtilService {
       },
       {
         id: 76,
-        bye: 12,
+        bye: 13,
         defenseRankLs: 12,
         offenseRankLs: 7,
         city: "Arizona",
@@ -610,7 +612,7 @@ export class NflUtilService {
       },
       {
         id: 77,
-        bye: 11,
+        bye: 7,
         defenseRankLs: 2,
         offenseRankLs: 17,
         city: "Los Angeles",
@@ -626,7 +628,7 @@ export class NflUtilService {
       },
       {
         id: 78,
-        bye: 6,
+        bye: 9,
         defenseRankLs: 19,
         offenseRankLs: 15,
         city: "San Francisco",
@@ -641,7 +643,7 @@ export class NflUtilService {
       },
         {
           id: 79,
-          bye: 9,
+          bye: 11,
           defenseRankLs: 13,
           offenseRankLs: 10,
           city: "Seattle",
@@ -1794,6 +1796,16 @@ export class NflUtilService {
           lastName: "Vaughn",
           image: nflImageRoot+"to1j3eftgyobffvygini"
         },
+        "39082" : {
+          firstName: "Drake",
+          lastName: "London",
+          image: nflImageRoot+"rrwzcsvsfqq9xptp8o48"
+        },
+        "39129" : {
+          firstName: "Trey",
+          lastName: "McBride",
+          image: nflImageRoot+"qawwcnmfggwgsemqwwki"
+        },
             
       }
    }
@@ -2120,23 +2132,12 @@ export class NflUtilService {
         oToughnessShRank: any, 
         scheduleTicker: any,
         weekOpponent: any
-      };
-    
-      // forkJoin(
-      //   this.nflTeams.map(
-      //     g => 
-          
-      //     this.http.get(`https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular/games.json?team=${g.abbreviation}`, { headers })
-          
-      //   )
-      // )
-      // .subscribe(res => {
-        //console.log(res, 'get team schedules...');
+      }
         let res = schedGames
         res.forEach((item, index) => { 
-          team = this.nflTeams[index].id
-          bye = this.nflTeams[index].bye
-          abbreviation = this.nflTeams[index].abbreviation
+          team = item.gamesBelongId //this.nflTeams[index].id
+          bye = item.bye //this.nflTeams[index].bye
+          abbreviation = item.gamesBelongTo //this.nflTeams[index].abbreviation
           teamSchedule = {
             team: team,
             abbreviation: abbreviation,
@@ -2157,160 +2158,52 @@ export class NflUtilService {
   }
 
   public rank(nflTeams, stats, week) {
-    let dataO = [];
-    let rankO = [];
-    let rank2O = [];
-    let tRankO = [];
-    dataO = stats;
+    let rankO = []
+    let rankD = []
 
-    let dataD = [];
-    let rankD = [];
-    let rank2D = [];
-    let tRankD = [];
-    dataD = stats;
-
-    rankO = dataO.slice().sort((a: any, b: any) => {
-      if ((a['stats'].rushing.rushYards + a['stats'].passing.passNetYards
-      + (parseInt(week) < 15 && a.bye < parseInt(week) ? 350 : 0))
-      >= (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards + (parseInt(week) < 15 && b.bye < parseInt(week) ? 350 : 0))) {
+    rankO = stats.slice().sort((a: any, b: any) => {
+      if ((parseInt(a['stats'].receiving.teamFDFP) + (parseInt(week) < 15 && a.bye < parseInt(week) ? parseInt(a['stats'].receiving.teamFDFPA) : 0))
+      >= (parseInt(b['stats'].receiving.teamFDFP) + (parseInt(week) < 15 && b.bye < parseInt(week) ? parseInt(b['stats'].receiving.teamFDFPA) : 0))) {
         return -1;
-      } else if ((a['stats'].rushing.rushYards + a['stats'].passing.passNetYards
-      + (parseInt(week) < 15 && a.bye < parseInt(week) ? 350 : 0))
-      <= (b['stats'].rushing.rushYards + b['stats'].passing.passNetYards + (parseInt(week) < 15 && b.bye < parseInt(week) ? 350 : 0))) {
+      } else if ((parseInt(a['stats'].receiving.teamFDFP) + (parseInt(week) < 15 && a.bye < parseInt(week) ? parseInt(a['stats'].receiving.teamFDFPA) : 0))
+      <= (parseInt(b['stats'].receiving.teamFDFP) + (parseInt(week) < 15 && b.bye < parseInt(week) ? parseInt(b['stats'].receiving.teamFDFPA) : 0))) {
         return 1;
       } else {
         return 0;
       }
-  });
+    })
 
-  rank2O = dataO.slice().sort((a: any, b: any) => {
-    // console.log('rank Sacks and Picks');
-    //TODO add FG made to algo
-    if ((a['stats'].passing.passTD + a['stats'].rushing.rushTD
-    + (parseInt(week) < 15 && a.bye < parseInt(week) ? 3 : 0)) 
-     >= (b['stats'].passing.passTD + b['stats'].rushing.rushTD + (parseInt(week) < 15 && b.bye < parseInt(week) ? 3 : 0))) {
-      return -1;
-    } else if ((a['stats'].passing.passTD + a['stats'].rushing.rushTD
-    + (parseInt(week) < 15 && a.bye < parseInt(week) ? 3 : 0)) 
-     <= (b['stats'].passing.passTD + b['stats'].rushing.rushTD + (parseInt(week) < 15 && b.bye < parseInt(week) ? 3 : 0))) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-
-  rankO.forEach(function(item, index){
+  rankO.forEach((item, index) => {
     for (let team of nflTeams) {
-     if (rankO[index].team.id === team.id) { 
-       team.oRank = index + 1;
-       team.stats = rankO[index].stats;
+     if (rankO[index].team.id === team.id) {
+       team.offenseRankLs = index + 1 
+       team.oRank = team.offenseRankLs
+       team.stats = rankO[index].stats
      }
     }
-  });
+  })
 
-  rank2O.forEach(function(item, index){
-    for (let team of nflTeams) {
-     if (rank2O[index].team.id === team.id) { 
-       team.tdRank = index + 1; 
-     }
-    }
-  });
-
-  tRankO = nflTeams.slice().sort((a: any, b: any) => {
-    // console.log('rank teams final');
-    if (a.oRank + a.tdRank
-    <= b.oRank + b.tdRank) {
+  rankD = stats.slice().sort((a: any, b: any) => {
+    if ((a['stats'].receiving.teamDefFDFP + (parseInt(week) < 15 && a.bye < parseInt(week) ? a['stats'].receiving.teamDefFDFPA : 0)) 
+     >= (b['stats'].receiving.teamDefFDFP + (parseInt(week) < 15 && b.bye < parseInt(week) ? b['stats'].receiving.teamDefFDFPA : 0))) {
       return -1;
-    } else if (a.oRank + a.tdRank
-    >= b.oRank + b.tdRank) {
+    } else if ((a['stats'].receiving.teamDefFDFP + (parseInt(week) < 15 && a.bye < parseInt(week) ? a['stats'].receiving.teamDefFDFPA : 0))  
+     <= (b['stats'].receiving.teamDefFDFP + (parseInt(week) < 15 && b.bye < parseInt(week) ? b['stats'].receiving.teamDefFDFPA : 0))) {
       return 1;
     } else {
       return 0;
     }
-  });
-  //console.log('team rank', tRankO);
+  })
 
-  tRankO.forEach(function(item, index){
-    for (let team of nflTeams) {
-      if (tRankO[index].id === team.id) { 
-        team.offenseRankLs = index + 1; 
-      }
-    }
-  });
-
-  rankD = dataD.slice().sort((a: any, b: any) => {
-    if ((a['stats'].standings.pointsAgainst + 
-    (parseInt(week) < 15 && a.bye < parseInt(week) ? 21 : 0)) 
-     <= (b['stats'].standings.pointsAgainst + 
-     (parseInt(week) < 15 && b.bye < parseInt(week) ? 21 : 0))) {
-      return -1;
-    } else if ((a['stats'].standings.pointsAgainst + 
-    (parseInt(week) < 15 && a.bye < parseInt(week) ? 21 : 0)) 
-     >= (b['stats'].standings.pointsAgainst + 
-     (parseInt(week) < 15 && b.bye < parseInt(week) ? 21 : 0))) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-
-  rank2D = dataD.slice().sort((a: any, b: any) => {
-    // console.log('rank Sacks and Picks');
-    if ((a['stats'].tackles.sacks + a['stats'].interceptions.interceptions + a['stats'].interceptions.passesDefended 
-    + (parseInt(week) < 15 && a.bye < parseInt(week) ? 7 : 0))
-     >= (b['stats'].tackles.sacks + b['stats'].interceptions.interceptions + b['stats'].interceptions.passesDefended 
-     + (parseInt(week) < 15 && b.bye < parseInt(week) ? 7 : 0))) {
-      return -1;
-    } else if ((a['stats'].tackles.sacks + a['stats'].interceptions.interceptions + a['stats'].interceptions.passesDefended 
-    + (parseInt(week) < 15 && a.bye < parseInt(week) ? 7 : 0))
-     <= (b['stats'].tackles.sacks + b['stats'].interceptions.interceptions + b['stats'].interceptions.passesDefended 
-     + (parseInt(week) < 15 && b.bye < parseInt(week) ? 7 : 0))) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-
-  rankD.forEach(function(item, index){
+  rankD.forEach((item, index) => {
     for (let team of nflTeams) {
      if (rankD[index].team.id === team.id) { 
-       team.dRank = index + 1;
-       team.stats = rankD[index].stats;
+       team.defenseRankLs = index + 1
+       team.dRank = index + 1
+       team.stats = rankD[index].stats
      }
     }
-  });
-
-  rank2D.forEach(function(item, index){
-    for (let team of nflTeams) {
-     if (rank2D[index].team.id === team.id) { 
-       team.sackRank = index + 1; 
-     }
-    }
-  });
-
-  tRankD = nflTeams.slice().sort((a: any, b: any) => {
-    // console.log('rank teams final');
-    if ((a.dRank + a.sackRank)
-    <= (b.dRank + b.sackRank)) {
-      return -1;
-    } else if ((a.dRank + a.sackRank)
-    >= (b.dRank + b.sackRank)) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-  
-  //console.log('team rank D', tRankD);
-  tRankD.forEach(function(item, index){
-    for (let team of nflTeams) {
-      if (tRankD[index].id === team.id) { 
-        team.defenseRankLs = index + 1; 
-      }
-    }
-  });
-
-  //return this.nflTeams = nflTeams;
+  })
 }
 
   public getNFLImages() {
@@ -2325,17 +2218,41 @@ export class NflUtilService {
     return this.weekTimes;
   }
 
-  public offenseFp(player) { 
-    
+  public teamFp(teams, stats) { 
+    for(let team of stats) {
+      for (let t of teams) {
+        if (team['team'].id === t.id) {
+          team['stats'].receiving.teamFDFP = (team['stats'].receiving != null && team['stats'].twoPointAttempts != null) ? ((team['stats'].twoPointAttempts.twoPtPassMade + team['stats'].twoPointAttempts.twoPtRushMade * 2) + (team['stats'].fumbles.fumTD * 6) + (team['stats'].passing.passTD * 4) + (team['stats'].passing.passNetYards * 0.04) + (team['stats'].receiving.receptions * 0.5) + (team['stats'].receiving.recTD * 6) + (team['stats'].receiving.recYards * 0.1) + (team['stats'].rushing.rushTD * 6) + (team['stats'].rushing.rushYards * 0.1) + (team['stats'].extraPointAttempt.xpMade) + (team['stats'].fieldGoals.fgMade1_19 + team['stats'].fieldGoals.fgMade20_29 + team['stats'].fieldGoals.fgMade30_39 * 3) + (team['stats'].fieldGoals.fgMade40_49 * 4) + (team['stats'].fieldGoals.fgMade50Plus * 5) - ((team['stats'].fumbles.fumLost * 2) + (team['stats'].passing.passInt))).toFixed(2) : 0
+          team['stats'].receiving.teamFDFPA = (parseInt(team['stats'].receiving.teamFDFP) / team['stats'].gamesPlayed).toFixed(1) 
+          team['stats'].receiving.defTD = team['stats'].fumbles.fumTD + team['stats'].interceptions.intTD + team['stats'].puntReturns.prTD + team['stats'].kickoffReturns.krTD
+          team['stats'].receiving.teamDefFDFP = (team['stats'].receiving != null) ? (((team['stats'].punting.puntBlk + team['stats'].fieldGoals.fgBlk + team['stats'].fumbles.fumOppRec + team['stats'].interceptions.interceptions + team['stats'].interceptions.safeties) * 2) + ((team['stats'].puntReturns.prTD + team['stats'].kickoffReturns.krTD) * 6) + ((team['stats'].fumbles.fumTD + team['stats'].interceptions.intTD) * 6) + (team['stats'].tackles.sacks)) : 0
+          team['stats'].receiving.teamDefFDFPA = (parseInt(team['stats'].receiving.teamDefFDFP) / team['stats'].gamesPlayed).toFixed(1) 
+        }
+      }
+    } 
+  }
+
+  public offenseFp(player) {  
     if (player.player.primaryPosition != 'K' && player.stats.receiving != null) {
-      player.stats.receiving.fanDuelFP = (player.stats.gamesPlayed > 0 && player.stats.twoPointAttempts != null || player.stats.receiving != null && player.stats.twoPointAttempts != null) ? ((player.stats.twoPointAttempts.twoPtPassMade + player.stats.twoPointAttempts.twoPtPassRec + player.stats.twoPointAttempts.twoPtRushMade * 2) - (player.stats.fumbles.fumLost * 2) + (player.stats.fumbles.fumTD * 6) - (player.stats.passing.passInt) + (player.stats.kickoffReturns.krTD * 6) + (player.stats.puntReturns.prTD * 6) + (player.stats.passing.passTD * 4) + (player.stats.passing.passYards * 0.04) + (player.stats.receiving.receptions * 0.5) + (player.stats.receiving.recTD * 6) + (player.stats.receiving.recYards * 0.1) + (player.stats.rushing.rushTD * 6) + (player.stats.rushing.rushYards * 0.1)).toFixed(2) : 0;
-      player.stats.receiving.fanDuelFPA = player.stats.gamesPlayed > 0 ? (parseInt(player.stats.receiving.fanDuelFP) / player.stats.gamesPlayed).toFixed(1) : 0;
+      player.stats.receiving.fanDuelFP = (player.stats.gamesPlayed > 0 && player.stats.twoPointAttempts != null || player.stats.receiving != null && player.stats.twoPointAttempts != null) ? ((player.stats.twoPointAttempts.twoPtPassMade + player.stats.twoPointAttempts.twoPtPassRec + player.stats.twoPointAttempts.twoPtRushMade * 2) - (player.stats.fumbles.fumLost * 2) + (player.stats.fumbles.fumTD * 6) - (player.stats.passing.passInt) + (player.stats.kickoffReturns.krTD * 6) + (player.stats.puntReturns.prTD * 6) + (player.stats.passing.passTD * 4) + (player.stats.passing.passYards * 0.04) + (player.stats.receiving.receptions * 0.5) + (player.stats.receiving.recTD * 6) + (player.stats.receiving.recYards * 0.1) + (player.stats.rushing.rushTD * 6) + (player.stats.rushing.rushYards * 0.1)).toFixed(2) : 0
+      player.stats.receiving.fanDuelFPA = player.stats.gamesPlayed > 0 ? (parseInt(player.stats.receiving.fanDuelFP) / player.stats.gamesPlayed).toFixed(1) : 0
     } 
     
     if (player.player.primaryPosition === 'K' && player.stats.fieldGoals != null) {
       player.stats.fieldGoals.fanDuelFP = (player.stats.gamesPlayed > 0 || player.stats.fieldGoals != null) ? ((player.stats.extraPointAttempts.xpMade) + (player.stats.fieldGoals.fgMade1_19 + player.stats.fieldGoals.fgMade20_29 + player.stats.fieldGoals.fgMade30_39 * 3) + (player.stats.fieldGoals.fgMade40_49 * 4) + (player.stats.fieldGoals.fgMade50Plus * 5)).toFixed(2) : 0;
       player.stats.fieldGoals.fanDuelFPA = player.stats.gamesPlayed > 0 ? Math.floor(parseInt(player.stats.fieldGoals.fanDuelFP) / player.stats.gamesPlayed) : 0;
     }
+  }
+
+  public teamDailyFp(mdata, daily, type) {
+     //daily defense only (0 points allowed * 10 1-6 * 7 7-13 * 4 14-20 * 1 28-34 -1 35 -4 ) 
+     //TODO rank def per rush yards allowed pass yards allowed 
+  }
+
+  public defenseFp(player) {  
+    player['stats'].interceptions.defTD = player['stats'].fumbles.fumTD + player['stats'].interceptions.intTD + player['stats'].puntReturns.prTD + player['stats'].kickoffReturns.krTD
+    player['stats'].interceptions.fanDuelFP = (player['stats'].interceptions != null) ? (((player['stats'].fumbles.fumOppRec + player['stats'].interceptions.interceptions + player['stats'].interceptions.safeties) * 2) + ((player['stats'].puntReturns.prTD + player['stats'].kickoffReturns.krTD) * 6) + ((player['stats'].fumbles.fumTD + player['stats'].interceptions.intTD) * 6) + (player['stats'].tackles.sacks) + (player['stats'].interceptions.passesDefended) + (player['stats'].tackles.tackleTotal)) : 0
+    player['stats'].interceptions.fanDuelFPA = (parseInt(player['stats'].interceptions.fanDuelFP) / player['stats'].gamesPlayed).toFixed(1)
   }
 
 

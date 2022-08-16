@@ -1189,8 +1189,26 @@
               [eliteStat]="100"
               ></app-stat-card>
 
-              <!-- <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflRookies != null" 
-              [data]="nflRookies" 
+              <app-stat-card *ngIf="nflPosition === 'rb' && !nflOffenseLoading && nflData != null || nflPosition === 'wr' && !nflOffenseLoading && nflData != null || nflPosition === 'te' && !nflOffenseLoading && nflData != null" 
+              [data]="nflData" 
+              [statType]="'passing'"
+              [statField]="'offSnapPct'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Snap Percentage'"
+              [statTag]="'%'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="850"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nfl22Rookies != null" 
+              [data]="nfl22Rookies" 
               [statType]="'drafted'"
               [statField]="'overallPick'"
               [page]="page"
@@ -1205,7 +1223,7 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
               [eliteStat]="850"
-              ></app-stat-card> -->
+              ></app-stat-card>
 
               <app-stat-card *ngIf="nflPosition === 'rb' && !nflOffenseLoading && nflData != null && week === 'three-weeks'" 
               [data]="nflData" 
@@ -1349,8 +1367,39 @@
                 [seasonLength]="seasonLengthD"
                 ></app-stat-card>
 
-              <!-- [statType]="'drafted'"
-              [statField]="'overallPick'" -->
+                <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
+                [data]="nflDefenseData" 
+                [statType]="'interceptions'" 
+                [statField]="'fanDuelFP'"
+                [page]="page"
+                [amount]="amount"
+                [title]="'Fantasy Points'"
+                [statTag]="'FP'"
+                [sport]="'nfl'"
+                [order]="'DESC'"
+                [teams]="nflTeams"
+                (open)="authorize($event)"
+                [twitter]="twitter"
+                [ndk]="nflDraftKit"
+                [seasonLength]="seasonLengthD"
+                ></app-stat-card>
+
+                <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
+                [data]="nflDefenseData" 
+                [statType]="'interceptions'" 
+                [statField]="'fanDuelFPA'"
+                [page]="page"
+                [amount]="amount"
+                [title]="'FP Average'"
+                [statTag]="'FPA'"
+                [sport]="'nfl'"
+                [order]="'DESC'"
+                [teams]="nflTeams"
+                (open)="authorize($event)"
+                [twitter]="twitter"
+                [ndk]="nflDraftKit"
+                [seasonLength]="seasonLengthD"
+                ></app-stat-card>
 
               <app-stat-card *ngIf="!nflDefenseLoading && defenseRookies != null" 
               [data]="defenseRookies" 

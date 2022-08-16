@@ -32,7 +32,7 @@ let playedStatuses = {'COMPLETED': 'COMPLETED', 'COMPLETED_PENDING_REVIEW': 'COM
 })
 export class HomeComponent implements OnInit {
 
-  public starters: Array <any>;
+  //public starters: Array <any>;
   public score: Array <any>;
   public mlbSchedule: Array <any>;
   public mlbTeamRef: Array <any>;
@@ -104,8 +104,8 @@ export class HomeComponent implements OnInit {
   public nflGames: Array <any>
   public load: any
 
-  tweetDay: any;
-  apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-regular";
+  //tweetDay: any
+  //apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nhl/2020-regular";
 
   constructor(
      public router: Router,
@@ -148,9 +148,10 @@ export class HomeComponent implements OnInit {
     this.nhlSelectedDate = new Date();
     this.nbaSelectedDate = new Date();
     this.mlbSelectedDate = new Date();
-    if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
-      this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
-    }
+
+    // if (date > new Date('Tue Dec 31 2019 00:00:00 GMT-0700 (Pacific Daylight Time)')) {
+    //   this.apiRoot = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2020-playoff"; //2019-2020-regular";
+    // }
 
     this.nhlPlayoffDate = 'Fri May 14 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.nbaPlayoffDate = 'Mon May 17 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
@@ -160,10 +161,10 @@ export class HomeComponent implements OnInit {
     this.checkPlayoffs(new Date(this.mlbSelectedDate), 'mlb')
 
     this.testBrowser = isPlatformBrowser(platformId);
-    //this.nflSched = true
+    this.nflSched = true
     //this.nhlSched = true
-    this.mlbSched = true
-    this.load = 'loadMLB'
+    // this.mlbSched = true
+    this.load = 'loadNFL' //'loadMLB'
 
   }
 
@@ -265,7 +266,7 @@ loadData() {
   this.loading = true
   this.nhlDataService.serverInfo(
           'nhl', 
-          '2021-2022-regular', 
+          '2022-2023-regular', 
           'games', 
           'dateB', 
           'dateE', 
