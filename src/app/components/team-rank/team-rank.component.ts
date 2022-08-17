@@ -68,7 +68,7 @@ export class TeamRankComponent implements OnInit {
       this.loading = false;
       return this.tRank;
 
-    } else if (title === 'Toughest Defense Schedule 2021') {
+    } else if (title === 'Toughest Defense Schedule 2022') {
       this.seasonChange.emit(sl);
       rank = teams.slice().sort((a: any, b: any) => {    
         if (a[statTypeD] 
@@ -85,7 +85,7 @@ export class TeamRankComponent implements OnInit {
       this.tRank = rank;
       this.loading = false;
       return this.tRank;
-    }  else if (title === 'Toughest Offense Schedule 2021') {
+    }  else if (title === 'Toughest Offense Schedule 2022') {
       this.seasonChangeD.emit(sl);
       rank = teams.slice().sort((a: any, b: any) => {
         // console.log('rank PA');
