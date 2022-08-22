@@ -1865,6 +1865,7 @@ export class NflUtilService {
       }
       return sum;
     } else if (type === 'o') {
+      console.log('get o sched toughness once')
       let sum = 0;
       for (let s of sched) {
         for (let t of this.nflTeams){
@@ -1872,7 +1873,7 @@ export class NflUtilService {
             s.schedule.awayTeam.id === t.id || 
             s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
-            sum += t.offenseRankLs;
+            sum += t.offenseRankLs
           }
         }
       }
@@ -1967,7 +1968,7 @@ export class NflUtilService {
   }
 
   public getRank(schedules) {
-
+    //console.log('schedules', schedules)
     let rank = [];
     let rank2 = [];
     let rankDfh = [];
@@ -2012,7 +2013,7 @@ export class NflUtilService {
       rank2.forEach(async (item, index) => {
         for (let team of this.nflTeams) {
           if (rank2[index].team === team.id) { 
-            team.otr = index + 1;
+            team.otr = index + 1
           }         
         }
       });
@@ -2115,7 +2116,7 @@ export class NflUtilService {
   }
 
   public sortSchedules(schedules, week, schedGames) {
-  
+    console.log('this should only call one time')
     if (schedules.length === 0) {
       let team: any;
       let bye: any;
@@ -2151,8 +2152,8 @@ export class NflUtilService {
             scheduleTicker: this.getSchedToughness(res[index]['games'], 't', team, bye, week),
             weekOpponent: this.getSchedToughness(res[index]['games'], 'wop', team, bye, week)
           }
-          schedules.push(teamSchedule);
-          this.getRank(schedules);
+          schedules.push(teamSchedule)
+          this.getRank(schedules)
         })
     }
   }

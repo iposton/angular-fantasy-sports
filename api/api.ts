@@ -479,12 +479,16 @@ methods.getStats = async (
                     let byes = data.teamByeWeeks
                     data.gamesBelongTo = g['abbreviation']
                     data.gamesBelongId = g['id']
-                    byes.forEach ((item) => {
-                      if (item.team.id === data.gamesBelongId) {
-                        data.bye = item.byeWeeks[0]
-                      }
-                    })
+                    data.bye = g['bye']
+                    data.byes = byes
                     stats[0].scheduleGames.push(data)
+                    
+                    // byes.forEach ((item) => {
+                    //   if (item.team.id === data.gamesBelongId) {
+                    //     data.bye = item.byeWeeks[0]
+                    //   }
+                    // })
+                    
 
                   } catch(e) {
                     console.log(colors.fg.red+'Schedule games error:', e, colors.reset)
