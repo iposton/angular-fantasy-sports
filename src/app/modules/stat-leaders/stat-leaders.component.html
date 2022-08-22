@@ -46,8 +46,8 @@
    <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false; timeSpan = 'full'">NHL Skaters</button>
    <button [ngClass]="{'dn' : !mlbSection}" (click)="loadHitters(); timeSpan = 'full'">MLB Hitters</button>  
    <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false; timeSpan = 'full'">MLB Pitchers</button>
-   <button [ngClass]="{'dn' : !nflSection}" (click)="week = 'all'; timeSpan = 'full'; defensePlayers();">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
-   <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</button>
+   <button [ngClass]="{'dn' : !nflSection}" (click)="week = 'all'; timeSpan = 'full'; defensePlayers(); $event.stopPropagation()">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
+   <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit; ; $event.stopPropagation()">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</button>
 </div>
 <div class="center" *ngIf="sport === 'mlb' && mlbHittingSection">
   <select name="pos" id="pos" (change)="onHitterChange($event.target.value)">

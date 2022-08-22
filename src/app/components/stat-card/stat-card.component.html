@@ -185,7 +185,7 @@
                 <span class="lg" *ngIf="ndk && sport === 'nfl'">
                     <span class="ticker" *ngIf="item?.team?.dtr != null && item?.team?.scheduleTicker != null">
                       <span *ngFor="let game of item?.team?.scheduleTicker; let i = index;">
-                          <span class="game {{hoveredItem2}}" (mouseover)="hoveredItem2 = 'hovered'" (mouseout)="hoveredItem2 = ''">
+                          <span class="game {{hoveredItem2}}" (mouseover)="hoveredItem2 = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem2 = ''; $event.stopPropagation()">
                             <span [ngClass]="{'white' : game?.dRank === 'BYE', 'red' : game?.dRank &lt;= 10, 'orange' : game?.dRank > 10 && game?.dRank &lt;= 21, 'green' : game?.dRank > 21, 'dn' : seasonLength === 'dfh' && i > 8 || seasonLength === 'dsh' && i &lt;= 8 }">{{game?.printName}}</span>
                             <span class="tooltip">{{ game?.dRank === 'BYE' ? 'Week '+game?.name : 'D Rank '+ game?.dRank}}</span>
                           </span> 
@@ -193,7 +193,7 @@
                   </span>
                   <span class="ticker" *ngIf="item?.team?.otr != null && item?.team?.scheduleTicker != null">
                       <span *ngFor="let game of item?.team?.scheduleTicker; let i = index;">
-                          <span class="game {{hoveredItem2}}" (mouseover)="hoveredItem2 = 'hovered'" (mouseout)="hoveredItem2 = ''">
+                          <span class="game {{hoveredItem2}}" (mouseover)="hoveredItem2 = 'hovered'; $event.stopPropagation()" (mouseout)="hoveredItem2 = ''; $event.stopPropagation()">
                             <span [ngClass]="{'white' : game?.oRank === 'BYE', 'red' : game?.oRank &lt;= 10, 'orange' : game?.oRank > 10 && game?.oRank &lt;= 21, 'green' : game?.oRank > 21, 'dn' : seasonLength === 'ofh' && i > 8 || seasonLength === 'osh' && i &lt;= 8 }">{{game?.printName}}</span>
                             <span class="tooltip">{{ game?.oRank === 'BYE' ? 'Week '+game?.name : 'O Rank '+ game?.oRank}}</span>
                           </span> 

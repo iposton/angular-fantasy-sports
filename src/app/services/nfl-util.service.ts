@@ -2177,7 +2177,7 @@ export class NflUtilService {
     for (let team of nflTeams) {
      if (rankO[index].team.id === team.id) {
        team.offenseRankLs = index + 1 
-       team.oRank = team.offenseRankLs
+       team.oRank = index + 1 
        team.stats = rankO[index].stats
      }
     }
