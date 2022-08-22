@@ -44,7 +44,7 @@
                     FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamFDFP &lt; 1200 ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamFDFP}}</span>
                   </span>
                 </span> 
-                <span *ngIf="title === 'Toughest Defense Schedule 2022' && item?.scheduleTicker != null">
+                <span class="ticker" *ngIf="title === 'Toughest Defense Schedule 2022' && item?.scheduleTicker != null">
                     <span *ngFor="let game of item?.scheduleTicker; let i = index;">
                         <span class="game {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'" (mouseout)="hoveredItem = ''">
                            <span [ngClass]="{'white' : game?.dRank === 'BYE', 'red' : game?.dRank &lt;= 10, 'orange' : game?.dRank > 10 && game?.dRank &lt;= 21, 'green' : game?.dRank > 21, 'dn' : seasonLength === 'dfh' && i > 8 || seasonLength === 'dsh' && i &lt;= 8 }">{{game?.printName}}</span>
@@ -52,7 +52,7 @@
                         </span> 
                     </span>
                 </span>
-                <span *ngIf="title === 'Toughest Offense Schedule 2022' && item?.scheduleTicker != null">
+                <span class="ticker" *ngIf="title === 'Toughest Offense Schedule 2022' && item?.scheduleTicker != null">
                     <span *ngFor="let game of item?.scheduleTicker; let i = index;">
                         <span class="game {{hoveredItem}}" (mouseover)="hoveredItem = 'hovered'" (mouseout)="hoveredItem = ''">
                             <span [ngClass]="{'white' : game?.oRank === 'BYE', 'red' : game?.oRank &lt;= 10, 'orange' : game?.oRank > 10 && game?.oRank &lt;= 21, 'green' : game?.oRank > 21, 'dn' : seasonLength === 'ofh' && i > 8 || seasonLength === 'osh' && i &lt;= 8 }">{{game?.printName}}</span>

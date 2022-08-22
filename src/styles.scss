@@ -219,6 +219,10 @@ footer {
     .sched-item {
       .abb-single {
 
+        .ticker {
+          background: rgba(0, 0, 0, .6);
+        }
+
         .team-st {
           background: #ccc;
           padding: 4px 2px;
@@ -350,6 +354,10 @@ footer {
     .lg {
       font-size: 16px;
       color: #eee;
+
+      .ticker {
+        background: rgba(0, 0, 0, .6);
+      }
 
       .game {
         font-size: 14px;
