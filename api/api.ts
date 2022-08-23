@@ -475,6 +475,7 @@ methods.getStats = async (
                 async function(err, res, body) {
                   try {
                     //getting nfl schedules
+                    console.count()
                     let data = await JSON.parse(body)
                     let byes = data.teamByeWeeks
                     data.gamesBelongTo = g['abbreviation']
@@ -482,7 +483,7 @@ methods.getStats = async (
                     data.bye = g['bye']
                     data.byes = byes
                     stats[0].scheduleGames.push(data)
-                    
+
                     // byes.forEach ((item) => {
                     //   if (item.team.id === data.gamesBelongId) {
                     //     data.bye = item.byeWeeks[0]

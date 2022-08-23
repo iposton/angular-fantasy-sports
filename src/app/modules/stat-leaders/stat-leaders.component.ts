@@ -136,17 +136,18 @@ export class StatLeadersComponent implements OnInit {
   public nbaRookies: Array <any> = []
   public seasonLength   : string = 'full';
   public seasonLengthD  : string = 'full';
-  public testBrowser: boolean;
-  public timeSpan: string = 'full';
-  public nbaSpanGames: Array <any> = [];
-  public reduced: Array <any> = [];
-  public crunched: Array <any> = [];
+  public testBrowser: boolean
+  public timeSpan: string = 'full'
+  public nbaSpanGames: Array <any> = []
+  public reduced: Array <any> = []
+  public crunched: Array <any> = []
   public combined: Array <any> = []
   public sport: string
   public nflWeek: any
   public week: any = 'all'
   public defaultWeek: string = ''
   public hitterPosition: string
+  public schedules: any
 
 
   public crunchedDef: Array <any> = []
@@ -1003,6 +1004,12 @@ export class StatLeadersComponent implements OnInit {
           this.nflUtil.rank(this.nflTeams, res['teamStats'].teamStatsTotals, this.nflWeek)
           this.nflUtil.updateTeamStats(res['teamStats'].teamStatsTotals)
           this.nflTeamStats = res['teamStats'].teamStatsTotals
+
+          if (res['scheduleGames'].length > 32) {
+            console.log('server added too many schedule objects, truncate')
+            res['scheduleGames'].length = 32
+            console.log(res['scheduleGames'], 'after truncate')
+          }
 
           if (this.haveNflSchedules === false) 
             this.nflUtil.sortSchedules(this.teamSchedules, this.nflWeek, res['scheduleGames'])
