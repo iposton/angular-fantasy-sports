@@ -139,6 +139,7 @@ export class NflUtilService {
         name: "Bills",
         twitter: "#BillsMafia",
         abbreviation: "BUF",
+        conference: "AFC East",
         teamColoursHex: [
           "#00338d",
           "#c60c30"
@@ -154,6 +155,7 @@ export class NflUtilService {
         name: "Dolphins",
         twitter: "#FinsUp",
         abbreviation: "MIA",
+        conference: "AFC East",
         teamColoursHex: [
         "#008e97",
         "#fc4c02",
@@ -170,6 +172,7 @@ export class NflUtilService {
         name: "Patriots",
         abbreviation: "NE",
         twitter: "#ForeverNE",
+        conference: "AFC East",
         teamColoursHex: [
         "#002244",
         "#c60c30",
@@ -186,6 +189,7 @@ export class NflUtilService {
         name: "Jets",
         twitter: "#TakeFlight",
         abbreviation: "NYJ",
+        conference: "AFC East",
         teamColoursHex: [
         "#125740",
         "#000000",
@@ -202,6 +206,7 @@ export class NflUtilService {
         name: "Cowboys",
         twitter: "#DallasCowboys",
         abbreviation: "DAL",
+        conference: "NFC East",
         teamColoursHex: [
         "#003594",
         "#041e42",
@@ -220,6 +225,7 @@ export class NflUtilService {
         name: "Giants",
         twitter: "#TogetherBlue",
         abbreviation: "NYG",
+        conference: "NFC East",
         teamColoursHex: [
         "#0b2265",
         "#a71930",
@@ -236,6 +242,7 @@ export class NflUtilService {
         name: "Eagles",
         twitter: "#FlyEaglesFly",
         abbreviation: "PHI",
+        conference: "NFC East",
         teamColoursHex: [
         "#004c54",
         "#a5acaf",
@@ -254,6 +261,7 @@ export class NflUtilService {
         name: "Commanders",
         twitter: "#WashingtonFootball",
         abbreviation: "WAS",
+        conference: "NFC East",
         teamColoursHex: [
         "#773141",
         "#ffb612"
@@ -269,6 +277,7 @@ export class NflUtilService {
         name: "Ravens",
         twitter: "#RavensFlock",
         abbreviation: "BAL",
+        conference: "AFC North",
         teamColoursHex: [
         "#241773",
         "#000000",
@@ -286,6 +295,7 @@ export class NflUtilService {
         name: "Bengals",
         twitter: "#RuleTheJungle",
         abbreviation: "CIN",
+        conference: "AFC North",
         teamColoursHex: [
         "#fb4f14",
         "#000000"
@@ -301,6 +311,7 @@ export class NflUtilService {
         name: "Browns",
         twitter: "#Browns",
         abbreviation: "CLE",
+        conference: "AFC North",
         teamColoursHex: [
         "#311d00",
         "#ff3c00",
@@ -317,6 +328,7 @@ export class NflUtilService {
         name: "Steelers",
         twitter: "#HereWeGo",
         abbreviation: "PIT",
+        conference: "AFC North",
         teamColoursHex: [
         "#ffb612",
         "#101820",
@@ -335,6 +347,7 @@ export class NflUtilService {
         name: "Bears",
         twitter: "#DaBears",
         abbreviation: "CHI",
+        conference: "NFC North",
         teamColoursHex: [
         "#0b162a",
         "#c83803"
@@ -350,6 +363,7 @@ export class NflUtilService {
         name: "Lions",
         twitter: "#OnePride",
         abbreviation: "DET",
+        conference: "NFC North",
         teamColoursHex: [
         "#0076b6",
         "#b0b7bc",
@@ -367,6 +381,7 @@ export class NflUtilService {
         name: "Packers",
         abbreviation: "GB",
         twitter: "#GoPackGo",
+        conference: "NFC North",
         teamColoursHex: [
         "#203731",
         "#ffb612"
@@ -382,6 +397,7 @@ export class NflUtilService {
         name: "Vikings",
         twitter: "#Skol",
         abbreviation: "MIN",
+        conference: "NFC North",
         teamColoursHex: [
         "#4f2683",
         "#ffc62f"
@@ -397,6 +413,7 @@ export class NflUtilService {
         name: "Texans",
         twitter: "#WeAreTexans",
         abbreviation: "HOU",
+        conference: "AFC South",
         teamColoursHex: [
         "#03202f",
         "#a71930"
@@ -412,6 +429,7 @@ export class NflUtilService {
         name: "Colts",
         twitter: "#ForTheShoe",
         abbreviation: "IND",
+        conference: "AFC South",
         teamColoursHex: [
         "#002c5f",
         "#a2aaad"
@@ -431,6 +449,7 @@ export class NflUtilService {
         id: 57,
         name: "TIAA Bank Field"
         },
+        conference: "AFC South",
         teamColoursHex: [
         "#101820",
         "#d7a22a",
@@ -448,6 +467,7 @@ export class NflUtilService {
         name: "Titans",
         twitter: "#Titans",
         abbreviation: "TEN",
+        conference: "AFC South",
         teamColoursHex: [
         "#0c2340",
         "#418fde",
@@ -467,6 +487,7 @@ export class NflUtilService {
         name: "Falcons",
         twitter: " #DirtyBirds",
         abbreviation: "ATL",
+        conference: "NFC South",
         teamColoursHex: [
         "#a71930",
         "#000000",
@@ -487,6 +508,7 @@ export class NflUtilService {
         id: 47,
         name: "Bank of America Stadium"
         },
+        conference: "NFC South",
         teamColoursHex: [
         "#0085ca",
         "#101820",
@@ -503,6 +525,7 @@ export class NflUtilService {
         name: "Saints",
         abbreviation: "NO",
         twitter: "#Saints",
+        conference: "NFC South",
         teamColoursHex: [
         "#d3bc8d",
         "#101820"
@@ -518,6 +541,7 @@ export class NflUtilService {
         name: "Buccaneers",
         abbreviation: "TB",
         twitter: "#GoBucs",
+        conference: "NFC South",
         teamColoursHex: [
         "#d50a0a",
         "#ff7900",
@@ -536,6 +560,7 @@ export class NflUtilService {
         name: "Broncos",
         twitter: "#BroncosCountry",
         abbreviation: "DEN",
+        conference: "AFC West",
         teamColoursHex: [
         "#fb4f14",
         "#002244"
@@ -551,6 +576,7 @@ export class NflUtilService {
         name: "Chiefs",
         abbreviation: "KC",
         twitter: "#ChiefsKingdom",
+        conference: "AFC West",
         teamColoursHex: [
         "#e31837",
         "#ffb81c"
@@ -566,6 +592,7 @@ export class NflUtilService {
         name: "Raiders",
         abbreviation: "LV",
         twitter: "#RaiderNation",
+        conference: "AFC West",
         teamColoursHex: [
         "#000000",
         "#a5acaf"
@@ -587,6 +614,7 @@ export class NflUtilService {
         name: "Chargers",
         twitter: "#BoltUp",
         abbreviation: "LAC",
+        conference: "AFC West",
         teamColoursHex: [
         "#002a5e",
         "#ffc20e",
@@ -603,6 +631,7 @@ export class NflUtilService {
         name: "Cardinals",
         twitter: "#RedSea",
         abbreviation: "ARI",
+        conference: "NFC West",
         teamColoursHex: [
         "#97233f",
         "#000000",
@@ -619,6 +648,7 @@ export class NflUtilService {
         name: "Rams",
         abbreviation: "LA",
         twitter: "#RamsHouse",
+        conference: "NFC West",
         teamColoursHex: [
         "#002244",
         "#866d4b",
@@ -635,6 +665,7 @@ export class NflUtilService {
         name: "49ers",
         abbreviation: "SF",
         twitter: "#FTTB",
+        conference: "NFC West",
         teamColoursHex: [
         "#aa0000",
         "#b3995d"
@@ -650,6 +681,7 @@ export class NflUtilService {
           name: "Seahawks",
           twitter: "#Seahawks",
           abbreviation: "SEA",
+          conference: "NFC West",
           teamColoursHex: [
           "#002244",
           "#69be28",
@@ -1811,6 +1843,7 @@ export class NflUtilService {
    }
 
    public updateTeamStats(tStats) {
+    console.log('update nfl team stats')
     for (let stats of tStats) {
       for (let team of this.nflTeams) {
         if (stats.team.id === team.id) {

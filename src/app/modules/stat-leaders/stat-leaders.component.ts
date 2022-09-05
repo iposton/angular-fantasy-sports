@@ -10,7 +10,8 @@ import { NBADataService,
   NhlUtilService,
   NbaUtilService,
   MlbUtilService,
-  NflUtilService } from '../../services/index';
+  NflUtilService,
+  LocalStorageService } from '../../services/index';
 import * as CryptoJS from 'crypto-js';
 import { forkJoin } from 'rxjs';
 
@@ -148,7 +149,10 @@ export class StatLeadersComponent implements OnInit {
   public defaultWeek: string = ''
   public hitterPosition: string
   public schedules: any
-
+  public wlPlayers: any
+  public nflWl: any
+  public mlbHitWl: any
+  public mlbWl: any
 
   public crunchedDef: Array <any> = []
   public nhlSeason: boolean = true
@@ -170,6 +174,7 @@ export class StatLeadersComponent implements OnInit {
               public nbaUtil: NbaUtilService,
               public mlbUtil: MlbUtilService,
               public nflUtil: NflUtilService,
+              public ls: LocalStorageService,
               @Inject(PLATFORM_ID) platformId: string) {
     //default sport load
     this.nflSection = true
@@ -224,6 +229,7 @@ export class StatLeadersComponent implements OnInit {
     nflplayerImages = this.nflUtil.getNFLImages()
     this.mlbplayerImages = this.mlbUtil.getMLBImages()
     this.nhlplayerImages = this.nhlUtil.getNHLImages()
+    
 
     
     let thisDate = new Date()
@@ -286,20 +292,21 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public authorize(event: object) {
-    this.isOpen = true;
-    this.submitting = true;
-    let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded');
+    this.isOpen = true
+    this.submitting = true
+    let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded')
 
     this.http.post('/authorize', {headers}).subscribe((res) => {
-      this.openModal(event['player'], headers, event['type']);
+      this.openModal(event['player'], headers, event['type'])
     });
   }
 
   public openModal(player, headers, type) {
-    this.type = type;
-    this.selectedPlayer = null;
-    this.noPosts = '';
-    this.selectedPlayer = player;
+    this.type = type
+    this.selectedPlayer = null
+    this.noPosts = ''
+    this.selectedPlayer = player
+    console.log('selectedPlayer', this.selectedPlayer)
     //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
     let twitter = null;
     twitter = type === 'nba' ? this.nbaTeams[player.player['currentTeam'].abbreviation].twitter : type === 'nhl' ? this.nhlTeams[player.player['currentTeam'].abbreviation].twitter : player.team.twitter;
@@ -317,8 +324,8 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public getByDate(event, type) {
-    console.log('trying to get stats for', event, type);
-    this.sport = type;
+    console.log('trying to get stats for', event, type)
+    this.sport = type
     if (this.sport === 'nba')
       this.loading = true;
     if (this.sport === 'nhl' && this.nhlSection)
@@ -329,7 +336,7 @@ export class StatLeadersComponent implements OnInit {
       this.mlbPitchingLoading = true;
     if (this.sport === 'mlb' && this.mlbHittingSection)
       this.mlbHittingLoading = true;
-    this.timeSpan = event;
+    this.timeSpan = event
     this.combined = [];
     this.crunched = [];
     this.reduced = [];
@@ -358,7 +365,7 @@ export class StatLeadersComponent implements OnInit {
   public onChange(week) {
     this.defaultWeek = week
     this.week = week
-    this.nflSeason = week > 18 ? '2022-playoff' : '2021-2022-regular'
+    this.nflSeason = week > 18 ? '2023-playoff' : '2022-2023-regular'
     this.timeSpan = week
     this.combined = []
     this.reduced = []
@@ -662,7 +669,8 @@ export class StatLeadersComponent implements OnInit {
         this.mobile = true
       }
       if (this.myData === undefined) {
-        //default load 
+        //default load get watchlist 
+        this.wlPlayers = this.ls.get('watchList')
         this.loadNFL() //this.loadMLB()
         console.log('fetch data on init...')
       } else {
@@ -683,10 +691,9 @@ export class StatLeadersComponent implements OnInit {
     this.nflDraftKit = false
     this.sport = 'mlb'
     this.mlbPitchingLoading = true
+    this.mlbWl = this.wlPlayers.filter(x => x.sport === 'mlb' && x.player.primaryPosition == 'P')
     
 
-    // this.mlbService
-    //    .getAllStats(this.mlbApiRoot).subscribe(res => {
       this.nhlService.myStats(
         'mlb', 
         this.mlbSeasonType, 
@@ -729,6 +736,7 @@ export class StatLeadersComponent implements OnInit {
     this.mlbSection = false;
     this.mlbHittingSection = true
     this.mlbHittingLoading = true
+    this.mlbHitWl = this.wlPlayers.filter(x => x.sport === 'mlb' && x.player.primaryPosition != 'P')
 
       this.nhlService.myStats(
         'mlb', 
@@ -858,6 +866,7 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public rookieInfo(array, teams) {
+    console.log('nfl rookie info')
     for (let data of array) {
       data.stats = {
         drafted: {
@@ -880,35 +889,36 @@ export class StatLeadersComponent implements OnInit {
         }
       }
 
-      if (nflplayerImages[data.player.id] != null) {
+      if (data.player != null && data.player.id != null && nflplayerImages[data.player.id] != null) {
         data.player.officialImageSrc = nflplayerImages[data.player.id].image
       }
     }
 
     for (let team of teams) {
       for (let data of array) { 
-        if (team['id'] === data.teamAsOfDate.id) {
+        if (data.teamAsOfDate != null && team['id'] === data.teamAsOfDate.id) {
           data.team = {}
-          data.team.logo = team['officialLogoImageSrc'];
-          data.team.city = team['city'];
-          data.team.name = team['name'];
-          data.team.twitter = team['twitter'];
-          data.team.dtr = team['dtr'];
-          data.team.dfh = team['dfh'];
-          data.team.dsh = team['dsh'];
-          data.team.abbreviation = team['abbreviation'];
-          data.team.scheduleTicker = team['scheduleTicker'];
-          data.team.weekOpponent = team['weekOpponent'];
+          data.team.logo = team['officialLogoImageSrc']
+          data.team.city = team['city']
+          data.team.name = team['name']
+          data.team.twitter = team['twitter']
+          data.team.dtr = team['dtr']
+          data.team.dfh = team['dfh']
+          data.team.dsh = team['dsh']
+          data.team.abbreviation = team['abbreviation']
+          data.team.scheduleTicker = team['scheduleTicker']
+          data.team.weekOpponent = team['weekOpponent']
         }
       }
     }
   }
 
   public teamInfoRookie(array, teams, type, week, pos) {
+    console.log('team info rookie data')
     for (let team of teams) {
       for (let data of array) { 
-        if (data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && week === 'all' ||
-        week != 'all' && team['id'] === data.team.id) {
+        if (data.team != null && data.player != null && data.player['currentTeam'] != null && team['id'] === data.player['currentTeam'].id && week === 'all' ||
+        data.team != null && week != 'all' && team['id'] === data.team.id) {
           data.team = {}
           data.team.logo = team['officialLogoImageSrc'];
           data.team.city = team['city'];
@@ -978,7 +988,17 @@ export class StatLeadersComponent implements OnInit {
     this.mlbHittingSection = false;
     this.nflSection = true;
     this.sport = 'nfl'
-    this.haveNflSchedules = (this.teamSchedules.length > 0 ? true : false)
+    console.log(this.teamSchedules, 'this.teamSchedules where did you go?', this.nflTeams, 'this.nflTeams where di you go?')
+    if (this.teamSchedules.length === 0) {
+      this.haveNflSchedules = (this.ls.get('nflSchedules').length > 0 ? true : false)
+    } else {
+      this.haveNflSchedules = true
+    }
+    
+    console.log(this.haveNflSchedules, 'have nflSchedules? this should true')
+    //this.wlPlayers = this.ls.get('watchList')
+    this.nflWl = this.wlPlayers.filter(x => x.sport === 'nfl')
+    console.log(this.nflWl, 'watchlist')
 
     this.nhlService.myStats(
       'nfl', 
@@ -1009,9 +1029,19 @@ export class StatLeadersComponent implements OnInit {
             console.log('server added too many schedule objects, truncate')
             res['scheduleGames'].length = 32
             console.log(res['scheduleGames'], 'after truncate')
+            this.ls.set('nflSchedules', res['scheduleGames'])
+          } else if (res['scheduleGames'].length == 32) {
+
           }
 
-          if (this.haveNflSchedules === false) 
+          if (res['scheduleGames'] == []) {
+            res['scheduleGames'] = this.ls.get('nflSchedules')
+          } else {
+            console.log('set nfl schedules', res['scheduleGames'])
+            this.ls.set('nflSchedules', res['scheduleGames'])
+          }
+
+          if (this.teamSchedules.length === 0) 
             this.nflUtil.sortSchedules(this.teamSchedules, this.nflWeek, res['scheduleGames'])
 
           this.sortToughest()
@@ -1051,7 +1081,8 @@ export class StatLeadersComponent implements OnInit {
         console.log(res['playerInfo'], 'nfl player info')
         this.util.updatePlayers(res['playerInfo'].players, this.nflData, this.nflTeams)
         this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie')
-        this.nflOffenseLoading = false   
+        this.nflOffenseLoading = false 
+        console.log(this.teamSchedules, 'this.teamSchedules should persist now')  
 
         })
     }

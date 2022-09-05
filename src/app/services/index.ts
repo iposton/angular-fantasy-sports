@@ -9,4 +9,5 @@ export * from './nba-util.service';
 export * from './mlb-util.service';
 export * from './firebase.service';
 export * from './util.service';
+export * from './local-storage.service';
 export * from './google-analytics.service';

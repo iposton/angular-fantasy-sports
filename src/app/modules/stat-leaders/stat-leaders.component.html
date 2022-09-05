@@ -10,6 +10,11 @@
 [noPosts]="noPosts"
 [tweetsData]="tweetsData"
 [name]="name"
+[selectedPlayer]="selectedPlayer"
+[selectedWeek]="week"
+[selectedDate]="'none'"
+[timeSpan]="timeSpan"
+[sport]="sport"
 [image]="image"
 (close)="isOpen = false"
 [modalType]="'twitter'"
@@ -40,16 +45,25 @@
     </div>
 </div>
 <div class="center buttons">
-   <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button> 
-   <button [ngClass]="{'dn' : !mlbSection && !mlbHittingSection}" (click)="mlbSeason = !mlbSeason; updateEndpoint(); timeSpan = 'full'">{{mlbSeason ? 'Playoffs' : 'Season'}}</button>
-   <button [ngClass]="{'dn' : !nhlSection}" (click)="goalies(); nhlSection = false; nhlGoalies = true; timeSpan = 'full'">NHL Goalies</button>  
-   <button [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false; timeSpan = 'full'">NHL Skaters</button>
-   <button [ngClass]="{'dn' : !mlbSection}" (click)="loadHitters(); timeSpan = 'full'">MLB Hitters</button>  
-   <button [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false; timeSpan = 'full'">MLB Pitchers</button>
-   <button [ngClass]="{'dn' : !nflSection}" (click)="week = 'all'; timeSpan = 'full'; defensePlayers(); $event.stopPropagation()">Defense</button>  <button [ngClass]="{'dn' : !nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</button>
-   <button [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit; ; $event.stopPropagation()">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</button>
+   <!-- <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button>  -->
+   <!-- <button [ngClass]="{'dn' : !mlbSection && !mlbHittingSection}" (click)="mlbSeason = !mlbSeason; updateEndpoint(); timeSpan = 'full'">{{mlbSeason ? 'Playoffs' : 'Season'}}</button> -->
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('two-weeks', sport)">Last 14 Days</span> 
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('last-week', sport)">Last 7 Days</span>  
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('full', sport)">All</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('today', sport)">Today</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('yesterday', sport)">Yesterday</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : !nhlSection}" (click)="goalies(); nhlSection = false; nhlGoalies = true; timeSpan = 'full'">NHL Goalies</span>  
+   <span class="hollow-btn" [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false; timeSpan = 'full'">NHL Skaters</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : !mlbSection}" (click)="loadHitters(); timeSpan = 'full'">MLB Hitters</span>  
+   <span class="hollow-btn" [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false; timeSpan = 'full'">MLB Pitchers</span>
+   <span [ngClass]="{'dn' : !nflSection, 'hollow-btn' : nflSection}" (click)="week = 'all'; timeSpan = 'full'; defensePlayers(); $event.stopPropagation()">Defense</span>  
+   <span [ngClass]="{'dn' : !nflDefenseSection, 'hollow-btn' : nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit; ; $event.stopPropagation()">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('three-weeks')">Last 3 Weeks</span> 
+   <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('all')">ALL</span>
 </div>
-<div class="center" *ngIf="sport === 'mlb' && mlbHittingSection">
+<div class="center nfl-select" *ngIf="sport === 'mlb' && mlbHittingSection">
+  <label for="pos">Position:</label>
   <select name="pos" id="pos" (change)="onHitterChange($event.target.value)">
     <option value="OF,RF,LF,CF"> OF </option>
     <option value="1B"> 1B </option>
@@ -60,29 +74,27 @@
     <option value="DH"> DH </option>
   </select>
 </div>
-<div class="center" *ngIf="sport != 'nfl'">
-    <button (click)="getByDate('two-weeks', sport)">Last 14 Days</button> &nbsp;&nbsp;
-    <button (click)="getByDate('last-week', sport)">Last 7 Days</button> &nbsp;&nbsp; 
-    <button (click)="getByDate('full', sport)">All</button>
-    &nbsp;&nbsp; <button (click)="getByDate('today', sport)">Today</button>
-    &nbsp;&nbsp; <button (click)="getByDate('yesterday', sport)">Yesterday</button>
-</div>
-<div class="center" *ngIf="sport === 'nfl' && nflSection">
-  <select name="pos" id="pos" (change)="onPosChange($event.target.value)">
-    <option value="qb"> QB </option>
-    <option value="rb"> RB </option>
-    <option value="wr"> WR </option>
-    <option value="te"> TE </option>
-    <option value="k"> K </option>
-  </select>
-</div>
-<div class="center" *ngIf="sport === 'nfl' && nflDefenseSection">
-  <select name="dpos" id="dpos" (change)="onPosDChange($event.target.value)">
-    <option value="LB,DT,DE,OLB,ILB,MLB"> LB, DE </option>
-    <option value="DB,SS,FS,CB,S"> CB, S </option>
-  </select>
-</div>
-<div class="center" *ngIf="sport === 'nfl'">
+
+<div class="center nfl-select" *ngIf="sport === 'nfl'">
+  <span *ngIf="nflSection">
+    <label for="pos">Position:</label>
+    <select name="pos" id="pos" (change)="onPosChange($event.target.value)">
+      <option value="qb"> QB </option>
+      <option value="rb"> RB </option>
+      <option value="wr"> WR </option>
+      <option value="te"> TE </option>
+      <option value="k"> K </option>
+    </select>
+  </span> 
+  <span *ngIf="nflDefenseSection">
+    <label for="pos">Position:</label>
+    <select name="dpos" id="dpos" (change)="onPosDChange($event.target.value)">
+      <option value="LB,DT,DE,OLB,ILB,MLB"> LB, DE </option>
+      <option value="DB,SS,FS,CB,S"> CB, S </option>
+    </select>
+  </span>
+  <span class="week-select">
+    <label for="week">Week:</label>
     <select name="week" id="week" (change)="onChange($event.target.value)" [value]="defaultWeek">
       <option value="1"> - </option>
       <option value="1">1</option>
@@ -103,14 +115,14 @@
       <option value="16">16</option>
       <option value="17">17</option>
       <option value="18">18</option>
-      <option value="19">wildcard</option>
+      <!-- <option value="19">wildcard</option>
       <option value="20">division round</option>
       <option value="21">conf championship</option>
-      <option value="23">super bowl</option>
-    </select>
-    &nbsp;&nbsp; <button (click)="onChange('three-weeks')">Three Weeks</button>
-    &nbsp;&nbsp; <button (click)="onChange('all')">ALL</button>
-  </div>
+      <option value="23">super bowl</option> -->
+    </select>  
+  </span>
+</div>
+
 <app-spinner *ngIf="loading || nhlGoalieloading || nhlSkaterloading || mlbPitchingLoading || mlbHittingLoading || nflOffenseLoading || nflDefenseLoading" [size]="'lg'" [color]="'white'" [title]="'Stat Leader Data'"></app-spinner>
 <div *ngIf="errMessage" class="err center">
   <h1><strong>Error: </strong> {{ errMessage }}</h1>
@@ -893,6 +905,24 @@
             [twitter]="twitter"
             ></app-stat-card>
 
+            <app-stat-card *ngIf="!mlbPitchingLoading && mlbWl != null" 
+              [data]="mlbWl" 
+              [statType]="'pitching'"
+              [statField]="'fanDuelFP'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Watch List'"
+              [statTag]="'FP'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="850"
+              ></app-stat-card>
+
         </section>
 
         <section [ngClass]="{'dn' : !mlbHittingSection}">
@@ -1060,6 +1090,24 @@
             (open)="authorize($event)"
             [twitter]="twitter"
             ></app-stat-card>
+
+            <app-stat-card *ngIf="!mlbHittingLoading && mlbHittingData != null && mlbHitWl != null" 
+              [data]="mlbHitWl" 
+              [statType]="'batting'"
+              [statField]="'fanDuelFP'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Watch List'"
+              [statTag]="'FP'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="850"
+              ></app-stat-card>
           </section>
 
           <section [ngClass]="{'dn' : !nflSection}">
@@ -1217,6 +1265,24 @@
               [statTag]="'Pick'"
               [sport]="'nfl'"
               [order]="'ASC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="850"
+              ></app-stat-card>
+
+              <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflWl != null" 
+              [data]="nflWl" 
+              [statType]="'receiving'"
+              [statField]="'fanDuelFP'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Watch List'"
+              [statTag]="'FP'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
               [teams]="nflTeams"
               (open)="authorize($event)"
               [twitter]="twitter"

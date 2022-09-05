@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FirebaseService } from '../../services/index';
+import { FirebaseService,
+LocalStorageService } from '../../services/index';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -9,40 +10,96 @@ import { FormControl } from '@angular/forms';
 })
 export class DialogComponent implements OnInit {
   @Input('tweetsData')
-  public tweetsData         :Array<any>;
+  public tweetsData         :Array<any>
   @Input('teams')
-  public teams              :Array<any>;
+  public teams              :Array<any>
   @Input('title')
-  public title              :string;
+  public title              :string
   @Input('type')
-  public type               :string;
+  public type               :string
   @Input('modalType')
-  public modalType          :string;
+  public modalType          :string
   @Input('area')
-  public area               :string;
+  public area               :string
   @Input('noPosts')
-  public noPosts            :any;
+  public noPosts            :any
   @Input('submitting')
-  public submitting         :any;
+  public submitting         :any
   @Input('name')
-  public name               :any;
+  public name               :any
+  @Input('sport')
+  public sport              :any
+  @Input('selectedPlayer')
+  public selectedPlayer     :any
   @Input('image')
-  public image              :any;
+  public image              :any
   @Input('isOpen')
-  public isOpen             :any;
-  @Output() close = new EventEmitter();
-  public signedIn: any;
+  public isOpen             :any
+  @Input('selectedWeek')
+  public selectedWeek       :any
+  @Input('selectedDate')
+  public selectedDate       :any
+  @Input('timeSpan')
+  public timeSpan             :any
+  @Output() close = new EventEmitter()
+  public signedIn: any
+  public wl: any
+  public favorites: any
+  public showSnack: boolean
+  public wlAlert: string
 
   public user = {
     email: '',
     password: ''
   };
 
-  constructor(public fbService: FirebaseService) { }
+  constructor(public fbService: FirebaseService, public ls: LocalStorageService) {
+    this.showSnack = false
+    this.wlAlert = ""
+    this.wl = []
+    this.wl = this.ls.get('watchList')
+    this.favorites = this.ls.get('favorites')
+   }
+
+  public watchList(item, name, sport, data, title) {  
+
+    if (data != null) {
+      //console.log(data, 'selectedData')
+      if (title === 'watchList') {
+        if (this.ls.doesExist(data, item.player.id)) {
+          console.log('already exists', item.player.id, this.ls.doesExist(data, item.player.id))
+          this.showSnack = true
+          this.wlAlert = `${name} is already watched.`
+          setTimeout(()=> {
+            this.showSnack = false
+            this.wlAlert = ""
+          }, 2950)
+          return
+        }
+      } 
+    }
+  
+    if (this.wlAlert === "" && !this.showSnack) {
+      console.log('add item and set', item)
+      this.ls.add(data, item, sport, this.selectedWeek, title)
+      this.ls.set(title, data)
+
+      this.showSnack = true
+      this.wlAlert = `Player Added`
+      setTimeout(()=> {
+        this.showSnack = false
+        this.wlAlert = ""
+      }, 2950)
+    } 
+  }
+
+  public unwatch(item, data, title) {
+    this.ls.remove(item, data, title)
+  }
 
   public closeModal() {
-    this.isOpen = false;
-    this.close.emit(); 
+    this.isOpen = false
+    this.close.emit() 
   }
 
   public signIn() {

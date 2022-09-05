@@ -468,7 +468,7 @@ methods.getStats = async (
         } 
         
         if (sport === 'nfl' && nflWeek === 'all' && haveSchedules === 'false' || playerType === 'nflPlayers' && haveSchedules === 'false') {
-          console.log(`Get ${sport} schedule games for sort ranks.`)
+          console.log(`Get ${sport} schedules.`)
           forkJoin(
             jsonTeam.map(
               g => request(`${apiRoot}/${sport}/2022-2023-regular/games.json?team=${g.abbreviation}`, {headers},
@@ -596,7 +596,7 @@ methods.getStats = async (
             //only use at the start of season to fetch all players
             console.log(`got player info for ${sport}`)
             let rookies = null
-            body.rookies = body['players'].filter(item => item.player.rookie === true && item.player.drafted != null && item.player.drafted.year == 2022)
+            body.rookies = body['players'].filter(item => item.teamAsOfDate != null && item.player.rookie === true && item.player.drafted != null && item.player.drafted.year == 2022)
             stats[0].playerInfo = await body
             
         })

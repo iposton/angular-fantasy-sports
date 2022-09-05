@@ -1,4 +1,5 @@
 <div id="overlay" [ngClass]="{'active': isOpen}" (click)="closeModal()">
+  <div id="snackbar" [ngClass]="{'show' : showSnack}">{{wlAlert}} <span *ngIf="wlAlert === 'Player Added'"> &#10003;</span> </div>
   <div class="modal" (click)="$event.stopPropagation()">
     <div class="modal-header" *ngIf="!submitting && modalType === 'twitter'">
       <span> 
@@ -6,7 +7,12 @@
         <span class="{{type}}">
           <img src="{{image}}" alt="{{type}} player" onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'" />
         </span> 
-        <span>{{name}}</span>
+        <span>{{name}} </span>  &nbsp;
+        <span *ngIf="selectedPlayer?.dateAdded == null" class="watchlist" (click)="watchList(selectedPlayer, name, sport, this.wl, 'watchList')">&#43; Watch List</span>
+        <span *ngIf="selectedPlayer?.dateAdded" class="watchlist" (click)="unwatch(selectedPlayer, this.wl, 'watchList')">&#8722; Remove</span>
+        <span *ngIf="sport === 'nfl' && selectedWeek != 'three-weeks' && selectedWeek != 'all'" class="fav-star">
+          <span title="Favorite" class="star" (click)="watchList(selectedPlayer, name, sport, this.favorites, 'favorites')">☆ <span class="tooltip">Favorite</span></span>
+        </span>
             <!-- <span class="team-image"> <img src="{{selectedPlayer?.team?.logo}}" alt="{{selectedPlayer?.team?.name}} logo"></span> -->
       </span>
       <span class="right" (click)="closeModal()">X</span>

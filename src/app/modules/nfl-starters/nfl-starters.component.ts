@@ -4,12 +4,13 @@ import { NFLDataService,
          UtilService, 
          DepthService,
          NflUtilService,
-        NHLDataService } from '../../services/index';
+        NHLDataService,
+        LocalStorageService } from '../../services/index';
 import { isPlatformBrowser } from '@angular/common';
-import { forkJoin } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import * as CryptoJS from 'crypto-js';
-let headers = null;
+// import { forkJoin } from 'rxjs';
+// import { debounceTime } from 'rxjs/operators';
+// import * as CryptoJS from 'crypto-js';
+// let headers = null;
 let playerString = null;
 let weekTimes = null;
 let pos = {
@@ -129,6 +130,7 @@ export class NflStartersComponent implements OnInit {
     private depthService: DepthService,
     private nhlService: NHLDataService,
     private nflUtil: NflUtilService,
+    public ls: LocalStorageService,
     @Inject(PLATFORM_ID) platformId: string) {
       this.showMatchup = true;
       this.teams = this.nflUtil.getNFLTeams();
@@ -175,14 +177,15 @@ export class NflStartersComponent implements OnInit {
   }
 
   public openModal(player, headers, type) {
-    this.type = type;
-    this.selectedPlayer = null;
-    this.noPosts = '';
-    this.selectedPlayer = player;
-    let twitter = null;
-    twitter = player.team.twitter;
-    let searchterm = null;
-    searchterm = 'query=' + player.player.lastName + ' ' + twitter;
+    this.type = type
+    this.selectedPlayer = null
+    this.noPosts = ''
+    this.selectedPlayer = player
+    console.log('selectedPlayer', this.selectedPlayer)
+    let twitter = null
+    twitter = player.team.twitter
+    let searchterm = null
+    searchterm = 'query=' + player.player.lastName + ' ' + twitter
     this.image = player.player.officialImageSrc;
     this.name = player.player.firstName + ' ' + player.player.lastName +' - '+ player.player.primaryPosition +' | #'+ player.player.jerseyNumber;
     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
@@ -217,7 +220,7 @@ export class NflStartersComponent implements OnInit {
 
         this.nhlService.serverInfo(
         'nfl', 
-        this.nflSeason, 
+        '2022-2023-regular', 
         'games', 
         'dateB', 
         'dateE', 
@@ -339,7 +342,7 @@ export class NflStartersComponent implements OnInit {
 
   public sortData() {
     if (this.gamesToday === true) {
-
+      this.haveNflSchedules = (this.ls.get('nflSchedules').length > 0 ? true : false)
       this.nhlService.myStats(
         'nfl', 
         this.nflSeason, 
@@ -357,11 +360,26 @@ export class NflStartersComponent implements OnInit {
         'noUpdate',
         'none',
         this.haveNflSchedules).subscribe(async res => {
-          const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+        
           console.log(res, 'nfl stats data')
           this.teamStats = res['teamStats'].teamStatsTotals
           this.teamScheds = res['scheduleGames']
-          if (this.haveNflSchedules === false)
+
+          if (res['scheduleGames'].length > 32) {
+            console.log('server added too many schedule objects, truncate')
+            res['scheduleGames'].length = 32
+            console.log(res['scheduleGames'], 'after truncate')
+            this.ls.set('nflSchedules', res['scheduleGames'])
+          }
+
+          if (res['scheduleGames'].length === 0) {
+            res['scheduleGames'] = this.ls.get('nflSchedules')
+            this.teamScheds = res['scheduleGames']
+          } else {
+            this.ls.set('nflSchedules', res['scheduleGames'])
+          }
+
+          if (this.teamSchedules.length === 0)
             this.sortTeamRanks()
 
           this.dailyStats = res['dailyStats'].gamelogs

@@ -167,10 +167,11 @@ export class StartingPitcherComponent implements OnInit {
   }
 
   public openModal(player, headers, type) {
-    this.type = type;
-    this.selectedPlayer = null;
-    this.noPosts = '';
-    this.selectedPlayer = player;
+    this.type = type
+    this.selectedPlayer = null
+    this.noPosts = ''
+    this.selectedPlayer = player
+    console.log('selectedPlayer', this.selectedPlayer)
     //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
     let twitter = null;
     twitter = player.team.twitter;

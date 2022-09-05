@@ -694,6 +694,40 @@ ul {
   .w100 {
     width: 100%;
   }
+
+  .page-arrow {
+    font-size: 25px;
+  }
+
+  .page-arrow:hover {
+    cursor: pointer;
+  }
+
+  .all-btn {
+    border: 1px solid #fff;
+  }
+
+  .pcard-btn {
+    padding: 0px 8px;
+    border-radius: 3px;
+    margin: 4px;
+  }
+
+  .pcard-btn:hover {
+    cursor: pointer;
+  }
+
+  .green.pcard-btn {
+    background: #2ecc71;
+  }
+
+  .orange.pcard-btn {
+    background: #e67e22;
+  }
+
+  .red.pcard-btn {
+    background: #e74c3c;
+  }
 }
 
 .card-wrap-sp.position-box {
@@ -1938,6 +1972,32 @@ form.date-form {
   color: gold;
 }
 
+.hollow-btn {
+  border: 1px solid #fff;
+  padding: 0px 8px;
+  border-radius: 2px;
+  margin: 4px;
+  transition: linear .3s;
+  margin: 7px 5px;
+  display: inline-block;
+}
+
+.hollow-btn:hover {
+  cursor: pointer;
+  color: #ccc;
+  border: 1px solid #ccc;
+}
+
+.hollow-btn.dn {
+  display: none;
+}
+
+.nfl-select {
+  select {
+    margin: 5px 10px;
+  }
+}
+
 //nfl
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper {
   display: block!important;
@@ -2362,6 +2422,34 @@ form input[type="text"] {
       img {
         width: 0%;
       }
+      .watchlist {
+        border: 1px solid #fff;
+        padding: 2px 6px;
+        border-radius: 4px;
+        transition: linear .3s;
+      }
+
+      .watchlist:hover {
+        border: 1px solid #ccc;
+        color: #ccc;
+        cursor: pointer;
+      }
+
+      .fav-star {
+        top: 5px;
+        right: 25px;
+        position: absolute;
+        transition: linear .3s;
+      }
+
+      .fav-star:hover {
+        color: transparent;
+        .star:before {
+          content: "\2605";
+          position: absolute;
+          color: gold;
+        }
+      }
     }
   }
 }
@@ -2443,7 +2531,48 @@ form input[type="text"] {
       padding: 8px;
       width: 145px;
     }
-    
+
+    //snackbar
+  #snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 200;
+    left: 87%;
+    top: 30px;
+  }
+
+  #snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+
+  @-webkit-keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 30px; opacity: 1;}
+  }
+
+  @keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 30px; opacity: 1;}
+  }
+
+  @-webkit-keyframes fadeout {
+    from {top: 30px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+  }
+
+  @keyframes fadeout {
+    from {top: 30px; opacity: 1;}
+    to {top: 0; opacity: 0;}
+  }    
 }
 
 // spinner component

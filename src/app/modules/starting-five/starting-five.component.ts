@@ -627,9 +627,10 @@ export class StartingFiveComponent implements OnInit {
   public openModal(item, headers, area) {
     this.area = area;
     this.type = 'nba';
-    this.selectedPlayer = null;
-    this.noPosts = '';
-    this.selectedPlayer = item;
+    this.selectedPlayer = null
+    this.noPosts = ''
+    this.selectedPlayer = item
+    console.log('selectedPlayer', this.selectedPlayer)
     //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
     let searchterm = null;
     if (area === 'top') {

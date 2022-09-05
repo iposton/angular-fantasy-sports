@@ -18,7 +18,7 @@
       <app-team-rank *ngIf="!nflTeamStatsLoading && nflDraftKit && teamSchedules.length > 0 && showDef" 
         [data]="nflTeamStats" 
         [teams]="teams"
-        [title]="'Toughest Defense Schedule 2021'"
+        [title]="'Toughest Defense Schedule 2022'"
         (seasonChange)="seasonLength = $event"
         [seasonLength]="seasonLength"
         [week]="selectedWeek">
@@ -33,7 +33,7 @@
       <app-team-rank *ngIf="!nflTeamStatsLoading && nflDraftKit && teamSchedules.length > 0 && !showDef" 
           [data]="nflTeamStats" 
           [teams]="teams"
-          [title]="'Toughest Offense Schedule 2021'"
+          [title]="'Toughest Offense Schedule 2022'"
           [seasonLength]="seasonLengthD"
           (seasonChangeD)="seasonLengthD = $event">
       </app-team-rank>
@@ -50,6 +50,8 @@
   [noPosts]="noPosts"
   [tweetsData]="tweetsData"
   [name]="name"
+  [sport]="'nfl'"
+  [selectedPlayer]="selectedPlayer"
   [image]="image"
   (close)="isOpen = false"
   [modalType]="'twitter'"

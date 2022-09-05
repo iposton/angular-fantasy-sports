@@ -1640,11 +1640,12 @@ public showMatchups() {
   }
 
   public openModal(item, headers, area) {
-    this.area = area;
-    this.type = 'nhl';
-    this.selectedPlayer = null;
-    this.noPosts = '';
-    this.selectedPlayer = item;
+    this.area = area
+    this.type = 'nhl'
+    this.selectedPlayer = null
+    this.noPosts = ''
+    this.selectedPlayer = item
+    console.log('selectedPlayer', this.selectedPlayer)
     //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
     let searchterm = null;
     searchterm = 'query=' + item.player.lastName + ' ' + (item.player.twitterHandle ?  item.player.twitterHandle : this.teams[item.team.abbreviation].twitter);

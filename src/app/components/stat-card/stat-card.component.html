@@ -1,7 +1,7 @@
 <div class="card-wrap-sp mat-elevation-z6 position-box">
   <span class="title">{{ title }}</span> 
-  <span *ngIf="sport === 'nfl'">
-      <button [ngClass]="{'dn': end === 21}" (click)="begin = 0; end = 21; page = 39; amount = -1;">Easy</button> <button [ngClass]="{'dn': end === 32}" (click)="begin = 21; end = 32; page = 39; amount = -1;">Good</button> <button [ngClass]="{'dn': end === 32}" (click)="begin = 10; end = 32; page = 39; amount = -1;">Hard</button> <button (click)="begin = 0; end = 0; page = 19; amount = -1;">All</button>
+  <span>
+      <span title="Easy Matchup" class="green pcard-btn" [ngClass]="{'dn': end === 21}" (click)="begin = 0; end = 21; page = 39; amount = -1;"> &nbsp;</span> <span title="Good Matchup" class="orange pcard-btn" [ngClass]="{'dn': end === 32}" (click)="begin = 21; end = 32; page = 39; amount = -1;"> &nbsp;</span> <span title="Hard Matchup" class="red pcard-btn" [ngClass]="{'dn': end === 32}" (click)="begin = 10; end = 32; page = 39; amount = -1;"> &nbsp;</span> <span title="Show All Matchups" class="pcard-btn all-btn" [ngClass]="{'dn': end === 0 && begin === 0 || end == null}" (click)="begin = 0; end = 0; page = 19; amount = -1;"> All </span>  <span title="21-40" class="page-arrow" [ngClass]="{'dn': amount &gt; -1}" (click)="page = 39; amount = 19">&#8594;</span> <span title="1-20" class="page-arrow" [ngClass]="{'dn': amount === -1}" (click)="page = 19; amount = -1">&#8592;</span>
   </span>
   <div>
     <div class="content-wrapper">
