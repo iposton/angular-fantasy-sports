@@ -384,6 +384,7 @@ export class NflStartersComponent implements OnInit {
 
           this.dailyStats = res['dailyStats'].gamelogs
           this.myData = res['playerStats'].playerStatsTotals
+          this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
      
             this.dailyTeamStats = res['team'].gamelogs
             if (this.dailyTeamStats) {
@@ -627,9 +628,9 @@ export class NflStartersComponent implements OnInit {
                       }
                     }  
                 }
-                this.groupPlayers();
+                this.groupPlayers()
               } else {
-                this.groupPlayers();
+                this.groupPlayers()
               }
             }
             this.loading = false;

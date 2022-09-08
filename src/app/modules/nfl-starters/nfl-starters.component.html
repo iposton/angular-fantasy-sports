@@ -1,9 +1,9 @@
 <app-spinner *ngIf="nflTeamStatsLoading && !teamSchedules.length && !loading" [size]="'lg'" [color]="'white'" [title]="'Loading NFL Teams'"></app-spinner>
 <div class="main-row" *ngIf="!nflTeamStatsLoading">
-    <button *ngIf="!showMatchup" (click)="nflDraftKit = !nflDraftKit">{{nflDraftKit ? 'Team Stats' : 'Draft Kit'}}</button>
-    <button *ngIf="!showMatchup && nflDraftKit" (click)="sortToughest(showDef)">{{showDef ? 'Toughest O' : 'Toughest D'}}</button>
-    <button (click)="showMatchup = !showMatchup; loadData()">{{showMatchup ? 'Teams' : 'Matchups'}}</button>
-    <button (click)="fantasyPoints = !fantasyPoints">{{fantasyPoints ? 'Stats' : 'Fantasy Points'}}</button>
+    <span class="hollow-btn" *ngIf="!showMatchup" (click)="nflDraftKit = !nflDraftKit">{{nflDraftKit ? 'Team Stats' : 'Draft Kit'}}</span>
+    <span class="hollow-btn" *ngIf="!showMatchup && nflDraftKit" (click)="sortToughest(showDef)">{{showDef ? 'Toughest O' : 'Toughest D'}}</span>
+    <span class="hollow-btn" (click)="showMatchup = !showMatchup; loadData()">{{showMatchup ? 'Teams' : 'Matchups'}}</span>
+    <span class="hollow-btn" (click)="fantasyPoints = !fantasyPoints">{{fantasyPoints ? 'Stats' : 'Fantasy Points'}}</span>
 </div>
 
 <div class="main-row stat-leaders" *ngIf="!showMatchup">   
@@ -56,7 +56,8 @@
   (close)="isOpen = false"
   [modalType]="'twitter'"
   ></app-dialog>
-  <div class="center">
+  <div class="center nfl-select">
+      <label for="week">Week:</label>
       <select name="week" id="week" (change)="onChange($event.target.value)">
         <option value="1"> - </option>
         <option value="1">1</option>
@@ -77,10 +78,10 @@
         <option value="16">16</option>
         <option value="17">17</option>
         <option value="18">18</option>
-        <option value="19">wildcard</option>
+        <!-- <option value="19">wildcard</option>
         <option value="20">division round</option>
         <option value="21">conf championship</option>
-        <option value="23">super bowl</option>
+        <option value="23">super bowl</option> -->
       </select>
     </div>
     <!-- <div class="center">

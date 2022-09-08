@@ -398,8 +398,8 @@ methods.getStats = async (
           console.log('have schedules?', haveSchedules)
           jsonTeam = await JSON.parse(team)
         }
-          
-        dailyUrl = playerType === 'nhlGoalies' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?position=${position}` : playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?position=${position}` : playerType === 'nflPlayers' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?player=${player}` : sport === 'mlb' ? `${apiRoot}/${sport}/2022-regular/date/${dailyDate}/${feedType}.json?player=${player}` : `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?player=${player}`
+        //player=${player} 
+        dailyUrl = playerType === 'nhlGoalies' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?position=${position}` : playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?position=${position}` : playerType === 'nflPlayers' ? `${apiRoot}/${sport}/2022-2023-regular/week/${nflWeek}/${feedType}.json` : sport === 'mlb' ? `${apiRoot}/${sport}/2022-regular/date/${dailyDate}/${feedType}.json?player=${player}` : `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?player=${player}`
         teamStatsUrl = `${apiRoot}/${sport}/${season}/${feedType2}.json`
         playerStatsUrl = playerType === 'statLeaders' || playerType === 'nhlGoalies' || playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/${feedType3}.json?position=${position}` : `${apiRoot}/${sport}/${season}/${feedType3}.json?player=${player}` 
         playerInfoUrl = `${apiRoot}/${sport}/players.json?position=${position}`
