@@ -236,7 +236,7 @@ export class StatLeadersComponent implements OnInit {
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000))
     this.testBrowser = isPlatformBrowser(platformId)
     let weekTimes = this.nflUtil.getWeekTimes()
-    this.nflSeason = '2021-2022-regular'
+    this.nflSeason = '2022-2023-regular'
     //reset global daily date
     this.nhlService.selectedDate(this.nhlService.dailyDate)
 
@@ -244,8 +244,8 @@ export class StatLeadersComponent implements OnInit {
       let date = new Date();
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.nflWeek = week.week
-
-        this.nflSeason = this.nflWeek > 18 ? '2022-playoff' : '2021-2022-regular'
+        this.util.nflWeek = week.week
+        this.nflSeason = this.nflWeek > 18 ? '2023-playoff' : '2022-2023-regular'
         // this.timeSpan = week.week
         // this.week = week.week
         if (date < new Date(week.dateEnd)) {
@@ -667,6 +667,7 @@ export class StatLeadersComponent implements OnInit {
     if (this.testBrowser) {
       if (window.innerWidth < 700) {
         this.mobile = true
+        this.util.mobile = this.mobile
       }
       if (this.myData === undefined) {
         //default load get watchlist 
@@ -997,8 +998,11 @@ export class StatLeadersComponent implements OnInit {
     
     console.log(this.haveNflSchedules, 'have nflSchedules? this should true')
     //this.wlPlayers = this.ls.get('watchList')
+
+    //TODO move this to update stats first and then set it to ls
     this.nflWl = this.wlPlayers.filter(x => x.sport === 'nfl')
     console.log(this.nflWl, 'watchlist')
+    //TODO move this to update stats first and then set it to ls
 
     this.nhlService.myStats(
       'nfl', 
@@ -1069,9 +1073,24 @@ export class StatLeadersComponent implements OnInit {
         let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(x => x.stats.gamesPlayed > 0) : res['dailyStats'].gamelogs)
         this.nflData = stats
 
+        //TODO turn this into a function that updates all wl stats by player id and set the new watchlist
+        if (this.nflWl != null && this.nflWl.length > 0) {
+         
+            for (let data of this.nflData) {
+              for (let wl of this.nflWl) {
+                //TODO create a player string to fetch updated stats, use full watchlist not the nflwl
+                if (data.player.id === wl.player.id) {
+                  wl.statsUpdated = this.util.nflWeek
+                  wl.stats = data.stats
+                }
+              }
+            }
+   
+        }
+
         //temporary before season start
-        this.nfl22Rookies = res['playerInfo'].rookies ? res['playerInfo'].rookies : []
-        this.rookieInfo(this.nfl22Rookies, this.nflTeams)
+        //this.nfl22Rookies = res['playerInfo'].rookies ? res['playerInfo'].rookies : []
+        //this.rookieInfo(this.nfl22Rookies, this.nflTeams)
         //temporary before season start
 
         this.nflRookies = res['playerStats'].rookies ? res['playerStats'].rookies : [] //this.nflData.filter(player => player.player.rookie === true)
@@ -1079,7 +1098,7 @@ export class StatLeadersComponent implements OnInit {
         this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition)
         this.nflTeamInfo(this.nflRookies, this.nflTeams, 'o', this.week, this.nflPosition)
         console.log(res['playerInfo'], 'nfl player info')
-        this.util.updatePlayers(res['playerInfo'].players, this.nflData, this.nflTeams)
+        //this.util.updatePlayers(res['playerInfo'].players, this.nflData, this.nflTeams)
         this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie')
         this.nflOffenseLoading = false 
         console.log(this.teamSchedules, 'this.teamSchedules should persist now')  
@@ -1141,7 +1160,7 @@ export class StatLeadersComponent implements OnInit {
           this.defenseRookies = res['playerStats'].rookies ? res['playerStats'].rookies : [] //this.nflDefenseData.filter(player => player.player.rookie === true) 
           this.teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week)
           this.teamInfo(this.defenseRookies, this.nflTeams, 'd', this.week)
-          this.util.updatePlayers(res['playerInfo'].players, this.nflDefenseData, this.nflTeams)
+          //this.util.updatePlayers(res['playerInfo'].players, this.nflDefenseData, this.nflTeams)
           this.teamInfoRookie(this.defenseRookies, this.nflTeams, 'd', this.week, 'rookie');
 
           this.nflDefenseLoading = false

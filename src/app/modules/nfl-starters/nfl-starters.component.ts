@@ -151,7 +151,8 @@ export class NflStartersComponent implements OnInit {
         if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
           this.selectedWeek = week.week
           this.currentWeek = week.week
-          this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2022-playoff' : '2021-2022-regular'
+          this.util.nflWeek = week.week
+          this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2023-playoff' : '2022-2023-regular'
           if (date < new Date(week.dateEnd)) {
             let utcDate = new Date(week.dateBeg);
             utcDate.setHours(utcDate.getHours() - 24);
@@ -200,7 +201,7 @@ export class NflStartersComponent implements OnInit {
   public onChange(week) {
     this.loading = true
     this.selectedWeek = week
-    this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2022-playoff' : '2021-2022-regular'
+    this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2023-playoff' : '2022-2023-regular'
     this.haveNflSchedules = (this.teamScheds.length > 0 ? true : false)
     this.dailySchedule = []
     this.starterIdData = []
@@ -384,7 +385,7 @@ export class NflStartersComponent implements OnInit {
 
           this.dailyStats = res['dailyStats'].gamelogs
           this.myData = res['playerStats'].playerStatsTotals
-          this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
+          //this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
      
             this.dailyTeamStats = res['team'].gamelogs
             if (this.dailyTeamStats) {
@@ -669,7 +670,9 @@ export class NflStartersComponent implements OnInit {
   ngOnInit(): void {
     if (this.testBrowser) {
       if (window.innerWidth < 700) {
-        this.mobile = true;
+        this.mobile = true
+        this.util.mobile = this.mobile
+        this.util.tb = this.testBrowser
       }
       this.loadData()
     }

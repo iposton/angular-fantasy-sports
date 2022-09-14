@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FirebaseService,
-LocalStorageService } from '../../services/index';
+LocalStorageService,
+UtilService } from '../../services/index';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -53,12 +54,8 @@ export class DialogComponent implements OnInit {
     password: ''
   };
 
-  constructor(public fbService: FirebaseService, public ls: LocalStorageService) {
-    this.showSnack = false
-    this.wlAlert = ""
-    this.wl = []
-    this.wl = this.ls.get('watchList')
-    this.favorites = this.ls.get('favorites')
+  constructor(public fbService: FirebaseService, public ls: LocalStorageService, public util: UtilService) {
+    
    }
 
   public watchList(item, name, sport, data, title) {  
@@ -112,6 +109,13 @@ export class DialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.util.tb) {
+      this.showSnack = false
+      this.wlAlert = ""
+      this.wl = []
+      this.wl = this.ls.get('watchList')
+      this.favorites = this.ls.get('favorites')
+    }
   }
 
 }

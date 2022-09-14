@@ -47,11 +47,11 @@
 <div class="center buttons">
    <!-- <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button>  -->
    <!-- <button [ngClass]="{'dn' : !mlbSection && !mlbHittingSection}" (click)="mlbSeason = !mlbSeason; updateEndpoint(); timeSpan = 'full'">{{mlbSeason ? 'Playoffs' : 'Season'}}</button> -->
-   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('two-weeks', sport)">Last 14 Days</span> 
-   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('last-week', sport)">Last 7 Days</span>  
-   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('full', sport)">All</span>
-   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('today', sport)">Today</span>
-   <span class="hollow-btn" [ngClass]="{'dn' : nflSection}" (click)="getByDate('yesterday', sport)">Yesterday</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection || nflDefenseSection}" (click)="getByDate('two-weeks', sport)">Last 14 Days</span> 
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection || nflDefenseSection}" (click)="getByDate('last-week', sport)">Last 7 Days</span>  
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection || nflDefenseSection}" (click)="getByDate('full', sport)">All</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection || nflDefenseSection}" (click)="getByDate('today', sport)">Today</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : nflSection || nflDefenseSection}" (click)="getByDate('yesterday', sport)">Yesterday</span>
    <span class="hollow-btn" [ngClass]="{'dn' : !nhlSection}" (click)="goalies(); nhlSection = false; nhlGoalies = true; timeSpan = 'full'">NHL Goalies</span>  
    <span class="hollow-btn" [ngClass]="{'dn' : !nhlGoalies}" (click)="nhlSection = true; nhlGoalies = false; timeSpan = 'full'">NHL Skaters</span>
    <span class="hollow-btn" [ngClass]="{'dn' : !mlbSection}" (click)="loadHitters(); timeSpan = 'full'">MLB Hitters</span>  
@@ -1255,7 +1255,7 @@
               [eliteStat]="850"
               ></app-stat-card>
 
-              <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nfl22Rookies != null" 
+              <!-- <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nfl22Rookies != null" 
               [data]="nfl22Rookies" 
               [statType]="'drafted'"
               [statField]="'overallPick'"
@@ -1271,7 +1271,7 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
               [eliteStat]="850"
-              ></app-stat-card>
+              ></app-stat-card> -->
 
               <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflWl != null" 
               [data]="nflWl" 

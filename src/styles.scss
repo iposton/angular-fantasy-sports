@@ -2436,17 +2436,15 @@ form input[type="text"] {
       }
 
       .fav-star {
-        top: 5px;
-        right: 25px;
-        position: absolute;
         transition: linear .3s;
+        margin: 10px;
       }
 
       .fav-star:hover {
         color: transparent;
         .star:before {
           content: "\2605";
-          position: absolute;
+          // position: absolute;
           color: gold;
         }
       }
@@ -2543,7 +2541,7 @@ form input[type="text"] {
     border-radius: 2px;
     padding: 16px;
     position: fixed;
-    z-index: 200;
+    z-index: 9999;
     left: 87%;
     top: 30px;
   }
@@ -2637,6 +2635,14 @@ form input[type="text"] {
 
 //home 
 @media only screen and (max-width: 750px) {
+
+  #snackbar {
+    left: 80%;
+  }
+
+  #overlay.active .modal .modal-header img {
+    width: 15%;
+  }
 
   .score-container.mlb {
     background-size: 100%!important;

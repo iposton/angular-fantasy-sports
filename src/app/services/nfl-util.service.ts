@@ -11,9 +11,9 @@ let time23 = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
   providedIn: 'root'
 })
 export class NflUtilService {
-  public nflTeams: any;
-  public weekTimes: Array<any> = [];
-  public NFLImages: any;
+  public nflTeams: any
+  public weekTimes: Array<any> = []
+  public NFLImages: any
 
   constructor(private http: HttpClient) {
     this.weekTimes = [
@@ -127,7 +127,7 @@ export class NflUtilService {
         dateEnd: `Thu Feb 16 ${time23}`,
         week: '23' //super bowl
       }
-    ];
+    ]
 
     this.nflTeams = [
       {
@@ -1433,11 +1433,6 @@ export class NflUtilService {
           lastName: "Martinez",
           image: nflImageRoot+"cryuvmmnkryxlgjfgziw"
         },
-        "9937": {
-          firstName: "Jacoby",
-          lastName: "Brissett",
-          image: nflImageRoot+"z8e0godak9btfkl9nu6s"
-        },
         "18787": {
           firstName: "Quintez",
           lastName: "Cephus",
@@ -1838,7 +1833,60 @@ export class NflUtilService {
           lastName: "McBride",
           image: nflImageRoot+"qawwcnmfggwgsemqwwki"
         },
-            
+        "7380" : {
+          firstName: "Jarvis",
+          lastName: "Landry",
+          image: nflImageRoot+"w2q9uwsjvgadwyvnvopb"
+        },
+        "9910" : {
+          firstName: "Tyreke",
+          lastName: "Hill",
+          image: nflImageRoot+"lsszbdnkusxc7mduw5be"
+        },
+        "6025" : {
+          firstName: "Matt",
+          lastName: "Ryan",
+          image: nflImageRoot+"s6zam4ekrrnonsck6vak"
+        },
+        "14492" : {
+          firstName: "Baker",
+          lastName: "Mayfield",
+          image: nflImageRoot+"aztmh1hzf253ntkzjgkn"
+        },
+        "39127" : {
+          firstName: "Alec",
+          lastName: "Pierce",
+          image: nflImageRoot+"em0lm1sfdslmnfyu8ykh"
+        },
+        "43341" : {
+          firstName: "Damien",
+          lastName: "Pierce",
+          image: nflImageRoot+"ha8dflxsj1egza1sxbzb"
+        },
+        "39126" : {
+          firstName: "George",
+          lastName: "Pickens",
+          image: nflImageRoot+"weaecvrxrfflsqm8kvpt"
+        },
+        "6225" : {
+          firstName: "Robert",
+          lastName: "Woods",
+          image: nflImageRoot+"ksw0cui3nmzzaxwnkstl"
+        },
+        "9937" : {
+          firstName: "Jacoby",
+          lastName: "Brissett",
+          image: nflImageRoot+"z12an2n54jj6ycouwg9h"
+        },
+        "8283" : {
+          firstName: "Russell",
+          lastName: "Wilson",
+          image: nflImageRoot+"gebzv2aljujgleboe4ns"
+        },
+        
+        
+        
+              
       }
    }
 

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { UtilService } from 'src/app/services'
 
 @Component({
   selector: 'app-team-rank',
@@ -25,7 +26,7 @@ export class TeamRankComponent implements OnInit {
   public loading: boolean = true;
   public hoveredItem: string = '';
 
-  constructor() { }
+  constructor(public util: UtilService) { }
 
   public getRank(d, teams, title, sl, week) {
     this.loading = true;

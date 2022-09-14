@@ -5,8 +5,26 @@ import { Injectable } from '@angular/core';
 })
 export class UtilService {
 
-  constructor() {
+  public mobile: boolean
+  public tb: boolean
+  public nflWeek: any
+  public weeklyTS: object
 
+  constructor() {
+    this.mobile = false
+    this.tb = false
+
+    this.weeklyTS = {
+      pa: 27,
+      ty: 300,
+      sacks: 2,
+      passTD: 2,
+      rushTD: 1,
+      fp: 70,
+      int: 1,
+      pd: 4,
+      defFP: 6,
+    }
   }
 
   public colorLuminance(hex, lum) {
