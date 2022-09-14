@@ -45,7 +45,7 @@ export class DepthService {
     this.nflDepth = {
       '54': [
         {
-          'gdate': 16,
+          'gdate': 1,
           // 'Offense-WR-2' : {
           //   firstName: 'DeVonta',
           //   lastName: 'Smith',
@@ -62,22 +62,22 @@ export class DepthService {
           //   abbreviation: 'PHI',
           //   position: 'TE'
           // },
-          'Offense-RB-1' : {
-            firstName: 'Boston',
-            lastName: 'Scott',
-            id: 14716,
-            status: 'Starter',
-            abbreviation: 'PHI',
-            position: 'RB'
-          },
           // 'Offense-RB-1' : {
-          //   firstName: 'Kenneth',
-          //   lastName: 'Gainwell',
-          //   id: 30597,
+          //   firstName: 'Boston',
+          //   lastName: 'Scott',
+          //   id: 14716,
           //   status: 'Starter',
           //   abbreviation: 'PHI',
           //   position: 'RB'
           // },
+          'Offense-WR-2' : {
+            firstName: 'Kenneth',
+            lastName: 'Gainwell',
+            id: 30597,
+            status: 'Starter',
+            abbreviation: 'PHI',
+            position: 'RB'
+          },
          
       }
     ],
@@ -122,6 +122,14 @@ export class DepthService {
           abbreviation: 'NE',
           position: 'QB'
         },
+        'Offense-TE-1' : {
+          firstName: 'J',
+          lastName: 'Smith',
+          id: 13529,
+          status: 'Starter',
+          abbreviation: 'NE',
+          position: 'TE'
+        },
         
       }
     ],
@@ -137,6 +145,14 @@ export class DepthService {
         //   abbreviation: 'NYG',
         //   position: 'TE'
         // },
+        'Offense-TE-1' : {
+          firstName: 'Chris',
+          lastName: 'Myarick',
+          id: 16079,
+          status: 'Starter',
+          abbreviation: 'NYG',
+          position: 'TE'
+        },
         'Offense-WR-1' : {
           firstName: 'Kadarius',
           lastName: 'Toney',
@@ -144,7 +160,15 @@ export class DepthService {
           status: 'Starter',
           abbreviation: 'NYG',
           position: 'WR'
-        },
+        },    
+        // 'Offense-WR-1' : {
+        //   firstName: 'Ricky',
+        //   lastName: 'James',
+        //   id: 14729,
+        //   status: 'Starter',
+        //   abbreviation: 'NYG',
+        //   position: 'WR'
+        // },
         // 'Offense-WR-1' : {
         //   firstName: 'Dante',
         //   lastName: 'Pettis',
@@ -207,14 +231,7 @@ export class DepthService {
         //   abbreviation: 'LV',
         //   position: 'RB'
         // },
-        // 'Offense-WR-1' : {
-        //   firstName: 'Zay',
-        //   lastName: 'Jones',
-        //   id: 12769,
-        //   status: 'Starter',
-        //   abbreviation: 'LV',
-        //   position: 'WR'
-        // },
+    
         // 'Offense-TE-1' : {
         //   firstName: 'Hunter',
         //   lastName: 'Renfrow',
@@ -400,7 +417,16 @@ export class DepthService {
     ],
     '55': [
       {
-        'gdate': 15,
+        'gdate': 1,
+
+        'Offense-TE-1' : {
+          firstName: 'Zay',
+          lastName: 'Jones',
+          id: 12769,
+          status: 'Starter',
+          abbreviation: 'WAS',
+          position: 'WR'
+        },
         
         // 'Offense-RB-1' : {
         //   firstName: 'Antonio',
@@ -434,14 +460,14 @@ export class DepthService {
         //   abbreviation: 'WAS',
         //   position: 'WR'
         // },
-        'Offense-WR-2' : {
-          firstName: 'Cam',
-          lastName: 'Sims',
-          id: 14852,
-          status: 'Starter',
-          abbreviation: 'WAS',
-          position: 'WR'
-        },
+        // 'Offense-WR-2' : {
+        //   firstName: 'Cam',
+        //   lastName: 'Sims',
+        //   id: 14852,
+        //   status: 'Starter',
+        //   abbreviation: 'WAS',
+        //   position: 'WR'
+        // },
         // 'Offense-TE-1' : {
         //   firstName: 'Ricky',
         //   lastName: 'Seals-Jones',
@@ -536,7 +562,7 @@ export class DepthService {
         //   abbreviation: 'NYJ',
         //   position: 'RB'
         // },
-        'Offense-WR-2' : {
+        'Offense-WR-1' : {
           firstName: 'Elijah',
           lastName: 'Moore',
           id: 30817,
@@ -544,6 +570,23 @@ export class DepthService {
           abbreviation: 'NYJ',
           position: 'WR'
         },
+        'Offense-TE-1' : {
+          firstName: 'Tyler',
+          lastName: 'Conklin',
+          id: 14710,
+          status: 'Starter',
+          abbreviation: 'NYJ',
+          position: 'TE'
+        },
+        'Offense-WR-2' : {
+          firstName: 'Corey',
+          lastName: 'Davis',
+          id: 12670,
+          status: 'Starter',
+          abbreviation: 'NYJ',
+          position: 'WR'
+        },
+        
         // 'Offense-TE-1' : {
         //   firstName: 'Jamison',
         //   lastName: 'Crowder',
@@ -802,7 +845,7 @@ export class DepthService {
     ],
     '64': [
       {
-        'gdate': 18,
+        'gdate': 1,
         // 'Offense-WR-1' : {
         //   firstName: 'Brandin',
         //   lastName: 'Cooks',
@@ -852,14 +895,23 @@ export class DepthService {
         //   abbreviation: 'HOU',
         //   position: 'TE'
         // },
+        // 'Offense-TE-1' : {
+        //   firstName: 'Danny',
+        //   lastName: 'Amendola',
+        //   id: 7560,
+        //   status: 'Starter',
+        //   abbreviation: 'HOU',
+        //   position: 'WR'
+        // },
         'Offense-TE-1' : {
-          firstName: 'Danny',
-          lastName: 'Amendola',
-          id: 7560,
+          firstName: 'OJ',
+          lastName: 'Howard',
+          id: 13491,
           status: 'Starter',
           abbreviation: 'HOU',
-          position: 'WR'
+          position: 'TE'
         },
+        
       }
     ],
     '58': [
@@ -1109,14 +1161,14 @@ export class DepthService {
         //   abbreviation: 'CHI',
         //   position: 'RB'
         // }, 
-        // 'Offense-RB-1' : {
-        //   firstName: 'Kahlil',
-        //   lastName: 'Herbert',
-        //   id: 30593,
-        //   status: 'Starter',
-        //   abbreviation: 'CHI',
-        //   position: 'RB'
-        // },
+        'Offense-TE-1' : {
+          firstName: 'Kahlil',
+          lastName: 'Herbert',
+          id: 30593,
+          status: 'Starter',
+          abbreviation: 'CHI',
+          position: 'RB'
+        },
         // 'Offense-WR-1' : {
         //   firstName: 'Allen',
         //   lastName: 'Robinson',
@@ -1149,14 +1201,14 @@ export class DepthService {
         //   abbreviation: 'CHI',
         //   position: 'WR'
         // },
-        'Offense-TE-1' : {
-          firstName: 'Cole',
-          lastName: 'Kmet',
-          id: 18576,
-          status: 'Starter',
-          abbreviation: 'CHI',
-          position: 'TE'
-        },
+        // 'Offense-TE-1' : {
+        //   firstName: 'Cole',
+        //   lastName: 'Kmet',
+        //   id: 18576,
+        //   status: 'Starter',
+        //   abbreviation: 'CHI',
+        //   position: 'TE'
+        // },
         
         
       }
@@ -1525,14 +1577,7 @@ export class DepthService {
         //   abbreviation: 'TEN',
         //   position: 'WR'
         // },
-        'Offense-WR-2' : {
-          firstName: 'Julio',
-          lastName: 'Jones',
-          id: 6038,
-          status: 'Starter',
-          abbreviation: 'TEN',
-          position: 'WR'
-        },
+        
         'Offense-TE-1' : {
           firstName: 'Geoff',
           lastName: 'Swaim',
@@ -1579,7 +1624,16 @@ export class DepthService {
     ],
     '71': [
       {
-        'gdate': 20,
+        'gdate': 1,
+
+        'Offense-TE-1' : {
+          firstName: 'Julio',
+          lastName: 'Jones',
+          id: 6038,
+          status: 'Starter',
+          abbreviation: 'TB',
+          position: 'WR'
+        },
        
         // 'Offense-RB-1' : {
         //   firstName: 'Leonard',
@@ -1613,22 +1667,22 @@ export class DepthService {
         //   abbreviation: 'TB',
         //   position: 'WR'
         // }, 
-        'Offense-TE-1' : {
-        firstName: 'Rob',
-        lastName: 'Gronk',
-        id: 7575,
-        status: 'Starter',
-        abbreviation: 'TB',
-        position: 'TE'
-       },
-       'Offense-WR-2' : {
-          firstName: 'Scott',
-          lastName: 'Miller',
-          id: 16254,
-          status: 'Starter',
-          abbreviation: 'TB',
-          position: 'WR'
-        }, 
+      //   'Offense-TE-1' : {
+      //   firstName: 'Rob',
+      //   lastName: 'Gronk',
+      //   id: 7575,
+      //   status: 'Starter',
+      //   abbreviation: 'TB',
+      //   position: 'TE'
+      //  },
+      //  'Offense-WR-2' : {
+      //     firstName: 'Scott',
+      //     lastName: 'Miller',
+      //     id: 16254,
+      //     status: 'Starter',
+      //     abbreviation: 'TB',
+      //     position: 'WR'
+      //   }, 
       }
     ],
     '73': [

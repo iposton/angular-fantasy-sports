@@ -701,9 +701,6 @@ export class NflUtilService {
         "7549" : {
           image: nflImageRoot+"sfehmfwtg9i5gdcpqzgf"
         },
-        "14516" : {
-          image: nflImageRoot+"cw9mplvltikyayjsjmc3"
-        },
         "8190" : {
           image: nflImageRoot+"voakyrtj34sghkwxaxxf"
         },
@@ -1208,11 +1205,6 @@ export class NflUtilService {
           lastName: "Osburn",
           image: nflImageRoot+"p44nhjopxr4mwncbdx5l"
         },
-        "9712": {
-          firstName: "Carson",
-          lastName: "Wentz",
-          image: nflImageRoot+"komdw34m3vpzadqftxzh"
-        },
         "9919": {
           firstName: "Jared",
           lastName: "Goff",
@@ -1367,11 +1359,6 @@ export class NflUtilService {
           firstName: "Mike",
           lastName: "Davis",
           image: nflImageRoot+"a12intlc15po42xebdxv"
-        },
-        "6487": {
-          firstName: "Tyler",
-          lastName: "Kroft",
-          image: nflImageRoot+"jatdbdpswqdwvukemp1t"
         },
         "6845": {
           firstName: "Eric",
@@ -1883,10 +1870,101 @@ export class NflUtilService {
           lastName: "Wilson",
           image: nflImageRoot+"gebzv2aljujgleboe4ns"
         },
-        
-        
-        
-              
+        "9712" : {
+          firstName: "Carson",
+          lastName: "Wentz",
+          image: nflImageRoot+"indtay8ngoq8ubhhydbp"
+        },
+        // "16931" : {
+        //   firstName: "Hollywood",
+        //   lastName: "Brown",
+        //   image: nflImageRoot+"xx"
+        // },
+        "14654" : {
+          firstName: "Christian",
+          lastName: "Kirk",
+          image: nflImageRoot+"illjppjxpfa4joefmpd0"
+        },
+        "13203" : {
+          firstName: "Juju",
+          lastName: "Smith-Schuster",
+          image: nflImageRoot+"tmvx3eakcr4uong0gf5h"
+        },
+        "16185" : {
+          firstName: "Greg",
+          lastName: "Dortch",
+          image: nflImageRoot+"j5xmpo01eea118axwwaj"
+        },
+        "6924" : {
+          firstName: "Devante",
+          lastName: "Adams",
+          image: nflImageRoot+"jmojceirzhgctrcfi4aw"
+        },
+        "14874" : {
+          firstName: "Chase",
+          lastName: "Edmonds",
+          image: nflImageRoot+"ya7hnoqk5r2zemgknwpm"
+        },
+        "7384" : {
+          firstName: "DeVante",
+          lastName: "Parker",
+          image: nflImageRoot+"cgbhrfcqdoe3yvpsic04"
+        },
+        "7198" : {
+          firstName: "Allen",
+          lastName: "Robinson",
+          image: nflImageRoot+"q9aj6lloix5ocf7xk8ry"
+        },
+        "8640" : {
+          firstName: "Marcus",
+          lastName: "Mariota",
+          image: nflImageRoot+"sd59iwjj69atxaqjti1r"
+        },
+        "7929" : {
+          firstName: "Amari",
+          lastName: "Cooper",
+          image: nflImageRoot+"zibbxjtein7gpu5zgcj4"
+        },
+        "6487" : {
+          firstName: "Tyler",
+          lastName: "Kroft",
+          image: nflImageRoot+"qon8cgkz2g2m4ocwdlok"
+        },
+        // "0" : {
+        //   firstName: "",
+        //   lastName: "Chark jr.",
+        //   image: nflImageRoot+"xx"
+        // },
+        "14516" : {
+          firstName: "Hayden",
+          lastName: "Hurst",
+          image: nflImageRoot+"dgplukocyi73df1g1602"
+        },
+        // "0" : {
+        //   firstName: "Kenyan",
+        //   lastName: "Drake",
+        //   image: nflImageRoot+"xx"
+        // },
+        "13094" : {
+          firstName: "Evan",
+          lastName: "Engram",
+          image: nflImageRoot+"adr65rbw956sxntlph8a"
+        },
+        "39090" : {
+          firstName: "Jahan",
+          lastName: "Dotson",
+          image: nflImageRoot+"ejqlekhhbiox5x2767hp"
+        },
+        "39108" : {
+          firstName: "Christian",
+          lastName: "Watson",
+          image: nflImageRoot+"gvusv3krvdk69c1zyac9"
+        },
+        "14689" : {
+          firstName: "E",
+          lastName: "St. Brown",
+          image: nflImageRoot+"utyhdvj2rjwpnr4ppjly"
+        },
       }
    }
 
