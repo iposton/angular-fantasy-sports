@@ -42,16 +42,17 @@ let pos = {
   styleUrls: ['./nfl-starters.component.scss']
 })
 export class NflStartersComponent implements OnInit {
-  public dailySchedule: Array <any>;
-  public starterIdData: Array <any> = [];
-  public batterIdData: Array <any> = [];
-  public gameStarters: Array <any> = [];
-  public gameBatters: Array <any> = [];
-  public dailyTeamStats: Array <any> = [];
-  public teamSchedules: Array <any> = [];
-  public toughOSchedules: Array <any> = [];
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular";
-  public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2022-playoff";
+  public dailySchedule: Array <any>
+  public starterIdData: Array <any> = []
+  public batterIdData: Array <any> = []
+  public gameStarters: Array <any> = []
+  public gameBatters: Array <any> = []
+  public dailyTeamStats: Array <any> = []
+  public teamSchedules: Array <any> = []
+  public toughOSchedules: Array <any> = []
+  public dailyLineup: Array <any> = []
+  // public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular"
+  // public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2022-playoff"
   public testBrowser: boolean;
   public gamesToday: boolean = false;
   public noGamesToday: boolean = false;
@@ -91,10 +92,11 @@ export class NflStartersComponent implements OnInit {
   public depth: any;
   public showMatchup: boolean
   public haveNflSchedules: boolean
-  public showDef: boolean;
-  public nflDraftKit: boolean;
-  public seasonLength   : string = 'dtr';
-  public seasonLengthD  : string = 'otr';
+  public nflSchedules: any
+  public showDef: boolean
+  public nflDraftKit: boolean
+  public seasonLength   : string = 'dtr'
+  public seasonLengthD  : string = 'otr'
   public currentWeek: string
   public isPast: boolean
   public fantasyPoints: boolean
@@ -235,6 +237,16 @@ export class NflStartersComponent implements OnInit {
         this.selectedWeek).subscribe(res => {
           console.log(res, 'client res: schedlule')
 
+          this.dailyLineup = res['dailyLineup']
+
+          for(let item of this.dailyLineup) {
+            for(let sched of res['games'].games) {
+              if (item.game.id === sched.schedule.id) {
+                item.game.score = sched.score
+              }
+            }
+          }
+
           if (res['games'].games.length === 0) {
             this.loading = false;
             this.noGamesToday = true;
@@ -269,7 +281,7 @@ export class NflStartersComponent implements OnInit {
                 try {
                   game2 = res.dailyLineup[i]['game'];
                   res2 = res.dailyLineup[i]['teamLineups'];
-                  score2 = this.dailySchedule[i].score;
+                  score2 = this.dailyLineup[i]['game'].score
                 } catch {
                   console.log('bad endpoint');
                 }
@@ -300,8 +312,8 @@ export class NflStartersComponent implements OnInit {
                             startType: 'actual',
                             playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
                           }
-                          this.gameStarters.push(this.gameStarter);
-                          this.starterIdData.push(this.gameStarter['playerID']);
+                          this.gameStarters.push(this.gameStarter)
+                          this.starterIdData.push(this.gameStarter['playerID'])
                         } 
                       }
                       
@@ -343,7 +355,7 @@ export class NflStartersComponent implements OnInit {
 
   public sortData() {
     if (this.gamesToday === true) {
-      this.haveNflSchedules = (this.ls.get('nflSchedules').length > 0 ? true : false)
+      this.haveNflSchedules = (this.nflSchedules.length > 0 ? true : false)
       this.nhlService.myStats(
         'nfl', 
         this.nflSeason, 
@@ -374,9 +386,11 @@ export class NflStartersComponent implements OnInit {
           }
 
           if (res['scheduleGames'].length === 0) {
-            res['scheduleGames'] = this.ls.get('nflSchedules')
+            console.log('use nfl schedule from local storage')
+            res['scheduleGames'] = this.nflSchedules
             this.teamScheds = res['scheduleGames']
           } else {
+            console.log('set to local storage', res['scheduleGames'])
             this.ls.set('nflSchedules', res['scheduleGames'])
           }
 
@@ -672,8 +686,10 @@ export class NflStartersComponent implements OnInit {
       if (window.innerWidth < 700) {
         this.mobile = true
         this.util.mobile = this.mobile
-        this.util.tb = this.testBrowser
+        
       }
+      this.util.tb = this.testBrowser
+      this.nflSchedules = this.ls.get('nflSchedules')
       this.loadData()
     }
   }

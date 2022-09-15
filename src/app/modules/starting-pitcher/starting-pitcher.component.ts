@@ -246,9 +246,10 @@ export class StartingPitcherComponent implements OnInit {
             this.dailyLineup = res['dailyLineup']
 
             for(let item of this.dailyLineup) {
-              for(let sched of res['games'].games)
-              if (item.game.id === sched.schedule.id) {
-                item.game.score = sched.score
+              for(let sched of res['games'].games) {
+                if (item.game.id === sched.schedule.id) {
+                  item.game.score = sched.score
+                }
               }
             }
 

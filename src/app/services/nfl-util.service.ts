@@ -1974,7 +1974,8 @@ export class NflUtilService {
       for (let team of this.nflTeams) {
         if (stats.team.id === team.id) {
           stats.bye = team.bye;
-          team.plays = stats.stats.rushing.rushAttempts + stats.stats.passing.passAttempts;
+          team.snaps = stats.stats.snapCounts.offenseSnaps
+          team.plays = stats.stats.rushing.rushAttempts + stats.stats.passing.passAttempts
           team.passPlays = stats.stats.passing.passAttempts;
           team.runPlays = stats.stats.rushing.rushAttempts;
           stats.upDefRank = team.defenseRankLs;

@@ -162,6 +162,7 @@ export class StatLeadersComponent implements OnInit {
   public nflPosition: string
   public nflDPosition: string
   public haveNflSchedules: boolean
+  public nflSchedules: any
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -672,6 +673,7 @@ export class StatLeadersComponent implements OnInit {
       if (this.myData === undefined) {
         //default load get watchlist 
         this.wlPlayers = this.ls.get('watchList')
+        this.nflSchedules = this.ls.get('nflSchedules')
         this.loadNFL() //this.loadMLB()
         console.log('fetch data on init...')
       } else {
@@ -991,7 +993,8 @@ export class StatLeadersComponent implements OnInit {
     this.sport = 'nfl'
     console.log(this.teamSchedules, 'this.teamSchedules where did you go?', this.nflTeams, 'this.nflTeams where di you go?')
     if (this.teamSchedules.length === 0) {
-      this.haveNflSchedules = (this.ls.get('nflSchedules').length > 0 ? true : false)
+      this.haveNflSchedules = (this.nflSchedules.length > 0 ? true : false)
+      //console.log('local storage nfl schedules', this.ls.get('nflSchedules'))
     } else {
       this.haveNflSchedules = true
     }
@@ -1038,8 +1041,9 @@ export class StatLeadersComponent implements OnInit {
 
           }
 
-          if (res['scheduleGames'] == []) {
-            res['scheduleGames'] = this.ls.get('nflSchedules')
+          if (res['scheduleGames'].length === 0) {
+            console.log('use nfl schedule from local storage')
+            res['scheduleGames'] = this.nflSchedules
           } else {
             console.log('set nfl schedules', res['scheduleGames'])
             this.ls.set('nflSchedules', res['scheduleGames'])
@@ -1197,12 +1201,12 @@ export class StatLeadersComponent implements OnInit {
           data.stats.receiving.totalYards = data.stats.rushing.rushYards + data.stats.receiving.recYards
           data.stats.receiving.totalTd = data.stats.rushing.rushTD + data.stats.receiving.recTD
 
-          data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets;
-          data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.plays * 100)
+          data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets
+          data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.snaps * 100)
           data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100)
           data.stats.receiving.touchCatchPct = Math.floor(data.stats.receiving.targets / team.passPlays * 100)
-          data.stats.passing.totalPassPct = Math.floor(data.stats.passing.passAttempts / team.plays * 100)
-          data.stats.passing.offSnapPct = Math.floor(data.stats.snapCounts.offenseSnaps / team.plays * 100)
+          data.stats.passing.totalPassPct = Math.floor(data.stats.passing.passAttempts / team.snaps * 100)
+          data.stats.passing.offSnapPct = Math.floor(data.stats.snapCounts.offenseSnaps / team.snaps * 100)
           
         }
 

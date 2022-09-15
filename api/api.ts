@@ -393,9 +393,10 @@ methods.getStats = async (
         let playerInfoUrl = null
         let dailyTeamUrl = null
         let jsonTeam = null
+        console.log('have schedules?', haveSchedules)
         await sleep(10)
         if (sport === 'nfl' && haveSchedules === 'false') {
-          console.log('have schedules?', haveSchedules)
+          //console.log('teams', team)
           jsonTeam = await JSON.parse(team)
         }
          
