@@ -108,7 +108,7 @@
                         <span class="rank-circle" title="Offense Rank" [ngClass]="{'red' : data['oPlayers'][0]?.playerObj?.teamORank &lt;= 10, 'orange' : data['oPlayers'][0]?.playerObj?.teamORank > 10 && data['oPlayers'][0]?.playerObj?.teamORank &lt;= 21, 'green' : data['oPlayers'][0]?.playerObj?.teamORank > 21}">{{data['oPlayers'][0]?.playerObj?.teamORank}} </span> &nbsp;
                         <span class="rank-circle" title="Defense Rank" [ngClass]="{'red' : data['oPlayers'][0]?.playerObj?.teamDRank &lt;= 10, 'orange' : data['oPlayers'][0]?.playerObj?.teamDRank > 10 && data['oPlayers'][0]?.playerObj?.teamDRank &lt;= 21, 'green' : data['oPlayers'][0]?.playerObj?.teamDRank > 21}">{{data['oPlayers'][0]?.playerObj?.teamDRank}}</span>    
                         <!-- + data['oPlayers'][0]?.playerObj?.winToday + data['oPlayers'][0]?.playerObj?.lossToday + data['oPlayers'][0]?.playerObj?.tieToday -->
-                    {{data['oPlayers'][0]?.playerObj?.team.name}} 
+                   <span title="{{data['oPlayers'][0]?.playerObj?.team.conference}}">{{data['oPlayers'][0]?.playerObj?.team.name}}</span>  
                     {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.wins }} - 
                     {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.losses }} - 
                     {{data['oPlayers'][0]?.playerObj?.teamStats?.stats?.standings?.ties }}
@@ -252,7 +252,7 @@
                     <span class="team-record">
                         <span class="rank-circle" title="Offense Rank" [ngClass]="{'red' : data['oPlayers'][6]?.playerObj?.teamORank &lt;= 10, 'orange' : data['oPlayers'][6]?.playerObj?.teamORank > 10 && data['oPlayers'][6]?.playerObj?.teamORank &lt;= 21, 'green' : data['oPlayers'][6]?.playerObj?.teamORank > 21}">{{data['oPlayers'][6]?.playerObj?.teamORank}} </span> &nbsp;
                         <span class="rank-circle" title="Defense Rank" [ngClass]="{'red' : data['oPlayers'][6]?.playerObj?.teamDRank &lt;= 10, 'orange' : data['oPlayers'][6]?.playerObj?.teamDRank > 10 && data['oPlayers'][6]?.playerObj?.teamDRank &lt;= 21, 'green' : data['oPlayers'][6]?.playerObj?.teamDRank > 21}">{{data['oPlayers'][6]?.playerObj?.teamDRank}}</span> 
-                        {{data['oPlayers'][6]?.playerObj?.team.name}} 
+                        <span title="{{data['oPlayers'][6]?.playerObj?.team.conference}}">{{data['oPlayers'][6]?.playerObj?.team.name}} </span>
                         {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.standings?.wins }} - 
                         {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.standings?.losses }} - 
                         {{data['oPlayers'][6]?.playerObj?.teamStats?.stats?.standings?.ties }}

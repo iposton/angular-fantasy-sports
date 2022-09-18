@@ -11,7 +11,7 @@
         <span title="Watchlist" *ngIf="selectedPlayer?.dateAdded == null" class="watchlist" (click)="watchList(selectedPlayer, name, sport, this.wl, 'watchList')">&#43; <span *ngIf="!util.mobile">Watch List</span> </span>
         <span title="Remove" *ngIf="selectedPlayer?.dateAdded" class="watchlist" (click)="unwatch(selectedPlayer, this.wl, 'watchList')">&#8722; <span *ngIf="!util.mobile">Remove</span></span>
         <span *ngIf="sport === 'nfl' && selectedWeek != 'three-weeks' && selectedWeek != 'all'" class="fav-star">
-          <span title="Favorite" class="star" (click)="watchList(selectedPlayer, name, sport, this.favorites, 'favorites')">☆ <span *ngIf="!util.mobile">Favorite</span></span>
+          <span title="Favorite" class="star" (click)="watchList(selectedPlayer, name, sport, this.favorites, 'favorites')">☆</span>
         </span>
             <!-- <span class="team-image"> <img src="{{selectedPlayer?.team?.logo}}" alt="{{selectedPlayer?.team?.name}} logo"></span> -->
       </span>

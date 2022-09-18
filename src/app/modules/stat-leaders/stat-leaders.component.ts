@@ -413,6 +413,7 @@ export class StatLeadersComponent implements OnInit {
      this.timeSpan = 'full'
      this.nflPosition = p
      this.defaultWeek = ''
+     this.ls.set('watchList', this.wlPlayers)
      this.loadNFL()
   }
 
@@ -1081,11 +1082,12 @@ export class StatLeadersComponent implements OnInit {
         if (this.nflWl != null && this.nflWl.length > 0) {
          
             for (let data of this.nflData) {
-              for (let wl of this.nflWl) {
+              for (let wl of this.wlPlayers) {
                 //TODO create a player string to fetch updated stats, use full watchlist not the nflwl
                 if (data.player.id === wl.player.id) {
                   wl.statsUpdated = this.util.nflWeek
                   wl.stats = data.stats
+                  wl.player.officialImageSrc = data.player.officialImageSrc
                 }
               }
             }
@@ -1122,7 +1124,7 @@ export class StatLeadersComponent implements OnInit {
       this.haveNflSchedules = (this.teamSchedules.length > 0 != null ? true : false)
       this.sortToughest()
       
-      // if (this.nflDefenseData == null || this.week != 'all') {
+     
         this.nflDefenseLoading = true
 
         this.nhlService.myStats(
@@ -1144,7 +1146,7 @@ export class StatLeadersComponent implements OnInit {
           this.haveNflSchedules).subscribe(async res => {
             console.log(res, 'nfl defense stats data')
 
-        //this.nflService.getAllDefense(this.nflDPosition, 'stats', this.week).subscribe(res => {
+      
 
           if (res['dailyStats'].gamelogs != null && res['dailyStats'].gamelogs.length > 0) {
             for (let data of this.nflDefenseData) {

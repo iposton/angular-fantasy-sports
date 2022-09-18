@@ -1280,11 +1280,6 @@ export class NflUtilService {
           lastName: "Heinicke",
           image: nflImageRoot+"hik6marceggrf4cmukci"
         },
-        "6224": {
-          firstName: "Sammy",
-          lastName: "Watkins",
-          image: nflImageRoot+"uulusc1rbfhi3k0yhcch"
-        },
         "27502": {
           firstName: "Ty'Son",
           lastName: "Williams",
@@ -1299,11 +1294,6 @@ export class NflUtilService {
           firstName: "Eli",
           lastName: "Mitchell",
           image: nflImageRoot+"csra0oiqwh6i2utjdlud"
-        },
-        "13409": {
-          firstName: "Gerald",
-          lastName: "Everett",
-          image: nflImageRoot+"cstlbdkqplchtbgjdcxf"
         },
         "13529": {
           firstName: "Jonnu",
@@ -1710,11 +1700,6 @@ export class NflUtilService {
           lastName: "Newton",
           image: nflImageRoot+"zwmgw2gmnn2kch4nquft"
         },
-        "14973" : {
-          firstName: "Deandre",
-          lastName: "Carter",
-          image: nflImageRoot+"ntvfcvfd32hho1rkokwi"
-        },
         "30304" : {
           firstName: "John",
           lastName: "Bates",
@@ -1965,6 +1950,55 @@ export class NflUtilService {
           lastName: "St. Brown",
           image: nflImageRoot+"utyhdvj2rjwpnr4ppjly"
         },
+        "13409" : {
+          firstName: "Gerald",
+          lastName: "Everett",
+          image: nflImageRoot+"ovlnn7uuj2335ublzb6o"
+        },
+        "14688" : {
+          firstName: "Marquez",
+          lastName: "Valdez-Scantling",
+          image: nflImageRoot+"dvzluuxi81gwt3e8eixo"
+        },
+        "14710" : {
+          firstName: "Tyler",
+          lastName: "Conklin",
+          image: nflImageRoot+"fx3sjul1xvi4tuag57bn"
+        },
+        "16079" : {
+          firstName: "Chris",
+          lastName: "Myarick",
+          image: nflImageRoot+"p4wveksckzn0nuept8zw"
+        },
+        "16705" : {
+          firstName: "Noah",
+          lastName: "Fant",
+          image: nflImageRoot+"w1gqasldrg3jumzdqjvy"
+        },
+        "6224" : {
+          firstName: "Sammy",
+          lastName: "Watkins",
+          image: nflImageRoot+"nkqk4ac4uncxocqlgp2k"
+        },
+        "39293" : {
+          firstName: "Romeo",
+          lastName: "Doubs",
+          image: nflImageRoot+"wciz0bsjd4bedpiwggog"
+        },
+        "12651" : {
+          firstName: "Johnny",
+          lastName: "Mundt",
+          image: nflImageRoot+"sjglruhtgs3eeea6zd3i"
+        },
+        "14973" : {
+          firstName: "DeAndre",
+          lastName: "Carter",
+          image: nflImageRoot+"fgkf5m167nupk3jv3w5w"
+        },
+        
+        
+          
+        
       }
    }
 
@@ -2045,11 +2079,11 @@ export class NflUtilService {
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
-            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
+            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation}) //, result: (s.schedule.score.awayScoreTotal == undefined ? '' : s.schedule.score.awayScoreTotal < s.schedule.score.homeScoreTotal ? 'L': 'W'), score: (s.schedule.score.awayScoreTotal == undefined ? '' : s.schedule.score.awayScoreTotal+'-'+s.schedule.score.homeScoreTotal)})
           } else if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
-            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation});
+            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation}) //, result: (s.schedule.score.homeScoreTotal == undefined ? '' : s.schedule.score.homeScoreTotal < s.schedule.score.awayScoreTotal ? 'L': 'W'), score: (s.schedule.score.homeScoreTotal == undefined ? '' : s.schedule.score.homeScoreTotal+'-'+s.schedule.score.awayScoreTotal)})
           }
         }
       })
