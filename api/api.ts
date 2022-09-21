@@ -406,8 +406,8 @@ methods.getStats = async (
         playerInfoUrl = `${apiRoot}/${sport}/players.json?position=${position}`
         dailyTeamUrl = `${apiRoot}/${sport}/2022-2023-regular/week/${nflWeek}/team_gamelogs.json`
         
-        console.log(playerStatsUrl, 'player stats totals url for', sport)
-        console.log(dailyUrl, 'dailyurl url for', sport)
+        console.log(teamStatsUrl, 'TEAM STATS for', sport)
+        //console.log(dailyUrl, 'dailyurl url for', sport)
         //console.log(nflWeek , 'nflWeek')
         stats[0].dailyStats = []
 

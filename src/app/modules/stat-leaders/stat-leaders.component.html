@@ -1291,6 +1291,24 @@
               [eliteStat]="850"
               ></app-stat-card>
 
+              <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflFavorites != null && week != 'three-weeks' && week != 'all' && week != ''" 
+              [data]="nflFavorites" 
+              [statType]="'receiving'"
+              [statField]="'fanDuelFP'"
+              [page]="page"
+              [amount]="amount"
+              [title]="'Favorites'"
+              [statTag]="'FP'"
+              [sport]="'nfl'"
+              [order]="'DESC'"
+              [teams]="nflTeams"
+              (open)="authorize($event)"
+              [twitter]="twitter"
+              [ndk]="nflDraftKit"
+              [seasonLength]="seasonLength"
+              [eliteStat]="850"
+              ></app-stat-card>
+
               <app-stat-card *ngIf="nflPosition === 'rb' && !nflOffenseLoading && nflData != null && week === 'three-weeks'" 
               [data]="nflData" 
               [statType]="'rushing'"

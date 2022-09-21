@@ -59,7 +59,7 @@ export class DialogComponent implements OnInit {
    }
 
   public watchList(item, name, sport, data, title) {  
-
+    console.log(data, 'data')
     if (data != null) {
       //console.log(data, 'selectedData')
       if (title === 'watchList') {

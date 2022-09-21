@@ -959,9 +959,6 @@ export class NflUtilService {
         "18593" : {
           image: nflImageRoot+"w2zhcr5cconyonvyhhbo"
         },
-        "6926" : {
-          image: nflImageRoot+"lgdqefi7aa9lqoxgf5ru"
-        },
         "14713" : {
           image: nflImageRoot+"iduydmfnwwumvdkafogu"
         },
@@ -1012,9 +1009,6 @@ export class NflUtilService {
         },
         "18643" : {
           image: nflImageRoot+"qatisluh7jkk6gbhz7hj"
-        },
-        "6130" : {
-          image: nflImageRoot+"crnqcrkqwapmkzlsoora"
         },
         "18668" : {
           image: nflImageRoot+"gpz9zs474snz3jntrpbd"
@@ -1238,7 +1232,7 @@ export class NflUtilService {
         "7647": {
           firstName: "Mark",
           lastName: "Ingram",
-          image: nflImageRoot+"jvql2hcns2ezsafopltd"
+          image: nflImageRoot+"qyju9wutyssrf0b26ran"
         },
         "6038": {
           firstName: "Julio",
@@ -1995,10 +1989,78 @@ export class NflUtilService {
           lastName: "Carter",
           image: nflImageRoot+"fgkf5m167nupk3jv3w5w"
         },
+        "39084" : {
+          firstName: "Garrett",
+          lastName: "Wilson",
+          image: nflImageRoot+"gqdfigo9nzji4e6nshpk"
+        },
+        "39085" : {
+          firstName: "Chris",
+          lastName: "Olave",
+          image: nflImageRoot+"fh4mzrgbiqemhomzpukt"
+        },
+        "39092" : {
+          firstName: "Treylon",
+          lastName: "Burks",
+          image: nflImageRoot+"lg8k1ii67cspylp6przv"
+        },
+        "13573" : {
+          firstName: "Josh",
+          lastName: "Reynolds",
+          image: nflImageRoot+"khqejrdwhxxjzvbco3nv"
+        },
+        "6926" : {
+          firstName: "Randall",
+          lastName: "Cobb",
+          image: nflImageRoot+"wphqc5wstbm0wji2bpxk"
+        },
+        "12811" : {
+          firstName: "Curtis",
+          lastName: "Samuel",
+          image: nflImageRoot+"sua7hikhhqlmqsqu0kk7"
+        },
+        "31103" : {
+          firstName: "Rhamandre",
+          lastName: "Stevenson",
+          image: nflImageRoot+"ro2fqabc4qndtnxykvm7"
+        },
+        "14729" : {
+          firstName: "Richie",
+          lastName: "James",
+          image: nflImageRoot+"iuxz1y4skvu6cqcqjhag"
+        },
+        "43347" : {
+          firstName: "Dan",
+          lastName: "Bellinger",
+          image: nflImageRoot+"hqu8d9tlejqvfhexn56r"
+        },
+        "14734" : {
+          firstName: "Justin",
+          lastName: "Watson",
+          image: nflImageRoot+"h54qh7pjxrhokvmbnyzt"
+        },
+        "30928" : {
+          firstName: "Kylen",
+          lastName: "Granson",
+          image: nflImageRoot+"t3lbs3ss6y4mto2lkjjh"
+        },
+        "6130" : {
+          firstName: "Breshod",
+          lastName: "Perriman",
+          image: nflImageRoot+"zpwov1n42bi5lsqdlxhh"
+        },
+        "12738" : {
+          firstName: "",
+          lastName: "Saubert",
+          image: nflImageRoot+"u6q14gpp39btnbvlkvik"
+        },
+        "14905" : {
+          firstName: "D",
+          lastName: "Williams",
+          image: nflImageRoot+"qloiwle7db59cznhqhub"
+        },
         
-        
-          
-        
+         
       }
    }
 
@@ -2079,11 +2141,11 @@ export class NflUtilService {
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
-            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation}) //, result: (s.schedule.score.awayScoreTotal == undefined ? '' : s.schedule.score.awayScoreTotal < s.schedule.score.homeScoreTotal ? 'L': 'W'), score: (s.schedule.score.awayScoreTotal == undefined ? '' : s.schedule.score.awayScoreTotal+'-'+s.schedule.score.homeScoreTotal)})
+            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal < s.score.homeScoreTotal ? 'L': 'W'), score: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal+'-'+s.score.homeScoreTotal)})
           } else if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye}); 
-            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation}) //, result: (s.schedule.score.homeScoreTotal == undefined ? '' : s.schedule.score.homeScoreTotal < s.schedule.score.awayScoreTotal ? 'L': 'W'), score: (s.schedule.score.homeScoreTotal == undefined ? '' : s.schedule.score.homeScoreTotal+'-'+s.schedule.score.awayScoreTotal)})
+            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.homeScoreTotal == null ? '' : s.score.homeScoreTotal < s.score.awayScoreTotal ? 'L': 'W'), score: (s.score.homeScoreTotal == null ? '' : s.score.homeScoreTotal+'-'+s.score.awayScoreTotal)})
           }
         }
       })

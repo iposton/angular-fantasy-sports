@@ -163,6 +163,7 @@ export class StatLeadersComponent implements OnInit {
   public nflDPosition: string
   public haveNflSchedules: boolean
   public nflSchedules: any
+  public nflFavorites: any
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -373,6 +374,8 @@ export class StatLeadersComponent implements OnInit {
     if (this.nflDefenseSection) {
       this.defensePlayers()
     } else if (this.nflSection) {
+      this.nflFavorites.filter(player => player.dateAdded != null && player.dateAdded === week)
+      console.log(this.nflFavorites, 'nfl favorites')
       this.loadNFL()
     } 
   }
@@ -674,6 +677,7 @@ export class StatLeadersComponent implements OnInit {
       if (this.myData === undefined) {
         //default load get watchlist 
         this.wlPlayers = this.ls.get('watchList')
+        this.nflFavorites = this.ls.get('favorites')
         this.nflSchedules = this.ls.get('nflSchedules')
         this.loadNFL() //this.loadMLB()
         console.log('fetch data on init...')

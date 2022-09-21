@@ -7,7 +7,7 @@
     <div class="content-wrapper">
       <div class="row">
         <div *ngFor="let item of sortStats(data, statType, statField, order, ndk, seasonLength, eliteStat ? eliteStat : 0); let i = index" 
-        [ngStyle]="{width: item?.spanOpponents != null ? '100%' : '100%'}">
+        [ngStyle]="{width: item?.spanOpponents != null || title === 'Favorites' ? '100%' : '100%'}">
            
           <span
             [ngClass]="{
@@ -15,10 +15,10 @@
               'dn': i > page || i <= amount || ndk && item.player.unsigned,
               'dn2': (!ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank > begin : !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank > begin : item?.team[seasonLength] > begin) && (!ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= end : !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= end : item?.team[seasonLength] <= end),
               'dn3': begin === 21 && !ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= 10 : begin === 21 && !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= 10 : begin === 21 && item?.team[seasonLength] <= 10,
-              'sm' : item?.spanOpponents != null
+              'sm' : item?.spanOpponents != null || title === 'Favorites'
             }"
-            [ngStyle]="{background: item?.spanOpponents != null ? 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' + item?.team?.logo +')' : null,
-            backgroundSize: item?.spanOpponents != null ? '414px' : null, backgroundPosition: item?.spanOpponents != null ? '0% 32%' : null}"
+            [ngStyle]="{background: item?.spanOpponents != null || title === 'Favorites' ? 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' + item?.team?.logo +')' : null,
+            backgroundSize: item?.spanOpponents != null || title === 'Favorites' ? '414px' : null, backgroundPosition: item?.spanOpponents != null || title === 'Favorites' ? '0% 32%' : null}"
             >
             <span class="tw">
 
@@ -29,8 +29,7 @@
                 src="{{ item?.player?.officialImageSrc }}"
                 alt="{{sport}} player"
                 onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"
-                loading="lazy"
-            />
+                loading="lazy"/>
             <span class="sched-rank sched-opp" *ngIf="sport === 'mlb' && item?.mlbSpanOpponents?.length > 0">
               <span class="weekopp-top">
                 <span *ngFor="let team of item?.mlbSpanOpponents; let i = index;"> {{team.print}} </span> 
@@ -72,23 +71,23 @@
                   </span>    
             </span>    
           </span>
-            <span class="player-infos" [ngClass]="{'sm' : item?.spanOpponents != null}">
+            <span class="player-infos" [ngClass]="{'sm' : item?.spanOpponents != null || title === 'Favorites'}">
               <span *ngIf="item.player?.rookie === true && !ndk" class="rookie">R</span>
-              <span class="names" *ngIf="item?.spanOpponents == null">
-                  {{ !mobile && !ndk && item?.spanOpponents == null ? item.player.firstName + " " + item.player.lastName : item.player.lastName}} 
+              <span class="names" *ngIf="item?.spanOpponents == null && title != 'Favorites'">
+                  {{ !mobile && !ndk && item?.spanOpponents == null && title != 'Favorites' ? item.player.firstName + " " + item.player.lastName : item.player.lastName}} 
                    <span> - {{ item?.player?.primaryPosition }}</span>  
               </span>
-              <span class="names" *ngIf="item?.spanOpponents != null">
+              <span class="names" *ngIf="item?.spanOpponents != null || title === 'Favorites'">
                 <span *ngIf="!mobile" class="fn">{{item.player.firstName}} </span>  <span class="ln"> {{item.player.lastName}}</span>
                  <span> - {{ item?.player?.primaryPosition }}</span>  
                </span>
 
-              <span *ngIf="!item?.spanOpponents" class="team-image {{sport}}">
+              <span *ngIf="!item?.spanOpponents || title != 'Favorites'" class="team-image {{sport}}">
                 <img src="{{ item?.team?.logo }}" alt="{{ item?.team?.name }} logo" loading="lazy" />
               </span>
 
               <span class="point">
-                <span class="lg" *ngIf="!ndk" [ngClass]="{'sm' : item?.spanOpponents != null}">
+                <span class="lg" *ngIf="!ndk" [ngClass]="{'sm' : item?.spanOpponents != null || title === 'Favorites'}">
                   {{ (item?.stats)[statType][statField] }} {{ statTag }}
                   <span *ngIf="sport === 'nfl' && title != 'Rookie Total Yds'">
                     <span *ngIf="statType === 'interceptions' && item?.stats[statType]?.intTD &gt; 0">{{ item?.stats[statType]?.intTD }} TD</span>
@@ -181,6 +180,9 @@
                           <span *ngIf="team?.gameTD &gt; 0">TD: {{team?.gameTD}}</span>
                       </span>
                   </span>
+                </span>
+                <span class="three-week" *ngIf="title === 'Favorites' && sport === 'nfl'">
+                  <!-- Favorites stats in here -->
                 </span>
                 <span class="lg" *ngIf="ndk && sport === 'nfl'">
                     <span class="ticker" *ngIf="item?.team?.dtr != null && item?.team?.scheduleTicker != null">

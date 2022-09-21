@@ -8,10 +8,10 @@
           <img src="{{image}}" alt="{{type}} player" onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'" />
         </span> 
         <span>{{name}} </span>  &nbsp;
-        <span title="Watchlist" *ngIf="selectedPlayer?.dateAdded == null" class="watchlist" (click)="watchList(selectedPlayer, name, sport, this.wl, 'watchList')">&#43; <span *ngIf="!util.mobile">Watch List</span> </span>
-        <span title="Remove" *ngIf="selectedPlayer?.dateAdded" class="watchlist" (click)="unwatch(selectedPlayer, this.wl, 'watchList')">&#8722; <span *ngIf="!util.mobile">Remove</span></span>
+        <span title="Watchlist" *ngIf="selectedPlayer?.dateAdded == null" class="watchlist" (click)="watchList(selectedPlayer, name, sport, wl, 'watchList')">&#43; <span *ngIf="!util.mobile">Watch List</span> </span>
+        <span title="Remove" *ngIf="selectedPlayer?.dateAdded" class="watchlist" (click)="unwatch(selectedPlayer, wl, 'watchList')">&#8722; <span *ngIf="!util.mobile">Remove</span></span>
         <span *ngIf="sport === 'nfl' && selectedWeek != 'three-weeks' && selectedWeek != 'all'" class="fav-star">
-          <span title="Favorite" class="star" (click)="watchList(selectedPlayer, name, sport, this.favorites, 'favorites')">☆</span>
+          <span title="Favorite" class="star" (click)="watchList(selectedPlayer, name, sport, favorites, 'favorites')">☆</span>
         </span>
             <!-- <span class="team-image"> <img src="{{selectedPlayer?.team?.logo}}" alt="{{selectedPlayer?.team?.name}} logo"></span> -->
       </span>
