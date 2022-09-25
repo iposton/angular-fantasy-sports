@@ -32,7 +32,7 @@ export class LocalStorageService {
   }
 
   public remove(item, data, title) {
-    data.forEach((reminder, index) => {
+    data.forEach((player, index) => {
       if(data[index].id === item.id) {
         data.splice(index, 1);
         this.set(title, data)
