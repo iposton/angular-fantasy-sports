@@ -803,6 +803,15 @@ ul {
   font-size: 16px;
 }
 
+.main-row.stat-leaders .left-content.fav img {
+  height: 70px;
+  width: 60px;
+  box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+  border: none;
+  border-radius: 3%;
+  margin-right: 3px;
+}
+
 // starting-five
 .starting-five {
 
@@ -2457,7 +2466,7 @@ form input[type="text"] {
       }
 
       .fav-star {
-        transition: linear .3s;
+        // transition: linear .3s;
         margin: 10px;
       }
 

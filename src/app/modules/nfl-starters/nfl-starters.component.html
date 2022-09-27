@@ -46,7 +46,7 @@
   [isOpen]="isOpen"
   [submitting]="submitting"
   [type]="type"
-  [area]="'none'"
+  [area]="'lineup'"
   [noPosts]="noPosts"
   [tweetsData]="tweetsData"
   [name]="name"
@@ -56,6 +56,8 @@
   (close)="isOpen = false"
   [modalType]="'twitter'"
   ></app-dialog>
+
+
   <div class="center nfl-select">
       <label for="week">Week:</label>
       <select name="week" id="week" (change)="onChange($event.target.value)">

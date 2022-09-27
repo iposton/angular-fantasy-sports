@@ -32,6 +32,10 @@ export class DialogComponent implements OnInit {
   public sport              :any
   @Input('selectedPlayer')
   public selectedPlayer     :any
+  @Input('wl')
+  public wl                 :any
+  @Input('favorites')
+  public favorites          :any
   @Input('image')
   public image              :any
   @Input('isOpen')
@@ -44,8 +48,6 @@ export class DialogComponent implements OnInit {
   public timeSpan             :any
   @Output() close = new EventEmitter()
   public signedIn: any
-  public wl: any
-  public favorites: any
   public showSnack: boolean
   public wlAlert: string
 
@@ -82,16 +84,12 @@ export class DialogComponent implements OnInit {
       this.ls.set(title, data)
 
       this.showSnack = true
-      this.wlAlert = `Player Added`
+      this.wlAlert = `Player Added to `+title
       setTimeout(()=> {
         this.showSnack = false
         this.wlAlert = ""
       }, 2950)
     } 
-  }
-
-  public unwatch(item, data, title) {
-    this.ls.remove(item, data, title)
   }
 
   public closeModal() {
@@ -108,13 +106,11 @@ export class DialogComponent implements OnInit {
     .catch((err) => console.log('error: ' + err));
   }
 
-  ngOnInit(): void {
-    if (this.util.tb) {
+  ngOnInit() {
       this.showSnack = false
       this.wlAlert = ""
-      this.wl = []
-      this.wl = this.ls.get('watchList')
-      this.favorites = this.ls.get('favorites')
+    if (this.util.tb) {
+
     }
   }
 

@@ -15,7 +15,8 @@
               'dn': i > page || i <= amount || ndk && item.player.unsigned,
               'dn2': (!ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank > begin : !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank > begin : item?.team[seasonLength] > begin) && (!ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= end : !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= end : item?.team[seasonLength] <= end),
               'dn3': begin === 21 && !ndk && statType != 'tackles' && statType != 'interceptions' && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.dRank <= 10 : begin === 21 && !ndk && (statType == 'tackles' || statType == 'interceptions') && item?.team?.weekOpponent ? item?.team?.weekOpponent[0]?.oRank <= 10 : begin === 21 && item?.team[seasonLength] <= 10,
-              'sm' : item?.spanOpponents != null || title === 'Favorites'
+              'sm' : item?.spanOpponents != null || title === 'Favorites',
+              'fav' : title === 'Favorites'
             }"
             [ngStyle]="{background: item?.spanOpponents != null || title === 'Favorites' ? 'linear-gradient(-225deg, rgba(0,0,0,0.7) 50%, rgba(0,0, 0,0.6) 80%), url(' + item?.team?.logo +')' : null,
             backgroundSize: item?.spanOpponents != null || title === 'Favorites' ? '414px' : null, backgroundPosition: item?.spanOpponents != null || title === 'Favorites' ? '0% 32%' : null}"
@@ -82,7 +83,7 @@
                  <span> - {{ item?.player?.primaryPosition }}</span>  
                </span>
 
-              <span *ngIf="!item?.spanOpponents || title != 'Favorites'" class="team-image {{sport}}">
+              <span *ngIf="!item?.spanOpponents && title != 'Favorites'" class="team-image {{sport}}">
                 <img src="{{ item?.team?.logo }}" alt="{{ item?.team?.name }} logo" loading="lazy" />
               </span>
 
@@ -91,14 +92,14 @@
                   {{ (item?.stats)[statType][statField] }} {{ statTag }}
                   <span *ngIf="sport === 'nfl' && title != 'Rookie Total Yds'">
                     <span *ngIf="statType === 'interceptions' && item?.stats[statType]?.intTD &gt; 0">{{ item?.stats[statType]?.intTD }} TD</span>
-                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField != 'offSnapPct'" [ngStyle]="{color: item?.stats[statType]?.passTD &gt; 30 ? 'gold' : 'white'}">{{ item?.stats[statType]?.passTD }} TD</span>
-                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField == 'offSnapPct'" [ngStyle]="{color: (item?.stats.rushing?.rushYards + item?.stats?.receiving?.recYards) &gt; (item?.player?.primaryPosition == 'rb' ? 900 : 1100) ? 'gold' : 'white'}">{{ item?.stats.rushing?.rushYards + item?.stats?.receiving?.recYards }} Yds </span> 
-                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField == 'offSnapPct'" [ngStyle]="{color: item?.stats?.receiving?.receptions &gt; (item?.player?.primaryPosition == 'rb' ? 45 : 85) ? 'gold' : 'white'}"> {{ item?.stats?.receiving?.receptions }} Rec</span>
+                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField != 'offSnapPct'" [ngStyle]="{color: item?.stats[statType]?.passTD &gt; 6 ? 'gold' : 'white'}">{{ item?.stats[statType]?.passTD }} TD</span>
+                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField == 'offSnapPct'" [ngStyle]="{color: (item?.stats.rushing?.rushYards + item?.stats?.receiving?.recYards) &gt; (item?.player?.primaryPosition == 'rb' ? 300 : 500) ? 'gold' : 'white'}">{{ item?.stats.rushing?.rushYards + item?.stats?.receiving?.recYards }} Yds </span> 
+                    <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField == 'offSnapPct'" [ngStyle]="{color: item?.stats?.receiving?.receptions &gt; (item?.player?.primaryPosition == 'rb' ? 10 : 19) ? 'gold' : 'white'}"> {{ item?.stats?.receiving?.receptions }} Rec</span>
                     <span *ngIf="statType === 'passing' && statField == 'ydsPerGame'">{{ item?.stats[statType]?.passTD + item?.stats?.rushing?.rushTD }} TD</span>
-                    <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'" [ngStyle]="{color: item?.stats[statType]?.rushTD &gt; 8 ? 'gold' : 'white'}">{{ item?.stats[statType]?.rushTD }} TD</span>
+                    <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'" [ngStyle]="{color: item?.stats[statType]?.rushTD &gt; 2 ? 'gold' : 'white'}">{{ item?.stats[statType]?.rushTD }} TD</span>
                     <span *ngIf="statType === 'rushing' && statField == 'ydsPerGame'">{{ item?.stats[statType]?.rushTD + item?.stats?.receiving?.recTD }} TD</span>
-                    <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct' && statField != 'fanDuelFP' && statField != 'fanDuelFPA'" [ngStyle]="{color: item?.stats[statType]?.recTD &gt; 8 ? 'gold' : 'white'}">{{ item?.stats[statType]?.recTD }} TD</span>
-                    <span *ngIf="statField === 'totalTouchPct'" [ngStyle]="{color: (item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD) &gt; 8 ? 'gold' : 'white'}">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
+                    <span *ngIf="statType === 'receiving' && statField != 'totalTouchPct' && statField != 'fanDuelFP' && statField != 'fanDuelFPA'" [ngStyle]="{color: item?.stats[statType]?.recTD &gt; 2 ? 'gold' : 'white'}">{{ item?.stats[statType]?.recTD }} TD</span>
+                    <span *ngIf="statField === 'totalTouchPct'" [ngStyle]="{color: (item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD) &gt; 2 ? 'gold' : 'white'}">{{ item?.stats?.receiving?.recTD + item?.stats?.rushing?.rushTD }} TD</span>
                     <span *ngIf="statField == 'fanDuelFPA'">{{ item?.stats.gamesPlayed }} GP</span>
                   </span>
                   <span *ngIf="sport === 'nfl' && title == 'Rookie Total Yds'">
@@ -183,6 +184,9 @@
                 </span>
                 <span class="three-week" *ngIf="title === 'Favorites' && sport === 'nfl'">
                   <!-- Favorites stats in here -->
+                  <span *ngIf="position === 'qb'">{{ item?.stats.passing?.passTD + item?.stats.rushing?.rushTD}} TD</span>
+                  <span *ngIf="position === 'qb'">{{ item?.stats.passing?.passYards + item?.stats.rushing?.rushYards}} Yds</span>
+                  <span *ngIf="position === 'qb'">{{ item?.stats.passing?.passTD + item?.stats.rushing?.rushTD}} TD</span>
                 </span>
                 <span class="lg" *ngIf="ndk && sport === 'nfl'">
                     <span class="ticker" *ngIf="item?.team?.dtr != null && item?.team?.scheduleTicker != null">

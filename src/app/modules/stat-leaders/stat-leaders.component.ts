@@ -164,6 +164,7 @@ export class StatLeadersComponent implements OnInit {
   public haveNflSchedules: boolean
   public nflSchedules: any
   public nflFavorites: any
+  public favorites: any
   
   constructor(private nbaService: NBADataService,
               private nhlService: NHLDataService,
@@ -374,7 +375,7 @@ export class StatLeadersComponent implements OnInit {
     if (this.nflDefenseSection) {
       this.defensePlayers()
     } else if (this.nflSection) {
-      this.nflFavorites.filter(player => player.dateAdded != null && player.dateAdded === week)
+      this.nflFavorites = this.favorites.filter(player => player.dateAdded != null && player.dateAdded === this.week)
       console.log(this.nflFavorites, 'nfl favorites')
       this.loadNFL()
     } 
@@ -677,7 +678,7 @@ export class StatLeadersComponent implements OnInit {
       if (this.myData === undefined) {
         //default load get watchlist 
         this.wlPlayers = this.ls.get('watchList')
-        this.nflFavorites = this.ls.get('favorites')
+        this.favorites = this.ls.get('favorites')
         this.nflSchedules = this.ls.get('nflSchedules')
         this.loadNFL() //this.loadMLB()
         console.log('fetch data on init...')
@@ -1009,6 +1010,7 @@ export class StatLeadersComponent implements OnInit {
 
     //TODO move this to update stats first and then set it to ls
     this.nflWl = this.wlPlayers.filter(x => x.sport === 'nfl')
+   
     console.log(this.nflWl, 'watchlist')
     //TODO move this to update stats first and then set it to ls
 
@@ -1082,21 +1084,6 @@ export class StatLeadersComponent implements OnInit {
         let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(x => x.stats.gamesPlayed > 0) : res['dailyStats'].gamelogs)
         this.nflData = stats
 
-        //TODO turn this into a function that updates all wl stats by player id and set the new watchlist
-        if (this.nflWl != null && this.nflWl.length > 0) {
-         
-            for (let data of this.nflData) {
-              for (let wl of this.wlPlayers) {
-                //TODO create a player string to fetch updated stats, use full watchlist not the nflwl
-                if (data.player.id === wl.player.id) {
-                  wl.statsUpdated = this.util.nflWeek
-                  wl.stats = data.stats
-                  wl.player.officialImageSrc = data.player.officialImageSrc
-                }
-              }
-            }
-   
-        }
 
         //temporary before season start
         //this.nfl22Rookies = res['playerInfo'].rookies ? res['playerInfo'].rookies : []
@@ -1110,6 +1097,21 @@ export class StatLeadersComponent implements OnInit {
         console.log(res['playerInfo'], 'nfl player info')
         //this.util.updatePlayers(res['playerInfo'].players, this.nflData, this.nflTeams)
         this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie')
+          //TODO turn this into a function that updates all wl stats by player id and set the new watchlist
+          if (this.nflWl != null && this.nflWl.length > 0) {
+         
+            for (let data of this.nflData) {
+              for (let wl of this.wlPlayers) {
+                //TODO create a player string to fetch updated stats, use full watchlist not the nflwl
+                if (data.player.id === wl.player.id && wl.player.primaryPosition === this.nflPosition.toUpperCase()) {
+                  wl.statsUpdated = this.util.nflWeek
+                  wl.stats = data.stats
+                  wl.type = 'wl'
+                  wl.player.officialImageSrc = data.player.officialImageSrc
+                }
+              }
+            }
+        }
         this.nflOffenseLoading = false 
         console.log(this.teamSchedules, 'this.teamSchedules should persist now')  
 
@@ -1825,6 +1827,18 @@ export class StatLeadersComponent implements OnInit {
 
               this.crunched = this.nflData.filter(player => player.player.span === this.timeSpan)
               this.nflData = this.crunched
+
+              for (let data of this.nflData) {
+                for (let item of this.favorites) {
+                  if (data.player.id === item.player.id && item.dateAdded === this.week) {
+                    //item.statsUpdated = this.util.nflWeek
+                    item.stats = data.stats
+                    //item.player.officialImageSrc = data.player.officialImageSrc
+                  }
+                }
+              }
+
+
                
               // console.log(this.nhlGoaltenders, 'crunched nhl');
               this.nflOffenseLoading = false;

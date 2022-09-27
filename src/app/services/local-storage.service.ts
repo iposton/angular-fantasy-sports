@@ -28,10 +28,13 @@ export class LocalStorageService {
     item.dateAdded = sport === 'nfl' && title === 'favorites' ? selectedDate : new Date().toISOString().slice(0,10)
     item.id = item.player.id
     item.sport = sport
+    item.type = sport === 'nfl' && title === 'favorites' ? 'fav' : 'wl'
     data.push(item)
   }
 
   public remove(item, data, title) {
+    console.log('removing item from '+title)
+    //console.log(item, 'item', data, 'data')
     data.forEach((player, index) => {
       if(data[index].id === item.id) {
         data.splice(index, 1);
