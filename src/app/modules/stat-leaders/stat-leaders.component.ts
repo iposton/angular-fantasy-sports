@@ -680,6 +680,8 @@ export class StatLeadersComponent implements OnInit {
         this.wlPlayers = this.ls.get('watchList')
         this.favorites = this.ls.get('favorites')
         this.nflSchedules = this.ls.get('nflSchedules')
+        //this.nflSchedules[0].weekSet = '1'
+        this.nflSchedules = this.nflSchedules[0].weekSet < this.util.nflWeek ? [] : this.nflSchedules
         this.loadNFL() //this.loadMLB()
         console.log('fetch data on init...')
       } else {
@@ -1043,6 +1045,7 @@ export class StatLeadersComponent implements OnInit {
             console.log('server added too many schedule objects, truncate')
             res['scheduleGames'].length = 32
             console.log(res['scheduleGames'], 'after truncate')
+            res['scheduleGames'][0].weekSet = this.util.nflWeek
             this.ls.set('nflSchedules', res['scheduleGames'])
           } else if (res['scheduleGames'].length == 32) {
 
@@ -1053,6 +1056,7 @@ export class StatLeadersComponent implements OnInit {
             res['scheduleGames'] = this.nflSchedules
           } else {
             console.log('set nfl schedules', res['scheduleGames'])
+            res['scheduleGames'][0].weekSet = this.util.nflWeek
             this.ls.set('nflSchedules', res['scheduleGames'])
           }
 

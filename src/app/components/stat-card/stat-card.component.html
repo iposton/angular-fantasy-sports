@@ -24,7 +24,7 @@
             <span class="tw">
 
             
-            <span class="index-rank" [ngClass]="{'dn' : sport === 'nfl' && ndk}">{{ i + 1 }}</span>
+            <span class="index-rank" [ngClass]="{'dn' : sport === 'nfl' && ndk || sport === 'nfl' && title === 'Favorites'}">{{ i + 1 }}</span>
             <span (click)="authorize(item, sport)" class="point" (mouseover)="$event.stopPropagation()" (mouseout)="$event.stopPropagation()">
               <img
                 src="{{ item?.player?.officialImageSrc }}"
@@ -184,9 +184,55 @@
                 </span>
                 <span class="three-week" *ngIf="title === 'Favorites' && sport === 'nfl'">
                   <!-- Favorites stats in here -->
-                  <span *ngIf="position === 'qb'">{{ item?.stats.passing?.passTD + item?.stats.rushing?.rushTD}} TD</span>
-                  <span *ngIf="position === 'qb'">{{ item?.stats.passing?.passYards + item?.stats.rushing?.rushYards}} Yds</span>
-                  <span *ngIf="position === 'qb'">{{ item?.stats.passing?.passTD + item?.stats.rushing?.rushTD}} TD</span>
+                  <span class="stats" *ngIf="item?.player?.primaryPosition === 'QB'">
+                    <span class="inner">
+                      <span>
+                        {{ item?.stats.passing?.passTD + item?.stats.rushing?.rushTD}} TD
+                      </span>
+                    </span>
+                  </span>
+
+                  <span class="stats" *ngIf="item?.player?.primaryPosition === 'QB'">
+                    <span class="inner">
+                      <span>
+                        {{ item?.stats.passing?.passYards + item?.stats.rushing?.rushYards}} Yds
+                      </span>
+                    </span>
+                  </span>
+
+                  <span class="stats" *ngIf="item?.player?.primaryPosition === 'QB'">
+                    <span class="inner">
+                      <span>
+                        {{item?.stats?.twoPointAttempts?.twoPtPassMade &gt; 0 ? item?.stats?.twoPointAttempts?.twoPtPassMade + ' 2pt' : item?.stats?.passing?.passInt + ' Int'}} 
+                      </span>
+                    </span>
+                  </span>
+
+                  <span class="stats" *ngIf="item?.player?.primaryPosition === 'RB' || item?.player?.primaryPosition === 'WR' || item?.player?.primaryPosition === 'TE'">
+                    <span class="inner">
+                      <span>
+                        {{ item?.stats?.receiving?.recTD + item?.stats.rushing?.rushTD}} TD
+                      </span>
+                    </span>
+                  </span>
+
+                  <span class="stats" *ngIf="item?.player?.primaryPosition === 'RB' || item?.player?.primaryPosition === 'WR' || item?.player?.primaryPosition === 'TE'">
+                    <span class="inner">
+                      <span>
+                        {{ item?.stats?.receiving?.recYards + item?.stats.rushing?.rushYards}} Yds
+                      </span>
+                    </span>
+                  </span>
+
+                  <span class="stats" *ngIf="item?.player?.primaryPosition === 'RB' || item?.player?.primaryPosition === 'WR' || item?.player?.primaryPosition === 'TE'">
+                    <span class="inner">
+                      <span>
+                        {{item?.stats?.receiving?.receptions}} Rec
+                      </span>
+                    </span>
+                  </span>
+                  
+
                 </span>
                 <span class="lg" *ngIf="ndk && sport === 'nfl'">
                     <span class="ticker" *ngIf="item?.team?.dtr != null && item?.team?.scheduleTicker != null">

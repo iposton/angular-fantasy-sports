@@ -240,6 +240,7 @@ footer {
               justify-content: center;
               align-items: center;
               justify-content: center;
+              text-align: center;
             }
           }
         }
@@ -2053,7 +2054,8 @@ form.date-form {
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content .stats, 
-.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats {
+.nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content .stats,
+.main-row.stat-leaders .left-content .three-week .stats {
   font-size: 20px;
   font-weight: 900;
   width: 90px;
@@ -2081,6 +2083,10 @@ form.date-form {
     width: 80px;
     padding: 5px 0;
   }
+}
+
+.main-row.stat-leaders .left-content .three-week .stats { 
+  margin: 2px;
 }
 
 .nfl-page .card-wrap-sp .mat-card-sp {

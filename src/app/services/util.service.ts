@@ -24,6 +24,8 @@ export class UtilService {
       int: 1,
       pd: 4,
       defFP: 6,
+      fum: 1,
+      safe: 0
     }
   }
 
