@@ -677,11 +677,11 @@ export class StatLeadersComponent implements OnInit {
       }
       if (this.myData === undefined) {
         //default load get watchlist 
+        let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date().getDay()]
         this.wlPlayers = this.ls.get('watchList')
         this.favorites = this.ls.get('favorites')
         this.nflSchedules = this.ls.get('nflSchedules')
-        //this.nflSchedules[0].weekSet = '1'
-        this.nflSchedules = this.nflSchedules[0].weekSet < this.util.nflWeek ? [] : this.nflSchedules
+        this.nflSchedules = this.nflSchedules.length < 32 || this.nflSchedules[0].weekSet == null || weekday === 'Tue' && this.nflSchedules[0].weekSet < this.util.nflWeek ? [] : this.nflSchedules
         this.loadNFL() //this.loadMLB()
         console.log('fetch data on init...')
       } else {
