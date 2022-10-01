@@ -60,8 +60,9 @@
    <span class="hollow-btn" [ngClass]="{'dn' : !mlbHittingSection}" (click)="mlbSection = true; mlbHittingSection = false; timeSpan = 'full'">MLB Pitchers</span>
    <span [ngClass]="{'dn' : !nflSection, 'hollow-btn' : nflSection}" (click)="week = 'all'; timeSpan = 'full'; defensePlayers(); $event.stopPropagation()">Defense</span>  
    <span [ngClass]="{'dn' : !nflDefenseSection, 'hollow-btn' : nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</span>
-   <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit; ; $event.stopPropagation()">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit; $event.stopPropagation()">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</span>
    <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('three-weeks')">Last 3 Weeks</span> 
+   <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="pStats = !pStats">{{pStats ? 'Teams' : 'Players'}}</span> 
    <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('all')">ALL</span>
 </div>
 <div class="center nfl-select" *ngIf="sport === 'mlb' && mlbHittingSection">
@@ -1112,7 +1113,7 @@
               ></app-stat-card>
           </section>
 
-          <section [ngClass]="{'dn' : !nflSection}">
+          <section [ngClass]="{'dn' : !nflSection, 'dn2' : !pStats}">
               <app-stat-card *ngIf="!nflOffenseLoading && nflData != null && st1 != ''" 
               [data]="nflData" 
               [statType]="st1"
@@ -1366,7 +1367,9 @@
               [seasonLength]="seasonLength"
               [eliteStat]="70"
               ></app-stat-card>
+            </section>
 
+            <section [ngClass]="{'dn' : !nflSection, 'dn2' : pStats}">
               <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && teamSchedules.length > 0" 
                 [data]="nflTeamStats" 
                 [teams]="nflTeams"
@@ -1382,10 +1385,9 @@
                 (seasonChange)="seasonLength = $event"
                 [week]="nflWeek">
               </app-team-rank>
-
             </section>
 
-             <section [ngClass]="{'dn' : !nflDefenseSection}">
+             <section [ngClass]="{'dn' : !nflDefenseSection, 'dn2' : !pStats}">
                 <app-stat-card *ngIf="!nflDefenseLoading && nflDefenseData != null" 
                 [data]="nflDefenseData" 
                 [statType]="'tackles'" 
@@ -1524,19 +1526,23 @@
               [eliteStat]="850"
               ></app-stat-card> -->
 
-                <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && teamSchedules.length > 0" 
-                [data]="nflTeamStats" 
-                [teams]="nflTeams"
-                [title]="'Defense Team Rank'">
-                </app-team-rank>
+                
+              </section>
 
-                <app-team-rank *ngIf="!nflTeamLoading && nflDraftKit && teamSchedules.length > 0" 
-                [data]="nflTeamStats" 
-                [teams]="nflTeams"
-                [title]="'Toughest Offense Schedule 2022'"
-                [seasonLength]="seasonLengthD"
-                (seasonChangeD)="seasonLengthD = $event">
-                </app-team-rank>
+              <section [ngClass]="{'dn' : !nflDefenseSection, 'dn2' : pStats}">
+                <app-team-rank *ngIf="!nflTeamLoading && !nflDraftKit && teamSchedules.length > 0" 
+                  [data]="nflTeamStats" 
+                  [teams]="nflTeams"
+                  [title]="'Defense Team Rank'">
+                  </app-team-rank>
+  
+                  <app-team-rank *ngIf="!nflTeamLoading && nflDraftKit && teamSchedules.length > 0" 
+                  [data]="nflTeamStats" 
+                  [teams]="nflTeams"
+                  [title]="'Toughest Offense Schedule 2022'"
+                  [seasonLength]="seasonLengthD"
+                  (seasonChangeD)="seasonLengthD = $event">
+                  </app-team-rank>
               </section>
       
   <div class="row" *ngIf="!loading">

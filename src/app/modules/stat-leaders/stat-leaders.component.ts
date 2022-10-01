@@ -31,13 +31,13 @@ export class StatLeadersComponent implements OnInit {
 
   public teamRef: Array <any>;
   public allSentData: Array <any>;
-  public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
-  public mlbApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular";
-  public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular";
-  public nbaSeasonType: string = "2021-2022-regular";
-  public nflSeasonType: string = "2020-2021-regular";
-  public nhlSeasonType: string = "2021-2022-regular";
-  public mlbSeasonType: string = "2022-regular";
+  // public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
+  //public mlbApiRoot: string
+  // public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular";
+  public nbaSeasonType: string = "2021-2022-regular"
+  public nflSeasonType: string = "2020-2021-regular"
+  public nhlSeasonType: string = "2021-2022-regular"
+  public mlbSeasonType: string = "2022-regular"
   public myData: Array <any>;
   public fgPlayers: Array <any>;
   public smPlayers: Array <any>;
@@ -112,8 +112,8 @@ export class StatLeadersComponent implements OnInit {
   public nflTeamLoading: boolean = false;
   public nhlGoalies: boolean = false;
   public weekResults: boolean = false;
-  public page: number = 19;
-  public amount: number = -1;
+  public page: number
+  public amount: number
   public getAll: boolean = true;
   public isOpen: boolean = false;
   public tweetsData: Array <any> = [];
@@ -162,6 +162,7 @@ export class StatLeadersComponent implements OnInit {
   public nflPosition: string
   public nflDPosition: string
   public haveNflSchedules: boolean
+  public pStats: boolean
   public nflSchedules: any
   public nflFavorites: any
   public favorites: any
@@ -180,6 +181,9 @@ export class StatLeadersComponent implements OnInit {
               public ls: LocalStorageService,
               @Inject(PLATFORM_ID) platformId: string) {
     //default sport load
+    this.page = 29
+    this.amount = -1
+    this.pStats = true
     this.nflSection = true
     this.sport = 'nfl'
     this.nflDraftKit = false
@@ -282,7 +286,7 @@ export class StatLeadersComponent implements OnInit {
     }
 
     if (this.sport === 'mlb') {
-      this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular" : "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-playoff"
+      // this.mlbApiRoot = this.mlbSeason ? "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-regular" : "https://api.mysportsfeeds.com/v2.1/pull/mlb/2021-playoff"
 
       this.mlbSeasonType = this.mlbSeason ? "2022-regular" : "2022-playoff"
       
@@ -470,7 +474,7 @@ export class StatLeadersComponent implements OnInit {
     }
 
     if (this.sport === 'nfl') {     
-      season = '2021-2022-regular'
+      season = '2022-2023-regular'
     }
 
       this.nhlService.myStats(
@@ -1783,7 +1787,7 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.passing.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
                         info.stats.receiving.recYards = data['8'];
                         info.stats.passing.totalPassPct = Math.floor(data['11'] / data['14'] * 100);
-                        info.spanOpponents = data['17'];
+                        info.spanOpponents = data['17']
                         //rb
                         info.stats.rushing.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
                         info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
@@ -1840,10 +1844,15 @@ export class StatLeadersComponent implements OnInit {
                     //item.player.officialImageSrc = data.player.officialImageSrc
                   }
                 }
+                for (let item of this.nflWl) {
+                  if (data.player.id === item.player.id) {
+                    //item.statsUpdated = this.util.nflWeek
+                    item.spanOpponents = data.spanOpponents
+                    //item.player.officialImageSrc = data.player.officialImageSrc
+                  }
+                }
               }
 
-
-               
               // console.log(this.nhlGoaltenders, 'crunched nhl');
               this.nflOffenseLoading = false;
                  

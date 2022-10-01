@@ -2074,11 +2074,12 @@ export class NflUtilService {
           lastName: "Hendershot",
           image: nflImageRoot+"c4755isxqphddzmqbejm"
         },
-        
-        
-        
-        
-         
+        "39094" : {
+          firstName: "Kenny",
+          lastName: "Pickett",
+          image: nflImageRoot+"vbabaquryx2jw1uahay2"
+        },
+          
       }
    }
 

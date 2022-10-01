@@ -650,8 +650,8 @@ methods.getStats = async (
           } else {
             console.log('Something went wrong getting Boxscores')
           }
-          await sleep(3500)
-          console.log(colors.fg.green+'Waited 3.5 seconds for boxscores, Resolve', colors.reset)
+          await sleep(4500)
+          console.log(colors.fg.green+'Waited 4.5 seconds for boxscores, Resolve', colors.reset)
           resolve('done')
         })
        }) 
