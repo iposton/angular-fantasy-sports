@@ -673,6 +673,13 @@ export class StatLeadersComponent implements OnInit {
     } 
   }
 
+  public resetSpanOpp() {
+      for (let wl of this.wlPlayers) {
+        if (wl.spanOpponents != null)
+          wl.spanOpponents = null
+      }
+  }
+
   ngOnInit() {
     if (this.testBrowser) {
       if (window.innerWidth < 700) {
@@ -683,6 +690,7 @@ export class StatLeadersComponent implements OnInit {
         //default load get watchlist 
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date().getDay()]
         this.wlPlayers = this.ls.get('watchList')
+        this.resetSpanOpp()
         this.favorites = this.ls.get('favorites')
         this.nflSchedules = this.ls.get('nflSchedules')
         this.nflSchedules = this.nflSchedules.length < 32 || this.nflSchedules[0].weekSet == null || weekday === 'Tue' && this.nflSchedules[0].weekSet < this.util.nflWeek ? [] : this.nflSchedules
@@ -1116,6 +1124,7 @@ export class StatLeadersComponent implements OnInit {
                   wl.stats = data.stats
                   wl.type = 'wl'
                   wl.player.officialImageSrc = data.player.officialImageSrc
+                  //wl.spanOpponents = null
                 }
               }
             }
