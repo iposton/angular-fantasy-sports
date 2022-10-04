@@ -1212,7 +1212,7 @@ export class NflUtilService {
         "6205": {
           firstName: "Tyrod",
           lastName: "Taylor",
-          image: nflImageRoot+"sc2pqxzxhd0stvbgo0u4"
+          image: nflImageRoot+"c8dbt9tuux5oatihnwkz"
         },
         "7457": {
           firstName: "Teddy",
@@ -1227,7 +1227,7 @@ export class NflUtilService {
         "6464": {
           firstName: "Andy",
           lastName: "Dalton",
-          image: nflImageRoot+"ejcbwk2yijkswrmzscbk"
+          image: nflImageRoot+"yhkh8vtc5ocjo3iyn9ug"
         },
         "7647": {
           firstName: "Mark",
@@ -2084,6 +2084,37 @@ export class NflUtilService {
           lastName: "Hall",
           image: nflImageRoot+"xcuixhewoo00o7frboye"
         },
+        "44936" : {
+          firstName: "C",
+          lastName: "Okonkwo",
+          image: nflImageRoot+"sxuawjrgawwilhceso3d"
+        },
+        "30450" : {
+          firstName: "Travis",
+          lastName: "Etienne",
+          image: nflImageRoot+"d8xhoicgjybtyvttcxhu"
+        },
+        "39810" : {
+          firstName: "Bailey",
+          lastName: "Zappe",
+          image: nflImageRoot+"iwpeibkv4p0ad6mxgjrq"
+        },
+        "39128" : {
+          firstName: "Skyy",
+          lastName: "Moore",
+          image: nflImageRoot+"nkvb3cfmw6kzzwvu5egh"
+        },
+        "43337" : {
+          firstName: "Tyler",
+          lastName: "Allgeier",
+          image: nflImageRoot+"osk8e6vpyxuzkrsalopb"
+        },
+        "43343" : {
+          firstName: "I",
+          lastName: "Pacheco",
+          image: nflImageRoot+"s9suhdxobh0p5nbwxq8t"
+        },
+     
         
           
       }
