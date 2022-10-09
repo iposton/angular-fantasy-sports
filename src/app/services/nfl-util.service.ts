@@ -2114,6 +2114,12 @@ export class NflUtilService {
           lastName: "Pacheco",
           image: nflImageRoot+"s9suhdxobh0p5nbwxq8t"
         },
+        "30140" : {
+          firstName: "Deon",
+          lastName: "Jackson",
+          image: nflImageRoot+"baws2kukxj8wwdoskidg"
+        },
+        
      
         
           

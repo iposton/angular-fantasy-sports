@@ -1780,7 +1780,7 @@ export class StatLeadersComponent implements OnInit {
                   for (let data of this.reduced) {
                     //info.player.span = false;
                     if (info.player.id === data.id) {
-                     
+                      info.stats.gamesPlayed = data['7']
                       if (info.player['primaryPosition'] != 'K') {
                         //qb 
                         info.stats.passing.passYards = data['1'];
@@ -1797,6 +1797,7 @@ export class StatLeadersComponent implements OnInit {
                         info.stats.receiving.recYards = data['8'];
                         info.stats.passing.totalPassPct = Math.floor(data['11'] / data['14'] * 100);
                         info.spanOpponents = data['17']
+                        
                         //rb
                         info.stats.rushing.ydsPerGame = Math.floor((data['1'] + data['3'] + data['8']) / data['7']);
                         info.stats.rushing.touchRunPct = Math.floor(data['12'] / data['16'] * 100);
