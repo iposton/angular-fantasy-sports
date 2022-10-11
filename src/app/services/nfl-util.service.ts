@@ -1,9 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { forkJoin } from 'rxjs';
-import { CompletionKind } from '@angular/compiler-cli/src/ngtsc/typecheck/api';
-import { WrappedNodeExpr } from '@angular/compiler';
-let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/';
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/'
 let time22 = `2022 00:00:00 GMT-0700 (Pacific Daylight Time)`
 let time23 = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
 
@@ -2119,6 +2116,29 @@ export class NflUtilService {
           lastName: "Jackson",
           image: nflImageRoot+"baws2kukxj8wwdoskidg"
         },
+        "43338" : {
+          firstName: "Khalil",
+          lastName: "Shakir",
+          image: nflImageRoot+"qoltpowkukxjs5xtpn8a"
+        },
+        "44961" : {
+          firstName: "Skylar",
+          lastName: "Thompson",
+          image: nflImageRoot+"kpyt5qpi4rh9bguzuorm"
+        },
+        "43374" : {
+          firstName: "Chris",
+          lastName: "Otton",
+          image: nflImageRoot+"hqxroxrpcxjttwnuuqw7"
+        },
+        "32265" : {
+          firstName: "Ben",
+          lastName: "Skowronek",
+          image: nflImageRoot+"hud5c4tf8corgoehrvc1"
+        },
+        
+        
+        
         
      
         
