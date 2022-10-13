@@ -20,14 +20,14 @@
                 <span class="team-rec" *ngIf="title === 'Defense Team Rank' || title === 'Offense Team Rank'"> ({{item?.stats?.standings.wins}}-{{item?.stats?.standings.losses}}-{{item?.stats?.standings.ties}})</span> &nbsp; 
                 <span class="team-st" *ngIf="title === 'Defense Team Rank'">
                   <span class="inner-st">
-                    Points Allowed: <span [ngStyle]="{color: item.stats.standings.pointsAgainst &gt; (util.weeklyTS['pa'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.standings?.pointsAgainst}}</span>   &nbsp;
+                    Pts Allowed: <span [ngStyle]="{color: item.stats.standings.pointsAgainst &gt; (util.weeklyTS['pa'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.standings?.pointsAgainst}}</span>   &nbsp;
                     Sacks: <span [ngStyle]="{color: item.stats.tackles.sacks &lt; (util.weeklyTS['sacks'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.tackles.sacks}}</span>   &nbsp;
                     Int: <span [ngStyle]="{color: item.stats.interceptions?.interceptions &lt; (util.weeklyTS['int'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.interceptions}}</span>   &nbsp;
                     PD: <span [ngStyle]="{color: item.stats.interceptions?.passesDefended &lt; (util.weeklyTS['pd'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.passesDefended}}</span> &nbsp;
                     Fum Rec: <span [ngStyle]="{color: item.stats?.fumbles?.fumOppRec &lt; (util.weeklyTS['fum'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item.stats?.fumbles?.fumOppRec}}</span> &nbsp;
-                    Safeties: <span [ngStyle]="{color: item.stats.interceptions?.safeties &lt; (util.weeklyTS['safe'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.safeties}}</span> &nbsp;
+                    SF: <span [ngStyle]="{color: item.stats.interceptions?.safeties &lt; (util.weeklyTS['safe'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.safeties}}</span> &nbsp;
                     TD: <span [ngStyle]="{color: item?.stats?.receiving.defTD &lt; 1 ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving.defTD}}</span> &nbsp;
-                    FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamDefFDFP &lt; (util.weeklyTS['defFP'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamDefFDFP}}</span>
+                    FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamDefFDFP &lt; (util.weeklyTS['defFP'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamDefFDFP}}</span> &nbsp;
                     <span *ngIf="item?.opponentYdsArr && item?.opponentYdsArr.length > 0">
                             <b>Yds Allowed:</b> 
                         <span *ngFor="let g of item?.opponentYdsArr"> 

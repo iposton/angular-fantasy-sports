@@ -2136,13 +2136,33 @@ export class NflUtilService {
           lastName: "Skowronek",
           image: nflImageRoot+"hud5c4tf8corgoehrvc1"
         },
+        "43350" : {
+          firstName: "Rachaad",
+          lastName: "White",
+          image: nflImageRoot+"hls9krnjkudneprlkqxh"
+        },
+        "18691" : {
+          firstName: "Eno",
+          lastName: "Benjamin",
+          image: nflImageRoot+"xvtbawgh0kycl6caxrb5"
+        },
+        "39115" : {
+          firstName: "Kenneth",
+          lastName: "Walker",
+          image: nflImageRoot+"rwdj1bljth8fyojof5dp"
+        },
+        "39253" : {
+          firstName: "Jaylen",
+          lastName: "Warren",
+          image: nflImageRoot+"q6zstqy99al3sghrufey"
+        },
+        "39135" : {
+          firstName: "James",
+          lastName: "Cook",
+          image: nflImageRoot+"hh0bnf0lr6lzwyceorwj"
+        },
         
-        
-        
-        
-     
-        
-          
+ 
       }
    }
 

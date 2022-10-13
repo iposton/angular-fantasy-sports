@@ -142,7 +142,7 @@
                       [ngClass]="{'red' : team?.dRank &lt;= 10, 'orange' : team?.dRank > 10 && team?.dRank &lt;= 21, 'green' : team?.dRank > 21}">
                           {{team?.printName}} <br> {{team?.dRank}} <br> 
                          
-                          <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField != 'totalPassPct' && statField != 'totalPassYards'">PY: {{team?.gamePY}} <br>
+                          <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField != 'totalPassPct' && statField != 'totalPassYards' && statField != 'offSnapPct'">PY: {{team?.gamePY}} <br>
                           Int: {{team?.gamePI}}</span>
                           <span *ngIf="statField == 'totalPassPct'">PY: {{team?.gamePY}} <br>
                             PA: {{team?.gamePA}}</span>
@@ -157,6 +157,9 @@
                           </span>
                           <span *ngIf="statType === 'rushing' && statField != 'ydsPerGame'">RY: {{team?.gameRY}}<br>
                             FUM: {{team?.gameFUM + team?.gameRecF}}</span>
+
+                          <span *ngIf="statType === 'passing' && statField == 'offSnapPct'">Yds: {{team?.gameRecY + team?.gameRY}}<br>
+                                TD: {{team?.gameRTD + team?.gameRecTD}}</span>
                           
                           <span *ngIf="statField === 'recYards'">RY: {{team?.gameRecY}} <br>
                             TD: {{team?.gameRecTD}}</span>

@@ -1906,8 +1906,8 @@ export class StatLeadersComponent implements OnInit {
             let i: number;
             let home;
             let away;
-            let awayOpponent;
-            let homeOpponent;
+            let awayOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
+            let homeOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
             let awayOpponentYds;
             let homeOpponentYds;
             let awayTeam;
@@ -1915,17 +1915,17 @@ export class StatLeadersComponent implements OnInit {
             let opponentYdsArr = [];
             let res = games
 
-            function applyOY(team, print, oy) {  
+            function applyOY(team, print, opponent) {  
               
               for (let t of nflTeams) {
                if (team === t.abbreviation) { 
-                  opponentYdsArr.push({owner: team, game: print, oy: oy});
+                  opponentYdsArr.push({owner: team, game: print, oy: opponent.yds, opponentStats: opponent});
                   t.opponentYdsArr = opponentYdsArr;
                 }
               }
             }
 
-            function findRank(team, print, player, oy) {
+            function findRank(team, print, player, opponent) {
               let info;
               
               for (let t of nflTeams) {
@@ -1937,15 +1937,16 @@ export class StatLeadersComponent implements OnInit {
                        oRank: t.offenseRankLs, 
                        dRank: t.defenseRankLs, 
                        name: t.abbreviation, 
-                       opponentYds: oy, 
+                       opponentYds: opponent.yds,
+                       opponentStats: opponent,
                        gameTackles: player['playerStats'][0].tackles.tackleTotal, 
                        gameSacks: player['playerStats'][0].tackles.sacks, 
                        gameInt: player['playerStats'][0].interceptions.interceptions, 
                        gameTD: player['playerStats'][0].interceptions.intTD + player['playerStats'][0].fumbles.fumTD,
                        playerName: player.player['firstName'],
                        playerId: player.player.id
-                      };
-                    return info; 
+                    }
+                    return info
                   }
                
               }
@@ -1960,20 +1961,35 @@ export class StatLeadersComponent implements OnInit {
                 homeTeam = res[i]['game'].homeTeam.abbreviation;
                 awayTeam = res[i]['game'].awayTeam.abbreviation;
                 //console.log(away, 'away players')
-                awayOpponentYds = res[i]['stats'].home.teamStats[0].miscellaneous ? res[i]['stats'].home.teamStats[0].miscellaneous.offenseYds : 0;
-                homeOpponentYds = res[i]['stats'].away.teamStats[0].miscellaneous ? res[i]['stats'].away.teamStats[0].miscellaneous.offenseYds : 0;
-                applyOY(awayTeam, `@${homeTeam}`, awayOpponentYds);
-                applyOY(homeTeam, `vs${awayTeam}`, homeOpponentYds);
+                awayOpponent.yds = res[i]['stats'].home.teamStats[0].miscellaneous ? res[i]['stats'].home.teamStats[0].miscellaneous.offenseYds : 0
+                homeOpponent.yds = res[i]['stats'].away.teamStats[0].miscellaneous ? res[i]['stats'].away.teamStats[0].miscellaneous.offenseYds : 0
+
+                homeOpponent.passYds = res[i]['stats'].away.teamStats[0].passing.passNetYards
+                awayOpponent.passYds = res[i]['stats'].home.teamStats[0].passing.passNetYards
+                homeOpponent.rushYds = res[i]['stats'].away.teamStats[0].rushing.rushYards
+                awayOpponent.rushYds = res[i]['stats'].home.teamStats[0].rushing.rushYards
+
+                homeOpponent.passTD = res[i]['stats'].away.teamStats[0].passing.passTD
+                awayOpponent.passTD = res[i]['stats'].home.teamStats[0].passing.passTD
+                homeOpponent.rushTD = res[i]['stats'].away.teamStats[0].rushing.rushTD
+                awayOpponent.rushTD = res[i]['stats'].home.teamStats[0].rushing.rushTD
+
+                homeOpponent.passOver20 = res[i]['stats'].away.teamStats[0].passing.pass20Plus + res[i]['stats'].away.teamStats[0].passing.pass40Plus
+                awayOpponent.passOver20 = res[i]['stats'].home.teamStats[0].passing.pass20Plus + res[i]['stats'].home.teamStats[0].passing.pass40Plus
+                homeOpponent.rushOver20 = res[i]['stats'].away.teamStats[0].rushing.rush20Plus + res[i]['stats'].away.teamStats[0].rushing.rush40Plus
+                awayOpponent.rushOver20 = res[i]['stats'].home.teamStats[0].rushing.rush20Plus + res[i]['stats'].home.teamStats[0].rushing.rush40Plus
+                applyOY(awayTeam, `@${homeTeam}`, awayOpponent);
+                applyOY(homeTeam, `vs${awayTeam}`, homeOpponent);
                 //homeOpponent = findRank(awayTeam, `vs${awayTeam}`, home, homeOpponentYds);
                 //awayOpponent = findRank(homeTeam, `@${homeTeam}`, away, awayOpponentYds);
 
                 away.forEach((item, index) => {
-                  away[index].opponent = findRank(homeTeam, `@${homeTeam}`, away[index], awayOpponentYds);
+                  away[index].opponent = findRank(homeTeam, `@${homeTeam}`, away[index], awayOpponent);
                   this.combined.push(away[index]);
                 })
 
                 home.forEach((item, index) => {  
-                  home[index].opponent = findRank(awayTeam, `vs${awayTeam}`, home[index], homeOpponentYds); 
+                  home[index].opponent = findRank(awayTeam, `vs${awayTeam}`, home[index], homeOpponent); 
                   this.combined.push(home[index]);
                 })
             
