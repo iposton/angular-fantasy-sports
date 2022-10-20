@@ -1908,8 +1908,8 @@ export class StatLeadersComponent implements OnInit {
             let away;
             let awayOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
             let homeOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
-            let awayOpponentYds;
-            let homeOpponentYds;
+            let awayTeamStats;
+            let homeTeamStats;
             let awayTeam;
             let homeTeam;
             let opponentYdsArr = [];
@@ -1920,7 +1920,7 @@ export class StatLeadersComponent implements OnInit {
               for (let t of nflTeams) {
                if (team === t.abbreviation) { 
                   opponentYdsArr.push({owner: team, game: print, oy: opponent.yds, opponentStats: opponent});
-                  t.opponentYdsArr = opponentYdsArr;
+                  t.opponentYdsArr = opponentYdsArr
                 }
               }
             }
@@ -1956,8 +1956,10 @@ export class StatLeadersComponent implements OnInit {
               i = index;
               if (res[i] != null) {
                 //console.log(res[i], 'boxscore')
-                home = res[i]['stats'].home.players;
-                away = res[i]['stats'].away.players;
+                home = res[i]['stats'].home.players
+                away = res[i]['stats'].away.players
+                homeTeamStats = res[i]['stats'].home.teamStats
+                awayTeamStats = res[i]['stats'].away.teamStats
                 homeTeam = res[i]['game'].homeTeam.abbreviation;
                 awayTeam = res[i]['game'].awayTeam.abbreviation;
                 //console.log(away, 'away players')
@@ -2030,7 +2032,7 @@ export class StatLeadersComponent implements OnInit {
                         info.spanOpponents = data['6'];
                         
                         //TODO: Get toughness rank per 3 week span
-                        info.player.span = this.timeSpan;
+                        info.player.span = this.timeSpan
                     }
                   }
                 }
