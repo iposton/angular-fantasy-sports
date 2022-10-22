@@ -140,7 +140,7 @@
                     <span *ngIf="item?.spanOpponents.length &gt; 0">
                       <span class="sm" *ngFor="let team of item?.spanOpponents; let i = index;" 
                       [ngClass]="{'red' : team?.dRank &lt;= 10, 'orange' : team?.dRank > 10 && team?.dRank &lt;= 21, 'green' : team?.dRank > 21}">
-                          {{team?.printName}} <br> {{team?.dRank}} <br> 
+                      WEEK {{team?.week}}<br> {{team?.printName}} {{team?.dRank}} <br> 
                          
                           <span *ngIf="statType === 'passing' && statField != 'ydsPerGame' && statField != 'totalPassPct' && statField != 'totalPassYards' && statField != 'offSnapPct'">PY: {{team?.gamePY}} <br>
                           Int: {{team?.gamePI}}</span>
@@ -177,7 +177,7 @@
                     <span *ngIf="item?.spanOpponents.length &gt; 0">
                       <span class="sm" *ngFor="let team of item?.spanOpponents; let i = index;" 
                       [ngClass]="{'red' : team?.oRank &lt;= 10, 'orange' : team?.oRank > 10 && team?.oRank &lt;= 21, 'green' : team?.oRank > 21}">
-                          {{team?.printName}} <br> {{team?.oRank}} <br> OY: {{team?.opponentYds}} <br>
+                      WEEK {{team?.week}} <br> {{team?.printName}} {{team?.oRank}} <br> OY: {{team?.opponentYds}} <br>
                           <span *ngIf="team?.gameTD === 0 && team?.gameSacks === 0 && team?.gameInt &gt; 0">Int: {{team?.gameInt}}</span> 
                           <span *ngIf="team?.gameTD === 0 && team?.gameSacks === 0 && team?.gameInt === 0">Tkl: {{team?.gameTackles}}</span> 
                           <span *ngIf="team?.gameSacks &gt; 0 && team?.gameTD === 0">Sack: {{team?.gameSacks}}</span> 
