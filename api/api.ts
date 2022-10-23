@@ -190,7 +190,7 @@ methods.getInfo = async (
       let nbaUrl = `${apiRoot}/nba/${season}/date/${dailyDate}/${feedType}.json`
       let nflUrl = `${apiRoot}/nfl/${season}/week/${selectedWeek}/${feedType}.json`
       let nhlUrl = `${apiRoot}/nhl/${season}/date/${dailyDate}/${feedType}.json`
-      let mlbUrl = `${apiRoot}/mlb/2022-regular/date/${dailyDate}/${feedType}.json`
+      let mlbUrl = `${apiRoot}/mlb/2022-playoff/date/${dailyDate}/${feedType}.json`
 
       // const nbaOptions = {
       //   method: 'GET',

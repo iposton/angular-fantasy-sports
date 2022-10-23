@@ -155,7 +155,7 @@ export class HomeComponent implements OnInit {
 
     this.nhlPlayoffDate = 'Fri May 14 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.nbaPlayoffDate = 'Mon May 17 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
-    this.mlbPlayoffDate = 'Tue Oct 5 2021 00:00:00 GMT-0700 (Pacific Daylight Time)'
+    this.mlbPlayoffDate = 'Mon Oct 7 2022 00:00:00 GMT-0700 (Pacific Daylight Time)'
     this.checkPlayoffs(new Date(this.nhlSelectedDate), 'nhl')
     this.checkPlayoffs(new Date(this.nbaSelectedDate), 'nba')
     this.checkPlayoffs(new Date(this.mlbSelectedDate), 'mlb')
@@ -199,7 +199,7 @@ export class HomeComponent implements OnInit {
 
       this.dataService.isPlayoffs = this.isMLBPlayoffs;
       if (this.isMLBPlayoffs)
-        this.mlbSeason = '2021-playoff'
+        this.mlbSeason = '2022-playoff'
     }  
   }
 
