@@ -693,7 +693,8 @@ export class StatLeadersComponent implements OnInit {
         this.resetSpanOpp()
         this.favorites = this.ls.get('favorites')
         this.nflSchedules = this.ls.get('nflSchedules')
-        this.nflSchedules = this.nflSchedules.length < 32 || this.nflSchedules[0].weekSet == null || weekday === 'Tue' && this.nflSchedules[0].weekSet < this.util.nflWeek ? [] : this.nflSchedules
+        console.log(weekday, 'weekday', this.nflSchedules[0].weekSet, 'week set', this.util.nflWeek, 'nfl week')
+        this.nflSchedules = (this.nflSchedules.length < 32 || this.nflSchedules[0].weekSet == null || weekday === 'Thu' && this.nflSchedules[0].weekSet < this.util.nflWeek) ? [] : this.nflSchedules
         this.loadNFL() //this.loadMLB()
         console.log('fetch data on init...')
       } else {
@@ -1904,8 +1905,8 @@ export class StatLeadersComponent implements OnInit {
             let i: number;
             let home;
             let away;
-            let awayOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
-            let homeOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
+            // let awayOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
+            // let homeOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
             let week
             let awayTeamStats
             let homeTeamStats
@@ -1915,13 +1916,15 @@ export class StatLeadersComponent implements OnInit {
             let res = games
 
 
-            function applyOY(team, print, opponent) {  
+            function applyOY(team, print, opponent, week) {  
               
               for (let t of nflTeams) {
                if (team === t.abbreviation) { 
-                  opponentYdsArr.push({owner: team, game: print, oy: opponent.yds, opponentStats: opponent});
+                  opponentYdsArr.push({owner: team, game: print, oy: opponent.yds, opponentStats: opponent, week: week});
                   t.opponentYdsArr = opponentYdsArr
+                  // t.opponentYdsArr.sort((a, b) =>(a.week - b.week))
                 }
+                
               }
             }
 
@@ -1954,8 +1957,11 @@ export class StatLeadersComponent implements OnInit {
             }
 
             res.forEach((item, index) => {
+              let awayOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
+              let homeOpponent = {'yds': 0, 'passYds': 0, 'rushYds': 0, 'passTD': 0, 'rushTD': 0, 'passOver20': 0, 'rushOver20': 0}
               i = index;
               if (res[i] != null) {
+
                 //console.log(res[i], 'boxscore')
                 home = res[i]['stats'].home.players
                 away = res[i]['stats'].away.players
@@ -1982,8 +1988,8 @@ export class StatLeadersComponent implements OnInit {
                 awayOpponent.passOver20 = res[i]['stats'].home.teamStats[0].passing.pass20Plus + res[i]['stats'].home.teamStats[0].passing.pass40Plus
                 homeOpponent.rushOver20 = res[i]['stats'].away.teamStats[0].rushing.rush20Plus + res[i]['stats'].away.teamStats[0].rushing.rush40Plus
                 awayOpponent.rushOver20 = res[i]['stats'].home.teamStats[0].rushing.rush20Plus + res[i]['stats'].home.teamStats[0].rushing.rush40Plus
-                applyOY(awayTeam, `@${homeTeam}`, awayOpponent);
-                applyOY(homeTeam, `vs${awayTeam}`, homeOpponent);
+                applyOY(awayTeam, `@${homeTeam}`, awayOpponent, week)
+                applyOY(homeTeam, `vs${awayTeam}`, homeOpponent, week)
                 //homeOpponent = findRank(awayTeam, `vs${awayTeam}`, home, homeOpponentYds);
                 //awayOpponent = findRank(homeTeam, `@${homeTeam}`, away, awayOpponentYds);
 

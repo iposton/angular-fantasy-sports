@@ -15,7 +15,7 @@ export class UtilService {
     this.tb = false
 
     this.weeklyTS = {
-      pa: 27,
+      pa: 17,
       ty: 300,
       sacks: 2,
       passTD: 2,

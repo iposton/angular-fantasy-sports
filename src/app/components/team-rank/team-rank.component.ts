@@ -28,6 +28,11 @@ export class TeamRankComponent implements OnInit {
 
   constructor(public util: UtilService) { }
 
+  public getSort(arr) {
+    arr.sort((a, b) =>(a.week - b.week))
+    return arr
+  }
+
   public getRank(d, teams, title, sl, week) {
     this.loading = true;
     let rank = [];

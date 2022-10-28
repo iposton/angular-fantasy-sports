@@ -29,9 +29,10 @@
                     TD: <span [ngStyle]="{color: item?.stats?.receiving.defTD &lt; 1 ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving.defTD}}</span> &nbsp;
                     FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamDefFDFP &lt; (util.weeklyTS['defFP'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamDefFDFP}}</span> &nbsp;
                     <span *ngIf="item?.opponentYdsArr && item?.opponentYdsArr.length > 0">
-                            <b>Yds Allowed:</b> 
-                        <span *ngFor="let g of item?.opponentYdsArr"> 
-                         <span *ngIf="item?.abbreviation === g?.owner"> <b>&nbsp; {{g.game}} {{g.oy}} </b> </span>
+                           <b>Stats Allowed: </b>
+                        <span *ngFor="let g of getSort(item?.opponentYdsArr);"> 
+                         <span *ngIf="item?.abbreviation === g?.owner"> <b> {{g.game}} </b> <span class="small"> <span [ngStyle]="{color: g.opponentStats.passYds &lt; 250 ? 'gold' : 'white'}">{{g.opponentStats.passYds}} PY</span>  &nbsp; <span [ngStyle]="{color: g.opponentStats.rushYds &lt; 100 ? 'gold' : 'white'}">{{g.opponentStats.rushYds}} RY</span> &nbsp; <span *ngIf="g.opponentStats.passTD &gt; 0">{{g.opponentStats.passTD}} PassTD</span>  &nbsp; <span *ngIf="g.opponentStats.rushTD &gt; 0">{{g.opponentStats.rushTD}} RushTD</span></span></span>
+                         <!-- &nbsp; <span *ngIf="g.opponentStats.passOver20 &gt; 0">{{g.opponentStats.passOver20}} Pass +20Yds</span> &nbsp; <span *ngIf="g.opponentStats.rushOver20 &gt; 0">{{g.opponentStats.rushOver20}} Rush +20Yds</span> -->
                         </span>
                     </span>
                   </span>
