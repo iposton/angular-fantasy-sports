@@ -21,10 +21,10 @@ export class UtilService {
       passTD: 2,
       rushTD: 1,
       fp: 70,
-      int: 1,
+      int: .5,
       pd: 4,
       defFP: 6,
-      fum: 1,
+      fum: .5,
       safe: 0
     }
   }
