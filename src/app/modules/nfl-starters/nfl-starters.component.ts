@@ -51,8 +51,7 @@ export class NflStartersComponent implements OnInit {
   public teamSchedules: Array <any> = []
   public toughOSchedules: Array <any> = []
   public dailyLineup: Array <any> = []
-  // public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular"
-  // public poRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2022-playoff"
+
   public testBrowser: boolean;
   public gamesToday: boolean = false;
   public noGamesToday: boolean = false;
@@ -110,6 +109,7 @@ export class NflStartersComponent implements OnInit {
     scheduleStatus: any,
     position: any,
     startType: any,
+    image: any,
     playerType: any;
   }
 
@@ -310,6 +310,7 @@ export class NflStartersComponent implements OnInit {
                             scheduleStatus: game2.scheduleStatus,
                             position: position['position'],
                             startType: 'actual',
+                            image: '',//this.depth[res2[i2].team.id][0][position['position']].image != null ? this.depth[res2[i2].team.id][0][position['position']].image : '',
                             playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
                           }
                           this.gameStarters.push(this.gameStarter)
@@ -334,6 +335,7 @@ export class NflStartersComponent implements OnInit {
                             scheduleStatus: game2.scheduleStatus,
                             position: position.player ? position.player.position : position['position'],
                             startType: 'expected',
+                            image: '',//this.depth[res2[i2].team.id][0][position['position']].image != null ? this.depth[res2[i2].team.id][0][position['position']].image : '',
                             playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
                           }
                           
@@ -437,6 +439,7 @@ export class NflStartersComponent implements OnInit {
                       data.starterTeam = gs.team;
                       data.sStatus = gs.scheduleStatus;
                       data.playerType = gs.playerType;
+                      data.player.officialImageSrc = gs.image != null ? gs.image : ''
                       //this.pitcherFp(data);
 
                       if (gs.status !== "UNPLAYED") {
@@ -493,7 +496,7 @@ export class NflStartersComponent implements OnInit {
                         } 
 
                         if (this.playerImages[sdata.player.id] != null) {
-                          sdata.player.officialImageSrc = this.playerImages[sdata.player.id].image;
+                          sdata.player.officialImageSrc = this.playerImages[sdata.player.id].image
                         }
 
                         if (sdata.stats.rushing && sdata.player.primaryPosition === 'RB' && 

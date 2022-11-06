@@ -89,7 +89,7 @@
               <div *ngFor="let item of data.offensePlayers; let i=index">
                   <span [ngClass]="{'left-content' : !item?.playerObj?.starterInfo?.bench, 'dn' : item?.playerObj?.starterInfo?.bench}" (click)="$event.stopPropagation()">
                     <span (click)="authorize({player: item, area: 'top'})" class="point"><img src="{{item?.playerObj?.player?.officialImageSrc}}" alt="basketball player"
-                      onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'" title="{{item?.playerObj?.player?.position}}"/></span>
+                      onError="this.src='https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png'" title="{{item?.playerObj?.player?.position}}"/></span>
                     <span class="player-infos" (click)="$event.stopPropagation()">
                         <span *ngIf="item.playerObj.player?.rookie === true" class="rookie">R</span>
                         <span *ngIf="!mobile"> 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/'
-'http://static.nfl.com/static/content/public/static/img/fantasy/transparent/200x200/SIN186919.png'
 let time22 = `2022 00:00:00 GMT-0700 (Pacific Daylight Time)`
 let time23 = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
 
@@ -2274,6 +2273,67 @@ export class NflUtilService {
           lastName: "Ehlinger",
           image: nflImageRoot+"vxk188efnro9zonnihdo"
         },
+        "16786" : {
+          firstName: "AJ",
+          lastName: "Brown",
+          image: nflImageRoot+"sb8stxfvnkedmhs6c1fx"
+        },
+        "13378" : {
+          firstName: "A",
+          lastName: "Ekeler",
+          image: nflImageRoot+"tl0nhc7kyf4aumbyzs5b"
+        },
+        "6914" : {
+          firstName: "A",
+          lastName: "Rodgers",
+          image: nflImageRoot+"mee42twdk3qpcdotzdka"
+        },
+        "14706" : {
+          firstName: "",
+          lastName: "Gesicki",
+          image: nflImageRoot+"utqutyyzxbabvmyt1r3n"
+        },
+        "16039" : {
+          firstName: "",
+          lastName: "Montgomery",
+          image: nflImageRoot+"sqahircgbz406rjbglpe"
+        },
+        "7916" : {
+          firstName: "",
+          lastName: "Carr",
+          image: nflImageRoot+"l1eqjrajbnisr91dmlcl"
+        },
+        "14498" : {
+          firstName: "Josh",
+          lastName: "Allen",
+          image: nflImageRoot+"btfnqtymqsqgybnv4u6n"
+        },
+        "14523" : {
+          firstName: "L",
+          lastName: "Jackson",
+          image: nflImageRoot+"gylnuxkxgm3zd4j0d0ku"
+        },
+        "13349" : {
+          firstName: "Patrick",
+          lastName: "Mahomes",
+          image: nflImageRoot+"vs40h82nvqaqvyephwwu"
+        },
+        "10043" : {
+          firstName: "D",
+          lastName: "Henry",
+          image: nflImageRoot+"lvdvmkqltz7zz7fjtopr"
+        },
+        "13255" : {
+          firstName: "A",
+          lastName: "Kamara",
+          image: nflImageRoot+"uulstglrpmhqsvqyr5v3"
+        },
+        "7299" : {
+          firstName: "T",
+          lastName: "Kelce",
+          image: nflImageRoot+"gorkhvipsk0gdqb6bo34"
+        },
+        
         
       }
    }

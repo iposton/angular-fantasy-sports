@@ -29,7 +29,7 @@
               <img
                 src="{{ item?.player?.officialImageSrc }}"
                 alt="{{sport}} player"
-                onError="this.src='https://www.nba.com/.element/img/2.0/sect/statscube/players/large/default_nba_headshot_v2.png'"
+                onError="this.src='https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png'"
                 loading="lazy"/>
             <span class="sched-rank sched-opp" *ngIf="sport === 'mlb' && item?.mlbSpanOpponents?.length > 0">
               <span class="weekopp-top">
