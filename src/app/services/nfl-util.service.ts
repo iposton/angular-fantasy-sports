@@ -849,7 +849,7 @@ export class NflUtilService {
           image: nflImageRoot+"jpdzcfis6a3qmwyn7mbu"
         },
         "7013" : {
-          image: nflImageRoot+"rfdif7ec0f3czwyeyfxq"
+          image: nflImageRoot+"kikfprn4t5ap1lju4a4k"
         },
         "6486" : {
           image: nflImageRoot+"sextvbehmeu7ydutxtsu"
@@ -2333,8 +2333,61 @@ export class NflUtilService {
           lastName: "Kelce",
           image: nflImageRoot+"gorkhvipsk0gdqb6bo34"
         },
-        
-        
+        "16035" : {
+          firstName: "M",
+          lastName: "Sanders",
+          image: nflImageRoot+"byt89vdiisuyc8of2kcn"
+        },
+        "12843" : {
+          firstName: "Joe",
+          lastName: "Mixon",
+          image: nflImageRoot+"rd210pq6ch22vpoygtfn"
+        },
+        "12978" : {
+          firstName: "Aaron",
+          lastName: "Jones",
+          image: nflImageRoot+"oo8yixhsahh4gznox7th"
+        },
+        "16034" : {
+          firstName: "Josh",
+          lastName: "Jacobs",
+          image: nflImageRoot+"sagoqkubeaz5yht01ow7"
+        },
+        "13412" : {
+          firstName: "Cooper",
+          lastName: "Kupp",
+          image: nflImageRoot+"tojsgl1ttwjkvo6x7wgy"
+        },
+        "8731" : {
+          firstName: "K",
+          lastName: "Cousins",
+          image: nflImageRoot+"h9ndf9ralxifgjvot2q4"
+        },
+        "16123" : {
+          firstName: "DK",
+          lastName: "Metcalf",
+          image: nflImageRoot+"oa43ir8zoaiofwbupkrt"
+        },
+        "8296" : {
+          firstName: "T",
+          lastName: "Lockett",
+          image: nflImageRoot+"kzytmhxcdxrakzklb6hw"
+        }, 
+        "16490" : {
+          firstName: "Terry",
+          lastName: "McLaurin",
+          image: nflImageRoot+"bxkrzih9phr5abgabo7v"
+        },
+        "16226" : {
+          firstName: "K",
+          lastName: "Murray",
+          image: nflImageRoot+"nkb9x92lbea6ayknzoba"
+        },
+        "13493" : {
+          firstName: "C",
+          lastName: "Godwin",
+          image: nflImageRoot+"knfx1v1e3suxbuh9vlmj"
+        },
       }
    }
 
