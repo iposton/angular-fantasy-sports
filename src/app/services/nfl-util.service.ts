@@ -2388,6 +2388,51 @@ export class NflUtilService {
           lastName: "Godwin",
           image: nflImageRoot+"knfx1v1e3suxbuh9vlmj"
         },
+        "8562" : {
+          firstName: "M",
+          lastName: "Evans",
+          image: nflImageRoot+"pyilrqdmfvv1zceem1cg"
+        },
+        "13132" : {
+          firstName: "Dalvin",
+          lastName: "Cook",
+          image: nflImageRoot+"gfwvqolvz9vegp1amhf3"
+        },
+        "14672" : {
+          firstName: "Nick",
+          lastName: "Chubb",
+          image: nflImageRoot+"a8ib0haur75wrhqrbtyo"
+        },
+        "14493" : {
+          firstName: "",
+          lastName: "Barkley",
+          image: nflImageRoot+"o8tlhps5u1tvnaaxlpjk"
+        },
+        "16040" : {
+          firstName: "",
+          lastName: "Singletary",
+          image: nflImageRoot+"d9ifpvw57zivczxlpxdh"
+        },
+        "16603" : {
+          firstName: "D",
+          lastName: "Jones",
+          image: nflImageRoot+"af6nbjqa6qubnu8oi4ms"
+        },
+        "7551" : {
+          firstName: "",
+          lastName: "Garoppolo",
+          image: nflImageRoot+"fuepwtifp7wd9grpzvwb"
+        }, 
+        "9845" : {
+          firstName: "",
+          lastName: "Prescott",
+          image: nflImageRoot+"ofhu8bvafse5folcjzyu"
+        },
+        "16765" : {
+          firstName: "",
+          lastName: "Hardman",
+          image: nflImageRoot+"s1lhxffk9f4e4lo201is"
+        },
       }
    }
 
