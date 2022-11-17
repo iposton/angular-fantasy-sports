@@ -693,8 +693,14 @@ export class StatLeadersComponent implements OnInit {
         this.resetSpanOpp()
         this.favorites = this.ls.get('favorites')
         this.nflSchedules = this.ls.get('nflSchedules')
-        console.log(weekday, 'weekday', this.nflSchedules[0].weekSet, 'week set', this.util.nflWeek, 'nfl week')
-        this.nflSchedules = (this.nflSchedules.length < 32 || this.nflSchedules[0].weekSet == null || weekday === 'Thu' && this.nflSchedules[0].weekSet < this.util.nflWeek) ? [] : this.nflSchedules
+        
+        if (this.nflSchedules.length != 0) {
+          console.log(weekday, 'weekday', this.nflSchedules[0].weekSet, 'week set', this.util.nflWeek, 'nfl week')
+          console.log('is the set week behind current nfl week?', parseInt(this.nflSchedules[0].weekSet) < parseInt(this.util.nflWeek))
+        }
+        
+        this.nflSchedules = (this.nflSchedules.length < 32 || this.nflSchedules[0].weekSet == null || weekday === 'Thu' && parseInt(this.nflSchedules[0].weekSet) < parseInt(this.util.nflWeek)) ? [] : this.nflSchedules
+        console.log(this.nflSchedules, 'after condition check loading nfl data ...')
         this.loadNFL() //this.loadMLB()
         console.log('fetch data on init...')
       } else {
