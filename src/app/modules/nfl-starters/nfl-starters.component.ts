@@ -596,10 +596,14 @@ export class NflStartersComponent implements OnInit {
                       
                       mdata.player.fpToday = 0;
                       mdata.gameId = daily.game.id;
+                      mdata.stats.krTDToday = daily.stats.kickoffReturns ? daily.stats.kickoffReturns.krTD : 0
+                      mdata.stats.prTDToday = daily.stats.puntReturns ? daily.stats.puntReturns.prTD : 0
+                      mdata.stats.krYdsToday = daily.stats.kickoffReturns ? daily.stats.kickoffReturns.krYds : 0
+                      mdata.stats.prYdsToday = daily.stats.puntReturns ? daily.stats.puntReturns.prYds : 0
                       mdata.stats.recToday = daily.stats.receiving ? daily.stats.receiving.receptions : 0;
-                      mdata.stats.tyToday = daily.stats.receiving ?  daily.stats.receiving.recYards + daily.stats.rushing.rushYards : 0;
-                      mdata.stats.tqbyToday = daily.stats.passing ?  daily.stats.passing.passYards + daily.stats.rushing.rushYards : 0;
-                      mdata.stats.ttdToday = daily.stats.receiving ? daily.stats.passing.passTD + daily.stats.rushing.rushTD + daily.stats.receiving.recTD  : 0;
+                      mdata.stats.tyToday = daily.stats.receiving ?  daily.stats.receiving.recYards + daily.stats.rushing.rushYards + mdata.stats.krYdsToday + mdata.stats.prYdsToday : 0;
+                      mdata.stats.tqbyToday = daily.stats.passing ?  daily.stats.passing.passYards + daily.stats.rushing.rushYards + daily.stats.receiving.recYards : 0;
+                      mdata.stats.ttdToday = daily.stats.receiving ? daily.stats.passing.passTD + daily.stats.rushing.rushTD + daily.stats.receiving.recTD + mdata.stats.krTDToday + mdata.stats.prTDToday  : 0;
                       this.nflUtil.offDailyFp(mdata, daily)
                       if (mdata.stats.receiving) {
                         mdata.stats.receiving.dailyTotalTouches = daily.stats.rushing ? daily.stats.rushing.rushAttempts + daily.stats.receiving.targets : 0;

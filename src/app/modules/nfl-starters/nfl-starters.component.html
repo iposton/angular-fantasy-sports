@@ -128,21 +128,21 @@
                             <span>
                               {{item?.playerObj?.stats?.receiving?.receptions}} Rec
                               <br>
-                              <span class="sml-stat"> {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
+                              <span class="sml-stat"> {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD  + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
                             </span> 
                           </span>
                           <span *ngIf="item?.playerObj.player?.primaryPosition === 'RB'">
                               <span>
-                                  {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}    
+                                  {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}    
                                   <br>
-                                  <span class="sml-stat"> {{item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards}} Yds </span>
+                                  <span class="sml-stat"> {{item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards + item?.playerObj?.stats?.kickoffReturns?.krYds + item?.playerObj?.stats?.puntReturns?.prYds}} Yds </span>
                               </span> 
                           </span>
                           <span *ngIf="item?.playerObj.player?.primaryPosition === 'QB'">
                               <span>
                                   {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD}} TD
                                   <br>
-                                  <span class="sml-stat"> {{(item?.playerObj?.stats?.passing?.passYards + item?.playerObj?.stats?.rushing?.rushYards) + ' Yds'}}</span>
+                                  <span class="sml-stat"> {{(item?.playerObj?.stats?.passing?.passYards + item?.playerObj?.stats?.rushing?.rushYards + item?.playerObj?.stats?.receiving?.recYards) + ' Yds'}}</span>
                               </span> 
                           </span>
                         </span>
@@ -273,12 +273,12 @@
                         <span>
                           {{item?.playerObj?.stats?.receiving?.receptions}} Rec
                           <br>
-                          <span class="sml-stat">  {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
+                          <span class="sml-stat">  {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
                         </span> 
                       </span>
                       <span *ngIf="item?.playerObj.player?.primaryPosition === 'RB'">
                           <span>
-                              {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}  
+                              {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}  
                               <br>
                               <span class="sml-stat">  {{item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards}} Yds </span>
                           </span> 
@@ -447,21 +447,21 @@
                         <span>
                           {{item?.playerObj?.stats?.receiving?.receptions}} Rec
                           
-                          <span class="sml-stat">  {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + ' Yds'}}</span>
+                          <span class="sml-stat">  {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD + ' TD' : item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.kickoffReturns?.krYds + item?.playerObj?.stats?.puntReturns?.prYds + item?.playerObj?.stats?.rushing?.rushYards + ' Yds'}}</span>
                         </span> 
                       </span>
                       <span *ngIf="item?.playerObj.player?.primaryPosition === 'RB'">
                           <span>
-                              {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}  
+                              {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD &gt; 0 ? item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD + item?.playerObj?.stats?.kickoffReturns?.krTD + item?.playerObj?.stats?.puntReturns?.prTD + ' TD' : item?.playerObj?.stats?.receiving?.receptions + ' Rec'}}  
                               
-                              <span class="sml-stat">{{item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards}} Yds </span>
+                              <span class="sml-stat">{{item?.playerObj?.stats?.receiving?.recYards + item?.playerObj?.stats?.rushing?.rushYards + item?.playerObj?.stats?.kickoffReturns?.krYds + item?.playerObj?.stats?.puntReturns?.prYds}} Yds </span>
                           </span> 
                       </span>
                       <span *ngIf="item?.playerObj.player?.primaryPosition === 'QB'">
                           <span>
                               {{item?.playerObj?.stats?.receiving?.recTD + item?.playerObj?.stats?.passing?.passTD + item?.playerObj?.stats?.rushing?.rushTD}} TD
                               
-                              <span class="sml-stat"> {{(item?.playerObj?.stats?.passing?.passYards + item?.playerObj?.stats?.rushing?.rushYards) + ' Yds'}}</span>
+                              <span class="sml-stat"> {{(item?.playerObj?.stats?.passing?.passYards + item?.playerObj?.stats?.rushing?.rushYards + item?.playerObj?.stats?.receiving?.recYards) + ' Yds'}}</span>
                           </span> 
                       </span>
                     
