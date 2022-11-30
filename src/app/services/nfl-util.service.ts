@@ -854,9 +854,6 @@ export class NflUtilService {
         "18561" : {
           image: nflImageRoot+"tr3yxhybdwehibl6maqy"
         },
-        "19009" : {
-          image: nflImageRoot+"qtjp84utne7uhgbtx0o5"
-        },
         "19043" : {
           image: nflImageRoot+"ydu8lvszgayayddtnt44"
         },
@@ -2530,6 +2527,42 @@ export class NflUtilService {
           lastName: "Higbee",
           image: nflImageRoot+"b6kn7vqe0iplpkgmzzv1"
         },
+        "19009" : {
+          firstName: "J",
+          lastName: "Hasty",
+          image: nflImageRoot+"qtjp84utne7uhgbtx0o5"
+        },
+        "12923" : {
+          firstName: "",
+          lastName: "McKenzie",
+          image: nflImageRoot+"sm2btbgkg6s1r1hvi931"
+        },
+        "14679" : {
+          firstName: "D",
+          lastName: "Schultz",
+          image: nflImageRoot+"mbqinxum5qovm6p8xgkc"
+        },
+        "18781" : {
+          firstName: "",
+          lastName: "Hinton",
+          image: nflImageRoot+"jfkiipuusxstakvm94nw"
+        },
+        "12875" : {
+          firstName: "",
+          lastName: "Njoku",
+          image: nflImageRoot+"bcecxpc9nciff80xhipd"
+        },
+        "9797" : {
+          firstName: "T",
+          lastName: "Boyd",
+          image: nflImageRoot+"kzzhrm9gbefdpobngtzq"
+        },
+        "16624" : {
+          firstName: "F",
+          lastName: "Moreau",
+          image: nflImageRoot+"sa6jfe7xjslhihldbiiy"
+        },
+
       
       }
    }
