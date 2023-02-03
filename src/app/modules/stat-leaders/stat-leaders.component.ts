@@ -158,7 +158,7 @@ export class StatLeadersComponent implements OnInit {
   public nhlSeason: boolean = true
   public nbaSeason: boolean = true
   public mlbSeason: boolean = true
-  public nflSeason: string
+  public nflSeason: boolean = true
   public nflPosition: string
   public nflDPosition: string
   public haveNflSchedules: boolean
@@ -243,7 +243,7 @@ export class StatLeadersComponent implements OnInit {
     this.tomorrowDate = new Date(thisDate.getTime() + (48 * 60 * 60 * 1000))
     this.testBrowser = isPlatformBrowser(platformId)
     let weekTimes = this.nflUtil.getWeekTimes()
-    this.nflSeason = '2022-2023-regular'
+    this.nflSeasonType = '2022-2023-regular'
     //reset global daily date
     this.nhlService.selectedDate(this.nhlService.dailyDate)
 
@@ -251,8 +251,9 @@ export class StatLeadersComponent implements OnInit {
       let date = new Date();
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.nflWeek = week.week
-        this.util.nflWeek = week.week
-        this.nflSeason = this.nflWeek > 18 ? '2023-playoff' : '2022-2023-regular'
+        this.util.nflWeek = week.week 
+        this.nflSeasonType = this.nflWeek > 18 ? '2023-playoff' : '2022-2023-regular'
+        this.nflSeason = this.nflWeek > 18 ? false : true
         // this.timeSpan = week.week
         // this.week = week.week
         if (date < new Date(week.dateEnd)) {
@@ -267,6 +268,17 @@ export class StatLeadersComponent implements OnInit {
   }
 
   public updateEndpoint() {
+
+    if (this.sport === 'nfl') {
+      this.nflSeasonType = this.nflSeason ? '2022-2023-regular' : '2023-playoff' 
+     
+      if (this.nflSection) { 
+        this.loadNFL()
+      } else {
+        this.defensePlayers()
+      }
+    }
+
     if (this.sport === 'nba') {
       this.nbaSeasonType = this.nbaSeason ? "2021-2022-regular" : "2022-playoff";
      
@@ -372,7 +384,7 @@ export class StatLeadersComponent implements OnInit {
   public onChange(week) {
     this.defaultWeek = week
     this.week = week
-    this.nflSeason = week > 18 ? '2023-playoff' : '2022-2023-regular'
+    this.nflSeasonType = week > 18 ? '2023-playoff' : '2022-2023-regular'
     this.timeSpan = week
     this.combined = []
     this.reduced = []
@@ -1037,7 +1049,7 @@ export class StatLeadersComponent implements OnInit {
 
     this.nhlService.myStats(
       'nfl', 
-      this.nflSeason, 
+      this.nflSeasonType, 
       'player_gamelogs', 
       'team_stats_totals', 
       'player_stats_totals', 
@@ -1159,7 +1171,7 @@ export class StatLeadersComponent implements OnInit {
 
         this.nhlService.myStats(
           'nfl', 
-          this.nflSeason, 
+          this.nflSeasonType, 
           'player_gamelogs', 
           'team_stats_totals', 
           'player_stats_totals', 

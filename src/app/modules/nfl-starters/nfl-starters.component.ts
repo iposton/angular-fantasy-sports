@@ -63,7 +63,7 @@ export class NflStartersComponent implements OnInit {
   public myData: Array <any>
   public dailyStats: Array <any>
   public teamStats: Array <any>
-  public teamScheds: Array <any>
+  public teamScheds: Array <any> = []
   public errMessage: string = ''
   public gameGroups: Array <any>;
   public statData: Array <any> = [];
@@ -139,7 +139,7 @@ export class NflStartersComponent implements OnInit {
       this.testBrowser = isPlatformBrowser(platformId);
       this.playerImages = this.nflUtil.getNFLImages();
       this.selectedWeek = '1'
-      this.nflSeason = '2021-2022-regular'
+      this.nflSeason = '2022-2022-regular'
       weekTimes = this.nflUtil.getWeekTimes();
       this.depth = this.depthService.getNFLDepth();
       this.nflDraftKit = true
@@ -223,7 +223,7 @@ export class NflStartersComponent implements OnInit {
 
         this.nhlService.serverInfo(
         'nfl', 
-        '2022-2023-regular', 
+        this.nflSeason, 
         'games', 
         'dateB', 
         'dateE', 
@@ -665,8 +665,8 @@ export class NflStartersComponent implements OnInit {
 
   public showMatchups(type) {
     if (type === 'o') {
-      this.showData = this.gameGroups;
-      console.log(this.showData, 'show data');
+      this.showData = this.gameGroups
+      console.log(this.showData, 'show data')
       // this.dataService
       //   .sendStats(this.showData);
     } 

@@ -266,7 +266,7 @@ loadData() {
   this.loading = true
   this.nhlDataService.serverInfo(
           'nhl', 
-          '2022-2023-regular', 
+          '2023-playoff', 
           'games', 
           'dateB', 
           'dateE', 

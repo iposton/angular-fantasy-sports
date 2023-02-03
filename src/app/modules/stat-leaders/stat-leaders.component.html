@@ -48,7 +48,7 @@
 </div>
 <div class="center buttons">
    <!-- <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button>  -->
-   <span class="hollow-btn" [ngClass]="{'dn' : !mlbSection && !mlbHittingSection}" (click)="mlbSeason = !mlbSeason; updateEndpoint(); timeSpan = 'full'">{{mlbSeason ? 'Playoffs' : 'Season'}}</span>
+   <span class="hollow-btn" [ngClass]="{'dn' : !mlbSection && !mlbHittingSection && nflSection && nflDefenseSection}" (click)="mlbSeason = !mlbSeason; nflSeason = !nflSeason; updateEndpoint(); timeSpan = 'full'">{{nflSeason ? 'Playoffs' : 'Season'}}</span>
    <span class="hollow-btn" [ngClass]="{'dn' : nflSection || nflDefenseSection}" (click)="getByDate('two-weeks', sport)">Last 14 Days</span> 
    <span class="hollow-btn" [ngClass]="{'dn' : nflSection || nflDefenseSection}" (click)="getByDate('last-week', sport)">Last 7 Days</span>  
    <span class="hollow-btn" [ngClass]="{'dn' : nflSection || nflDefenseSection}" (click)="getByDate('full', sport)">All</span>
@@ -118,10 +118,10 @@
       <option value="16">16</option>
       <option value="17">17</option>
       <option value="18">18</option>
-      <!-- <option value="19">wildcard</option>
+      <option value="19">wildcard</option>
       <option value="20">division round</option>
       <option value="21">conf championship</option>
-      <option value="23">super bowl</option> -->
+      <option value="23">super bowl</option>
     </select>  
   </span>
 </div>

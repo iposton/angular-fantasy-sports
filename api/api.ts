@@ -184,11 +184,12 @@ methods.getInfo = async (
   }  
 
   if (dataType === 'games') {
+    let nflSeason = parseInt(selectedWeek) > 18 ? '2023-playoff' : '2022-2023-regular'
     console.log(colors.fg.yellow+`Fetch Games for All Sports: Home Page`, colors.reset)
     //console.log(player, 'players')
     let gamePromise = new Promise(async(resolve, reject) => {
       let nbaUrl = `${apiRoot}/nba/${season}/date/${dailyDate}/${feedType}.json`
-      let nflUrl = `${apiRoot}/nfl/${season}/week/${selectedWeek}/${feedType}.json`
+      let nflUrl = `${apiRoot}/nfl/${nflSeason}/week/${selectedWeek}/${feedType}.json`
       let nhlUrl = `${apiRoot}/nhl/${season}/date/${dailyDate}/${feedType}.json`
       let mlbUrl = `${apiRoot}/mlb/2022-playoff/date/${dailyDate}/${feedType}.json`
 
@@ -214,22 +215,22 @@ methods.getInfo = async (
       //   games[0].nhl = body
       // })
 
-      const mlbOptions = {
-        method: 'GET',
-        url: mlbUrl ,
-        headers: headers,
-        json: true
-      }
-      try {
-        request(mlbOptions, async (error, response, body) => {
-          // console.log(error, 'error')
-          games[0].mlb = body
-          console.log(colors.fg.green+'MLB Games, Resolve', colors.reset)
-          //resolve('done')
-        })
-      } catch(e) {
-        console.log(e, 'error')
-      }   
+      // const mlbOptions = {
+      //   method: 'GET',
+      //   url: mlbUrl ,
+      //   headers: headers,
+      //   json: true
+      // }
+      // try {
+      //   request(mlbOptions, async (error, response, body) => {
+      //     // console.log(error, 'error')
+      //     games[0].mlb = body
+      //     console.log(colors.fg.green+'MLB Games, Resolve', colors.reset)
+      //     //resolve('done')
+      //   })
+      // } catch(e) {
+      //   console.log(e, 'error')
+      // }   
       
       const nflOptions = {
         method: 'GET',
@@ -393,7 +394,10 @@ methods.getStats = async (
         let playerInfoUrl = null
         let dailyTeamUrl = null
         let jsonTeam = null
+     
         console.log('have schedules?', haveSchedules)
+        if (sport === 'nfl')
+          season = parseInt(nflWeek) > 18 ? '2023-playoff' : '2022-2023-regular'
         await sleep(10)
         if (sport === 'nfl' && haveSchedules === 'false') {
           //console.log('teams', team)
@@ -406,8 +410,8 @@ methods.getStats = async (
         playerInfoUrl = `${apiRoot}/${sport}/players.json?position=${position}`
         dailyTeamUrl = `${apiRoot}/${sport}/2022-2023-regular/week/${nflWeek}/team_gamelogs.json`
         
-        //console.log(playerStatsUrl, 'PLAYER STATS for', sport)
-        //console.log(teamStatsUrl, 'TEAM STATS for', sport)
+        console.log(playerStatsUrl, 'PLAYER STATS for', sport)
+        console.log(teamStatsUrl, 'TEAM STATS for', sport)
         //console.log(dailyUrl, 'dailyurl url for', sport)
         //console.log(nflWeek , 'nflWeek')
         stats[0].dailyStats = []
