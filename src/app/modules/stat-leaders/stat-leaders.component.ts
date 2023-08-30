@@ -1159,7 +1159,11 @@ export class StatLeadersComponent implements OnInit {
         let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(x => x.stats.gamesPlayed > 0) : res['dailyStats'].gamelogs)
         this.nflData = stats
 
-
+        if (this.teamSchedules.length > 0) {
+          console.log('first time getRank is called with this.teamSchedules', this.teamSchedules)
+          this.nflUtil.getRank(this.teamSchedules)
+        }
+          
         //temporary before season start
         this.nfl22Rookies = res['playerInfo'].rookies ? res['playerInfo'].rookies : []
         this.rookieInfo(this.nfl22Rookies, this.nflTeams)

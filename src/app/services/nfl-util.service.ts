@@ -2657,14 +2657,18 @@ export class NflUtilService {
    public updateTicker(tStats) {
     console.log('update schedule ticker def rank')
       for (let team of this.nflTeams) {
-        for (let game of team['scheduleTicker']) {
-          for (let stats of tStats) {
-            if (stats.team.abbreviation === game.name)  {
-              game['dRank'] = stats.upDefRank
-              game['oRank'] = stats.upOffRank
+        try {
+          for (let game of team?.scheduleTicker != null ? team?.scheduleTicker : []) {
+            for (let stats of tStats) {
+              if (stats.team.abbreviation === game.name)  {
+                game['dRank'] = stats.upDefRank
+                game['oRank'] = stats.upOffRank
+              }
             }
           }
-        }
+        } catch(e) {
+          console.log(e, 'the web is having trouble defining the schedule ticker.')
+        }  
       }
    }
 
@@ -3009,17 +3013,17 @@ export class NflUtilService {
       rankOsh.forEach(async (item, index) => {
         for (let team of this.nflTeams) {
           if (rankOsh[index].team === team.id) { 
-            team.osh = index + 1;
+            team.osh = index + 1
           }         
         }
-      });
+      })
 
         schedules.forEach((item, index) => {
           for (let team of this.nflTeams) {
             if (schedules[index].team === team.id) { 
               team.dToughnessRank = schedules[index].dToughnessRank;
               team.oToughnessRank = schedules[index].oToughnessRank;
-              team.scheduleTicker = schedules[index].scheduleTicker
+              team.scheduleTicker = schedules[index]?.scheduleTicker != null ? schedules[index]?.scheduleTicker : []
               team.dToughnessFhRank = schedules[index].dToughnessFhRank;
               team.oToughnessFhRank = schedules[index].oToughnessFhRank;
               team.dToughnessShRank = schedules[index].dToughnessShRank;
@@ -3069,7 +3073,7 @@ export class NflUtilService {
             weekOpponent: this.getSchedToughness(res[index]['games'], 'wop', team, bye, week)
           }
           schedules.push(teamSchedule)
-          this.getRank(schedules)
+          //this.getRank(schedules)
         })
     }
   }
