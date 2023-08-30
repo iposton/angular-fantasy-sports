@@ -382,7 +382,8 @@ export class StartingPitcherComponent implements OnInit {
         'selectedWeek',
         'noUpdate',
         'none',
-        'haveNflSchedules').subscribe(async res => {
+        'haveNflSchedules',
+        'havePlayerInfo').subscribe(async res => {
           console.log(res, 'pitcher stats data')
 
             this.dailyStats = res['dailyStats'].gamelogs
@@ -767,7 +768,8 @@ export class StartingPitcherComponent implements OnInit {
         'selectedWeek',
         'noUpdate',
         'none',
-        'haveNflSchedules').subscribe(async res => {
+        'haveNflSchedules',
+        'havePlayerInfo').subscribe(async res => {
           console.log(res, 'mlb stats data')
 
       // this.dataService

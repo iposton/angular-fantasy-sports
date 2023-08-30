@@ -128,7 +128,7 @@ export class NHLDataService {
     }
   }
 
-  public myStats(sport, season, feedType, feedType2, feedType3, player, position, team, selectedDate, isToday, dataType, playerType, nflWeek, liveUpdate, span, haveSchedules) {
+  public myStats(sport, season, feedType, feedType2, feedType3, player, position, team, selectedDate, isToday, dataType, playerType, nflWeek, liveUpdate, span, haveSchedules, havePlayerInfo) {
     let headers = new HttpHeaders().set('Content-Type', 'application/X-www-form-urlencoded')
     let fromTo = tomorrowDailyDate === dailyDate ? `from-${this.dailyDate}-to-${dayAfterTomorrow}` : `from-${yesterdayDailyDate}-to-${tomorrowDailyDate}`
     let strTeam = JSON.stringify(team)
@@ -144,7 +144,7 @@ export class NHLDataService {
     } else if (span === 'three-weeks') {
       spanDate = `from-${threeWeekDailyDate}-to-${dailyDate}`
     }
-    let data = `query=${sport}&dailyDate=${dailyDate}&season=${season}&feedType=${feedType}&feedType2=${feedType2}&feedType3=${feedType3}&position=${position}&selectedDate=${selectedDate}&isToday=${isToday}&dataType=${dataType}&fromTo=${fromTo}&team=${strTeam}&player=${player}&playerType=${playerType}&nflWeek=${nflWeek}&liveUpdate=${liveUpdate}&spanDate=${spanDate}&haveSchedules=${haveSchedules}`
+    let data = `query=${sport}&dailyDate=${dailyDate}&season=${season}&feedType=${feedType}&feedType2=${feedType2}&feedType3=${feedType3}&position=${position}&selectedDate=${selectedDate}&isToday=${isToday}&dataType=${dataType}&fromTo=${fromTo}&team=${strTeam}&player=${player}&playerType=${playerType}&nflWeek=${nflWeek}&liveUpdate=${liveUpdate}&spanDate=${spanDate}&haveSchedules=${haveSchedules}&havePlayerInfo=${havePlayerInfo}`
     try {
       this.si = this.http.post('/stats', data, {headers})
       return this.si

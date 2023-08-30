@@ -9,16 +9,17 @@ export class UtilService {
   public tb: boolean
   public nflWeek: any
   public weeklyTS: object
+  public weeklyPS: object
 
   constructor() {
     this.mobile = false
     this.tb = false
 
     this.weeklyTS = {
-      pa: 17,
+      pa: 21,
       ty: 300,
       sacks: 2,
-      passTD: 2,
+      passTD: 1.75,
       rushTD: 1,
       fp: 70,
       int: .5,
@@ -26,6 +27,25 @@ export class UtilService {
       defFP: 6,
       fum: .5,
       safe: 0
+    }
+
+    this.weeklyPS = {
+      sacks: .25,
+      rbRecTD: .10,
+      wrRecTD: .50,
+      rushTD: .50,
+      passTD: .80,
+      totTD: 1,
+      fp: 70,
+      int: .25,
+      pd: 4,
+      defFP: 6,
+      fum: .5,
+      tackles: 6,
+      rbTotYds: 50,
+      wrTotYds: 75,
+      rbRec: 1,
+      wrRec: 3.5
     }
   }
 
@@ -136,8 +156,9 @@ export class UtilService {
   }
 
   public updatePlayers(info, players, teams) {
-    
+    //console.log(info, 'player info')
     for (let n of info) {
+      //console.log(n, 'palyer info item')
       for (let old of players) {
         if (old.player['currentTeam'] != null)
           old.player['currentTeam'].lastYearTeamId = old.player['currentTeam'] != null ? old.player['currentTeam'].id : 0;
@@ -161,10 +182,18 @@ export class UtilService {
           if (old.player.id === 8100) {
             old.player.unsigned = true
           }
+
+          if (old.player.rookie) {
+            old.player.rookie = n.player.drafted != null && n.player.drafted.year == 2022 ? true : false
+            old.player.actualRookie = n.player.drafted != null && n.player.drafted.year == 2022 ? true : false
+          }
+
         }
+
         if (n.player.id === old.player.id && n['teamAsOfDate'] == null) {
           old.player.unsigned = true
         }
+
         if (n.player.rookie) {
           n.stats = {drafted: {overallPick: n.player.drafted != null ? n.player.drafted.overallPick : 9000}}
         }

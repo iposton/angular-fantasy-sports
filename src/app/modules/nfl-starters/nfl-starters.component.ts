@@ -91,6 +91,7 @@ export class NflStartersComponent implements OnInit {
   public depth: any;
   public showMatchup: boolean
   public haveNflSchedules: boolean
+  public havePlayerInfo: boolean
   public nflSchedules: any
   public showDef: boolean
   public nflDraftKit: boolean
@@ -374,7 +375,8 @@ export class NflStartersComponent implements OnInit {
         this.selectedWeek,
         'noUpdate',
         'none',
-        this.haveNflSchedules).subscribe(async res => {
+        this.haveNflSchedules,
+        this.havePlayerInfo).subscribe(async res => {
         
           console.log(res, 'nfl stats data')
           this.teamStats = res['teamStats'].teamStatsTotals

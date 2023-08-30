@@ -378,7 +378,8 @@ methods.getStats = async (
   nflWeek: string,
   liveUpdate: string,
   spanDate: string,
-  haveSchedules: string) => {
+  haveSchedules: string,
+  havePlayerInfo: string) => {
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     let headers = {"Authorization": "Basic " + Buffer.from(apiKey + ":" + "MYSPORTSFEEDS").toString('base64')}
 
@@ -514,7 +515,7 @@ methods.getStats = async (
         }
   
         request(psOptions, async (error, response, body) => {
-            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 3000)
+            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 4500)
             let values = null
             let rookieVal
             await sleep(30)
@@ -590,7 +591,7 @@ methods.getStats = async (
         })
       }
 
-      if (sport === 'none') {
+      if (havePlayerInfo === 'false') {
         const piOptions = {
           method: 'GET',
           url: playerInfoUrl,
@@ -602,10 +603,13 @@ methods.getStats = async (
             //only use at the start of season to fetch all players
             console.log(`got player info for ${sport}`)
             let rookies = null
-            body.rookies = body['players'].filter(item => item.teamAsOfDate != null && item.player.rookie === true && item.player.drafted != null && item.player.drafted.year == 2022)
+            body.rookies = body['players'].filter(item => item.teamAsOfDate != null && item.player.rookie === true && item.player.drafted != null && item.player.drafted.year == 2023)
             stats[0].playerInfo = await body
             
         })
+      } else {
+        //stats[0].playerInfo = []
+        console.log(colors.fg.yellow+`Not getting player info got it from localStorage instead`, colors.reset)
       }
       
       })

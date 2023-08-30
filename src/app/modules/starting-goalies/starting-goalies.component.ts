@@ -554,7 +554,8 @@ export class StartingGoaliesComponent implements OnInit {
       'nflWeek',
       'noUpdate',
       'none',
-      'haveSchedules').subscribe(async res => {
+      'haveSchedules',
+      'havePlayerInfo').subscribe(async res => {
        console.log(res, 'stats')
        this.dailyStats = res['dailyStats'] != null ? res['dailyStats'].gamelogs : []
        this.teamStats = res['teamStats'].teamStatsTotals
@@ -1197,7 +1198,8 @@ public showMatchups() {
         'nflWeek',
         'noUpdate',
         'none',
-        'haveSchedules').subscribe(async res => {
+        'haveSchedules',
+        'havePlayerInfo').subscribe(async res => {
          console.log(res, 'stats')
          this.dailySkaterStats = res['dailyStats'].gamelogs
          this.mySkaterData = res['playerStats'].playerStatsTotals
@@ -1457,7 +1459,8 @@ public showMatchups() {
                 'nflWeek',
                 'nhlUpdate',
                 'none',
-                'haveSchedules').subscribe(async res => {
+                'haveSchedules',
+                'havePlayerInfo').subscribe(async res => {
 
                   console.log(res, 'Daily stats updated!')
                   this.dailyStats = res['dailyStats'].gamelogs

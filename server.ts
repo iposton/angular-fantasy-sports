@@ -70,7 +70,7 @@ export function app() {
       request.get('https://api.twitter.com/1.1/search/tweets.json?q=' + encsearchquery +
       '&result_type=recent', {headers: {Authorization: bearerheader}}, function(error, body, response) {
           if(error)
-          console.log(error);
+          console.log(error)
           else {
               res.json({success: true, data:JSON.parse(body.body)});
           }
@@ -126,7 +126,8 @@ export function app() {
     let liveUpdate = req.body.liveUpdate
     let spanDate = req.body.spanDate
     let haveSchedules = req.body.haveSchedules
-    const data =  await api.data.getStats(msfToken, sport, dailyDate, season, feedType, feedType2, feedType3, player, position, team, selectedDate, isToday, dataType, fromTo, playerType, nflWeek, liveUpdate, spanDate, haveSchedules)
+    let havePlayerInfo = req.body.havePlayerInfo
+    const data =  await api.data.getStats(msfToken, sport, dailyDate, season, feedType, feedType2, feedType3, player, position, team, selectedDate, isToday, dataType, fromTo, playerType, nflWeek, liveUpdate, spanDate, haveSchedules, havePlayerInfo)
     res.status(200).json(data)
   })
 

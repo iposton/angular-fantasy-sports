@@ -23,7 +23,7 @@
 ></app-dialog>
        
 <div class="button-wrapper sl-btns" *ngIf="!loading">
-    <div class="schedule-box row">
+    <!-- <div class="schedule-box row">
       <div [ngClass]="{'active': nbaSection}" class="col" (click)="timeSpan = 'full'; sortNBA()">
           <span class="sched-item">
             NBA
@@ -44,7 +44,7 @@
             NFL
           </span> 
       </div>
-    </div>
+    </div> -->
 </div>
 <div class="center buttons">
    <!-- <button (click)="page = 19; amount = -1">1 - 20</button>  <button (click)="page = 39; amount = 19">21 - 40</button>  -->
@@ -61,7 +61,7 @@
    <span [ngClass]="{'dn' : !nflSection, 'hollow-btn' : nflSection}" (click)="week = 'all'; timeSpan = 'full'; defensePlayers(); $event.stopPropagation()">Defense</span>  
    <span [ngClass]="{'dn' : !nflDefenseSection, 'hollow-btn' : nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</span>
    <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit; $event.stopPropagation()">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</span>
-   <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('three-weeks')">Last 3 Weeks</span> 
+   <!-- <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('three-weeks')">Last 3 Weeks</span>  -->
    <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="pStats = !pStats">{{pStats ? 'Teams' : 'Players'}}</span> 
    <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('all')">ALL</span>
 </div>
@@ -1258,7 +1258,7 @@
               [eliteStat]="850"
               ></app-stat-card>
 
-              <!-- <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nfl22Rookies != null" 
+              <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nfl22Rookies != null" 
               [data]="nfl22Rookies" 
               [statType]="'drafted'"
               [statField]="'overallPick'"
@@ -1274,7 +1274,7 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
               [eliteStat]="850"
-              ></app-stat-card> -->
+              ></app-stat-card>
 
               <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflWl != null" 
               [data]="nflWl" 

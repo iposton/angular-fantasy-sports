@@ -418,7 +418,8 @@ export class StartingFiveComponent implements OnInit {
       'nflWeek',
       'noUpdate',
       'none',
-      'haveSchedules').subscribe(async res => {
+      'haveSchedules',
+      'havePlayerInfo').subscribe(async res => {
        console.log(res, 'stats')
        this.dailyStats = res['dailyStats'].gamelogs
        this.teamStats = res['teamStats'].teamStatsTotals
@@ -682,7 +683,8 @@ export class StartingFiveComponent implements OnInit {
                 'nflWeek',
                 'nbaUpdate',
                 'none',
-                'haveSchedules').subscribe(async res => {
+                'haveSchedules',
+                'havePlayerInfo').subscribe(async res => {
                   console.log(res, 'updated nba schedule')
                   this.dailyStats = res['dailyStats'].gamelogs
                   this.dailySchedule = res['updatedSchedule'].games

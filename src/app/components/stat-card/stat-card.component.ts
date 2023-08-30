@@ -50,7 +50,7 @@ export class StatCardComponent implements OnInit {
   public hoveredItem2   :string = '';
   public sortedStats: Array<any>;
 
-  constructor(private util: UtilService) { }
+  constructor(public util: UtilService) { }
 
   public authorize(player, type) {
     //console.log('trying to emit', player)

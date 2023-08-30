@@ -34,6 +34,7 @@ export class TeamRankComponent implements OnInit {
   }
 
   public getRank(d, teams, title, sl, week) {
+    //TODO rank offense and defense schedule combined.
     this.loading = true;
     let rank = [];
     let tRank = [];
