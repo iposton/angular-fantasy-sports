@@ -2627,8 +2627,8 @@ export class NflUtilService {
           team.plays = stats.stats.rushing.rushAttempts + stats.stats.passing.passAttempts
           team.passPlays = stats.stats.passing.passAttempts;
           team.runPlays = stats.stats.rushing.rushAttempts;
-          stats.upDefRank = team.defenseRankLs;
-          stats.upOffRank = team.offenseRankLs;
+          stats.upDefRank = team.defenseRankLs
+          stats.upOffRank = team.offenseRankLs
 
           team.sTeamStats = stats;
           team.seasonPY = stats.stats.passing.passNetYards;
@@ -2642,12 +2642,13 @@ export class NflUtilService {
     }
    }
 
-   public updateDefRank(tStats) {
+  public updateDefRank(tStats) {
     console.log('update def rank')
     for (let stats of tStats) {
       for (let team of this.nflTeams) {
         if (stats.team.id === team.id) {
           stats.upDefRank = team.defenseRankLs
+          stats.upOffRank = team.offenseRankLs
         }
       }
     }
@@ -2660,6 +2661,7 @@ export class NflUtilService {
           for (let stats of tStats) {
             if (stats.team.abbreviation === game.name)  {
               game['dRank'] = stats.upDefRank
+              game['oRank'] = stats.upOffRank
             }
           }
         }
@@ -2669,9 +2671,12 @@ export class NflUtilService {
    public superUpdater(tSchedules) {
      console.log('one last super def rank update because I had to calculate pointsAgainst before I could properly rank and by doing so it screwed up my whole ranking algo which needs refactoring.')
     for (let team of tSchedules) {
-      team.dToughnessRank = this.getSchedToughness(team['schedule'], 'd', team.team, null, null)  
-      team.dToughnessFhRank = this.getSchedToughness(team['schedule'], 'dfh', team.team, null, null)
-      team.dToughnessShRank = this.getSchedToughness(team['schedule'], 'dsh', team.team, null, null)
+      team.dToughnessRank = this.dToughness(team['schedule'], 'd', team.team)  
+      team.dToughnessFhRank = this.dToughness(team['schedule'], 'dfh', team.team)
+      team.dToughnessShRank = this.dToughness(team['schedule'], 'dsh', team.team)
+      team.oToughnessRank = this.oToughness(team['schedule'], 'o', team.team)  
+      team.oToughnessFhRank = this.oToughness(team['schedule'], 'ofh', team.team)
+      team.oToughnessShRank = this.oToughness(team['schedule'], 'osh', team.team)
     }
     this.getRank(tSchedules)
    }
@@ -2722,14 +2727,27 @@ export class NflUtilService {
      }
    }
 
-   public getSchedToughness(sched, type, mainTeam, bye, nflWeek) {
-    let halfwayThrough = Math.floor(sched.length / 2);
-    let arrayFirstHalf = sched.slice(0, halfwayThrough);
-    let arraySecondHalf = sched.slice(halfwayThrough, sched.length);
+   public dToughness(sched, type, mainTeam) {
+    let halfwayThrough = Math.floor(sched.length / 2)
+    let arrayFirstHalf = sched.slice(0, halfwayThrough)
+    let arraySecondHalf = sched.slice(halfwayThrough, sched.length)
 
     if (type === 'd') {
       let sum = 0;
       for (let s of sched) {
+        for (let t of this.nflTeams){
+          if (s.schedule.awayTeam.id != mainTeam &&
+            s.schedule.awayTeam.id === t.id || 
+            s.schedule.homeTeam.id != mainTeam &&
+            s.schedule.homeTeam.id === t.id) {
+            sum += t.defenseRankLs
+          }
+        }
+      }
+      return sum
+    } else if (type === 'dfh') {
+      let sum = 0;
+      for (let s of arrayFirstHalf) {
         for (let t of this.nflTeams){
           if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id || 
@@ -2740,21 +2758,71 @@ export class NflUtilService {
         }
       }
       return sum
-    } else if (type === 'o') {
-      console.log('get o sched toughness once')
+    } else if (type === 'dsh') {
       let sum = 0;
-      for (let s of sched) {
+      for (let s of arraySecondHalf) {
         for (let t of this.nflTeams){
           if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id || 
             s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
-            sum += t.offenseRankLs
+            sum += t.defenseRankLs;
           }
         }
       }
-      return sum;
-    }  else if (type === 't') {
+      return sum
+    }
+ }
+
+   public oToughness(sched, type, mainTeam) {
+      let halfwayThrough = Math.floor(sched.length / 2)
+      let arrayFirstHalf = sched.slice(0, halfwayThrough)
+      let arraySecondHalf = sched.slice(halfwayThrough, sched.length)
+
+      if (type === 'o') {
+        let sum = 0
+        for (let s of sched) {
+          for (let t of this.nflTeams){
+            if (s.schedule.awayTeam.id != mainTeam &&
+              s.schedule.awayTeam.id === t.id || 
+              s.schedule.homeTeam.id != mainTeam &&
+              s.schedule.homeTeam.id === t.id) {
+              sum += t.offenseRankLs
+            }
+          }
+        }
+        return sum
+      } else if (type === 'ofh') {
+        let sum = 0;
+        for (let s of arrayFirstHalf) {
+          for (let t of this.nflTeams){
+            if (s.schedule.awayTeam.id != mainTeam &&
+              s.schedule.awayTeam.id === t.id || 
+              s.schedule.homeTeam.id != mainTeam &&
+              s.schedule.homeTeam.id === t.id) {
+              sum += t.offenseRankLs;
+            }
+          }
+        }
+        return sum
+      } else if (type === 'osh') {
+        let sum = 0;
+        for (let s of arraySecondHalf) {
+          for (let t of this.nflTeams){
+            if (s.schedule.awayTeam.id != mainTeam &&
+              s.schedule.awayTeam.id === t.id || 
+              s.schedule.homeTeam.id != mainTeam &&
+              s.schedule.homeTeam.id === t.id) {
+              sum += t.offenseRankLs;
+            }
+          }
+        }
+        return sum
+      }
+   }
+
+   public getSchedToughness(sched, type, mainTeam, bye, nflWeek) {
+     if (type === 't') {
       let sum = []
       //console.log('points against sum starts here')
       let paTotal = 0
@@ -2794,7 +2862,7 @@ export class NflUtilService {
       sum['shLoss'] = finishedWlObject['shL']
       sum['shTie'] = finishedWlObject['shT']
       return sum
-    }  else if (type === 'wop') {
+    } else if (type === 'wop') {
       let sum = [];
       sched.forEach((s, index) => {
         for (let t of this.nflTeams){
@@ -2811,60 +2879,8 @@ export class NflUtilService {
           }
         }
       })
-      return sum;
-    } else if (type === 'dfh') {
-      let sum = 0;
-      for (let s of arrayFirstHalf) {
-        for (let t of this.nflTeams){
-          if (s.schedule.awayTeam.id != mainTeam &&
-            s.schedule.awayTeam.id === t.id || 
-            s.schedule.homeTeam.id != mainTeam &&
-            s.schedule.homeTeam.id === t.id) {
-            sum += t.defenseRankLs;
-          }
-        }
-      }
-      return sum;
-    } else if (type === 'ofh') {
-      let sum = 0;
-      for (let s of arrayFirstHalf) {
-        for (let t of this.nflTeams){
-          if (s.schedule.awayTeam.id != mainTeam &&
-            s.schedule.awayTeam.id === t.id || 
-            s.schedule.homeTeam.id != mainTeam &&
-            s.schedule.homeTeam.id === t.id) {
-            sum += t.offenseRankLs;
-          }
-        }
-      }
-      return sum;
-    } else if (type === 'dsh') {
-      let sum = 0;
-      for (let s of arraySecondHalf) {
-        for (let t of this.nflTeams){
-          if (s.schedule.awayTeam.id != mainTeam &&
-            s.schedule.awayTeam.id === t.id || 
-            s.schedule.homeTeam.id != mainTeam &&
-            s.schedule.homeTeam.id === t.id) {
-            sum += t.defenseRankLs;
-          }
-        }
-      }
-      return sum;
-    } else if (type === 'osh') {
-      let sum = 0;
-      for (let s of arraySecondHalf) {
-        for (let t of this.nflTeams){
-          if (s.schedule.awayTeam.id != mainTeam &&
-            s.schedule.awayTeam.id === t.id || 
-            s.schedule.homeTeam.id != mainTeam &&
-            s.schedule.homeTeam.id === t.id) {
-            sum += t.offenseRankLs;
-          }
-        }
-      }
-      return sum;
-    }
+      return sum
+    } 
   }
 
   public getRank(schedules) {
@@ -3043,12 +3059,12 @@ export class NflUtilService {
             team: team,
             abbreviation: abbreviation,
             schedule: res[index]['games'],
-            dToughnessRank: this.getSchedToughness(res[index]['games'], 'd', team, bye, week),
-            oToughnessRank: this.getSchedToughness(res[index]['games'], 'o', team, bye, week),
-            dToughnessFhRank: this.getSchedToughness(res[index]['games'], 'dfh', team, bye, week),
-            oToughnessFhRank: this.getSchedToughness(res[index]['games'], 'ofh', team, bye, week),
-            dToughnessShRank: this.getSchedToughness(res[index]['games'], 'dsh', team, bye, week),
-            oToughnessShRank: this.getSchedToughness(res[index]['games'], 'osh', team, bye, week),
+            dToughnessRank: null,
+            oToughnessRank: null,
+            dToughnessFhRank: null,
+            oToughnessFhRank: null,
+            dToughnessShRank: null,
+            oToughnessShRank: null,
             scheduleTicker: this.getSchedToughness(res[index]['games'], 't', team, bye, week),
             weekOpponent: this.getSchedToughness(res[index]['games'], 'wop', team, bye, week)
           }
@@ -3136,13 +3152,19 @@ public rankD(nflTeams, stats, week) {
 
   public teamNflDefFp(teams, stats) { 
     console.log('define pointsAgainstDefTotal for ui')
+    let paTot = null
     //console.log('define teamDefFDFP for ui but its NaN because pointsAgainstDefTotal is undefined', teams)
     for(let team of stats) {
       for (let t of teams) {
         if (team['team'].id === t.id) {
-          team['stats'].receiving.teamDefFDFP = (team['stats'].receiving != null) ? (((team['stats'].punting.puntBlk + team['stats'].fieldGoals.fgBlk + team['stats'].fumbles.fumOppRec + team['stats'].interceptions.interceptions + team['stats'].interceptions.safeties) * 2) + ((team['stats'].puntReturns.prTD + team['stats'].kickoffReturns.krTD) * 6) + ((team['stats'].fumbles.fumTD + team['stats'].interceptions.intTD) * 6) + team['stats'].tackles.sacks + t.scheduleTicker.paTotal) : 0
+          try {
+            paTot = t['scheduleTicker']?.paTotal != null ? t['scheduleTicker']?.paTotal : 0
+          } catch(e) {
+            console.log(e, 'paTotal no ready yet')
+          }
+          team['stats'].receiving.teamDefFDFP = (team['stats'].receiving != null) ? (((team['stats'].punting.puntBlk + team['stats'].fieldGoals.fgBlk + team['stats'].fumbles.fumOppRec + team['stats'].interceptions.interceptions + team['stats'].interceptions.safeties) * 2) + ((team['stats'].puntReturns.prTD + team['stats'].kickoffReturns.krTD) * 6) + ((team['stats'].fumbles.fumTD + team['stats'].interceptions.intTD) * 6) + team['stats'].tackles.sacks + paTot) : 0
           team['stats'].receiving.teamDefFDFPA = (parseInt(team['stats'].receiving.teamDefFDFP) / team['stats'].gamesPlayed).toFixed(1) 
-          team['stats'].pointsAgainstDefTotal = t.scheduleTicker.paTotal
+          team['stats'].pointsAgainstDefTotal = paTot
         }
       }
     } 
