@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/'
-let time22 = `2022 00:00:00 GMT-0700 (Pacific Daylight Time)`
-let time23 = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
+let nextYear = `2024 00:00:00 GMT-0700 (Pacific Daylight Time)`
+let nflYear = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
 
 @Injectable({
   providedIn: 'root'
@@ -15,113 +15,113 @@ export class NflUtilService {
   constructor(private http: HttpClient) {
     this.weekTimes = [
       {
-        dateBeg: `Thu Sep 08 ${time22}`,
-        dateEnd: `Thu Sep 15 ${time22}`,
+        dateBeg: `Thu Sep 07 ${nflYear}`,
+        dateEnd: `Thu Sep 14 ${nflYear}`,
         week: '1'
       },
       {
-        dateBeg: `Thu Sep 15 ${time22}`,
-        dateEnd: `Thu Sep 22 ${time22}`,
+        dateBeg: `Thu Sep 14 ${nflYear}`,
+        dateEnd: `Thu Sep 21 ${nflYear}`,
         week: '2'
       },
       {
-        dateBeg: `Thu Sep 22 ${time22}`,
-        dateEnd: `Thu Sep 29 ${time22}`,
+        dateBeg: `Thu Sep 21 ${nflYear}`,
+        dateEnd: `Thu Sep 28 ${nflYear}`,
         week: '3'
       },
       {
-        dateBeg: `Thu Sep 29 ${time22}`,
-        dateEnd: `Thu Oct 06 ${time22}`,
+        dateBeg: `Thu Sep 28 ${nflYear}`,
+        dateEnd: `Thu Oct 05 ${nflYear}`,
         week: '4'
       },
       {
-        dateBeg: `Thu Oct 06 ${time22}`,
-        dateEnd: `Thu Oct 13 ${time22}`,
+        dateBeg: `Thu Oct 05 ${nflYear}`,
+        dateEnd: `Thu Oct 12 ${nflYear}`,
         week: '5'
       },
       {
-        dateBeg: `Thu Oct 13 ${time22}`,
-        dateEnd: `Thu Oct 20 ${time22}`,
+        dateBeg: `Thu Oct 12 ${nflYear}`,
+        dateEnd: `Thu Oct 19 ${nflYear}`,
         week: '6'
       },
       {
-        dateBeg: `Thu Oct 20 ${time22}`,
-        dateEnd: `Thu Oct 27 ${time22}`,
+        dateBeg: `Thu Oct 19 ${nflYear}`,
+        dateEnd: `Thu Oct 26 ${nflYear}`,
         week: '7'
       },
       {
-        dateBeg: `Thu Oct 27 ${time22}`,
-        dateEnd: `Thu Nov 03 ${time22}`,
+        dateBeg: `Thu Oct 26 ${nflYear}`,
+        dateEnd: `Thu Nov 02 ${nflYear}`,
         week: '8'
       },
       {
-        dateBeg: `Thu Nov 03 ${time22}`,
-        dateEnd: `Thu Nov 10 ${time22}`,
+        dateBeg: `Thu Nov 02 ${nflYear}`,
+        dateEnd: `Thu Nov 09 ${nflYear}`,
         week: '9'
       },
       {
-        dateBeg: `Thu Nov 10 ${time22}`,
-        dateEnd: `Thu Nov 17 ${time22}`,
+        dateBeg: `Thu Nov 09 ${nflYear}`,
+        dateEnd: `Thu Nov 16 ${nflYear}`,
         week: '10'
       },
       {
-        dateBeg: `Thu Nov 17 ${time22}`,
-        dateEnd: `Thu Nov 24 ${time22}`,
+        dateBeg: `Thu Nov 16 ${nflYear}`,
+        dateEnd: `Thu Nov 23 ${nflYear}`,
         week: '11'
       },
       {
-        dateBeg: `Thu Nov 24 ${time22}`,
-        dateEnd: `Thu Dec 01 ${time22}`,
+        dateBeg: `Thu Nov 23 ${nflYear}`,
+        dateEnd: `Thu Nov 30 ${nflYear}`,
         week: '12'
       },
       {
-        dateBeg: `Thu Dec 01 ${time22}`,
-        dateEnd: `Thu Dec 08 ${time22}`,
+        dateBeg: `Thu Nov 30 ${nflYear}`,
+        dateEnd: `Thu Dec 07 ${nflYear}`,
         week: '13'
       },
       {
-        dateBeg: `Thu Dec 08 ${time22}`,
-        dateEnd: `Thu Dec 15 ${time22}`,
+        dateBeg: `Thu Dec 07 ${nflYear}`,
+        dateEnd: `Thu Dec 14 ${nflYear}`,
         week: '14'
       },
       {
-        dateBeg: `Thu Dec 15 ${time22}`,
-        dateEnd: `Thu Dec 22 ${time22}`,
+        dateBeg: `Thu Dec 14 ${nflYear}`,
+        dateEnd: `Thu Dec 21 ${nflYear}`,
         week: '15'
       },
       {
-        dateBeg: `Thu Dec 22 ${time22}`,
-        dateEnd: `Thu Dec 29 ${time22}`,
+        dateBeg: `Thu Dec 21 ${nflYear}`,
+        dateEnd: `Thu Dec 28 ${nflYear}`,
         week: '16'
       },
       {
-        dateBeg: `Thu Dec 29 ${time22}`,
-        dateEnd: `Thu Jan 05 ${time23}`,
+        dateBeg: `Thu Dec 28 ${nflYear}`,
+        dateEnd: `Thu Jan 04 ${nextYear}`,
         week: '17'
       },
       {
-        dateBeg: `Thu Jan 05 ${time23}`,
-        dateEnd: `Thu Jan 12 ${time23}`,
+        dateBeg: `Thu Jan 04 ${nextYear}`,
+        dateEnd: `Thu Jan 11 ${nextYear}`,
         week: '18'
       },
       {
-        dateBeg: `Thu Jan 12 ${time23}`,
-        dateEnd: `Thu Jan 19 ${time23}`,
+        dateBeg: `Thu Jan 11 ${nextYear}`,
+        dateEnd: `Thu Jan 18 ${nextYear}`,
         week: '19' //playoff
       },
       {
-        dateBeg: `Thu Jan 19 ${time23}`,
-        dateEnd: `Thu Jan 26 ${time23}`,
+        dateBeg: `Thu Jan 18 ${nextYear}`,
+        dateEnd: `Thu Jan 25 ${nextYear}`,
         week: '20' //wild card
       },
       {
-        dateBeg: `Thu Jan 26 ${time23}`,
-        dateEnd: `Thu Feb 09 ${time23}`,
+        dateBeg: `Thu Jan 25 ${nextYear}`,
+        dateEnd: `Thu Feb 08 ${nextYear}`,
         week: '21' //afc nfc final 4
       },
       {
-        dateBeg: `Thu Feb 09 ${time23}`,
-        dateEnd: `Thu Feb 16 ${time23}`,
+        dateBeg: `Thu Feb 08 ${nextYear}`,
+        dateEnd: `Thu Feb 15 ${nextYear}`,
         week: '23' //super bowl
       }
     ]
@@ -2698,18 +2698,36 @@ export class NflUtilService {
     }
    }
 
+  public updateBye(scheds) {
+    for (let s of scheds) {
+      for (let b of s.teamByeWeeks){
+        if (s.gamesBelongId === b.team.id) {
+         s.bye = b.byeWeeks[0]
+        }
+      }
+    }
+  }
+
    public winsLosses(aScore: number, hScore: number, week: number, isHome: boolean, wlObj) {
+
+     if (aScore == null) 
+       return wlObj
+
+     if (aScore === hScore) {
+      wlObj.fhT += 1
+      wlObj.shT += 1
+      return wlObj
+     }
     
      if(!isHome) {
 
        if (week < 10) {
-        wlObj.fhL += aScore == null ? 0 : aScore === hScore ? 0 : aScore < hScore ? 1 : 0
-        wlObj.fhW += aScore == null ? 0 : aScore === hScore ? 0 : aScore > hScore ? 1 : 0
-        wlObj.fhT +=  aScore == null ? 0 : aScore === hScore ? 1 : 0
+        wlObj.fhL += aScore < hScore ? 1 : 0
+        wlObj.fhW += aScore > hScore ? 1 : 0
+        
        } else if (week > 9) {
-        wlObj.shL +=  aScore == null ? 0 : aScore === hScore ? 0 : aScore < hScore ? 1 : 0
-        wlObj.shW += aScore == null ? 0 : aScore === hScore ? 0 : aScore > hScore ? 1 : 0
-        wlObj.shT +=  aScore == null ? 0 : aScore === hScore ? 1 : 0
+        wlObj.shL +=  aScore < hScore ? 1 : 0
+        wlObj.shW += aScore > hScore ? 1 : 0
        }
 
        return wlObj
@@ -2717,13 +2735,12 @@ export class NflUtilService {
      } else {
 
        if (week < 10) {
-        wlObj.fhL += aScore == null ? 0 : aScore === hScore ? 0 : aScore > hScore ? 1 : 0
-        wlObj.fhW +=  aScore == null ? 0 : aScore === hScore ? 0 : aScore < hScore ? 1 : 0
-        wlObj.fhT +=  aScore == null ? 0 : aScore === hScore ? 1 : 0
+        wlObj.fhL += aScore > hScore ? 1 : 0
+        wlObj.fhW +=  aScore < hScore ? 1 : 0
+        
        } else if (week > 9) {
-        wlObj.shL += aScore == null ? 0 : aScore === hScore ? 0 : aScore > hScore ? 1 : 0
-        wlObj.shW += aScore == null ? 0 : aScore === hScore ? 0 : aScore < hScore ? 1 : 0
-        wlObj.shT +=  aScore == null ? 0 : aScore === hScore ? 1 : 0
+        wlObj.shL += aScore > hScore ? 1 : 0
+        wlObj.shW += aScore < hScore ? 1 : 0
       }
 
       return wlObj
@@ -3057,7 +3074,9 @@ export class NflUtilService {
         let res = schedGames
         res.forEach((item, index) => { 
           team = item.gamesBelongId //this.nflTeams[index].id
-          bye = item.bye //this.nflTeams[index].bye
+          //TODO create bye func and refactor winloss
+          //getByes()
+          bye = team === item.byes[index].team['id'] ? item.byes[index].byeWeeks[0] : item.bye //this.nflTeams[index].bye
           abbreviation = item.gamesBelongTo //this.nflTeams[index].abbreviation
           teamSchedule = {
             team: team,

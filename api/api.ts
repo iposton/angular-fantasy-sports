@@ -184,7 +184,7 @@ methods.getInfo = async (
   }  
 
   if (dataType === 'games') {
-    let nflSeason = parseInt(selectedWeek) > 18 ? '2023-playoff' : '2022-2023-regular'
+    let nflSeason = parseInt(selectedWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
     console.log(colors.fg.yellow+`Fetch Games for All Sports: Home Page`, colors.reset)
     //console.log(player, 'players')
     let gamePromise = new Promise(async(resolve, reject) => {
@@ -478,7 +478,7 @@ methods.getStats = async (
           console.log(`Get ${sport} schedules.`)
           forkJoin(
             jsonTeam.map(
-              g => request(`${apiRoot}/${sport}/2022-2023-regular/games.json?team=${g.abbreviation}`, {headers},
+              g => request(`${apiRoot}/${sport}/2023-2024-regular/games.json?team=${g.abbreviation}`, {headers},
                 async function(err, res, body) {
                   try {
                     //getting nfl schedules

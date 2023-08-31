@@ -42,4 +42,8 @@ export class LocalStorageService {
       }
     })
   }
+
+  public delete(title) {
+    return localStorage.removeItem(title)
+  }
 }

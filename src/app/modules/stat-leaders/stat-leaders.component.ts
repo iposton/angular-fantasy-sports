@@ -189,8 +189,8 @@ export class StatLeadersComponent implements OnInit {
     this.nflSection = true
     this.sport = 'nfl'
     this.nflDraftKit = false
-    this.nflWeek = '18'
-    this.util.nflWeek = '18'
+    this.nflWeek = '1'
+    this.util.nflWeek = '1'
     this.nflPosition = 'qb'
     this.nflDPosition = 'LB,DT,DE,OLB,ILB,MLB'
     this.nhlSection = false
@@ -719,6 +719,8 @@ export class StatLeadersComponent implements OnInit {
         this.wlPlayers = this.ls.get('watchList')
         this.resetSpanOpp()
         this.favorites = this.ls.get('favorites')
+        console.log('reset localStorage schedules temp')
+        this.ls.delete('nflSchedules')
         this.nflSchedules = this.ls.get('nflSchedules')
         this.getSelectedPlayerInfo(this.nflPosition)
         
@@ -1098,6 +1100,7 @@ export class StatLeadersComponent implements OnInit {
         if (this.nflTeamStats == null) {
           //TODO apply def points against before getting team fp
           // check nflschedules with nflteams and apply paDefFP
+          
           this.nflUtil.teamFp(this.nflTeams, res['teamStats'].teamStatsTotals)
           this.nflUtil.rank(this.nflTeams, res['teamStats'].teamStatsTotals, this.nflWeek)
           this.nflUtil.updateTeamStats(res['teamStats'].teamStatsTotals)
@@ -1107,16 +1110,22 @@ export class StatLeadersComponent implements OnInit {
             console.log('server added too many schedule objects, truncate')
             res['scheduleGames'].length = 32
             console.log(res['scheduleGames'], 'after truncate')
+            console.log('udate byes before storage')
+            this.nflUtil.updateBye(res['scheduleGames'])
             res['scheduleGames'][0].weekSet = this.util.nflWeek
             this.ls.set('nflSchedules', res['scheduleGames'])
           } else if (res['scheduleGames'].length == 32) {
 
           }
 
-          if (res['scheduleGames'].length === 0) {
+          if (res['scheduleGames'].length === 0) { 
+            console.log('udate byes after storage')
+            this.nflUtil.updateBye(this.nflSchedules)
             console.log('use nfl schedule from local storage')
             res['scheduleGames'] = this.nflSchedules
           } else {
+            console.log('udate byes before storage')
+            this.nflUtil.updateBye(res['scheduleGames'])
             console.log('set nfl schedules', res['scheduleGames'])
             res['scheduleGames'][0].weekSet = this.util.nflWeek
             this.ls.set('nflSchedules', res['scheduleGames'])
@@ -1171,8 +1180,7 @@ export class StatLeadersComponent implements OnInit {
 
         this.nflRookies = res['playerStats'].rookies ? res['playerStats'].rookies : [] //this.nflData.filter(player => player.player.rookie === true)
         console.log('rookies', this.nflRookies)
-        this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition)
-        this.nflTeamInfo(this.nflRookies, this.nflTeams, 'o', this.week, this.nflPosition)
+        
         console.log(res['playerInfo'], 'nfl player info')
         //temporary before season start
         console.log('update players')
@@ -1187,6 +1195,9 @@ export class StatLeadersComponent implements OnInit {
         this.nflUtil.updateDefRank(res['teamStats'].teamStatsTotals)
         this.nflUtil.updateTicker(res['teamStats'].teamStatsTotals)
         this.nflUtil.superUpdater(this.teamSchedules)
+        console.log('update players sched ranks after the super rank udater')
+        this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition)
+        this.nflTeamInfo(this.nflRookies, this.nflTeams, 'o', this.week, this.nflPosition)
          //Udate all the defense rank after getting the very difficult calculation of pointsAgainst fantasy points
         
           //TODO turn this into a function that updates all wl stats by player id and set the new watchlist
