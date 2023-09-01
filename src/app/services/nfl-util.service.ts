@@ -2672,6 +2672,24 @@ export class NflUtilService {
       }
    }
 
+   public updateWop(tStats) {
+    console.log('update week opponent def and off rank')
+      for (let team of this.nflTeams) {
+        try {
+          for (let game of team?.weekOpponent != null ? team?.weekOpponent : []) {
+            for (let stats of tStats) {
+              if (stats.team.abbreviation === game.name)  {
+                game['dRank'] = stats.upDefRank
+                game['oRank'] = stats.upOffRank
+              }
+            }
+          }
+        } catch(e) {
+          console.log(e, 'the web is having trouble defining the week opponent.')
+        }  
+      }
+   }
+
    public superUpdater(tSchedules) {
      console.log('one last super def rank update because I had to calculate pointsAgainst before I could properly rank and by doing so it screwed up my whole ranking algo which needs refactoring.')
     for (let team of tSchedules) {

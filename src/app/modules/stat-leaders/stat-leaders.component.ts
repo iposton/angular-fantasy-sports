@@ -720,7 +720,7 @@ export class StatLeadersComponent implements OnInit {
         this.resetSpanOpp()
         this.favorites = this.ls.get('favorites')
         console.log('reset localStorage schedules temp')
-        this.ls.delete('nflSchedules')
+        //this.ls.delete('nflSchedules')
         this.nflSchedules = this.ls.get('nflSchedules')
         this.getSelectedPlayerInfo(this.nflPosition)
         
@@ -1194,6 +1194,8 @@ export class StatLeadersComponent implements OnInit {
         this.nflUtil.rankD(this.nflTeams, res['teamStats'].teamStatsTotals, this.nflWeek)
         this.nflUtil.updateDefRank(res['teamStats'].teamStatsTotals)
         this.nflUtil.updateTicker(res['teamStats'].teamStatsTotals)
+        //update week opponent
+        this.nflUtil.updateWop(res['teamStats'].teamStatsTotals)
         this.nflUtil.superUpdater(this.teamSchedules)
         console.log('update players sched ranks after the super rank udater')
         this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition)
