@@ -46,7 +46,7 @@ export class DepthService {
     this.nflDepth = {
       '54': [
         {
-          'gdate': 15,
+          'gdate': 11,
           
           // 'Offense-TE-1' : {
           //   firstName: 'M',
@@ -103,7 +103,7 @@ export class DepthService {
     ],
     '72': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         
         'Offense-WR-1' : {
@@ -179,7 +179,7 @@ export class DepthService {
     ],
     '50': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-WR-2' : {
         //   firstName: 'Tyquan',
@@ -261,7 +261,7 @@ export class DepthService {
     ],
     '53': [
       {
-        'gdate': 12,
+        'gdate': 11,
        
         
         // 'Offense-TE-1' : {
@@ -367,7 +367,7 @@ export class DepthService {
     ],
     '74': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-TE-1' : {
         //   firstName: 'Darren',
@@ -415,7 +415,7 @@ export class DepthService {
     ],
     '78': [
       {
-        'gdate': 10,
+        'gdate': 110,
         
 
         'Offense-WR-2' : {
@@ -489,7 +489,7 @@ export class DepthService {
   ],
   '79': [
     {
-      'gdate': 15,
+      'gdate': 11,
 
       'Offense-TE-1' : {
         firstName: 'Noah',
@@ -664,7 +664,7 @@ export class DepthService {
     ],
     '55': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-TE-1' : {
         //   firstName: 'B',
@@ -745,7 +745,7 @@ export class DepthService {
     ],
     '52': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         'Offense-WR-1' : {
           firstName: 'Noah',
@@ -810,7 +810,7 @@ export class DepthService {
     ],
     '51': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-RB-1' : {
         //   firstName: 'Ty',
@@ -916,7 +916,7 @@ export class DepthService {
     ],
     '69': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-QB-1' : {
         //   firstName: 'Baker',
@@ -1009,6 +1009,15 @@ export class DepthService {
       {
         'gdate': 11,
 
+        'Offense-RB-1' : {
+          firstName: 'Jamaal',
+          lastName: 'Williams',
+          id: 12999,
+          status: 'Starter',
+          abbreviation: 'NO',
+          position: 'RB'
+        },
+
         // 'Offense-WR-2' : {
         //   firstName: '',
         //   lastName: 'Landry',
@@ -1018,14 +1027,14 @@ export class DepthService {
         //   position: 'WR'
         // },
 
-        'Offense-TE-1' : {
-          firstName: 'Juwan',
-          lastName: 'Johnson',
-          id: 24446,
-          status: 'Starter',
-          abbreviation: 'NO',
-          position: 'TE'
-        },
+        // 'Offense-TE-1' : {
+        //   firstName: 'Juwan',
+        //   lastName: 'Johnson',
+        //   id: 24446,
+        //   status: 'Starter',
+        //   abbreviation: 'NO',
+        //   position: 'TE'
+        // },
       //  'Offense-WR-2' : {
       //     firstName: 'Rahshid',
       //     lastName: 'Shaheed',
@@ -1043,14 +1052,14 @@ export class DepthService {
       //     position: 'TE'
       //   },
 
-        'Offense-WR-2' : {
-          firstName: '',
-          lastName: 'Olave',
-          id: 39085,
-          status: 'Starter',
-          abbreviation: 'NO',
-          position: 'WR'
-        },
+        // 'Offense-WR-2' : {
+        //   firstName: '',
+        //   lastName: 'Olave',
+        //   id: 39085,
+        //   status: 'Starter',
+        //   abbreviation: 'NO',
+        //   position: 'WR'
+        // },
 
         // 'Offense-QB-1' : {
         //   firstName: 'Andy',
@@ -1121,7 +1130,7 @@ export class DepthService {
     ],
     '48': [
       {
-        'gdate': 15,
+        'gdate': 11,
         
 
         // 'Offense-TE-1' : {
@@ -1177,7 +1186,7 @@ export class DepthService {
     ],
     '62': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-WR-2' : {
         //   firstName: '',
@@ -1281,7 +1290,7 @@ export class DepthService {
     ],
     '64': [
       {
-        'gdate': 15,
+        'gdate': 11,
         
          'Offense-RB-1' : {
           firstName: 'R',
@@ -1437,7 +1446,7 @@ export class DepthService {
     ],
     '57': [
       {
-        'gdate':15,
+        'gdate': 11,
         
         // 'Offense-RB-1' : {
         //   firstName: 'S',
@@ -1484,7 +1493,25 @@ export class DepthService {
     ],
     '61': [
       {
-        'gdate': 15,
+        'gdate': 1,
+
+      //  'Offense-RB-1' : {
+      //     firstName: 'Jahmyr',
+      //     lastName: 'Gibbs',
+      //     id: 79750,
+      //     status: 'Starter',
+      //     abbreviation: 'DET',
+      //     position: 'RB'
+      //   },
+
+      'Offense-RB-1' : {
+          firstName: 'David',
+          lastName: 'Montgomery',
+          id: 16039,
+          status: 'Starter',
+          abbreviation: 'DET',
+          position: 'RB'
+        }, 
    
         'Offense-TE-1' : {
           firstName: 'K',
@@ -1551,20 +1578,13 @@ export class DepthService {
         //   abbreviation: 'DET',
         //   position: 'RB'
         // },
-        'Offense-WR-1' : {
-          firstName: 'Jamaal',
-          lastName: 'Williams',
-          id: 12999,
-          status: 'Starter',
-          abbreviation: 'DET',
-          position: 'RB'
-        },
+       
         
       }
     ],
     '68': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-WR-2' : {
         //   firstName: '',
@@ -1630,7 +1650,7 @@ export class DepthService {
     ],
     '60': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         'Offense-WR-2' : {
           firstName: 'B',
@@ -1658,14 +1678,7 @@ export class DepthService {
         //   position: 'QB'
         // },
     
-        // 'Offense-TE-1' : {
-        //   firstName: 'David',
-        //   lastName: 'Montgomery',
-        //   id: 16039,
-        //   status: 'Starter',
-        //   abbreviation: 'CHI',
-        //   position: 'RB'
-        // }, 
+      
         // 'Offense-WR-2' : {
         //   firstName: 'Kahlil',
         //   lastName: 'Herbert',
@@ -1713,7 +1726,7 @@ export class DepthService {
     ],
     '66': [
       {
-        'gdate': 12,
+        'gdate': 11,
 
         // 'Offense-TE-1' : {
         //   firstName: 'Zay',
@@ -1798,7 +1811,7 @@ export class DepthService {
     ],
     '75': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-WR-2' : {
         //   firstName: 'D',
@@ -1870,7 +1883,7 @@ export class DepthService {
     ],
     '59': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         'Offense-TE-1' : {
           firstName: 'J',
@@ -1926,7 +1939,7 @@ export class DepthService {
     ],
     '56': [
       {
-        'gdate': 12,
+        'gdate': 11,
 
         // 'Offense-WR-1' : {
         //   firstName: 'I',
@@ -2004,7 +2017,7 @@ export class DepthService {
     ],
     '63': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-TE-1' : {
         //   firstName: 'T.J.',
@@ -2080,7 +2093,7 @@ export class DepthService {
     ],
     '49': [
       {
-        'gdate': 10,
+        'gdate': 11,
 
         'Offense-TE-1' : {
           firstName: 'Jeff',
@@ -2172,7 +2185,7 @@ export class DepthService {
     ],
     '65': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         'Offense-WR-1' : {
           firstName: 'Z',
@@ -2283,7 +2296,7 @@ export class DepthService {
     ],
     '67': [
       {
-        'gdate': 12,
+        'gdate': 11,
         
         'Offense-WR-1' : {
           firstName: 'Treylon',
@@ -2384,7 +2397,7 @@ export class DepthService {
     ],
     '71': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         
         // 'Offense-TE-1' : {
@@ -2474,7 +2487,7 @@ export class DepthService {
     ],
     '73': [
       {
-        'gdate': 15,
+        'gdate': 11,
 
         // 'Offense-RB-1' : {
         //   firstName: 'C',
@@ -2552,7 +2565,7 @@ export class DepthService {
     ],
     '77': [
       {
-        'gdate': 12,
+        'gdate': 11,
 
         // 'Offense-WR-1' : {
         //   firstName: 'Allen',

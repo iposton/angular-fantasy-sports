@@ -7,10 +7,6 @@ import { NFLDataService,
         NHLDataService,
         LocalStorageService } from '../../services/index';
 import { isPlatformBrowser } from '@angular/common';
-// import { forkJoin } from 'rxjs';
-// import { debounceTime } from 'rxjs/operators';
-// import * as CryptoJS from 'crypto-js';
-// let headers = null;
 let playerString = null;
 let weekTimes = null;
 let pos = {
@@ -140,7 +136,7 @@ export class NflStartersComponent implements OnInit {
       this.testBrowser = isPlatformBrowser(platformId);
       this.playerImages = this.nflUtil.getNFLImages();
       this.selectedWeek = '1'
-      this.nflSeason = '2022-2022-regular'
+      this.nflSeason = '2023-2024-regular'
       weekTimes = this.nflUtil.getWeekTimes();
       this.depth = this.depthService.getNFLDepth();
       this.nflDraftKit = true
@@ -155,7 +151,7 @@ export class NflStartersComponent implements OnInit {
           this.selectedWeek = week.week
           this.currentWeek = week.week
           this.util.nflWeek = week.week
-          this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2023-playoff' : '2022-2023-regular'
+          this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
           if (date < new Date(week.dateEnd)) {
             let utcDate = new Date(week.dateBeg);
             utcDate.setHours(utcDate.getHours() - 24);
@@ -194,17 +190,18 @@ export class NflStartersComponent implements OnInit {
     this.name = player.player.firstName + ' ' + player.player.lastName +' - '+ player.player.primaryPosition +' | #'+ player.player.jerseyNumber;
     this.http.post('/search', searchterm, {headers}).subscribe((res) => {
       this.submitting = false;
-      this.tweetsData = res['data'].statuses;
-      if (this.tweetsData.length === 0) {
-        this.noPosts = "No Tweets.";
-      }
-    });
+      console.log(res['data'].errors[0].message, 'twitter api response.')
+      this.tweetsData = res['data'].statuses
+      // if (this.tweetsData.length === 0) {
+      //   this.noPosts = "No Tweets.";
+      // }
+    })
   }
 
   public onChange(week) {
     this.loading = true
     this.selectedWeek = week
-    this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2023-playoff' : '2022-2023-regular'
+    this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
     this.haveNflSchedules = (this.teamScheds.length > 0 ? true : false)
     this.dailySchedule = []
     this.starterIdData = []
@@ -352,7 +349,7 @@ export class NflStartersComponent implements OnInit {
           }
         })
       } else {
-        this.sortTeamRanks();
+        this.sortTeamRanks()
       }
   }
 
@@ -376,7 +373,7 @@ export class NflStartersComponent implements OnInit {
         'noUpdate',
         'none',
         this.haveNflSchedules,
-        this.havePlayerInfo).subscribe(async res => {
+        false).subscribe(async res => {
         
           console.log(res, 'nfl stats data')
           this.teamStats = res['teamStats'].teamStatsTotals
@@ -386,7 +383,7 @@ export class NflStartersComponent implements OnInit {
             console.log('server added too many schedule objects, truncate')
             res['scheduleGames'].length = 32
             console.log(res['scheduleGames'], 'after truncate')
-            this.ls.set('nflSchedules', res['scheduleGames'])
+            this.ls.set('nflSchedulesDiff', res['scheduleGames'])
           }
 
           if (res['scheduleGames'].length === 0) {
@@ -395,15 +392,15 @@ export class NflStartersComponent implements OnInit {
             this.teamScheds = res['scheduleGames']
           } else {
             console.log('set to local storage', res['scheduleGames'])
-            this.ls.set('nflSchedules', res['scheduleGames'])
+            this.ls.set('nflSchedulesDiff', res['scheduleGames'])
           }
 
           if (this.teamSchedules.length === 0)
             this.sortTeamRanks()
-
+          console.log('daily url NEEDS to be set to current season before season starts or it gives wrong game IDs!', res['dailyStats'].gamelogs)
           this.dailyStats = res['dailyStats'].gamelogs
           this.myData = res['playerStats'].playerStatsTotals
-          //this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
+          this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
      
             this.dailyTeamStats = res['team'].gamelogs
             if (this.dailyTeamStats) {
@@ -698,7 +695,9 @@ export class NflStartersComponent implements OnInit {
         
       }
       this.util.tb = this.testBrowser
-      this.nflSchedules = this.ls.get('nflSchedules')
+      //delete last year local storage
+      this.ls.delete('nflSchedules')
+      this.nflSchedules = this.ls.get('nflSchedulesDiff')
       this.loadData()
     }
   }
@@ -724,7 +723,16 @@ export class NflStartersComponent implements OnInit {
     this.nflUtil.rank(this.teams, this.teamStats, this.selectedWeek)
     this.nflUtil.updateTeamStats(this.teamStats)
     this.nflTeamStats = this.teamStats
-    this.nflUtil.sortSchedules(this.teamSchedules, this.selectedWeek, this.teamScheds);
+    this.nflUtil.sortSchedules(this.teamSchedules, this.selectedWeek, this.teamScheds)
+
+    //Udate all the defense rank after getting the very difficult calculation of pointsAgainst fantasy points
+    this.nflUtil.teamNflDefFp(this.teams, this.teamStats)
+    this.nflUtil.rankD(this.teams, this.teamStats, this.selectedWeek)
+    this.nflUtil.updateDefRank(this.teamStats)
+    this.nflUtil.updateTicker(this.teamStats)
+    //update week opponent
+    this.nflUtil.updateWop(this.teamStats)
+    this.nflUtil.superUpdater(this.teamSchedules)
     //console.log(this.nflTeamStats, 'nfl team season stats');
     this.nflTeamStatsLoading = false
   }

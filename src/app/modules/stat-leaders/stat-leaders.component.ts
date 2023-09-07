@@ -720,8 +720,9 @@ export class StatLeadersComponent implements OnInit {
         this.resetSpanOpp()
         this.favorites = this.ls.get('favorites')
         console.log('reset localStorage schedules temp')
-        //this.ls.delete('nflSchedules')
-        this.nflSchedules = this.ls.get('nflSchedules')
+        //delete last year local storage
+        this.ls.delete('nflSchedules')
+        this.nflSchedules = this.ls.get('nflSchedulesDiff')
         this.getSelectedPlayerInfo(this.nflPosition)
         
         if (this.nflSchedules.length != 0) {
@@ -1113,7 +1114,7 @@ export class StatLeadersComponent implements OnInit {
             console.log('udate byes before storage')
             this.nflUtil.updateBye(res['scheduleGames'])
             res['scheduleGames'][0].weekSet = this.util.nflWeek
-            this.ls.set('nflSchedules', res['scheduleGames'])
+            this.ls.set('nflSchedulesDiff', res['scheduleGames'])
           } else if (res['scheduleGames'].length == 32) {
 
           }
@@ -1128,7 +1129,7 @@ export class StatLeadersComponent implements OnInit {
             this.nflUtil.updateBye(res['scheduleGames'])
             console.log('set nfl schedules', res['scheduleGames'])
             res['scheduleGames'][0].weekSet = this.util.nflWeek
-            this.ls.set('nflSchedules', res['scheduleGames'])
+            this.ls.set('nflSchedulesDiff', res['scheduleGames'])
           }
 
           if (this.teamSchedules.length === 0) 

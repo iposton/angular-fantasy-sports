@@ -1310,7 +1310,7 @@ export class NflUtilService {
         "6479": {
           firstName: "Marvin",
           lastName: "Jones Jr.",
-          image: nflImageRoot+"x09ruarqlcrdsjqq5mpg"
+          image: nflImageRoot+"ciy9sxefmcnwjw7ln3h2"
         },
         "7287": {
           firstName: "Chris",
@@ -1520,7 +1520,7 @@ export class NflUtilService {
         "30447": {
           firstName: "Kadarius",
           lastName: "Toney",
-          image: nflImageRoot+"hyl8jzsa7dto7qekd7vl"
+          image: nflImageRoot+"sptr6q2brsttjjg4zkov"
         },
         "8466": {
           firstName: "Malcom",
@@ -2288,9 +2288,9 @@ export class NflUtilService {
           image: nflImageRoot+"utqutyyzxbabvmyt1r3n"
         },
         "16039" : {
-          firstName: "",
+          firstName: "David",
           lastName: "Montgomery",
-          image: nflImageRoot+"sqahircgbz406rjbglpe"
+          image: nflImageRoot+"grd20lxzonco9jyg3ful"
         },
         "7916" : {
           firstName: "",
@@ -2873,9 +2873,10 @@ export class NflUtilService {
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye})
-            //TODO: get first-half record and second-half record
+            //get first-half record and second-half record
             finishedWlObject = this.winsLosses(s.score.awayScoreTotal, s.score.homeScoreTotal, s.schedule.week, false, wlObject)
-
+            //TODO: get rec yards allowed, rush yards allowed, pass yards allowed and TDs 
+            //to calculate different defense ranks by position
             paDefFP = (s.score.homeScoreTotal == null ? 0 : s.score.homeScoreTotal === 0 ? 10 : s.score.homeScoreTotal > 0 && s.score.homeScoreTotal < 7 ? 7 : s.score.homeScoreTotal > 6 && s.score.homeScoreTotal < 14 ? 4 : s.score.homeScoreTotal > 13 && s.score.homeScoreTotal < 21 ? 1 : s.score.homeScoreTotal > 20 && s.score.homeScoreTotal < 28 ? 0 : s.score.homeScoreTotal > 27 && s.score.homeScoreTotal < 35 ? -1 : -4)
             sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.awayScoreTotal < s.score.homeScoreTotal ? 'L' : 'W'), score: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal+'-'+s.score.homeScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP})
           } else if (s.schedule.awayTeam.id != mainTeam &&
