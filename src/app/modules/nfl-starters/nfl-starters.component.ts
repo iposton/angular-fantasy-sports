@@ -356,6 +356,7 @@ export class NflStartersComponent implements OnInit {
   public sortData() {
     if (this.gamesToday === true) {
       this.haveNflSchedules = (this.nflSchedules.length > 0 ? true : false)
+      console.log('do I have nfl schedules?', this.haveNflSchedules)
       this.nhlService.myStats(
         'nfl', 
         this.nflSeason, 
