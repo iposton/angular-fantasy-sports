@@ -29,15 +29,12 @@ let nbasmall = {'SF':'SF', 'SG':'SG', 'PG':'PG'}
 })
 export class StatLeadersComponent implements OnInit {
 
-  public teamRef: Array <any>;
-  public allSentData: Array <any>;
-  // public apiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nba/2020-regular";
-  //public mlbApiRoot: string
-  // public nflApiRoot: string = "https://api.mysportsfeeds.com/v2.1/pull/nfl/2021-2022-regular";
-  public nbaSeasonType: string = "2021-2022-regular"
-  public nflSeasonType: string = "2020-2021-regular"
-  public nhlSeasonType: string = "2021-2022-regular"
-  public mlbSeasonType: string = "2022-regular"
+  public teamRef: Array <any>
+  public allSentData: Array <any>
+  public nbaSeasonType: string
+  public nflSeasonType: string
+  public nhlSeasonType: string
+  public mlbSeasonType: string
   public myData: Array <any>;
   public fgPlayers: Array <any>;
   public smPlayers: Array <any>;
@@ -255,7 +252,7 @@ export class StatLeadersComponent implements OnInit {
       if (date > new Date(week.dateBeg) && date < new Date(week.dateEnd)) {
         this.nflWeek = week.week
         this.util.nflWeek = week.week 
-        this.nflSeasonType = this.nflWeek > 18 ? '2023-playoff' : '2022-2023-regular'
+        this.nflSeasonType = this.nflWeek > 18 ? '2024-playoff' : '2023-2024-regular'
         this.nflSeason = this.nflWeek > 18 ? false : true
         // this.timeSpan = week.week
         // this.week = week.week
@@ -273,7 +270,7 @@ export class StatLeadersComponent implements OnInit {
   public updateEndpoint() {
 
     if (this.sport === 'nfl') {
-      this.nflSeasonType = this.nflSeason ? '2022-2023-regular' : '2023-playoff' 
+      this.nflSeasonType = this.nflSeason ? '2023-2024-regular' : '2024-playoff' 
      
       if (this.nflSection) { 
         this.loadNFL()
@@ -328,7 +325,7 @@ export class StatLeadersComponent implements OnInit {
     this.selectedPlayer = null
     this.noPosts = ''
     this.selectedPlayer = player
-    console.log('selectedPlayer', this.selectedPlayer)
+    console.log('selectedPlayer', this.selectedPlayer.player.id, this.selectedPlayer)
     //this.gaService.eventEmitter("nba player info "+(data.playerObj ? data.playerObj.player.lastName : data.player.lastName), "nbatwitter", "tweet", "click", 10);
     let twitter = null;
     twitter = type === 'nba' ? this.nbaTeams[player.player['currentTeam'].abbreviation].twitter : type === 'nhl' ? this.nhlTeams[player.player['currentTeam'].abbreviation].twitter : player.team.twitter;
@@ -388,7 +385,7 @@ export class StatLeadersComponent implements OnInit {
   public onChange(week) {
     this.defaultWeek = week
     this.week = week
-    this.nflSeasonType = week > 18 ? '2023-playoff' : '2022-2023-regular'
+    this.nflSeasonType = week > 18 ? '2024-playoff' : '2023-2024-regular'
     this.timeSpan = week
     this.combined = []
     this.reduced = []
@@ -437,7 +434,9 @@ export class StatLeadersComponent implements OnInit {
      this.timeSpan = 'full'
      this.nflPosition = p
      this.defaultWeek = ''
-     this.getSelectedPlayerInfo(this.nflPosition)
+     //temparary to save player info before season starts
+     //this.getSelectedPlayerInfo(this.nflPosition)
+     this.deletePlayerInfo(this.nflPosition)
      this.ls.set('watchList', this.wlPlayers)
      this.loadNFL()
   }
@@ -446,6 +445,11 @@ export class StatLeadersComponent implements OnInit {
     console.log(`getting player info ${position}`)
     this.selectedPlayerInfo = this.ls.get(position+'Info')
     this.selectedPlayerInfo = this.selectedPlayerInfo != null  ? this.selectedPlayerInfo : []
+  }
+
+  public deletePlayerInfo(position) {
+    console.log(`deleting player info ${position}`)
+    this.ls.delete(position+'Info')
   }
 
   public onHitterChange(p) {
@@ -723,7 +727,9 @@ export class StatLeadersComponent implements OnInit {
         //delete last year local storage
         this.ls.delete('nflSchedules')
         this.nflSchedules = this.ls.get('nflSchedulesDiff')
-        this.getSelectedPlayerInfo(this.nflPosition)
+        //temparary to save player info before season starts
+        //this.getSelectedPlayerInfo(this.nflPosition)
+        this.deletePlayerInfo(this.nflPosition)
         
         if (this.nflSchedules.length != 0) {
           console.log(weekday, 'weekday', this.nflSchedules[0].weekSet, 'week set', this.util.nflWeek, 'nfl week')
@@ -959,6 +965,7 @@ export class StatLeadersComponent implements OnInit {
       } else {
         data.player.officialImageSrc = 'https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png'
       }
+      
     }
 
     for (let team of teams) {
@@ -1034,9 +1041,13 @@ export class StatLeadersComponent implements OnInit {
           data.stats.interceptions.defSnapPct = Math.floor(data.stats.snapCounts.defenseSnaps / team.plays * 100)
         }
         if (nflplayerImages[data.player.id] != null) {
-          data.player.officialImageSrc = nflplayerImages[data.player.id].image;
+          data.player.officialImageSrc = nflplayerImages[data.player.id].image
         } else {
           data.player.officialImageSrc = 'https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png'
+        }
+
+        if (this.nflUtil.notRookies[data.player.id] != null) {
+          data.player.rookie = false
         }
       }  
     }
@@ -1068,7 +1079,8 @@ export class StatLeadersComponent implements OnInit {
     console.log(this.haveNflSchedules, 'have nflSchedules? this should true')
 
     console.log(this.selectedPlayerInfo, 'this.selectedPlayerInfo')
-    this.havePlayerInfo = (this.selectedPlayerInfo?.players != null ? true : false)
+    this.havePlayerInfo = true
+    //this.havePlayerInfo = (this.selectedPlayerInfo?.players != null ? true : false)
     
     console.log(this.havePlayerInfo, `have ${this.nflPosition} player info?`)
     //this.wlPlayers = this.ls.get('watchList')
@@ -1157,14 +1169,14 @@ export class StatLeadersComponent implements OnInit {
           }
         }
 
-        if (this.havePlayerInfo === true) {
-          console.log('use player info from local storage')
-          res['playerInfo'] = this.selectedPlayerInfo
-          //res['playerInfo'].players = this.selectedPlayerInfo.players
-        } else {
-          console.log('set player info', res['playerInfo'].players)
-          this.ls.set(this.nflPosition+'Info', res['playerInfo'])
-        }
+        //Temparary function to handle player info before season starts
+        // if (this.havePlayerInfo === true) {
+        //   console.log('use player info from local storage')
+        //   res['playerInfo'] = this.selectedPlayerInfo
+        // } else {
+        //   console.log('set player info', res['playerInfo'].players)
+        //   this.ls.set(this.nflPosition+'Info', res['playerInfo'])
+        // }
 
         let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(x => x.stats.gamesPlayed > 0) : res['dailyStats'].gamelogs)
         this.nflData = stats
@@ -1175,21 +1187,21 @@ export class StatLeadersComponent implements OnInit {
         }
           
         //temporary before season start
-        this.nfl22Rookies = res['playerInfo'].rookies ? res['playerInfo'].rookies : []
-        this.rookieInfo(this.nfl22Rookies, this.nflTeams)
+        //this.nfl22Rookies = res['playerInfo'].rookies ? res['playerInfo'].rookies : []
+        //this.rookieInfo(this.nfl22Rookies, this.nflTeams)
         //temporary before season start
 
-        this.nflRookies = res['playerStats'].rookies ? res['playerStats'].rookies : [] //this.nflData.filter(player => player.player.rookie === true)
+        this.nflRookies = res['playerStats'].rookies ? res['playerStats'].rookies.filter(item => this.nflUtil.notRookies[item.player.id] === undefined) : []
         console.log('rookies', this.nflRookies)
         
         console.log(res['playerInfo'], 'nfl player info')
         //temporary before season start
-        console.log('update players')
-        this.util.updatePlayers(res['playerInfo'].players, this.nflData, this.nflTeams)
-        this.util.updatePlayers(res['playerInfo'].players, this.nflRookies, this.nflTeams)
+        //console.log('update players')
+        //this.util.updatePlayers(res['playerInfo'].players, this.nflData, this.nflTeams)
+        //this.util.updatePlayers(res['playerInfo'].players, this.nflRookies, this.nflTeams)
         //temporary before season start
-        this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie')   
-        this.nflRookies = this.nflRookies.filter(x => x.player.actualRookie === true)
+        //this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie')   
+        //this.nflRookies = this.nflRookies.filter(x => x.player.actualRookie === true)
         //Udate all the defense rank after getting the very difficult calculation of pointsAgainst fantasy points
         this.nflUtil.teamNflDefFp(this.nflTeams, res['teamStats'].teamStatsTotals)
         this.nflUtil.rankD(this.nflTeams, res['teamStats'].teamStatsTotals, this.nflWeek)
@@ -1201,6 +1213,7 @@ export class StatLeadersComponent implements OnInit {
         console.log('update players sched ranks after the super rank udater')
         this.nflTeamInfo(this.nflData, this.nflTeams, 'o', this.week, this.nflPosition)
         this.nflTeamInfo(this.nflRookies, this.nflTeams, 'o', this.week, this.nflPosition)
+        
          //Udate all the defense rank after getting the very difficult calculation of pointsAgainst fantasy points
         
           //TODO turn this into a function that updates all wl stats by player id and set the new watchlist
@@ -1236,10 +1249,13 @@ export class StatLeadersComponent implements OnInit {
       this.nflDefenseSection = true
       this.haveNflSchedules = (this.teamSchedules.length > 0 != null ? true : false)
       this.sortToughest()
-      this.getSelectedPlayerInfo(this.nflDPosition)
+      //temparary to save player info before season starts
+      //this.getSelectedPlayerInfo(this.nflDPosition)
+      this.deletePlayerInfo(this.nflPosition)
 
       console.log(this.selectedPlayerInfo, 'this.selectedPlayerInfo')
-      this.havePlayerInfo = (this.selectedPlayerInfo?.players != null ? true : false)
+      this.havePlayerInfo = true
+      //this.havePlayerInfo = (this.selectedPlayerInfo?.players != null ? true : false)
       console.log(this.havePlayerInfo, `have ${this.nflPosition} player info?`)
      
         this.nflDefenseLoading = true
@@ -1282,7 +1298,7 @@ export class StatLeadersComponent implements OnInit {
           this.defenseRookies = res['playerStats'].rookies ? res['playerStats'].rookies : [] //this.nflDefenseData.filter(player => player.player.rookie === true) 
           this.teamInfo(this.nflDefenseData, this.nflTeams, 'd', this.week)
           this.teamInfo(this.defenseRookies, this.nflTeams, 'd', this.week)
-          this.util.updatePlayers(res['playerInfo'].players, this.nflDefenseData, this.nflTeams)
+          //this.util.updatePlayers(res['playerInfo'].players, this.nflDefenseData, this.nflTeams)
           this.teamInfoRookie(this.defenseRookies, this.nflTeams, 'd', this.week, 'rookie');
 
           this.nflDefenseLoading = false
@@ -1332,6 +1348,10 @@ export class StatLeadersComponent implements OnInit {
           data.player.officialImageSrc = nflplayerImages[data.player.id].image;
         } else {
           data.player.officialImageSrc = 'https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png'
+        }
+
+        if (this.nflUtil.notRookies[data.player.id] != null) {
+          data.player.rookie = false
         }
 
         if (data.player.id === 16494 || data.player.id === 8100) {

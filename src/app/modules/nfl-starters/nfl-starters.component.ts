@@ -374,7 +374,7 @@ export class NflStartersComponent implements OnInit {
         'noUpdate',
         'none',
         this.haveNflSchedules,
-        false).subscribe(async res => {
+        true).subscribe(async res => {
         
           console.log(res, 'nfl stats data')
           this.teamStats = res['teamStats'].teamStatsTotals
@@ -401,7 +401,8 @@ export class NflStartersComponent implements OnInit {
           console.log('daily url NEEDS to be set to current season before season starts or it gives wrong game IDs!', res['dailyStats'].gamelogs)
           this.dailyStats = res['dailyStats'].gamelogs
           this.myData = res['playerStats'].playerStatsTotals
-          this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
+          //temparary updatePlayers function
+          //this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
      
             this.dailyTeamStats = res['team'].gamelogs
             if (this.dailyTeamStats) {
@@ -418,9 +419,9 @@ export class NflStartersComponent implements OnInit {
                     team.dailyPassPlays = teamStats.stats.passing.passAttempts;
                     team.dailyRunPlays = teamStats.stats.rushing.rushAttempts;
                     if (teamStats.stats.rushing.rushAttempts > teamStats.stats.passing.passAttempts) {
-                      team.dailyRun = true;
+                      team.dailyRun = true
                     } else {
-                      team.dailyRun = false;
+                      team.dailyRun = false
                     }
                   }
                 }

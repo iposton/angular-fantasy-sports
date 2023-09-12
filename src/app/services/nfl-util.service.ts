@@ -11,6 +11,7 @@ export class NflUtilService {
   public nflTeams: any
   public weekTimes: Array<any> = []
   public NFLImages: any
+  public notRookies: any
 
   constructor(private http: HttpClient) {
     this.weekTimes = [
@@ -687,6 +688,57 @@ export class NflUtilService {
           officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/gcytzwpjdzbpwnwxincg"
         }
       ]
+
+      this.notRookies = {
+        "30443" : {
+          rookie: false
+        },
+        "30439" : {
+          rookie: false
+        },
+        "30425" : {
+          rookie: false
+        },
+        "39438" : {
+          rookie: false
+        },
+        "39094" : {
+          rookie: false
+        },
+        "39186" : {
+          rookie: false
+        },
+        "30430" : {
+          rookie: false
+        },
+        "43384" : {
+          rookie: false
+        },
+        "39110" : {
+          rookie: false
+        },
+        "30450" : {
+          rookie: false
+        },
+        "30208" : {
+          rookie: false
+        },
+        "39115" : {
+          rookie: false
+        },
+        "43352" : {
+          rookie: false
+        },
+        "30593" : {
+          rookie: false
+        },
+        "30597" : {
+          rookie: false
+        },
+        "31103" : {
+          rookie: false
+        },
+      }
 
       this.NFLImages = {
         "8195" : {
@@ -1744,7 +1796,7 @@ export class NflUtilService {
         "7746" : {
           firstName: "Odell",
           lastName: "Beckham",
-          image: nflImageRoot+"dw6kneiq5flxfw0m6rf3"
+          image: nflImageRoot+"etl34lkiscs2lpc4to2f"
         },
         "8032" : {
           firstName: "Zach",
@@ -1874,7 +1926,7 @@ export class NflUtilService {
         "7198" : {
           firstName: "Allen",
           lastName: "Robinson",
-          image: nflImageRoot+"q9aj6lloix5ocf7xk8ry"
+          image: nflImageRoot+"tucplhxtb3c626iekuzv"
         },
         "8640" : {
           firstName: "Marcus",
@@ -2667,8 +2719,72 @@ export class NflUtilService {
           lastName: "Smith",
           image: nflImageRoot+"gvnnqr5kj0rtte3iw9mp"
         },
+        "79772" : {
+          firstName: "Sam",
+          lastName: "LaPorta",
+          image: nflImageRoot+"svqsmqhfemrnxcheh0ev"
+        },
+        "79746" : {
+          firstName: "B",
+          lastName: "Robinson",
+          image: nflImageRoot+"gatvdlb0kch6kyhhpu4c"
+        },
+        "79739" : {
+          firstName: "B",
+          lastName: "Young",
+          image: nflImageRoot+"knekunqi7nlnwgxnelb8"
+        },
+        "14517" : {
+          firstName: "C",
+          lastName: "Ridley",
+          image: nflImageRoot+"jnknuowszoqaywqoopy7"
+        },
+        "79740" : {
+          firstName: "C.J.",
+          lastName: "Stroud",
+          image: nflImageRoot+"u7g6u23cyjzpvayvwzhi"
+        },
+        "79742" : {
+          firstName: "Anthony",
+          lastName: "Richardson",
+          image: nflImageRoot+"bqrc00wmzjbz1asoapvk"
+        },
+        "79817" : {
+          firstName: "Josh",
+          lastName: "Downs",
+          image: nflImageRoot+"wdrwbumtvwv8s9te8wof"
+        },
+        "79788" : {
+          firstName: "Jayden",
+          lastName: "Reed",
+          image: nflImageRoot+"hotj0rhtzqtfckgt7xue"
+        },
+        "79780" : {
+          firstName: "Luke",
+          lastName: "Mustgrave",
+          image: nflImageRoot+"myipiqsxzxonrcegrism"
+        },
+        "30936" : {
+          firstName: "Tutu",
+          lastName: "Atwell",
+          image: nflImageRoot+"h0kk3mtoa4xwdw21lty9"
+        },
+        "108863" : {
+          firstName: "",
+          lastName: "Nacua",
+          image: nflImageRoot+"br1ovzclyrebrec6q0mp"
+        },
+        "13467" : {
+          firstName: "K",
+          lastName: "Bourne",
+          image: nflImageRoot+"vrovcaqql9p6xsycko83"
+        },
+        "79763" : {
+          firstName: "D",
+          lastName: "Kincaid",
+          image: nflImageRoot+"gc2do3ceqflw2axa6xii"
+        },
         
-
       }
    }
 

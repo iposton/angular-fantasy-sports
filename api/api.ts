@@ -398,7 +398,7 @@ methods.getStats = async (
      
         console.log('have schedules?', haveSchedules)
         if (sport === 'nfl')
-          season = parseInt(nflWeek) > 18 ? '2023-playoff' : '2022-2023-regular'
+          season = parseInt(nflWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
         await sleep(10)
         if (sport === 'nfl' && haveSchedules === 'false') {
           //console.log('teams', team)
@@ -412,7 +412,7 @@ methods.getStats = async (
         playerInfoUrl = `${apiRoot}/${sport}/players.json?position=${position}`
         dailyTeamUrl = `${apiRoot}/${sport}/${season}/week/${nflWeek}/team_gamelogs.json`
         
-        console.log(playerStatsUrl, 'PLAYER STATS for', sport)
+        //console.log(playerStatsUrl, 'PLAYER STATS for', sport)
         console.log(teamStatsUrl, 'TEAM STATS for', sport)
         //console.log(dailyUrl, 'daily player url url for', sport)
         //console.log(nflWeek , 'nflWeek')
@@ -516,7 +516,7 @@ methods.getStats = async (
         }
   
         request(psOptions, async (error, response, body) => {
-            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 4500)
+            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 3000 : 3000)
             let values = null
             let rookieVal
             await sleep(30)
