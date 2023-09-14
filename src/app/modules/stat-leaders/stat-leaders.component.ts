@@ -722,10 +722,12 @@ export class StatLeadersComponent implements OnInit {
         let weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date().getDay()]
         this.wlPlayers = this.ls.get('watchList')
         this.resetSpanOpp()
-        this.favorites = this.ls.get('favorites')
+        this.favorites = this.ls.get('nflFavorites')
+        console.log(this.favorites)
         console.log('reset localStorage schedules temp')
         //delete last year local storage
         this.ls.delete('nflSchedules')
+        this.ls.delete('favorites')
         this.nflSchedules = this.ls.get('nflSchedulesDiff')
         //temparary to save player info before season starts
         //this.getSelectedPlayerInfo(this.nflPosition)
@@ -1042,13 +1044,12 @@ export class StatLeadersComponent implements OnInit {
         }
         if (nflplayerImages[data.player.id] != null) {
           data.player.officialImageSrc = nflplayerImages[data.player.id].image
+          data.player.rookie = nflplayerImages[data.player.id].rookie
         } else {
           data.player.officialImageSrc = 'https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png'
         }
 
-        if (this.nflUtil.notRookies[data.player.id] != null) {
-          data.player.rookie = false
-        }
+        
       }  
     }
   }
@@ -1191,7 +1192,7 @@ export class StatLeadersComponent implements OnInit {
         //this.rookieInfo(this.nfl22Rookies, this.nflTeams)
         //temporary before season start
 
-        this.nflRookies = res['playerStats'].rookies ? res['playerStats'].rookies.filter(item => this.nflUtil.notRookies[item.player.id] === undefined) : []
+        this.nflRookies = res['playerStats'].rookies ? res['playerStats'].rookies.filter(item => nflplayerImages[item.player.id]?.rookie === true ||  nflplayerImages[item.player.id] === undefined) : []
         console.log('rookies', this.nflRookies)
         
         console.log(res['playerInfo'], 'nfl player info')
@@ -1345,14 +1346,12 @@ export class StatLeadersComponent implements OnInit {
         }
 
         if (nflplayerImages[data.player.id] != null) {
-          data.player.officialImageSrc = nflplayerImages[data.player.id].image;
+          data.player.officialImageSrc = nflplayerImages[data.player.id].image
+          data.player.rookie = nflplayerImages[data.player.id].rookie
         } else {
           data.player.officialImageSrc = 'https://cdn.nba.com/headshots/nba/latest/260x190/fallback.png'
         }
 
-        if (this.nflUtil.notRookies[data.player.id] != null) {
-          data.player.rookie = false
-        }
 
         if (data.player.id === 16494 || data.player.id === 8100) {
           data.player.unsigned = true

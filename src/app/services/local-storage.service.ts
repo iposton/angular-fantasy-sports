@@ -25,7 +25,7 @@ export class LocalStorageService {
   }
 
   public add(data, item, sport, selectedDate, title) {
-    item.dateAdded = sport === 'nfl' && title === 'favorites' ? selectedDate : new Date().toISOString().slice(0,10)
+    item.dateAdded = sport === 'nfl' && title === 'nflFavorites' ? selectedDate : new Date().toISOString().slice(0,10)
     item.id = item.player.id
     item.sport = sport
     item.type = sport === 'nfl' && title === 'favorites' ? 'fav' : 'wl'
