@@ -1842,7 +1842,7 @@ export class NflUtilService {
           rookie: false,
           firstName: "Mack",
           lastName: "Hollins",
-          image: nflImageRoot+"kjbgxufvchxbh9q8e6hh"
+          image: nflImageRoot+"fe6e0gnullhxbgt6ohhg"
         },
         "12937": {
           rookie: false,
@@ -2640,7 +2640,7 @@ export class NflUtilService {
           rookie: false,
           firstName: "",
           lastName: "Gesicki",
-          image: nflImageRoot+"utqutyyzxbabvmyt1r3n"
+          image: nflImageRoot+"mpichyoi6vdnhb7qte6c"
         },
         "16039" : {
           rookie: false,
@@ -3213,6 +3213,32 @@ export class NflUtilService {
           lastName: "Addison",
           image: nflImageRoot+"zhyhkz6wzwhioemhqgbk"
         },
+        "79801" : {
+          rookie: true,
+          firstName: "Mar",
+          lastName: "Mims Jr.",
+          image: nflImageRoot+"ipelpuqkimvisda7pqem"
+        },
+        "79760" : {
+          rookie: true,
+          firstName: "Z",
+          lastName: "Flowers",
+          image: nflImageRoot+"zvstl5cycvmbbqczemau"
+        },
+        "112027" : {
+          rookie: true,
+          firstName: "T",
+          lastName: "Dell",
+          image: nflImageRoot+"vxkqythvtp5ujzpqlvsk"
+        },
+        "79777" : {
+          rookie: true,
+          firstName: "",
+          lastName: "Mingo",
+          image: nflImageRoot+"ie1yo3orpq0mqemptnko"
+        },
+        
+        
         
         
         

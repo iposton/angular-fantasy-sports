@@ -404,14 +404,7 @@ export class DepthService {
         //   abbreviation: 'LV',
         //   position: 'WR'
         // },
-         'Offense-TE-1' : {
-            firstName: 'Mack',
-            lastName: 'Hollins',
-            id: 13280,
-            status: 'Starter',
-            abbreviation: 'LV',
-            position: 'WR'
-          },
+       
        
       }
     ],
@@ -1617,6 +1610,15 @@ export class DepthService {
     '68': [
       {
         'gdate': 1,
+
+        // 'Offense-TE-1' : {
+        //   firstName: 'Mack',
+        //   lastName: 'Hollins',
+        //   id: 13280,
+        //   status: 'Starter',
+        //   abbreviation: 'ATL',
+        //   position: 'WR'
+        // },
 
         // 'Offense-WR-2' : {
         //   firstName: '',
