@@ -3207,6 +3207,12 @@ export class NflUtilService {
           lastName: "Bigsby",
           image: nflImageRoot+"yndvsfcpy4ejgx9cnms3"
         },
+        "79761" : {
+          rookie: true,
+          firstName: "Jordan",
+          lastName: "Addison",
+          image: nflImageRoot+"zhyhkz6wzwhioemhqgbk"
+        },
         
         
         

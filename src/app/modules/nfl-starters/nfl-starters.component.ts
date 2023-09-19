@@ -299,8 +299,8 @@ export class NflStartersComponent implements OnInit {
                         //console.log(pos[position.player.position], pos, position.player.position);
                         if (position.player != null) {
                           this.gameStarter = {
-                            playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? this.depth[res2[i2].team.id][0][position['position']].id : position.player.id,
-                            name: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? this.depth[res2[i2].team.id][0][position['position']].lastName : position.player.lastName,
+                            playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === 1 ? this.depth[res2[i2].team.id][0][position['position']].id : position.player.id,
+                            name: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === 1 ? this.depth[res2[i2].team.id][0][position['position']].lastName : position.player.lastName,
                             team: res2[i2].team.id,
                             gameID: game2.id,
                             score: score2,
@@ -309,7 +309,7 @@ export class NflStartersComponent implements OnInit {
                             position: position['position'],
                             startType: 'actual',
                             image: '',//this.depth[res2[i2].team.id][0][position['position']].image != null ? this.depth[res2[i2].team.id][0][position['position']].image : '',
-                            playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
+                            playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === 1 ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
                           }
                           this.gameStarters.push(this.gameStarter)
                           this.starterIdData.push(this.gameStarter['playerID'])
@@ -324,8 +324,8 @@ export class NflStartersComponent implements OnInit {
                         //console.log(pos[position.player.position], pos, position.player.position);
                         if (position.player != null) {
                           this.gameStarter = {
-                            playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? this.depth[res2[i2].team.id][0][position['position']].id : position.player.id, //position.player.id,
-                            name: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? this.depth[res2[i2].team.id][0][position['position']].lastName : position.player.lastName, //position.player.lastName,
+                            playerID: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === 1 ? this.depth[res2[i2].team.id][0][position['position']].id : position.player.id, //position.player.id,
+                            name: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === 1 ? this.depth[res2[i2].team.id][0][position['position']].lastName : position.player.lastName, //position.player.lastName,
                             team: res2[i2].team.id,
                             gameID: game2.id,
                             score: score2,
@@ -334,7 +334,7 @@ export class NflStartersComponent implements OnInit {
                             position: position.player ? position.player.position : position['position'],
                             startType: 'expected',
                             image: '',//this.depth[res2[i2].team.id][0][position['position']].image != null ? this.depth[res2[i2].team.id][0][position['position']].image : '',
-                            playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === parseInt(this.selectedWeek) ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
+                            playerType: this.depth[res2[i2].team.id] && this.depth[res2[i2].team.id][0][position['position']] != null && this.depth[res2[i2].team.id][0]['gdate'] === 1 ? pos[this.depth[res2[i2].team.id][0][position['position']].position] : pos[position.player.position]
                           }
                           
                           this.gameStarters.push(this.gameStarter);
