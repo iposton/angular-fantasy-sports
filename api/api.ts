@@ -461,6 +461,37 @@ methods.getStats = async (
         }
 
         if (sport === 'nfl' && nflWeek != 'all') {
+
+          
+
+          function tryAgain(ep, abb, id, bye) {
+            console.log(ep, 'trying this endpoint again')
+            const tryAgainOptions = {
+              method: 'GET',
+              url: ep,
+              headers: headers,
+              json: true
+             }
+
+            request(tryAgainOptions, async (error, response, body) => {
+             try {
+                console.log('tried again got body')
+                let data = await body
+                let byes = data.teamByeWeeks
+                data.gamesBelongTo = abb
+                data.gamesBelongId = id
+                data.bye = bye
+                data.byes = byes
+                stats[0].scheduleGames.push(data)
+             } catch(e) {
+              console.error(error, 'error')
+              console.log(colors.fg.red+'tried again schedule error: for '+ abb, e, colors.reset)
+             } 
+              
+            })
+
+          }
+
           const dtOptions = {
            method: 'GET',
            url: dailyTeamUrl ,
@@ -479,27 +510,26 @@ methods.getStats = async (
           console.log(`Get ${sport} schedules.`)
           forkJoin(
             jsonTeam.map(
-              g => request(`${apiRoot}/${sport}/2023-2024-regular/games.json?team=${g.abbreviation}`, {headers},
+              g => request(`${apiRoot}/${sport}/2023-2024-regular/games.json?team=${g.abbreviation}`, {headers, json: true},
                 async function(err, res, body) {
                   try {
                     //getting nfl schedules
+                    
                     console.count()
-                    let data = await JSON.parse(body)
+                    let data = await body
                     let byes = data.teamByeWeeks
                     data.gamesBelongTo = g['abbreviation']
                     data.gamesBelongId = g['id']
                     data.bye = g['bye']
                     data.byes = byes
                     stats[0].scheduleGames.push(data)
-
-                    // byes.forEach ((item) => {
-                    //   if (item.team.id === data.gamesBelongId) {
-                    //     data.bye = item.byeWeeks[0]
-                    //   }
-                    // })
                     
 
                   } catch(e) {
+                    let endPointBlocked = `${apiRoot}/${sport}/2023-2024-regular/games.json?team=${g.abbreviation}`
+                    this.tryAgain(endPointBlocked, g['abbreviation'], g['id'], g['bye'])
+                    console.log(body, 'body')
+                    console.error(err, 'error')
                     console.log(colors.fg.red+'Schedule games error:', e, colors.reset)
                   }
                 })
@@ -516,7 +546,7 @@ methods.getStats = async (
         }
   
         request(psOptions, async (error, response, body) => {
-            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 3500 : 3500)
+            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 4500)
             let values = null
             let rookieVal
             await sleep(30)
