@@ -727,6 +727,7 @@ export class StatLeadersComponent implements OnInit {
         console.log('reset localStorage schedules temp')
         //delete last year local storage
         this.ls.delete('nflSchedules')
+        this.ls.delete('nflSchedulesDiff')
         this.ls.delete('favorites')
         this.nflSchedules = this.ls.get('nflSchedulesDiff')
         //temparary to save player info before season starts
@@ -1135,7 +1136,7 @@ export class StatLeadersComponent implements OnInit {
           if (res['scheduleGames'].length === 0) { 
             console.log('udate byes after storage')
             this.nflUtil.updateBye(this.nflSchedules)
-            console.log('use nfl schedule from local storage')
+            console.log('use nfl schedule from local storage if length ', this.nflSchedules.length)
             res['scheduleGames'] = this.nflSchedules
           } else {
             console.log('udate byes before storage')

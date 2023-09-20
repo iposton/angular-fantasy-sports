@@ -516,7 +516,7 @@ methods.getStats = async (
         }
   
         request(psOptions, async (error, response, body) => {
-            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 3000 : 3000)
+            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 3500 : 3500)
             let values = null
             let rookieVal
             await sleep(30)
