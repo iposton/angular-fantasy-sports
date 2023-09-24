@@ -107,8 +107,9 @@ export class NflStartersComponent implements OnInit {
     position: any,
     startType: any,
     image: any,
-    playerType: any;
+    playerType: any
   }
+  public dryTeams: any
 
   public longNames: any = {
     'Edwards-Helaire' : 'Edwards-Helaire',
@@ -131,8 +132,9 @@ export class NflStartersComponent implements OnInit {
     private nflUtil: NflUtilService,
     public ls: LocalStorageService,
     @Inject(PLATFORM_ID) platformId: string) {
-      this.showMatchup = true;
-      this.teams = this.nflUtil.getNFLTeams();
+      this.showMatchup = true
+      this.dryTeams = this.nflUtil.getNFLTeams()
+      this.teams = this.nflUtil.getNFLTeams()
       this.testBrowser = isPlatformBrowser(platformId);
       this.playerImages = this.nflUtil.getNFLImages();
       this.selectedWeek = '1'
@@ -227,7 +229,7 @@ export class NflStartersComponent implements OnInit {
         'dateE', 
         'player',
         'Offense-RB-1,Offense-TE-1,Offense-QB-1,Offense-WR-1,Offense-WR-2', 
-        this.teams,
+        this.dryTeams,
         this.tsDate, 
         'true',
         'dailySchedule',
@@ -365,7 +367,7 @@ export class NflStartersComponent implements OnInit {
         'player_stats_totals', 
         playerString, 
         'QB,WR,TE,RB', 
-        this.teams,
+        this.dryTeams,
         this.tsDate, 
         'isToday',
         'stats',
@@ -380,6 +382,7 @@ export class NflStartersComponent implements OnInit {
           this.teamStats = res['teamStats'].teamStatsTotals
           this.teamScheds = res['scheduleGames']
 
+
           if (res['scheduleGames'].length > 32) {
             console.log('server added too many schedule objects, truncate')
             res['scheduleGames'].length = 32
@@ -392,6 +395,8 @@ export class NflStartersComponent implements OnInit {
             res['scheduleGames'] = this.nflSchedules
             this.teamScheds = res['scheduleGames']
           } else {
+            //TODO creat function to add gamelog to nflschedules
+            this.nflUtil.getTeamGamelogs(res['dailyStats'].gamelogs, res['scheduleGames'])
             console.log('set to local storage', res['scheduleGames'])
             this.ls.set('nflSchedulesDiff', res['scheduleGames'])
           }
@@ -697,9 +702,11 @@ export class NflStartersComponent implements OnInit {
         
       }
       this.util.tb = this.testBrowser
+      //this.ls.delete('nflSchedulesDiff')
       //delete last year local storage
       this.ls.delete('nflSchedules')
       this.nflSchedules = this.ls.get('nflSchedulesDiff')
+      //TODO: add gamelog objects by team id to this.nflSchedules on demand
       this.loadData()
     }
   }

@@ -727,7 +727,7 @@ export class StatLeadersComponent implements OnInit {
         console.log('reset localStorage schedules temp')
         //delete last year local storage
         this.ls.delete('nflSchedules')
-        this.ls.delete('nflSchedulesDiff')
+        //this.ls.delete('nflSchedulesDiff')
         this.ls.delete('favorites')
         this.nflSchedules = this.ls.get('nflSchedulesDiff')
         //temparary to save player info before season starts

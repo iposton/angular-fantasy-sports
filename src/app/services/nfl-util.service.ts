@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
+import { BEFORE_APP_SERIALIZED } from '@angular/platform-server'
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/'
 let nextYear = `2024 00:00:00 GMT-0700 (Pacific Daylight Time)`
 let nflYear = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
@@ -1010,10 +1011,6 @@ export class NflUtilService {
           rookie: false,
           image: nflImageRoot+"ew3fzelndoialgn6a2ra"
         },
-        "13466" : {
-          rookie: false,
-          image: nflImageRoot+"o7flzlafkwup1al6ujiw"
-        },
         "9743" : {
           rookie: false,
           image: nflImageRoot+"zi77vkqwrmklt5ic6lc6"
@@ -1440,7 +1437,7 @@ export class NflUtilService {
           rookie: false,
           firstName: "Adam",
           lastName: "Trautman",
-          image: nflImageRoot+"uzw6h7whiuhlo15vneqk"
+          image: nflImageRoot+"zdzicjvlqk43ssjhupwy"
         },
         "8019": {
           rookie: false,
@@ -3237,12 +3234,36 @@ export class NflUtilService {
           lastName: "Mingo",
           image: nflImageRoot+"ie1yo3orpq0mqemptnko"
         },
+        "13466" : {
+          rookie: false,
+          firstName: 'Matt',
+          lastName: 'Breida',
+          image: nflImageRoot+"rc4m1xw0xmtsrxswd0bg"
+        },
         
         
         
         
         
-        
+      }
+   }
+
+   public getTeamGamelogs(gamelogs, schedules) {
+      //TODO: add the gamelog by id, check if week already have
+      console.log('getting game stats for games to save in nflTeamSchedules')
+      for (let sItem of schedules) {
+        for (let s of sItem.games) {
+          for (let gItem of gamelogs) {
+            if (gItem.game.id === s.schedule.id) {
+              if (gItem.team.id === s.schedule.awayTeam['id']) {
+                s.stats = gItem.stats
+              } else if (gItem.team.id === s.schedule.homeTeam['id']) {
+                s.stats = gItem.stats
+              }
+              
+            }
+          }
+        }
       }
    }
 
@@ -3493,19 +3514,24 @@ export class NflUtilService {
      if (type === 't') {
       let sum = []
       //console.log('points against sum starts here')
+      let tunrOverGameTotal = 0
       let paTotal = 0
       let wlObject: object = {fhW: 0, fhL: 0, shW: 0, shL: 0, fhT: 0, shT: 0}
       let finishedWlObject = null
       sched.forEach((s, index) => {
         let paDefFP = null
+        let tunrOverSeasonTotal = null
         for (let t of this.nflTeams){
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye})
+            //TODO: calculate how many TDs were from offense tunrover such as interception or fumble
+            tunrOverGameTotal = s.score.intTD + s.score.fumTD
             //get first-half record and second-half record
             finishedWlObject = this.winsLosses(s.score.awayScoreTotal, s.score.homeScoreTotal, s.schedule.week, false, wlObject)
             //TODO: get rec yards allowed, rush yards allowed, pass yards allowed and TDs 
             //to calculate different defense ranks by position
+            
             paDefFP = (s.score.homeScoreTotal == null ? 0 : s.score.homeScoreTotal === 0 ? 10 : s.score.homeScoreTotal > 0 && s.score.homeScoreTotal < 7 ? 7 : s.score.homeScoreTotal > 6 && s.score.homeScoreTotal < 14 ? 4 : s.score.homeScoreTotal > 13 && s.score.homeScoreTotal < 21 ? 1 : s.score.homeScoreTotal > 20 && s.score.homeScoreTotal < 28 ? 0 : s.score.homeScoreTotal > 27 && s.score.homeScoreTotal < 35 ? -1 : -4)
             sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.awayScoreTotal < s.score.homeScoreTotal ? 'L' : 'W'), score: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal+'-'+s.score.homeScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP})
           } else if (s.schedule.awayTeam.id != mainTeam &&

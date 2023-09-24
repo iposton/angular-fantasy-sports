@@ -386,7 +386,13 @@ methods.getStats = async (
     if (dataType === 'stats') {
       console.log(colors.fg.yellow+`Fetch Stats for ${sport}`, colors.reset)
       //console.log(playerType, 'playerType')
+      
       let firstPromise = new Promise(async(resolve, reject) => {
+
+        async function isParsed(t) {
+          console.log('try to parse teams again stringify')
+          jsonTeam = JSON.parse(JSON.stringify(t))
+        }
 
         let dailyLineup = []
         let dailyUrl = null
@@ -399,11 +405,21 @@ methods.getStats = async (
         console.log('have schedules?', haveSchedules)
         if (sport === 'nfl')
           season = parseInt(nflWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
+
+
         await sleep(10)
-        if (sport === 'nfl' && haveSchedules === 'false') {
-          //console.log('teams', team)
-          jsonTeam = await JSON.parse(team)
+
+        try {
+          if (sport === 'nfl' && haveSchedules === 'false') {
+            //console.log('teams', team)
+            jsonTeam = await JSON.parse(team)
+          }
+        } catch(e) {
+          
+          await isParsed(team)
+          console.log(e, 'error')
         }
+       
         
         // daily url NEEDS to be set to current season before season starts or all hell will happen!
         dailyUrl = playerType === 'nhlGoalies' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?position=${position}` : playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?position=${position}` : playerType === 'nflPlayers' ? `${apiRoot}/${sport}/2023-2024-regular/week/${nflWeek}/${feedType}.json?player=${player}` : sport === 'mlb' ? `${apiRoot}/${sport}/2022-regular/date/${dailyDate}/${feedType}.json?player=${player}` : `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?player=${player}`
