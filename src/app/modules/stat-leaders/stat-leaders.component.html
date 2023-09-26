@@ -61,7 +61,7 @@
    <span [ngClass]="{'dn' : !nflSection, 'hollow-btn' : nflSection}" (click)="week = 'all'; timeSpan = 'full'; defensePlayers(); $event.stopPropagation()">Defense</span>  
    <span [ngClass]="{'dn' : !nflDefenseSection, 'hollow-btn' : nflDefenseSection}" (click)="nflSection = true; nflDefenseSection = false;">Offense</span>
    <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="nflDraftKit = !nflDraftKit; $event.stopPropagation()">{{nflDraftKit ? 'Stats' : 'Draft Kit'}}</span>
-   <!-- <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('three-weeks')">Last 3 Weeks</span>  -->
+   <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('three-weeks')">Last 3 Weeks</span> 
    <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="pStats = !pStats">{{pStats ? 'Teams' : 'Players'}}</span> 
    <span class="hollow-btn" [ngClass]="{'dn' : !nflSection && !nflDefenseSection}" (click)="onChange('all')">ALL</span>
 </div>
