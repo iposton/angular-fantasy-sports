@@ -501,7 +501,7 @@ export class StatLeadersComponent implements OnInit {
     }
 
     if (this.sport === 'nfl') {     
-      season = '2022-2023-regular'
+      season = '2023-2024-regular'
     }
 
       this.nhlService.myStats(
