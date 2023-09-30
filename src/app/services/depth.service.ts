@@ -1345,6 +1345,15 @@ export class DepthService {
     '64': [
       {
         'gdate': 1,
+
+        'Offense-WR-2' : {
+          firstName: 'Tank',
+          lastName: 'Dell',
+          id: 112027,
+          status: 'Starter',
+          abbreviation: 'HOU',
+          position: 'WR'
+        },
         
         //  'Offense-RB-1' : {
         //   firstName: 'R',
@@ -1380,7 +1389,7 @@ export class DepthService {
         //   abbreviation: 'HOU',
         //   position: 'WR'
         // },
-        'Offense-TE-1' : {
+        'Offense-WR-1' : {
           firstName: 'Nico',
           lastName: 'Collins',
           id: 30242,

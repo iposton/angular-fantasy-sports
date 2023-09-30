@@ -1749,13 +1749,6 @@ export class StatLeadersComponent implements OnInit {
       'G':'n',
     }
   
-        // forkJoin(
-        //     games.map(
-        //       g =>
-        //       this.http.get(`${root}/games/`+ g.schedule.id +`/boxscore.json`, {headers})
-        //     )
-        //   )
-        //   .subscribe(res => {
             let i: number;
             let home;
             let away;

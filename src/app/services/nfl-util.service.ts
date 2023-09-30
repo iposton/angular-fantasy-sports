@@ -596,12 +596,6 @@ export class NflUtilService {
         "#000000",
         "#a5acaf"
         ],
-        socialMediaAccounts: [
-        {
-        mediaType: "TWITTER",
-        value: "Raiders"
-        }
-        ],
         officialLogoImageSrc: "https://static.www.nfl.com/image/private/t_q-best/league/gzcojbzcyjgubgyb6xf2"
       },
       {
@@ -2183,12 +2177,6 @@ export class NflUtilService {
           lastName: "Hurst",
           image: nflImageRoot+"evevkgcgy0suudtprryp"
         },
-        // "0" : {
-          rookie: false,
-        //   firstName: "Kenyan",
-        //   lastName: "Drake",
-        //   image: nflImageRoot+"xx"
-        // },
         "13094" : {
           rookie: false,
           firstName: "Evan",
@@ -3258,8 +3246,12 @@ export class NflUtilService {
           lastName: 'Edwards',
           image: nflImageRoot+"tvxpivjku1lbpf7tfafl"
         },
-        
-        
+        "14677" : {
+          rookie: false,
+          firstName: 'M',
+          lastName: 'Gallup',
+          image: nflImageRoot+"tt9xpcg4x2z3osc1fcq6"
+        },    
         
       }
    }
@@ -3271,9 +3263,9 @@ export class NflUtilService {
         for (let s of sItem.games) {
           for (let gItem of gamelogs) {
             if (gItem.game.id === s.schedule.id) {
-              if (gItem.team.id === s.schedule.awayTeam['id']) {
+              if (gItem.team.id === s.schedule.awayTeam['id'] && s.stats == null) {
                 s.stats = gItem.stats
-              } else if (gItem.team.id === s.schedule.homeTeam['id']) {
+              } else if (gItem.team.id === s.schedule.homeTeam['id'] && s.stats == null) {
                 s.stats = gItem.stats
               }
               

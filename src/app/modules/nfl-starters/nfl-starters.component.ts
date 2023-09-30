@@ -392,7 +392,10 @@ export class NflStartersComponent implements OnInit {
 
           if (res['scheduleGames'].length === 0) {
             console.log('use nfl schedule from local storage')
+            this.nflUtil.getTeamGamelogs(res['dailyStats'].gamelogs, this.nflSchedules)
             res['scheduleGames'] = this.nflSchedules
+            console.log('set schedules to ls again after getting the weekly game log stats')
+            this.ls.set('nflSchedulesDiff', res['scheduleGames'])
             this.teamScheds = res['scheduleGames']
           } else {
             //TODO creat function to add gamelog to nflschedules
@@ -528,7 +531,8 @@ export class NflStartersComponent implements OnInit {
                         data.team.abbreviation = team.abbreviation;
                         data.team.city = team.city;
                         data.team.name = team.name;
-                        data.team.twitter = team.twitter;
+                        data.team.twitter = team.twitter
+                        data.team.conference = team.conference
             
                         if (data.stats.rushing) {
                           data.stats.receiving.seasonTotalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets;

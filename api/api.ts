@@ -2,7 +2,7 @@ let request = require('request')
 let methods: any = {}
 let apiRoot: string = `https://api.mysportsfeeds.com/v2.1/pull`
 import { forkJoin } from 'rxjs'
-import { debounceTime, delay, take } from 'rxjs/operators'
+import { teams } from './teams'
 
 let info = [
     {
@@ -78,10 +78,8 @@ methods.getInfo = async (
     selectedWeek: string) => {
       const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
       let headers = {"Authorization": "Basic " + Buffer.from(apiKey + ":" + "MYSPORTSFEEDS").toString('base64')}
-      let jsonTeam = null
-      await sleep(10)
-      if (haveSchedules === 'false')
-        jsonTeam = await JSON.parse(team)
+      
+     
 
   if (dataType === 'dailySchedule') {
     console.log(colors.fg.yellow+`Fetch data for ${sport}`, colors.reset)
@@ -91,8 +89,6 @@ methods.getInfo = async (
       let gamesUrl = sport != 'nfl' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json` : `${apiRoot}/${sport}/${season}/week/${selectedWeek}/${feedType}.json`
       let fromToUrl = `${apiRoot}/${sport}/${season}/${feedType}.json?date=${fromTo}`
       
-      
-      //console.log(jsonTeam, 'json') 
       console.log(gamesUrl, 'games url')
       console.log(fromToUrl, 'from to url')
 
@@ -263,7 +259,7 @@ methods.getInfo = async (
       let nextWeekSchedule
       let items = []
       let items2 = []
-      const teamsArray = Object.values(jsonTeam)
+      const teamsArray = Object.values(teams.nflTeams)
       //console.log(teamsArray, 'teams')
       console.log(`${apiRoot}/${sport}/${season}/${feedType}.json?team=123&date=${fromToWeek}`, 'fromtoweek')
       forkJoin(
@@ -389,10 +385,6 @@ methods.getStats = async (
       
       let firstPromise = new Promise(async(resolve, reject) => {
 
-        async function isParsed(t) {
-          console.log('try to parse teams again stringify')
-          jsonTeam = JSON.parse(JSON.stringify(t))
-        }
 
         let dailyLineup = []
         let dailyUrl = null
@@ -400,29 +392,18 @@ methods.getStats = async (
         let playerStatsUrl = null
         let playerInfoUrl = null
         let dailyTeamUrl = null
-        let jsonTeam = null
+        
      
         console.log('have schedules?', haveSchedules)
         if (sport === 'nfl')
           season = parseInt(nflWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
 
 
-        await sleep(10)
 
-        try {
-          if (sport === 'nfl' && haveSchedules === 'false') {
-            //console.log('teams', team)
-            jsonTeam = await JSON.parse(team)
-          }
-        } catch(e) {
-          
-          await isParsed(team)
-          console.log(e, 'error')
-        }
        
-        
-        // daily url NEEDS to be set to current season before season starts or all hell will happen!
+        console.log('daily url NEEDS to be set to current season before season starts or all hell will happen!')
         dailyUrl = playerType === 'nhlGoalies' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?position=${position}` : playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?position=${position}` : playerType === 'nflPlayers' ? `${apiRoot}/${sport}/2023-2024-regular/week/${nflWeek}/${feedType}.json?player=${player}` : sport === 'mlb' ? `${apiRoot}/${sport}/2022-regular/date/${dailyDate}/${feedType}.json?player=${player}` : `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?player=${player}`
+
         teamStatsUrl = `${apiRoot}/${sport}/${season}/${feedType2}.json`
         playerStatsUrl = playerType === 'statLeaders' || playerType === 'nhlGoalies' || playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/${feedType3}.json?position=${position}` : `${apiRoot}/${sport}/${season}/${feedType3}.json?player=${player}` 
         playerInfoUrl = `${apiRoot}/${sport}/players.json?position=${position}`
@@ -525,7 +506,7 @@ methods.getStats = async (
         if (sport === 'nfl' && nflWeek === 'all' && haveSchedules === 'false' || playerType === 'nflPlayers' && haveSchedules === 'false') {
           console.log(`Get ${sport} schedules.`)
           forkJoin(
-            jsonTeam.map(
+            teams.nflTeams.map(
               g => request(`${apiRoot}/${sport}/2023-2024-regular/games.json?team=${g.abbreviation}`, {headers, json: true},
                 async function(err, res, body) {
                   try {

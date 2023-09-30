@@ -1415,6 +1415,24 @@ ul {
           background-size: 70% !important;
           display: inline-block;
           padding: 14px 0;
+
+          .team-con-container {
+            font-size: 11px;
+            color: #000;
+            background: #ccc;
+            width: 80px;
+            margin: 0 auto;
+            padding: 0;
+          }
+
+          .team-con-container.AFC {
+            background: #184C8C;
+            color: #fff
+          }
+          .team-con-container.NFC {
+            background: #D61B17;
+            color: #fff
+          }
   
           img {
             width: 35%;
@@ -1434,6 +1452,17 @@ ul {
           }
           
   
+        }
+
+        .left-content .team-con-container {
+          position: absolute;
+          top: 0;
+        }
+        .right-content .team-con-container {
+          position: absolute;
+          bottom: 0;
+          bottom: 165px;
+          right: 0;
         }
    
       }
@@ -2136,9 +2165,12 @@ form.date-form {
       color: #fff;
     }
 
-    .rank-circle:hover { 
+    .rank-circle:hover,
+    .t-name:hover { 
       cursor: pointer;
     }
+
+    
 
     .red {
       background:#e74c3c;
@@ -3052,6 +3084,8 @@ form input[type="text"] {
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .left-content, 
   .nfl-page .card-wrap-sp .mat-card-sp .content-wrapper .right-content {
     background-size: 500px 226px!important;
+
+      
   }
 
 }
