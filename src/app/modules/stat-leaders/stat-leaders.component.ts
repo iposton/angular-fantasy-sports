@@ -45,6 +45,7 @@ export class StatLeadersComponent implements OnInit {
   public nflOffenseData: Array <any>;
   public nflData: Array <any>;
   public nflDefenseData: Array <any>;
+  public gamesByID: Array<any> = []
 
   public st1: any; //passing
   public st2: any;
@@ -730,6 +731,7 @@ export class StatLeadersComponent implements OnInit {
         //this.ls.delete('nflSchedulesDiff')
         this.ls.delete('favorites')
         this.nflSchedules = this.ls.get('nflSchedulesDiff')
+        this.gamesByID = this.ls.get('gamesByID')
         //temparary to save player info before season starts
         //this.getSelectedPlayerInfo(this.nflPosition)
         this.deletePlayerInfo(this.nflPosition)
@@ -1138,6 +1140,7 @@ export class StatLeadersComponent implements OnInit {
             this.nflUtil.updateBye(this.nflSchedules)
             console.log('use nfl schedule from local storage if length ', this.nflSchedules.length)
             res['scheduleGames'] = this.nflSchedules
+            this.nflUtil.statsToSched(this.nflSchedules, this.gamesByID)
           } else {
             console.log('udate byes before storage')
             this.nflUtil.updateBye(res['scheduleGames'])

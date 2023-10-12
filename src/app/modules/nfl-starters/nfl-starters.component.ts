@@ -47,6 +47,7 @@ export class NflStartersComponent implements OnInit {
   public teamSchedules: Array <any> = []
   public toughOSchedules: Array <any> = []
   public dailyLineup: Array <any> = []
+  public gamesByID: Array<any> = []
 
   public testBrowser: boolean;
   public gamesToday: boolean = false;
@@ -120,7 +121,8 @@ export class NflStartersComponent implements OnInit {
     'Peoples-Jones' : 'Peoples-Jones',
     'Beckham Jr.' : 'Beckham Jr.',
     'Westbrook-Ikhine' : 'Westbrook-Ikhine',
-    'Okwuegbunam' : 'Okwuegbunam'
+    'Okwuegbunam' : 'Okwuegbunam',
+    'Thompson-Robinson' : 'Thompson-Robinson'
   }
   
   constructor(
@@ -387,21 +389,28 @@ export class NflStartersComponent implements OnInit {
             console.log('server added too many schedule objects, truncate')
             res['scheduleGames'].length = 32
             console.log(res['scheduleGames'], 'after truncate')
+            res['scheduleGames'][0].weekSet = this.util.nflWeek
             this.ls.set('nflSchedulesDiff', res['scheduleGames'])
           }
 
           if (res['scheduleGames'].length === 0) {
             console.log('use nfl schedule from local storage')
-            this.nflUtil.getTeamGamelogs(res['dailyStats'].gamelogs, this.nflSchedules)
+            this.nflUtil.getTeamGamelogs(res['team'].gamelogs, this.nflSchedules, this.gamesByID)
             res['scheduleGames'] = this.nflSchedules
             console.log('set schedules to ls again after getting the weekly game log stats')
-            this.ls.set('nflSchedulesDiff', res['scheduleGames'])
+            res['scheduleGames'][0].weekSet = this.util.nflWeek
+            //this.ls.set('nflSchedulesDiff', res['scheduleGames'])
+            this.gamesByID = this.util.removeDuplicatesBy(x => x.gameID, this.gamesByID)
+            this.ls.set('gamesByID', this.gamesByID)
             this.teamScheds = res['scheduleGames']
           } else {
             //TODO creat function to add gamelog to nflschedules
-            this.nflUtil.getTeamGamelogs(res['dailyStats'].gamelogs, res['scheduleGames'])
+            this.nflUtil.getTeamGamelogs(res['team'].gamelogs, res['scheduleGames'], this.gamesByID)
             console.log('set to local storage', res['scheduleGames'])
+            res['scheduleGames'][0].weekSet = this.util.nflWeek
             this.ls.set('nflSchedulesDiff', res['scheduleGames'])
+            this.gamesByID = this.util.removeDuplicatesBy(x => x.gameID, this.gamesByID)
+            this.ls.set('gamesByID', this.gamesByID)
           }
 
           if (this.teamSchedules.length === 0)
@@ -710,6 +719,7 @@ export class NflStartersComponent implements OnInit {
       //delete last year local storage
       this.ls.delete('nflSchedules')
       this.nflSchedules = this.ls.get('nflSchedulesDiff')
+      this.gamesByID = this.ls.get('gamesByID')
       //TODO: add gamelog objects by team id to this.nflSchedules on demand
       this.loadData()
     }
@@ -731,6 +741,7 @@ export class NflStartersComponent implements OnInit {
   }
 
   public sortTeamRanks() {
+    this.nflUtil.statsToSched(this.nflSchedules, this.gamesByID)
     this.nflTeamStatsLoading = true
     this.nflUtil.teamFp(this.teams, this.teamStats)
     this.nflUtil.rank(this.teams, this.teamStats, this.selectedWeek)

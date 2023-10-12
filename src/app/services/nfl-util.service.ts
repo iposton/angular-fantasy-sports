@@ -11,8 +11,10 @@ let nflYear = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
 export class NflUtilService {
   public nflTeams: any
   public weekTimes: Array<any> = []
+  public gamesByID: Array<any> = []
   public NFLImages: any
   public notRookies: any
+  public standin: number
 
   constructor(private http: HttpClient) {
     this.weekTimes = [
@@ -3097,7 +3099,7 @@ export class NflUtilService {
           image: nflImageRoot+"svqsmqhfemrnxcheh0ev"
         },
         "79746" : {
-          rookie: false,
+          rookie: true,
           firstName: "B",
           lastName: "Robinson",
           image: nflImageRoot+"gatvdlb0kch6kyhhpu4c"
@@ -3251,28 +3253,105 @@ export class NflUtilService {
           firstName: 'M',
           lastName: 'Gallup',
           image: nflImageRoot+"tt9xpcg4x2z3osc1fcq6"
-        },    
+        },
+        "79832" : {
+          rookie: true,
+          firstName: 'M',
+          lastName: 'Wilson',
+          image: nflImageRoot+"o5sshsrygioektzjsahk"
+        }, 
+           
         
       }
    }
 
-   public getTeamGamelogs(gamelogs, schedules) {
+   public getTeamGamelogs(gamelogs, schedules, gamesByID) {
       //TODO: add the gamelog by id, check if week already have
       console.log('getting game stats for games to save in nflTeamSchedules')
       for (let sItem of schedules) {
         for (let s of sItem.games) {
-          for (let gItem of gamelogs) {
+          let homeToTD = null
+          let awayToTD = null
+
+          let gameObj = { 
+            gameID: null,
+            awayStats: null,
+            homeStats: null,
+            awayToTD: null,
+            homeToTD: null,
+            homeTeam: null,
+            awayTeam: null,
+            week: null,
+            belongsToID: null,
+          }
+
+          for (let [index, gItem] of gamelogs.entries()) {
             if (gItem.game.id === s.schedule.id) {
-              if (gItem.team.id === s.schedule.awayTeam['id'] && s.stats == null) {
-                s.stats = gItem.stats
-              } else if (gItem.team.id === s.schedule.homeTeam['id'] && s.stats == null) {
-                s.stats = gItem.stats
+                gameObj.gameID = gItem.game.id
+                gameObj.week = gItem.game.week
+                gameObj.awayTeam = gItem.game.awayTeamAbbreviation
+                gameObj.homeTeam = gItem.game.homeTeamAbbreviation
+                gameObj.belongsToID = gItem.team.id
+
+              if (gItem.team.id === s.schedule.awayTeam['id']) {
+                //s.awayStats = gItem.stats
+                //s.awayToTD = awayToTD
+                awayToTD = gItem.stats.interceptions.intTD + gItem.stats.fumbles.fumTD
+                gameObj.awayStats = gItem.stats
+                gameObj.awayToTD = awayToTD
+                
+              } else if (gameObj.belongsToID != s.schedule.awayTeam['id'] && gameObj.homeTeam === s.schedule.homeTeam['abbreviation']) {
+                //s.homeStats = gItem.stats
+                //s.homeToTD = homeToTD
+                homeToTD = gItem.stats.interceptions.intTD + gItem.stats.fumbles.fumTD
+                gameObj.homeStats = gItem.stats
+                gameObj.homeToTD = homeToTD  
+
+              }
+
+              if(gameObj.homeStats != null && gameObj.awayStats != null)
+                gamesByID.push(gameObj)
+            }
+          }
+        }
+
+        
+      }
+      
+      // const arrayHashmap = gamesByID.reduce((obj, item) => {
+      //   obj[item.gameID] = obj[item.gameID] || []
+      //   obj[item.gameID].push(item)
+      //   return obj
+      // }, {})
+      
+      // const mergedArray = Object.values(arrayHashmap)
+      
+      // console.log(mergedArray, 'merged')
+   }
+
+   public statsToSched(schedules, gamesByID) {
+     console.log('apply TO stats to teams')
+    if (gamesByID.length === 0) {
+      console.log('gamesByID is empty')
+      return
+    } else {
+      for (let sItem of schedules) {
+        for (let [index, g] of gamesByID.entries()) {
+          for(let s of sItem.games) {
+            if (g.gameID === s.schedule.id) {
+              if (g.awayTeam === s.schedule.awayTeam['abbreviation']) {
+                s.awayToTD = g.awayToTD
               }
               
+              if (g.homeTeam === s.schedule.homeTeam['abbreviation']) {
+                s.homeToTD = g.homeToTD
+              }
             }
           }
         }
       }
+    }
+    console.log('gamesBYID', gamesByID)
    }
 
    public updateTeamStats(tStats) {
@@ -3522,39 +3601,43 @@ export class NflUtilService {
      if (type === 't') {
       let sum = []
       //console.log('points against sum starts here')
-      let tunrOverGameTotal = 0
+      let toTDTotal = 0
       let paTotal = 0
       let wlObject: object = {fhW: 0, fhL: 0, shW: 0, shL: 0, fhT: 0, shT: 0}
       let finishedWlObject = null
       sched.forEach((s, index) => {
         let paDefFP = null
-        let tunrOverSeasonTotal = null
+        let turnOverTD = null
         for (let t of this.nflTeams){
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye})
             //TODO: calculate how many TDs were from offense tunrover such as interception or fumble
-            tunrOverGameTotal = s.score.intTD + s.score.fumTD
+            turnOverTD = s.homeToTD != null ? s.homeToTD * 6 : 0
+            s.score.homeScoreTotal - turnOverTD
             //get first-half record and second-half record
             finishedWlObject = this.winsLosses(s.score.awayScoreTotal, s.score.homeScoreTotal, s.schedule.week, false, wlObject)
             //TODO: get rec yards allowed, rush yards allowed, pass yards allowed and TDs 
             //to calculate different defense ranks by position
             
             paDefFP = (s.score.homeScoreTotal == null ? 0 : s.score.homeScoreTotal === 0 ? 10 : s.score.homeScoreTotal > 0 && s.score.homeScoreTotal < 7 ? 7 : s.score.homeScoreTotal > 6 && s.score.homeScoreTotal < 14 ? 4 : s.score.homeScoreTotal > 13 && s.score.homeScoreTotal < 21 ? 1 : s.score.homeScoreTotal > 20 && s.score.homeScoreTotal < 28 ? 0 : s.score.homeScoreTotal > 27 && s.score.homeScoreTotal < 35 ? -1 : -4)
-            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.awayScoreTotal < s.score.homeScoreTotal ? 'L' : 'W'), score: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal+'-'+s.score.homeScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP})
+            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.awayScoreTotal < s.score.homeScoreTotal ? 'L' : 'W'), score: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal+'-'+s.score.homeScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP, toTDTotal: toTDTotal += turnOverTD})
           } else if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye})
 
+            turnOverTD = s.awayToTD != null ? s.awayToTD * 6 : 0
+            s.score.awayScoreTotal - turnOverTD
             finishedWlObject = this.winsLosses(s.score.awayScoreTotal, s.score.homeScoreTotal, s.schedule.week, true, wlObject)
 
             paDefFP = (s.score.awayScoreTotal == null ? 0 : s.score.awayScoreTotal === 0 ? 10 : s.score.awayScoreTotal > 0 && s.score.awayScoreTotal < 7 ? 7 : s.score.awayScoreTotal > 6 && s.score.awayScoreTotal < 14 ? 4 : s.score.awayScoreTotal > 13 && s.score.awayScoreTotal < 21 ? 1 : s.score.awayScoreTotal > 20 && s.score.awayScoreTotal < 28 ? 0 : s.score.awayScoreTotal > 27 && s.score.awayScoreTotal < 35 ? -1 : -4)
-            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.homeScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.homeScoreTotal < s.score.awayScoreTotal ? 'L': 'W'), score: (s.score.homeScoreTotal == null ? '' : s.score.homeScoreTotal+'-'+s.score.awayScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP})
+            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.homeScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.homeScoreTotal < s.score.awayScoreTotal ? 'L': 'W'), score: (s.score.homeScoreTotal == null ? '' : s.score.homeScoreTotal+'-'+s.score.awayScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP, toTDTotal: toTDTotal += turnOverTD})
           }
         }
       })
 
       sum['paTotal'] = paTotal
+      sum['toTDTotal'] = toTDTotal
       sum['finishedWlObject'] = finishedWlObject
       //first-half win loss record
       sum['fhWin'] = finishedWlObject['fhW']
@@ -3858,18 +3941,21 @@ public rankD(nflTeams, stats, week) {
   public teamNflDefFp(teams, stats) { 
     console.log('define pointsAgainstDefTotal for ui')
     let paTot = null
+    let toTot = null
     //console.log('define teamDefFDFP for ui but its NaN because pointsAgainstDefTotal is undefined', teams)
     for(let team of stats) {
       for (let t of teams) {
         if (team['team'].id === t.id) {
           try {
             paTot = t['scheduleTicker']?.paTotal != null ? t['scheduleTicker']?.paTotal : 0
+            toTot = t['scheduleTicker']?.toTDTotal != null ? t['scheduleTicker']?.toTDTotal : 0
           } catch(e) {
             console.log(e, 'paTotal no ready yet')
           }
           team['stats'].receiving.teamDefFDFP = (team['stats'].receiving != null) ? (((team['stats'].punting.puntBlk + team['stats'].fieldGoals.fgBlk + team['stats'].fumbles.fumOppRec + team['stats'].interceptions.interceptions + team['stats'].interceptions.safeties) * 2) + ((team['stats'].puntReturns.prTD + team['stats'].kickoffReturns.krTD) * 6) + ((team['stats'].fumbles.fumTD + team['stats'].interceptions.intTD) * 6) + team['stats'].tackles.sacks + paTot) : 0
           team['stats'].receiving.teamDefFDFPA = (parseInt(team['stats'].receiving.teamDefFDFP) / team['stats'].gamesPlayed).toFixed(1) 
           team['stats'].pointsAgainstDefTotal = paTot
+          team['stats'].toTDTotal = toTot
         }
       }
     } 
