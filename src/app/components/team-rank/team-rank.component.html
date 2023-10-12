@@ -30,7 +30,7 @@
                     TD: <span [ngStyle]="{color: item?.stats?.receiving.defTD &lt; 1 ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving.defTD}}</span> &nbsp;
                     PAFP: <span>{{item?.stats?.pointsAgainstDefTotal}}</span> &nbsp;
                     FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamDefFDFP &lt; (util.weeklyTS['defFP'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamDefFDFP}}</span> &nbsp;
-                    OTO: <span>{{item?.stats?.toTDTotal}}</span> &nbsp;
+                    <!-- OTO: <span>{{item?.stats?.toTDTotal}}</span> &nbsp; -->
                     <span *ngIf="item?.opponentYdsArr && item?.opponentYdsArr.length > 0">
                            <b>Stats Allowed: </b>
                         <span *ngFor="let g of getSort(item?.opponentYdsArr);"> 
@@ -46,6 +46,7 @@
                     Avg Yards Per Play: <span [ngStyle]="{color: item?.stats?.miscellaneous?.offenseAvgYds &lt; 5 ? '#e74c3c' : 'gold'}">{{item?.stats?.miscellaneous?.offenseAvgYds}}</span>   &nbsp;
                     Sacks Given up: <span [ngStyle]="{color: item?.stats?.passing?.passSacks &gt; (util.weeklyTS['sacks'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.passing?.passSacks}}</span>   &nbsp;
                     Turnover Pts: <span>{{item?.stats?.toTDTotal}}</span> &nbsp;
+                    Pick 6: <span>{{item?.stats?.pickSixTotal}}</span> &nbsp;
                     Pass TD's: <span [ngStyle]="{color: item?.stats?.passing?.passTD &lt; (util.weeklyTS['passTD'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.passing?.passTD}}</span>    &nbsp;
                     Rush TD's: <span [ngStyle]="{color: item?.stats?.rushing?.rushTD &lt; (util.weeklyTS['rushTD'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.rushing?.rushTD}}</span> &nbsp;
                     FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamFDFP &lt; (util.weeklyTS['fp'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamFDFP}}</span>

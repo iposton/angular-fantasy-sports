@@ -1147,6 +1147,7 @@ export class StatLeadersComponent implements OnInit {
             console.log('set nfl schedules', res['scheduleGames'])
             res['scheduleGames'][0].weekSet = this.util.nflWeek
             this.ls.set('nflSchedulesDiff', res['scheduleGames'])
+            this.nflUtil.statsToSched(res['scheduleGames'], this.gamesByID)
           }
 
           if (this.teamSchedules.length === 0) 
