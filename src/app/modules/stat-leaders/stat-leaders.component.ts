@@ -1343,8 +1343,11 @@ export class StatLeadersComponent implements OnInit {
 
           data.stats.receiving.totalTouches = data.stats.rushing.rushAttempts + data.stats.receiving.targets
           data.stats.receiving.totalTouchPct = Math.floor(data.stats.receiving.totalTouches / team.snaps * 100)
+          data.stats.receiving.totalTeamSnaps = team.snaps
           data.stats.rushing.touchRunPct = Math.floor(data.stats.rushing.rushAttempts / team.runPlays * 100)
+          data.stats.rushing.teamRunPlays = team.runPlays
           data.stats.receiving.touchCatchPct = Math.floor(data.stats.receiving.targets / team.passPlays * 100)
+          data.stats.receiving.teamPassPlays = team.passPlays
           data.stats.passing.totalPassPct = Math.floor(data.stats.passing.passAttempts / team.snaps * 100)
           data.stats.passing.offSnapPct = Math.floor(data.stats.snapCounts.offenseSnaps / team.snaps * 100)
           

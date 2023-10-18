@@ -310,7 +310,7 @@ export class NflUtilService {
         offenseRankLs: 13,
         city: "Cleveland",
         name: "Browns",
-        twitter: "#Browns",
+        twitter: "#DawgPound",
         abbreviation: "CLE",
         conference: "AFC North",
         teamColoursHex: [
@@ -1054,10 +1054,6 @@ export class NflUtilService {
         "18677" : {
           rookie: false,
           image: nflImageRoot+"bre8ysydjkevbfjzrs61"
-        },
-        "19004" : {
-          rookie: false,
-          image: nflImageRoot+"oebtmmy9ad0jdsct6hkr"
         },
         "8240" : {
           rookie: false,
@@ -1985,7 +1981,7 @@ export class NflUtilService {
           rookie: false,
           firstName: "Donta",
           lastName: "Foreman",
-          image: nflImageRoot+"kvowcl8ebdanhiuiwcrp"
+          image: nflImageRoot+"fhxviqgdrngc8gvvhnor"
         },
         "7746" : {
           rookie: false,
@@ -3259,8 +3255,44 @@ export class NflUtilService {
           firstName: 'M',
           lastName: 'Wilson',
           image: nflImageRoot+"o5sshsrygioektzjsahk"
-        }, 
-           
+        },
+        "79819" : {
+          rookie: true,
+          firstName: 'T',
+          lastName: 'Spears',
+          image: nflImageRoot+"eeh5mowhlf3godvrceym"
+        },
+        "13330" : {
+          rookie: false,
+          firstName: 'K',
+          lastName: 'Hunt',
+          image: nflImageRoot+"fmy9cgin9nv7ewyhsipr"
+        },
+        "19004" : {
+          rookie: false,
+          firstName: '',
+          lastName: 'Ahmed',
+          image: nflImageRoot+"ggkz2vamnepagqfn992j"
+        },
+        "79773" : {
+          rookie: true,
+          firstName: 'M',
+          lastName: 'Mayer',
+          image: nflImageRoot+"nurmjov3hnrlietcywnm"
+        },
+        "112076" : {
+          rookie: true,
+          firstName: 'J',
+          lastName: 'McLaughlin',
+          image: nflImageRoot+"ba28phgfwcntbca7aoyh"
+        },
+        "16932" : {
+          rookie: false,
+          firstName: 'J',
+          lastName: 'Hill',
+          image: nflImageRoot+"v9xufmbbfauthnlpxcrc"
+        },
+         
         
       }
    }
@@ -3592,20 +3624,29 @@ export class NflUtilService {
       let toTDTotal = 0
       let paTotal = 0
       let pickSixTotal = 0
+      let ryGivenUpTotal = 0
+      let rTDGivenUpTotal = 0 
       let wlObject: object = {fhW: 0, fhL: 0, shW: 0, shL: 0, fhT: 0, shT: 0}
       let finishedWlObject = null
       sched.forEach((s, index) => {
         let paDefFP = null
         let turnOverTD = null
         let pickSix = null
+        let safetie = null
+        let rushYardsAgainst = null
+        let rushTDAgainst = null
         for (let t of this.nflTeams){
           if (s.schedule.homeTeam.id != mainTeam &&
             s.schedule.homeTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye})
-            //TODO: calculate how many TDs were from offense tunrover such as interception or fumble
-            console.log(s.homeStats, 'home stats')
+            //calculate how many TDs were from offense tunrover such as interception or fumble or safties
+            //console.log(s.homeStats, 'home stats')
+            rushYardsAgainst = s.homeStats != null ? s.homeStats.rushing.rushYards : 0
+            rushTDAgainst = s.homeStats != null ? s.homeStats.rushing.rushTD : 0
             pickSix = s.homeStats != null ? s.homeStats.interceptions.intTD : 0
+            safetie = s.homeStats != null ? s.homeStats.interceptions.safeties * 2 : 0
             turnOverTD = s.homeToTD != null ? s.homeToTD * 6 : 0
+            turnOverTD = turnOverTD + safetie
             s.score.homeScoreTotal - turnOverTD
             //get first-half record and second-half record
             finishedWlObject = this.winsLosses(s.score.awayScoreTotal, s.score.homeScoreTotal, s.schedule.week, false, wlObject)
@@ -3613,22 +3654,28 @@ export class NflUtilService {
             //to calculate different defense ranks by position
             
             paDefFP = (s.score.homeScoreTotal == null ? 0 : s.score.homeScoreTotal === 0 ? 10 : s.score.homeScoreTotal > 0 && s.score.homeScoreTotal < 7 ? 7 : s.score.homeScoreTotal > 6 && s.score.homeScoreTotal < 14 ? 4 : s.score.homeScoreTotal > 13 && s.score.homeScoreTotal < 21 ? 1 : s.score.homeScoreTotal > 20 && s.score.homeScoreTotal < 28 ? 0 : s.score.homeScoreTotal > 27 && s.score.homeScoreTotal < 35 ? -1 : -4)
-            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.awayScoreTotal < s.score.homeScoreTotal ? 'L' : 'W'), score: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal+'-'+s.score.homeScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP, toTDTotal: toTDTotal += turnOverTD, pickSixTotal: pickSixTotal += pickSix})
+            sum.push({printName: '@'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.awayScoreTotal < s.score.homeScoreTotal ? 'L' : 'W'), score: (s.score.awayScoreTotal == null ? '' : s.score.awayScoreTotal+'-'+s.score.homeScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP, toTDTotal: toTDTotal += turnOverTD, pickSixTotal: pickSixTotal += pickSix, ryGivenUpTotal: ryGivenUpTotal += rushYardsAgainst, rTDGivenUpTotal: rTDGivenUpTotal += rushTDAgainst})
           } else if (s.schedule.awayTeam.id != mainTeam &&
             s.schedule.awayTeam.id === t.id) {
             if (index+1 === bye) sum.push({printName: 'BYE ', oRank: 'BYE', dRank: 'BYE', name: bye})
+            rushYardsAgainst = s.awayStats != null ? s.awayStats.rushing.rushYards : 0
+            rushTDAgainst = s.awayStats != null ? s.awayStats.rushing.rushTD : 0
             pickSix = s.awayStats != null ? s.awayStats.interceptions.intTD : 0
+            safetie = s.awayStats != null ? s.awayStats.interceptions.safeties * 2 : 0
             turnOverTD = s.awayToTD != null ? s.awayToTD * 6 : 0
+            turnOverTD = turnOverTD + safetie
             s.score.awayScoreTotal - turnOverTD
             finishedWlObject = this.winsLosses(s.score.awayScoreTotal, s.score.homeScoreTotal, s.schedule.week, true, wlObject)
 
             paDefFP = (s.score.awayScoreTotal == null ? 0 : s.score.awayScoreTotal === 0 ? 10 : s.score.awayScoreTotal > 0 && s.score.awayScoreTotal < 7 ? 7 : s.score.awayScoreTotal > 6 && s.score.awayScoreTotal < 14 ? 4 : s.score.awayScoreTotal > 13 && s.score.awayScoreTotal < 21 ? 1 : s.score.awayScoreTotal > 20 && s.score.awayScoreTotal < 28 ? 0 : s.score.awayScoreTotal > 27 && s.score.awayScoreTotal < 35 ? -1 : -4)
-            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.homeScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.homeScoreTotal < s.score.awayScoreTotal ? 'L': 'W'), score: (s.score.homeScoreTotal == null ? '' : s.score.homeScoreTotal+'-'+s.score.awayScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP, toTDTotal: toTDTotal += turnOverTD, pickSixTotal: pickSixTotal += pickSix})
+            sum.push({printName: 'vs'+t.abbreviation+' ', oRank: t.offenseRankLs, dRank: t.defenseRankLs, name: t.abbreviation, result: (s.score.homeScoreTotal == null ? '' : s.score.awayScoreTotal === s.score.homeScoreTotal ? 'T' : s.score.homeScoreTotal < s.score.awayScoreTotal ? 'L': 'W'), score: (s.score.homeScoreTotal == null ? '' : s.score.homeScoreTotal+'-'+s.score.awayScoreTotal), paDefenseFP: paDefFP, paTotal: paTotal += paDefFP, toTDTotal: toTDTotal += turnOverTD, pickSixTotal: pickSixTotal += pickSix, ryGivenUpTotal: ryGivenUpTotal += rushYardsAgainst, rTDGivenUpTotal: rTDGivenUpTotal += rushTDAgainst})
           }
         }
       })
 
       sum['paTotal'] = paTotal
+      sum['ryGivenUpTotal'] = ryGivenUpTotal
+      sum['rTDGivenUpTotal'] = rTDGivenUpTotal
       sum['pickSixTotal'] = pickSixTotal
       sum['toTDTotal'] = toTDTotal
       sum['finishedWlObject'] = finishedWlObject
@@ -3936,6 +3983,8 @@ public rankD(nflTeams, stats, week) {
     let paTot = null
     let toTot = null
     let p6Tot = null
+    let ryaTot = null
+    let rTDaTot = null
     //console.log('define teamDefFDFP for ui but its NaN because pointsAgainstDefTotal is undefined', teams)
     for(let team of stats) {
       for (let t of teams) {
@@ -3944,14 +3993,18 @@ public rankD(nflTeams, stats, week) {
             paTot = t['scheduleTicker']?.paTotal != null ? t['scheduleTicker']?.paTotal : 0
             toTot = t['scheduleTicker']?.toTDTotal != null ? t['scheduleTicker']?.toTDTotal : 0
             p6Tot = t['scheduleTicker']?.pickSixTotal != null ? t['scheduleTicker']?.pickSixTotal : 0
+            ryaTot = t['scheduleTicker']?.ryGivenUpTotal != null ? t['scheduleTicker']?.ryGivenUpTotal : 0
+            rTDaTot = t['scheduleTicker']?.rTDGivenUpTotal != null ? t['scheduleTicker']?.rTDGivenUpTotal : 0
           } catch(e) {
-            console.log(e, 'paTotal no ready yet')
+            console.log(e, 'Totals not ready yet')
           }
           team['stats'].receiving.teamDefFDFP = (team['stats'].receiving != null) ? (((team['stats'].punting.puntBlk + team['stats'].fieldGoals.fgBlk + team['stats'].fumbles.fumOppRec + team['stats'].interceptions.interceptions + team['stats'].interceptions.safeties) * 2) + ((team['stats'].puntReturns.prTD + team['stats'].kickoffReturns.krTD) * 6) + ((team['stats'].fumbles.fumTD + team['stats'].interceptions.intTD) * 6) + team['stats'].tackles.sacks + paTot) : 0
           team['stats'].receiving.teamDefFDFPA = (parseInt(team['stats'].receiving.teamDefFDFP) / team['stats'].gamesPlayed).toFixed(1) 
           team['stats'].pointsAgainstDefTotal = paTot
           team['stats'].toTDTotal = toTot
           team['stats'].pickSixTotal = p6Tot
+          team['stats'].rushYdsAgainst = ryaTot
+          team['stats'].rushTDAgainst = rTDaTot
         }
       }
     } 

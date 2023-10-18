@@ -26,7 +26,8 @@ export class UtilService {
       pd: 4,
       defFP: 6,
       fum: .5,
-      safe: 0
+      safe: 0,
+      rya: 105
     }
 
     this.weeklyPS = {
@@ -34,7 +35,7 @@ export class UtilService {
       rbRecTD: .10,
       wrRecTD: .50,
       rushTD: .50,
-      passTD: .80,
+      passTD: 1,
       totTD: 1,
       fp: 70,
       int: .25,

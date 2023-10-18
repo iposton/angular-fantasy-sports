@@ -28,6 +28,7 @@
                     Fum Rec: <span [ngStyle]="{color: item.stats?.fumbles?.fumOppRec &lt; (util.weeklyTS['fum'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item.stats?.fumbles?.fumOppRec}}</span> &nbsp;
                     SF: <span [ngStyle]="{color: item.stats.interceptions?.safeties &lt; 1 ? '#e74c3c' : 'gold'}">{{item?.stats?.interceptions?.safeties}}</span> &nbsp;
                     TD: <span [ngStyle]="{color: item?.stats?.receiving.defTD &lt; 1 ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving.defTD}}</span> &nbsp;
+                    Rush Yds Allowed: <span [ngStyle]="{color: item?.stats?.rushYdsAgainst &gt; (util.weeklyTS['rya'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.rushYdsAgainst}}</span> &nbsp; 
                     PAFP: <span>{{item?.stats?.pointsAgainstDefTotal}}</span> &nbsp;
                     FP: <span [ngStyle]="{color: item?.stats?.receiving?.teamDefFDFP &lt; (util.weeklyTS['defFP'] * util.nflWeek) ? '#e74c3c' : 'gold'}">{{item?.stats?.receiving?.teamDefFDFP}}</span> &nbsp;
                     <!-- OTO: <span>{{item?.stats?.toTDTotal}}</span> &nbsp; -->
