@@ -17,7 +17,6 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.0.2",
-    "@angular/cli": "14.0.2",
     "@angular/common": "^14.0.2",
     "@angular/compiler": "^14.0.2",
     "@angular/compiler-cli": "^14.0.2",
@@ -44,6 +43,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.0.2",
+    "@angular/cli": "^15.2.11",
     "@angular/language-service": "^14.0.2",
     "@nguniversal/builders": "^14.0.1",
     "@types/express": "^4.17.0",
