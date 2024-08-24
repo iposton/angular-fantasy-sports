@@ -180,7 +180,7 @@ methods.getInfo = async (
   }  
 
   if (dataType === 'games') {
-    let nflSeason = parseInt(selectedWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
+    let nflSeason = parseInt(selectedWeek) > 18 ? '2025-playoff' : '2024-2025-regular'
     console.log(colors.fg.yellow+`Fetch Games for All Sports: Home Page`, colors.reset)
     //console.log(player, 'players')
     let gamePromise = new Promise(async(resolve, reject) => {
@@ -396,13 +396,13 @@ methods.getStats = async (
      
         console.log('have schedules?', haveSchedules)
         if (sport === 'nfl')
-          season = parseInt(nflWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
+          season = parseInt(nflWeek) > 18 ? '2025-playoff' : '2024-2025-regular'
 
 
 
        
         console.log('daily url NEEDS to be set to current season before season starts or all hell will happen!')
-        dailyUrl = playerType === 'nhlGoalies' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?position=${position}` : playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?position=${position}` : playerType === 'nflPlayers' ? `${apiRoot}/${sport}/2023-2024-regular/week/${nflWeek}/${feedType}.json?player=${player}` : sport === 'mlb' ? `${apiRoot}/${sport}/2022-regular/date/${dailyDate}/${feedType}.json?player=${player}` : `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?player=${player}`
+        dailyUrl = playerType === 'nhlGoalies' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?position=${position}` : playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?position=${position}` : playerType === 'nflPlayers' ? `${apiRoot}/${sport}/2024-2025-regular/week/${nflWeek}/${feedType}.json?player=${player}` : sport === 'mlb' ? `${apiRoot}/${sport}/2022-regular/date/${dailyDate}/${feedType}.json?player=${player}` : `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?player=${player}`
 
         teamStatsUrl = `${apiRoot}/${sport}/${season}/${feedType2}.json`
         playerStatsUrl = playerType === 'statLeaders' || playerType === 'nhlGoalies' || playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/${feedType3}.json?position=${position}` : `${apiRoot}/${sport}/${season}/${feedType3}.json?player=${player}` 
@@ -507,7 +507,7 @@ methods.getStats = async (
           console.log(`Get ${sport} schedules.`)
           forkJoin(
             teams.nflTeams.map(
-              g => request(`${apiRoot}/${sport}/2023-2024-regular/games.json?team=${g.abbreviation}`, {headers, json: true},
+              g => request(`${apiRoot}/${sport}/2024-2025-regular/games.json?team=${g.abbreviation}`, {headers, json: true},
                 async function(err, res, body) {
                   try {
                     //getting nfl schedules
@@ -523,7 +523,7 @@ methods.getStats = async (
                     
 
                   } catch(e) {
-                    let endPointBlocked = `${apiRoot}/${sport}/2023-2024-regular/games.json?team=${g.abbreviation}`
+                    let endPointBlocked = `${apiRoot}/${sport}/2024-2025-regular/games.json?team=${g.abbreviation}`
                     this.tryAgain(endPointBlocked, g['abbreviation'], g['id'], g['bye'])
                     console.log(body, 'body')
                     console.error(err, 'error')

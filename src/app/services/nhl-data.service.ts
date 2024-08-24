@@ -75,6 +75,7 @@ export class NHLDataService {
   public nhlTeamsSched: Array <any> = [];
   public isPlayoffs: boolean = false;
   public si: any;
+  public ms: any;
 
   constructor(private http: HttpClient) {
      this.dailyDate = dailyDate
