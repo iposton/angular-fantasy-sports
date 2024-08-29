@@ -378,7 +378,7 @@ export class NflStartersComponent implements OnInit {
         'noUpdate',
         'none',
         this.haveNflSchedules,
-        true).subscribe(async res => {
+        false).subscribe(async res => {
         
           console.log(res, 'nfl stats data')
           this.teamStats = res['teamStats'].teamStatsTotals
@@ -395,7 +395,7 @@ export class NflStartersComponent implements OnInit {
 
           if (res['scheduleGames'].length === 0) {
             console.log('use nfl schedule from local storage')
-            this.nflUtil.getTeamGamelogs(res['team'].gamelogs, this.nflSchedules, this.gamesByID)
+            //this.nflUtil.getTeamGamelogs(res['team'].gamelogs, this.nflSchedules, this.gamesByID)
             res['scheduleGames'] = this.nflSchedules
             console.log('set schedules to ls again after getting the weekly game log stats')
             res['scheduleGames'][0].weekSet = this.util.nflWeek
@@ -405,7 +405,7 @@ export class NflStartersComponent implements OnInit {
             this.teamScheds = res['scheduleGames']
           } else {
             //TODO creat function to add gamelog to nflschedules
-            this.nflUtil.getTeamGamelogs(res['team'].gamelogs, res['scheduleGames'], this.gamesByID)
+            //this.nflUtil.getTeamGamelogs(res['team'].gamelogs, res['scheduleGames'], this.gamesByID)
             console.log('set to local storage', res['scheduleGames'])
             res['scheduleGames'][0].weekSet = this.util.nflWeek
             this.ls.set('nflSchedulesDiff', res['scheduleGames'])
@@ -419,9 +419,9 @@ export class NflStartersComponent implements OnInit {
           this.dailyStats = res['dailyStats'].gamelogs
           this.myData = res['playerStats'].playerStatsTotals
           //temparary updatePlayers function
-          //this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
+          this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
      
-            this.dailyTeamStats = res['team'].gamelogs
+            this.dailyTeamStats = res['team']?.gamelogs != null ? res['team']?.gamelogs : []
             if (this.dailyTeamStats) {
               for (let teamStats of this.dailyTeamStats) {
                 for (let team of this.teams) {

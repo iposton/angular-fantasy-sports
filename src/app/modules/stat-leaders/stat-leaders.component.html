@@ -1258,7 +1258,7 @@
               [eliteStat]="850"
               ></app-stat-card>
 
-              <!-- <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nfl22Rookies != null" 
+              <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nfl22Rookies != null" 
               [data]="nfl22Rookies" 
               [statType]="'drafted'"
               [statField]="'overallPick'"
@@ -1274,7 +1274,7 @@
               [ndk]="nflDraftKit"
               [seasonLength]="seasonLength"
               [eliteStat]="850"
-              ></app-stat-card> -->
+              ></app-stat-card>
 
               <app-stat-card *ngIf="nflPosition != null && !nflOffenseLoading && nflWl != null" 
               [data]="nflWl" 
@@ -1380,7 +1380,7 @@
               <app-team-rank *ngIf="!nflTeamLoading && nflDraftKit && teamSchedules.length > 0" 
                 [data]="nflTeamStats" 
                 [teams]="nflTeams"
-                [title]="'Toughest Defense Schedule 2023'"
+                [title]="'Toughest Defense Schedule 2024'"
                 [seasonLength]="seasonLength"
                 (seasonChange)="seasonLength = $event"
                 [week]="nflWeek">
@@ -1539,7 +1539,7 @@
                   <app-team-rank *ngIf="!nflTeamLoading && nflDraftKit && teamSchedules.length > 0" 
                   [data]="nflTeamStats" 
                   [teams]="nflTeams"
-                  [title]="'Toughest Offense Schedule 2023'"
+                  [title]="'Toughest Offense Schedule 2024'"
                   [seasonLength]="seasonLengthD"
                   (seasonChangeD)="seasonLengthD = $event">
                   </app-team-rank>
