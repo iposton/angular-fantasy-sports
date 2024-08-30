@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { BEFORE_APP_SERIALIZED } from '@angular/platform-server'
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/'
+let newNflImageRoot = `https://static.www.nfl.com/image/upload/t_headshot_desktop_2x/f_auto/league/`;
 let nextYear = `2024 00:00:00 GMT-0700 (Pacific Daylight Time)`
 let nflYear = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
 
@@ -3292,7 +3293,94 @@ export class NflUtilService {
           lastName: 'Hill',
           image: nflImageRoot+"v9xufmbbfauthnlpxcrc"
         },
-         
+        "133835" : {
+          rookie: true,
+          firstName: 'Caleb',
+          lastName: 'Williams',
+          image: newNflImageRoot+"idewrhb7kngpdtrvku31"
+        },
+        "133846" : {
+          rookie: true,
+          firstName: 'Bo',
+          lastName: 'Nix',
+          image: newNflImageRoot+"zibtvsprpauxnytis229"
+        },
+        "133986" : {
+          rookie: true,
+          firstName: 'S',
+          lastName: 'Rattler',
+          image: newNflImageRoot+"xhllpfkd4hrpbwczbca6"
+        },
+        "133880" : {
+          rookie: true,
+          firstName: 'Jonathan',
+          lastName: 'Brooks',
+          image: newNflImageRoot+"xo4zizexs7aezh1shgsv"
+        },
+        "133901" : {
+          rookie: true,
+          firstName: 'Trey',
+          lastName: 'Benson',
+          image: newNflImageRoot+"iu0gbspz3kjdqlazvtkn"
+        },
+        "133918" : {
+          rookie: true,
+          firstName: 'B',
+          lastName: 'Corum',
+          image: newNflImageRoot+"ehpbxs9iiosm4xs7nhnl"
+        },
+        "133840" : {
+          rookie: true,
+          firstName: 'M',
+          lastName: 'Nabers',
+          image: newNflImageRoot+"w3edoyyuomqlovvp9ixc"
+        },
+        "133843" : {
+          rookie: true,
+          firstName: 'R',
+          lastName: 'Odunze',
+          image: newNflImageRoot+"labs8tstecnehvzfmrs5"
+        },
+        // "133857" : {
+        //   rookie: true,
+        //   firstName: 'Brian',
+        //   lastName: 'Thomas Jr.',
+        //   image: newNflImageRoot+""
+        // },
+        "133862" : {
+          rookie: true,
+          firstName: 'X',
+          lastName: 'Worthy',
+          image: newNflImageRoot+"fvzbx5gpiqkogglyoo1w"
+        },
+        "133865" : {
+          rookie: true,
+          firstName: 'Ricky',
+          lastName: 'Pearsall',
+          image: newNflImageRoot+"akwepvt6qxwbgankljmv"
+        },
+        "133866" : {
+          rookie: true,
+          firstName: 'X',
+          lastName: 'Legette',
+          image: newNflImageRoot+"a3etuvp3kqtwmtkioq8g"
+        },
+        "133867" : {
+          rookie: true,
+          firstName: 'K',
+          lastName: 'Coleman',
+          image: newNflImageRoot+"ipwpdgb0cm3xy3d8zu1l"
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
       }
    }
