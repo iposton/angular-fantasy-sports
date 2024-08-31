@@ -86,7 +86,7 @@ methods.getInfo = async (
     let firstPromise = new Promise(async(resolve, reject) => {
 
       let dailyLineup = []
-      let gamesUrl = sport != 'nfl' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json` : `${apiRoot}/${sport}/${season}/week/${selectedWeek}/${feedType}.json`
+      let gamesUrl = sport != 'nfl' ? `${apiRoot}/${sport}/2024-2025-regular/date/${dailyDate}/${feedType}.json` : `${apiRoot}/${sport}/2024-2025-regular/week/${selectedWeek}/${feedType}.json`
       let fromToUrl = `${apiRoot}/${sport}/${season}/${feedType}.json?date=${fromTo}`
       
       console.log(gamesUrl, 'games url')
@@ -153,7 +153,7 @@ methods.getInfo = async (
           console.log(`Sort daily lineups for ${sport}`)
           forkJoin(
               body.games.map(
-              g =>  request(`${apiRoot}/${sport}/${season}/${feedType}/${g['schedule'].id}/lineup.json?position=${position}`, {headers},
+              g =>  request(`${apiRoot}/${sport}/2024-2025-regular/${feedType}/${g['schedule'].id}/lineup.json?position=${position}`, {headers},
                 async function(err, res, body) {
                 //console.log(body, 'lineup')
                 await sleep(10)
@@ -404,14 +404,15 @@ methods.getStats = async (
         console.log('daily url NEEDS to be set to current season before season starts or all hell will happen!')
         dailyUrl = playerType === 'nhlGoalies' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?position=${position}` : playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?position=${position}` : playerType === 'nflPlayers' ? `${apiRoot}/${sport}/2024-2025-regular/week/${nflWeek}/${feedType}.json?player=${player}` : sport === 'mlb' ? `${apiRoot}/${sport}/2022-regular/date/${dailyDate}/${feedType}.json?player=${player}` : `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?player=${player}`
 
-        teamStatsUrl = `${apiRoot}/${sport}/${season}/${feedType2}.json`
-        playerStatsUrl = playerType === 'statLeaders' || playerType === 'nhlGoalies' || playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/${feedType3}.json?position=${position}` : `${apiRoot}/${sport}/${season}/${feedType3}.json?player=${player}` 
+        teamStatsUrl = `${apiRoot}/${sport}/2023-2024-regular/${feedType2}.json`
+        playerStatsUrl = playerType === 'statLeaders' || playerType === 'nhlGoalies' || playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/2023-2024-regular/${feedType3}.json?position=${position}` : `${apiRoot}/${sport}/2023-2024-regular/${feedType3}.json?player=${player}` 
         playerInfoUrl = `${apiRoot}/${sport}/players.json?position=${position}`
+        console.log('playerInfoUrl: ', playerInfoUrl);
         dailyTeamUrl = `${apiRoot}/${sport}/${season}/week/${nflWeek}/team_gamelogs.json`
         
-        //console.log(playerStatsUrl, 'PLAYER STATS for', sport)
+        console.log(playerStatsUrl, 'PLAYER STATS for', sport)
         console.log(teamStatsUrl, 'TEAM STATS for', sport)
-        //console.log(dailyUrl, 'daily player url url for', sport)
+        console.log(dailyUrl, 'daily player url for', sport)
         //console.log(nflWeek , 'nflWeek')
         stats[0].dailyStats = []
 
@@ -543,7 +544,7 @@ methods.getStats = async (
         }
   
         request(psOptions, async (error, response, body) => {
-            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 4500)
+            let sleepTime = (playerType === 'nflDefense' ? 3500 : playerType === 'mlbPlayers' ? 4500 : 10000)
             let values = null
             let rookieVal
             await sleep(30)
@@ -631,7 +632,7 @@ methods.getStats = async (
             //only use at the start of season to fetch all players
             console.log(`got player info for ${sport}`)
             let rookies = null
-            body.rookies = body['players'].filter(item => item.teamAsOfDate != null && item.player.rookie === true && item.player.drafted != null && item.player.drafted.year == 2023)
+            body.rookies = body['players'].filter(item => item.teamAsOfDate != null && item.player.rookie === true && item.player.drafted != null && item.player.drafted.year == 2024)
             stats[0].playerInfo = await body
             
         })

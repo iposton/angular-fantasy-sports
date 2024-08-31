@@ -436,8 +436,9 @@ export class StatLeadersComponent implements OnInit {
      this.nflPosition = p
      this.defaultWeek = ''
      //temparary to save player info before season starts
-     //this.getSelectedPlayerInfo(this.nflPosition)
-     this.deletePlayerInfo(this.nflPosition)
+     this.getSelectedPlayerInfo(this.nflPosition)
+     //temparary to save player info before season starts
+     //this.deletePlayerInfo(this.nflPosition)
      this.ls.set('watchList', this.wlPlayers)
      this.loadNFL()
   }
@@ -733,8 +734,9 @@ export class StatLeadersComponent implements OnInit {
         this.nflSchedules = this.ls.get('nflSchedulesDiff')
         this.gamesByID = this.ls.get('gamesByID')
         //temparary to save player info before season starts
-        //this.getSelectedPlayerInfo(this.nflPosition)
-        this.deletePlayerInfo(this.nflPosition)
+        this.getSelectedPlayerInfo(this.nflPosition)
+        //temparary to save player info before season starts
+        //this.deletePlayerInfo(this.nflPosition)
         
         if (this.nflSchedules.length != 0) {
           console.log(weekday, 'weekday', this.nflSchedules[0].weekSet, 'week set', this.util.nflWeek, 'nfl week')
@@ -1083,8 +1085,12 @@ export class StatLeadersComponent implements OnInit {
     console.log(this.haveNflSchedules, 'have nflSchedules? this should true')
 
     console.log(this.selectedPlayerInfo, 'this.selectedPlayerInfo')
-    this.havePlayerInfo = true
-    //this.havePlayerInfo = (this.selectedPlayerInfo?.players != null ? true : false)
+    //after season starts
+    //this.havePlayerInfo = true
+    //after season starts
+    //temparary
+    this.havePlayerInfo = (this.selectedPlayerInfo?.players != null ? true : false)
+    //temparary
     
     console.log(this.havePlayerInfo, `have ${this.nflPosition} player info?`)
     //this.wlPlayers = this.ls.get('watchList')
@@ -1176,13 +1182,13 @@ export class StatLeadersComponent implements OnInit {
         }
 
         //Temparary function to handle player info before season starts
-        // if (this.havePlayerInfo === true) {
-        //   console.log('use player info from local storage')
-        //   res['playerInfo'] = this.selectedPlayerInfo
-        // } else {
-        //   console.log('set player info', res['playerInfo'].players)
-        //   this.ls.set(this.nflPosition+'Info', res['playerInfo'])
-        // }
+        if (this.havePlayerInfo === true) {
+          console.log('use player info from local storage')
+          res['playerInfo'] = this.selectedPlayerInfo
+        } else {
+          console.log('set player info', res['playerInfo'].players)
+          this.ls.set(this.nflPosition+'Info', res['playerInfo'])
+        }
 
         let stats = (this.week === 'all' ? res['playerStats'].playerStatsTotals.filter(x => x.stats.gamesPlayed > 0) : res['dailyStats'].gamelogs)
         this.nflData = stats
@@ -1193,8 +1199,9 @@ export class StatLeadersComponent implements OnInit {
         }
           
         //temporary before season start
-        //this.nfl22Rookies = res['playerInfo'].rookies ? res['playerInfo'].rookies : []
-        //this.rookieInfo(this.nfl22Rookies, this.nflTeams)
+        this.nfl22Rookies = res['playerInfo'].rookies ? res['playerInfo'].rookies : []
+        this.rookieInfo(this.nfl22Rookies, this.nflTeams)
+        console.log('nfl22Rookies', this.nfl22Rookies)
         //temporary before season start
 
         this.nflRookies = res['playerStats'].rookies ? res['playerStats'].rookies.filter(item => nflplayerImages[item.player.id]?.rookie === true ||  nflplayerImages[item.player.id] === undefined) : []
@@ -1202,12 +1209,12 @@ export class StatLeadersComponent implements OnInit {
         
         console.log(res['playerInfo'], 'nfl player info')
         //temporary before season start
-        //console.log('update players')
-        //this.util.updatePlayers(res['playerInfo'].players, this.nflData, this.nflTeams)
-        //this.util.updatePlayers(res['playerInfo'].players, this.nflRookies, this.nflTeams)
+        console.log('temporary before season start, update players')
+        this.util.updatePlayers(res['playerInfo'].players, this.nflData, this.nflTeams)
+        this.util.updatePlayers(res['playerInfo'].players, this.nflRookies, this.nflTeams)
         //temporary before season start
-        //this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie')   
-        //this.nflRookies = this.nflRookies.filter(x => x.player.actualRookie === true)
+        this.teamInfoRookie(this.nflRookies, this.nflTeams, 'o', this.week, 'rookie')   
+        this.nflRookies = this.nflRookies.filter(x => x.player.actualRookie === true)
         //Udate all the defense rank after getting the very difficult calculation of pointsAgainst fantasy points
         this.nflUtil.teamNflDefFp(this.nflTeams, res['teamStats'].teamStatsTotals)
         this.nflUtil.rankD(this.nflTeams, res['teamStats'].teamStatsTotals, this.nflWeek)
@@ -1256,12 +1263,12 @@ export class StatLeadersComponent implements OnInit {
       this.haveNflSchedules = (this.teamSchedules.length > 0 != null ? true : false)
       this.sortToughest()
       //temparary to save player info before season starts
-      //this.getSelectedPlayerInfo(this.nflDPosition)
-      this.deletePlayerInfo(this.nflPosition)
-
+      this.getSelectedPlayerInfo(this.nflDPosition)
+      //this.deletePlayerInfo(this.nflPosition)
+      //temparary to save player info before season starts
       console.log(this.selectedPlayerInfo, 'this.selectedPlayerInfo')
-      this.havePlayerInfo = true
-      //this.havePlayerInfo = (this.selectedPlayerInfo?.players != null ? true : false)
+      //this.havePlayerInfo = true
+      this.havePlayerInfo = (this.selectedPlayerInfo?.players != null ? true : false)
       console.log(this.havePlayerInfo, `have ${this.nflPosition} player info?`)
      
         this.nflDefenseLoading = true
