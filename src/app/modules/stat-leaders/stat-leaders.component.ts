@@ -438,7 +438,7 @@ export class StatLeadersComponent implements OnInit {
      //temparary to save player info before season starts
      this.getSelectedPlayerInfo(this.nflPosition)
      //temparary to save player info before season starts
-     this.deletePlayerInfo(this.nflPosition)
+     //this.deletePlayerInfo(this.nflPosition)
      this.ls.set('watchList', this.wlPlayers)
      this.loadNFL()
   }
