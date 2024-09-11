@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { BEFORE_APP_SERIALIZED } from '@angular/platform-server'
 let nflImageRoot = 'https://static.www.nfl.com/image/private/t_player_profile_landscape_2x/f_auto/league/'
 let newNflImageRoot = `https://static.www.nfl.com/image/upload/t_headshot_desktop_2x/f_auto/league/`;
-let nextYear = `2024 00:00:00 GMT-0700 (Pacific Daylight Time)`
-let nflYear = `2023 00:00:00 GMT-0700 (Pacific Daylight Time)`
+let nextYear = `2025 00:00:00 GMT-0700 (Pacific Daylight Time)`
+let nflYear = `2024 00:00:00 GMT-0700 (Pacific Daylight Time)`
 
 @Injectable({
   providedIn: 'root'
@@ -20,113 +20,113 @@ export class NflUtilService {
   constructor(private http: HttpClient) {
     this.weekTimes = [
       {
-        dateBeg: `Thu Sep 07 ${nflYear}`,
-        dateEnd: `Thu Sep 14 ${nflYear}`,
+        dateBeg: `Thu Sep 05 ${nflYear}`,
+        dateEnd: `Thu Sep 12 ${nflYear}`,
         week: '1'
       },
       {
-        dateBeg: `Thu Sep 14 ${nflYear}`,
-        dateEnd: `Thu Sep 21 ${nflYear}`,
+        dateBeg: `Thu Sep 12 ${nflYear}`,
+        dateEnd: `Thu Sep 19 ${nflYear}`,
         week: '2'
       },
       {
-        dateBeg: `Thu Sep 21 ${nflYear}`,
-        dateEnd: `Thu Sep 28 ${nflYear}`,
+        dateBeg: `Thu Sep 19 ${nflYear}`,
+        dateEnd: `Thu Sep 26 ${nflYear}`,
         week: '3'
       },
       {
-        dateBeg: `Thu Sep 28 ${nflYear}`,
-        dateEnd: `Thu Oct 05 ${nflYear}`,
+        dateBeg: `Thu Sep 26 ${nflYear}`,
+        dateEnd: `Thu Oct 03 ${nflYear}`,
         week: '4'
       },
       {
-        dateBeg: `Thu Oct 05 ${nflYear}`,
-        dateEnd: `Thu Oct 12 ${nflYear}`,
+        dateBeg: `Thu Oct 03 ${nflYear}`,
+        dateEnd: `Thu Oct 10 ${nflYear}`,
         week: '5'
       },
       {
-        dateBeg: `Thu Oct 12 ${nflYear}`,
-        dateEnd: `Thu Oct 19 ${nflYear}`,
+        dateBeg: `Thu Oct 10 ${nflYear}`,
+        dateEnd: `Thu Oct 17 ${nflYear}`,
         week: '6'
       },
       {
-        dateBeg: `Thu Oct 19 ${nflYear}`,
-        dateEnd: `Thu Oct 26 ${nflYear}`,
+        dateBeg: `Thu Oct 17 ${nflYear}`,
+        dateEnd: `Thu Oct 24 ${nflYear}`,
         week: '7'
       },
       {
-        dateBeg: `Thu Oct 26 ${nflYear}`,
-        dateEnd: `Thu Nov 02 ${nflYear}`,
+        dateBeg: `Thu Oct 24 ${nflYear}`,
+        dateEnd: `Thu Oct 31 ${nflYear}`,
         week: '8'
       },
       {
-        dateBeg: `Thu Nov 02 ${nflYear}`,
-        dateEnd: `Thu Nov 09 ${nflYear}`,
+        dateBeg: `Thu Oct 31 ${nflYear}`,
+        dateEnd: `Thu Nov 07 ${nflYear}`,
         week: '9'
       },
       {
-        dateBeg: `Thu Nov 09 ${nflYear}`,
-        dateEnd: `Thu Nov 16 ${nflYear}`,
+        dateBeg: `Thu Nov 07 ${nflYear}`,
+        dateEnd: `Thu Nov 14 ${nflYear}`,
         week: '10'
       },
       {
-        dateBeg: `Thu Nov 16 ${nflYear}`,
-        dateEnd: `Thu Nov 23 ${nflYear}`,
+        dateBeg: `Thu Nov 14 ${nflYear}`,
+        dateEnd: `Thu Nov 21 ${nflYear}`,
         week: '11'
       },
       {
-        dateBeg: `Thu Nov 23 ${nflYear}`,
-        dateEnd: `Thu Nov 30 ${nflYear}`,
+        dateBeg: `Thu Nov 21 ${nflYear}`,
+        dateEnd: `Thu Nov 28 ${nflYear}`,
         week: '12'
       },
       {
-        dateBeg: `Thu Nov 30 ${nflYear}`,
-        dateEnd: `Thu Dec 07 ${nflYear}`,
+        dateBeg: `Thu Nov 28 ${nflYear}`,
+        dateEnd: `Thu Dec 05 ${nflYear}`,
         week: '13'
       },
       {
-        dateBeg: `Thu Dec 07 ${nflYear}`,
-        dateEnd: `Thu Dec 14 ${nflYear}`,
+        dateBeg: `Thu Dec 05 ${nflYear}`,
+        dateEnd: `Thu Dec 12 ${nflYear}`,
         week: '14'
       },
       {
-        dateBeg: `Thu Dec 14 ${nflYear}`,
-        dateEnd: `Thu Dec 21 ${nflYear}`,
+        dateBeg: `Thu Dec 12 ${nflYear}`,
+        dateEnd: `Thu Dec 19 ${nflYear}`,
         week: '15'
       },
       {
-        dateBeg: `Thu Dec 21 ${nflYear}`,
-        dateEnd: `Thu Dec 28 ${nflYear}`,
+        dateBeg: `Thu Dec 19 ${nflYear}`,
+        dateEnd: `Thu Dec 26 ${nflYear}`,
         week: '16'
       },
       {
-        dateBeg: `Thu Dec 28 ${nflYear}`,
-        dateEnd: `Thu Jan 04 ${nextYear}`,
+        dateBeg: `Thu Dec 26 ${nflYear}`,
+        dateEnd: `Thu Jan 02 ${nextYear}`,
         week: '17'
       },
       {
-        dateBeg: `Thu Jan 04 ${nextYear}`,
-        dateEnd: `Thu Jan 11 ${nextYear}`,
+        dateBeg: `Thu Jan 02 ${nextYear}`,
+        dateEnd: `Thu Jan 09 ${nextYear}`,
         week: '18'
       },
       {
-        dateBeg: `Thu Jan 11 ${nextYear}`,
-        dateEnd: `Thu Jan 18 ${nextYear}`,
+        dateBeg: `Thu Jan 09 ${nextYear}`,
+        dateEnd: `Thu Jan 16 ${nextYear}`,
         week: '19' //playoff
       },
       {
-        dateBeg: `Thu Jan 18 ${nextYear}`,
-        dateEnd: `Thu Jan 25 ${nextYear}`,
+        dateBeg: `Thu Jan 16 ${nextYear}`,
+        dateEnd: `Thu Jan 23 ${nextYear}`,
         week: '20' //wild card
       },
       {
-        dateBeg: `Thu Jan 25 ${nextYear}`,
-        dateEnd: `Thu Feb 08 ${nextYear}`,
+        dateBeg: `Thu Jan 23 ${nextYear}`,
+        dateEnd: `Thu Feb 06 ${nextYear}`,
         week: '21' //afc nfc final 4
       },
       {
-        dateBeg: `Thu Feb 08 ${nextYear}`,
-        dateEnd: `Thu Feb 15 ${nextYear}`,
+        dateBeg: `Thu Feb 06 ${nextYear}`,
+        dateEnd: `Thu Feb 13 ${nextYear}`,
         week: '23' //super bowl
       }
     ]

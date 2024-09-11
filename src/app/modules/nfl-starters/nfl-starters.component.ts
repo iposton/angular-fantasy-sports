@@ -122,7 +122,8 @@ export class NflStartersComponent implements OnInit {
     'Beckham Jr.' : 'Beckham Jr.',
     'Westbrook-Ikhine' : 'Westbrook-Ikhine',
     'Okwuegbunam' : 'Okwuegbunam',
-    'Thompson-Robinson' : 'Thompson-Robinson'
+    'Thompson-Robinson' : 'Thompson-Robinson',
+    'Smith-Njigba' : 'Smith-Njigba'
   }
   
   constructor(
@@ -140,7 +141,7 @@ export class NflStartersComponent implements OnInit {
       this.testBrowser = isPlatformBrowser(platformId);
       this.playerImages = this.nflUtil.getNFLImages();
       this.selectedWeek = '1'
-      this.nflSeason = '2023-2024-regular'
+      this.nflSeason = '2024-2025-regular'
       weekTimes = this.nflUtil.getWeekTimes();
       this.depth = this.depthService.getNFLDepth();
       this.nflDraftKit = true
@@ -155,7 +156,7 @@ export class NflStartersComponent implements OnInit {
           this.selectedWeek = week.week
           this.currentWeek = week.week
           this.util.nflWeek = week.week
-          this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
+          this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2025-playoff' : '2024-2025-regular'
           if (date < new Date(week.dateEnd)) {
             let utcDate = new Date(week.dateBeg);
             utcDate.setHours(utcDate.getHours() - 24);
@@ -205,7 +206,7 @@ export class NflStartersComponent implements OnInit {
   public onChange(week) {
     this.loading = true
     this.selectedWeek = week
-    this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2024-playoff' : '2023-2024-regular'
+    this.nflSeason = parseInt(this.selectedWeek) > 18 ? '2025-playoff' : '2024-2025-regular'
     this.haveNflSchedules = (this.teamScheds.length > 0 ? true : false)
     this.dailySchedule = []
     this.starterIdData = []
@@ -419,7 +420,7 @@ export class NflStartersComponent implements OnInit {
           this.dailyStats = res['dailyStats'].gamelogs
           this.myData = res['playerStats'].playerStatsTotals
           //temparary updatePlayers function
-          this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
+          //this.util.updatePlayers(res['playerInfo'].players, this.myData, this.teams)
      
             this.dailyTeamStats = res['team']?.gamelogs != null ? res['team']?.gamelogs : []
             if (this.dailyTeamStats) {

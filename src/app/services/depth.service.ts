@@ -1033,16 +1033,16 @@ export class DepthService {
     ],
     '70': [
       {
-        'gdate': 1,
+        'gdate': 11,
 
-        'Offense-TE-1' : {
-          firstName: 'M',
-          lastName: 'Thomas',
-          id: 9952,
-          status: 'Starter',
-          abbreviation: 'NO',
-          position: 'WR'
-        },
+        // 'Offense-TE-1' : {
+        //   firstName: 'M',
+        //   lastName: 'Thomas',
+        //   id: 9952,
+        //   status: 'Starter',
+        //   abbreviation: 'NO',
+        //   position: 'WR'
+        // },
 
         'Offense-QB-1' : {
           firstName: 'Dareck',
@@ -1576,7 +1576,7 @@ export class DepthService {
     ],
     '61': [
       {
-        'gdate': 1,
+        'gdate': 11,
 
         'Offense-TE-1' : {
           firstName: 'S',

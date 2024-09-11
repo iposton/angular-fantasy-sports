@@ -404,15 +404,15 @@ methods.getStats = async (
         console.log('daily url NEEDS to be set to current season before season starts or all hell will happen!')
         dailyUrl = playerType === 'nhlGoalies' ? `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?position=${position}` : playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/week/${nflWeek}/${feedType}.json?position=${position}` : playerType === 'nflPlayers' ? `${apiRoot}/${sport}/2024-2025-regular/week/${nflWeek}/${feedType}.json?player=${player}` : sport === 'mlb' ? `${apiRoot}/${sport}/2022-regular/date/${dailyDate}/${feedType}.json?player=${player}` : `${apiRoot}/${sport}/${season}/date/${dailyDate}/${feedType}.json?player=${player}`
 
-        teamStatsUrl = `${apiRoot}/${sport}/2023-2024-regular/${feedType2}.json`
-        playerStatsUrl = playerType === 'statLeaders' || playerType === 'nhlGoalies' || playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/2023-2024-regular/${feedType3}.json?position=${position}` : `${apiRoot}/${sport}/2023-2024-regular/${feedType3}.json?player=${player}` 
+        teamStatsUrl = `${apiRoot}/${sport}/${season}/${feedType2}.json`
+        playerStatsUrl = playerType === 'statLeaders' || playerType === 'nhlGoalies' || playerType === 'nflOffense' || playerType === 'nflDefense' ? `${apiRoot}/${sport}/${season}/${feedType3}.json?position=${position}` : `${apiRoot}/${sport}/${season}/${feedType3}.json?player=${player}` 
         playerInfoUrl = `${apiRoot}/${sport}/players.json?position=${position}`
         console.log('playerInfoUrl: ', playerInfoUrl);
         dailyTeamUrl = `${apiRoot}/${sport}/${season}/week/${nflWeek}/team_gamelogs.json`
         
-        console.log(playerStatsUrl, 'PLAYER STATS for', sport)
-        console.log(teamStatsUrl, 'TEAM STATS for', sport)
-        console.log(dailyUrl, 'daily player url for', sport)
+        //console.log(playerStatsUrl, 'PLAYER STATS for', sport)
+        //console.log(teamStatsUrl, 'TEAM STATS for', sport)
+        //console.log(dailyUrl, 'daily player url for', sport)
         //console.log(nflWeek , 'nflWeek')
         stats[0].dailyStats = []
 
